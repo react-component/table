@@ -1,0 +1,203 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.0.0
+3 info using node@v0.11.14
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/dxq613/Desktop/work/react/table',
+5 verbose install   [ 'browserify-shim',
+5 verbose install     'browserify-jsx',
+5 verbose install     'es5-shim',
+5 verbose install     'expect.js',
+5 verbose install     'gh-changelog',
+5 verbose install     'gulp',
+5 verbose install     'gulp-jscs',
+5 verbose install     'gulp-jshint',
+5 verbose install     'gulp-jsx',
+5 verbose install     'gulp-util',
+5 verbose install     'jquery',
+5 verbose install     'jshint',
+5 verbose install     'jshint-stylish',
+5 verbose install     'koa',
+5 verbose install     'koa-body',
+5 verbose install     'koa-jsx',
+5 verbose install     'koa-modularize',
+5 verbose install     'koa-mount',
+5 verbose install     'koa-node-jscover',
+5 verbose install     'koa-serve-index',
+5 verbose install     'koa-static',
+5 verbose install     'mocha',
+5 verbose install     'modulex',
+5 verbose install     'modulex-npm',
+5 verbose install     'node-jscover',
+5 verbose install     'node-jscover-coveralls',
+5 verbose install     'precommit-hook',
+5 verbose install     'react',
+5 verbose install     'react-tools',
+5 verbose install     'simulate-dom-event' ] ]
+6 info preinstall rc-table@1.0.0
+7 warn package.json browserify-jsx@0.1.0 No repository field.
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping jquery@~1.11.1 /Users/dxq613/Desktop/work/react/table
+10 verbose already installed skipping jshint@^2.5.5 /Users/dxq613/Desktop/work/react/table
+11 verbose already installed skipping jshint-stylish@^0.4.0 /Users/dxq613/Desktop/work/react/table
+12 verbose already installed skipping koa@~0.13.0 /Users/dxq613/Desktop/work/react/table
+13 verbose already installed skipping koa-body@^0.4.0 /Users/dxq613/Desktop/work/react/table
+14 verbose already installed skipping koa-jsx@^1.1.3 /Users/dxq613/Desktop/work/react/table
+15 verbose already installed skipping koa-modularize@^2.0.0 /Users/dxq613/Desktop/work/react/table
+16 verbose already installed skipping koa-mount@~1.3.0 /Users/dxq613/Desktop/work/react/table
+17 verbose already installed skipping koa-node-jscover@^1.0.0 /Users/dxq613/Desktop/work/react/table
+18 verbose already installed skipping koa-serve-index@~1.0.1 /Users/dxq613/Desktop/work/react/table
+19 verbose already installed skipping koa-static@~1.4.7 /Users/dxq613/Desktop/work/react/table
+20 verbose already installed skipping mocha@~2.0.1 /Users/dxq613/Desktop/work/react/table
+21 verbose already installed skipping modulex@~1.7.0 /Users/dxq613/Desktop/work/react/table
+22 verbose already installed skipping modulex-npm@^2.0.0 /Users/dxq613/Desktop/work/react/table
+23 verbose already installed skipping node-jscover@^0.6.8 /Users/dxq613/Desktop/work/react/table
+24 verbose already installed skipping node-jscover-coveralls@^1.0.13 /Users/dxq613/Desktop/work/react/table
+25 verbose already installed skipping precommit-hook@^1.0.7 /Users/dxq613/Desktop/work/react/table
+26 verbose already installed skipping react@~0.12.1 /Users/dxq613/Desktop/work/react/table
+27 verbose already installed skipping react-tools@~0.12.1 /Users/dxq613/Desktop/work/react/table
+28 verbose already installed skipping simulate-dom-event@^1.0.1 /Users/dxq613/Desktop/work/react/table
+29 verbose already installed skipping browserify-shim@^3.8.0 /Users/dxq613/Desktop/work/react/table
+30 verbose already installed skipping browserify-jsx@^0.1.0 /Users/dxq613/Desktop/work/react/table
+31 verbose already installed skipping es5-shim@~4.0.5 /Users/dxq613/Desktop/work/react/table
+32 verbose already installed skipping expect.js@~0.3.1 /Users/dxq613/Desktop/work/react/table
+33 verbose already installed skipping gh-changelog@^1.0.5 /Users/dxq613/Desktop/work/react/table
+34 verbose already installed skipping gulp@^3.8.7 /Users/dxq613/Desktop/work/react/table
+35 verbose already installed skipping gulp-jscs@^1.1.0 /Users/dxq613/Desktop/work/react/table
+36 verbose already installed skipping gulp-jshint@^1.8.4 /Users/dxq613/Desktop/work/react/table
+37 verbose already installed skipping gulp-jsx@~0.6.0 /Users/dxq613/Desktop/work/react/table
+38 verbose already installed skipping gulp-util@^3.0.1 /Users/dxq613/Desktop/work/react/table
+39 silly resolved []
+40 info build /Users/dxq613/Desktop/work/react/table
+41 verbose linkStuff [ false, false, false, '/Users/dxq613/Desktop/work/react' ]
+42 info linkStuff rc-table@1.0.0
+43 verbose linkBins rc-table@1.0.0
+44 verbose linkMans rc-table@1.0.0
+45 verbose rebuildBundles rc-table@1.0.0
+46 verbose rebuildBundles [ '.bin',
+46 verbose rebuildBundles   'browserify',
+46 verbose rebuildBundles   'browserify-jsx',
+46 verbose rebuildBundles   'browserify-shim',
+46 verbose rebuildBundles   'es5-shim',
+46 verbose rebuildBundles   'expect.js',
+46 verbose rebuildBundles   'gh-changelog',
+46 verbose rebuildBundles   'gulp',
+46 verbose rebuildBundles   'gulp-jscs',
+46 verbose rebuildBundles   'gulp-jshint',
+46 verbose rebuildBundles   'gulp-jsx',
+46 verbose rebuildBundles   'gulp-util',
+46 verbose rebuildBundles   'jquery',
+46 verbose rebuildBundles   'jshint',
+46 verbose rebuildBundles   'jshint-stylish',
+46 verbose rebuildBundles   'koa',
+46 verbose rebuildBundles   'koa-body',
+46 verbose rebuildBundles   'koa-jsx',
+46 verbose rebuildBundles   'koa-modularize',
+46 verbose rebuildBundles   'koa-mount',
+46 verbose rebuildBundles   'koa-node-jscover',
+46 verbose rebuildBundles   'koa-serve-index',
+46 verbose rebuildBundles   'koa-static',
+46 verbose rebuildBundles   'mocha',
+46 verbose rebuildBundles   'modulex',
+46 verbose rebuildBundles   'modulex-npm',
+46 verbose rebuildBundles   'node-jscover',
+46 verbose rebuildBundles   'node-jscover-coveralls',
+46 verbose rebuildBundles   'precommit-hook',
+46 verbose rebuildBundles   'react',
+46 verbose rebuildBundles   'react-tools',
+46 verbose rebuildBundles   'simulate-dom-event' ]
+47 verbose rebuild bundle /Users/dxq613/Desktop/work/react/table/node_modules/browserify
+48 info build /Users/dxq613/Desktop/work/react/table/node_modules/browserify
+49 info preinstall browserify@6.3.4
+50 verbose linkStuff [ false,
+50 verbose linkStuff   false,
+50 verbose linkStuff   false,
+50 verbose linkStuff   '/Users/dxq613/Desktop/work/react/table/node_modules' ]
+51 info linkStuff browserify@6.3.4
+52 verbose linkBins browserify@6.3.4
+53 verbose link bins [ { browserify: 'bin/cmd.js' },
+53 verbose link bins   '/Users/dxq613/Desktop/work/react/table/node_modules/.bin',
+53 verbose link bins   false ]
+54 verbose linkMans browserify@6.3.4
+55 verbose rebuildBundles browserify@6.3.4
+56 verbose rebuildBundles [ '.bin',
+56 verbose rebuildBundles   'JSONStream',
+56 verbose rebuildBundles   'assert',
+56 verbose rebuildBundles   'browser-pack',
+56 verbose rebuildBundles   'browser-resolve',
+56 verbose rebuildBundles   'browserify-zlib',
+56 verbose rebuildBundles   'buffer',
+56 verbose rebuildBundles   'builtins',
+56 verbose rebuildBundles   'commondir',
+56 verbose rebuildBundles   'concat-stream',
+56 verbose rebuildBundles   'console-browserify',
+56 verbose rebuildBundles   'constants-browserify',
+56 verbose rebuildBundles   'crypto-browserify',
+56 verbose rebuildBundles   'deep-equal',
+56 verbose rebuildBundles   'defined',
+56 verbose rebuildBundles   'deps-sort',
+56 verbose rebuildBundles   'domain-browser',
+56 verbose rebuildBundles   'duplexer2',
+56 verbose rebuildBundles   'events',
+56 verbose rebuildBundles   'glob',
+56 verbose rebuildBundles   'http-browserify',
+56 verbose rebuildBundles   'https-browserify',
+56 verbose rebuildBundles   'inherits',
+56 verbose rebuildBundles   'insert-module-globals',
+56 verbose rebuildBundles   'isarray',
+56 verbose rebuildBundles   'labeled-stream-splicer',
+56 verbose rebuildBundles   'module-deps',
+56 verbose rebuildBundles   'os-browserify',
+56 verbose rebuildBundles   'parents',
+56 verbose rebuildBundles   'path-browserify',
+56 verbose rebuildBundles   'process',
+56 verbose rebuildBundles   'punycode',
+56 verbose rebuildBundles   'querystring-es3',
+56 verbose rebuildBundles   'readable-stream',
+56 verbose rebuildBundles   'resolve',
+56 verbose rebuildBundles   'shallow-copy',
+56 verbose rebuildBundles   'shasum',
+56 verbose rebuildBundles   'shell-quote',
+56 verbose rebuildBundles   'stream-browserify',
+56 verbose rebuildBundles   'string_decoder',
+56 verbose rebuildBundles   'subarg',
+56 verbose rebuildBundles   'syntax-error',
+56 verbose rebuildBundles   'through2',
+56 verbose rebuildBundles   'timers-browserify',
+56 verbose rebuildBundles   'tty-browserify',
+56 verbose rebuildBundles   'umd',
+56 verbose rebuildBundles   'url',
+56 verbose rebuildBundles   'util',
+56 verbose rebuildBundles   'vm-browserify',
+56 verbose rebuildBundles   'xtend' ]
+57 verbose gentlyRm vacuuming /Users/dxq613/Desktop/work/react/table/node_modules/.bin/browserify
+58 silly gentlyRm purging /Users/dxq613/Desktop/work/react/table/node_modules/.bin/browserify
+59 silly gentlyRm quitting because other entries in /Users/dxq613/Desktop/work/react/table/node_modules/.bin
+60 info install browserify@6.3.4
+61 info postinstall browserify@6.3.4
+62 info install rc-table@1.0.0
+63 verbose unsafe-perm in lifecycle true
+64 info rc-table@1.0.0 Failed to exec install script
+65 verbose stack Error: Exit status 1
+65 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:212:16)
+65 verbose stack     at ChildProcess.emit (events.js:110:17)
+65 verbose stack     at maybeClose (child_process.js:1000:16)
+65 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1072:5)
+66 verbose pkgid rc-table@1.0.0
+67 verbose cwd /Users/dxq613/Desktop/work/react/table
+68 error Darwin 13.3.0
+69 error argv "node" "/usr/local/bin/npm" "install"
+70 error node v0.11.14
+71 error npm  v2.0.0
+72 error code ELIFECYCLE
+73 error rc-table@1.0.0 install: `gulp config`
+73 error Exit status 1
+74 error Failed at the rc-table@1.0.0 install script.
+74 error This is most likely a problem with the rc-table package,
+74 error not with npm itself.
+74 error Tell the author that this fails on your system:
+74 error     gulp config
+74 error You can get their info via:
+74 error     npm owner ls rc-table
+74 error There is likely additional logging output above.
+75 verbose exit [ 1, true ]
