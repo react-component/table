@@ -27,20 +27,23 @@ describe('table', function() {
         document.getElementById('t1')
   );
 
+  var node = $('#t1');
 
   it('create', function() {
-
+    expect(node.find('table').length).to.be(1);
   });
 
   it('init data', function() {
-
+     expect(node.find('tbody tr').length).to.be(data.length);
   });
 
   it('change data', function() {
 
   });
-
+/*
   it('renderer', function() {
-
+    expect(node.find('a').first().text()).to.be('操作')；
   });
+
+*/
 });
