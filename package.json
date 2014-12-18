@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": ["react","table","rc-table"],
   "homepage": "https://github.com/react-component/table",
@@ -13,14 +13,23 @@
     "url": "https://github.com/react-component/table/issues"
   },
   "licenses": "MIT",
-  "spm": {},
+  "spm": {
+
+    "main": "index.js",
+    "dependencies": {
+      
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1",
+      "sinon" : "1.12.1",
+      "simulate-dom-event": "^1.0.1"
+    }
+  },
   "config":{
     "port":8000
   },
   "scripts": {
     "start": "node --harmony server",
-    "install":"gulp config",
-    "update":"gulp config",
     "publish": "gulp tag",
     "lint": "gulp lint",
     "test": "",
