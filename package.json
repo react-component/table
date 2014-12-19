@@ -14,10 +14,9 @@
   },
   "licenses": "MIT",
   "spm": {
-
     "main": "index.js",
     "dependencies": {
-      
+      "react": "~0.12.1"
     },
     "devDependencies": {
       "expect.js": "0.3.1",
