@@ -9,6 +9,8 @@ var $ = require('jquery');
 
 $('<div id="t1"></div>').appendTo('body');
 
+$('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">')
+  .appendTo(document.getElementsByTagName('head')[0])
 describe('table', function() {
 
   var columns = [

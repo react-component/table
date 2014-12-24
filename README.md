@@ -29,43 +29,9 @@ react table component
 ## Usage
 
 ```js
-var Table = require('rc-table');
-
-  var columns = [
-    {title : 'header 1',dataIndex :'a', width:100},
-    {id: '123',title : 'header 2',dataIndex :'b', width:100},
-    {title : 'header 3',dataIndex : 'c',width:200},
-    {title : 'operate',dataIndex : '',renderer :function (value,obj) {
-      return <a href="#">edit</a>
-    }}
-  ];
-
-  var data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}];
-
-  var table = React.renderComponent(
-        <Table columns={columns} data={data} className="table"/>,
-        document.getElementById('t1')
-  );
-  
+var table = require('rc-table');
 // use table
 ```
-## API 
-
-### property
-
-#### columns 
-  * The columns config of table
-
-    * title : The title of column
-    * dataIndex : display the data field
-    * width : The width of column. The width of the specific proportion calculation according to the width of the columns
-    * renderer : The render function of cell , has two params. value : the text of this cell;obj : the record of this row
-
-#### data
-  * The Data to be shown
-
-#### className 
-  * The css class this table to be used
 
 ## Development
 
@@ -80,10 +46,7 @@ http://localhost:8000/tests/runner.html?coverage
 
 ## Coverage
 
-http://localhost:8000/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8004/tests/runner.html?coverage
-
-
-
+http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8000/tests/runner.html?coverage
 
 ## License
 

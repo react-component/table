@@ -1,16 +1,14 @@
 language: node_js
-
+notifications:
+  email:
+  - yiminghe@gmail.com
 node_js:
-  - "0.10"
-
-install:
-  - npm install spm coveralls
-
+- 0.11
 before_script:
-  - node_modules/spm/bin/spm-install
-
+- npm start &
+- npm install mocha-phantomjs -g
+- phantomjs --version
 script:
-  - node_modules/spm/bin/spm-test
-
-after_success:
-  - node_modules/spm/bin/spm-test --coveralls | node_modules/.bin/coveralls
+- npm test
+- npm run-script browser-test
+- npm run-script browser-test-cover
