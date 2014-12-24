@@ -26,12 +26,7 @@ react table component
 
 [![rc-table](https://nodei.co/npm/rc-table.png)](https://npmjs.org/package/rc-table)
 
-## Usage
 
-```js
-var table = require('rc-table');
-// use table
-```
 
 ## Development
 
