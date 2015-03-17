@@ -27,7 +27,6 @@ react table component
 [![rc-table](https://nodei.co/npm/rc-table.png)](https://npmjs.org/package/rc-table)
 
 
-
 ## Development
 
 ```
@@ -35,28 +34,32 @@ npm install
 npm start
 ```
 
+## Example
+
+http://localhost:8000/examples/
+
+online example: http://react-component.github.io/table/build/examples/
+
 ## Usage
 
 ```js
 var Table = require('rc-table');
 
-  var columns = [
-    {title : 'header 1',dataIndex :'a', width:100},
-    {id: '123',title : 'header 2',dataIndex :'b', width:100},
-    {title : 'header 3',dataIndex : 'c',width:200},
-    {title : 'operate',dataIndex : '',renderer :function (value,obj) {
-      return <a href="#">edit</a>
-    }}
-  ];
+var columns = [
+  {title : 'header 1',dataIndex :'a', width:100},
+  {id: '123',title : 'header 2',dataIndex :'b', width:100},
+  {title : 'header 3',dataIndex : 'c',width:200},
+  {title : 'operate',dataIndex : '',renderer :function (value,obj) {
+    return <a href="#">edit</a>
+  }}
+];
 
-  var data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}];
+var data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}];
 
-  var table = React.renderComponent(
-        <Table columns={columns} data={data} className="table"/>,
-        document.getElementById('t1')
-  );
-  
-// use table
+React.renderComponent(
+      <Table columns={columns} data={data} className="table"/>,
+      document.getElementById('t1')
+);
 ```
 ## API 
 
