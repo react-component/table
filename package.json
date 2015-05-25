@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "table ui component for react",
   "keywords": [
     "react",
@@ -35,10 +35,9 @@
     "start": "node --harmony node_modules/.bin/rc-server",
     "publish": "rc-tools run tag && spm publish",
     "lint": "rc-tools run lint",
-    "test": "",
-    "saucelabs": "rc-tools run saucelabs",
-    "browser-test": "rc-tools run browser-test",
-    "browser-test-cover": "rc-tools run browser-test-cover"
+    "saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
+    "browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
+    "browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
