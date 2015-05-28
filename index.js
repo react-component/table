@@ -1,1 +1,3 @@
-module.exports = require('./lib/Table');
+'use strict';
+
+module.exports = require('./src/');

@@ -1,11 +1,12 @@
 {
   "name": "rc-table",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "table ui component for react",
   "keywords": [
     "react",
     "react-table"
   ],
+  "main": "./lib/index",
   "homepage": "http://github.com/react-component/table",
   "maintainers": [
     "dxq613@gmail.com",
@@ -19,21 +20,17 @@
     "url": "http://github.com/react-component/table/issues"
   },
   "licenses": "MIT",
-  "spm": {
-    "dependencies": {
-      "react": "*"
-    }
-  },
   "config": {
     "port": 8000
   },
   "scripts": {
     "build": "rc-tools run build",
+    "precommit": "rc-tools run precommit",
     "less": "rc-tools run less",
     "gh-pages": "rc-tools run gh-pages",
     "history": "rc-tools run history",
     "start": "node --harmony node_modules/.bin/rc-server",
-    "publish": "rc-tools run tag && spm publish",
+    "publish": "rc-tools run tag",
     "lint": "rc-tools run lint",
     "saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
     "browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
@@ -43,12 +40,11 @@
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
     "precommit-hook": "^1.0.7",
-    "rc-server": "^2.0.0",
-    "rc-tools": "2.x",
+    "rc-server": "3.x",
+    "rc-tools": "3.x",
     "react": "~0.13.0"
   },
   "precommit": [
-    "lint",
-    "less"
+    "precommit"
   ]
 }
