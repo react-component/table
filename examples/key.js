@@ -42,7 +42,7 @@ var MyTable = React.createClass({
     return <a href="#" onClick={this.handleClick(index)}>删除</a>;
   },
 
-  getKey(record){
+  getRowKey(record){
     return record.a;
   },
 
@@ -55,7 +55,7 @@ var MyTable = React.createClass({
       { title: '操作', dataIndex: '',  key:'x', renderer: this.renderAction }
     ];
     return (
-      <Table columns={columns} data={state.data} className="table" keyFn={this.getKey}/>
+      <Table columns={columns} data={state.data} className="table" rowKey={this.getRowKey}/>
     );
   },
 

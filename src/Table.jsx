@@ -50,7 +50,7 @@ class Table extends React.Component {
       columns = self.props.columns,
       rst = [];
 
-    var keyFn = this.props.keyFn;
+    var keyFn = this.props.rowKey;
     for (var i = 0; i < data.length; i++) {
       var record = data[i];
       var key = keyFn ? keyFn(record, i) : undefined;

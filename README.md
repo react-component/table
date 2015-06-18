@@ -65,7 +65,7 @@ React.renderComponent(
 
 ### property
 
-#### keyFn
+#### rowKey
 
 `Function(recode):string`
 
