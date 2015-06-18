@@ -42,16 +42,20 @@ var MyTable = React.createClass({
     return <a href="#" onClick={this.handleClick(index)}>删除</a>;
   },
 
+  getKey(record){
+    return record.a;
+  },
+
   render: function() {
     var state = this.state;
     var columns = [
-      { title: '表头1', dataIndex: 'a', width: 100, renderer: this.checkbox },
-      { title: '表头2', dataIndex: 'b', width: 100},
-      { title: '表头3', dataIndex: 'c', width: 200},
-      { title: '操作', dataIndex: '', renderer: this.renderAction }
+      { title: '表头1', dataIndex: 'a', key:'a', width: 100, renderer: this.checkbox },
+      { title: '表头2', dataIndex: 'b', key:'b',  width: 100},
+      { title: '表头3', dataIndex: 'c', key:'c',  width: 200},
+      { title: '操作', dataIndex: '',  key:'x', renderer: this.renderAction }
     ];
     return (
-      <Table columns={columns} data={state.data} className="table" keyField="a"/>
+      <Table columns={columns} data={state.data} className="table" keyFn={this.getKey}/>
     );
   },
 

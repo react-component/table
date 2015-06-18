@@ -38,7 +38,7 @@ npm start
 
 http://localhost:8000/examples/
 
-online example: http://react-component.github.io/table/build/examples/
+online example: http://react-component.github.io/table/examples/
 
 ## Usage
 
@@ -65,13 +65,15 @@ React.renderComponent(
 
 ### property
 
-#### keyField
+#### keyFn
 
-* key value of each row
+`Function(recode):string`
+
+* get key value of each row from each row record data
 
 #### columns
   * The columns config of table
-
+    * key : key of this column
     * title : The title of column
     * dataIndex : display the data field
     * width : The width of column. The width of the specific proportion calculation according to the width of the columns
