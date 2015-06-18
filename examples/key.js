@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Table = require('rc-table');
+var pkg = require('../package.json');
 
 var CheckBox = React.createClass({
 
@@ -68,6 +69,7 @@ var data = [{a: '123'}, {a: 'cdd', b: 'edd'}, {a: '1333', c: 'eee', d: 2}];
 
 React.render(
   <div>
+    <h1>{pkg.name}@{pkg.version}</h1>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
     <MyTable data={data} className="table"/>
   </div>,

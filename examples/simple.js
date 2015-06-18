@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Table = require('rc-table');
+var pkg = require('../package.json');
 
 var columns = [
   {title: '表头1', dataIndex: 'a', width: 100},
@@ -18,6 +19,7 @@ var data = [{a: '123'}, {a: 'cdd', b: 'edd'}, {a: '1333', c: 'eee', d: 2}];
 
 var table = React.render(
   <div>
+    <h1>{pkg.name}@{pkg.version}</h1>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
     <Table columns={columns} data={data} className="table"/>
   </div>,
