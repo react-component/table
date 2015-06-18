@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
     <style>
         .hljs {
             display: block;
@@ -172,9 +173,9 @@
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
     <![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 </head>
 <body>
 <div id="__react-content"></div>
@@ -182,8 +183,11 @@
 <script src="simple.js?nowrap"></script>
 <div class="highlight">
 <pre>
+<span class="hljs-string">'use strict'</span>;
+
 var React = require(<span class="hljs-string">'react'</span>);
 var Table = require(<span class="hljs-string">'rc-table'</span>);
+var pkg = require(<span class="hljs-string">'../package.json'</span>);
 
 var columns = [
   {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
@@ -200,6 +204,7 @@ var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'
 
 var table = React.render(
   &lt;div&gt;
+    &lt;h1&gt;{pkg.name}@{pkg.version}&lt;/h1&gt;
     &lt;link rel=<span class="hljs-string">"stylesheet"</span> href=<span class="hljs-string">"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"</span> /&gt;
     &lt;Table columns={columns} data={data} className=<span class="hljs-string">"table"</span>/&gt;
   &lt;/div&gt;,
