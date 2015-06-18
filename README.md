@@ -65,7 +65,11 @@ React.renderComponent(
 
 ### property
 
-#### columns 
+#### keyField
+
+* key value of each row
+
+#### columns
   * The columns config of table
 
     * title : The title of column

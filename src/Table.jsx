@@ -26,7 +26,7 @@ class TableRow extends React.Component {
       if (renderer) {
         text = renderer(text, record, index);
       }
-      cells.push(<td>{text}</td>);
+      cells.push(<td key={i}>{text}</td>);
     }
     return (<tr>{cells}</tr>);
   }
@@ -39,7 +39,7 @@ class Table extends React.Component {
       rst = [];
     for (var i = 0; i < columns.length; i++) {
       var col = columns[i];
-      rst.push(<TableColumn title={col.title} dataIndex={col.dataIndex} width={col.width}/>);
+      rst.push(<TableColumn title={col.title} dataIndex={col.dataIndex} width={col.width} key={i}/>);
     }
     return rst;
   }
@@ -50,12 +50,13 @@ class Table extends React.Component {
       columns = self.props.columns,
       rst = [];
 
+    var keyField = this.props.keyField;
     for (var i = 0; i < data.length; i++) {
       var record = data[i];
-      rst.push(<TableRow record={record} index={i} columns={columns}/>);
+      var key = keyField ? record[keyField] : i;
+      rst.push(<TableRow record={record} index={i} columns={columns} key={key}/>);
     }
     return rst;
-
   }
 
   render() {
