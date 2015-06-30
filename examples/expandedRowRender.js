@@ -54,7 +54,9 @@ var MyTable = React.createClass({
       {title: '操作', dataIndex: '', key: 'x', render: this.renderAction}
     ];
     return (
-      <Table columns={columns} data={state.data} className="table" rowKey={this.getRowKey}/>
+      <Table columns={columns}
+        expandedRowRender={expandedRowRender}
+        data={state.data} className="table" rowKey={this.getRowKey}/>
     );
   },
 
@@ -65,10 +67,16 @@ var MyTable = React.createClass({
 
 var data = [{a: '123'}, {a: 'cdd', b: 'edd'}, {a: '1333', c: 'eee', d: 2}];
 
+function expandedRowRender(record){
+  return <p>extra: {record.a}</p>;
+}
+
 React.render(
   <div>
-    <h2>specify key</h2>
-    <MyTable data={data} className="table"/>
+    <h2>expandedRowRender</h2>
+    <MyTable data={data}
+
+      className="table"/>
   </div>,
   document.getElementById('__react-content')
 );
