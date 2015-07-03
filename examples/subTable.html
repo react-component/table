@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>rc-table-simple</title>
+  <title>rc-table-subTable</title>
   <meta http-equiv=Content-Type content="text/html;charset=utf-8">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
   <style>
@@ -183,38 +183,83 @@
 <h1>rc-table@3.0.0</h1>
 <div id="__react-content"></div>
 <script src="common.js?nowrap"></script>
-<script src="simple.js?nowrap"></script>
+<script src="subTable.js?nowrap"></script>
 <div class="highlight">
 <pre>
-<span class="hljs-string">'use strict'</span>;
+<span class="hljs-pi">'use strict'</span>;
 
-var React = require(<span class="hljs-string">'react'</span>);
-var Table = require(<span class="hljs-string">'rc-table'</span>);
-require(<span class="hljs-string">'rc-table/assets/index.css'</span>);
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">var</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-var columns = [
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
-  {
-<span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>, <span class="hljs-string">render:</span> function () {
-    <span class="hljs-keyword">return</span> &lt;a href=<span class="hljs-string">"#"</span>&gt;操作&lt;/a&gt;
+
+<span class="hljs-keyword">var</span> MyTable = React.createClass({
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> {
+      data: <span class="hljs-keyword">this</span>.props.data
+    };
+  },
+
+  handleClick(record, e) {
+    e.preventDefault();
+    <span class="hljs-built_in">console</span>.log(record.a);
+  },
+
+  getRowKey(record) {
+    <span class="hljs-keyword">return</span> record.a;
+  },
+
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> state = <span class="hljs-keyword">this</span>.state;
+    <span class="hljs-keyword">var</span> columns = [
+      {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>},
+      {title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
+      {title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>},
+      {
+        title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: (_, record) =&gt; {
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">'a'</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleClick.bind(null,</span> <span class="hljs-attribute">record</span>)}&gt;</span>click {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+      }
+      }
+    ];
+    return (
+      <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{this.getRowKey}</span>/&gt;</span>
+    )</span>;
   }
+});
+
+<span class="hljs-keyword">var</span> data = [
+  {
+    a: <span class="hljs-string">'a1'</span>
+  },
+  {
+    a: <span class="hljs-string">'a2'</span>,
+    b: <span class="hljs-string">'b2'</span>,
+    children: [
+      {
+        a: <span class="hljs-string">'a2-1'</span>,
+        b: <span class="hljs-string">'b2-1'</span>
+      },
+      {
+        a: <span class="hljs-string">'a2-2'</span>,
+        b: <span class="hljs-string">'b2-2'</span>
+      }
+    ]
+  },
+  {
+    a: <span class="hljs-string">'a3'</span>,
+    c: <span class="hljs-string">'c3'</span>,
+    d: <span class="hljs-string">'d3'</span>
   }
 ];
 
-var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'cdd'</span>, <span class="hljs-string">b:</span> <span class="hljs-string">'edd'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'1333'</span>, <span class="hljs-string">c:</span> <span class="hljs-string">'eee'</span>, <span class="hljs-string">d:</span> <span class="hljs-number">2</span>}];
-
-var table = React.render(
-  &lt;div&gt;
-    &lt;h2&gt;simple table&lt;/h2&gt;
-    &lt;Table columns={columns}
-      data={data}
-      className=<span class="hljs-string">"table"</span>/&gt;
-  &lt;/div&gt;,
-  document.getElementById(<span class="hljs-string">'__react-content'</span>)
+React.render(
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>sub table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+  document.getElementById('__react-content')
 );
-
+</span>
 </pre>
 </div>
 </body>

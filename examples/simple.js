@@ -1,24 +1,24 @@
-webpackJsonp([1],{
+webpackJsonp([4],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(6);
+	module.exports = __webpack_require__(75);
 
 
 /***/ },
 
-/***/ 6:
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
 	var Table = __webpack_require__(3);
-	var pkg = __webpack_require__(5);
+	__webpack_require__(6);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', width: 200 }, {
-	  title: '操作', dataIndex: '', renderer: function renderer() {
+	  title: '操作', dataIndex: '', render: function render() {
 	    return React.createElement(
 	      'a',
 	      { href: '#' },
@@ -33,14 +33,13 @@ webpackJsonp([1],{
 	  'div',
 	  null,
 	  React.createElement(
-	    'h1',
+	    'h2',
 	    null,
-	    pkg.name,
-	    '@',
-	    pkg.version
+	    'simple table'
 	  ),
-	  React.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' }),
-	  React.createElement(Table, { columns: columns, data: data, className: 'table' })
+	  React.createElement(Table, { columns: columns,
+	    data: data,
+	    className: 'table' })
 	), document.getElementById('__react-content'));
 
 /***/ }

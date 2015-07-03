@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>rc-table-simple</title>
+  <title>rc-table-scrollBody</title>
   <meta http-equiv=Content-Type content="text/html;charset=utf-8">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
   <style>
@@ -183,7 +183,7 @@
 <h1>rc-table@3.0.0</h1>
 <div id="__react-content"></div>
 <script src="common.js?nowrap"></script>
-<script src="simple.js?nowrap"></script>
+<script src="scrollBody.js?nowrap"></script>
 <div class="highlight">
 <pre>
 <span class="hljs-string">'use strict'</span>;
@@ -192,28 +192,69 @@ var React = require(<span class="hljs-string">'react'</span>);
 var Table = require(<span class="hljs-string">'rc-table'</span>);
 require(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-var columns = [
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
-  {
-<span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>, <span class="hljs-string">render:</span> function () {
-    <span class="hljs-keyword">return</span> &lt;a href=<span class="hljs-string">"#"</span>&gt;操作&lt;/a&gt;
-  }
-  }
-];
 
-var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'cdd'</span>, <span class="hljs-string">b:</span> <span class="hljs-string">'edd'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'1333'</span>, <span class="hljs-string">c:</span> <span class="hljs-string">'eee'</span>, <span class="hljs-string">d:</span> <span class="hljs-number">2</span>}];
+var data = [];
+<span class="hljs-keyword">for</span> (var i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">30</span>; i++) {
+  data.push({
+<span class="hljs-label">    key:</span> i,
+<span class="hljs-label">    a:</span> <span class="hljs-string">'a'</span> + i,
+<span class="hljs-label">    b:</span> <span class="hljs-string">'b'</span> + i,
+<span class="hljs-label">    c:</span> <span class="hljs-string">'c'</span> + i
+  });
+}
 
-var table = React.render(
-  &lt;div&gt;
-    &lt;h2&gt;simple table&lt;/h2&gt;
-    &lt;Table columns={columns}
+function getRowKey(record) {
+  <span class="hljs-keyword">return</span> record.key;
+}
+
+var Test = React.createClass({
+  getInitialState() {
+
+    <span class="hljs-keyword">return</span> {
+<span class="hljs-label">      showBody:</span> <span class="hljs-literal">true</span>
+    }
+  },
+
+  toggleBody() {
+    <span class="hljs-keyword">this</span>.setState({
+<span class="hljs-label">      showBody:</span> !<span class="hljs-keyword">this</span>.state.showBody
+    })
+  },
+
+  render() {
+    var columns = [
+      {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+      {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+      {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
+      {
+<span class="hljs-label">        title:</span> &lt;a onClick={<span class="hljs-keyword">this</span>.toggleBody} href=<span class="hljs-string">'#'</span>&gt;{<span class="hljs-keyword">this</span>.state.showBody ? '隐藏' : <span class="hljs-string">'显示'</span>}体&lt;/a&gt;,
+<span class="hljs-label">        key:</span> <span class="hljs-string">'x'</span>,
+<span class="hljs-label">        width:</span> <span class="hljs-number">200</span>,
+<span class="hljs-label">        render:</span> function () {
+          <span class="hljs-keyword">return</span> &lt;a href=<span class="hljs-string">"#"</span>&gt;操作&lt;/a&gt;
+        }
+      }
+    ];
+    <span class="hljs-keyword">return</span> &lt;Table columns={columns}
       data={data}
-      className=<span class="hljs-string">"table"</span>/&gt;
+      rowKey={getRowKey}
+      bodyStyle={{
+<span class="hljs-label">        overflow:</span> <span class="hljs-string">'auto'</span>,
+<span class="hljs-label">        height:</span> <span class="hljs-number">200</span>,
+<span class="hljs-label">        display:</span> <span class="hljs-keyword">this</span>.state.showBody ? '' : <span class="hljs-string">'none'</span>
+      }}
+      className=<span class="hljs-string">"table"</span>/&gt;;
+  }
+});
+
+React.render(
+  &lt;div&gt;
+    &lt;h2&gt;scroll body table&lt;/h2&gt;
+    &lt;Test/&gt;
   &lt;/div&gt;,
   document.getElementById(<span class="hljs-string">'__react-content'</span>)
 );
+
 
 </pre>
 </div>

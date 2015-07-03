@@ -1,14 +1,14 @@
-webpackJsonp([2],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(73);
+	module.exports = __webpack_require__(72);
 
 
 /***/ },
 
-/***/ 73:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69,7 +69,9 @@ webpackJsonp([2],{
 	  render: function render() {
 	    var state = this.state;
 	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
-	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: this.getRowKey });
+	    return React.createElement(Table, { columns: columns,
+	      expandedRowRender: expandedRowRender,
+	      data: state.data, className: 'table', rowKey: this.getRowKey });
 	  },
 	
 	  checkbox: function checkbox(a) {
@@ -79,18 +81,29 @@ webpackJsonp([2],{
 	
 	var data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
 	
+	function expandedRowRender(record) {
+	  return React.createElement(
+	    'p',
+	    null,
+	    'extra: ',
+	    record.a
+	  );
+	}
+	
 	React.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(
 	    'h2',
 	    null,
-	    'specify key'
+	    'expandedRowRender'
 	  ),
-	  React.createElement(MyTable, { data: data, className: 'table' })
+	  React.createElement(MyTable, { data: data,
+	
+	    className: 'table' })
 	), document.getElementById('__react-content'));
 
 /***/ }
 
 });
-//# sourceMappingURL=key.js.map
+//# sourceMappingURL=expandedRowRender.js.map
