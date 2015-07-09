@@ -1,0 +1,50 @@
+@tablePrefixCls: rc-table;
+
+.@{tablePrefixCls} {
+  &-header {
+    th {
+      background-color: #EDEDEF;
+      border: 0px;
+      border-bottom: 1px solid #DDD;
+      color: #222;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+
+  &-body, &-header {
+    > table {
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  &-row, &-expanded-row {
+   > td {
+      padding: 5px;
+      background-color: #FFF;
+      border-top-color: #DDD;
+      border-bottom: 1px solid #E1E1E1;
+      color: #222;
+    }
+
+    &-expand-icon {
+      cursor: pointer;
+      display: inline-block;
+      margin: 5px;
+      width: 21px;
+      height: 28px;
+      text-align: center;
+      line-height: 28px;
+      border:1px solid red;
+    }
+
+    &-expanded:after {
+      content:'-'
+    }
+
+    &-collapsed:after {
+      content:'+'
+    }
+  }
+}
