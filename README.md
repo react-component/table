@@ -120,12 +120,48 @@ var table = React.render(
           <th></th>
           <td>
             The columns config of table. contains
-
-            * key : key of this column
-            * title : The title of column
-            * dataIndex : display the data field
-            * width : The width of column. The width of the specific proportion calculation according to the width of the columns
-            * renderer : The render function of cell , has two params. value : the text of this cell;obj : the record of this row
+            <table>
+             <thead>
+                <tr>
+                    <th style="width: 100px;">name</th>
+                    <th style="width: 50px;">type</th>
+                    <th>default</th>
+                    <th>description</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      <td>key</td>
+                      <td>String</td>
+                      <th></th>
+                      <td>key of this column</td>
+                  </tr>
+                  <tr>
+                      <td>title</td>
+                      <td>React Node</td>
+                      <th></th>
+                      <td>title of this column</td>
+                  </tr>
+                  <tr>
+                      <td>dataIndex</td>
+                      <td>String</td>
+                      <th></th>
+                      <td>display field of the data record</td>
+                  </tr>
+                  <tr>
+                      <td>width</td>
+                      <td>String|Number</td>
+                      <th></th>
+                      <td>he width of the specific proportion calculation according to the width of the columns</td>
+                  </tr>
+                  <tr>
+                      <td>renderer</td>
+                      <td>Function(value, record)</td>
+                      <th></th>
+                      <td>The render function of cell, has two params: the text of this cell and the record of this row</td>
+                  </tr>
+                </tbody>
+            </table>
           </td>
       </tr>
     </tbody>
