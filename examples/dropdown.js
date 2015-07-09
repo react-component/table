@@ -2490,7 +2490,7 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(8)();
-	exports.push([module.id, "@font-face {\n  font-family: 'anticon';\n  src: url('//at.alicdn.com/t/font_1434092639_4910953.eot');\n  /* IE9*/\n  src: url('//at.alicdn.com/t/font_1434092639_4910953.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1434092639_4910953.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1434092639_4910953.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1434092639_4910953.svg#iconfont') format('svg');\n  /* iOS 4.1- */\n}\n.rc-dropdown {\n  position: absolute;\n  left: -9999px;\n  top: -9999px;\n  z-index: 1070;\n  display: block;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 12px;\n  font-weight: normal;\n  line-height: 1.5;\n  padding-top: 3px;\n}\n.rc-dropdown-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background: #000;\n  opacity: 0;\n  filter: alpha(opacity=0);\n  width: 100%;\n  height: 100%;\n  z-index: 1070;\n}\n.rc-dropdown-hidden,\n.rc-dropdown-mask-hidden {\n  display: none;\n}\n.rc-dropdown-menu {\n  outline: none;\n  position: relative;\n  list-style-type: none;\n  padding: 0;\n  margin: 2px 0 0 0;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 3px;\n  box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n}\n.rc-dropdown-menu > li {\n  margin: 0;\n  padding: 0;\n}\n.rc-dropdown-menu:before {\n  content: \"\";\n  position: absolute;\n  top: -4px;\n  left: 0;\n  width: 100%;\n  height: 4px;\n  background: #ffffff;\n  background: rgba(255, 255, 255, 0.01);\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item {\n  position: relative;\n  display: block;\n  padding: 7px 10px;\n  clear: both;\n  font-size: 12px;\n  font-weight: normal;\n  color: #666666;\n  white-space: nowrap;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:hover,\n.rc-dropdown-menu > .rc-dropdown-menu-item-active,\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected {\n  background-color: #ebfaff;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected {\n  position: relative;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected:after {\n  content: '\\e613';\n  font-family: 'anticon';\n  font-weight: bold;\n  position: absolute;\n  top: 6px;\n  right: 16px;\n  color: #3CB8F0;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-disabled {\n  color: #ccc;\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-disabled:hover {\n  color: #ccc;\n  background-color: #fff;\n  cursor: not-allowed;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:last-child {\n  border-bottom-left-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:first-child {\n  border-top-left-radius: 3px;\n  border-top-right-radius: 3px;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-divider {\n  height: 1px;\n  margin: 1px 0;\n  overflow: hidden;\n  background-color: #e5e5e5;\n  line-height: 0;\n}\n.rc-dropdown-slide-up-enter {\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-transform-origin: 0 0;\n      -ms-transform-origin: 0 0;\n          transform-origin: 0 0;\n  display: block !important;\n  opacity: 0;\n  -webkit-animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);\n          animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-dropdown-slide-up-leave {\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-transform-origin: 0 0;\n      -ms-transform-origin: 0 0;\n          transform-origin: 0 0;\n  display: block !important;\n  opacity: 1;\n  -webkit-animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);\n          animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-dropdown-slide-up-enter.rc-dropdown-slide-up-enter-active {\n  -webkit-animation-name: rcDropdownSlideUpIn;\n          animation-name: rcDropdownSlideUpIn;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n.rc-dropdown-slide-up-leave.rc-dropdown-slide-up-leave-active {\n  -webkit-animation-name: rcDropdownSlideUpOut;\n          animation-name: rcDropdownSlideUpOut;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n@-webkit-keyframes rcDropdownSlideUpIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n}\n@keyframes rcDropdownSlideUpIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n}\n@-webkit-keyframes rcDropdownSlideUpOut {\n  0% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n}\n@keyframes rcDropdownSlideUpOut {\n  0% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n}\n", ""]);
+	exports.push([module.id, "@font-face {\n  font-family: 'anticon';\n  src: url('//at.alicdn.com/t/font_1434092639_4910953.eot');\n  /* IE9*/\n  src: url('//at.alicdn.com/t/font_1434092639_4910953.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1434092639_4910953.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1434092639_4910953.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1434092639_4910953.svg#iconfont') format('svg');\n  /* iOS 4.1- */\n}\n.rc-dropdown {\n  position: absolute;\n  left: -9999px;\n  top: -9999px;\n  z-index: 1070;\n  display: block;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 12px;\n  font-weight: normal;\n  line-height: 1.5;\n  padding-top: 3px;\n}\n.rc-dropdown-hidden {\n  display: none;\n}\n.rc-dropdown-menu {\n  outline: none;\n  position: relative;\n  list-style-type: none;\n  padding: 0;\n  margin: 2px 0 0 0;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 3px;\n  box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n}\n.rc-dropdown-menu > li {\n  margin: 0;\n  padding: 0;\n}\n.rc-dropdown-menu:before {\n  content: \"\";\n  position: absolute;\n  top: -4px;\n  left: 0;\n  width: 100%;\n  height: 4px;\n  background: #ffffff;\n  background: rgba(255, 255, 255, 0.01);\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item {\n  position: relative;\n  display: block;\n  padding: 7px 10px;\n  clear: both;\n  font-size: 12px;\n  font-weight: normal;\n  color: #666666;\n  white-space: nowrap;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:hover,\n.rc-dropdown-menu > .rc-dropdown-menu-item-active,\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected {\n  background-color: #ebfaff;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected {\n  position: relative;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-selected:after {\n  content: '\\e613';\n  font-family: 'anticon';\n  font-weight: bold;\n  position: absolute;\n  top: 6px;\n  right: 16px;\n  color: #3CB8F0;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-disabled {\n  color: #ccc;\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-disabled:hover {\n  color: #ccc;\n  background-color: #fff;\n  cursor: not-allowed;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:last-child {\n  border-bottom-left-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item:first-child {\n  border-top-left-radius: 3px;\n  border-top-right-radius: 3px;\n}\n.rc-dropdown-menu > .rc-dropdown-menu-item-divider {\n  height: 1px;\n  margin: 1px 0;\n  overflow: hidden;\n  background-color: #e5e5e5;\n  line-height: 0;\n}\n.rc-dropdown-slide-up-enter {\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-transform-origin: 0 0;\n      -ms-transform-origin: 0 0;\n          transform-origin: 0 0;\n  display: block !important;\n  opacity: 0;\n  -webkit-animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);\n          animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-dropdown-slide-up-leave {\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-transform-origin: 0 0;\n      -ms-transform-origin: 0 0;\n          transform-origin: 0 0;\n  display: block !important;\n  opacity: 1;\n  -webkit-animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);\n          animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-dropdown-slide-up-enter.rc-dropdown-slide-up-enter-active {\n  -webkit-animation-name: rcDropdownSlideUpIn;\n          animation-name: rcDropdownSlideUpIn;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n.rc-dropdown-slide-up-leave.rc-dropdown-slide-up-leave-active {\n  -webkit-animation-name: rcDropdownSlideUpOut;\n          animation-name: rcDropdownSlideUpOut;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n@-webkit-keyframes rcDropdownSlideUpIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n}\n@keyframes rcDropdownSlideUpIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n}\n@-webkit-keyframes rcDropdownSlideUpOut {\n  0% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n}\n@keyframes rcDropdownSlideUpOut {\n  0% {\n    opacity: 1;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(1);\n            transform: scaleY(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 0% 0%;\n            transform-origin: 0% 0%;\n    -webkit-transform: scaleY(0);\n            transform: scaleY(0);\n  }\n}\n", ""]);
 
 /***/ },
 /* 34 */
@@ -2547,7 +2547,7 @@ webpackJsonp([0],[
 	var React = __webpack_require__(2);
 	var Tooltip = __webpack_require__(38);
 	var assign = __webpack_require__(59);
-	var rcUtil = __webpack_require__(60);
+	var rcUtil = __webpack_require__(40);
 	
 	/*
 	
@@ -2669,7 +2669,7 @@ webpackJsonp([0],[
 	    if ('visible' in props) {
 	      this.state.visible = !!props.visible;
 	    }
-	    ['toggle', 'show', 'hide'].forEach(function (m) {
+	    ['handleClick', 'handleMouseEnter', 'handleMouseDown', 'handleTouchStart', 'handleMouseLeave', 'handleFocus', 'handleBlur', 'handleOutsideClick'].forEach(function (m) {
 	      _this[m] = _this[m].bind(_this);
 	    });
 	  }
@@ -2677,6 +2677,12 @@ webpackJsonp([0],[
 	  _inherits(Tooltip, _React$Component);
 	
 	  _createClass(Tooltip, [{
+	    key: 'getPopupDomNode',
+	    value: function getPopupDomNode() {
+	      // for test
+	      return this.refs.popup ? this.refs.popup.getPopupDomNode() : this.popupInstance.getPopupDomNode();
+	    }
+	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if ('visible' in nextProps) {
@@ -2702,49 +2708,124 @@ webpackJsonp([0],[
 	      }
 	      var props = this.props;
 	      var state = this.state;
+	      var ref = {};
+	      if (!props.renderPopupToBody) {
+	        ref.ref = 'popup';
+	      }
 	      return React.createElement(
 	        Popup,
-	        { prefixCls: props.prefixCls,
+	        _extends({ prefixCls: props.prefixCls
+	        }, ref, {
 	          visible: state.visible,
 	          trigger: props.trigger,
 	          placement: props.placement,
 	          animation: props.animation,
 	          wrap: this,
-	          onClickOutside: this.hide,
 	          style: props.overlayStyle,
-	          transitionName: props.transitionName },
+	          transitionName: props.transitionName }),
 	        props.overlay
 	      );
-	    }
-	  }, {
-	    key: 'toggle',
-	    value: function toggle(e) {
-	      e.preventDefault();
-	      if (this.state.visible) {
-	        this.hide();
-	      } else {
-	        this.show();
-	      }
 	    }
 	  }, {
 	    key: 'setVisible',
 	    value: function setVisible(visible) {
 	      if (this.state.visible !== visible) {
-	        this.setState({
-	          visible: visible
-	        });
+	        var currentVisible = this.state.visible;
 	        this.props.onVisibleChange(visible);
+	        // avoid redundant render
+	        // user do not modify visible
+	        if (currentVisible === this.state.visible) {
+	          this.setState({
+	            visible: visible
+	          });
+	        }
 	      }
 	    }
 	  }, {
-	    key: 'show',
-	    value: function show() {
+	    key: 'delaySetVisible',
+	    value: function delaySetVisible(visible) {
+	      var _this2 = this;
+	
+	      var delay = this.props.delay * 1000;
+	      if (delay) {
+	        if (this.delayTimer) {
+	          clearTimeout(this.delayTimer);
+	        }
+	        this.delayTimer = setTimeout(function () {
+	          _this2.setVisible(visible);
+	          _this2.delayTimer = null;
+	        }, delay);
+	      } else {
+	        this.setVisible(visible);
+	      }
+	    }
+	  }, {
+	    key: 'handleMouseEnter',
+	    value: function handleMouseEnter() {
+	      this.delaySetVisible(true);
+	    }
+	  }, {
+	    key: 'handleMouseLeave',
+	    value: function handleMouseLeave() {
+	      this.delaySetVisible(false);
+	    }
+	  }, {
+	    key: 'handleFocus',
+	    value: function handleFocus() {
+	      this.focusTime = Date.now();
 	      this.setVisible(true);
 	    }
 	  }, {
-	    key: 'hide',
-	    value: function hide() {
+	    key: 'handleMouseDown',
+	    value: function handleMouseDown() {
+	      this.preClickTime = Date.now();
+	    }
+	  }, {
+	    key: 'handleTouchStart',
+	    value: function handleTouchStart() {
+	      this.preTouchTime = Date.now();
+	    }
+	  }, {
+	    key: 'handleBlur',
+	    value: function handleBlur() {
 	      this.setVisible(false);
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick(e) {
+	      // focus will trigger click
+	      if (this.focusTime) {
+	        var preTime;
+	        if (this.preClickTime && this.preTouchTime) {
+	          preTime = Math.min(this.preClickTime, this.preTouchTime);
+	        } else if (this.preClickTime) {
+	          preTime = this.preClickTime;
+	        } else if (this.preTouchTime) {
+	          preTime = this.preTouchTime;
+	        }
+	        if (Math.abs(preTime - this.focusTime) < 20) {
+	          return;
+	        }
+	        this.focusTime = 0;
+	      }
+	      this.preClickTime = 0;
+	      this.preTouchTime = 0;
+	      e.preventDefault();
+	      if (this.state.visible) {
+	        this.setVisible(false);
+	      } else {
+	        this.setVisible(true);
+	      }
+	    }
+	  }, {
+	    key: 'handleOutsideClick',
+	    value: function handleOutsideClick(e) {
+	      var target = e.target;
+	      var root = React.findDOMNode(this);
+	      var popupNode = this.getPopupDomNode();
+	      if (!rcUtil.Dom.contains(root, target) && !rcUtil.Dom.contains(popupNode, target)) {
+	        this.setVisible(false);
+	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -2758,7 +2839,43 @@ webpackJsonp([0],[
 	        return;
 	      }
 	      if (this.props.renderPopupToBody) {
-	        React.render(this.getPopupElement(), this.getTipContainer());
+	        this.popupInstance = React.render(this.getPopupElement(), this.getTipContainer());
+	      }
+	      var props = this.props;
+	      if (props.trigger.indexOf('click') !== -1) {
+	        if (this.state.visible) {
+	          if (!this.clickOutsideHandler) {
+	            this.clickOutsideHandler = rcUtil.Dom.addEventListener(document, 'mousedown', this.handleOutsideClick);
+	            this.touchOutsideHandler = rcUtil.Dom.addEventListener(document, 'touchstart', this.handleOutsideClick);
+	          }
+	          return;
+	        }
+	      }
+	      if (this.clickOutsideHandler) {
+	        this.clickOutsideHandler.remove();
+	        this.touchOutsideHandler.remove();
+	        this.clickOutsideHandler = null;
+	        this.touchOutsideHandler = null;
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var tipContainer = this.tipContainer;
+	      if (tipContainer) {
+	        React.unmountComponentAtNode(tipContainer);
+	        document.body.removeChild(tipContainer);
+	        this.tipContainer = null;
+	      }
+	      if (this.delayTimer) {
+	        clearTimeout(this.delayTimer);
+	        this.delayTimer = null;
+	      }
+	      if (this.clickOutsideHandler) {
+	        this.clickOutsideHandler.remove();
+	        this.touchOutsideHandler.remove();
+	        this.clickOutsideHandler = null;
+	        this.touchOutsideHandler = null;
 	      }
 	    }
 	  }, {
@@ -2775,15 +2892,17 @@ webpackJsonp([0],[
 	      var trigger = props.trigger;
 	      var mouseProps = {};
 	      if (trigger.indexOf('click') !== -1) {
-	        newChildProps.onClick = createChainedFunction(this.toggle, childProps.onClick);
+	        newChildProps.onClick = createChainedFunction(this.handleClick, childProps.onClick);
+	        newChildProps.onMouseDown = createChainedFunction(this.handleMouseDown, childProps.onMouseDown);
+	        newChildProps.onTouchStart = createChainedFunction(this.handleTouchStart, childProps.onTouchStart);
 	      }
 	      if (trigger.indexOf('hover') !== -1) {
-	        mouseProps.onMouseEnter = createChainedFunction(this.show, childProps.onMouseEnter);
-	        mouseProps.onMouseLeave = createChainedFunction(this.hide, childProps.onMouseLeave);
+	        mouseProps.onMouseEnter = createChainedFunction(this.handleMouseEnter, childProps.onMouseEnter);
+	        mouseProps.onMouseLeave = createChainedFunction(this.handleMouseLeave, childProps.onMouseLeave);
 	      }
 	      if (trigger.indexOf('focus') !== -1) {
-	        newChildProps.onFocus = createChainedFunction(this.show, childProps.onFocus);
-	        newChildProps.onBlur = createChainedFunction(this.hide, childProps.onBlur);
+	        newChildProps.onFocus = createChainedFunction(this.handleFocus, childProps.onFocus);
+	        newChildProps.onBlur = createChainedFunction(this.handleBlur, childProps.onBlur);
 	      }
 	
 	      var popupElement = props.renderPopupToBody ? null : this.getPopupElement();
@@ -2811,13 +2930,15 @@ webpackJsonp([0],[
 	  renderPopupToBody: React.PropTypes.bool,
 	  overlay: React.PropTypes.node.isRequired,
 	  overlayStyle: React.PropTypes.object,
-	  wrapStyle: React.PropTypes.object
+	  wrapStyle: React.PropTypes.object,
+	  delay: React.PropTypes.number
 	};
 	
 	Tooltip.defaultProps = {
 	  prefixCls: 'rc-tooltip',
 	  renderPopupToBody: true,
 	  onVisibleChange: function onVisibleChange() {},
+	  delay: 0.1,
 	  overlayStyle: {},
 	  wrapStyle: {},
 	  placement: 'right',
@@ -3709,8 +3830,8 @@ webpackJsonp([0],[
 	  _inherits(Popup, _React$Component);
 	
 	  _createClass(Popup, [{
-	    key: 'getPopupNode',
-	    value: function getPopupNode() {
+	    key: 'getPopupDomNode',
+	    value: function getPopupDomNode() {
 	      return React.findDOMNode(this.refs.popup);
 	    }
 	  }, {
@@ -3719,7 +3840,7 @@ webpackJsonp([0],[
 	      var props = this.props;
 	      if (props.visible && !prevProps.visible) {
 	        var targetDomNode = React.findDOMNode(props.wrap).firstChild;
-	        var popupDomNode = this.getPopupNode();
+	        var popupDomNode = this.getPopupDomNode();
 	        var placement = props.placement;
 	        var points;
 	        if (placement && placement.points) {
@@ -3753,7 +3874,7 @@ webpackJsonp([0],[
 	        transitionName = props.prefixCls + '-' + props.animation;
 	      }
 	      if (transitionName) {
-	        var domNode = this.getPopupNode();
+	        var domNode = this.getPopupDomNode();
 	        if (props.visible && !prevProps.visible) {
 	          anim(domNode, transitionName + '-enter');
 	        } else if (!props.visible && prevProps.visible) {
@@ -3782,28 +3903,21 @@ webpackJsonp([0],[
 	        className += ' ' + props.className;
 	      }
 	      var style = this.props.style;
-	      var maskClassName = props.prefixCls + '-mask';
 	      if (!props.visible) {
 	        className += ' ' + props.prefixCls + '-hidden';
-	        maskClassName += ' ' + props.prefixCls + '-mask-hidden';
 	      }
 	      var arrowClassName = props.prefixCls + '-arrow';
 	      var innerClassname = props.prefixCls + '-inner';
 	      return React.createElement(
 	        'div',
-	        null,
-	        props.trigger.indexOf('click') !== -1 ? React.createElement('div', { className: maskClassName, onClick: props.onClickOutside }) : null,
+	        { className: className,
+	          ref: 'popup',
+	          style: style },
+	        React.createElement('div', { className: arrowClassName }),
 	        React.createElement(
 	          'div',
-	          { className: className,
-	            ref: 'popup',
-	            style: style },
-	          React.createElement('div', { className: arrowClassName }),
-	          React.createElement(
-	            'div',
-	            { className: innerClassname },
-	            props.children
-	          )
+	          { className: innerClassname },
+	          props.children
 	        )
 	      );
 	    }
@@ -3823,7 +3937,7 @@ webpackJsonp([0],[
 	var Event = __webpack_require__(54);
 	var Css = __webpack_require__(55);
 	
-	module.exports = function (node, transitionName, callback) {
+	var cssAnimation = function cssAnimation(node, transitionName, callback) {
 	  var className = transitionName;
 	  var activeClassName = className + '-active';
 	
@@ -3863,6 +3977,55 @@ webpackJsonp([0],[
 	    node.rcAnimTimeout = null;
 	  }, 0);
 	};
+	
+	cssAnimation.style = function (node, style, callback) {
+	  if (node.rcEndListener) {
+	    node.rcEndListener();
+	  }
+	
+	  node.rcEndListener = function (e) {
+	    if (e && e.target !== node) {
+	      return;
+	    }
+	
+	    if (node.rcAnimTimeout) {
+	      clearTimeout(node.rcAnimTimeout);
+	      node.rcAnimTimeout = null;
+	    }
+	
+	    Event.removeEndEventListener(node, node.rcEndListener);
+	    node.rcEndListener = null;
+	
+	    // Usually this optional callback is used for informing an owner of
+	    // a leave animation and telling it to remove the child.
+	    if (callback) {
+	      callback();
+	    }
+	  };
+	
+	  Event.addEndEventListener(node, node.rcEndListener);
+	
+	  node.rcAnimTimeout = setTimeout(function () {
+	    for (var s in style) {
+	      node.style[s] = style[s];
+	    }
+	    node.rcAnimTimeout = null;
+	  }, 0);
+	};
+	
+	cssAnimation.setTransition = function (node, property, v) {
+	  property = property || '';
+	  ['Webkit', 'Moz', 'O',
+	  // ms is special .... !
+	  'ms'].forEach(function (prefix) {
+	    node.style[prefix + 'Transition' + property] = v;
+	  });
+	};
+	
+	cssAnimation.addClass = Css.addClass;
+	cssAnimation.removeClass = Css.removeClass;
+	
+	module.exports = cssAnimation;
 
 /***/ },
 /* 54 */
@@ -4828,856 +4991,6 @@ webpackJsonp([0],[
 		}
 	
 		return to;
-	};
-
-
-/***/ },
-/* 60 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  guid: __webpack_require__(61),
-	  classSet: __webpack_require__(62),
-	  joinClasses: __webpack_require__(63),
-	  KeyCode: __webpack_require__(64),
-	  PureRenderMixin: __webpack_require__(65),
-	  shallowEqual: __webpack_require__(66),
-	  createChainedFunction: __webpack_require__(67),
-	  Dom: {
-	    addEventListener: __webpack_require__(68),
-	    contains: __webpack_require__(69)
-	  },
-	  Children: {
-	    toArray: __webpack_require__(70),
-	    mapSelf: __webpack_require__(71)
-	  }
-	};
-
-
-/***/ },
-/* 61 */
-/***/ function(module, exports) {
-
-	var seed = 0;
-	module.exports = function () {
-	  return Date.now() + '_' + (seed++);
-	};
-
-
-/***/ },
-/* 62 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This file contains an unmodified version of:
-	 * https://github.com/facebook/react/blob/v0.12.0/src/vendor/stubs/cx.js
-	 *
-	 * This source code is licensed under the BSD-style license found here:
-	 * https://github.com/facebook/react/blob/v0.12.0/LICENSE
-	 * An additional grant of patent rights can be found here:
-	 * https://github.com/facebook/react/blob/v0.12.0/PATENTS
-	 */
-	
-	/**
-	 * This function is used to mark string literals representing CSS class names
-	 * so that they can be transformed statically. This allows for modularization
-	 * and minification of CSS class names.
-	 *
-	 * In static_upstream, this function is actually implemented, but it should
-	 * eventually be replaced with something more descriptive, and the transform
-	 * that is used in the main stack should be ported for use elsewhere.
-	 *
-	 * @param string|object className to modularize, or an object of key/values.
-	 *                      In the object case, the values are conditions that
-	 *                      determine if the className keys should be included.
-	 * @param [string ...]  Variable list of classNames in the string case.
-	 * @return string       Renderable space-separated CSS className.
-	 */
-	function cx(classNames) {
-	  if (typeof classNames === 'object') {
-	    return Object.keys(classNames).filter(function(className) {
-	      return classNames[className];
-	    }).join(' ');
-	  } else {
-	    return Array.prototype.join.call(arguments, ' ');
-	  }
-	}
-	
-	module.exports = cx;
-
-
-/***/ },
-/* 63 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This file contains an unmodified version of:
-	 * https://github.com/facebook/react/blob/v0.12.0/src/utils/joinClasses.js
-	 *
-	 * This source code is licensed under the BSD-style license found here:
-	 * https://github.com/facebook/react/blob/v0.12.0/LICENSE
-	 * An additional grant of patent rights can be found here:
-	 * https://github.com/facebook/react/blob/v0.12.0/PATENTS
-	 */
-	
-	"use strict";
-	
-	/**
-	 * Combines multiple className strings into one.
-	 * http://jsperf.com/joinclasses-args-vs-array
-	 *
-	 * @param {...?string} classes
-	 * @return {string}
-	 */
-	
-	function joinClasses(className /*, ... */ ) {
-	  if (!className) {
-	    className = '';
-	  }
-	  var nextClass;
-	  var argLength = arguments.length;
-	  if (argLength > 1) {
-	    for (var ii = 1; ii < argLength; ii++) {
-	      nextClass = arguments[ii];
-	      if (nextClass) {
-	        className = (className ? className + ' ' : '') + nextClass;
-	      }
-	    }
-	  }
-	  return className;
-	}
-	
-	module.exports = joinClasses;
-
-
-/***/ },
-/* 64 */
-/***/ function(module, exports) {
-
-	/**
-	 * @ignore
-	 * some key-codes definition and utils from closure-library
-	 * @author yiminghe@gmail.com
-	 */
-	
-	var KeyCode = {
-	  /**
-	   * MAC_ENTER
-	   */
-	  MAC_ENTER: 3,
-	  /**
-	   * BACKSPACE
-	   */
-	  BACKSPACE: 8,
-	  /**
-	   * TAB
-	   */
-	  TAB: 9,
-	  /**
-	   * NUMLOCK on FF/Safari Mac
-	   */
-	  NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
-	  /**
-	   * ENTER
-	   */
-	  ENTER: 13,
-	  /**
-	   * SHIFT
-	   */
-	  SHIFT: 16,
-	  /**
-	   * CTRL
-	   */
-	  CTRL: 17,
-	  /**
-	   * ALT
-	   */
-	  ALT: 18,
-	  /**
-	   * PAUSE
-	   */
-	  PAUSE: 19,
-	  /**
-	   * CAPS_LOCK
-	   */
-	  CAPS_LOCK: 20,
-	  /**
-	   * ESC
-	   */
-	  ESC: 27,
-	  /**
-	   * SPACE
-	   */
-	  SPACE: 32,
-	  /**
-	   * PAGE_UP
-	   */
-	  PAGE_UP: 33, // also NUM_NORTH_EAST
-	  /**
-	   * PAGE_DOWN
-	   */
-	  PAGE_DOWN: 34, // also NUM_SOUTH_EAST
-	  /**
-	   * END
-	   */
-	  END: 35, // also NUM_SOUTH_WEST
-	  /**
-	   * HOME
-	   */
-	  HOME: 36, // also NUM_NORTH_WEST
-	  /**
-	   * LEFT
-	   */
-	  LEFT: 37, // also NUM_WEST
-	  /**
-	   * UP
-	   */
-	  UP: 38, // also NUM_NORTH
-	  /**
-	   * RIGHT
-	   */
-	  RIGHT: 39, // also NUM_EAST
-	  /**
-	   * DOWN
-	   */
-	  DOWN: 40, // also NUM_SOUTH
-	  /**
-	   * PRINT_SCREEN
-	   */
-	  PRINT_SCREEN: 44,
-	  /**
-	   * INSERT
-	   */
-	  INSERT: 45, // also NUM_INSERT
-	  /**
-	   * DELETE
-	   */
-	  DELETE: 46, // also NUM_DELETE
-	  /**
-	   * ZERO
-	   */
-	  ZERO: 48,
-	  /**
-	   * ONE
-	   */
-	  ONE: 49,
-	  /**
-	   * TWO
-	   */
-	  TWO: 50,
-	  /**
-	   * THREE
-	   */
-	  THREE: 51,
-	  /**
-	   * FOUR
-	   */
-	  FOUR: 52,
-	  /**
-	   * FIVE
-	   */
-	  FIVE: 53,
-	  /**
-	   * SIX
-	   */
-	  SIX: 54,
-	  /**
-	   * SEVEN
-	   */
-	  SEVEN: 55,
-	  /**
-	   * EIGHT
-	   */
-	  EIGHT: 56,
-	  /**
-	   * NINE
-	   */
-	  NINE: 57,
-	  /**
-	   * QUESTION_MARK
-	   */
-	  QUESTION_MARK: 63, // needs localization
-	  /**
-	   * A
-	   */
-	  A: 65,
-	  /**
-	   * B
-	   */
-	  B: 66,
-	  /**
-	   * C
-	   */
-	  C: 67,
-	  /**
-	   * D
-	   */
-	  D: 68,
-	  /**
-	   * E
-	   */
-	  E: 69,
-	  /**
-	   * F
-	   */
-	  F: 70,
-	  /**
-	   * G
-	   */
-	  G: 71,
-	  /**
-	   * H
-	   */
-	  H: 72,
-	  /**
-	   * I
-	   */
-	  I: 73,
-	  /**
-	   * J
-	   */
-	  J: 74,
-	  /**
-	   * K
-	   */
-	  K: 75,
-	  /**
-	   * L
-	   */
-	  L: 76,
-	  /**
-	   * M
-	   */
-	  M: 77,
-	  /**
-	   * N
-	   */
-	  N: 78,
-	  /**
-	   * O
-	   */
-	  O: 79,
-	  /**
-	   * P
-	   */
-	  P: 80,
-	  /**
-	   * Q
-	   */
-	  Q: 81,
-	  /**
-	   * R
-	   */
-	  R: 82,
-	  /**
-	   * S
-	   */
-	  S: 83,
-	  /**
-	   * T
-	   */
-	  T: 84,
-	  /**
-	   * U
-	   */
-	  U: 85,
-	  /**
-	   * V
-	   */
-	  V: 86,
-	  /**
-	   * W
-	   */
-	  W: 87,
-	  /**
-	   * X
-	   */
-	  X: 88,
-	  /**
-	   * Y
-	   */
-	  Y: 89,
-	  /**
-	   * Z
-	   */
-	  Z: 90,
-	  /**
-	   * META
-	   */
-	  META: 91, // WIN_KEY_LEFT
-	  /**
-	   * WIN_KEY_RIGHT
-	   */
-	  WIN_KEY_RIGHT: 92,
-	  /**
-	   * CONTEXT_MENU
-	   */
-	  CONTEXT_MENU: 93,
-	  /**
-	   * NUM_ZERO
-	   */
-	  NUM_ZERO: 96,
-	  /**
-	   * NUM_ONE
-	   */
-	  NUM_ONE: 97,
-	  /**
-	   * NUM_TWO
-	   */
-	  NUM_TWO: 98,
-	  /**
-	   * NUM_THREE
-	   */
-	  NUM_THREE: 99,
-	  /**
-	   * NUM_FOUR
-	   */
-	  NUM_FOUR: 100,
-	  /**
-	   * NUM_FIVE
-	   */
-	  NUM_FIVE: 101,
-	  /**
-	   * NUM_SIX
-	   */
-	  NUM_SIX: 102,
-	  /**
-	   * NUM_SEVEN
-	   */
-	  NUM_SEVEN: 103,
-	  /**
-	   * NUM_EIGHT
-	   */
-	  NUM_EIGHT: 104,
-	  /**
-	   * NUM_NINE
-	   */
-	  NUM_NINE: 105,
-	  /**
-	   * NUM_MULTIPLY
-	   */
-	  NUM_MULTIPLY: 106,
-	  /**
-	   * NUM_PLUS
-	   */
-	  NUM_PLUS: 107,
-	  /**
-	   * NUM_MINUS
-	   */
-	  NUM_MINUS: 109,
-	  /**
-	   * NUM_PERIOD
-	   */
-	  NUM_PERIOD: 110,
-	  /**
-	   * NUM_DIVISION
-	   */
-	  NUM_DIVISION: 111,
-	  /**
-	   * F1
-	   */
-	  F1: 112,
-	  /**
-	   * F2
-	   */
-	  F2: 113,
-	  /**
-	   * F3
-	   */
-	  F3: 114,
-	  /**
-	   * F4
-	   */
-	  F4: 115,
-	  /**
-	   * F5
-	   */
-	  F5: 116,
-	  /**
-	   * F6
-	   */
-	  F6: 117,
-	  /**
-	   * F7
-	   */
-	  F7: 118,
-	  /**
-	   * F8
-	   */
-	  F8: 119,
-	  /**
-	   * F9
-	   */
-	  F9: 120,
-	  /**
-	   * F10
-	   */
-	  F10: 121,
-	  /**
-	   * F11
-	   */
-	  F11: 122,
-	  /**
-	   * F12
-	   */
-	  F12: 123,
-	  /**
-	   * NUMLOCK
-	   */
-	  NUMLOCK: 144,
-	  /**
-	   * SEMICOLON
-	   */
-	  SEMICOLON: 186, // needs localization
-	  /**
-	   * DASH
-	   */
-	  DASH: 189, // needs localization
-	  /**
-	   * EQUALS
-	   */
-	  EQUALS: 187, // needs localization
-	  /**
-	   * COMMA
-	   */
-	  COMMA: 188, // needs localization
-	  /**
-	   * PERIOD
-	   */
-	  PERIOD: 190, // needs localization
-	  /**
-	   * SLASH
-	   */
-	  SLASH: 191, // needs localization
-	  /**
-	   * APOSTROPHE
-	   */
-	  APOSTROPHE: 192, // needs localization
-	  /**
-	   * SINGLE_QUOTE
-	   */
-	  SINGLE_QUOTE: 222, // needs localization
-	  /**
-	   * OPEN_SQUARE_BRACKET
-	   */
-	  OPEN_SQUARE_BRACKET: 219, // needs localization
-	  /**
-	   * BACKSLASH
-	   */
-	  BACKSLASH: 220, // needs localization
-	  /**
-	   * CLOSE_SQUARE_BRACKET
-	   */
-	  CLOSE_SQUARE_BRACKET: 221, // needs localization
-	  /**
-	   * WIN_KEY
-	   */
-	  WIN_KEY: 224,
-	  /**
-	   * MAC_FF_META
-	   */
-	  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
-	  /**
-	   * WIN_IME
-	   */
-	  WIN_IME: 229
-	};
-	
-	/*
-	 whether text and modified key is entered at the same time.
-	 */
-	KeyCode.isTextModifyingKeyEvent = function (e) {
-	  var keyCode = e.keyCode;
-	  if (e.altKey && !e.ctrlKey || e.metaKey ||
-	      // Function keys don't generate text
-	    keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
-	    return false;
-	  }
-	
-	  // The following keys are quite harmless, even in combination with
-	  // CTRL, ALT or SHIFT.
-	  switch (keyCode) {
-	    case KeyCode.ALT:
-	    case KeyCode.CAPS_LOCK:
-	    case KeyCode.CONTEXT_MENU:
-	    case KeyCode.CTRL:
-	    case KeyCode.DOWN:
-	    case KeyCode.END:
-	    case KeyCode.ESC:
-	    case KeyCode.HOME:
-	    case KeyCode.INSERT:
-	    case KeyCode.LEFT:
-	    case KeyCode.MAC_FF_META:
-	    case KeyCode.META:
-	    case KeyCode.NUMLOCK:
-	    case KeyCode.NUM_CENTER:
-	    case KeyCode.PAGE_DOWN:
-	    case KeyCode.PAGE_UP:
-	    case KeyCode.PAUSE:
-	    case KeyCode.PRINT_SCREEN:
-	    case KeyCode.RIGHT:
-	    case KeyCode.SHIFT:
-	    case KeyCode.UP:
-	    case KeyCode.WIN_KEY:
-	    case KeyCode.WIN_KEY_RIGHT:
-	      return false;
-	    default:
-	      return true;
-	  }
-	};
-	
-	/*
-	 whether character is entered.
-	 */
-	KeyCode.isCharacterKey = function (keyCode) {
-	  if (keyCode >= KeyCode.ZERO &&
-	    keyCode <= KeyCode.NINE) {
-	    return true;
-	  }
-	
-	  if (keyCode >= KeyCode.NUM_ZERO &&
-	    keyCode <= KeyCode.NUM_MULTIPLY) {
-	    return true;
-	  }
-	
-	  if (keyCode >= KeyCode.A &&
-	    keyCode <= KeyCode.Z) {
-	    return true;
-	  }
-	
-	  // Safari sends zero key code for non-latin characters.
-	  if (window.navigation.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
-	    return true;
-	  }
-	
-	  switch (keyCode) {
-	    case KeyCode.SPACE:
-	    case KeyCode.QUESTION_MARK:
-	    case KeyCode.NUM_PLUS:
-	    case KeyCode.NUM_MINUS:
-	    case KeyCode.NUM_PERIOD:
-	    case KeyCode.NUM_DIVISION:
-	    case KeyCode.SEMICOLON:
-	    case KeyCode.DASH:
-	    case KeyCode.EQUALS:
-	    case KeyCode.COMMA:
-	    case KeyCode.PERIOD:
-	    case KeyCode.SLASH:
-	    case KeyCode.APOSTROPHE:
-	    case KeyCode.SINGLE_QUOTE:
-	    case KeyCode.OPEN_SQUARE_BRACKET:
-	    case KeyCode.BACKSLASH:
-	    case KeyCode.CLOSE_SQUARE_BRACKET:
-	      return true;
-	    default:
-	      return false;
-	  }
-	};
-	
-	module.exports = KeyCode;
-
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	* @providesModule ReactComponentWithPureRenderMixin
-	*/
-	
-	"use strict";
-	
-	var shallowEqual = __webpack_require__(66);
-	
-	/**
-	 * If your React component's render function is "pure", e.g. it will render the
-	 * same result given the same props and state, provide this Mixin for a
-	 * considerable performance boost.
-	 *
-	 * Most React components have pure render functions.
-	 *
-	 * Example:
-	 *
-	 *   var ReactComponentWithPureRenderMixin =
-	 *     require('ReactComponentWithPureRenderMixin');
-	 *   React.createClass({
-	 *     mixins: [ReactComponentWithPureRenderMixin],
-	 *
-	 *     render: function() {
-	 *       return <div className={this.props.className}>foo</div>;
-	 *     }
-	 *   });
-	 *
-	 * Note: This only checks shallow equality for props and state. If these contain
-	 * complex data structures this mixin may have false-negatives for deeper
-	 * differences. Only mixin to components which have simple props and state, or
-	 * use `forceUpdate()` when you know deep data structures have changed.
-	 */
-	var ReactComponentWithPureRenderMixin = {
-	  shouldComponentUpdate: function(nextProps, nextState) {
-	    return !shallowEqual(this.props, nextProps) ||
-	           !shallowEqual(this.state, nextState);
-	  }
-	};
-	
-	module.exports = ReactComponentWithPureRenderMixin;
-
-
-/***/ },
-/* 66 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule shallowEqual
-	 */
-	
-	"use strict";
-	
-	/**
-	 * Performs equality by iterating through keys on an object and returning
-	 * false when any key has values which are not strictly equal between
-	 * objA and objB. Returns true when the values of all keys are strictly equal.
-	 *
-	 * @return {boolean}
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	  var key;
-	  // Test for A's keys different from B.
-	  for (key in objA) {
-	    if (objA.hasOwnProperty(key) &&
-	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
-	      return false;
-	    }
-	  }
-	  // Test for B's keys missing from A.
-	  for (key in objB) {
-	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
-	      return false;
-	    }
-	  }
-	  return true;
-	}
-	
-	module.exports = shallowEqual;
-
-
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
-
-	/**
-	 * Safe chained function
-	 *
-	 * Will only create a new function if needed,
-	 * otherwise will pass back existing functions or null.
-	 *
-	 * @returns {function|null}
-	 */
-	function createChainedFunction() {
-	  var args = arguments;
-	
-	  return function chainedFunction() {
-	    for (var i = 0; i < args.length; i++) {
-	      if (args[i] && args[i].apply) {
-	        args[i].apply(this, arguments);
-	      }
-	    }
-	  };
-	}
-	
-	module.exports = createChainedFunction;
-
-
-/***/ },
-/* 68 */
-/***/ function(module, exports) {
-
-	module.exports = function (target, eventType, callback) {
-	  if (target.addEventListener) {
-	    target.addEventListener(eventType, callback, false);
-	    return {
-	      remove: function () {
-	        target.removeEventListener(eventType, callback, false);
-	      }
-	    };
-	  } else if (target.attachEvent) {
-	    target.attachEvent('on' + eventType, callback);
-	    return {
-	      remove: function () {
-	        target.detachEvent('on' + eventType, callback);
-	      }
-	    };
-	  }
-	};
-
-
-/***/ },
-/* 69 */
-/***/ function(module, exports) {
-
-	module.exports = function (root, node) {
-	  while (node) {
-	    if (node === root) {
-	      return true;
-	    }
-	    node = node.parentNode;
-	  }
-	
-	  return false;
-	};
-
-
-/***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(2);
-	
-	module.exports = function (children) {
-	  var ret = [];
-	  React.Children.forEach(children, function (c) {
-	    ret.push(c);
-	  });
-	  return ret;
-	};
-
-
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(2);
-	
-	function mirror(o) {
-	  return o;
-	}
-	
-	module.exports = function (children) {
-	  // return ReactFragment
-	  return React.Children.map(children, mirror);
 	};
 
 

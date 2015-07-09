@@ -301,7 +301,13 @@
 	      if (props.className) {
 	        className += ' ' + props.className;
 	      }
-	      return React.createElement('div', { className: className, style: props.style }, React.createElement('div', { className: prefixCls + '-header' }, React.createElement('table', null, this.getColGroup(), React.createElement('thead', null, React.createElement('tr', null, columns)))), React.createElement('div', { className: prefixCls + '-body', style: props.bodyStyle }, React.createElement('table', null, this.getColGroup(), React.createElement('tbody', null, rows))));
+	      var headerTable;
+	      var thead = React.createElement('thead', { className: prefixCls + '-thead' }, React.createElement('tr', null, columns));
+	      if (props.useFixedHeader) {
+	        headerTable = React.createElement('div', { className: prefixCls + '-header' }, React.createElement('table', null, this.getColGroup(), thead));
+	        thead = null;
+	      }
+	      return React.createElement('div', { className: className, style: props.style }, headerTable, React.createElement('div', { className: prefixCls + '-body', style: props.bodyStyle }, React.createElement('table', null, this.getColGroup(), thead, React.createElement('tbody', { className: prefixCls + '-tbody' }, rows))));
 	    }
 	  }]);
 	
@@ -309,15 +315,21 @@
 	})(React.Component);
 	
 	Table.propTypes = {
+	  useFixedHeader: React.PropTypes.bool,
 	  columns: React.PropTypes.array,
 	  prefixCls: React.PropTypes.string,
 	  bodyStyle: React.PropTypes.object,
 	  style: React.PropTypes.object,
+	  rowKey: React.PropTypes.func,
 	  childrenColumnName: React.PropTypes.string
 	};
 	
 	Table.defaultProps = {
+	  useFixedHeader: false,
 	  columns: [],
+	  rowKey: function rowKey(o) {
+	    return o.key;
+	  },
 	  prefixCls: 'rc-table',
 	  bodyStyle: {},
 	  style: {},
@@ -453,7 +465,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(8)();
-	exports.push([module.id, ".rc-table-header th {\n  background-color: #EDEDEF;\n  border: 0px;\n  border-bottom: 1px solid #DDD;\n  color: #222;\n  padding: 5px;\n  cursor: pointer;\n}\n.rc-table-body > table,\n.rc-table-header > table {\n  width: 100%;\n  table-layout: fixed;\n}\n.rc-table-row > td,\n.rc-table-expanded-row > td {\n  padding: 5px;\n  background-color: #FFF;\n  border-top-color: #DDD;\n  border-bottom: 1px solid #E1E1E1;\n  color: #222;\n}\n.rc-table-row-expand-icon,\n.rc-table-expanded-row-expand-icon {\n  cursor: pointer;\n  display: inline-block;\n  margin: 5px;\n  width: 21px;\n  height: 28px;\n  text-align: center;\n  line-height: 28px;\n  border: 1px solid red;\n}\n.rc-table-row-expanded:after,\n.rc-table-expanded-row-expanded:after {\n  content: '-';\n}\n.rc-table-row-collapsed:after,\n.rc-table-expanded-row-collapsed:after {\n  content: '+';\n}\n", ""]);
+	exports.push([module.id, ".rc-table-thead th {\n  background-color: #EDEDEF;\n  border: 0px;\n  border-bottom: 1px solid #DDD;\n  color: #222;\n  padding: 5px;\n  cursor: pointer;\n}\n.rc-table-body > table,\n.rc-table-header > table {\n  width: 100%;\n  table-layout: fixed;\n}\n.rc-table-row > td,\n.rc-table-expanded-row > td {\n  padding: 5px;\n  background-color: #FFF;\n  border-top-color: #DDD;\n  border-bottom: 1px solid #E1E1E1;\n  color: #222;\n}\n.rc-table-row-expand-icon,\n.rc-table-expanded-row-expand-icon {\n  cursor: pointer;\n  display: inline-block;\n  margin: 5px;\n  width: 21px;\n  height: 28px;\n  text-align: center;\n  line-height: 28px;\n  border: 1px solid red;\n}\n.rc-table-row-expanded:after,\n.rc-table-expanded-row-expanded:after {\n  content: '-';\n}\n.rc-table-row-collapsed:after,\n.rc-table-expanded-row-collapsed:after {\n  content: '+';\n}\n", ""]);
 
 /***/ },
 /* 8 */

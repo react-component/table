@@ -3,12 +3,12 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(74);
+	module.exports = __webpack_require__(62);
 
 
 /***/ },
 
-/***/ 74:
+/***/ 62:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67,6 +67,7 @@ webpackJsonp([3],{
 	    }];
 	    return React.createElement(Table, { columns: columns,
 	      data: data,
+	      useFixedHeader: true,
 	      rowKey: getRowKey,
 	      bodyStyle: {
 	        overflow: 'auto',

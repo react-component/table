@@ -180,7 +180,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 </head>
 <body>
-<h1>rc-table@3.0.0</h1>
+<h1>rc-table@3.0.1</h1>
 <div id="__react-content"></div>
 <script src="common.js?nowrap"></script>
 <script src="simple.js?nowrap"></script>
@@ -193,17 +193,17 @@ var Table = require(<span class="hljs-string">'rc-table'</span>);
 require(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
 var columns = [
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
-  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
+  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">key:</span><span class="hljs-string">'a'</span>,<span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+  {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">key:</span><span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>,  <span class="hljs-string">key:</span><span class="hljs-string">'c'</span>,<span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
   {
-<span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>, <span class="hljs-string">render:</span> function () {
+<span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>,  <span class="hljs-string">key:</span><span class="hljs-string">'d'</span>,<span class="hljs-string">render:</span> function () {
     <span class="hljs-keyword">return</span> &lt;a href=<span class="hljs-string">"#"</span>&gt;操作&lt;/a&gt;
   }
   }
 ];
 
-var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'cdd'</span>, <span class="hljs-string">b:</span> <span class="hljs-string">'edd'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'1333'</span>, <span class="hljs-string">c:</span> <span class="hljs-string">'eee'</span>, <span class="hljs-string">d:</span> <span class="hljs-number">2</span>}];
+var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'</span>,<span class="hljs-string">key:</span><span class="hljs-string">'1'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'cdd'</span>, <span class="hljs-string">b:</span> <span class="hljs-string">'edd'</span>,<span class="hljs-string">key:</span><span class="hljs-string">'2'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'1333'</span>, <span class="hljs-string">c:</span> <span class="hljs-string">'eee'</span>, <span class="hljs-string">d:</span> <span class="hljs-number">2</span>,<span class="hljs-string">key:</span><span class="hljs-string">'3'</span>}];
 
 var table = React.render(
   &lt;div&gt;
