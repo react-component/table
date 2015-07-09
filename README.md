@@ -43,47 +43,93 @@ online example: http://react-component.github.io/table/examples/
 ## Usage
 
 ```js
+var React = require('react');
 var Table = require('rc-table');
+require('rc-table/assets/index.css');
 
 var columns = [
-  {title : 'header 1',dataIndex :'a', width:100},
-  {id: '123',title : 'header 2',dataIndex :'b', width:100},
-  {title : 'header 3',dataIndex : 'c',width:200},
-  {title : 'operate',dataIndex : '',renderer :function (value,obj) {
-    return <a href="#">edit</a>
-  }}
+  {title: '表头1', dataIndex: 'a', key:'a',width: 100},
+  {id: '123', title: '表头2', dataIndex: 'b', key:'b', width: 100},
+  {title: '表头3', dataIndex: 'c',  key:'c',width: 200},
+  {
+    title: '操作', dataIndex: '',  key:'d',render: function () {
+    return <a href="#">操作</a>
+  }
+  }
 ];
 
-var data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}];
+var data = [{a: '123',key:'1'}, {a: 'cdd', b: 'edd',key:'2'}, {a: '1333', c: 'eee', d: 2,key:'3'}];
 
-React.renderComponent(
-      <Table columns={columns} data={data} className="table"/>,
-      document.getElementById('t1')
+var table = React.render(
+  <div>
+    <h2>simple table</h2>
+    <Table columns={columns}
+      data={data}
+      className="table"/>
+  </div>,
+  document.getElementById('__react-content')
 );
 ```
 ## API 
 
 ### property
 
-#### rowKey
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th>default</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>prefixCls</td>
+          <td>String</td>
+          <th>rc-table</th>
+          <td></td>
+      </tr>
+      <tr>
+          <td>className</td>
+          <td>String</td>
+          <th></th>
+          <td>additional className</td>
+      </tr>
+      <tr>
+          <td>useFixedHeader</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>whether use separator table for header. better set width for columns</td>
+      </tr>
+      <tr>
+          <td>rowKey</td>
+          <td>Function(recode):string</td>
+          <th>record.key</th>
+          <td>default use record.key as rowKey</td>
+      </tr>
+      <tr>
+          <td>data</td>
+          <td>Array<Object></td>
+          <th></th>
+          <td>data record array to be rendered</td>
+      </tr>
+      <tr>
+          <td>columns</td>
+          <td>Array<Object></td>
+          <th></th>
+          <td>
+            The columns config of table. contains
 
-`Function(recode):string`
-
-* get key value of each row from each row record data
-
-#### columns
-  * The columns config of table
-    * key : key of this column
-    * title : The title of column
-    * dataIndex : display the data field
-    * width : The width of column. The width of the specific proportion calculation according to the width of the columns
-    * renderer : The render function of cell , has two params. value : the text of this cell;obj : the record of this row
-
-#### data
-  * The Data to be shown
-
-#### className 
-  * The css class this table to be used
+            * key : key of this column
+            * title : The title of column
+            * dataIndex : display the data field
+            * width : The width of column. The width of the specific proportion calculation according to the width of the columns
+            * renderer : The render function of cell , has two params. value : the text of this cell;obj : the record of this row
+          </td>
+      </tr>
+    </tbody>
+</table>
 
 ## Test Case
 

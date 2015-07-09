@@ -133,22 +133,29 @@ class Table extends React.Component {
     if (props.className) {
       className += ' ' + props.className;
     }
+    var headerTable;
+    var thead = <thead className={`${prefixCls}-thead`}>
+      <tr>
+        {columns}
+      </tr>
+    </thead>;
+    if (props.useFixedHeader) {
+      headerTable = <div className={`${prefixCls}-header`}>
+        <table>
+            {this.getColGroup()}
+          {thead}
+        </table>
+      </div>;
+      thead = null;
+    }
     return (
       <div className={className} style={props.style}>
-        <div className={`${prefixCls}-header`}>
-          <table>
-            {this.getColGroup()}
-            <thead>
-              <tr>
-              {columns}
-              </tr>
-            </thead>
-          </table>
-        </div>
+      {headerTable}
         <div className={`${prefixCls}-body`} style={props.bodyStyle}>
           <table>
           {this.getColGroup()}
-            <tbody>
+          {thead}
+            <tbody className={`${prefixCls}-tbody`}>
             {rows}
             </tbody>
           </table>
@@ -159,15 +166,21 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
+  useFixedHeader: React.PropTypes.bool,
   columns: React.PropTypes.array,
   prefixCls: React.PropTypes.string,
   bodyStyle: React.PropTypes.object,
   style: React.PropTypes.object,
+  rowKey: React.PropTypes.func,
   childrenColumnName: React.PropTypes.string
 };
 
 Table.defaultProps = {
+  useFixedHeader: false,
   columns: [],
+  rowKey: function (o) {
+    return o.key;
+  },
   prefixCls: 'rc-table',
   bodyStyle: {},
   style: {},

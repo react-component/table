@@ -49,6 +49,7 @@ var Test = React.createClass({
     ];
     return <Table columns={columns}
       data={data}
+      useFixedHeader={true}
       rowKey={getRowKey}
       bodyStyle={{
         overflow: 'auto',
