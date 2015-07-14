@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		6:0
+/******/ 		7:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"dropdown","1":"expandedRowRender","2":"key","3":"scrollBody","4":"simple","5":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"className","1":"dropdown","2":"expandedRowRender","3":"key","4":"scrollBody","5":"simple","6":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -227,14 +227,17 @@
 	    key: 'getThs',
 	    value: function getThs() {
 	      return this.props.columns.map(function (c) {
-	        return React.createElement('th', { key: c.key }, c.title);
+	        return React.createElement('th', { key: c.key, className: c.className || '' }, c.title);
 	      });
 	    }
 	  }, {
 	    key: 'getExpandedRow',
-	    value: function getExpandedRow(content, visible) {
+	    value: function getExpandedRow(key, content, visible, className) {
 	      var prefixCls = this.props.prefixCls;
-	      return React.createElement('tr', { style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row' }, React.createElement('td', { colSpan: this.props.columns.length }, content));
+	      if (key) {
+	        key += '-extra-row';
+	      }
+	      return React.createElement('tr', { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className }, React.createElement('td', { colSpan: this.props.columns.length }, content));
 	    }
 	  }, {
 	    key: 'getRowsByData',
@@ -245,6 +248,8 @@
 	      var expandedRowRender = props.expandedRowRender;
 	      var rst = [];
 	      var keyFn = props.rowKey;
+	      var rowClassName = props.rowClassName;
+	      var expandedRowClassName = props.expandedRowClassName;
 	      for (var i = 0; i < data.length; i++) {
 	        var record = data[i];
 	        var key = keyFn ? keyFn(record, i) : undefined;
@@ -253,7 +258,9 @@
 	        if (expandedRowRender) {
 	          expandedRowContent = expandedRowRender(record, i);
 	        }
+	        var className = rowClassName(record, i);
 	        rst.push(React.createElement(TableRow, {
+	          className: className,
 	          record: record,
 	          onDestroy: this.handleRowDestroy,
 	          index: i,
@@ -269,7 +276,7 @@
 	        var subVisible = visible && this.isRowExpanded(record);
 	
 	        if (expandedRowContent) {
-	          rst.push(this.getExpandedRow(expandedRowContent, subVisible));
+	          rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
 	        }
 	        if (childrenColumn) {
 	          rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
@@ -321,6 +328,8 @@
 	  bodyStyle: React.PropTypes.object,
 	  style: React.PropTypes.object,
 	  rowKey: React.PropTypes.func,
+	  rowClassName: React.PropTypes.func,
+	  expandedRowClassName: React.PropTypes.func,
 	  childrenColumnName: React.PropTypes.string
 	};
 	
@@ -329,6 +338,12 @@
 	  columns: [],
 	  rowKey: function rowKey(o) {
 	    return o.key;
+	  },
+	  rowClassName: function rowClassName(o) {
+	    return '';
+	  },
+	  expandedRowClassName: function expandedRowClassName(o) {
+	    return '';
 	  },
 	  prefixCls: 'rc-table',
 	  bodyStyle: {},
@@ -414,6 +429,7 @@
 	      var expanded = props.expanded;
 	      for (var i = 0; i < columns.length; i++) {
 	        var col = columns[i];
+	        var colClassName = col.className || '';
 	        var render = col.render;
 	        var text = record[col.dataIndex];
 	        if (render) {
@@ -426,9 +442,9 @@
 	            onClick: props.onExpand.bind(null, !expanded, record)
 	          });
 	        }
-	        cells.push(React.createElement('td', { key: col.key }, expandIcon, text));
+	        cells.push(React.createElement('td', { key: col.key, className: '' + colClassName }, expandIcon, text));
 	      }
-	      return React.createElement('tr', { className: prefixCls, style: { display: props.visible ? '' : 'none' } }, cells);
+	      return React.createElement('tr', { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } }, cells);
 	    }
 	  }]);
 	
