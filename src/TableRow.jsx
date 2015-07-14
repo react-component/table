@@ -17,6 +17,7 @@ class TableRow extends React.Component {
     var expanded = props.expanded;
     for (var i = 0; i < columns.length; i++) {
       var col = columns[i];
+      var colClassName = col.className || '';
       var render = col.render;
       var text = record[col.dataIndex];
       if (render) {
@@ -29,12 +30,12 @@ class TableRow extends React.Component {
           onClick={props.onExpand.bind(null, !expanded, record)}
         ></span>;
       }
-      cells.push(<td key={col.key}>
+      cells.push(<td key={col.key} className={`${colClassName}`}>
       {expandIcon}
       {text}
       </td>);
     }
-    return (<tr className={prefixCls} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
+    return (<tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
   }
 }
 

@@ -104,9 +104,21 @@ var table = React.render(
       </tr>
       <tr>
           <td>rowKey</td>
-          <td>Function(recode):string</td>
+          <td>Function(recode,index):string</td>
           <th>record.key</th>
           <td>default use record.key as rowKey</td>
+      </tr>
+      <tr>
+          <td>rowClassName</td>
+          <td>Function(recode,index):string</td>
+          <th></th>
+          <td>get row's className</td>
+      </tr>
+      <tr>
+          <td>expandedRowClassName</td>
+          <td>Function(recode,index):string</td>
+          <th></th>
+          <td>get expanded row's className</td>
       </tr>
       <tr>
           <td>data</td>
@@ -135,6 +147,12 @@ var table = React.render(
                       <td>String</td>
                       <th></th>
                       <td>key of this column</td>
+                  </tr>
+                  <tr>
+                      <td>className</td>
+                      <td>String</td>
+                      <th></th>
+                      <td>className of this column</td>
                   </tr>
                   <tr>
                       <td>title</td>

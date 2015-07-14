@@ -60,13 +60,16 @@ class Table extends React.Component {
 
   getThs() {
     return this.props.columns.map((c)=> {
-      return <th key={c.key}>{c.title}</th>;
+      return <th key={c.key} className={c.className || ''}>{c.title}</th>;
     });
   }
 
-  getExpandedRow(content, visible) {
+  getExpandedRow(key, content, visible, className) {
     var prefixCls = this.props.prefixCls;
-    return <tr  style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row`}>
+    if (key) {
+      key += '-extra-row';
+    }
+    return <tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
       <td colSpan={this.props.columns.length}>
       {content}
       </td>
@@ -80,6 +83,8 @@ class Table extends React.Component {
     var expandedRowRender = props.expandedRowRender;
     var rst = [];
     var keyFn = props.rowKey;
+    var rowClassName = props.rowClassName;
+    var expandedRowClassName = props.expandedRowClassName;
     for (var i = 0; i < data.length; i++) {
       var record = data[i];
       var key = keyFn ? keyFn(record, i) : undefined;
@@ -88,7 +93,9 @@ class Table extends React.Component {
       if (expandedRowRender) {
         expandedRowContent = expandedRowRender(record, i);
       }
+      var className = rowClassName(record, i);
       rst.push(<TableRow
+        className={className}
         record={record}
         onDestroy={this.handleRowDestroy}
         index={i}
@@ -104,7 +111,7 @@ class Table extends React.Component {
       var subVisible = visible && this.isRowExpanded(record);
 
       if (expandedRowContent) {
-        rst.push(this.getExpandedRow(expandedRowContent, subVisible));
+        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
       }
       if (childrenColumn) {
         rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
@@ -172,6 +179,8 @@ Table.propTypes = {
   bodyStyle: React.PropTypes.object,
   style: React.PropTypes.object,
   rowKey: React.PropTypes.func,
+  rowClassName: React.PropTypes.func,
+  expandedRowClassName: React.PropTypes.func,
   childrenColumnName: React.PropTypes.string
 };
 
@@ -180,6 +189,12 @@ Table.defaultProps = {
   columns: [],
   rowKey: function (o) {
     return o.key;
+  },
+  rowClassName: function (o) {
+    return '';
+  },
+  expandedRowClassName: function (o) {
+    return '';
   },
   prefixCls: 'rc-table',
   bodyStyle: {},
