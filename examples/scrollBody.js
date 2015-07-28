@@ -3,19 +3,19 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(63);
+	module.exports = __webpack_require__(64);
 
 
 /***/ },
 
-/***/ 63:
+/***/ 64:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
 	var Table = __webpack_require__(3);
-	__webpack_require__(6);
+	__webpack_require__(7);
 	
 	var data = [];
 	for (var i = 0; i < 30; i++) {
@@ -60,7 +60,7 @@ webpackJsonp([4],{
 	      render: function render() {
 	        return React.createElement(
 	          'a',
-	          { href: '#' },
+	          { href: "#" },
 	          '操作'
 	        );
 	      }
@@ -74,7 +74,7 @@ webpackJsonp([4],{
 	        height: 200,
 	        display: this.state.showBody ? '' : 'none'
 	      },
-	      className: 'table' });
+	      className: "table" });
 	  }
 	});
 	

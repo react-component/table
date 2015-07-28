@@ -3,19 +3,19 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(62);
+	module.exports = __webpack_require__(63);
 
 
 /***/ },
 
-/***/ 62:
+/***/ 63:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
 	var Table = __webpack_require__(3);
-	__webpack_require__(6);
+	__webpack_require__(7);
 	
 	var CheckBox = React.createClass({
 	  displayName: 'CheckBox',
@@ -24,7 +24,7 @@ webpackJsonp([3],{
 	    return React.createElement(
 	      'label',
 	      null,
-	      React.createElement('input', { type: 'checkbox' }),
+	      React.createElement('input', { type: "checkbox" }),
 	      this.props.id
 	    );
 	  }
@@ -57,7 +57,7 @@ webpackJsonp([3],{
 	  renderAction: function renderAction(o, row, index) {
 	    return React.createElement(
 	      'a',
-	      { href: '#', onClick: this.handleClick(index) },
+	      { href: "#", onClick: this.handleClick(index) },
 	      '删除'
 	    );
 	  },
@@ -69,7 +69,7 @@ webpackJsonp([3],{
 	  render: function render() {
 	    var state = this.state;
 	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
-	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: this.getRowKey });
+	    return React.createElement(Table, { columns: columns, data: state.data, className: "table", rowKey: this.getRowKey });
 	  },
 	
 	  checkbox: function checkbox(a) {
@@ -87,7 +87,7 @@ webpackJsonp([3],{
 	    null,
 	    'specify key'
 	  ),
-	  React.createElement(MyTable, { data: data, className: 'table' })
+	  React.createElement(MyTable, { data: data, className: "table" })
 	), document.getElementById('__react-content'));
 
 /***/ }

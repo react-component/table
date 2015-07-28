@@ -13,7 +13,7 @@ webpackJsonp([0],[
 	
 	var React = __webpack_require__(2);
 	var Table = __webpack_require__(3);
-	__webpack_require__(6);
+	__webpack_require__(7);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a',
 	  className: 'a',
@@ -27,7 +27,7 @@ webpackJsonp([0],[
 	  key: 'd', render: function render() {
 	    return React.createElement(
 	      'a',
-	      { href: '#' },
+	      { href: "#" },
 	      '操作'
 	    );
 	  }
@@ -65,7 +65,7 @@ webpackJsonp([0],[
 	    expandedRowRender: expandedRowRender,
 	    expandedRowClassName: expandedRowClassName,
 	    data: data,
-	    className: 'table' })
+	    className: "table" })
 	), document.getElementById('__react-content'));
 
 /***/ }

@@ -113,52 +113,28 @@
 
 	'use strict';
 	
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
+	module.exports = __webpack_require__(5);
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
-	var _get = function get(_x, _x2, _x3) {
-	  var _again = true;_function: while (_again) {
-	    var object = _x,
-	        property = _x2,
-	        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-	      var parent = Object.getPrototypeOf(object);if (parent === null) {
-	        return undefined;
-	      } else {
-	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
-	      }
-	    } else if ('value' in desc) {
-	      return desc.value;
-	    } else {
-	      var getter = desc.get;if (getter === undefined) {
-	        return undefined;
-	      }return getter.call(receiver);
-	    }
-	  }
-	};
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
-	var TableRow = __webpack_require__(5);
+	var TableRow = __webpack_require__(6);
 	
 	var Table = (function (_React$Component) {
+	  _inherits(Table, _React$Component);
+	
 	  function Table(props) {
 	    var _this = this;
 	
@@ -173,8 +149,6 @@
 	      _this[m] = _this[m].bind(_this);
 	    });
 	  }
-	
-	  _inherits(Table, _React$Component);
 	
 	  _createClass(Table, [{
 	    key: 'componentWillReceiveProps',
@@ -227,7 +201,11 @@
 	    key: 'getThs',
 	    value: function getThs() {
 	      return this.props.columns.map(function (c) {
-	        return React.createElement('th', { key: c.key, className: c.className || '' }, c.title);
+	        return React.createElement(
+	          'th',
+	          { key: c.key, className: c.className || '' },
+	          c.title
+	        );
 	      });
 	    }
 	  }, {
@@ -237,7 +215,15 @@
 	      if (key) {
 	        key += '-extra-row';
 	      }
-	      return React.createElement('tr', { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className }, React.createElement('td', { colSpan: this.props.columns.length }, content));
+	      return React.createElement(
+	        'tr',
+	        { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className },
+	        React.createElement(
+	          'td',
+	          { colSpan: this.props.columns.length },
+	          content
+	        )
+	      );
 	    }
 	  }, {
 	    key: 'getRowsByData',
@@ -295,7 +281,11 @@
 	      var cols = this.props.columns.map(function (c) {
 	        return React.createElement('col', { key: c.key, style: { width: c.width } });
 	      });
-	      return React.createElement('colgroup', null, cols);
+	      return React.createElement(
+	        'colgroup',
+	        null,
+	        cols
+	      );
 	    }
 	  }, {
 	    key: 'render',
@@ -309,12 +299,48 @@
 	        className += ' ' + props.className;
 	      }
 	      var headerTable;
-	      var thead = React.createElement('thead', { className: prefixCls + '-thead' }, React.createElement('tr', null, columns));
+	      var thead = React.createElement(
+	        'thead',
+	        { className: prefixCls + '-thead' },
+	        React.createElement(
+	          'tr',
+	          null,
+	          columns
+	        )
+	      );
 	      if (props.useFixedHeader) {
-	        headerTable = React.createElement('div', { className: prefixCls + '-header' }, React.createElement('table', null, this.getColGroup(), thead));
+	        headerTable = React.createElement(
+	          'div',
+	          { className: prefixCls + '-header' },
+	          React.createElement(
+	            'table',
+	            null,
+	            this.getColGroup(),
+	            thead
+	          )
+	        );
 	        thead = null;
 	      }
-	      return React.createElement('div', { className: className, style: props.style }, headerTable, React.createElement('div', { className: prefixCls + '-body', style: props.bodyStyle }, React.createElement('table', null, this.getColGroup(), thead, React.createElement('tbody', { className: prefixCls + '-tbody' }, rows))));
+	      return React.createElement(
+	        'div',
+	        { className: className, style: props.style },
+	        headerTable,
+	        React.createElement(
+	          'div',
+	          { className: prefixCls + '-body', style: props.bodyStyle },
+	          React.createElement(
+	            'table',
+	            null,
+	            this.getColGroup(),
+	            thead,
+	            React.createElement(
+	              'tbody',
+	              { className: prefixCls + '-tbody' },
+	              rows
+	            )
+	          )
+	        )
+	      );
 	    }
 	  }]);
 	
@@ -354,63 +380,29 @@
 	module.exports = Table;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _createClass = (function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	})();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) {
-	  var _again = true;_function: while (_again) {
-	    var object = _x,
-	        property = _x2,
-	        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-	      var parent = Object.getPrototypeOf(object);if (parent === null) {
-	        return undefined;
-	      } else {
-	        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
-	      }
-	    } else if ('value' in desc) {
-	      return desc.value;
-	    } else {
-	      var getter = desc.get;if (getter === undefined) {
-	        return undefined;
-	      }return getter.call(receiver);
-	    }
-	  }
-	};
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== 'function' && superClass !== null) {
-	    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) subClass.__proto__ = superClass;
-	}
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
 	
 	var TableRow = (function (_React$Component) {
+	  _inherits(TableRow, _React$Component);
+	
 	  function TableRow() {
 	    _classCallCheck(this, TableRow);
 	
 	    _get(Object.getPrototypeOf(TableRow.prototype), 'constructor', this).apply(this, arguments);
 	  }
-	
-	  _inherits(TableRow, _React$Component);
 	
 	  _createClass(TableRow, [{
 	    key: 'componentWillUnmount',
@@ -442,9 +434,18 @@
 	            onClick: props.onExpand.bind(null, !expanded, record)
 	          });
 	        }
-	        cells.push(React.createElement('td', { key: col.key, className: '' + colClassName }, expandIcon, text));
+	        cells.push(React.createElement(
+	          'td',
+	          { key: col.key, className: '' + colClassName },
+	          expandIcon,
+	          text
+	        ));
 	      }
-	      return React.createElement('tr', { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } }, cells);
+	      return React.createElement(
+	        'tr',
+	        { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
+	        cells
+	      );
 	    }
 	  }]);
 	
@@ -454,16 +455,16 @@
 	module.exports = TableRow;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(7);
+	var content = __webpack_require__(8);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
+	var update = __webpack_require__(10)(content, {});
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
@@ -477,14 +478,14 @@
 	}
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(8)();
+	exports = module.exports = __webpack_require__(9)();
 	exports.push([module.id, ".rc-table-thead th {\n  background-color: #EDEDEF;\n  border: 0px;\n  border-bottom: 1px solid #DDD;\n  color: #222;\n  padding: 5px;\n  cursor: pointer;\n}\n.rc-table-body > table,\n.rc-table-header > table {\n  width: 100%;\n  table-layout: fixed;\n}\n.rc-table-row > td,\n.rc-table-expanded-row > td {\n  padding: 5px;\n  background-color: #FFF;\n  border-top-color: #DDD;\n  border-bottom: 1px solid #E1E1E1;\n  color: #222;\n}\n.rc-table-row-expand-icon,\n.rc-table-expanded-row-expand-icon {\n  cursor: pointer;\n  display: inline-block;\n  margin: 5px;\n  width: 21px;\n  height: 28px;\n  text-align: center;\n  line-height: 28px;\n  border: 1px solid red;\n}\n.rc-table-row-expanded:after,\n.rc-table-expanded-row-expanded:after {\n  content: '-';\n}\n.rc-table-row-collapsed:after,\n.rc-table-expanded-row-collapsed:after {\n  content: '+';\n}\n", ""]);
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = function() {
@@ -505,7 +506,7 @@
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

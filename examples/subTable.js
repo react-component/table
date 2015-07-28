@@ -3,19 +3,19 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(65);
+	module.exports = __webpack_require__(66);
 
 
 /***/ },
 
-/***/ 65:
+/***/ 66:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
 	var Table = __webpack_require__(3);
-	__webpack_require__(6);
+	__webpack_require__(7);
 	
 	var MyTable = React.createClass({
 	  displayName: 'MyTable',
@@ -49,7 +49,7 @@ webpackJsonp([6],{
 	        );
 	      }
 	    }];
-	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: this.getRowKey });
+	    return React.createElement(Table, { columns: columns, data: state.data, className: "table", rowKey: this.getRowKey });
 	  }
 	});
 	
@@ -79,7 +79,7 @@ webpackJsonp([6],{
 	    null,
 	    'sub table'
 	  ),
-	  React.createElement(MyTable, { data: data, className: 'table' })
+	  React.createElement(MyTable, { data: data, className: "table" })
 	), document.getElementById('__react-content'));
 
 /***/ }
