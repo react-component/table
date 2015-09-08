@@ -15,7 +15,18 @@ class TableRow extends React.Component {
     var index = props.index;
     var cells = [];
     var expanded = props.expanded;
-    for (var i = 0; i < columns.length; i++) {
+    var expandable = props.expandable;
+
+    if (expandable) {
+      cells.push(<td>
+        {<span
+          className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
+          onClick={props.onExpand.bind(null, !expanded, record)}
+          ></span>}
+      </td>);
+    }
+
+    for (var i = expandable ? 1 : 0; i < columns.length; i++) {
       var col = columns[i];
       var colClassName = col.className || '';
       var render = col.render;
@@ -23,19 +34,12 @@ class TableRow extends React.Component {
       if (render) {
         text = render(text, record, index);
       }
-      var expandIcon = null;
-      if (props.expandable && i === 0) {
-        expandIcon = <span
-          className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
-          onClick={props.onExpand.bind(null, !expanded, record)}
-        ></span>;
-      }
       cells.push(<td key={col.key} className={`${colClassName}`}>
-      {expandIcon}
-      {text}
+        {text}
       </td>);
     }
-    return (<tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
+    return (
+      <tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
   }
 }
 

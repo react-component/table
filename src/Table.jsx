@@ -58,7 +58,33 @@ class Table extends React.Component {
     return info[0] && info[0].expanded;
   }
 
+  getRowsIsExpand(data) {
+    var props = this.props;
+    var childrenColumnName = props.childrenColumnName;
+    var expandedRowRender = props.expandedRowRender;
+    for (var i = 0; i < data.length; i++) {
+      var record = data[i];
+      var childrenColumn = record[childrenColumnName];
+      var expandedRowContent;
+      if (expandedRowRender) {
+        expandedRowContent = expandedRowRender(record, i);
+      }
+      if (childrenColumn || expandedRowContent) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   getThs() {
+    if (this.getRowsIsExpand(this.state.data)) {
+      this.props.columns.unshift({
+        title: '',
+        dataIndex: '',
+        key: '',
+        width: 100
+      });
+    }
     return this.props.columns.map((c)=> {
       return <th key={c.key} className={c.className || ''}>{c.title}</th>;
     });
@@ -71,7 +97,7 @@ class Table extends React.Component {
     }
     return <tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
       <td colSpan={this.props.columns.length}>
-      {content}
+        {content}
       </td>
     </tr>;
   }
@@ -142,14 +168,14 @@ class Table extends React.Component {
     }
     var headerTable;
     var thead = <thead className={`${prefixCls}-thead`}>
-      <tr>
-        {columns}
-      </tr>
+    <tr>
+      {columns}
+    </tr>
     </thead>;
     if (props.useFixedHeader) {
       headerTable = <div className={`${prefixCls}-header`}>
         <table>
-            {this.getColGroup()}
+          {this.getColGroup()}
           {thead}
         </table>
       </div>;
@@ -157,11 +183,11 @@ class Table extends React.Component {
     }
     return (
       <div className={className} style={props.style}>
-      {headerTable}
+        {headerTable}
         <div className={`${prefixCls}-body`} style={props.bodyStyle}>
           <table>
-          {this.getColGroup()}
-          {thead}
+            {this.getColGroup()}
+            {thead}
             <tbody className={`${prefixCls}-tbody`}>
             {rows}
             </tbody>
