@@ -59,19 +59,29 @@ class Table extends React.Component {
   }
 
   getThs() {
-    return this.props.columns.map((c)=> {
+    var expandIconAsCell = this.props.expandIconAsCell === false ? false : true;
+    var ths = [];
+    if (expandIconAsCell) {
+      ths.push({
+        title: ''
+      });
+    }
+    ths = ths.concat(this.props.columns);
+    return ths.map((c)=> {
       return <th key={c.key} className={c.className || ''}>{c.title}</th>;
     });
   }
 
   getExpandedRow(key, content, visible, className) {
+    var expandIconAsCell = this.props.expandIconAsCell === false ? false : true;
     var prefixCls = this.props.prefixCls;
     if (key) {
       key += '-extra-row';
     }
     return <tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
+      {expandIconAsCell ? <td></td> : ''}
       <td colSpan={this.props.columns.length}>
-      {content}
+        {content}
       </td>
     </tr>;
   }
@@ -81,6 +91,7 @@ class Table extends React.Component {
     var columns = props.columns;
     var childrenColumnName = props.childrenColumnName;
     var expandedRowRender = props.expandedRowRender;
+    var expandIconAsCell = props.expandIconAsCell;
     var rst = [];
     var keyFn = props.rowKey;
     var rowClassName = props.rowClassName;
@@ -97,6 +108,7 @@ class Table extends React.Component {
       rst.push(<TableRow
         className={className}
         record={record}
+        expandIconAsCell={expandIconAsCell}
         onDestroy={this.handleRowDestroy}
         index={i}
         visible={visible}
@@ -142,14 +154,14 @@ class Table extends React.Component {
     }
     var headerTable;
     var thead = <thead className={`${prefixCls}-thead`}>
-      <tr>
-        {columns}
-      </tr>
+    <tr>
+      {columns}
+    </tr>
     </thead>;
     if (props.useFixedHeader) {
       headerTable = <div className={`${prefixCls}-header`}>
         <table>
-            {this.getColGroup()}
+          {this.getColGroup()}
           {thead}
         </table>
       </div>;
@@ -157,11 +169,11 @@ class Table extends React.Component {
     }
     return (
       <div className={className} style={props.style}>
-      {headerTable}
+        {headerTable}
         <div className={`${prefixCls}-body`} style={props.bodyStyle}>
           <table>
-          {this.getColGroup()}
-          {thead}
+            {this.getColGroup()}
+            {thead}
             <tbody className={`${prefixCls}-tbody`}>
             {rows}
             </tbody>
