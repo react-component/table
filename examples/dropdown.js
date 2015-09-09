@@ -2,10 +2,10 @@
 
 var React = require('react');
 var Table = require('rc-table');
-require('rc-table/assets/index.css');
+require('rc-table/assets/index.less');
 var Menu = require('rc-menu');
-require('rc-dropdown/assets/index.css');
-require('rc-menu/assets/index.css');
+require('rc-dropdown/assets/index.less');
+require('rc-menu/assets/index.less');
 var DropDown = require('rc-dropdown');
 
 var data = [];

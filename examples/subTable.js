@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Table = require('rc-table');
-require('rc-table/assets/index.css');
+require('rc-table/assets/index.less');
 
 
 var MyTable = React.createClass({
