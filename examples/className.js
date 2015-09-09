@@ -27,7 +27,7 @@ webpackJsonp([0],[
 	  key: 'd', render: function render() {
 	    return React.createElement(
 	      'a',
-	      { href: "#" },
+	      { href: '#' },
 	      '操作'
 	    );
 	  }
@@ -65,7 +65,7 @@ webpackJsonp([0],[
 	    expandedRowRender: expandedRowRender,
 	    expandedRowClassName: expandedRowClassName,
 	    data: data,
-	    className: "table" })
+	    className: 'table' })
 	), document.getElementById('__react-content'));
 
 /***/ }

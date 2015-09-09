@@ -121,263 +121,268 @@
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _react = __webpack_require__(2);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _react2 = _interopRequireDefault(_react);
 	
-	var React = __webpack_require__(2);
-	var TableRow = __webpack_require__(6);
+	var _TableRow = __webpack_require__(6);
 	
-	var Table = (function (_React$Component) {
-	  _inherits(Table, _React$Component);
+	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
-	  function Table(props) {
-	    var _this = this;
+	var Table = _react2['default'].createClass({
+	  displayName: 'Table',
 	
-	    _classCallCheck(this, Table);
+	  propTypes: {
+	    data: _react2['default'].PropTypes.array,
+	    expandIconAsCell: _react2['default'].PropTypes.bool,
+	    useFixedHeader: _react2['default'].PropTypes.bool,
+	    columns: _react2['default'].PropTypes.array,
+	    prefixCls: _react2['default'].PropTypes.string,
+	    bodyStyle: _react2['default'].PropTypes.object,
+	    style: _react2['default'].PropTypes.object,
+	    rowKey: _react2['default'].PropTypes.func,
+	    rowClassName: _react2['default'].PropTypes.func,
+	    expandedRowClassName: _react2['default'].PropTypes.func,
+	    childrenColumnName: _react2['default'].PropTypes.string
+	  },
 	
-	    _get(Object.getPrototypeOf(Table.prototype), 'constructor', this).call(this, props);
-	    this.state = {
-	      expandedRows: [],
-	      data: (props.data || []).concat()
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      data: [],
+	      useFixedHeader: false,
+	      expandIconAsCell: false,
+	      columns: [],
+	      rowKey: function rowKey(o) {
+	        return o.key;
+	      },
+	      rowClassName: function rowClassName() {
+	        return '';
+	      },
+	      expandedRowClassName: function expandedRowClassName() {
+	        return '';
+	      },
+	      prefixCls: 'rc-table',
+	      bodyStyle: {},
+	      style: {},
+	      childrenColumnName: 'children'
 	    };
-	    ['handleRowDestroy', 'handleExpand'].forEach(function (m) {
-	      _this[m] = _this[m].bind(_this);
-	    });
-	  }
+	  },
 	
-	  _createClass(Table, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      if ('data' in nextProps) {
-	        this.setState({
-	          data: (nextProps.data || []).concat()
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'handleExpand',
-	    value: function handleExpand(expanded, record) {
-	      var expandedRows = this.state.expandedRows.concat();
-	      var info = expandedRows.filter(function (i) {
-	        return i.record === record;
-	      });
-	      if (info.length) {
-	        info[0].expanded = expanded;
-	      } else {
-	        expandedRows.push({ record: record, expanded: expanded });
-	      }
+	  getInitialState: function getInitialState() {
+	    return {
+	      expandedRows: [],
+	      data: this.props.data.concat()
+	    };
+	  },
+	
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if ('data' in nextProps) {
 	      this.setState({
-	        expandedRows: expandedRows
+	        data: nextProps.data.concat()
 	      });
 	    }
-	  }, {
-	    key: 'handleRowDestroy',
-	    value: function handleRowDestroy(record) {
-	      var expandedRows = this.state.expandedRows;
-	      var index = -1;
-	      expandedRows.forEach(function (r, i) {
-	        if (r === record) {
-	          index = i;
-	        }
+	  },
+	
+	  onExpanded: function onExpanded(expanded, record) {
+	    var expandedRows = this.state.expandedRows.concat();
+	    var info = expandedRows.filter(function (i) {
+	      return i.record === record;
+	    });
+	    if (info.length) {
+	      info[0].expanded = expanded;
+	    } else {
+	      expandedRows.push({ record: record, expanded: expanded });
+	    }
+	    this.setState({
+	      expandedRows: expandedRows
+	    });
+	  },
+	
+	  onRowDestroy: function onRowDestroy(record) {
+	    var expandedRows = this.state.expandedRows;
+	    var index = -1;
+	    expandedRows.forEach(function (r, i) {
+	      if (r === record) {
+	        index = i;
+	      }
+	    });
+	    if (index !== -1) {
+	      expandedRows.splice(index, 1);
+	    }
+	  },
+	
+	  getThs: function getThs() {
+	    var ths = [];
+	    if (this.props.expandIconAsCell) {
+	      ths.push({
+	        key: 'rc-table-expandIconAsCell',
+	        className: this.props.prefixCls + '-expand-icon-th',
+	        title: ''
 	      });
-	      if (index !== -1) {
-	        expandedRows.splice(index, 1);
+	    }
+	    ths = ths.concat(this.props.columns);
+	    return ths.map(function (c) {
+	      return _react2['default'].createElement(
+	        'th',
+	        { key: c.key, className: c.className || '' },
+	        c.title
+	      );
+	    });
+	  },
+	
+	  getExpandedRow: function getExpandedRow(key2, content, visible, className) {
+	    var key = key2;
+	    var prefixCls = this.props.prefixCls;
+	    if (key) {
+	      key += '-extra-row';
+	    }
+	    return _react2['default'].createElement(
+	      'tr',
+	      { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className },
+	      this.props.expandIconAsCell ? _react2['default'].createElement('td', { key: 'rc-table-expand-icon-placeholder' }) : '',
+	      _react2['default'].createElement(
+	        'td',
+	        { colSpan: this.props.columns.length },
+	        content
+	      )
+	    );
+	  },
+	
+	  getRowsByData: function getRowsByData(data, visible) {
+	    var props = this.props;
+	    var columns = props.columns;
+	    var childrenColumnName = props.childrenColumnName;
+	    var expandedRowRender = props.expandedRowRender;
+	    var expandIconAsCell = props.expandIconAsCell;
+	    var rst = [];
+	    var keyFn = props.rowKey;
+	    var rowClassName = props.rowClassName;
+	    var expandedRowClassName = props.expandedRowClassName;
+	    for (var i = 0; i < data.length; i++) {
+	      var record = data[i];
+	      var key = keyFn ? keyFn(record, i) : undefined;
+	      var childrenColumn = record[childrenColumnName];
+	      var expandedRowContent = undefined;
+	      if (expandedRowRender) {
+	        expandedRowContent = expandedRowRender(record, i);
+	      }
+	      var className = rowClassName(record, i);
+	      rst.push(_react2['default'].createElement(_TableRow2['default'], {
+	        className: className,
+	        record: record,
+	        expandIconAsCell: expandIconAsCell,
+	        onDestroy: this.onRowDestroy,
+	        index: i,
+	        visible: visible,
+	        onExpand: this.onExpanded,
+	        expandable: childrenColumn || expandedRowContent,
+	        expanded: this.isRowExpanded(record),
+	        prefixCls: props.prefixCls + '-row',
+	        childrenColumnName: childrenColumnName,
+	        columns: columns,
+	        key: key }));
+	
+	      var subVisible = visible && this.isRowExpanded(record);
+	
+	      if (expandedRowContent) {
+	        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
+	      }
+	      if (childrenColumn) {
+	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
 	      }
 	    }
-	  }, {
-	    key: 'isRowExpanded',
-	    value: function isRowExpanded(record) {
-	      var info = this.state.expandedRows.filter(function (i) {
-	        return i.record === record;
-	      });
-	      return info[0] && info[0].expanded;
+	    return rst;
+	  },
+	
+	  getRows: function getRows() {
+	    return this.getRowsByData(this.state.data, true);
+	  },
+	
+	  getColGroup: function getColGroup() {
+	    var cols = [];
+	    if (this.props.expandIconAsCell) {
+	      cols.push(_react2['default'].createElement('col', { className: this.props.prefixCls + '-expand-icon-col', key: 'rc-table-expand-icon-col' }));
 	    }
-	  }, {
-	    key: 'getThs',
-	    value: function getThs() {
-	      return this.props.columns.map(function (c) {
-	        return React.createElement(
-	          'th',
-	          { key: c.key, className: c.className || '' },
-	          c.title
-	        );
-	      });
+	    cols = cols.concat(this.props.columns.map(function (c) {
+	      return _react2['default'].createElement('col', { key: c.key, style: { width: c.width } });
+	    }));
+	    return _react2['default'].createElement(
+	      'colgroup',
+	      null,
+	      cols
+	    );
+	  },
+	
+	  render: function render() {
+	    var props = this.props;
+	    var prefixCls = props.prefixCls;
+	    var columns = this.getThs();
+	    var rows = this.getRows();
+	    var className = props.prefixCls;
+	    if (props.className) {
+	      className += ' ' + props.className;
 	    }
-	  }, {
-	    key: 'getExpandedRow',
-	    value: function getExpandedRow(key, content, visible, className) {
-	      var prefixCls = this.props.prefixCls;
-	      if (key) {
-	        key += '-extra-row';
-	      }
-	      return React.createElement(
+	    var headerTable = undefined;
+	    var thead = _react2['default'].createElement(
+	      'thead',
+	      { className: prefixCls + '-thead' },
+	      _react2['default'].createElement(
 	        'tr',
-	        { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className },
-	        React.createElement(
-	          'td',
-	          { colSpan: this.props.columns.length },
-	          content
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'getRowsByData',
-	    value: function getRowsByData(data, visible) {
-	      var props = this.props;
-	      var columns = props.columns;
-	      var childrenColumnName = props.childrenColumnName;
-	      var expandedRowRender = props.expandedRowRender;
-	      var rst = [];
-	      var keyFn = props.rowKey;
-	      var rowClassName = props.rowClassName;
-	      var expandedRowClassName = props.expandedRowClassName;
-	      for (var i = 0; i < data.length; i++) {
-	        var record = data[i];
-	        var key = keyFn ? keyFn(record, i) : undefined;
-	        var childrenColumn = record[childrenColumnName];
-	        var expandedRowContent;
-	        if (expandedRowRender) {
-	          expandedRowContent = expandedRowRender(record, i);
-	        }
-	        var className = rowClassName(record, i);
-	        rst.push(React.createElement(TableRow, {
-	          className: className,
-	          record: record,
-	          onDestroy: this.handleRowDestroy,
-	          index: i,
-	          visible: visible,
-	          onExpand: this.handleExpand,
-	          expandable: childrenColumn || expandedRowContent,
-	          expanded: this.isRowExpanded(record),
-	          prefixCls: props.prefixCls + '-row',
-	          childrenColumnName: childrenColumnName,
-	          columns: columns,
-	          key: key }));
-	
-	        var subVisible = visible && this.isRowExpanded(record);
-	
-	        if (expandedRowContent) {
-	          rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
-	        }
-	        if (childrenColumn) {
-	          rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
-	        }
-	      }
-	      return rst;
-	    }
-	  }, {
-	    key: 'getRows',
-	    value: function getRows() {
-	      return this.getRowsByData(this.state.data, true);
-	    }
-	  }, {
-	    key: 'getColGroup',
-	    value: function getColGroup() {
-	      var cols = this.props.columns.map(function (c) {
-	        return React.createElement('col', { key: c.key, style: { width: c.width } });
-	      });
-	      return React.createElement(
-	        'colgroup',
 	        null,
-	        cols
-	      );
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var props = this.props;
-	      var prefixCls = props.prefixCls;
-	      var columns = this.getThs();
-	      var rows = this.getRows();
-	      var className = props.prefixCls;
-	      if (props.className) {
-	        className += ' ' + props.className;
-	      }
-	      var headerTable;
-	      var thead = React.createElement(
-	        'thead',
-	        { className: prefixCls + '-thead' },
-	        React.createElement(
-	          'tr',
-	          null,
-	          columns
-	        )
-	      );
-	      if (props.useFixedHeader) {
-	        headerTable = React.createElement(
-	          'div',
-	          { className: prefixCls + '-header' },
-	          React.createElement(
-	            'table',
-	            null,
-	            this.getColGroup(),
-	            thead
-	          )
-	        );
-	        thead = null;
-	      }
-	      return React.createElement(
+	        columns
+	      )
+	    );
+	    if (props.useFixedHeader) {
+	      headerTable = _react2['default'].createElement(
 	        'div',
-	        { className: className, style: props.style },
-	        headerTable,
-	        React.createElement(
-	          'div',
-	          { className: prefixCls + '-body', style: props.bodyStyle },
-	          React.createElement(
-	            'table',
-	            null,
-	            this.getColGroup(),
-	            thead,
-	            React.createElement(
-	              'tbody',
-	              { className: prefixCls + '-tbody' },
-	              rows
-	            )
-	          )
+	        { className: prefixCls + '-header' },
+	        _react2['default'].createElement(
+	          'table',
+	          null,
+	          this.getColGroup(),
+	          thead
 	        )
 	      );
+	      thead = null;
 	    }
-	  }]);
-	
-	  return Table;
-	})(React.Component);
-	
-	Table.propTypes = {
-	  useFixedHeader: React.PropTypes.bool,
-	  columns: React.PropTypes.array,
-	  prefixCls: React.PropTypes.string,
-	  bodyStyle: React.PropTypes.object,
-	  style: React.PropTypes.object,
-	  rowKey: React.PropTypes.func,
-	  rowClassName: React.PropTypes.func,
-	  expandedRowClassName: React.PropTypes.func,
-	  childrenColumnName: React.PropTypes.string
-	};
-	
-	Table.defaultProps = {
-	  useFixedHeader: false,
-	  columns: [],
-	  rowKey: function rowKey(o) {
-	    return o.key;
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: className, style: props.style },
+	      headerTable,
+	      _react2['default'].createElement(
+	        'div',
+	        { className: prefixCls + '-body', style: props.bodyStyle },
+	        _react2['default'].createElement(
+	          'table',
+	          null,
+	          this.getColGroup(),
+	          thead,
+	          _react2['default'].createElement(
+	            'tbody',
+	            { className: prefixCls + '-tbody' },
+	            rows
+	          )
+	        )
+	      )
+	    );
 	  },
-	  rowClassName: function rowClassName(o) {
-	    return '';
-	  },
-	  expandedRowClassName: function expandedRowClassName(o) {
-	    return '';
-	  },
-	  prefixCls: 'rc-table',
-	  bodyStyle: {},
-	  style: {},
-	  childrenColumnName: 'children'
-	};
 	
-	module.exports = Table;
+	  isRowExpanded: function isRowExpanded(record) {
+	    var info = this.state.expandedRows.filter(function (i) {
+	      return i.record === record;
+	    });
+	    return info[0] && info[0].expanded;
+	  }
+	});
+	
+	exports['default'] = Table;
+	module.exports = exports['default'];
 
 /***/ },
 /* 6 */
@@ -385,74 +390,85 @@
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _react = __webpack_require__(2);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _react2 = _interopRequireDefault(_react);
 	
-	var React = __webpack_require__(2);
+	var TableRow = _react2['default'].createClass({
+	  displayName: 'TableRow',
 	
-	var TableRow = (function (_React$Component) {
-	  _inherits(TableRow, _React$Component);
+	  propTypes: {
+	    onDestroy: _react2['default'].PropTypes.func,
+	    record: _react2['default'].PropTypes.object,
+	    prefixCls: _react2['default'].PropTypes.string
+	  },
 	
-	  function TableRow() {
-	    _classCallCheck(this, TableRow);
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.props.onDestroy(this.props.record);
+	  },
 	
-	    _get(Object.getPrototypeOf(TableRow.prototype), 'constructor', this).apply(this, arguments);
-	  }
+	  render: function render() {
+	    var props = this.props;
+	    var prefixCls = props.prefixCls;
+	    var columns = props.columns;
+	    var record = props.record;
+	    var index = props.index;
+	    var cells = [];
+	    var expanded = props.expanded;
+	    var expandable = props.expandable;
+	    var expandIconAsCell = props.expandIconAsCell;
 	
-	  _createClass(TableRow, [{
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.props.onDestroy(this.props.record);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var props = this.props;
-	      var prefixCls = props.prefixCls;
-	      var columns = props.columns;
-	      var record = props.record;
-	      var index = props.index;
-	      var cells = [];
-	      var expanded = props.expanded;
-	      for (var i = 0; i < columns.length; i++) {
-	        var col = columns[i];
-	        var colClassName = col.className || '';
-	        var render = col.render;
-	        var text = record[col.dataIndex];
-	        if (render) {
-	          text = render(text, record, index);
-	        }
-	        var expandIcon = null;
-	        if (props.expandable && i === 0) {
-	          expandIcon = React.createElement('span', {
-	            className: prefixCls + '-expand-icon ' + prefixCls + '-' + (expanded ? 'expanded' : 'collapsed'),
-	            onClick: props.onExpand.bind(null, !expanded, record)
-	          });
-	        }
-	        cells.push(React.createElement(
-	          'td',
-	          { key: col.key, className: '' + colClassName },
-	          expandIcon,
-	          text
-	        ));
+	    for (var i = 0; i < columns.length; i++) {
+	      var col = columns[i];
+	      var colClassName = col.className || '';
+	      var render = col.render;
+	      var text = record[col.dataIndex];
+	
+	      var expandIcon = null;
+	
+	      if (i === 0 && expandable) {
+	        expandIcon = _react2['default'].createElement('span', {
+	          className: prefixCls + '-expand-icon ' + prefixCls + '-' + (expanded ? 'expanded' : 'collapsed'),
+	          onClick: props.onExpand.bind(null, !expanded, record) });
 	      }
-	      return React.createElement(
-	        'tr',
-	        { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
-	        cells
-	      );
+	
+	      if (expandIconAsCell && i === 0) {
+	        cells.push(_react2['default'].createElement(
+	          'td',
+	          { className: prefixCls + '-expand-icon-cell',
+	            key: 'rc-table-expand-icon-cell' },
+	          expandIcon
+	        ));
+	        expandIcon = null;
+	      }
+	
+	      if (render) {
+	        text = render(text, record, index);
+	      }
+	
+	      cells.push(_react2['default'].createElement(
+	        'td',
+	        { key: col.key, className: '' + colClassName },
+	        expandIcon,
+	        text
+	      ));
 	    }
-	  }]);
+	    return _react2['default'].createElement(
+	      'tr',
+	      { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
+	      cells
+	    );
+	  }
+	});
 	
-	  return TableRow;
-	})(React.Component);
-	
-	module.exports = TableRow;
+	exports['default'] = TableRow;
+	module.exports = exports['default'];
 
 /***/ },
 /* 7 */

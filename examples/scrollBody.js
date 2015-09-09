@@ -3,12 +3,12 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(59);
+	module.exports = __webpack_require__(66);
 
 
 /***/ },
 
-/***/ 59:
+/***/ 66:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60,7 +60,7 @@ webpackJsonp([4],{
 	      render: function render() {
 	        return React.createElement(
 	          'a',
-	          { href: "#" },
+	          { href: '#' },
 	          '操作'
 	        );
 	      }
@@ -74,7 +74,7 @@ webpackJsonp([4],{
 	        height: 200,
 	        display: this.state.showBody ? '' : 'none'
 	      },
-	      className: "table" });
+	      className: 'table' });
 	  }
 	});
 	

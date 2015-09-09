@@ -37,6 +37,9 @@
 .rc-table td {
   padding: 16px 8px;
 }
+.rc-table-expand-icon-col {
+  width: 10px;
+}
 .rc-table-row-expand-icon,
 .rc-table-expanded-row-expand-icon {
   cursor: pointer;

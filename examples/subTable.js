@@ -3,12 +3,12 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(61);
+	module.exports = __webpack_require__(68);
 
 
 /***/ },
 
-/***/ 61:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49,7 +49,9 @@ webpackJsonp([6],{
 	        );
 	      }
 	    }];
-	    return React.createElement(Table, { columns: columns, data: state.data, className: "table", rowKey: this.getRowKey });
+	    return React.createElement(Table, { columns: columns,
+	      expandIconAsCell: true,
+	      data: state.data, className: 'table', rowKey: this.getRowKey });
 	  }
 	});
 	
@@ -79,7 +81,7 @@ webpackJsonp([6],{
 	    null,
 	    'sub table'
 	  ),
-	  React.createElement(MyTable, { data: data, className: "table" })
+	  React.createElement(MyTable, { data: data, className: 'table' })
 	), document.getElementById('__react-content'));
 
 /***/ }

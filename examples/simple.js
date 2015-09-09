@@ -3,12 +3,12 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(60);
+	module.exports = __webpack_require__(67);
 
 
 /***/ },
 
-/***/ 60:
+/***/ 67:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21,7 +21,7 @@ webpackJsonp([5],{
 	  title: '操作', dataIndex: '', key: 'd', render: function render() {
 	    return React.createElement(
 	      'a',
-	      { href: "#" },
+	      { href: '#' },
 	      '操作'
 	    );
 	  }
@@ -39,7 +39,7 @@ webpackJsonp([5],{
 	  ),
 	  React.createElement(Table, { columns: columns,
 	    data: data,
-	    className: "table" })
+	    className: 'table' })
 	), document.getElementById('__react-content'));
 
 /***/ }
