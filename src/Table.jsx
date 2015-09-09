@@ -1,31 +1,61 @@
-'use strict';
+import React from 'react';
+import TableRow from './TableRow';
 
-var React = require('react');
-var TableRow = require('./TableRow');
+const Table = React.createClass({
+  propTypes: {
+    data: React.PropTypes.array,
+    expandIconAsCell: React.PropTypes.bool,
+    useFixedHeader: React.PropTypes.bool,
+    columns: React.PropTypes.array,
+    prefixCls: React.PropTypes.string,
+    bodyStyle: React.PropTypes.object,
+    style: React.PropTypes.object,
+    rowKey: React.PropTypes.func,
+    rowClassName: React.PropTypes.func,
+    expandedRowClassName: React.PropTypes.func,
+    childrenColumnName: React.PropTypes.string,
+  },
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expandedRows: [],
-      data: (props.data || []).concat()
+  getDefaultProps() {
+    return {
+      data: [],
+      useFixedHeader: false,
+      expandIconAsCell: false,
+      columns: [],
+      rowKey(o) {
+        return o.key;
+      },
+      rowClassName() {
+        return '';
+      },
+      expandedRowClassName() {
+        return '';
+      },
+      prefixCls: 'rc-table',
+      bodyStyle: {},
+      style: {},
+      childrenColumnName: 'children',
     };
-    ['handleRowDestroy', 'handleExpand'].forEach((m)=> {
-      this[m] = this[m].bind(this);
-    });
-  }
+  },
+
+  getInitialState() {
+    return {
+      expandedRows: [],
+      data: this.props.data.concat(),
+    };
+  },
 
   componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
       this.setState({
-        data: (nextProps.data || []).concat()
+        data: nextProps.data.concat(),
       });
     }
-  }
+  },
 
-  handleExpand(expanded, record) {
-    var expandedRows = this.state.expandedRows.concat();
-    var info = expandedRows.filter(function (i) {
+  onExpanded(expanded, record) {
+    const expandedRows = this.state.expandedRows.concat();
+    const info = expandedRows.filter((i) => {
       return i.record === record;
     });
     if (info.length) {
@@ -34,14 +64,14 @@ class Table extends React.Component {
       expandedRows.push({record: record, expanded});
     }
     this.setState({
-      expandedRows: expandedRows
+      expandedRows: expandedRows,
     });
-  }
+  },
 
-  handleRowDestroy(record) {
-    var expandedRows = this.state.expandedRows;
-    var index = -1;
-    expandedRows.forEach(function (r, i) {
+  onRowDestroy(record) {
+    const expandedRows = this.state.expandedRows;
+    let index = -1;
+    expandedRows.forEach((r, i) => {
       if (r === record) {
         index = i;
       }
@@ -49,70 +79,64 @@ class Table extends React.Component {
     if (index !== -1) {
       expandedRows.splice(index, 1);
     }
-  }
-
-  isRowExpanded(record) {
-    var info = this.state.expandedRows.filter(function (i) {
-      return i.record === record;
-    });
-    return info[0] && info[0].expanded;
-  }
+  },
 
   getThs() {
-    var expandIconAsCell = this.props.expandIconAsCell === false ? false : true;
-    var ths = [];
-    if (expandIconAsCell) {
+    let ths = [];
+    if (this.props.expandIconAsCell) {
       ths.push({
-        title: ''
+        key: 'rc-table-expandIconAsCell',
+        className: `${this.props.prefixCls}-expand-icon-th`,
+        title: '',
       });
     }
     ths = ths.concat(this.props.columns);
     return ths.map((c)=> {
       return <th key={c.key} className={c.className || ''}>{c.title}</th>;
     });
-  }
+  },
 
-  getExpandedRow(key, content, visible, className) {
-    var expandIconAsCell = this.props.expandIconAsCell === false ? false : true;
-    var prefixCls = this.props.prefixCls;
+  getExpandedRow(key2, content, visible, className) {
+    let key = key2;
+    const prefixCls = this.props.prefixCls;
     if (key) {
       key += '-extra-row';
     }
-    return <tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
-      {expandIconAsCell ? <td></td> : ''}
+    return (<tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
+      {this.props.expandIconAsCell ? <td key="rc-table-expand-icon-placeholder"></td> : ''}
       <td colSpan={this.props.columns.length}>
         {content}
       </td>
-    </tr>;
-  }
+    </tr>);
+  },
 
   getRowsByData(data, visible) {
-    var props = this.props;
-    var columns = props.columns;
-    var childrenColumnName = props.childrenColumnName;
-    var expandedRowRender = props.expandedRowRender;
-    var expandIconAsCell = props.expandIconAsCell;
-    var rst = [];
-    var keyFn = props.rowKey;
-    var rowClassName = props.rowClassName;
-    var expandedRowClassName = props.expandedRowClassName;
-    for (var i = 0; i < data.length; i++) {
-      var record = data[i];
-      var key = keyFn ? keyFn(record, i) : undefined;
-      var childrenColumn = record[childrenColumnName];
-      var expandedRowContent;
+    const props = this.props;
+    const columns = props.columns;
+    const childrenColumnName = props.childrenColumnName;
+    const expandedRowRender = props.expandedRowRender;
+    const expandIconAsCell = props.expandIconAsCell;
+    let rst = [];
+    const keyFn = props.rowKey;
+    const rowClassName = props.rowClassName;
+    const expandedRowClassName = props.expandedRowClassName;
+    for (let i = 0; i < data.length; i++) {
+      const record = data[i];
+      const key = keyFn ? keyFn(record, i) : undefined;
+      const childrenColumn = record[childrenColumnName];
+      let expandedRowContent;
       if (expandedRowRender) {
         expandedRowContent = expandedRowRender(record, i);
       }
-      var className = rowClassName(record, i);
+      const className = rowClassName(record, i);
       rst.push(<TableRow
         className={className}
         record={record}
         expandIconAsCell={expandIconAsCell}
-        onDestroy={this.handleRowDestroy}
+        onDestroy={this.onRowDestroy}
         index={i}
         visible={visible}
-        onExpand={this.handleExpand}
+        onExpand={this.onExpanded}
         expandable={childrenColumn || expandedRowContent}
         expanded={this.isRowExpanded(record)}
         prefixCls={`${props.prefixCls}-row`}
@@ -120,7 +144,7 @@ class Table extends React.Component {
         columns={columns}
         key={key}/>);
 
-      var subVisible = visible && this.isRowExpanded(record);
+      const subVisible = visible && this.isRowExpanded(record);
 
       if (expandedRowContent) {
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
@@ -130,41 +154,45 @@ class Table extends React.Component {
       }
     }
     return rst;
-  }
+  },
 
   getRows() {
     return this.getRowsByData(this.state.data, true);
-  }
+  },
 
   getColGroup() {
-    var cols = this.props.columns.map((c)=> {
+    let cols = [];
+    if (this.props.expandIconAsCell) {
+      cols.push(<col className={`${this.props.prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col"></col>);
+    }
+    cols = cols.concat(this.props.columns.map((c)=> {
       return <col key={c.key} style={{width: c.width}}></col>;
-    });
+    }));
     return <colgroup>{cols}</colgroup>;
-  }
+  },
 
   render() {
-    var props = this.props;
-    var prefixCls = props.prefixCls;
-    var columns = this.getThs();
-    var rows = this.getRows();
-    var className = props.prefixCls;
+    const props = this.props;
+    const prefixCls = props.prefixCls;
+    const columns = this.getThs();
+    const rows = this.getRows();
+    let className = props.prefixCls;
     if (props.className) {
       className += ' ' + props.className;
     }
-    var headerTable;
-    var thead = <thead className={`${prefixCls}-thead`}>
+    let headerTable;
+    let thead = (<thead className={`${prefixCls}-thead`}>
     <tr>
       {columns}
     </tr>
-    </thead>;
+    </thead>);
     if (props.useFixedHeader) {
-      headerTable = <div className={`${prefixCls}-header`}>
+      headerTable = (<div className={`${prefixCls}-header`}>
         <table>
           {this.getColGroup()}
           {thead}
         </table>
-      </div>;
+      </div>);
       thead = null;
     }
     return (
@@ -181,37 +209,14 @@ class Table extends React.Component {
         </div>
       </div>
     );
-  }
-}
-
-Table.propTypes = {
-  useFixedHeader: React.PropTypes.bool,
-  columns: React.PropTypes.array,
-  prefixCls: React.PropTypes.string,
-  bodyStyle: React.PropTypes.object,
-  style: React.PropTypes.object,
-  rowKey: React.PropTypes.func,
-  rowClassName: React.PropTypes.func,
-  expandedRowClassName: React.PropTypes.func,
-  childrenColumnName: React.PropTypes.string
-};
-
-Table.defaultProps = {
-  useFixedHeader: false,
-  columns: [],
-  rowKey: function (o) {
-    return o.key;
   },
-  rowClassName: function (o) {
-    return '';
-  },
-  expandedRowClassName: function (o) {
-    return '';
-  },
-  prefixCls: 'rc-table',
-  bodyStyle: {},
-  style: {},
-  childrenColumnName: 'children'
-};
 
-module.exports = Table;
+  isRowExpanded(record) {
+    const info = this.state.expandedRows.filter((i) => {
+      return i.record === record;
+    });
+    return info[0] && info[0].expanded;
+  },
+});
+
+export default Table;

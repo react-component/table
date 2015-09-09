@@ -30,4 +30,3 @@ env:
   - TEST_TYPE=lint
   - TEST_TYPE=browser-test
   - TEST_TYPE=browser-test-cover
-  - TEST_TYPE=saucelabs

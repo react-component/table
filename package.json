@@ -1,10 +1,13 @@
 {
   "name": "rc-table",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "table ui component for react",
   "keywords": [
     "react",
     "react-table"
+  ],
+  "files": [
+    "lib"
   ],
   "main": "./lib/index",
   "homepage": "http://github.com/react-component/table",
@@ -25,13 +28,11 @@
   },
   "scripts": {
     "build": "rc-tools run build",
-    "precommit": "rc-tools run precommit",
-    "less": "rc-tools run less",
     "gh-pages": "rc-tools run gh-pages",
-    "history": "rc-tools run history",
     "start": "node --harmony node_modules/.bin/rc-server",
-    "publish": "rc-tools run tag",
+    "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
+    "karma": "rc-tools run karma",
     "saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
     "browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
     "browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover"
@@ -43,10 +44,10 @@
     "rc-dropdown": "~1.1.2",
     "rc-menu": "~3.4.0",
     "rc-server": "3.x",
-    "rc-tools": "3.x",
+    "rc-tools": "4.x",
     "react": "~0.13.0"
   },
   "precommit": [
-    "precommit"
+    "lint"
   ]
 }

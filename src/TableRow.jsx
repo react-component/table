@@ -1,68 +1,59 @@
-'use strict';
+import React from 'react';
 
-var React = require('react');
+const TableRow = React.createClass({
+  propTypes: {
+    onDestroy: React.PropTypes.func,
+    record: React.PropTypes.object,
+    prefixCls: React.PropTypes.string,
+  },
 
-class TableRow extends React.Component {
   componentWillUnmount() {
     this.props.onDestroy(this.props.record);
-  }
+  },
 
   render() {
-    var props = this.props;
-    var prefixCls = props.prefixCls;
-    var columns = props.columns;
-    var record = props.record;
-    var index = props.index;
-    var cells = [];
-    var expanded = props.expanded;
-    var expandable = props.expandable;
-    var expandIconAsCell = props.expandIconAsCell === false ? false : true;
+    const props = this.props;
+    const prefixCls = props.prefixCls;
+    const columns = props.columns;
+    const record = props.record;
+    const index = props.index;
+    const cells = [];
+    const expanded = props.expanded;
+    const expandable = props.expandable;
+    const expandIconAsCell = props.expandIconAsCell;
 
-    if (expandIconAsCell) {
-      if (expandable) {
-        cells.push(<td>
-          {<span
-            className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
-            onClick={props.onExpand.bind(null, !expanded, record)}
-            ></span>}
-        </td>);
-      } else {
-        cells.push(<td></td>);
-      }
-      if (!columns[0].title) {
-        columns.shift();
-      }
-    } else {
-      let col = columns[0];
+    for (let i = 0; i < columns.length; i++) {
+      const col = columns[i];
+      const colClassName = col.className || '';
+      const render = col.render;
       let text = record[col.dataIndex];
-      if (expandable) {
-        cells.push(<td>
-          {<span
-            className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
-            onClick={props.onExpand.bind(null, !expanded, record)}
-            ></span>}
-          {text}
-        </td>);
-      } else {
-        cells.push(<td>{text}</td>);
-      }
-    }
 
-    for (var i = expandIconAsCell ? 0 : 1; i < columns.length; i++) {
-      let col = columns[i];
-      let colClassName = col.className || '';
-      let render = col.render;
-      let text = record[col.dataIndex];
+      let expandIcon = null;
+
+      if (i === 0 && expandable) {
+        expandIcon = (<span
+          className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
+          onClick={props.onExpand.bind(null, !expanded, record)}/>);
+      }
+
+      if (expandIconAsCell && i === 0) {
+        cells.push(<td className={`${prefixCls}-expand-icon-cell`}
+                       key="rc-table-expand-icon-cell">{expandIcon}</td>);
+        expandIcon = null;
+      }
+
       if (render) {
         text = render(text, record, index);
       }
+
       cells.push(<td key={col.key} className={`${colClassName}`}>
+        {expandIcon}
         {text}
       </td>);
     }
     return (
       <tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
-  }
-}
+  },
+});
 
-module.exports = TableRow;
+export default TableRow;

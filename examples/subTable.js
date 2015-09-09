@@ -34,7 +34,9 @@ var MyTable = React.createClass({
       }
     ];
     return (
-      <Table columns={columns} data={state.data} className="table" rowKey={this.getRowKey}/>
+      <Table columns={columns}
+             expandIconAsCell={true}
+             data={state.data} className="table" rowKey={this.getRowKey}/>
     );
   }
 });

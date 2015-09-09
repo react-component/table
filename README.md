@@ -103,6 +103,12 @@ var table = React.render(
           <td>whether use separator table for header. better set width for columns</td>
       </tr>
       <tr>
+          <td>expandIconAsCell</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>whether render expandIcon as a cell</td>
+      </tr>
+      <tr>
           <td>rowKey</td>
           <td>Function(recode,index):string</td>
           <th>record.key</th>

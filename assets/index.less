@@ -46,8 +46,10 @@
   }
 }
 
-
 .@{tablePrefixCls} {
+  &-expand-icon-col {
+    width: 10px;
+  }
   &-row, &-expanded-row {
     &-expand-icon {
       cursor: pointer;
@@ -57,17 +59,17 @@
       height: 28px;
       text-align: center;
       line-height: 28px;
-      border:1px solid red;
+      border: 1px solid red;
       -webkit-user-select: none;
       user-select: none;
     }
 
     &-expanded:after {
-      content:'-'
+      content: '-'
     }
 
     &-collapsed:after {
-      content:'+'
+      content: '+'
     }
   }
 }
