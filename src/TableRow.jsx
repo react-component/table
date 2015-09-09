@@ -8,15 +8,15 @@ class TableRow extends React.Component {
   }
 
   render() {
-    let props = this.props;
-    let prefixCls = props.prefixCls;
-    let columns = props.columns;
-    let record = props.record;
-    let index = props.index;
-    let cells = [];
-    let expanded = props.expanded;
-    let expandable = props.expandable;
-    let expandIconAsCell = props.expandIconAsCell === false ? false : true;
+    var props = this.props;
+    var prefixCls = props.prefixCls;
+    var columns = props.columns;
+    var record = props.record;
+    var index = props.index;
+    var cells = [];
+    var expanded = props.expanded;
+    var expandable = props.expandable;
+    var expandIconAsCell = props.expandIconAsCell === false ? false : true;
 
     if (expandIconAsCell) {
       if (expandable) {
@@ -48,7 +48,7 @@ class TableRow extends React.Component {
       }
     }
 
-    for (let i = expandIconAsCell ? 0 : 1; i < columns.length; i++) {
+    for (var i = expandIconAsCell ? 0 : 1; i < columns.length; i++) {
       let col = columns[i];
       let colClassName = col.className || '';
       let render = col.render;
