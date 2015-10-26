@@ -172,6 +172,13 @@ const Table = React.createClass({
     return <colgroup>{cols}</colgroup>;
   },
 
+  isRowExpanded(record) {
+    const info = this.state.expandedRows.filter((i) => {
+      return i.record === record;
+    });
+    return info[0] && info[0].expanded;
+  },
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
@@ -210,13 +217,6 @@ const Table = React.createClass({
         </div>
       </div>
     );
-  },
-
-  isRowExpanded(record) {
-    const info = this.state.expandedRows.filter((i) => {
-      return i.record === record;
-    });
-    return info[0] && info[0].expanded;
   },
 });
 
