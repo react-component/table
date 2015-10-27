@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
@@ -17,7 +18,7 @@ var columns = [
 
 var data = [{a: '123',key:'1'}, {a: 'cdd', b: 'edd',key:'2'}, {a: '1333', c: 'eee', d: 2,key:'3'}];
 
-var table = React.render(
+var table = ReactDOM.render(
   <div>
     <h2>simple table</h2>
     <Table columns={columns}

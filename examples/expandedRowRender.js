@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
@@ -72,7 +73,7 @@ function expandedRowRender(record){
   return <p>extra: {record.a}</p>;
 }
 
-React.render(
+ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
     <MyTable data={data}

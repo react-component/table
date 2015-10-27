@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
@@ -66,7 +67,7 @@ var data = [
   }
 ];
 
-React.render(
+ReactDOM.render(
   <div>
     <h2>sub table</h2>
     <MyTable data={data} className="table"/>

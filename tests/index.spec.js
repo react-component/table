@@ -3,6 +3,7 @@
 var expect = require('expect.js');
 var Table = require('../');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 
 describe('table', function () {
@@ -24,7 +25,7 @@ describe('table', function () {
   var node = $(div);
 
   beforeEach(function () {
-    table = React.render(
+    table = ReactDOM.render(
       <Table columns={columns} data={data} className="table"/>,
       div
     );
@@ -32,7 +33,7 @@ describe('table', function () {
   });
 
   afterEach(function () {
-    React.unmountComponentAtNode(div);
+    ReactDOM.unmountComponentAtNode(div);
   });
 
   it('simple works', function () {

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
@@ -65,7 +66,7 @@ var MyTable = React.createClass({
 
 var data = [{a: '123'}, {a: 'cdd', b: 'edd'}, {a: '1333', c: 'eee', d: 2}];
 
-React.render(
+ReactDOM.render(
   <div>
     <h2>specify key</h2>
     <MyTable data={data} className="table"/>

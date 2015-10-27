@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
@@ -60,7 +61,7 @@ var Test = React.createClass({
   }
 });
 
-React.render(
+ReactDOM.render(
   <div>
     <h2>scroll body table</h2>
     <Test/>
