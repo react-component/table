@@ -3,19 +3,20 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(66);
+	module.exports = __webpack_require__(226);
 
 
 /***/ },
 
-/***/ 66:
+/***/ 226:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var Table = __webpack_require__(3);
-	__webpack_require__(7);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
 	
 	var data = [];
 	for (var i = 0; i < 30; i++) {
@@ -78,7 +79,7 @@ webpackJsonp([4],{
 	  }
 	});
 	
-	React.render(React.createElement(
+	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(

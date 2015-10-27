@@ -3,19 +3,20 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(64);
+	module.exports = __webpack_require__(224);
 
 
 /***/ },
 
-/***/ 64:
+/***/ 224:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var Table = __webpack_require__(3);
-	__webpack_require__(7);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
 	
 	var CheckBox = React.createClass({
 	  displayName: 'CheckBox',
@@ -91,7 +92,7 @@ webpackJsonp([2],{
 	  );
 	}
 	
-	React.render(React.createElement(
+	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(

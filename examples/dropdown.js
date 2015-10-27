@@ -2,7 +2,7 @@ webpackJsonp([1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(164);
 
 
 /***/ },
@@ -13,18 +13,175 @@ webpackJsonp([1],[
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var Table = __webpack_require__(3);
-	__webpack_require__(7);
-	var Menu = __webpack_require__(9);
-	__webpack_require__(31);
-	__webpack_require__(32);
-	var DropDown = __webpack_require__(33);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
+	var Menu = __webpack_require__(165);
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-dropdown/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-menu/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var DropDown = __webpack_require__(187);
 	
 	var data = [];
 	for (var i = 0; i < 10; i++) {
@@ -138,7 +295,7 @@ webpackJsonp([1],[
 	  }
 	});
 	
-	React.render(React.createElement(
+	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(
@@ -150,20 +307,20 @@ webpackJsonp([1],[
 	), document.getElementById('__react-content'));
 
 /***/ },
-/* 9 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Menu = __webpack_require__(10);
-	Menu.SubMenu = __webpack_require__(26);
-	Menu.Item = __webpack_require__(28);
-	Menu.ItemGroup = __webpack_require__(29);
-	Menu.Divider = __webpack_require__(30);
+	var Menu = __webpack_require__(166);
+	Menu.SubMenu = __webpack_require__(182);
+	Menu.Item = __webpack_require__(184);
+	Menu.ItemGroup = __webpack_require__(185);
+	Menu.Divider = __webpack_require__(186);
 	module.exports = Menu;
 
 /***/ },
-/* 10 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -179,12 +336,12 @@ webpackJsonp([1],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(11);
+	var rcUtil = __webpack_require__(167);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	var createChainedFunction = rcUtil.createChainedFunction;
 	var KeyCode = rcUtil.KeyCode;
-	var scrollIntoView = __webpack_require__(23);
+	var scrollIntoView = __webpack_require__(179);
 	
 	function noop() {}
 	
@@ -492,30 +649,30 @@ webpackJsonp([1],[
 	module.exports = Menu;
 
 /***/ },
-/* 11 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(12),
-	  classSet: __webpack_require__(13),
-	  joinClasses: __webpack_require__(14),
-	  KeyCode: __webpack_require__(15),
-	  PureRenderMixin: __webpack_require__(16),
-	  shallowEqual: __webpack_require__(17),
-	  createChainedFunction: __webpack_require__(18),
+	  guid: __webpack_require__(168),
+	  classSet: __webpack_require__(169),
+	  joinClasses: __webpack_require__(170),
+	  KeyCode: __webpack_require__(171),
+	  PureRenderMixin: __webpack_require__(172),
+	  shallowEqual: __webpack_require__(173),
+	  createChainedFunction: __webpack_require__(174),
 	  Dom: {
-	    addEventListener: __webpack_require__(19),
-	    contains: __webpack_require__(20)
+	    addEventListener: __webpack_require__(175),
+	    contains: __webpack_require__(176)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(21),
-	    mapSelf: __webpack_require__(22)
+	    toArray: __webpack_require__(177),
+	    mapSelf: __webpack_require__(178)
 	  }
 	};
 
 
 /***/ },
-/* 12 */
+/* 168 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -525,7 +682,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 13 */
+/* 169 */
 /***/ function(module, exports) {
 
 	/**
@@ -570,7 +727,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 14 */
+/* 170 */
 /***/ function(module, exports) {
 
 	/**
@@ -617,7 +774,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 15 */
+/* 171 */
 /***/ function(module, exports) {
 
 	/**
@@ -1144,7 +1301,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 16 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1160,7 +1317,7 @@ webpackJsonp([1],[
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(17);
+	var shallowEqual = __webpack_require__(173);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -1197,7 +1354,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 17 */
+/* 173 */
 /***/ function(module, exports) {
 
 	/**
@@ -1245,7 +1402,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 18 */
+/* 174 */
 /***/ function(module, exports) {
 
 	/**
@@ -1272,7 +1429,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 19 */
+/* 175 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -1295,7 +1452,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 20 */
+/* 176 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -1311,7 +1468,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 21 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -1326,7 +1483,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 22 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -1342,17 +1499,17 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 23 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(180);
 
 
 /***/ },
-/* 24 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var util = __webpack_require__(25);
+	var util = __webpack_require__(181);
 	
 	function scrollIntoView(elem, container, config) {
 	  config = config || {};
@@ -1477,7 +1634,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 25 */
+/* 181 */
 /***/ function(module, exports) {
 
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
@@ -1914,7 +2071,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 26 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1922,12 +2079,12 @@ webpackJsonp([1],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(11);
+	var rcUtil = __webpack_require__(167);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	var guid = rcUtil.guid;
 	var KeyCode = rcUtil.KeyCode;
-	var Menu = __webpack_require__(10);
+	var Menu = __webpack_require__(166);
 	var createChainedFunction = rcUtil.createChainedFunction;
 	
 	var SubMenu = React.createClass({
@@ -1939,7 +2096,7 @@ webpackJsonp([1],[
 	    onClick: React.PropTypes.func
 	  },
 	
-	  mixins: [__webpack_require__(27)],
+	  mixins: [__webpack_require__(183)],
 	
 	  getInitialState: function getInitialState() {
 	    return {
@@ -2133,12 +2290,12 @@ webpackJsonp([1],[
 	module.exports = SubMenu;
 
 /***/ },
-/* 27 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var rcUtil = __webpack_require__(11);
+	var rcUtil = __webpack_require__(167);
 	var KeyCode = rcUtil.KeyCode;
 	var React = __webpack_require__(2);
 	
@@ -2204,7 +2361,7 @@ webpackJsonp([1],[
 	module.exports = SubMenuStateMixin;
 
 /***/ },
-/* 28 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2220,7 +2377,7 @@ webpackJsonp([1],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
-	var rcUtil = __webpack_require__(11);
+	var rcUtil = __webpack_require__(167);
 	var joinClasses = rcUtil.joinClasses;
 	var classSet = rcUtil.classSet;
 	var KeyCode = rcUtil.KeyCode;
@@ -2357,7 +2514,7 @@ webpackJsonp([1],[
 	module.exports = MenuItem;
 
 /***/ },
-/* 29 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2417,7 +2574,7 @@ webpackJsonp([1],[
 	module.exports = MenuItemGroup;
 
 /***/ },
-/* 30 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2464,27 +2621,15 @@ webpackJsonp([1],[
 	module.exports = Divider;
 
 /***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 33 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(34);
+	module.exports = __webpack_require__(188);
 
 /***/ },
-/* 34 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2498,9 +2643,9 @@ webpackJsonp([1],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
-	var Tooltip = __webpack_require__(35);
-	var assign = __webpack_require__(63);
-	var rcUtil = __webpack_require__(37);
+	var Tooltip = __webpack_require__(189);
+	var assign = __webpack_require__(223);
+	var rcUtil = __webpack_require__(191);
 	
 	/*
 	
@@ -2578,15 +2723,15 @@ webpackJsonp([1],[
 	module.exports = Dropdown;
 
 /***/ },
-/* 35 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(36);
+	module.exports = __webpack_require__(190);
 
 /***/ },
-/* 36 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2603,9 +2748,9 @@ webpackJsonp([1],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(37);
+	var _rcUtil = __webpack_require__(191);
 	
-	var _Popup = __webpack_require__(49);
+	var _Popup = __webpack_require__(203);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
@@ -2622,7 +2767,8 @@ webpackJsonp([1],[
 	    overlayClassName: _react2['default'].PropTypes.string,
 	    wrapStyle: _react2['default'].PropTypes.object,
 	    mouseEnterDelay: _react2['default'].PropTypes.number,
-	    mouseLeaveDelay: _react2['default'].PropTypes.number
+	    mouseLeaveDelay: _react2['default'].PropTypes.number,
+	    getTooltipContainer: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -2671,7 +2817,7 @@ webpackJsonp([1],[
 	      var _ret = (function () {
 	        var self = _this;
 	        _react2['default'].render(_this.getPopupElement(), _this.getTipContainer(), function renderPopup() {
-	          self.popupInstance = this;
+	          self.popupDomNode = _react2['default'].findDOMNode(this);
 	          if (prevState.visible !== state.visible) {
 	            props.afterVisibleChange(state.visible);
 	          }
@@ -2703,7 +2849,12 @@ webpackJsonp([1],[
 	    var tipContainer = this.tipContainer;
 	    if (tipContainer) {
 	      _react2['default'].unmountComponentAtNode(tipContainer);
-	      document.body.removeChild(tipContainer);
+	      if (this.props.getTooltipContainer) {
+	        var mountNode = this.props.getTooltipContainer();
+	        mountNode.removeChild(tipContainer);
+	      } else {
+	        document.body.removeChild(tipContainer);
+	      }
 	      this.tipContainer = null;
 	    }
 	    if (this.delayTimer) {
@@ -2780,13 +2931,18 @@ webpackJsonp([1],[
 	
 	  getPopupDomNode: function getPopupDomNode() {
 	    // for test
-	    return this.popupInstance.getPopupDomNode();
+	    return this.popupDomNode;
 	  },
 	
 	  getTipContainer: function getTipContainer() {
 	    if (!this.tipContainer) {
 	      this.tipContainer = document.createElement('div');
-	      document.body.appendChild(this.tipContainer);
+	      if (this.props.getTooltipContainer) {
+	        var mountNode = this.props.getTooltipContainer();
+	        mountNode.appendChild(this.tipContainer);
+	      } else {
+	        document.body.appendChild(this.tipContainer);
+	      }
 	    }
 	    return this.tipContainer;
 	  },
@@ -2889,30 +3045,30 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 37 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(38),
-	  classSet: __webpack_require__(39),
-	  joinClasses: __webpack_require__(40),
-	  KeyCode: __webpack_require__(41),
-	  PureRenderMixin: __webpack_require__(42),
-	  shallowEqual: __webpack_require__(43),
-	  createChainedFunction: __webpack_require__(44),
+	  guid: __webpack_require__(192),
+	  classSet: __webpack_require__(193),
+	  joinClasses: __webpack_require__(194),
+	  KeyCode: __webpack_require__(195),
+	  PureRenderMixin: __webpack_require__(196),
+	  shallowEqual: __webpack_require__(197),
+	  createChainedFunction: __webpack_require__(198),
 	  Dom: {
-	    addEventListener: __webpack_require__(45),
-	    contains: __webpack_require__(46)
+	    addEventListener: __webpack_require__(199),
+	    contains: __webpack_require__(200)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(47),
-	    mapSelf: __webpack_require__(48)
+	    toArray: __webpack_require__(201),
+	    mapSelf: __webpack_require__(202)
 	  }
 	};
 
 
 /***/ },
-/* 38 */
+/* 192 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -2922,7 +3078,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 39 */
+/* 193 */
 /***/ function(module, exports) {
 
 	/**
@@ -2967,7 +3123,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 40 */
+/* 194 */
 /***/ function(module, exports) {
 
 	/**
@@ -3014,7 +3170,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 41 */
+/* 195 */
 /***/ function(module, exports) {
 
 	/**
@@ -3541,7 +3697,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 42 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3557,7 +3713,7 @@ webpackJsonp([1],[
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(43);
+	var shallowEqual = __webpack_require__(197);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -3594,7 +3750,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 43 */
+/* 197 */
 /***/ function(module, exports) {
 
 	/**
@@ -3642,7 +3798,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 44 */
+/* 198 */
 /***/ function(module, exports) {
 
 	/**
@@ -3669,7 +3825,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 45 */
+/* 199 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -3692,7 +3848,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 46 */
+/* 200 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -3708,7 +3864,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 47 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -3723,7 +3879,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 48 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -3739,7 +3895,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 49 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3754,22 +3910,15 @@ webpackJsonp([1],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _utils = __webpack_require__(50);
+	var _utils = __webpack_require__(204);
 	
-	var _rcAlign = __webpack_require__(51);
+	var _rcAlign = __webpack_require__(205);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(55);
+	var _rcAnimate = __webpack_require__(215);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
-	
-	var placementAlignMap = {
-	  left: { points: ['cr', 'cl'] },
-	  right: { points: ['cl', 'cr'] },
-	  top: { points: ['bc', 'tc'] },
-	  bottom: { points: ['tc', 'bc'] }
-	};
 	
 	var Popup = _react2['default'].createClass({
 	  displayName: 'Popup',
@@ -3782,6 +3931,10 @@ webpackJsonp([1],[
 	    onMouseLeave: _react2['default'].PropTypes.func
 	  },
 	
+	  componentDidMount: function componentDidMount() {
+	    this.rootNode = this.getPopupDomNode();
+	  },
+	
 	  // optimize for speed
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
 	    return this.props.visible || nextProps.visible;
@@ -3790,9 +3943,16 @@ webpackJsonp([1],[
 	  onAlign: function onAlign(popupDomNode, align) {
 	    var props = this.props;
 	    var placement = props.placement;
-	    if (placement && placement.points) {
-	      var originalClassName = (0, _utils.getToolTipClassByPlacement)(props.prefixCls, placement);
-	      var nextClassName = (0, _utils.getToolTipClassByPlacement)(props.prefixCls, align);
+	    var prefixCls = props.prefixCls;
+	
+	    if (placement) {
+	      var originalClassName = (0, _utils.getToolTipClassByPlacement)(prefixCls, placement);
+	      var nextClassName = undefined;
+	      if (placement.points) {
+	        nextClassName = (0, _utils.getToolTipClassByPlacement)(prefixCls, align);
+	      } else if (typeof placement === 'string') {
+	        nextClassName = (0, _utils.getToolTipClassByPlacement)(prefixCls, (0, _utils.fromPointsToPlacement)(align));
+	      }
 	      if (nextClassName !== originalClassName) {
 	        popupDomNode.className = popupDomNode.className.replace(originalClassName, nextClassName);
 	      }
@@ -3818,23 +3978,32 @@ webpackJsonp([1],[
 	
 	  render: function render() {
 	    var props = this.props;
-	    var className = (0, _utils.getToolTipClassByPlacement)(props.prefixCls, props.placement);
-	    if (props.className) {
-	      className += ' ' + props.className;
-	    }
-	    var style = this.props.style;
-	    if (!props.visible) {
-	      className += ' ' + props.prefixCls + '-hidden';
-	    }
-	    var arrowClassName = props.prefixCls + '-arrow';
-	    var innerClassname = props.prefixCls + '-inner';
-	
+	    var prefixCls = props.prefixCls;
 	    var placement = props.placement;
+	    var style = props.style;
+	
+	    var className = undefined;
+	
+	    if (props.visible || !this.rootNode) {
+	      className = (0, _utils.getToolTipClassByPlacement)(prefixCls, props.placement);
+	      if (props.className) {
+	        className += ' ' + props.className;
+	      }
+	    } else {
+	      // fix auto adjust
+	      className = this.rootNode.className;
+	      var hiddenClass = prefixCls + '-hidden';
+	      if (className.indexOf(hiddenClass) === -1) {
+	        className += ' ' + hiddenClass;
+	      }
+	    }
+	    var arrowClassName = prefixCls + '-arrow';
+	    var innerClassname = prefixCls + '-inner';
 	    var align = undefined;
 	    if (placement && placement.points) {
 	      align = placement;
 	    } else {
-	      align = placementAlignMap[placement];
+	      align = _utils.placementAlignMap[placement];
 	    }
 	
 	    return _react2['default'].createElement(
@@ -3848,6 +4017,7 @@ webpackJsonp([1],[
 	        _rcAlign2['default'],
 	        { target: this.getTarget,
 	          key: 'popup',
+	          monitorWindowResize: true,
 	          'data-visible': props.visible,
 	          disabled: !props.visible,
 	          align: align,
@@ -3874,7 +4044,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 50 */
+/* 204 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3882,12 +4052,11 @@ webpackJsonp([1],[
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.getToolTipClassByAlign = getToolTipClassByAlign;
 	exports.getToolTipClassByPlacement = getToolTipClassByPlacement;
+	exports.fromPointsToPlacement = fromPointsToPlacement;
 	
-	function getToolTipClassByPlacement(prefixCls, placement) {
-	  if (typeof placement === 'string') {
-	    return prefixCls + ' ' + prefixCls + '-placement-' + placement;
-	  }
+	function getToolTipClassByAlign(prefixCls, placement) {
 	  var offset = placement.offset || [0, 0];
 	  var offsetClass = '';
 	  if (offset && offset.length) {
@@ -3896,9 +4065,81 @@ webpackJsonp([1],[
 	  var points = placement.points;
 	  return prefixCls + ' ' + offsetClass + ' ' + prefixCls + '-placement-points-' + points[0] + '-' + points[1];
 	}
+	
+	function getToolTipClassByPlacement(prefixCls, placement) {
+	  if (typeof placement === 'string') {
+	    return prefixCls + ' ' + prefixCls + '-placement-' + placement;
+	  }
+	  return getToolTipClassByAlign(prefixCls, placement);
+	}
+	
+	var autoAdjustOverflow = {
+	  adjustX: 1,
+	  adjustY: 1
+	};
+	
+	var placementAlignMap = {
+	  left: {
+	    points: ['cr', 'cl'],
+	    overflow: autoAdjustOverflow,
+	    offset: [-3, 0]
+	  },
+	  right: {
+	    points: ['cl', 'cr'],
+	    overflow: autoAdjustOverflow,
+	    offset: [3, 0]
+	  },
+	  top: {
+	    points: ['bc', 'tc'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, -3]
+	  },
+	  bottom: {
+	    points: ['tc', 'bc'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, 3]
+	  },
+	  topLeft: {
+	    points: ['bl', 'tl'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, -3]
+	  },
+	  topRight: {
+	    points: ['br', 'tr'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, -3]
+	  },
+	  bottomRight: {
+	    points: ['tr', 'br'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, 3]
+	  },
+	  bottomLeft: {
+	    points: ['tl', 'bl'],
+	    overflow: autoAdjustOverflow,
+	    offset: [0, 3]
+	  }
+	};
+	
+	exports.placementAlignMap = placementAlignMap;
+	function isPointsEq(a1, a2) {
+	  return a1[0] === a2[0] && a1[1] === a2[1];
+	}
+	
+	function fromPointsToPlacement(align) {
+	  var points = align.points;
+	  for (var p in placementAlignMap) {
+	    if (placementAlignMap.hasOwnProperty(p)) {
+	      if (isPointsEq(placementAlignMap[p].points, points)) {
+	        return p;
+	      }
+	    }
+	  }
+	  throw new Error('can not find placement for', points);
+	}
 
 /***/ },
-/* 51 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3910,7 +4151,7 @@ webpackJsonp([1],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Align = __webpack_require__(52);
+	var _Align = __webpack_require__(206);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -3918,7 +4159,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 52 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3941,11 +4182,11 @@ webpackJsonp([1],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _domAlign = __webpack_require__(53);
+	var _domAlign = __webpack_require__(207);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _rcUtil = __webpack_require__(37);
+	var _rcUtil = __webpack_require__(191);
 	
 	var _rcUtil2 = _interopRequireDefault(_rcUtil);
 	
@@ -4083,7 +4324,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 53 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4099,164 +4340,31 @@ webpackJsonp([1],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(54);
+	var _utils = __webpack_require__(208);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
+	var _getOffsetParent = __webpack_require__(209);
+	
+	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	var _getVisibleRectForElement = __webpack_require__(210);
+	
+	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
+	
+	var _adjustForViewport = __webpack_require__(211);
+	
+	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
+	
+	var _getRegion = __webpack_require__(212);
+	
+	var _getRegion2 = _interopRequireDefault(_getRegion);
+	
+	var _getElFuturePos = __webpack_require__(213);
+	
+	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
+	
 	// http://yiminghe.iteye.com/blog/1124720
-	
-	/**
-	 * 获取 node 上的 align 对齐点 相对于页面的坐标
-	 */
-	
-	function getAlignOffset(region, align) {
-	  var V = align.charAt(0);
-	  var H = align.charAt(1);
-	  var w = region.width;
-	  var h = region.height;
-	  var x = undefined;
-	  var y = undefined;
-	
-	  x = region.left;
-	  y = region.top;
-	
-	  if (V === 'c') {
-	    y += h / 2;
-	  } else if (V === 'b') {
-	    y += h;
-	  }
-	
-	  if (H === 'c') {
-	    x += w / 2;
-	  } else if (H === 'r') {
-	    x += w;
-	  }
-	
-	  return {
-	    left: x,
-	    top: y
-	  };
-	}
-	
-	/**
-	 * 得到会导致元素显示不全的祖先元素
-	 */
-	
-	function getOffsetParent(element) {
-	  // ie 这个也不是完全可行
-	  /*
-	   <div style="width: 50px;height: 100px;overflow: hidden">
-	   <div style="width: 50px;height: 100px;position: relative;" id="d6">
-	   元素 6 高 100px 宽 50px<br/>
-	   </div>
-	   </div>
-	   */
-	  // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
-	  //  In other browsers it only includes elements with position absolute, relative or
-	  // fixed, not elements with overflow set to auto or scroll.
-	  //        if (UA.ie && ieMode < 8) {
-	  //            return element.offsetParent;
-	  //        }
-	  // 统一的 offsetParent 方法
-	  var doc = element.ownerDocument;
-	  var body = doc.body;
-	  var parent = undefined;
-	  var positionStyle = _utils2['default'].css(element, 'position');
-	  var skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
-	
-	  if (!skipStatic) {
-	    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
-	  }
-	
-	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
-	    positionStyle = _utils2['default'].css(parent, 'position');
-	    if (positionStyle !== 'static') {
-	      return parent;
-	    }
-	  }
-	  return null;
-	}
-	
-	/**
-	 * 获得元素的显示部分的区域
-	 */
-	
-	function getVisibleRectForElement(element) {
-	  var visibleRect = {
-	    left: 0,
-	    right: Infinity,
-	    top: 0,
-	    bottom: Infinity
-	  };
-	  var el = element;
-	  var scrollX = undefined;
-	  var scrollY = undefined;
-	  var winSize = undefined;
-	  var doc = element.ownerDocument;
-	  var win = doc.defaultView || doc.parentWindow;
-	  var body = doc.body;
-	  var documentElement = doc.documentElement;
-	
-	  // Determine the size of the visible rect by climbing the dom accounting for
-	  // all scrollable containers.
-	  while (el) {
-	    // clientWidth is zero for inline block elements in ie.
-	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (
-	    // body may have overflow set on it, yet we still get the entire
-	    // viewport. In some browsers, el.offsetParent may be
-	    // document.documentElement, so check for that too.
-	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible')) {
-	      var pos = _utils2['default'].offset(el);
-	      // add border
-	      pos.left += el.clientLeft;
-	      pos.top += el.clientTop;
-	      visibleRect.top = Math.max(visibleRect.top, pos.top);
-	      visibleRect.right = Math.min(visibleRect.right,
-	      // consider area without scrollBar
-	      pos.left + el.clientWidth);
-	      visibleRect.bottom = Math.min(visibleRect.bottom, pos.top + el.clientHeight);
-	      visibleRect.left = Math.max(visibleRect.left, pos.left);
-	    } else if (el === body || el === documentElement) {
-	      break;
-	    }
-	    el = getOffsetParent(el);
-	  }
-	
-	  // Clip by window's viewport.
-	  scrollX = _utils2['default'].getWindowScrollLeft(win);
-	  scrollY = _utils2['default'].getWindowScrollTop(win);
-	  visibleRect.left = Math.max(visibleRect.left, scrollX);
-	  visibleRect.top = Math.max(visibleRect.top, scrollY);
-	  winSize = {
-	    width: _utils2['default'].viewportWidth(win),
-	    height: _utils2['default'].viewportHeight(win)
-	  };
-	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
-	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
-	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
-	}
-	
-	function getElFuturePos(elRegion, refNodeRegion, points, offset) {
-	  var xy = undefined;
-	  var diff = undefined;
-	  var p1 = undefined;
-	  var p2 = undefined;
-	
-	  xy = {
-	    left: elRegion.left,
-	    top: elRegion.top
-	  };
-	
-	  p1 = getAlignOffset(refNodeRegion, points[1]);
-	  p2 = getAlignOffset(elRegion, points[0]);
-	
-	  diff = [p2.left - p1.left, p2.top - p1.top];
-	
-	  return {
-	    left: xy.left - diff[0] + +offset[0],
-	    top: xy.top - diff[1] + +offset[1]
-	  };
-	}
 	
 	function isFailX(elFuturePos, elRegion, visibleRect) {
 	  return elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right;
@@ -4264,47 +4372,6 @@ webpackJsonp([1],[
 	
 	function isFailY(elFuturePos, elRegion, visibleRect) {
 	  return elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom;
-	}
-	
-	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
-	  var pos = _utils2['default'].clone(elFuturePos);
-	  var size = {
-	    width: elRegion.width,
-	    height: elRegion.height
-	  };
-	
-	  if (overflow.adjustX && pos.left < visibleRect.left) {
-	    pos.left = visibleRect.left;
-	  }
-	
-	  // Left edge inside and right edge outside viewport, try to resize it.
-	  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
-	    size.width -= pos.left + size.width - visibleRect.right;
-	  }
-	
-	  // Right edge outside viewport, try to move it.
-	  if (overflow.adjustX && pos.left + size.width > visibleRect.right) {
-	    // 保证左边界和可视区域左边界对齐
-	    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
-	  }
-	
-	  // Top edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top < visibleRect.top) {
-	    pos.top = visibleRect.top;
-	  }
-	
-	  // Top edge inside and bottom edge outside viewport, try to resize it.
-	  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
-	    size.height -= pos.top + size.height - visibleRect.bottom;
-	  }
-	
-	  // Bottom edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
-	    // 保证上边界和可视区域上边界对齐
-	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
-	  }
-	
-	  return _utils2['default'].mix(pos, size);
 	}
 	
 	function flip(points, reg, map) {
@@ -4322,26 +4389,19 @@ webpackJsonp([1],[
 	  return offset;
 	}
 	
-	function getRegion(node) {
-	  var offset = undefined;
-	  var w = undefined;
-	  var h = undefined;
-	  if (!_utils2['default'].isWindow(node) && node.nodeType !== 9) {
-	    offset = _utils2['default'].offset(node);
-	    w = _utils2['default'].outerWidth(node);
-	    h = _utils2['default'].outerHeight(node);
+	function convertOffset(str, offsetLen) {
+	  var n = undefined;
+	  if (/%$/.test(str)) {
+	    n = parseInt(str.substring(0, str.length - 1), 10) / 100 * offsetLen;
 	  } else {
-	    var win = _utils2['default'].getWindow(node);
-	    offset = {
-	      left: _utils2['default'].getWindowScrollLeft(win),
-	      top: _utils2['default'].getWindowScrollTop(win)
-	    };
-	    w = _utils2['default'].viewportWidth(win);
-	    h = _utils2['default'].viewportHeight(win);
+	    n = parseInt(str, 10);
 	  }
-	  offset.width = w;
-	  offset.height = h;
-	  return offset;
+	  return n || 0;
+	}
+	
+	function normalizeOffset(offset, el) {
+	  offset[0] = convertOffset(offset[0], el.width);
+	  offset[1] = convertOffset(offset[1], el.height);
 	}
 	
 	/*
@@ -4358,21 +4418,26 @@ webpackJsonp([1],[
 	 */
 	function domAlign(el, refNode, align) {
 	  var points = align.points;
-	  var offset = align.offset;
+	  var offset = align.offset || [0, 0];
+	  var targetOffset = align.targetOffset || [0, 0];
 	  var overflow = align.overflow;
-	  offset = offset && [].concat(offset) || [0, 0];
+	  offset = [].concat(offset);
+	  targetOffset = [].concat(targetOffset);
 	  overflow = overflow || {};
 	  var newOverflowCfg = {};
 	
 	  var fail = 0;
 	  // 当前节点可以被放置的显示区域
-	  var visibleRect = getVisibleRectForElement(el);
+	  var visibleRect = (0, _getVisibleRectForElement2['default'])(el);
 	  // 当前节点所占的区域, left/top/width/height
-	  var elRegion = getRegion(el);
+	  var elRegion = (0, _getRegion2['default'])(el);
 	  // 参照节点所占的区域, left/top/width/height
-	  var refNodeRegion = getRegion(refNode);
+	  var refNodeRegion = (0, _getRegion2['default'])(refNode);
+	  // 将 offset 转换成数值，支持百分比
+	  normalizeOffset(offset, elRegion);
+	  normalizeOffset(targetOffset, refNodeRegion);
 	  // 当前节点将要被放置的位置
-	  var elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset);
+	  var elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
 	  // 当前节点将要所处的区域
 	  var newElRegion = _utils2['default'].merge(elRegion, elFuturePos);
 	
@@ -4389,6 +4454,7 @@ webpackJsonp([1],[
 	        });
 	        // 偏移量也反下
 	        offset = flipOffset(offset, 0);
+	        targetOffset = flipOffset(targetOffset, 0);
 	      }
 	    }
 	
@@ -4403,12 +4469,13 @@ webpackJsonp([1],[
 	        });
 	        // 偏移量也反下
 	        offset = flipOffset(offset, 1);
+	        targetOffset = flipOffset(targetOffset, 1);
 	      }
 	    }
 	
 	    // 如果失败，重新计算当前节点将要被放置的位置
 	    if (fail) {
-	      elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset);
+	      elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
 	      _utils2['default'].mix(newElRegion, elFuturePos);
 	    }
 	
@@ -4420,7 +4487,7 @@ webpackJsonp([1],[
 	
 	    // 确实要调整，甚至可能会调整高度宽度
 	    if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-	      newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg);
+	      newElRegion = (0, _adjustForViewport2['default'])(elFuturePos, elRegion, visibleRect, newOverflowCfg);
 	    }
 	  }
 	
@@ -4428,7 +4495,10 @@ webpackJsonp([1],[
 	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
 	  // 相对于屏幕位置没变，而 left/top 变了
 	  // 例如 <div 'relative'><el absolute></div>
-	  _utils2['default'].offset(el, { left: newElRegion.left, top: newElRegion.top });
+	  _utils2['default'].offset(el, {
+	    left: newElRegion.left,
+	    top: newElRegion.top
+	  });
 	
 	  // need judge to in case set fixed with in css on height auto element
 	  if (newElRegion.width !== elRegion.width) {
@@ -4442,13 +4512,14 @@ webpackJsonp([1],[
 	  return {
 	    points: points,
 	    offset: offset,
+	    targetOffset: targetOffset,
 	    overflow: newOverflowCfg
 	  };
 	}
 	
-	domAlign.__getOffsetParent = getOffsetParent;
+	domAlign.__getOffsetParent = _getOffsetParent2['default'];
 	
-	domAlign.__getVisibleRectForElement = getVisibleRectForElement;
+	domAlign.__getVisibleRectForElement = _getVisibleRectForElement2['default'];
 	
 	exports['default'] = domAlign;
 	
@@ -4463,7 +4534,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 54 */
+/* 208 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4919,16 +4990,342 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 55 */
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(208);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	/**
+	 * 得到会导致元素显示不全的祖先元素
+	 */
+	
+	function getOffsetParent(element) {
+	  // ie 这个也不是完全可行
+	  /*
+	   <div style="width: 50px;height: 100px;overflow: hidden">
+	   <div style="width: 50px;height: 100px;position: relative;" id="d6">
+	   元素 6 高 100px 宽 50px<br/>
+	   </div>
+	   </div>
+	   */
+	  // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
+	  //  In other browsers it only includes elements with position absolute, relative or
+	  // fixed, not elements with overflow set to auto or scroll.
+	  //        if (UA.ie && ieMode < 8) {
+	  //            return element.offsetParent;
+	  //        }
+	  // 统一的 offsetParent 方法
+	  var doc = element.ownerDocument;
+	  var body = doc.body;
+	  var parent = undefined;
+	  var positionStyle = _utils2['default'].css(element, 'position');
+	  var skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
+	
+	  if (!skipStatic) {
+	    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
+	  }
+	
+	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
+	    positionStyle = _utils2['default'].css(parent, 'position');
+	    if (positionStyle !== 'static') {
+	      return parent;
+	    }
+	  }
+	  return null;
+	}
+	
+	exports['default'] = getOffsetParent;
+	module.exports = exports['default'];
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(208);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var _getOffsetParent = __webpack_require__(209);
+	
+	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
+	
+	/**
+	 * 获得元素的显示部分的区域
+	 */
+	function getVisibleRectForElement(element) {
+	  var visibleRect = {
+	    left: 0,
+	    right: Infinity,
+	    top: 0,
+	    bottom: Infinity
+	  };
+	  var el = (0, _getOffsetParent2['default'])(element);
+	  var scrollX = undefined;
+	  var scrollY = undefined;
+	  var winSize = undefined;
+	  var doc = element.ownerDocument;
+	  var win = doc.defaultView || doc.parentWindow;
+	  var body = doc.body;
+	  var documentElement = doc.documentElement;
+	
+	  // Determine the size of the visible rect by climbing the dom accounting for
+	  // all scrollable containers.
+	  while (el) {
+	    // clientWidth is zero for inline block elements in ie.
+	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (
+	    // body may have overflow set on it, yet we still get the entire
+	    // viewport. In some browsers, el.offsetParent may be
+	    // document.documentElement, so check for that too.
+	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible')) {
+	      var pos = _utils2['default'].offset(el);
+	      // add border
+	      pos.left += el.clientLeft;
+	      pos.top += el.clientTop;
+	      visibleRect.top = Math.max(visibleRect.top, pos.top);
+	      visibleRect.right = Math.min(visibleRect.right,
+	      // consider area without scrollBar
+	      pos.left + el.clientWidth);
+	      visibleRect.bottom = Math.min(visibleRect.bottom, pos.top + el.clientHeight);
+	      visibleRect.left = Math.max(visibleRect.left, pos.left);
+	    } else if (el === body || el === documentElement) {
+	      break;
+	    }
+	    el = (0, _getOffsetParent2['default'])(el);
+	  }
+	
+	  // Clip by window's viewport.
+	  scrollX = _utils2['default'].getWindowScrollLeft(win);
+	  scrollY = _utils2['default'].getWindowScrollTop(win);
+	  visibleRect.left = Math.max(visibleRect.left, scrollX);
+	  visibleRect.top = Math.max(visibleRect.top, scrollY);
+	  winSize = {
+	    width: _utils2['default'].viewportWidth(win),
+	    height: _utils2['default'].viewportHeight(win)
+	  };
+	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
+	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
+	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
+	}
+	
+	exports['default'] = getVisibleRectForElement;
+	module.exports = exports['default'];
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(208);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
+	  var pos = _utils2['default'].clone(elFuturePos);
+	  var size = {
+	    width: elRegion.width,
+	    height: elRegion.height
+	  };
+	
+	  if (overflow.adjustX && pos.left < visibleRect.left) {
+	    pos.left = visibleRect.left;
+	  }
+	
+	  // Left edge inside and right edge outside viewport, try to resize it.
+	  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
+	    size.width -= pos.left + size.width - visibleRect.right;
+	  }
+	
+	  // Right edge outside viewport, try to move it.
+	  if (overflow.adjustX && pos.left + size.width > visibleRect.right) {
+	    // 保证左边界和可视区域左边界对齐
+	    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
+	  }
+	
+	  // Top edge outside viewport, try to move it.
+	  if (overflow.adjustY && pos.top < visibleRect.top) {
+	    pos.top = visibleRect.top;
+	  }
+	
+	  // Top edge inside and bottom edge outside viewport, try to resize it.
+	  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
+	    size.height -= pos.top + size.height - visibleRect.bottom;
+	  }
+	
+	  // Bottom edge outside viewport, try to move it.
+	  if (overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
+	    // 保证上边界和可视区域上边界对齐
+	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
+	  }
+	
+	  return _utils2['default'].mix(pos, size);
+	}
+	
+	exports['default'] = adjustForViewport;
+	module.exports = exports['default'];
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _utils = __webpack_require__(208);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	function getRegion(node) {
+	  var offset = undefined;
+	  var w = undefined;
+	  var h = undefined;
+	  if (!_utils2['default'].isWindow(node) && node.nodeType !== 9) {
+	    offset = _utils2['default'].offset(node);
+	    w = _utils2['default'].outerWidth(node);
+	    h = _utils2['default'].outerHeight(node);
+	  } else {
+	    var win = _utils2['default'].getWindow(node);
+	    offset = {
+	      left: _utils2['default'].getWindowScrollLeft(win),
+	      top: _utils2['default'].getWindowScrollTop(win)
+	    };
+	    w = _utils2['default'].viewportWidth(win);
+	    h = _utils2['default'].viewportHeight(win);
+	  }
+	  offset.width = w;
+	  offset.height = h;
+	  return offset;
+	}
+	
+	exports['default'] = getRegion;
+	module.exports = exports['default'];
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _getAlignOffset = __webpack_require__(214);
+	
+	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
+	
+	function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
+	  var xy = undefined;
+	  var diff = undefined;
+	  var p1 = undefined;
+	  var p2 = undefined;
+	
+	  xy = {
+	    left: elRegion.left,
+	    top: elRegion.top
+	  };
+	
+	  p1 = (0, _getAlignOffset2['default'])(refNodeRegion, points[1]);
+	  p2 = (0, _getAlignOffset2['default'])(elRegion, points[0]);
+	
+	  diff = [p2.left - p1.left, p2.top - p1.top];
+	
+	  return {
+	    left: xy.left - diff[0] + offset[0] - targetOffset[0],
+	    top: xy.top - diff[1] + offset[1] - targetOffset[1]
+	  };
+	}
+	
+	exports['default'] = getElFuturePos;
+	module.exports = exports['default'];
+
+/***/ },
+/* 214 */
+/***/ function(module, exports) {
+
+	/**
+	 * 获取 node 上的 align 对齐点 相对于页面的坐标
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	function getAlignOffset(region, align) {
+	  var V = align.charAt(0);
+	  var H = align.charAt(1);
+	  var w = region.width;
+	  var h = region.height;
+	  var x = undefined;
+	  var y = undefined;
+	
+	  x = region.left;
+	  y = region.top;
+	
+	  if (V === 'c') {
+	    y += h / 2;
+	  } else if (V === 'b') {
+	    y += h;
+	  }
+	
+	  if (H === 'c') {
+	    x += w / 2;
+	  } else if (H === 'r') {
+	    x += w;
+	  }
+	
+	  return {
+	    left: x,
+	    top: y
+	  };
+	}
+	
+	exports['default'] = getAlignOffset;
+	module.exports = exports['default'];
+
+/***/ },
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(56);
+	module.exports = __webpack_require__(216);
 
 /***/ },
-/* 56 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4945,15 +5342,15 @@ webpackJsonp([1],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(57);
+	var _ChildrenUtils = __webpack_require__(217);
 	
 	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
 	
-	var _AnimateChild = __webpack_require__(58);
+	var _AnimateChild = __webpack_require__(218);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(62);
+	var _util = __webpack_require__(222);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -5052,6 +5449,11 @@ webpackJsonp([1],[
 	        }
 	        if (newChild) {
 	          newChildren.push(newChild);
+	        }
+	      });
+	      nextChildren.forEach(function (nextChild) {
+	        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	          newChildren.push(nextChild);
 	        }
 	      });
 	    } else {
@@ -5243,7 +5645,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 57 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5360,7 +5762,7 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 58 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5375,11 +5777,11 @@ webpackJsonp([1],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cssAnimation = __webpack_require__(59);
+	var _cssAnimation = __webpack_require__(219);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(62);
+	var _util = __webpack_require__(222);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -5458,13 +5860,13 @@ webpackJsonp([1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 59 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(60);
-	var Css = __webpack_require__(61);
+	var Event = __webpack_require__(220);
+	var Css = __webpack_require__(221);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -5616,7 +6018,7 @@ webpackJsonp([1],[
 	module.exports = cssAnimation;
 
 /***/ },
-/* 60 */
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5704,7 +6106,7 @@ webpackJsonp([1],[
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 61 */
+/* 221 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5735,7 +6137,7 @@ webpackJsonp([1],[
 	};
 
 /***/ },
-/* 62 */
+/* 222 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5768,7 +6170,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 63 */
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';

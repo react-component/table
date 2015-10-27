@@ -12,8 +12,9 @@ webpackJsonp([0],[
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var Table = __webpack_require__(3);
-	__webpack_require__(7);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a',
 	  className: 'a',
@@ -52,7 +53,7 @@ webpackJsonp([0],[
 	  );
 	}
 	
-	var table = React.render(React.createElement(
+	var table = ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(

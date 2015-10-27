@@ -3,19 +3,20 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(67);
+	module.exports = __webpack_require__(227);
 
 
 /***/ },
 
-/***/ 67:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var Table = __webpack_require__(3);
-	__webpack_require__(7);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
 	  title: '操作', dataIndex: '', key: 'd', render: function render() {
@@ -29,7 +30,7 @@ webpackJsonp([5],{
 	
 	var data = [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', d: 2, key: '3' }];
 	
-	var table = React.render(React.createElement(
+	var table = ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(
