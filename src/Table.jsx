@@ -124,8 +124,9 @@ const Table = React.createClass({
       const record = data[i];
       const key = keyFn ? keyFn(record, i) : undefined;
       const childrenColumn = record[childrenColumnName];
+      const isRowExpanded = this.isRowExpanded(record);
       let expandedRowContent;
-      if (expandedRowRender) {
+      if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i);
       }
       const className = rowClassName(record, i);
@@ -138,13 +139,13 @@ const Table = React.createClass({
         visible={visible}
         onExpand={this.onExpanded}
         expandable={childrenColumn || expandedRowContent}
-        expanded={this.isRowExpanded(record)}
+        expanded={isRowExpanded}
         prefixCls={`${props.prefixCls}-row`}
         childrenColumnName={childrenColumnName}
         columns={columns}
         key={key}/>);
 
-      const subVisible = visible && this.isRowExpanded(record);
+      const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent) {
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
@@ -169,6 +170,13 @@ const Table = React.createClass({
       return <col key={c.key} style={{width: c.width}}></col>;
     }));
     return <colgroup>{cols}</colgroup>;
+  },
+
+  isRowExpanded(record) {
+    const info = this.state.expandedRows.filter((i) => {
+      return i.record === record;
+    });
+    return info[0] && info[0].expanded;
   },
 
   render() {
@@ -209,13 +217,6 @@ const Table = React.createClass({
         </div>
       </div>
     );
-  },
-
-  isRowExpanded(record) {
-    const info = this.state.expandedRows.filter((i) => {
-      return i.record === record;
-    });
-    return info[0] && info[0].expanded;
   },
 });
 
