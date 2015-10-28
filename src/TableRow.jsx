@@ -29,6 +29,11 @@ const TableRow = React.createClass({
       let text = record[col.dataIndex];
 
       let expandIcon = null;
+      let tdProps;
+      let colSpan;
+      let rowSpan;
+      let notRender = false;
+      let align = 'left';
 
       if (i === 0 && expandable) {
         expandIcon = (<span
@@ -43,13 +48,26 @@ const TableRow = React.createClass({
       }
 
       if (render) {
-        text = render(text, record, index);
+        text = render(text, record, index) || {};
+        tdProps = text.props || {};
+
+        if (!React.isValidElement(text)) {
+          text = text.children;
+        }
+        rowSpan = tdProps.rowspan;
+        colSpan = tdProps.colspan;
+        align = tdProps.align || 'left';
       }
 
-      cells.push(<td key={col.key} className={`${colClassName}`}>
+      if (rowSpan === 0 || colSpan === 0) {
+        notRender = true;
+      }
+      if (!notRender) {
+        cells.push(<td key={col.key} style={{textAlign: align}} colSpan={colSpan} rowSpan={rowSpan} className={`${colClassName}`}>
         {expandIcon}
         {text}
-      </td>);
+        </td>);
+      }
     }
     return (
       <tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
