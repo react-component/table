@@ -11,7 +11,7 @@ describe('table', function () {
   document.body.appendChild(div);
 
   var columns = [
-    {title: '表头1', dataIndex: 'a', headerColSpan: 2,width: 100,render: function(o, row, index){
+    {title: '表头1', dataIndex: 'a', headerColspan: 2,width: 100,render: function(o, row, index){
       //第一列中第一行合并两列
       let obj ={
         children:o,
@@ -23,7 +23,7 @@ describe('table', function () {
       return obj;
 
     }},
-    {id: '123', title: '表头2', headerColSpan: 0,dataIndex: 'b', width: 100, render: function(o, row, index){
+    {id: '123', title: '表头2', headerColspan: 0,dataIndex: 'b', width: 100, render: function(o, row, index){
       //2列被合并掉了colspan:0，第二列中第一行合并两行rowspan:2
       let obj ={
         children:o,
@@ -79,7 +79,7 @@ describe('table', function () {
     let colspanNum = 0;
     let cLen = columns.length;
     for(let i = 0; i < cLen; i++){
-      let headerColSpan = columns[i].headerColSpan;
+      let headerColSpan = columns[i].headerColspan;
       if(headerColSpan){
         colspanNum += headerColSpan
       }

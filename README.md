@@ -48,8 +48,8 @@ var Table = require('rc-table');
 require('rc-table/assets/index.css');
 
 var columns = [
-  {title: '表头1', dataIndex: 'a', headerColSpan: 2,key:'a',width: 100},
-  {id: '123', title: '表头2', dataIndex: 'b', headerColSpan: 0,key:'b', width: 100,, render: function(o, row, index){
+  {title: '表头1', dataIndex: 'a', headerColspan: 2,key:'a',width: 100},
+  {id: '123', title: '表头2', dataIndex: 'b', headerColspan: 0,key:'b', width: 100,, render: function(o, row, index){
       let obj ={
         children:o,
         props:{}

@@ -9,7 +9,7 @@ var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 var columns = [
-  {title: '手机号', dataIndex: 'a', headerColSpan: 2, width: 100, key: 'a', render: function(o, row, index){
+  {title: '手机号', dataIndex: 'a', headerColspan: 2, width: 100, key: 'a', render: function(o, row, index){
     let obj = {
       children: o,
       props:{
@@ -31,7 +31,7 @@ var columns = [
     }
     return obj;
   }},
-  {title: '电话', dataIndex: 'b', headerColSpan: 0, width: 100,key: 'b', render: function(o, row, index){
+  {title: '电话', dataIndex: 'b', headerColspan: 0, width: 100,key: 'b', render: function(o, row, index){
     let obj = {
       children: o,
       props:{
