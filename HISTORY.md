@@ -1,9 +1,6 @@
 # History
 ----
 
-## 3.3.1 / 2015-10-28
-
-- support th colspan,td colspan and rowspan
 
 ## 3.3.0 / 2015-10-27
 
