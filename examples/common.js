@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		7:0
+/******/ 		8:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"className","1":"dropdown","2":"expandedRowRender","3":"key","4":"scrollBody","5":"simple","6":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"className","1":"colspan-rowspan","2":"dropdown","3":"expandedRowRender","4":"key","5":"scrollBody","6":"simple","7":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -19769,11 +19769,13 @@
 	    }
 	    ths = ths.concat(this.props.columns);
 	    return ths.map(function (c) {
-	      return _react2['default'].createElement(
-	        'th',
-	        { key: c.key, className: c.className || '' },
-	        c.title
-	      );
+	      if (c.colSpan !== 0) {
+	        return _react2['default'].createElement(
+	          'th',
+	          { key: c.key, colSpan: c.colSpan, className: c.className || '' },
+	          c.title
+	        );
+	      }
 	    });
 	  },
 	
@@ -19973,6 +19975,11 @@
 	      var text = record[col.dataIndex];
 	
 	      var expandIcon = null;
+	      var tdProps = undefined;
+	      var colSpan = undefined;
+	      var rowSpan = undefined;
+	      var notRender = false;
+	      var align = 'left';
 	
 	      if (i === 0 && expandable) {
 	        expandIcon = _react2['default'].createElement('span', {
@@ -19991,15 +19998,28 @@
 	      }
 	
 	      if (render) {
-	        text = render(text, record, index);
+	        text = render(text, record, index) || {};
+	        tdProps = text.props || {};
+	
+	        if (!_react2['default'].isValidElement(text)) {
+	          text = text.children;
+	        }
+	        rowSpan = tdProps.rowSpan;
+	        colSpan = tdProps.colSpan;
+	        align = tdProps.align || 'left';
 	      }
 	
-	      cells.push(_react2['default'].createElement(
-	        'td',
-	        { key: col.key, className: '' + colClassName },
-	        expandIcon,
-	        text
-	      ));
+	      if (rowSpan === 0 || colSpan === 0) {
+	        notRender = true;
+	      }
+	      if (!notRender) {
+	        cells.push(_react2['default'].createElement(
+	          'td',
+	          { key: col.key, style: { textAlign: align }, colSpan: colSpan, rowSpan: rowSpan, className: '' + colClassName },
+	          expandIcon,
+	          text
+	        ));
+	      }
 	    }
 	    return _react2['default'].createElement(
 	      'tr',
