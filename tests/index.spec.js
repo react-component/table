@@ -11,26 +11,26 @@ describe('table', function () {
   document.body.appendChild(div);
 
   var columns = [
-    {title: '表头1', dataIndex: 'a', headerColspan: 2,width: 100,render: function(o, row, index){
+    {title: '表头1', dataIndex: 'a', colSpan: 2,width: 100,render: function(o, row, index){
       //第一列中第一行合并两列
       let obj ={
         children:o,
         props:{}
       };
       if(index === 0){
-        obj.props.colspan = 2;
+        obj.props.colSpan = 2;
       }
       return obj;
 
     }},
-    {id: '123', title: '表头2', headerColspan: 0,dataIndex: 'b', width: 100, render: function(o, row, index){
-      //2列被合并掉了colspan:0，第二列中第一行合并两行rowspan:2
+    {id: '123', title: '表头2', colSpan: 0,dataIndex: 'b', width: 100, render: function(o, row, index){
+      //2列被合并掉了colSpan:0，第二列中第一行合并两行rowSpan:2
       let obj ={
         children:o,
         props:{}
       }
       if(index === 0){
-        obj.props.colspan = 0;
+        obj.props.colSpan = 0;
       }
       return obj;
     }},
@@ -40,10 +40,10 @@ describe('table', function () {
         props:{}
       }
       if(index === 0){
-        obj.props.rowspan = 2;
+        obj.props.rowSpan = 2;
       }
       if(index === 1){
-        obj.props.rowspan = 0;
+        obj.props.rowSpan = 0;
       }
       return obj;
     }},
@@ -74,12 +74,12 @@ describe('table', function () {
     expect(node.find('tbody tr').length).to.be(data.length);
   });
 
-  it('th colspan works', function () {
+  it('th colSpan works', function () {
     expect(node.find('table').length).to.be(1);
     let colspanNum = 0;
     let cLen = columns.length;
     for(let i = 0; i < cLen; i++){
-      let headerColSpan = columns[i].headerColspan;
+      let headerColSpan = columns[i].colSpan;
       if(headerColSpan){
         colspanNum += headerColSpan
       }
@@ -87,7 +87,7 @@ describe('table', function () {
     expect(node.find('thead th').length).to.be(columns.length - (colspanNum - 1));
   });
 
-  it('td colspan works', function () {
+  it('td colSpan works', function () {
     expect(node.find('table').length).to.be(1);
 
     let colspan = 2;
@@ -103,7 +103,7 @@ describe('table', function () {
     expect(trFstTds).to.be(columns.length - ( 2 - 1));
   });
 
-  it('td rwowspan works', function () {
+  it('td rowSpan works', function () {
     expect(node.find('table').length).to.be(1);
     let rowspanNum = 2;
     expect(node.find('tbody tr').eq(1).find('td').length).to.be(columns.length - (rowspanNum - 1));

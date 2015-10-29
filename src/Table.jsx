@@ -92,8 +92,8 @@ const Table = React.createClass({
     }
     ths = ths.concat(this.props.columns);
     return ths.map((c)=> {
-      if (c.headerColspan !== 0) {
-        return <th key={c.key} colSpan={c.headerColspan} className={c.className || ''}>{c.title}</th>;
+      if (c.colSpan !== 0) {
+        return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
       }
     });
   },

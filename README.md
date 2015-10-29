@@ -48,17 +48,17 @@ var Table = require('rc-table');
 require('rc-table/assets/index.css');
 
 var columns = [
-  {title: '表头1', dataIndex: 'a', headerColspan: 2,key:'a',width: 100},
-  {id: '123', title: '表头2', dataIndex: 'b', headerColspan: 0,key:'b', width: 100, render: function(o, row, index){
+  {title: '表头1', dataIndex: 'a', colSpan: 2,key:'a',width: 100},
+  {id: '123', title: '表头2', dataIndex: 'b', colSpan: 0,key:'b', width: 100, render: function(o, row, index){
       let obj ={
         children:o,
         props:{}
       }
       if(index === 0){
-        obj.props.rowspan = 2;
+        obj.props.rowSpan = 2;
       }
       if(index === 1){
-        obj.props.rowspan = 0;
+        obj.props.rowSpan = 0;
       }
       return obj;
     }},
@@ -109,10 +109,10 @@ var table = React.render(
           <td>additional className</td>
       </tr>
       <tr>
-         <td>headerColspan</td>
+         <td>colSpan</td>
          <td>Number</td>
          <th></th>
-         <td>thead colspan of this column</td>
+         <td>thead colSpan of this column</td>
       </tr>
       <tr>
           <td>useFixedHeader</td>
@@ -200,7 +200,7 @@ var table = React.render(
                       <td>render</td>
                       <td>Function(value, row, index)</td>
                       <th></th>
-                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{children: value, props:{align:'center', colspan: 1, rowspan:1}}==>'children' is the text of this cell, props is some setting of this cell, eg: 'align' set text-align, 'colspan' set td colspan, 'rowspan' set td rowspan</td>
+                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{children: value, props:{align:'center', colSpan: 1, rowSpan:1}}==>'children' is the text of this cell, props is some setting of this cell, eg: 'align' set text-align, 'colspan' set td colspan, 'rowspan' set td rowspan</td>
                   </tr>
                 </tbody>
             </table>

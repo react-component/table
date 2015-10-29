@@ -9,7 +9,7 @@ var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 var columns = [
-  {title: '手机号', dataIndex: 'a', headerColspan: 2, width: 100, key: 'a', render: function(o, row, index){
+  {title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function(o, row, index){
     let obj = {
       children: o,
       props:{
@@ -22,25 +22,25 @@ var columns = [
     }
     //第5行合并两列
     if(index === 4){
-      obj.props.colspan = 2;
+      obj.props.colSpan = 2;
       obj.props.align = 'center';
     }
 
     if(index === 5){
-      obj.props.colspan = 6;
+      obj.props.colSpan = 6;
     }
     return obj;
   }},
-  {title: '电话', dataIndex: 'b', headerColspan: 0, width: 100,key: 'b', render: function(o, row, index){
+  {title: '电话', dataIndex: 'b', colSpan: 0, width: 100,key: 'b', render: function(o, row, index){
     let obj = {
       children: o,
       props:{
         align:'left'
       }
     };
-    //列合并掉的表格设置colspan=0，不会去渲染
+    //列合并掉的表格设置colSpan=0，不会去渲染
     if(index === 4 || index === 5){
-      obj.props.colspan = 0;
+      obj.props.colSpan = 0;
     }
     return obj;
   }},
@@ -53,7 +53,7 @@ var columns = [
     };
 
     if(index === 5){
-      obj.props.colspan = 0;
+      obj.props.colSpan = 0;
     }
     return obj;
   }},
@@ -65,10 +65,10 @@ var columns = [
       }
     };
     if(index === 0){
-      obj.props.rowspan = 2;
+      obj.props.rowSpan = 2;
     }
     if(index === 1 || index === 5){
-      obj.props.rowspan = 0;
+      obj.props.rowSpan = 0;
     }
 
     return obj;
@@ -80,7 +80,7 @@ var columns = [
         children: o,
         props:{
          align:'left',
-          colspan:0
+          colSpan:0
         }
       }
     }
@@ -91,7 +91,7 @@ var columns = [
       if(index === 5){
         return {
           props:{
-            colspan: 0
+            colSpan: 0
           }
         }
       }

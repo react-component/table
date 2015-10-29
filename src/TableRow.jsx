@@ -54,8 +54,8 @@ const TableRow = React.createClass({
         if (!React.isValidElement(text)) {
           text = text.children;
         }
-        rowSpan = tdProps.rowspan;
-        colSpan = tdProps.colspan;
+        rowSpan = tdProps.rowSpan;
+        colSpan = tdProps.colSpan;
         align = tdProps.align || 'left';
       }
 
