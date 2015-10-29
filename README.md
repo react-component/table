@@ -48,8 +48,20 @@ var Table = require('rc-table');
 require('rc-table/assets/index.css');
 
 var columns = [
-  {title: '表头1', dataIndex: 'a', key:'a',width: 100},
-  {id: '123', title: '表头2', dataIndex: 'b', key:'b', width: 100},
+  {title: '表头1', dataIndex: 'a', colSpan: 2,key:'a',width: 100},
+  {id: '123', title: '表头2', dataIndex: 'b', colSpan: 0,key:'b', width: 100, render: function(o, row, index){
+      let obj ={
+        children:o,
+        props:{}
+      }
+      if(index === 0){
+        obj.props.rowSpan = 2;
+      }
+      if(index === 1){
+        obj.props.rowSpan = 0;
+      }
+      return obj;
+    }},
   {title: '表头3', dataIndex: 'c',  key:'c',width: 200},
   {
     title: '操作', dataIndex: '',  key:'d',render: function () {
@@ -95,6 +107,12 @@ var table = React.render(
           <td>String</td>
           <th></th>
           <td>additional className</td>
+      </tr>
+      <tr>
+         <td>colSpan</td>
+         <td>Number</td>
+         <th></th>
+         <td>thead colSpan of this column</td>
       </tr>
       <tr>
           <td>useFixedHeader</td>
@@ -179,10 +197,10 @@ var table = React.render(
                       <td>he width of the specific proportion calculation according to the width of the columns</td>
                   </tr>
                   <tr>
-                      <td>renderer</td>
-                      <td>Function(value, record)</td>
+                      <td>render</td>
+                      <td>Function(value, row, index)</td>
                       <th></th>
-                      <td>The render function of cell, has two params: the text of this cell and the record of this row</td>
+                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{children: value, props:{align:'center', colSpan: 1, rowSpan:1}}==>'children' is the text of this cell, props is some setting of this cell, eg: 'align' set text-align, 'colspan' set td colspan, 'rowspan' set td rowspan</td>
                   </tr>
                 </tbody>
             </table>
