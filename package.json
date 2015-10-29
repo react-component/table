@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "table ui component for react",
   "keywords": [
     "react",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
-    "precommit-hook": "^1.0.7",
+    "precommit-hook-eslint": "3.x",
     "rc-dropdown": "~1.1.2",
     "rc-menu": "~3.4.0",
     "rc-server": "3.x",
@@ -49,7 +49,7 @@
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0"
   },
-  "precommit": [
+  "pre-commit": [
     "lint"
   ]
 }
