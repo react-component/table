@@ -24,9 +24,7 @@ webpackJsonp([1],{
 	var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
-	      props: {
-	        align: 'left'
-	      }
+	      props: {}
 	    };
 	    //设置第一行为链接
 	    if (index === 0) {
@@ -39,7 +37,6 @@ webpackJsonp([1],{
 	    //第5行合并两列
 	    if (index === 4) {
 	      obj.props.colSpan = 2;
-	      obj.props.align = 'center';
 	    }
 	
 	    if (index === 5) {
@@ -49,9 +46,7 @@ webpackJsonp([1],{
 	  } }, { title: '电话', dataIndex: 'b', colSpan: 0, width: 100, key: 'b', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
-	      props: {
-	        align: 'left'
-	      }
+	      props: {}
 	    };
 	    //列合并掉的表格设置colSpan=0，不会去渲染
 	    if (index === 4 || index === 5) {
@@ -61,9 +56,7 @@ webpackJsonp([1],{
 	  } }, { title: '姓名', dataIndex: 'c', width: 100, key: 'c', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
-	      props: {
-	        align: 'left'
-	      }
+	      props: {}
 	    };
 	
 	    if (index === 5) {
@@ -73,9 +66,7 @@ webpackJsonp([1],{
 	  } }, { title: '住址', dataIndex: 'd', width: 200, key: 'd', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
-	      props: {
-	        align: 'left'
-	      }
+	      props: {}
 	    };
 	    if (index === 0) {
 	      obj.props.rowSpan = 2;
@@ -86,15 +77,14 @@ webpackJsonp([1],{
 	
 	    return obj;
 	  } }, { title: '性别', dataIndex: 'e', width: 200, key: 'e', render: function render(o, row, index) {
+	    var obj = {
+	      children: o,
+	      props: {}
+	    };
 	    if (index === 5) {
-	      return {
-	        children: o,
-	        props: {
-	          align: 'left',
-	          colSpan: 0
-	        }
-	      };
+	      obj.props.colSpan = 0;
 	    }
+	    return obj;
 	  } }, {
 	  title: '操作', dataIndex: '', key: 'f',
 	  render: function render(o, row, index) {

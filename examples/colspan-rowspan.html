@@ -261,9 +261,7 @@ var columns = [
   {<span class="hljs-string">title:</span> <span class="hljs-string">'手机号'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">colSpan:</span> <span class="hljs-number">2</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'a'</span>, <span class="hljs-string">render:</span> function(o, row, index){
     let obj = {
 <span class="hljs-label">      children:</span> o,
-<span class="hljs-label">      props:</span>{
-<span class="hljs-label">        align:</span><span class="hljs-string">'left'</span>
-      }
+<span class="hljs-label">      props:</span> {}
     };
     <span class="hljs-comment">//设置第一行为链接</span>
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">0</span>){
@@ -272,7 +270,6 @@ var columns = [
     <span class="hljs-comment">//第5行合并两列</span>
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">4</span>){
       obj.props.colSpan = <span class="hljs-number">2</span>;
-      obj.props.align = <span class="hljs-string">'center'</span>;
     }
 
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">5</span>){
@@ -283,9 +280,7 @@ var columns = [
   {<span class="hljs-string">title:</span> <span class="hljs-string">'电话'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">colSpan:</span> <span class="hljs-number">0</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>,<span class="hljs-string">key:</span> <span class="hljs-string">'b'</span>, <span class="hljs-string">render:</span> function(o, row, index){
     let obj = {
 <span class="hljs-label">      children:</span> o,
-<span class="hljs-label">      props:</span>{
-<span class="hljs-label">        align:</span><span class="hljs-string">'left'</span>
-      }
+<span class="hljs-label">      props:</span> {}
     };
     <span class="hljs-comment">//列合并掉的表格设置colSpan=0，不会去渲染</span>
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">4</span> || index === <span class="hljs-number">5</span>){
@@ -296,9 +291,7 @@ var columns = [
   {<span class="hljs-string">title:</span> <span class="hljs-string">'姓名'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'c'</span>, <span class="hljs-string">render:</span> function(o, row, index){
     let obj = {
 <span class="hljs-label">      children:</span> o,
-<span class="hljs-label">      props:</span>{
-<span class="hljs-label">        align:</span><span class="hljs-string">'left'</span>
-      }
+<span class="hljs-label">      props:</span> {}
     };
 
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">5</span>){
@@ -309,9 +302,7 @@ var columns = [
   {<span class="hljs-string">title:</span> <span class="hljs-string">'住址'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'d'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">200</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'d'</span>, <span class="hljs-string">render:</span> function(o, row, index){
     let obj = {
 <span class="hljs-label">      children:</span> o,
-<span class="hljs-label">      props:</span>{
-<span class="hljs-label">        align:</span><span class="hljs-string">'left'</span>
-      }
+<span class="hljs-label">      props:</span> {}
     };
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">0</span>){
       obj.props.rowSpan = <span class="hljs-number">2</span>;
@@ -324,15 +315,14 @@ var columns = [
 
   }},
   {<span class="hljs-string">title:</span> <span class="hljs-string">'性别'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'e'</span>,  <span class="hljs-string">width:</span> <span class="hljs-number">200</span>, <span class="hljs-string">key:</span> <span class="hljs-string">'e'</span>, <span class="hljs-string">render:</span> function(o, row, index){
+    let obj = {
+<span class="hljs-label">      children:</span> o,
+<span class="hljs-label">      props:</span> {}
+    };
     <span class="hljs-keyword">if</span>(index === <span class="hljs-number">5</span>){
-      <span class="hljs-keyword">return</span> {
-<span class="hljs-label">        children:</span> o,
-<span class="hljs-label">        props:</span>{
-<span class="hljs-label">         align:</span><span class="hljs-string">'left'</span>,
-<span class="hljs-label">          colSpan:</span><span class="hljs-number">0</span>
-        }
-      }
+      obj.props.colSpan = <span class="hljs-number">0</span>;
     }
+    <span class="hljs-keyword">return</span> obj;
   }},
   {
 <span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>,<span class="hljs-string">key:</span> <span class="hljs-string">'f'</span>,

@@ -19979,7 +19979,6 @@
 	      var colSpan = undefined;
 	      var rowSpan = undefined;
 	      var notRender = false;
-	      var align = 'left';
 	
 	      if (i === 0 && expandable) {
 	        expandIcon = _react2['default'].createElement('span', {
@@ -20006,7 +20005,6 @@
 	        }
 	        rowSpan = tdProps.rowSpan;
 	        colSpan = tdProps.colSpan;
-	        align = tdProps.align || 'left';
 	      }
 	
 	      if (rowSpan === 0 || colSpan === 0) {
@@ -20015,7 +20013,7 @@
 	      if (!notRender) {
 	        cells.push(_react2['default'].createElement(
 	          'td',
-	          { key: col.key, style: { textAlign: align }, colSpan: colSpan, rowSpan: rowSpan, className: '' + colClassName },
+	          { key: col.key, colSpan: colSpan, rowSpan: rowSpan, className: '' + colClassName },
 	          expandIcon,
 	          text
 	        ));
