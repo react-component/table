@@ -93,7 +93,7 @@ const Table = React.createClass({
     ths = ths.concat(this.props.columns);
     return ths.map((c)=> {
       if (c.colSpan !== 0) {
-        return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
+        return <th key={c.key} style={{textAlign: c.align || undefined}} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
       }
     });
   },

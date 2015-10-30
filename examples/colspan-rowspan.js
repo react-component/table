@@ -9,7 +9,7 @@ var Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 var columns = [
-  {title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function(o, row, index){
+  {title: '手机号', dataIndex: 'a', align: 'center',colSpan: 2, width: 100, key: 'a', render: function(o, row, index){
     let obj = {
       children: o,
       props:{
@@ -75,15 +75,14 @@ var columns = [
 
   }},
   {title: '性别', dataIndex: 'e',  width: 200, key: 'e', render: function(o, row, index){
+    let obj = {
+      children: o,
+      props:{}
+    };
     if(index === 5){
-      return {
-        children: o,
-        props:{
-         align:'left',
-          colSpan:0
-        }
-      }
+      obj.props.colSpan = 0;
     }
+    return obj;
   }},
   {
     title: '操作', dataIndex: '',key: 'f',
