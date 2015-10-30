@@ -33,7 +33,6 @@ const TableRow = React.createClass({
       let colSpan;
       let rowSpan;
       let notRender = false;
-      let align = 'left';
 
       if (i === 0 && expandable) {
         expandIcon = (<span
@@ -56,14 +55,13 @@ const TableRow = React.createClass({
         }
         rowSpan = tdProps.rowSpan;
         colSpan = tdProps.colSpan;
-        align = tdProps.align || 'left';
       }
 
       if (rowSpan === 0 || colSpan === 0) {
         notRender = true;
       }
       if (!notRender) {
-        cells.push(<td key={col.key} style={{textAlign: align}} colSpan={colSpan} rowSpan={rowSpan} className={`${colClassName}`}>
+        cells.push(<td key={col.key} colSpan={colSpan} rowSpan={rowSpan} className={`${colClassName}`}>
         {expandIcon}
         {text}
         </td>);
