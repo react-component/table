@@ -3,20 +3,20 @@ webpackJsonp([7],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(229);
+	module.exports = __webpack_require__(230);
 
 
 /***/ },
 
-/***/ 229:
+/***/ 230:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(158);
-	var Table = __webpack_require__(159);
-	__webpack_require__(163);
+	var ReactDOM = __webpack_require__(159);
+	var Table = __webpack_require__(160);
+	__webpack_require__(164);
 	
 	var MyTable = React.createClass({
 	  displayName: 'MyTable',
