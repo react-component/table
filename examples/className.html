@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <title>className.js - example - rc-table@3.5.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -43,170 +42,153 @@
       hyphens: none;
       color: #E5E5C2;
     }
-  </style>
-  <style>
-/*
 
+    /*
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
-
 */
 
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #23241f;
-  -webkit-text-size-adjust: none;
-}
+    .hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0.5em;
+      background: #23241f;
+      -webkit-text-size-adjust: none;
+    }
 
-.hljs,
-.hljs-tag,
-.css .hljs-rule,
-.css .hljs-value,
-.aspectj .hljs-function,
-.css .hljs-function
-.hljs-preprocessor,
-.hljs-pragma {
-  color: #f8f8f2;
-}
+    .hljs,
+    .hljs-tag,
+    .css .hljs-rules,
+    .css .hljs-value,
+    .css .hljs-function
+    .hljs-preprocessor,
+    .hljs-pragma {
+      color: #f8f8f2;
+    }
 
-.hljs-strongemphasis,
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
-}
+    .hljs-strongemphasis,
+    .hljs-strong,
+    .hljs-emphasis {
+      color: #a8a8a2;
+    }
 
-.hljs-bullet,
-.hljs-blockquote,
-.hljs-horizontal_rule,
-.hljs-number,
-.hljs-regexp,
-.alias .hljs-keyword,
-.hljs-literal,
-.hljs-hexcolor {
-  color: #ae81ff;
-}
+    .hljs-bullet,
+    .hljs-blockquote,
+    .hljs-horizontal_rule,
+    .hljs-number,
+    .hljs-regexp,
+    .alias .hljs-keyword,
+    .hljs-literal,
+    .hljs-hexcolor {
+      color: #ae81ff;
+    }
 
-.hljs-code,
-.hljs-title,
-.css .hljs-class,
-.hljs-class .hljs-title:last-child {
-  color: #a6e22e;
-  /*color: #e6db74;*/
-}
+    .hljs-tag .hljs-value,
+    .hljs-code,
+    .hljs-title,
+    .css .hljs-class,
+    .hljs-class .hljs-title:last-child {
+      color: #a6e22e;
+    }
 
-.hljs-link_url {
-  font-size: 80%;
-}
+    .hljs-link_url {
+      font-size: 80%;
+    }
 
-.hljs-strong,
-.hljs-strongemphasis {
-  font-weight: bold;
-}
+    .hljs-strong,
+    .hljs-strongemphasis {
+      font-weight: bold;
+    }
 
-.hljs-emphasis,
-.hljs-strongemphasis,
-.hljs-class .hljs-title:last-child,
-.hljs-typename {
-  font-style: italic;
-}
+    .hljs-emphasis,
+    .hljs-strongemphasis,
+    .hljs-class .hljs-title:last-child {
+      font-style: italic;
+    }
 
-.hljs-keyword,
-.ruby .hljs-class .hljs-keyword:first-child,
-.ruby .hljs-function .hljs-keyword,
-.hljs-function,
-.hljs-change,
-.hljs-winutils,
-.hljs-flow,
-.nginx .hljs-title,
-.tex .hljs-special,
-.hljs-header,
-.hljs-symbol,
-.hljs-symbol .hljs-string,
-.hljs-tag .hljs-title,
-.hljs-value,
-.alias .hljs-keyword:first-child,
-.css .hljs-tag,
-.css .unit,
-.css .hljs-important {
-  color: #f92672;
-}
+    .hljs-keyword,
+    .hljs-function,
+    .hljs-change,
+    .hljs-winutils,
+    .hljs-flow,
+    .nginx .hljs-title,
+    .tex .hljs-special,
+    .hljs-header,
+    .hljs-attribute,
+    .hljs-symbol,
+    .hljs-symbol .hljs-string,
+    .hljs-tag .hljs-title,
+    .hljs-value,
+    .alias .hljs-keyword:first-child,
+    .css .hljs-tag,
+    .css .unit,
+    .css .hljs-important {
+      color: #f92672;
+    }
 
-.hljs-function .hljs-keyword,
-.hljs-class .hljs-keyword:first-child,
-.hljs-aspect .hljs-keyword:first-child,
-.hljs-constant,
-.hljs-typename,
-.hljs-name,
-.css .hljs-attribute {
-  color: #66d9ef;
-}
+    .hljs-function .hljs-keyword,
+    .hljs-class .hljs-keyword:first-child,
+    .hljs-constant,
+    .css .hljs-attribute {
+      color: #66d9ef;
+    }
 
-.hljs-variable,
-.hljs-params,
-.hljs-class .hljs-title,
-.hljs-aspect .hljs-title {
-  color: #f8f8f2;
-}
+    .hljs-variable,
+    .hljs-params,
+    .hljs-class .hljs-title {
+      color: #f8f8f2;
+    }
 
-.hljs-tag .hljs-value,
-.hljs-string,
-.css .hljs-id,
-.hljs-subst,
-.hljs-type,
-.ruby .hljs-class .hljs-parent,
-.django .hljs-template_tag,
-.django .hljs-variable,
-.smalltalk .hljs-class,
-.django .hljs-filter .hljs-argument,
-.smalltalk .hljs-localvars,
-.smalltalk .hljs-array,
-.hljs-attr_selector,
-.hljs-pseudo,
-.hljs-addition,
-.hljs-stream,
-.hljs-envvar,
-.apache .hljs-tag,
-.apache .hljs-cbracket,
-.tex .hljs-command,
-.hljs-prompt,
-.hljs-link_label,
-.hljs-link_url {
-  color: #e6db74;
-}
+    .hljs-string,
+    .css .hljs-id,
+    .hljs-subst,
+    .hljs-type,
+    .ruby .hljs-class .hljs-parent,
+    .hljs-built_in,
+    .django .hljs-template_tag,
+    .django .hljs-variable,
+    .smalltalk .hljs-class,
+    .django .hljs-filter .hljs-argument,
+    .smalltalk .hljs-localvars,
+    .smalltalk .hljs-array,
+    .hljs-attr_selector,
+    .hljs-pseudo,
+    .hljs-addition,
+    .hljs-stream,
+    .hljs-envvar,
+    .apache .hljs-tag,
+    .apache .hljs-cbracket,
+    .tex .hljs-command,
+    .hljs-prompt,
+    .hljs-link_label,
+    .hljs-link_url {
+      color: #e6db74;
+    }
 
-.hljs-comment,
-.hljs-annotation,
-.hljs-decorator,
-.hljs-pi,
-.hljs-doctype,
-.hljs-deletion,
-.hljs-shebang,
-.apache .hljs-sqbracket,
-.tex .hljs-formula {
-  color: #75715e;
-}
+    .hljs-comment,
+    .hljs-javadoc,
+    .hljs-annotation,
+    .hljs-decorator,
+    .hljs-template_comment,
+    .hljs-pi,
+    .hljs-doctype,
+    .hljs-deletion,
+    .hljs-shebang,
+    .apache .hljs-sqbracket,
+    .tex .hljs-formula {
+      color: #75715e;
+    }
 
-.coffeescript .javascript,
-.javascript .xml,
-.tex .hljs-formula,
-.xml .javascript,
-.xml .vbscript,
-.xml .css,
-.xml .hljs-cdata,
-.xml .php,
-.php .xml {
-  opacity: 0.5;
-}
-/***********/
-.hljs-attribute{
-  color: #a6e22e;
-}
-/***** node keyword ******/
-.hljs-built_in{
-  color: #3396dc;
-  font-weight: bold;
-}
+    .coffeescript .javascript,
+    .javascript .xml,
+    .tex .hljs-formula,
+    .xml .javascript,
+    .xml .vbscript,
+    .xml .css,
+    .xml .hljs-cdata,
+    .xml .php,
+    .php .xml {
+      opacity: 0.5;
+    }
   </style>
   <style>
     .container {
@@ -257,73 +239,73 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.5.0</h1>
+    <h1>rc-table@3.4.1</h1>
 
     <p>table ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="className.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
+  <div class="highlight">
+    <pre><code><span class="hljs-string">'use strict'</span>;
 
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">var</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
-<span class="hljs-keyword">var</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
-<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
+var React = require(<span class="hljs-string">'react'</span>);
+var ReactDOM = require(<span class="hljs-string">'react-dom'</span>);
+var Table = require(<span class="hljs-string">'rc-table'</span>);
+require(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">var</span> columns = [
-  {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>,
-    className:<span class="hljs-string">'a'</span>,
-    key:<span class="hljs-string">'a'</span>,width: <span class="hljs-number">100</span>},
-  {id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>,
-    className:<span class="hljs-string">'b'</span>,
-    key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
-  {title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>,
-    className:<span class="hljs-string">'c'</span>,
-    key:<span class="hljs-string">'c'</span>,width: <span class="hljs-number">200</span>},
+var columns = [
+  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头1'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'a'</span>,
+<span class="hljs-label">    className:</span><span class="hljs-string">'a'</span>,
+<span class="hljs-label">    key:</span><span class="hljs-string">'a'</span>,<span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+  {<span class="hljs-string">id:</span> <span class="hljs-string">'123'</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'表头2'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'b'</span>,
+<span class="hljs-label">    className:</span><span class="hljs-string">'b'</span>,
+<span class="hljs-label">    key:</span><span class="hljs-string">'b'</span>, <span class="hljs-string">width:</span> <span class="hljs-number">100</span>},
+  {<span class="hljs-string">title:</span> <span class="hljs-string">'表头3'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">'c'</span>,
+<span class="hljs-label">    className:</span><span class="hljs-string">'c'</span>,
+<span class="hljs-label">    key:</span><span class="hljs-string">'c'</span>,<span class="hljs-string">width:</span> <span class="hljs-number">200</span>},
   {
-    title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>,
-    className:<span class="hljs-string">'d'</span>,
-    key:<span class="hljs-string">'d'</span>,render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-label">    title:</span> <span class="hljs-string">'操作'</span>, <span class="hljs-string">dataIndex:</span> <span class="hljs-string">''</span>,
+<span class="hljs-label">    className:</span><span class="hljs-string">'d'</span>,
+<span class="hljs-label">    key:</span><span class="hljs-string">'d'</span>,<span class="hljs-string">render:</span> function () {
+    <span class="hljs-keyword">return</span> &lt;a href=<span class="hljs-string">"#"</span>&gt;操作&lt;/a&gt;
   }
   }
 ];
 
-var data = [{a: '123',key:'1'}, {a: 'cdd', b: 'edd',key:'2'}, {a: '1333', c: 'eee', d: 2,key:'3'}];
+var data = [{<span class="hljs-string">a:</span> <span class="hljs-string">'123'</span>,<span class="hljs-string">key:</span><span class="hljs-string">'1'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'cdd'</span>, <span class="hljs-string">b:</span> <span class="hljs-string">'edd'</span>,<span class="hljs-string">key:</span><span class="hljs-string">'2'</span>}, {<span class="hljs-string">a:</span> <span class="hljs-string">'1333'</span>, <span class="hljs-string">c:</span> <span class="hljs-string">'eee'</span>, <span class="hljs-string">d:</span> <span class="hljs-number">2</span>,<span class="hljs-string">key:</span><span class="hljs-string">'3'</span>}];
 
 function rowClassName(record,i){
-  return 'row-'+i;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'row-'</span>+i;
 }
 
 function expandedRowClassName(record,i){
-  return 'ex-row-'+i;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'ex-row-'</span>+i;
 }
 
 function expandedRowRender(record){
-  return <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>extra: {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>;</span>
+  <span class="hljs-keyword">return</span> &lt;p&gt;<span class="hljs-string">extra:</span> {record.a}&lt;/p&gt;;
 }
 
-<span class="hljs-keyword">var</span> table = ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-      <span class="hljs-attribute">rowClassName</span>=<span class="hljs-value">{rowClassName}</span>
-      <span class="hljs-attribute">expandedRowRender</span>=<span class="hljs-value">{expandedRowRender}</span>
-      <span class="hljs-attribute">expandedRowClassName</span>=<span class="hljs-value">{expandedRowClassName}</span>
-      <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-      <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>/&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+var table = ReactDOM.render(
+  &lt;div&gt;
+    &lt;h2&gt;simple table&lt;/h2&gt;
+    &lt;Table columns={columns}
+      rowClassName={rowClassName}
+      expandedRowRender={expandedRowRender}
+      expandedRowClassName={expandedRowClassName}
+      data={data}
+      className=<span class="hljs-string">"table"</span>/&gt;
+  &lt;/div&gt;,
+  document.getElementById(<span class="hljs-string">'__react-content'</span>)
 );
-</span></code></pre></div>
+</code></pre>
+  </div>
 </div>
-<a href="http://github.com/react-component/table">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+<a href="http://github.com/react-component/table"><img style="position: absolute; top: 0; right: 0; border: 0;"
+                            src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+                            alt="Fork me on GitHub"
+                            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
 
 </html>

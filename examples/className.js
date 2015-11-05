@@ -12,9 +12,9 @@ webpackJsonp([0],[
 	'use strict';
 	
 	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(164);
+	var ReactDOM = __webpack_require__(158);
+	var Table = __webpack_require__(159);
+	__webpack_require__(163);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a',
 	  className: 'a',
