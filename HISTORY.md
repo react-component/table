@@ -1,6 +1,9 @@
 # History
 ----
 
+## 3.5.0 / 2015-11-03
+
+- Add colSpan and rowSpan support
 
 ## 3.3.0 / 2015-10-27
 
