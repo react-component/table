@@ -19,7 +19,8 @@ var CheckBox = React.createClass({
 var MyTable = React.createClass({
   getInitialState: function () {
     return {
-      data: this.props.data
+      data: this.props.data,
+      expandedRowKeys: []
     };
   },
 
@@ -46,6 +47,22 @@ var MyTable = React.createClass({
     return record.a;
   },
 
+  onExpandedRowsChange(rows) {
+    this.setState({
+      expandedRowKeys: rows
+    })
+  },
+
+  toggleButton() {
+    if (this.state.expandedRowKeys.length) {
+      const closeAll = () => this.setState({expandedRowKeys: []});
+      return <button onClick={closeAll}>关闭所有</button>
+    } else {
+      const openAll = () => this.setState({expandedRowKeys: ['123', 'cdd', '1333']});
+      return <button onClick={openAll}>展开全部</button>
+    }
+  },
+
   render: function () {
     var state = this.state;
     var columns = [
@@ -55,10 +72,19 @@ var MyTable = React.createClass({
       {title: '操作', dataIndex: '', key: 'x', render: this.renderAction}
     ];
     return (
-      <Table columns={columns}
-             expandIconAsCell={true}
-        expandedRowRender={expandedRowRender}
-        data={state.data} className="table" rowKey={this.getRowKey}/>
+      <div>
+        {this.toggleButton()}
+        <Table
+          columns={columns}
+          expandIconAsCell={true}
+          expandedRowRender={expandedRowRender}
+          expandedRowKeys={this.state.expandedRowKeys}
+          onExpandedRowsChange={this.onExpandedRowsChange}
+          data={state.data}
+          className="table"
+          rowKey={this.getRowKey}
+        />
+      </div>
     );
   },
 
@@ -76,9 +102,10 @@ function expandedRowRender(record){
 ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
-    <MyTable data={data}
-
-      className="table"/>
+    <MyTable
+      data={data}
+      className="table"
+    />
   </div>,
   document.getElementById('__react-content')
 );
