@@ -139,6 +139,18 @@ var table = React.render(
           <td>get row's className</td>
       </tr>
       <tr>
+          <td>expandedRowKeys</td>
+          <td>Array<string></td>
+          <th></th>
+          <td>expanded rows keys</td>
+      </tr>
+      <tr>
+          <td>onExpandedRowsChange</td>
+          <td>Function(expandedRows)</td>
+          <th>save the expanded rows in the internal state</th>
+          <td>function to call when the expanded rows change</td>
+      </tr>
+      <tr>
           <td>expandedRowClassName</td>
           <td>Function(recode,index):string</td>
           <th></th>
