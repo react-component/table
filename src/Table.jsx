@@ -6,6 +6,7 @@ const Table = React.createClass({
     data: React.PropTypes.array,
     expandIconAsCell: React.PropTypes.bool,
     expandedRowKeys: React.PropTypes.array,
+    defaultExpandedRowKeys: React.PropTypes.array,
     useFixedHeader: React.PropTypes.bool,
     columns: React.PropTypes.array,
     prefixCls: React.PropTypes.string,
@@ -24,7 +25,7 @@ const Table = React.createClass({
       useFixedHeader: false,
       expandIconAsCell: false,
       columns: [],
-      expandedRowKeys: null,
+      defaultExpandedRowKeys: [],
       rowKey(o) {
         return o.key;
       },
@@ -42,28 +43,33 @@ const Table = React.createClass({
   },
 
   getInitialState() {
+    const props = this.props;
     return {
-      expandedRowKeys: [],
-      data: this.props.data.concat(),
+      expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
+      data: this.props.data,
     };
   },
 
   componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
       this.setState({
-        data: nextProps.data.concat(),
+        data: nextProps.data,
+      });
+    }
+    if ('expandedRowKeys' in nextProps) {
+      this.setState({
+        expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
   },
 
   onExpandedRowsChange(expandedRowKeys) {
-    if (this.props.expandedRowKeys) {
-      this.props.expandedRowKeys(expandedRowKeys);
-    } else {
+    if (!this.props.expandedRowKeys) {
       this.setState({
         expandedRowKeys: expandedRowKeys,
       });
     }
+    this.props.onExpandedRowsChange(expandedRowKeys);
   },
 
   onExpanded(expanded, record) {

@@ -139,10 +139,16 @@ var table = React.render(
           <td>get row's className</td>
       </tr>
       <tr>
+          <td>defaultExpandedRowKeys</td>
+          <td>String[]</td>
+          <th>[]</th>
+          <td>initial expanded rows keys</td>
+      </tr>
+      <tr>
           <td>expandedRowKeys</td>
-          <td>Array<string></td>
+          <td>String[]</td>
           <th></th>
-          <td>expanded rows keys</td>
+          <td>current expanded rows keys</td>
       </tr>
       <tr>
           <td>onExpandedRowsChange</td>
@@ -158,13 +164,13 @@ var table = React.render(
       </tr>
       <tr>
           <td>data</td>
-          <td>Array<Object></td>
+          <td>Object[]</td>
           <th></th>
           <td>data record array to be rendered</td>
       </tr>
       <tr>
           <td>columns</td>
-          <td>Array<Object></td>
+          <td>Object[]<Object></td>
           <th></th>
           <td>
             The columns config of table. contains

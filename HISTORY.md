@@ -1,6 +1,10 @@
 # History
 ----
 
+## 3.6.0 / 2015-11-11
+
+- add defaultExpandedRowKeys/expandedRowKeys/onExpandedRowsChange prop
+
 ## 3.5.0 / 2015-11-03
 
 - Add colSpan and rowSpan support
