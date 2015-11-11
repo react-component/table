@@ -35,6 +35,8 @@ const Table = React.createClass({
       expandedRowClassName() {
         return '';
       },
+      onExpandedRowsChange() {
+      },
       prefixCls: 'rc-table',
       bodyStyle: {},
       style: {},
