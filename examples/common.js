@@ -19749,6 +19749,7 @@
 	      expandedRowClassName: function expandedRowClassName() {
 	        return '';
 	      },
+	      onExpandedRowsChange: function onExpandedRowsChange() {},
 	      prefixCls: 'rc-table',
 	      bodyStyle: {},
 	      style: {},
