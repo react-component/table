@@ -183,7 +183,7 @@ webpackJsonp([2],[
 	var Menu = __webpack_require__(167);
 	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-dropdown/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-menu/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var DropDown = __webpack_require__(194);
+	var DropDown = __webpack_require__(189);
 	
 	var data = [];
 	for (var i = 0; i < 10; i++) {
@@ -315,10 +315,10 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var Menu = __webpack_require__(168);
-	Menu.SubMenu = __webpack_require__(189);
-	Menu.Item = __webpack_require__(191);
-	Menu.ItemGroup = __webpack_require__(192);
-	Menu.Divider = __webpack_require__(193);
+	Menu.SubMenu = __webpack_require__(184);
+	Menu.Item = __webpack_require__(186);
+	Menu.ItemGroup = __webpack_require__(187);
+	Menu.Divider = __webpack_require__(188);
 	module.exports = Menu;
 
 /***/ },
@@ -343,7 +343,7 @@ webpackJsonp([2],[
 	var classSet = rcUtil.classSet;
 	var createChainedFunction = rcUtil.createChainedFunction;
 	var KeyCode = rcUtil.KeyCode;
-	var scrollIntoView = __webpack_require__(186);
+	var scrollIntoView = __webpack_require__(181);
 	
 	function noop() {}
 	
@@ -657,18 +657,18 @@ webpackJsonp([2],[
 	module.exports = {
 	  guid: __webpack_require__(170),
 	  classSet: __webpack_require__(171),
-	  joinClasses: __webpack_require__(173),
-	  KeyCode: __webpack_require__(174),
-	  PureRenderMixin: __webpack_require__(175),
-	  shallowEqual: __webpack_require__(176),
-	  createChainedFunction: __webpack_require__(177),
+	  joinClasses: __webpack_require__(172),
+	  KeyCode: __webpack_require__(173),
+	  PureRenderMixin: __webpack_require__(174),
+	  shallowEqual: __webpack_require__(175),
+	  createChainedFunction: __webpack_require__(176),
 	  Dom: {
-	    addEventListener: __webpack_require__(178),
-	    contains: __webpack_require__(183)
+	    addEventListener: __webpack_require__(177),
+	    contains: __webpack_require__(178)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(184),
-	    mapSelf: __webpack_require__(185)
+	    toArray: __webpack_require__(179),
+	    mapSelf: __webpack_require__(180)
 	  }
 	};
 
@@ -685,67 +685,51 @@ webpackJsonp([2],[
 
 /***/ },
 /* 171 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(172);
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This file contains an unmodified version of:
+	 * https://github.com/facebook/react/blob/v0.12.0/src/vendor/stubs/cx.js
+	 *
+	 * This source code is licensed under the BSD-style license found here:
+	 * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+	 * An additional grant of patent rights can be found here:
+	 * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+	 */
+	
+	/**
+	 * This function is used to mark string literals representing CSS class names
+	 * so that they can be transformed statically. This allows for modularization
+	 * and minification of CSS class names.
+	 *
+	 * In static_upstream, this function is actually implemented, but it should
+	 * eventually be replaced with something more descriptive, and the transform
+	 * that is used in the main stack should be ported for use elsewhere.
+	 *
+	 * @param string|object className to modularize, or an object of key/values.
+	 *                      In the object case, the values are conditions that
+	 *                      determine if the className keys should be included.
+	 * @param [string ...]  Variable list of classNames in the string case.
+	 * @return string       Renderable space-separated CSS className.
+	 */
+	function cx(classNames) {
+	  if (typeof classNames === 'object') {
+	    return Object.keys(classNames).filter(function(className) {
+	      return classNames[className];
+	    }).join(' ');
+	  } else {
+	    return Array.prototype.join.call(arguments, ' ');
+	  }
+	}
+	
+	module.exports = cx;
 
 
 /***/ },
 /* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2015 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-	
-	(function () {
-		'use strict';
-	
-		var hasOwn = {}.hasOwnProperty;
-	
-		function classNames () {
-			var classes = '';
-	
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-	
-				var argType = typeof arg;
-	
-				if (argType === 'string' || argType === 'number') {
-					classes += ' ' + arg;
-				} else if (Array.isArray(arg)) {
-					classes += ' ' + classNames.apply(null, arg);
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes += ' ' + key;
-						}
-					}
-				}
-			}
-	
-			return classes.substr(1);
-		}
-	
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 173 */
 /***/ function(module, exports) {
 
 	/**
@@ -792,7 +776,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 174 */
+/* 173 */
 /***/ function(module, exports) {
 
 	/**
@@ -1319,7 +1303,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 175 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1335,7 +1319,7 @@ webpackJsonp([2],[
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(176);
+	var shallowEqual = __webpack_require__(175);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -1372,7 +1356,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 176 */
+/* 175 */
 /***/ function(module, exports) {
 
 	/**
@@ -1420,7 +1404,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 177 */
+/* 176 */
 /***/ function(module, exports) {
 
 	/**
@@ -1447,454 +1431,30 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
+/* 177 */
+/***/ function(module, exports) {
 
-	var addDOMEventListener = __webpack_require__(179);
-	
-	module.exports = addDOMEventListener['default'] || addDOMEventListener;
-
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports['default'] = addEventListener;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _EventObject = __webpack_require__(180);
-	
-	var _EventObject2 = _interopRequireDefault(_EventObject);
-	
-	function addEventListener(target, eventType, callback) {
-	  function wrapCallback(e) {
-	    var ne = new _EventObject2['default'](e);
-	    callback.call(target, ne);
-	  }
-	
+	module.exports = function (target, eventType, callback) {
 	  if (target.addEventListener) {
-	    target.addEventListener(eventType, wrapCallback, false);
+	    target.addEventListener(eventType, callback, false);
 	    return {
-	      remove: function remove() {
-	        target.removeEventListener(eventType, wrapCallback, false);
+	      remove: function () {
+	        target.removeEventListener(eventType, callback, false);
 	      }
 	    };
 	  } else if (target.attachEvent) {
-	    target.attachEvent('on' + eventType, wrapCallback);
+	    target.attachEvent('on' + eventType, callback);
 	    return {
-	      remove: function remove() {
-	        target.detachEvent('on' + eventType, wrapCallback);
+	      remove: function () {
+	        target.detachEvent('on' + eventType, callback);
 	      }
 	    };
 	  }
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * @ignore
-	 * event object for dom
-	 * @author yiminghe@gmail.com
-	 */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _EventBaseObject = __webpack_require__(181);
-	
-	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
-	
-	var _objectAssign = __webpack_require__(182);
-	
-	var _objectAssign2 = _interopRequireDefault(_objectAssign);
-	
-	var TRUE = true;
-	var FALSE = false;
-	var commonProps = ['altKey', 'bubbles', 'cancelable', 'ctrlKey', 'currentTarget', 'eventPhase', 'metaKey', 'shiftKey', 'target', 'timeStamp', 'view', 'type'];
-	
-	function isNullOrUndefined(w) {
-	  return w === null || w === undefined;
-	}
-	
-	var eventNormalizers = [{
-	  reg: /^key/,
-	  props: ['char', 'charCode', 'key', 'keyCode', 'which'],
-	  fix: function fix(event, nativeEvent) {
-	    if (isNullOrUndefined(event.which)) {
-	      event.which = !isNullOrUndefined(nativeEvent.charCode) ? nativeEvent.charCode : nativeEvent.keyCode;
-	    }
-	
-	    // add metaKey to non-Mac browsers (use ctrl for PC 's and Meta for Macs)
-	    if (event.metaKey === undefined) {
-	      event.metaKey = event.ctrlKey;
-	    }
-	  }
-	}, {
-	  reg: /^touch/,
-	  props: ['touches', 'changedTouches', 'targetTouches']
-	}, {
-	  reg: /^hashchange$/,
-	  props: ['newURL', 'oldURL']
-	}, {
-	  reg: /^gesturechange$/i,
-	  props: ['rotation', 'scale']
-	}, {
-	  reg: /^(mousewheel|DOMMouseScroll)$/,
-	  props: [],
-	  fix: function fix(event, nativeEvent) {
-	    var deltaX = undefined;
-	    var deltaY = undefined;
-	    var delta = undefined;
-	    var wheelDelta = nativeEvent.wheelDelta;
-	    var axis = nativeEvent.axis;
-	    var wheelDeltaY = nativeEvent.wheelDeltaY;
-	    var wheelDeltaX = nativeEvent.wheelDeltaX;
-	    var detail = nativeEvent.detail;
-	
-	    // ie/webkit
-	    if (wheelDelta) {
-	      delta = wheelDelta / 120;
-	    }
-	
-	    // gecko
-	    if (detail) {
-	      // press control e.detail == 1 else e.detail == 3
-	      delta = 0 - (detail % 3 === 0 ? detail / 3 : detail);
-	    }
-	
-	    // Gecko
-	    if (axis !== undefined) {
-	      if (axis === event.HORIZONTAL_AXIS) {
-	        deltaY = 0;
-	        deltaX = 0 - delta;
-	      } else if (axis === event.VERTICAL_AXIS) {
-	        deltaX = 0;
-	        deltaY = delta;
-	      }
-	    }
-	
-	    // Webkit
-	    if (wheelDeltaY !== undefined) {
-	      deltaY = wheelDeltaY / 120;
-	    }
-	    if (wheelDeltaX !== undefined) {
-	      deltaX = -1 * wheelDeltaX / 120;
-	    }
-	
-	    // 默认 deltaY (ie)
-	    if (!deltaX && !deltaY) {
-	      deltaY = delta;
-	    }
-	
-	    if (deltaX !== undefined) {
-	      /**
-	       * deltaX of mousewheel event
-	       * @property deltaX
-	       * @member Event.DomEvent.Object
-	       */
-	      event.deltaX = deltaX;
-	    }
-	
-	    if (deltaY !== undefined) {
-	      /**
-	       * deltaY of mousewheel event
-	       * @property deltaY
-	       * @member Event.DomEvent.Object
-	       */
-	      event.deltaY = deltaY;
-	    }
-	
-	    if (delta !== undefined) {
-	      /**
-	       * delta of mousewheel event
-	       * @property delta
-	       * @member Event.DomEvent.Object
-	       */
-	      event.delta = delta;
-	    }
-	  }
-	}, {
-	  reg: /^mouse|contextmenu|click|mspointer|(^DOMMouseScroll$)/i,
-	  props: ['buttons', 'clientX', 'clientY', 'button', 'offsetX', 'relatedTarget', 'which', 'fromElement', 'toElement', 'offsetY', 'pageX', 'pageY', 'screenX', 'screenY'],
-	  fix: function fix(event, nativeEvent) {
-	    var eventDoc = undefined;
-	    var doc = undefined;
-	    var body = undefined;
-	    var target = event.target;
-	    var button = nativeEvent.button;
-	
-	    // Calculate pageX/Y if missing and clientX/Y available
-	    if (target && isNullOrUndefined(event.pageX) && !isNullOrUndefined(nativeEvent.clientX)) {
-	      eventDoc = target.ownerDocument || document;
-	      doc = eventDoc.documentElement;
-	      body = eventDoc.body;
-	      event.pageX = nativeEvent.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
-	      event.pageY = nativeEvent.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
-	    }
-	
-	    // which for click: 1 === left; 2 === middle; 3 === right
-	    // do not use button
-	    if (!event.which && button !== undefined) {
-	      if (button & 1) {
-	        event.which = 1;
-	      } else if (button & 2) {
-	        event.which = 3;
-	      } else if (button & 4) {
-	        event.which = 2;
-	      } else {
-	        event.which = 0;
-	      }
-	    }
-	
-	    // add relatedTarget, if necessary
-	    if (!event.relatedTarget && event.fromElement) {
-	      event.relatedTarget = event.fromElement === target ? event.toElement : event.fromElement;
-	    }
-	
-	    return event;
-	  }
-	}];
-	
-	function retTrue() {
-	  return TRUE;
-	}
-	
-	function retFalse() {
-	  return FALSE;
-	}
-	
-	function DomEventObject(nativeEvent) {
-	  var type = nativeEvent.type;
-	
-	  var isNative = typeof nativeEvent.stopPropagation === 'function' || typeof nativeEvent.cancelBubble === 'boolean';
-	
-	  _EventBaseObject2['default'].call(this);
-	
-	  this.nativeEvent = nativeEvent;
-	
-	  // in case dom event has been mark as default prevented by lower dom node
-	  var isDefaultPrevented = retFalse;
-	  if ('defaultPrevented' in nativeEvent) {
-	    isDefaultPrevented = nativeEvent.defaultPrevented ? retTrue : retFalse;
-	  } else if ('getPreventDefault' in nativeEvent) {
-	    // https://bugzilla.mozilla.org/show_bug.cgi?id=691151
-	    isDefaultPrevented = nativeEvent.getPreventDefault() ? retTrue : retFalse;
-	  } else if ('returnValue' in nativeEvent) {
-	    isDefaultPrevented = nativeEvent.returnValue === FALSE ? retTrue : retFalse;
-	  }
-	
-	  this.isDefaultPrevented = isDefaultPrevented;
-	
-	  var fixFns = [];
-	  var fixFn = undefined;
-	  var l = undefined;
-	  var prop = undefined;
-	  var props = commonProps.concat();
-	
-	  eventNormalizers.forEach(function (normalizer) {
-	    if (type.match(normalizer.reg)) {
-	      props = props.concat(normalizer.props);
-	      if (normalizer.fix) {
-	        fixFns.push(normalizer.fix);
-	      }
-	    }
-	  });
-	
-	  l = props.length;
-	
-	  // clone properties of the original event object
-	  while (l) {
-	    prop = props[--l];
-	    this[prop] = nativeEvent[prop];
-	  }
-	
-	  // fix target property, if necessary
-	  if (!this.target && isNative) {
-	    this.target = nativeEvent.srcElement || document; // srcElement might not be defined either
-	  }
-	
-	  // check if target is a text node (safari)
-	  if (this.target && this.target.nodeType === 3) {
-	    this.target = this.target.parentNode;
-	  }
-	
-	  l = fixFns.length;
-	
-	  while (l) {
-	    fixFn = fixFns[--l];
-	    fixFn(this, nativeEvent);
-	  }
-	
-	  this.timeStamp = nativeEvent.timeStamp || Date.now();
-	}
-	
-	var EventBaseObjectProto = _EventBaseObject2['default'].prototype;
-	
-	(0, _objectAssign2['default'])(DomEventObject.prototype, EventBaseObjectProto, {
-	  constructor: DomEventObject,
-	
-	  preventDefault: function preventDefault() {
-	    var e = this.nativeEvent;
-	
-	    // if preventDefault exists run it on the original event
-	    if (e.preventDefault) {
-	      e.preventDefault();
-	    } else {
-	      // otherwise set the returnValue property of the original event to FALSE (IE)
-	      e.returnValue = FALSE;
-	    }
-	
-	    EventBaseObjectProto.preventDefault.call(this);
-	  },
-	
-	  stopPropagation: function stopPropagation() {
-	    var e = this.nativeEvent;
-	
-	    // if stopPropagation exists run it on the original event
-	    if (e.stopPropagation) {
-	      e.stopPropagation();
-	    } else {
-	      // otherwise set the cancelBubble property of the original event to TRUE (IE)
-	      e.cancelBubble = TRUE;
-	    }
-	
-	    EventBaseObjectProto.stopPropagation.call(this);
-	  }
-	});
-	
-	exports['default'] = DomEventObject;
-	module.exports = exports['default'];
-
-/***/ },
-/* 181 */
-/***/ function(module, exports) {
-
-	/**
-	 * @ignore
-	 * base event object for custom and dom event.
-	 * @author yiminghe@gmail.com
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	function returnFalse() {
-	  return false;
-	}
-	
-	function returnTrue() {
-	  return true;
-	}
-	
-	function EventBaseObject() {
-	  this.timeStamp = Date.now();
-	  this.target = undefined;
-	  this.currentTarget = undefined;
-	}
-	
-	EventBaseObject.prototype = {
-	  isEventObject: 1,
-	
-	  constructor: EventBaseObject,
-	
-	  isDefaultPrevented: returnFalse,
-	
-	  isPropagationStopped: returnFalse,
-	
-	  isImmediatePropagationStopped: returnFalse,
-	
-	  preventDefault: function preventDefault() {
-	    this.isDefaultPrevented = returnTrue;
-	  },
-	
-	  stopPropagation: function stopPropagation() {
-	    this.isPropagationStopped = returnTrue;
-	  },
-	
-	  stopImmediatePropagation: function stopImmediatePropagation() {
-	    this.isImmediatePropagationStopped = returnTrue;
-	    // fixed 1.2
-	    // call stopPropagation implicitly
-	    this.stopPropagation();
-	  },
-	
-	  halt: function halt(immediate) {
-	    if (immediate) {
-	      this.stopImmediatePropagation();
-	    } else {
-	      this.stopPropagation();
-	    }
-	    this.preventDefault();
-	  }
-	};
-	
-	exports["default"] = EventBaseObject;
-	module.exports = exports["default"];
-
-/***/ },
-/* 182 */
-/***/ function(module, exports) {
-
-	/* eslint-disable no-unused-vars */
-	'use strict';
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	module.exports = Object.assign || function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-	
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-	
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-	
-		return to;
 	};
 
 
 /***/ },
-/* 183 */
+/* 178 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -1910,7 +1470,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 184 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -1925,7 +1485,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 185 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -1941,17 +1501,17 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 186 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(187);
+	module.exports = __webpack_require__(182);
 
 
 /***/ },
-/* 187 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var util = __webpack_require__(188);
+	var util = __webpack_require__(183);
 	
 	function scrollIntoView(elem, container, config) {
 	  config = config || {};
@@ -2076,7 +1636,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 188 */
+/* 183 */
 /***/ function(module, exports) {
 
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
@@ -2513,7 +2073,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 189 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2538,7 +2098,7 @@ webpackJsonp([2],[
 	    onClick: React.PropTypes.func
 	  },
 	
-	  mixins: [__webpack_require__(190)],
+	  mixins: [__webpack_require__(185)],
 	
 	  getInitialState: function getInitialState() {
 	    return {
@@ -2732,7 +2292,7 @@ webpackJsonp([2],[
 	module.exports = SubMenu;
 
 /***/ },
-/* 190 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2803,7 +2363,7 @@ webpackJsonp([2],[
 	module.exports = SubMenuStateMixin;
 
 /***/ },
-/* 191 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2956,7 +2516,7 @@ webpackJsonp([2],[
 	module.exports = MenuItem;
 
 /***/ },
-/* 192 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3016,7 +2576,7 @@ webpackJsonp([2],[
 	module.exports = MenuItemGroup;
 
 /***/ },
-/* 193 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3063,15 +2623,15 @@ webpackJsonp([2],[
 	module.exports = Divider;
 
 /***/ },
-/* 194 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(195);
+	module.exports = __webpack_require__(190);
 
 /***/ },
-/* 195 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3085,9 +2645,9 @@ webpackJsonp([2],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(2);
-	var Tooltip = __webpack_require__(196);
-	var assign = __webpack_require__(230);
-	var rcUtil = __webpack_require__(198);
+	var Tooltip = __webpack_require__(191);
+	var assign = __webpack_require__(225);
+	var rcUtil = __webpack_require__(193);
 	
 	/*
 	
@@ -3165,15 +2725,15 @@ webpackJsonp([2],[
 	module.exports = Dropdown;
 
 /***/ },
-/* 196 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(197);
+	module.exports = __webpack_require__(192);
 
 /***/ },
-/* 197 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3190,9 +2750,9 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcUtil = __webpack_require__(198);
+	var _rcUtil = __webpack_require__(193);
 	
-	var _Popup = __webpack_require__(210);
+	var _Popup = __webpack_require__(205);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
@@ -3487,30 +3047,30 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 198 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
-	  guid: __webpack_require__(199),
-	  classSet: __webpack_require__(200),
-	  joinClasses: __webpack_require__(201),
-	  KeyCode: __webpack_require__(202),
-	  PureRenderMixin: __webpack_require__(203),
-	  shallowEqual: __webpack_require__(204),
-	  createChainedFunction: __webpack_require__(205),
+	  guid: __webpack_require__(194),
+	  classSet: __webpack_require__(195),
+	  joinClasses: __webpack_require__(196),
+	  KeyCode: __webpack_require__(197),
+	  PureRenderMixin: __webpack_require__(198),
+	  shallowEqual: __webpack_require__(199),
+	  createChainedFunction: __webpack_require__(200),
 	  Dom: {
-	    addEventListener: __webpack_require__(206),
-	    contains: __webpack_require__(207)
+	    addEventListener: __webpack_require__(201),
+	    contains: __webpack_require__(202)
 	  },
 	  Children: {
-	    toArray: __webpack_require__(208),
-	    mapSelf: __webpack_require__(209)
+	    toArray: __webpack_require__(203),
+	    mapSelf: __webpack_require__(204)
 	  }
 	};
 
 
 /***/ },
-/* 199 */
+/* 194 */
 /***/ function(module, exports) {
 
 	var seed = 0;
@@ -3520,7 +3080,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 200 */
+/* 195 */
 /***/ function(module, exports) {
 
 	/**
@@ -3565,7 +3125,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 201 */
+/* 196 */
 /***/ function(module, exports) {
 
 	/**
@@ -3612,7 +3172,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 202 */
+/* 197 */
 /***/ function(module, exports) {
 
 	/**
@@ -4139,7 +3699,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 203 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4155,7 +3715,7 @@ webpackJsonp([2],[
 	
 	"use strict";
 	
-	var shallowEqual = __webpack_require__(204);
+	var shallowEqual = __webpack_require__(199);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -4192,7 +3752,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 204 */
+/* 199 */
 /***/ function(module, exports) {
 
 	/**
@@ -4240,7 +3800,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 205 */
+/* 200 */
 /***/ function(module, exports) {
 
 	/**
@@ -4267,7 +3827,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 206 */
+/* 201 */
 /***/ function(module, exports) {
 
 	module.exports = function (target, eventType, callback) {
@@ -4290,7 +3850,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 207 */
+/* 202 */
 /***/ function(module, exports) {
 
 	module.exports = function (root, node) {
@@ -4306,7 +3866,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 208 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -4321,7 +3881,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 209 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2);
@@ -4337,7 +3897,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 210 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4352,13 +3912,13 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _utils = __webpack_require__(211);
+	var _utils = __webpack_require__(206);
 	
-	var _rcAlign = __webpack_require__(212);
+	var _rcAlign = __webpack_require__(207);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
-	var _rcAnimate = __webpack_require__(222);
+	var _rcAnimate = __webpack_require__(217);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -4486,7 +4046,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 211 */
+/* 206 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4581,7 +4141,7 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 212 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4593,7 +4153,7 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _Align = __webpack_require__(213);
+	var _Align = __webpack_require__(208);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -4601,7 +4161,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 213 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4624,11 +4184,11 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _domAlign = __webpack_require__(214);
+	var _domAlign = __webpack_require__(209);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _rcUtil = __webpack_require__(198);
+	var _rcUtil = __webpack_require__(193);
 	
 	var _rcUtil2 = _interopRequireDefault(_rcUtil);
 	
@@ -4766,7 +4326,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 214 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4782,27 +4342,27 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(215);
+	var _utils = __webpack_require__(210);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(216);
+	var _getOffsetParent = __webpack_require__(211);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(217);
+	var _getVisibleRectForElement = __webpack_require__(212);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(218);
+	var _adjustForViewport = __webpack_require__(213);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(219);
+	var _getRegion = __webpack_require__(214);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(220);
+	var _getElFuturePos = __webpack_require__(215);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -4933,6 +4493,15 @@ webpackJsonp([2],[
 	    }
 	  }
 	
+	  // https://github.com/kissyteam/kissy/issues/190
+	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
+	  // 相对于屏幕位置没变，而 left/top 变了
+	  // 例如 <div 'relative'><el absolute></div>
+	  _utils2['default'].offset(el, {
+	    left: newElRegion.left,
+	    top: newElRegion.top
+	  });
+	
 	  // need judge to in case set fixed with in css on height auto element
 	  if (newElRegion.width !== elRegion.width) {
 	    _utils2['default'].css(el, 'width', el.width() + newElRegion.width - elRegion.width);
@@ -4941,18 +4510,6 @@ webpackJsonp([2],[
 	  if (newElRegion.height !== elRegion.height) {
 	    _utils2['default'].css(el, 'height', el.height() + newElRegion.height - elRegion.height);
 	  }
-	
-	  // https://github.com/kissyteam/kissy/issues/190
-	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
-	  // 相对于屏幕位置没变，而 left/top 变了
-	  // 例如 <div 'relative'><el absolute></div>
-	  _utils2['default'].offset(el, {
-	    left: newElRegion.left,
-	    top: newElRegion.top
-	  }, {
-	    useCssRight: align.useCssRight,
-	    useCssBottom: align.useCssBottom
-	  });
 	
 	  return {
 	    points: points,
@@ -4979,7 +4536,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 215 */
+/* 210 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5089,10 +4646,9 @@ webpackJsonp([2],[
 	  var computedStyle = cs;
 	  var val = '';
 	  var d = elem.ownerDocument;
-	  computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null);
 	
 	  // https://github.com/kissyteam/kissy/issues/61
-	  if (computedStyle) {
+	  if (computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)) {
 	    val = computedStyle.getPropertyValue(name) || computedStyle[name];
 	  }
 	
@@ -5146,66 +4702,25 @@ webpackJsonp([2],[
 	  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
 	}
 	
-	function getOffsetDirection(dir, option) {
-	  if (dir === 'left') {
-	    return option.useCssRight ? 'right' : dir;
-	  }
-	  return option.useCssBottom ? 'bottom' : dir;
-	}
-	
-	function oppositeOffsetDirection(dir) {
-	  if (dir === 'left') {
-	    return 'right';
-	  } else if (dir === 'right') {
-	    return 'left';
-	  } else if (dir === 'top') {
-	    return 'bottom';
-	  } else if (dir === 'bottom') {
-	    return 'top';
-	  }
-	}
-	
 	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset, option) {
+	function setOffset(elem, offset) {
 	  // set position first, in-case top/left are set even on static elem
 	  if (css(elem, 'position') === 'static') {
 	    elem.style.position = 'relative';
 	  }
-	  var presetH = -999;
-	  var presetV = -999;
-	  var horizontalProperty = getOffsetDirection('left', option);
-	  var verticalProperty = getOffsetDirection('top', option);
-	  var oppositeHorizontalProperty = oppositeOffsetDirection(horizontalProperty);
-	  var oppositeVerticalProperty = oppositeOffsetDirection(verticalProperty);
-	
-	  if (horizontalProperty !== 'left') {
-	    presetH = 999;
-	  }
-	
-	  if (verticalProperty !== 'top') {
-	    presetV = 999;
-	  }
-	
+	  var preset = -9999;
 	  if ('left' in offset) {
-	    elem.style[oppositeHorizontalProperty] = '';
-	    elem.style[horizontalProperty] = presetH + 'px';
+	    elem.style.left = preset + 'px';
 	  }
 	  if ('top' in offset) {
-	    elem.style[oppositeVerticalProperty] = '';
-	    elem.style[verticalProperty] = presetV + 'px';
+	    elem.style.top = preset + 'px';
 	  }
 	  var old = getOffset(elem);
 	  var ret = {};
 	  var key = undefined;
 	  for (key in offset) {
 	    if (offset.hasOwnProperty(key)) {
-	      var dir = getOffsetDirection(key, option);
-	      var preset = key === 'left' ? presetH : presetV;
-	      if (dir === key) {
-	        ret[dir] = preset + offset[key] - old[key];
-	      } else {
-	        ret[dir] = preset + old[key] - offset[key];
-	      }
+	      ret[key] = preset + offset[key] - old[key];
 	    }
 	  }
 	  css(elem, ret);
@@ -5420,9 +4935,9 @@ webpackJsonp([2],[
 	    var doc = node.ownerDocument || node;
 	    return doc.defaultView || doc.parentWindow;
 	  },
-	  offset: function offset(el, value, option) {
+	  offset: function offset(el, value) {
 	    if (typeof value !== 'undefined') {
-	      setOffset(el, value, option || {});
+	      setOffset(el, value);
 	    } else {
 	      return getOffset(el);
 	    }
@@ -5477,7 +4992,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 216 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5488,7 +5003,7 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(215);
+	var _utils = __webpack_require__(210);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -5535,7 +5050,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 217 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5546,11 +5061,11 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(215);
+	var _utils = __webpack_require__(210);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(216);
+	var _getOffsetParent = __webpack_require__(211);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -5577,11 +5092,11 @@ webpackJsonp([2],[
 	  // all scrollable containers.
 	  while (el) {
 	    // clientWidth is zero for inline block elements in ie.
-	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) &&
+	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) && (
 	    // body may have overflow set on it, yet we still get the entire
 	    // viewport. In some browsers, el.offsetParent may be
 	    // document.documentElement, so check for that too.
-	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible') {
+	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible')) {
 	      var pos = _utils2['default'].offset(el);
 	      // add border
 	      pos.left += el.clientLeft;
@@ -5616,7 +5131,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 218 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5627,7 +5142,7 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(215);
+	var _utils = __webpack_require__(210);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -5676,7 +5191,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 219 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5687,7 +5202,7 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(215);
+	var _utils = __webpack_require__(210);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -5717,7 +5232,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 220 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5728,7 +5243,7 @@ webpackJsonp([2],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _getAlignOffset = __webpack_require__(221);
+	var _getAlignOffset = __webpack_require__(216);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -5758,7 +5273,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 216 */
 /***/ function(module, exports) {
 
 	/**
@@ -5803,16 +5318,16 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 222 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// export this package's api
 	'use strict';
 	
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(218);
 
 /***/ },
-/* 223 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5829,15 +5344,15 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(224);
+	var _ChildrenUtils = __webpack_require__(219);
 	
 	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
 	
-	var _AnimateChild = __webpack_require__(225);
+	var _AnimateChild = __webpack_require__(220);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(229);
+	var _util = __webpack_require__(224);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -6132,7 +5647,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6249,7 +5764,7 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6264,11 +5779,11 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cssAnimation = __webpack_require__(226);
+	var _cssAnimation = __webpack_require__(221);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(229);
+	var _util = __webpack_require__(224);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -6347,13 +5862,13 @@ webpackJsonp([2],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 226 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Event = __webpack_require__(227);
-	var Css = __webpack_require__(228);
+	var Event = __webpack_require__(222);
+	var Css = __webpack_require__(223);
 	var isCssAnimationSupported = Event.endEvents.length !== 0;
 	
 	function getDuration(node, name) {
@@ -6505,7 +6020,7 @@ webpackJsonp([2],[
 	module.exports = cssAnimation;
 
 /***/ },
-/* 227 */
+/* 222 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6593,7 +6108,7 @@ webpackJsonp([2],[
 	module.exports = TransitionEvents;
 
 /***/ },
-/* 228 */
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6624,7 +6139,7 @@ webpackJsonp([2],[
 	};
 
 /***/ },
-/* 229 */
+/* 224 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6657,7 +6172,7 @@ webpackJsonp([2],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 230 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';

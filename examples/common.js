@@ -20065,7 +20065,7 @@
 	        text = render(text, record, index) || {};
 	        tdProps = text.props || {};
 	
-	        if (!_react2['default'].isValidElement(text)) {
+	        if (!_react2['default'].isValidElement(text) && 'children' in text) {
 	          text = text.children;
 	        }
 	        rowSpan = tdProps.rowSpan;
