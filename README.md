@@ -169,6 +169,12 @@ var table = React.render(
           <td>data record array to be rendered</td>
       </tr>
       <tr>
+          <td>indentSize</td>
+          <td>Number</td>
+          <th>15</th>
+          <td>indentSize for every level of data.i.children, better using with column.width specified</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>
