@@ -1,3 +1,4 @@
+/* eslint react/no-multi-comp: 0*/
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Table = require('rc-table');
