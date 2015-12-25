@@ -1,16 +1,17 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(228);
+	module.exports = __webpack_require__(234);
 
 
 /***/ },
 
-/***/ 228:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint react/no-multi-comp: 0*/
 	'use strict';
 	
 	var React = __webpack_require__(2);
@@ -36,7 +37,6 @@ webpackJsonp([5],{
 	  displayName: 'Test',
 	
 	  getInitialState: function getInitialState() {
-	
 	    return {
 	      showBody: true
 	    };

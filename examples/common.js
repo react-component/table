@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		8:0
+/******/ 		9:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"className","1":"colspan-rowspan","2":"dropdown","3":"expandedRowRender","4":"key","5":"scrollBody","6":"simple","7":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"scrollBody","7":"simple","8":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -143,6 +143,7 @@
 	});
 	
 	React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
+	React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 	
 	module.exports = React;
 
@@ -10493,6 +10494,7 @@
 	    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    name: null,
+	    nonce: MUST_USE_ATTRIBUTE,
 	    noValidate: HAS_BOOLEAN_VALUE,
 	    open: HAS_BOOLEAN_VALUE,
 	    optimum: null,
@@ -10504,6 +10506,7 @@
 	    readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    rel: null,
 	    required: HAS_BOOLEAN_VALUE,
+	    reversed: HAS_BOOLEAN_VALUE,
 	    role: MUST_USE_ATTRIBUTE,
 	    rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
 	    rowSpan: null,
@@ -18706,7 +18709,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.2';
+	module.exports = '0.14.3';
 
 /***/ },
 /* 148 */
@@ -19730,7 +19733,8 @@
 	    rowClassName: _react2['default'].PropTypes.func,
 	    expandedRowClassName: _react2['default'].PropTypes.func,
 	    childrenColumnName: _react2['default'].PropTypes.string,
-	    onExpandedRowsChange: _react2['default'].PropTypes.func
+	    onExpandedRowsChange: _react2['default'].PropTypes.func,
+	    indentSize: _react2['default'].PropTypes.number
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19753,7 +19757,8 @@
 	      prefixCls: 'rc-table',
 	      bodyStyle: {},
 	      style: {},
-	      childrenColumnName: 'children'
+	      childrenColumnName: 'children',
+	      indentSize: 15
 	    };
 	  },
 	
@@ -19856,7 +19861,7 @@
 	    );
 	  },
 	
-	  getRowsByData: function getRowsByData(data, visible) {
+	  getRowsByData: function getRowsByData(data, visible, indent) {
 	    var props = this.props;
 	    var columns = props.columns;
 	    var childrenColumnName = props.childrenColumnName;
@@ -19877,6 +19882,8 @@
 	      }
 	      var className = rowClassName(record, i);
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], {
+	        indent: indent,
+	        indentSize: props.indentSize,
 	        className: className,
 	        record: record,
 	        expandIconAsCell: expandIconAsCell,
@@ -19897,14 +19904,14 @@
 	        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
 	      }
 	      if (childrenColumn) {
-	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
+	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1));
 	      }
 	    }
 	    return rst;
 	  },
 	
 	  getRows: function getRows() {
-	    return this.getRowsByData(this.state.data, true);
+	    return this.getRowsByData(this.state.data, true, 0);
 	  },
 	
 	  getColGroup: function getColGroup() {
@@ -20032,6 +20039,8 @@
 	    var expanded = props.expanded;
 	    var expandable = props.expandable;
 	    var expandIconAsCell = props.expandIconAsCell;
+	    var indent = props.indent;
+	    var indentSize = props.indentSize;
 	
 	    for (var i = 0; i < columns.length; i++) {
 	      var col = columns[i];
@@ -20044,6 +20053,7 @@
 	      var colSpan = undefined;
 	      var rowSpan = undefined;
 	      var notRender = false;
+	      var indentText = undefined;
 	
 	      if (i === 0 && expandable) {
 	        expandIcon = _react2['default'].createElement('span', {
@@ -20075,10 +20085,14 @@
 	      if (rowSpan === 0 || colSpan === 0) {
 	        notRender = true;
 	      }
+	
+	      indentText = i === 0 ? _react2['default'].createElement('span', { style: { paddingLeft: indentSize * indent + 'px' }, className: prefixCls + '-indent indent-level-' + indent }) : null;
+	
 	      if (!notRender) {
 	        cells.push(_react2['default'].createElement(
 	          'td',
 	          { key: col.key, colSpan: colSpan, rowSpan: rowSpan, className: '' + colClassName },
+	          indentText,
 	          expandIcon,
 	          text
 	        ));

@@ -1,14 +1,17 @@
-webpackJsonp([0],[
-/* 0 */
+webpackJsonp([1],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(165);
 
 
 /***/ },
-/* 1 */
+
+/***/ 165:
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint react/no-multi-comp: 0*/
 	'use strict';
 	
 	var React = __webpack_require__(2);
@@ -53,7 +56,7 @@ webpackJsonp([0],[
 	  );
 	}
 	
-	var table = ReactDOM.render(React.createElement(
+	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(
@@ -70,5 +73,6 @@ webpackJsonp([0],[
 	), document.getElementById('__react-content'));
 
 /***/ }
-]);
+
+});
 //# sourceMappingURL=className.js.map

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>className.js - example - rc-table@3.6.2</title>
+  <title>className.js - example - rc-table@3.7.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,54 +257,53 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.6.2</h1>
+    <h1>rc-table@3.7.0</h1>
 
     <p>table ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="className.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
-
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">var</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
-<span class="hljs-keyword">var</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint react/no-multi-comp: 0*/</span>
+<span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
+<span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">var</span> columns = [
+<span class="hljs-keyword">const</span> columns = [
   {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>,
-    className:<span class="hljs-string">'a'</span>,
-    key:<span class="hljs-string">'a'</span>,width: <span class="hljs-number">100</span>},
+    className: <span class="hljs-string">'a'</span>,
+    key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>},
   {id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>,
-    className:<span class="hljs-string">'b'</span>,
-    key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
+    className: <span class="hljs-string">'b'</span>,
+    key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
   {title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>,
-    className:<span class="hljs-string">'c'</span>,
-    key:<span class="hljs-string">'c'</span>,width: <span class="hljs-number">200</span>},
+    className: <span class="hljs-string">'c'</span>,
+    key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>},
   {
     title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>,
-    className:<span class="hljs-string">'d'</span>,
-    key:<span class="hljs-string">'d'</span>,render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-  }
-  }
+    className: <span class="hljs-string">'d'</span>,
+    key: <span class="hljs-string">'d'</span>, render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+    },
+  },
 ];
 
-var data = [{a: '123',key:'1'}, {a: 'cdd', b: 'edd',key:'2'}, {a: '1333', c: 'eee', d: 2,key:'3'}];
+<span class="hljs-keyword">const</span> data = [{a: <span class="hljs-string">'123'</span>, key: <span class="hljs-string">'1'</span>}, {a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span>}, {a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span>}];
 
-function rowClassName(record,i){
-  return 'row-'+i;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rowClassName</span>(<span class="hljs-params">record, i</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'row-'</span> + i;
 }
 
-function expandedRowClassName(record,i){
-  return 'ex-row-'+i;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowClassName</span>(<span class="hljs-params">record, i</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'ex-row-'</span> + i;
 }
 
-function expandedRowRender(record){
-  return <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>extra: {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>;</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowRender</span>(<span class="hljs-params">record</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>extra: {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>;</span>
 }
 
-<span class="hljs-keyword">var</span> table = ReactDOM.render(
+ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
