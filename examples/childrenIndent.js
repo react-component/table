@@ -77,15 +77,7 @@ const data = [{
   address: '我是b',
 }];
 
-ReactDOM.render( < Table columns = {
-    columns
-  }
-  data = {
-    data
-  }
-  indentSize = {
-    30
-  }
-  />,
+ReactDOM.render(
+  <Table columns={columns} data={data} indentSize={30} />,
   document.getElementById('__react-content')
 );
