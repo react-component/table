@@ -17,6 +17,7 @@ const Table = React.createClass({
     expandedRowClassName: React.PropTypes.func,
     childrenColumnName: React.PropTypes.string,
     onExpandedRowsChange: React.PropTypes.func,
+    indentSize: React.PropTypes.number,
   },
 
   getDefaultProps() {
@@ -41,6 +42,7 @@ const Table = React.createClass({
       bodyStyle: {},
       style: {},
       childrenColumnName: 'children',
+      indentSize: 15,
     };
   },
 
@@ -135,7 +137,7 @@ const Table = React.createClass({
     </tr>);
   },
 
-  getRowsByData(data, visible) {
+  getRowsByData(data, visible, indent) {
     const props = this.props;
     const columns = props.columns;
     const childrenColumnName = props.childrenColumnName;
@@ -156,6 +158,8 @@ const Table = React.createClass({
       }
       const className = rowClassName(record, i);
       rst.push(<TableRow
+        indent={indent}
+        indentSize={props.indentSize}
         className={className}
         record={record}
         expandIconAsCell={expandIconAsCell}
@@ -176,14 +180,14 @@ const Table = React.createClass({
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
       }
       if (childrenColumn) {
-        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible));
+        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1));
       }
     }
     return rst;
   },
 
   getRows() {
-    return this.getRowsByData(this.state.data, true);
+    return this.getRowsByData(this.state.data, true, 0);
   },
 
   getColGroup() {

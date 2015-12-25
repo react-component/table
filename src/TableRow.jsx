@@ -21,6 +21,8 @@ const TableRow = React.createClass({
     const expanded = props.expanded;
     const expandable = props.expandable;
     const expandIconAsCell = props.expandIconAsCell;
+    const indent = props.indent;
+    const indentSize = props.indentSize;
 
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
@@ -33,6 +35,7 @@ const TableRow = React.createClass({
       let colSpan;
       let rowSpan;
       let notRender = false;
+      let indentText;
 
       if (i === 0 && expandable) {
         expandIcon = (<span
@@ -60,8 +63,12 @@ const TableRow = React.createClass({
       if (rowSpan === 0 || colSpan === 0) {
         notRender = true;
       }
+
+      indentText = i === 0 ? (<span style={{paddingLeft: indentSize * indent + 'px'}} className={`${prefixCls}-indent indent-level-${indent}`}></span>) : null;
+
       if (!notRender) {
         cells.push(<td key={col.key} colSpan={colSpan} rowSpan={rowSpan} className={`${colClassName}`}>
+        {indentText}
         {expandIcon}
         {text}
         </td>);
