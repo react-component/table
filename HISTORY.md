@@ -1,6 +1,15 @@
 # History
 ----
 
+## 3.7.1 / 2015-12-28
+
+- fix align of indent nested children table
+- fix expandRowRender called problems when it is not expanded
+
+## 3.7.0 / 2015-12-28
+
+- indent nested children table
+
 ## 3.6.0 / 2015-11-11
 
 - add defaultExpandedRowKeys/expandedRowKeys/onExpandedRowsChange prop
