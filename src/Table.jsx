@@ -153,7 +153,7 @@ const Table = React.createClass({
       const childrenColumn = record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record);
       let expandedRowContent;
-      if (expandedRowRender) {
+      if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i);
       }
       const className = rowClassName(record, i);
@@ -167,7 +167,7 @@ const Table = React.createClass({
         index={i}
         visible={visible}
         onExpand={this.onExpanded}
-        expandable={childrenColumn || expandedRowContent}
+        expandable={childrenColumn || expandedRowRender}
         expanded={isRowExpanded}
         prefixCls={`${props.prefixCls}-row`}
         childrenColumnName={childrenColumnName}

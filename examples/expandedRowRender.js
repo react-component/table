@@ -64,6 +64,7 @@ const MyTable = React.createClass({
   },
 
   expandedRowRender(record) {
+    console.log(record);
     return <p>extra: {record.a}</p>;
   },
 
