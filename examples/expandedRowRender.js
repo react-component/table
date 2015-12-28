@@ -97,6 +97,7 @@ webpackJsonp([4],{
 	  },
 	
 	  expandedRowRender: function expandedRowRender(record) {
+	    console.log(record);
 	    return React.createElement(
 	      'p',
 	      null,

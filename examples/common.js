@@ -19871,19 +19871,23 @@
 	    var keyFn = props.rowKey;
 	    var rowClassName = props.rowClassName;
 	    var expandedRowClassName = props.expandedRowClassName;
+	    var needIndentSpaced = props.data.some(function (record) {
+	      return record[childrenColumnName] && record[childrenColumnName].length > 0;
+	    });
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
 	      var key = keyFn ? keyFn(record, i) : undefined;
 	      var childrenColumn = record[childrenColumnName];
 	      var isRowExpanded = this.isRowExpanded(record);
 	      var expandedRowContent = undefined;
-	      if (expandedRowRender) {
+	      if (expandedRowRender && isRowExpanded) {
 	        expandedRowContent = expandedRowRender(record, i);
 	      }
 	      var className = rowClassName(record, i);
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], {
 	        indent: indent,
 	        indentSize: props.indentSize,
+	        needIndentSpaced: needIndentSpaced,
 	        className: className,
 	        record: record,
 	        expandIconAsCell: expandIconAsCell,
@@ -19891,7 +19895,7 @@
 	        index: i,
 	        visible: visible,
 	        onExpand: this.onExpanded,
-	        expandable: childrenColumn || expandedRowContent,
+	        expandable: childrenColumn || expandedRowRender,
 	        expanded: isRowExpanded,
 	        prefixCls: props.prefixCls + '-row',
 	        childrenColumnName: childrenColumnName,
@@ -20041,6 +20045,7 @@
 	    var expandIconAsCell = props.expandIconAsCell;
 	    var indent = props.indent;
 	    var indentSize = props.indentSize;
+	    var needIndentSpaced = props.needIndentSpaced;
 	
 	    for (var i = 0; i < columns.length; i++) {
 	      var col = columns[i];
@@ -20059,6 +20064,9 @@
 	        expandIcon = _react2['default'].createElement('span', {
 	          className: prefixCls + '-expand-icon ' + prefixCls + '-' + (expanded ? 'expanded' : 'collapsed'),
 	          onClick: props.onExpand.bind(null, !expanded, record) });
+	      } else if (i === 0 && needIndentSpaced) {
+	        expandIcon = _react2['default'].createElement('span', {
+	          className: prefixCls + '-expand-icon ' + prefixCls + '-spaced' });
 	      }
 	
 	      if (expandIconAsCell && i === 0) {
