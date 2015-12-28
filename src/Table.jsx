@@ -147,6 +147,8 @@ const Table = React.createClass({
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
     const expandedRowClassName = props.expandedRowClassName;
+    const needIndentSpaced = props.data.some(record =>
+      record[childrenColumnName] && record[childrenColumnName].length > 0);
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = keyFn ? keyFn(record, i) : undefined;
@@ -160,6 +162,7 @@ const Table = React.createClass({
       rst.push(<TableRow
         indent={indent}
         indentSize={props.indentSize}
+        needIndentSpaced={needIndentSpaced}
         className={className}
         record={record}
         expandIconAsCell={expandIconAsCell}

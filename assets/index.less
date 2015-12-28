@@ -63,6 +63,12 @@
       -webkit-user-select: none;
       user-select: none;
     }
+    &-spaced {
+      visibility: hidden;
+    }
+    &-spaced:after {
+      content: '.'
+    }
 
     &-expanded:after {
       content: '-'
