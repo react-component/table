@@ -147,7 +147,8 @@ const Table = React.createClass({
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
     const expandedRowClassName = props.expandedRowClassName;
-    const needIndentSpaced = props.data.filter(a => (a[childrenColumnName] || []).length).length ? true : false;
+    const needIndentSpaced = props.data.some(record =>
+      record[childrenColumnName] && record[childrenColumnName].length > 0);
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = keyFn ? keyFn(record, i) : undefined;
