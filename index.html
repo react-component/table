@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-table@3.7.1 - table ui component for react</title>
+  <title>rc-table@3.6.3 - table ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,14 +737,12 @@
 
 <body>
 <div class="header">
-  <h1>rc-table@3.7.1</h1>
+  <h1>rc-table@3.6.3</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
   <div class="examples-body">
     <ul>
-      
-      <li><a href="examples/childrenIndent.html">childrenIndent</a></li>
       
       <li><a href="examples/className.html">className</a></li>
       
@@ -785,7 +783,7 @@ npm start</code></pre></div><h2>Example<a id="user-content-example" name="exampl
 
 <span class="hljs-keyword">var</span> columns = [
   {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, colSpan: <span class="hljs-number">2</span>,key:<span class="hljs-string">'a'</span>,width: <span class="hljs-number">100</span>},
-  {id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, colSpan: <span class="hljs-number">0</span>,key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>, render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">o, row, index</span>)</span>{
+  {id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, colSpan: <span class="hljs-number">0</span>,key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>, render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o, row, index)</span></span>{
       <span class="hljs-keyword">let</span> obj ={
         children:o,
         props:{}
@@ -800,7 +798,7 @@ npm start</code></pre></div><h2>Example<a id="user-content-example" name="exampl
     }},
   {title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>,  key:<span class="hljs-string">'c'</span>,width: <span class="hljs-number">200</span>},
   {
-    title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>,  key:<span class="hljs-string">'d'</span>,render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>,  key:<span class="hljs-string">'d'</span>,render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   }
   }
@@ -897,12 +895,6 @@ var table = React.render(
           <td>Object[]</td>
           <th></th>
           <td>data record array to be rendered</td>
-      </tr>
-      <tr>
-          <td>indentSize</td>
-          <td>Number</td>
-          <th>15</th>
-          <td>indentSize for every level of data.i.children, better using with column.width specified</td>
       </tr>
       <tr>
           <td>columns</td>

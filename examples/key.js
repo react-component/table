@@ -1,17 +1,16 @@
-webpackJsonp([5],{
+webpackJsonp([4],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(233);
+	module.exports = __webpack_require__(215);
 
 
 /***/ },
 
-/***/ 233:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint react/no-multi-comp: 0*/
 	'use strict';
 	
 	var React = __webpack_require__(2);
@@ -23,12 +22,11 @@ webpackJsonp([5],{
 	  displayName: 'CheckBox',
 	
 	  render: function render() {
-	    var props = this.props;
 	    return React.createElement(
 	      'label',
 	      null,
 	      React.createElement('input', { type: 'checkbox' }),
-	      props.id
+	      this.props.id
 	    );
 	  }
 	});
@@ -37,14 +35,16 @@ webpackJsonp([5],{
 	  displayName: 'MyTable',
 	
 	  getInitialState: function getInitialState() {
-	    var props = this.props;
 	    return {
-	      data: props.data
+	      data: this.props.data
 	    };
 	  },
 	
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
+	  handleClick: function handleClick(index) {
+	    var self = this;
+	    return function () {
+	      self.remove(index);
+	    };
 	  },
 	
 	  remove: function remove(index) {
@@ -55,17 +55,6 @@ webpackJsonp([5],{
 	    });
 	  },
 	
-	  handleClick: function handleClick(index) {
-	    var self = this;
-	    return function () {
-	      self.remove(index);
-	    };
-	  },
-	
-	  checkbox: function checkbox(a) {
-	    return React.createElement(CheckBox, { id: a });
-	  },
-	
 	  renderAction: function renderAction(o, row, index) {
 	    return React.createElement(
 	      'a',
@@ -74,10 +63,18 @@ webpackJsonp([5],{
 	    );
 	  },
 	
+	  getRowKey: function getRowKey(record) {
+	    return record.a;
+	  },
+	
 	  render: function render() {
 	    var state = this.state;
 	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
 	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: this.getRowKey });
+	  },
+	
+	  checkbox: function checkbox(a) {
+	    return React.createElement(CheckBox, { id: a });
 	  }
 	});
 	

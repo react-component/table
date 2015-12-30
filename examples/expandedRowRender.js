@@ -1,17 +1,16 @@
-webpackJsonp([4],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(232);
+	module.exports = __webpack_require__(214);
 
 
 /***/ },
 
-/***/ 232:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint react/no-multi-comp: 0*/
 	'use strict';
 	
 	var React = __webpack_require__(2);
@@ -23,12 +22,11 @@ webpackJsonp([4],{
 	  displayName: 'CheckBox',
 	
 	  render: function render() {
-	    var props = this.props;
 	    return React.createElement(
 	      'label',
 	      null,
 	      React.createElement('input', { type: 'checkbox' }),
-	      props.id
+	      this.props.id
 	    );
 	  }
 	});
@@ -37,44 +35,10 @@ webpackJsonp([4],{
 	  displayName: 'MyTable',
 	
 	  getInitialState: function getInitialState() {
-	    var props = this.props;
 	    return {
-	      data: props.data,
+	      data: this.props.data,
 	      expandedRowKeys: []
 	    };
-	  },
-	
-	  onExpandedRowsChange: function onExpandedRowsChange(rows) {
-	    this.setState({
-	      expandedRowKeys: rows
-	    });
-	  },
-	
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
-	  },
-	
-	  toggleButton: function toggleButton() {
-	    var _this = this;
-	
-	    if (this.state.expandedRowKeys.length) {
-	      var closeAll = function closeAll() {
-	        return _this.setState({ expandedRowKeys: [] });
-	      };
-	      return React.createElement(
-	        'button',
-	        { onClick: closeAll },
-	        '关闭所有'
-	      );
-	    }
-	    var openAll = function openAll() {
-	      return _this.setState({ expandedRowKeys: ['123', 'cdd', '1333'] });
-	    };
-	    return React.createElement(
-	      'button',
-	      { onClick: openAll },
-	      '展开全部'
-	    );
 	  },
 	
 	  handleClick: function handleClick(index) {
@@ -92,26 +56,46 @@ webpackJsonp([4],{
 	    });
 	  },
 	
-	  checkbox: function checkbox(a) {
-	    return React.createElement(CheckBox, { id: a });
-	  },
-	
-	  expandedRowRender: function expandedRowRender(record) {
-	    console.log(record);
-	    return React.createElement(
-	      'p',
-	      null,
-	      'extra: ',
-	      record.a
-	    );
-	  },
-	
 	  renderAction: function renderAction(o, row, index) {
 	    return React.createElement(
 	      'a',
 	      { href: '#', onClick: this.handleClick(index) },
 	      '删除'
 	    );
+	  },
+	
+	  getRowKey: function getRowKey(record) {
+	    return record.a;
+	  },
+	
+	  onExpandedRowsChange: function onExpandedRowsChange(rows) {
+	    this.setState({
+	      expandedRowKeys: rows
+	    });
+	  },
+	
+	  toggleButton: function toggleButton() {
+	    var _this = this;
+	
+	    if (this.state.expandedRowKeys.length) {
+	      var closeAll = function closeAll() {
+	        return _this.setState({ expandedRowKeys: [] });
+	      };
+	      return React.createElement(
+	        'button',
+	        { onClick: closeAll },
+	        '关闭所有'
+	      );
+	    } else {
+	      var openAll = function openAll() {
+	        return _this.setState({ expandedRowKeys: ['123', 'cdd', '1333'] });
+	      };
+	      return React.createElement(
+	        'button',
+	        { onClick: openAll },
+	        '展开全部'
+	      );
+	    }
 	  },
 	
 	  render: function render() {
@@ -124,7 +108,7 @@ webpackJsonp([4],{
 	      React.createElement(Table, {
 	        columns: columns,
 	        expandIconAsCell: true,
-	        expandedRowRender: this.expandedRowRender,
+	        expandedRowRender: expandedRowRender,
 	        expandedRowKeys: this.state.expandedRowKeys,
 	        onExpandedRowsChange: this.onExpandedRowsChange,
 	        data: state.data,
@@ -132,10 +116,23 @@ webpackJsonp([4],{
 	        rowKey: this.getRowKey
 	      })
 	    );
+	  },
+	
+	  checkbox: function checkbox(a) {
+	    return React.createElement(CheckBox, { id: a });
 	  }
 	});
 	
 	var data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
+	
+	function expandedRowRender(record) {
+	  return React.createElement(
+	    'p',
+	    null,
+	    'extra: ',
+	    record.a
+	  );
+	}
 	
 	ReactDOM.render(React.createElement(
 	  'div',

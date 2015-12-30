@@ -1,17 +1,16 @@
-webpackJsonp([8],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(236);
+	module.exports = __webpack_require__(218);
 
 
 /***/ },
 
-/***/ 236:
+/***/ 218:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint react/no-multi-comp: 0*/
 	'use strict';
 	
 	var React = __webpack_require__(2);
@@ -23,19 +22,18 @@ webpackJsonp([8],{
 	  displayName: 'MyTable',
 	
 	  getInitialState: function getInitialState() {
-	    var props = this.props;
 	    return {
-	      data: props.data
+	      data: this.props.data
 	    };
-	  },
-	
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
 	  },
 	
 	  handleClick: function handleClick(record, e) {
 	    e.preventDefault();
 	    console.log(record.a);
+	  },
+	
+	  getRowKey: function getRowKey(record) {
+	    return record.a;
 	  },
 	
 	  render: function render() {
