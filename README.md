@@ -127,6 +127,12 @@ var table = React.render(
           <td>whether render expandIcon as a cell</td>
       </tr>
       <tr>
+          <td>expandIconColumnHeader</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether render expandIcon column header. If not and expandIconAsCell is true, second column header will span first column header.</td>
+      </tr>
+      <tr>
           <td>rowKey</td>
           <td>Function(recode,index):string</td>
           <th>record.key</th>
