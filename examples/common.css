@@ -55,6 +55,14 @@
    -ms-user-select: none;
        user-select: none;
 }
+.rc-table-row-spaced,
+.rc-table-expanded-row-spaced {
+  visibility: hidden;
+}
+.rc-table-row-spaced:after,
+.rc-table-expanded-row-spaced:after {
+  content: '.';
+}
 .rc-table-row-expanded:after,
 .rc-table-expanded-row-expanded:after {
   content: '-';
