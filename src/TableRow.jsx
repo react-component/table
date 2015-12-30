@@ -50,7 +50,7 @@ const TableRow = React.createClass({
         text = render(text, record, index) || {};
         tdProps = text.props || {};
 
-        if (!React.isValidElement(text) && 'children' in text) {
+        if (typeof text !== 'string' && !React.isValidElement(text) && 'children' in text) {
           text = text.children;
         }
         rowSpan = tdProps.rowSpan;
