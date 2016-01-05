@@ -25,6 +25,8 @@ const TableRow = React.createClass({
     const indentSize = props.indentSize;
     const needIndentSpaced = props.needIndentSpaced;
 
+    let onExpand = null;
+
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
       const colClassName = col.className || '';
@@ -39,9 +41,10 @@ const TableRow = React.createClass({
       let indentText;
 
       if (i === 0 && expandable) {
+        onExpand = props.onExpand.bind(null, !expanded, record);
         expandIcon = (<span
           className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
-          onClick={props.onExpand.bind(null, !expanded, record)}/>);
+          onClick={onExpand}/>);
       } else if (i === 0 && needIndentSpaced) {
         expandIcon = (<span
           className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />);
@@ -79,7 +82,10 @@ const TableRow = React.createClass({
       }
     }
     return (
-      <tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
+      <tr className={`${prefixCls} ${props.className}`}
+          style={{display: props.visible ? '' : 'none'}}
+          onClick={props.expandOnRowClick ? onExpand : null}
+      >{cells}</tr>);
   },
 });
 
