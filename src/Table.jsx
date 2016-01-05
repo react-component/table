@@ -5,6 +5,7 @@ const Table = React.createClass({
   propTypes: {
     data: React.PropTypes.array,
     expandIconAsCell: React.PropTypes.bool,
+    expandOnRowClick: React.PropTypes.bool,
     expandedRowKeys: React.PropTypes.array,
     defaultExpandedRowKeys: React.PropTypes.array,
     useFixedHeader: React.PropTypes.bool,
@@ -25,6 +26,7 @@ const Table = React.createClass({
       data: [],
       useFixedHeader: false,
       expandIconAsCell: false,
+      expandOnRowClick: false,
       columns: [],
       defaultExpandedRowKeys: [],
       rowKey(o) {
@@ -143,6 +145,7 @@ const Table = React.createClass({
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandIconAsCell = props.expandIconAsCell;
+    const expandOnRowClick = props.expandOnRowClick;
     let rst = [];
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
@@ -166,6 +169,7 @@ const Table = React.createClass({
         className={className}
         record={record}
         expandIconAsCell={expandIconAsCell}
+        expandOnRowClick={expandOnRowClick}
         onDestroy={this.onRowDestroy}
         index={i}
         visible={visible}
