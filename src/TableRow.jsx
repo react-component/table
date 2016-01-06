@@ -80,7 +80,7 @@ const TableRow = React.createClass({
       }
     }
     return (
-      <tr onClick={onRowClick.bind(this, record, index)} className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
+      <tr onClick={onRowClick ? onRowClick.bind(this, record, index) : null} className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
   },
 });
 
