@@ -175,6 +175,12 @@ var table = React.render(
           <td>indentSize for every level of data.i.children, better using with column.width specified</td>
       </tr>
       <tr>
+          <td>onRowClick</td>
+          <td>Function(record, index)</td>
+          <th></th>
+          <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>
