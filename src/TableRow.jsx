@@ -24,6 +24,7 @@ const TableRow = React.createClass({
     const indent = props.indent;
     const indentSize = props.indentSize;
     const needIndentSpaced = props.needIndentSpaced;
+    const onRowClick = props.onRowClick;
 
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
@@ -79,7 +80,7 @@ const TableRow = React.createClass({
       }
     }
     return (
-      <tr className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
+      <tr onClick={onRowClick ? onRowClick.bind(null, record, index) : null} className={`${prefixCls} ${props.className}`} style={{display: props.visible ? '' : 'none'}}>{cells}</tr>);
   },
 });
 

@@ -18,6 +18,7 @@ const Table = React.createClass({
     childrenColumnName: React.PropTypes.string,
     onExpandedRowsChange: React.PropTypes.func,
     indentSize: React.PropTypes.number,
+    onRowClick: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -149,6 +150,7 @@ const Table = React.createClass({
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record =>
       record[childrenColumnName] && record[childrenColumnName].length > 0);
+    const onRowClick = props.onRowClick;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = keyFn ? keyFn(record, i) : undefined;
@@ -175,6 +177,7 @@ const Table = React.createClass({
         prefixCls={`${props.prefixCls}-row`}
         childrenColumnName={childrenColumnName}
         columns={columns}
+        onRowClick={onRowClick}
         key={key}/>);
 
       const subVisible = visible && isRowExpanded;
