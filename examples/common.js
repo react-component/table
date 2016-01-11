@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		9:0
+/******/ 		10:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"scrollBody","7":"simple","8":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"rowClick","7":"scrollBody","8":"simple","9":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -1108,7 +1108,7 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	function invariant(condition, format, a, b, c, d, e, f) {
+	var invariant = function (condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -1122,16 +1122,15 @@
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
+	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
-	      error.name = 'Invariant Violation';
 	    }
 	
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	}
+	};
 	
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
@@ -10558,8 +10557,8 @@
 	     */
 	    // autoCapitalize and autoCorrect are supported in Mobile Safari for
 	    // keyboard hints.
-	    autoCapitalize: MUST_USE_ATTRIBUTE,
-	    autoCorrect: MUST_USE_ATTRIBUTE,
+	    autoCapitalize: null,
+	    autoCorrect: null,
 	    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
 	    autoSave: null,
 	    // color is for Safari mask-icon link
@@ -10590,7 +10589,9 @@
 	    httpEquiv: 'http-equiv'
 	  },
 	  DOMPropertyNames: {
+	    autoCapitalize: 'autocapitalize',
 	    autoComplete: 'autocomplete',
+	    autoCorrect: 'autocorrect',
 	    autoFocus: 'autofocus',
 	    autoPlay: 'autoplay',
 	    autoSave: 'autosave',
@@ -13669,7 +13670,7 @@
 	    var value = LinkedValueUtils.getValue(props);
 	
 	    if (value != null) {
-	      updateOptions(this, Boolean(props.multiple), value);
+	      updateOptions(this, props, value);
 	    }
 	  }
 	}
@@ -16708,11 +16709,15 @@
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not yet defined.
 	 */
-	"use strict";
+	'use strict';
 	
 	function getActiveElement() /*?DOMElement*/{
+	  if (typeof document === 'undefined') {
+	    return null;
+	  }
+	
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -18452,9 +18457,7 @@
 	  'setValueForProperty': 'update attribute',
 	  'setValueForAttribute': 'update attribute',
 	  'deleteValueForProperty': 'remove attribute',
-	  'setValueForStyles': 'update styles',
-	  'replaceNodeWithMarkup': 'replace',
-	  'updateTextContent': 'set textContent'
+	  'dangerouslyReplaceNodeWithMarkupByID': 'replace'
 	};
 	
 	function getTotalTime(measurements) {
@@ -18646,23 +18649,18 @@
 	'use strict';
 	
 	var performance = __webpack_require__(146);
-	
-	var performanceNow;
+	var curPerformance = performance;
 	
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
 	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
 	 * because of Facebook's testing infrastructure.
 	 */
-	if (performance.now) {
-	  performanceNow = function () {
-	    return performance.now();
-	  };
-	} else {
-	  performanceNow = function () {
-	    return Date.now();
-	  };
+	if (!curPerformance || !curPerformance.now) {
+	  curPerformance = Date;
 	}
+	
+	var performanceNow = curPerformance.now.bind(curPerformance);
 	
 	module.exports = performanceNow;
 
@@ -18711,7 +18709,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.5';
+	module.exports = '0.14.3';
 
 /***/ },
 /* 148 */
@@ -19736,7 +19734,8 @@
 	    expandedRowClassName: _react2['default'].PropTypes.func,
 	    childrenColumnName: _react2['default'].PropTypes.string,
 	    onExpandedRowsChange: _react2['default'].PropTypes.func,
-	    indentSize: _react2['default'].PropTypes.number
+	    indentSize: _react2['default'].PropTypes.number,
+	    onRowClick: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19876,6 +19875,7 @@
 	    var needIndentSpaced = props.data.some(function (record) {
 	      return record[childrenColumnName] && record[childrenColumnName].length > 0;
 	    });
+	    var onRowClick = props.onRowClick;
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
 	      var key = keyFn ? keyFn(record, i) : undefined;
@@ -19902,6 +19902,7 @@
 	        prefixCls: props.prefixCls + '-row',
 	        childrenColumnName: childrenColumnName,
 	        columns: columns,
+	        onRowClick: onRowClick,
 	        key: key }));
 	
 	      var subVisible = visible && isRowExpanded;
@@ -20048,6 +20049,7 @@
 	    var indent = props.indent;
 	    var indentSize = props.indentSize;
 	    var needIndentSpaced = props.needIndentSpaced;
+	    var onRowClick = props.onRowClick;
 	
 	    for (var i = 0; i < columns.length; i++) {
 	      var col = columns[i];
@@ -20110,7 +20112,7 @@
 	    }
 	    return _react2['default'].createElement(
 	      'tr',
-	      { className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
+	      { onClick: onRowClick ? onRowClick.bind(null, record, index) : null, className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
 	      cells
 	    );
 	  }

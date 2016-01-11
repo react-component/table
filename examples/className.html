@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>className.js - example - rc-table@3.7.1</title>
+  <title>className.js - example - rc-table@3.8.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.7.1</h1>
+    <h1>rc-table@3.8.0</h1>
 
     <p>table ui component for react</p>
   </div>
@@ -283,7 +283,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   {
     title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>,
     className: <span class="hljs-string">'d'</span>,
-    key: <span class="hljs-string">'d'</span>, render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    key: <span class="hljs-string">'d'</span>, render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
     },
   },
@@ -291,15 +291,15 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
 <span class="hljs-keyword">const</span> data = [{a: <span class="hljs-string">'123'</span>, key: <span class="hljs-string">'1'</span>}, {a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span>}, {a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span>}];
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rowClassName</span><span class="hljs-params">(record, i)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rowClassName</span>(<span class="hljs-params">record, i</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">'row-'</span> + i;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowClassName</span><span class="hljs-params">(record, i)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowClassName</span>(<span class="hljs-params">record, i</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">'ex-row-'</span> + i;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowRender</span><span class="hljs-params">(record)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">expandedRowRender</span>(<span class="hljs-params">record</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>extra: {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>;</span>
 }
 
