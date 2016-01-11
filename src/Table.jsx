@@ -124,13 +124,9 @@ const Table = React.createClass({
     });
   },
 
-  getExpandedRow(key2, content, visible, className) {
-    let key = key2;
+  getExpandedRow(key, content, visible, className) {
     const prefixCls = this.props.prefixCls;
-    if (key) {
-      key += '-extra-row';
-    }
-    return (<tr key={key} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
+    return (<tr key={key + '-extra-row'} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
       {this.props.expandIconAsCell ? <td key="rc-table-expand-icon-placeholder"></td> : ''}
       <td colSpan={this.props.columns.length}>
         {content}
