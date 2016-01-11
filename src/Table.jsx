@@ -5,6 +5,7 @@ const Table = React.createClass({
   propTypes: {
     data: React.PropTypes.array,
     expandIconAsCell: React.PropTypes.bool,
+    expandIconColumnHeader: React.PropTypes.bool,
     expandedRowKeys: React.PropTypes.array,
     defaultExpandedRowKeys: React.PropTypes.array,
     useFixedHeader: React.PropTypes.bool,
@@ -26,6 +27,7 @@ const Table = React.createClass({
       data: [],
       useFixedHeader: false,
       expandIconAsCell: false,
+      expandIconColumnHeader: true,
       columns: [],
       defaultExpandedRowKeys: [],
       rowKey(o) {
@@ -109,7 +111,7 @@ const Table = React.createClass({
 
   getThs() {
     let ths = [];
-    if (this.props.expandIconAsCell) {
+    if (this.props.expandIconAsCell && this.props.expandIconColumnHeader) {
       ths.push({
         key: 'rc-table-expandIconAsCell',
         className: `${this.props.prefixCls}-expand-icon-th`,
@@ -117,9 +119,15 @@ const Table = React.createClass({
       });
     }
     ths = ths.concat(this.props.columns);
-    return ths.map((c)=> {
-      if (c.colSpan !== 0) {
-        return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
+    return ths.map((c, index) => {
+      let colSpan = c.colSpan;
+      if (colSpan !== 0) {
+        if (this.props.expandIconAsCell && !this.props.expandIconColumnHeader && index === 0) {
+          // if expand icon is rendered as icon and expandIconColumnHeader is false, we need to span second column header
+          colSpan = colSpan || 1;
+          colSpan += 1;
+        }
+        return <th key={c.key} colSpan={colSpan} className={c.className || ''}>{c.title}</th>;
       }
     });
   },
