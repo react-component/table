@@ -1,5 +1,6 @@
 import React from 'react';
 import TableRow from './TableRow';
+import objectAssign from 'object-assign';
 
 const Table = React.createClass({
   propTypes: {
@@ -19,6 +20,8 @@ const Table = React.createClass({
     onExpandedRowsChange: React.PropTypes.func,
     indentSize: React.PropTypes.number,
     onRowClick: React.PropTypes.func,
+    columnsPageRange: React.PropTypes.array,
+    columnsPageSize: React.PropTypes.number,
   },
 
   getDefaultProps() {
@@ -44,6 +47,7 @@ const Table = React.createClass({
       style: {},
       childrenColumnName: 'children',
       indentSize: 15,
+      columnsPageSize: 5,
     };
   },
 
@@ -52,6 +56,7 @@ const Table = React.createClass({
     return {
       expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
       data: this.props.data,
+      currentColumnsPage: 0,
     };
   },
 
@@ -116,7 +121,7 @@ const Table = React.createClass({
         title: '',
       });
     }
-    ths = ths.concat(this.props.columns);
+    ths = ths.concat(this.getCurrentColumns());
     return ths.map((c)=> {
       if (c.colSpan !== 0) {
         return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
@@ -140,7 +145,7 @@ const Table = React.createClass({
 
   getRowsByData(data, visible, indent) {
     const props = this.props;
-    const columns = props.columns;
+    const columns = this.getCurrentColumns();
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     const expandIconAsCell = props.expandIconAsCell;
@@ -205,6 +210,74 @@ const Table = React.createClass({
       return <col key={c.key} style={{width: c.width}}></col>;
     }));
     return <colgroup>{cols}</colgroup>;
+  },
+
+  getCurrentColumns() {
+    const { columns, columnsPageRange, columnsPageSize } = this.props;
+    const { currentColumnsPage } = this.state;
+    if (!columnsPageRange) {
+      return columns;
+    }
+    const currentColumns = columns.slice();
+    const start = columnsPageRange[0];
+    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
+
+    const columnsInRange = currentColumns.splice(start, rangeLength);
+    const currentPageColumns = columnsInRange.slice(
+      currentColumnsPage * columnsPageSize,
+      (currentColumnsPage + 1) * columnsPageSize + 1,
+    );
+    currentColumns.splice(start, 0, ...this.wrapPageColumns(currentPageColumns));
+    return currentColumns;
+  },
+
+  goToColumnsPage(currentColumnsPage) {
+    const { columnsPageRange, columnsPageSize } = this.props;
+    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
+    const maxColumnsPage = Math.floor((rangeLength - 1) / columnsPageSize);
+    let page = currentColumnsPage;
+    if (page < 0) {
+      page = 0;
+    }
+    if (page > maxColumnsPage) {
+      page = maxColumnsPage;
+    }
+    this.setState({
+      currentColumnsPage: page,
+    });
+  },
+
+  prevColumnsPage() {
+    this.goToColumnsPage(this.state.currentColumnsPage - 1);
+  },
+
+  nextColumnsPage() {
+    this.goToColumnsPage(this.state.currentColumnsPage + 1);
+  },
+
+  wrapPageColumns(columns) {
+    const { columnsPageRange, columnsPageSize, prefixCls } = this.props;
+    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
+    const maxColumnsPage = Math.floor((rangeLength - 1) / columnsPageSize);
+    const { currentColumnsPage } = this.state;
+    const prevHandler = currentColumnsPage === 0 ? null :
+      <span className={`${prefixCls}-prev-columns-page`} onClick={this.prevColumnsPage}>&lt;</span>;
+    const nextHandler = currentColumnsPage === maxColumnsPage ? null :
+      <span className={`${prefixCls}-next-columns-page`} onClick={this.nextColumnsPage}>&gt;</span>;
+    return columns.map((column, i) => {
+      const wrappedColumn = objectAssign({}, column);
+      if (i === 0) {
+        wrappedColumn.title = (
+          <span>{prevHandler}{column.title}</span>
+        );
+      }
+      if (i === columns.length - 1) {
+        wrappedColumn.title = (
+          <span>{column.title}{nextHandler}</span>
+        );
+      }
+      return wrappedColumn;
+    });
   },
 
   findExpandedRow(record) {
