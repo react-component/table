@@ -267,10 +267,16 @@ const Table = React.createClass({
     const { prefixCls } = this.props;
     const { currentColumnsPage } = this.state;
     const maxColumnsPage = this.getMaxColumnsPage();
-    const prevHandler = currentColumnsPage === 0 ? null :
-      <span className={`${prefixCls}-prev-columns-page`} onClick={this.prevColumnsPage}>&lt;</span>;
-    const nextHandler = currentColumnsPage === maxColumnsPage ? null :
-      <span className={`${prefixCls}-next-columns-page`} onClick={this.nextColumnsPage}>&gt;</span>;
+    let prevHandlerCls = `${prefixCls}-prev-columns-page`;
+    if (currentColumnsPage === 0) {
+      prevHandlerCls += ` ${prefixCls}-prev-columns-page-disabled`;
+    }
+    const prevHandler = <span className={prevHandlerCls} onClick={this.prevColumnsPage}>&lt;</span>;
+    let nextHandlerCls = `${prefixCls}-next-columns-page`;
+    if (currentColumnsPage === maxColumnsPage) {
+      nextHandlerCls += ` ${prefixCls}-next-columns-page-disabled`;
+    }
+    const nextHandler = <span className={nextHandlerCls} onClick={this.nextColumnsPage}>&gt;</span>;
     column.title = hasPrev ? <span>{prevHandler}{column.title}</span> : column.title;
     column.title = hasNext ? <span>{column.title}{nextHandler}</span> : column.title;
     return column;
