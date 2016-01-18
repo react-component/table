@@ -222,7 +222,7 @@ const Table = React.createClass({
       let newColumn = objectAssign({}, column);
       if (i >= columnsPageRange[0] && i <= columnsPageRange[1]) {
         const pageIndexStart = columnsPageRange[0] + currentColumnsPage * columnsPageSize;
-        let pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize;
+        let pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize - 1;
         if (pageIndexEnd > columnsPageRange[1]) {
           pageIndexEnd = columnsPageRange[1];
         }
