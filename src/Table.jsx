@@ -304,6 +304,9 @@ const Table = React.createClass({
     if (props.className) {
       className += ' ' + props.className;
     }
+    if (props.columnsPageRange) {
+      className += ` ${prefixCls}-columns-paging`;
+    }
     let headerTable;
     let thead = (<thead className={`${prefixCls}-thead`}>
     <tr>
