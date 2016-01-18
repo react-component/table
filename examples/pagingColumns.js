@@ -23,7 +23,7 @@ const data = [{a: '123', key: '1'}, {a: 'cdd', b: 'edd', key: '2'}, {a: '1333', 
 
 ReactDOM.render(
   <div>
-    <h2>scroll column table</h2>
+    <h2>paging columns table</h2>
     <Table columns={columns}
       columnsPageRange={[1, 10]}
       columnsPageSize={4}
