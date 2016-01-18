@@ -213,28 +213,36 @@ const Table = React.createClass({
   },
 
   getCurrentColumns() {
-    const { columns, columnsPageRange, columnsPageSize } = this.props;
+    const { columns, columnsPageRange, columnsPageSize, prefixCls } = this.props;
     const { currentColumnsPage } = this.state;
-    if (!columnsPageRange) {
+    if (!columnsPageRange || columnsPageRange[0] > columnsPageRange[1]) {
       return columns;
     }
-    const currentColumns = columns.slice();
-    const start = columnsPageRange[0];
-    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
+    return columns.map((column, i) => {
+      let newColumn = objectAssign({}, column);
+      if (i >= columnsPageRange[0] && i <= columnsPageRange[1]) {
+        const pageIndexStart = columnsPageRange[0] + currentColumnsPage * columnsPageSize;
+        let pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize;
+        if (pageIndexEnd > columnsPageRange[1]) {
+          pageIndexEnd = columnsPageRange[1];
+        }
+        if (i < pageIndexStart || i > pageIndexEnd) {
+          newColumn.className = newColumn.className || '';
+          newColumn.className += ' ' + prefixCls + '-column-hidden';
+        }
+        newColumn = this.wrapPageColumn(newColumn, (i === pageIndexStart), (i === pageIndexEnd));
+      }
+      return newColumn;
+    });
+  },
 
-    const columnsInRange = currentColumns.splice(start, rangeLength);
-    const currentPageColumns = columnsInRange.slice(
-      currentColumnsPage * columnsPageSize,
-      (currentColumnsPage + 1) * columnsPageSize + 1,
-    );
-    currentColumns.splice(start, 0, ...this.wrapPageColumns(currentPageColumns));
-    return currentColumns;
+  getMaxColumnsPage() {
+    const { columnsPageRange, columnsPageSize } = this.props;
+    return Math.floor((columnsPageRange[1] - columnsPageRange[0] - 1) / columnsPageSize);
   },
 
   goToColumnsPage(currentColumnsPage) {
-    const { columnsPageRange, columnsPageSize } = this.props;
-    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
-    const maxColumnsPage = Math.floor((rangeLength - 1) / columnsPageSize);
+    const maxColumnsPage = this.getMaxColumnsPage();
     let page = currentColumnsPage;
     if (page < 0) {
       page = 0;
@@ -255,29 +263,17 @@ const Table = React.createClass({
     this.goToColumnsPage(this.state.currentColumnsPage + 1);
   },
 
-  wrapPageColumns(columns) {
-    const { columnsPageRange, columnsPageSize, prefixCls } = this.props;
-    const rangeLength = columnsPageRange[1] - columnsPageRange[0];
-    const maxColumnsPage = Math.floor((rangeLength - 1) / columnsPageSize);
+  wrapPageColumn(column, hasPrev, hasNext) {
+    const { prefixCls } = this.props;
     const { currentColumnsPage } = this.state;
+    const maxColumnsPage = this.getMaxColumnsPage();
     const prevHandler = currentColumnsPage === 0 ? null :
       <span className={`${prefixCls}-prev-columns-page`} onClick={this.prevColumnsPage}>&lt;</span>;
     const nextHandler = currentColumnsPage === maxColumnsPage ? null :
       <span className={`${prefixCls}-next-columns-page`} onClick={this.nextColumnsPage}>&gt;</span>;
-    return columns.map((column, i) => {
-      const wrappedColumn = objectAssign({}, column);
-      if (i === 0) {
-        wrappedColumn.title = (
-          <span>{prevHandler}{column.title}</span>
-        );
-      }
-      if (i === columns.length - 1) {
-        wrappedColumn.title = (
-          <span>{column.title}{nextHandler}</span>
-        );
-      }
-      return wrappedColumn;
-    });
+    column.title = hasPrev ? <span>{prevHandler}{column.title}</span> : column.title;
+    column.title = hasNext ? <span>{column.title}{nextHandler}</span> : column.title;
+    return column;
   },
 
   findExpandedRow(record) {
