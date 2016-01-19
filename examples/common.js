@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		10:0
+/******/ 		11:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"rowClick","7":"scrollBody","8":"simple","9":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"pagingColumns","7":"rowClick","8":"scrollBody","9":"simple","10":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -1108,7 +1108,7 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	var invariant = function (condition, format, a, b, c, d, e, f) {
+	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -1122,15 +1122,16 @@
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	      error = new Error(format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
+	      error.name = 'Invariant Violation';
 	    }
 	
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	};
+	}
 	
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
@@ -10557,8 +10558,8 @@
 	     */
 	    // autoCapitalize and autoCorrect are supported in Mobile Safari for
 	    // keyboard hints.
-	    autoCapitalize: null,
-	    autoCorrect: null,
+	    autoCapitalize: MUST_USE_ATTRIBUTE,
+	    autoCorrect: MUST_USE_ATTRIBUTE,
 	    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
 	    autoSave: null,
 	    // color is for Safari mask-icon link
@@ -10589,9 +10590,7 @@
 	    httpEquiv: 'http-equiv'
 	  },
 	  DOMPropertyNames: {
-	    autoCapitalize: 'autocapitalize',
 	    autoComplete: 'autocomplete',
-	    autoCorrect: 'autocorrect',
 	    autoFocus: 'autofocus',
 	    autoPlay: 'autoplay',
 	    autoSave: 'autosave',
@@ -13670,7 +13669,7 @@
 	    var value = LinkedValueUtils.getValue(props);
 	
 	    if (value != null) {
-	      updateOptions(this, props, value);
+	      updateOptions(this, Boolean(props.multiple), value);
 	    }
 	  }
 	}
@@ -16705,11 +16704,14 @@
 	 * @typechecks
 	 */
 	
+	/* eslint-disable fb-www/typeof-undefined */
+	
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document or document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
 	 */
 	'use strict';
 	
@@ -16717,7 +16719,6 @@
 	  if (typeof document === 'undefined') {
 	    return null;
 	  }
-	
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -18457,7 +18458,9 @@
 	  'setValueForProperty': 'update attribute',
 	  'setValueForAttribute': 'update attribute',
 	  'deleteValueForProperty': 'remove attribute',
-	  'dangerouslyReplaceNodeWithMarkupByID': 'replace'
+	  'setValueForStyles': 'update styles',
+	  'replaceNodeWithMarkup': 'replace',
+	  'updateTextContent': 'set textContent'
 	};
 	
 	function getTotalTime(measurements) {
@@ -18649,18 +18652,23 @@
 	'use strict';
 	
 	var performance = __webpack_require__(146);
-	var curPerformance = performance;
+	
+	var performanceNow;
 	
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
 	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
 	 * because of Facebook's testing infrastructure.
 	 */
-	if (!curPerformance || !curPerformance.now) {
-	  curPerformance = Date;
+	if (performance.now) {
+	  performanceNow = function () {
+	    return performance.now();
+	  };
+	} else {
+	  performanceNow = function () {
+	    return Date.now();
+	  };
 	}
-	
-	var performanceNow = curPerformance.now.bind(curPerformance);
 	
 	module.exports = performanceNow;
 
@@ -18709,7 +18717,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.3';
+	module.exports = '0.14.6';
 
 /***/ },
 /* 148 */
@@ -19716,6 +19724,10 @@
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
+	var _objectAssign = __webpack_require__(164);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
 	var Table = _react2['default'].createClass({
 	  displayName: 'Table',
 	
@@ -19735,7 +19747,9 @@
 	    childrenColumnName: _react2['default'].PropTypes.string,
 	    onExpandedRowsChange: _react2['default'].PropTypes.func,
 	    indentSize: _react2['default'].PropTypes.number,
-	    onRowClick: _react2['default'].PropTypes.func
+	    onRowClick: _react2['default'].PropTypes.func,
+	    columnsPageRange: _react2['default'].PropTypes.array,
+	    columnsPageSize: _react2['default'].PropTypes.number
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19759,7 +19773,8 @@
 	      bodyStyle: {},
 	      style: {},
 	      childrenColumnName: 'children',
-	      indentSize: 15
+	      indentSize: 15,
+	      columnsPageSize: 5
 	    };
 	  },
 	
@@ -19767,7 +19782,8 @@
 	    var props = this.props;
 	    return {
 	      expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
-	      data: this.props.data
+	      data: this.props.data,
+	      currentColumnsPage: 0
 	    };
 	  },
 	
@@ -19832,7 +19848,7 @@
 	        title: ''
 	      });
 	    }
-	    ths = ths.concat(this.props.columns);
+	    ths = ths.concat(this.getCurrentColumns());
 	    return ths.map(function (c) {
 	      if (c.colSpan !== 0) {
 	        return _react2['default'].createElement(
@@ -19844,15 +19860,11 @@
 	    });
 	  },
 	
-	  getExpandedRow: function getExpandedRow(key2, content, visible, className) {
-	    var key = key2;
+	  getExpandedRow: function getExpandedRow(key, content, visible, className) {
 	    var prefixCls = this.props.prefixCls;
-	    if (key) {
-	      key += '-extra-row';
-	    }
 	    return _react2['default'].createElement(
 	      'tr',
-	      { key: key, style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className },
+	      { key: key + '-extra-row', style: { display: visible ? '' : 'none' }, className: prefixCls + '-expanded-row ' + className },
 	      this.props.expandIconAsCell ? _react2['default'].createElement('td', { key: 'rc-table-expand-icon-placeholder' }) : '',
 	      _react2['default'].createElement(
 	        'td',
@@ -19864,7 +19876,7 @@
 	
 	  getRowsByData: function getRowsByData(data, visible, indent) {
 	    var props = this.props;
-	    var columns = props.columns;
+	    var columns = this.getCurrentColumns();
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
 	    var expandIconAsCell = props.expandIconAsCell;
@@ -19936,6 +19948,97 @@
 	    );
 	  },
 	
+	  getCurrentColumns: function getCurrentColumns() {
+	    var _this = this;
+	
+	    var _props = this.props;
+	    var columns = _props.columns;
+	    var columnsPageRange = _props.columnsPageRange;
+	    var columnsPageSize = _props.columnsPageSize;
+	    var prefixCls = _props.prefixCls;
+	    var currentColumnsPage = this.state.currentColumnsPage;
+	
+	    if (!columnsPageRange || columnsPageRange[0] > columnsPageRange[1]) {
+	      return columns;
+	    }
+	    return columns.map(function (column, i) {
+	      var newColumn = (0, _objectAssign2['default'])({}, column);
+	      if (i >= columnsPageRange[0] && i <= columnsPageRange[1]) {
+	        var pageIndexStart = columnsPageRange[0] + currentColumnsPage * columnsPageSize;
+	        var pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize - 1;
+	        if (pageIndexEnd > columnsPageRange[1]) {
+	          pageIndexEnd = columnsPageRange[1];
+	        }
+	        if (i < pageIndexStart || i > pageIndexEnd) {
+	          newColumn.className = newColumn.className || '';
+	          newColumn.className += ' ' + prefixCls + '-column-hidden';
+	        }
+	        newColumn = _this.wrapPageColumn(newColumn, i === pageIndexStart, i === pageIndexEnd);
+	      }
+	      return newColumn;
+	    });
+	  },
+	
+	  getMaxColumnsPage: function getMaxColumnsPage() {
+	    var _props2 = this.props;
+	    var columnsPageRange = _props2.columnsPageRange;
+	    var columnsPageSize = _props2.columnsPageSize;
+	
+	    return Math.floor((columnsPageRange[1] - columnsPageRange[0] - 1) / columnsPageSize);
+	  },
+	
+	  goToColumnsPage: function goToColumnsPage(currentColumnsPage) {
+	    var maxColumnsPage = this.getMaxColumnsPage();
+	    var page = currentColumnsPage;
+	    if (page < 0) {
+	      page = 0;
+	    }
+	    if (page > maxColumnsPage) {
+	      page = maxColumnsPage;
+	    }
+	    this.setState({
+	      currentColumnsPage: page
+	    });
+	  },
+	
+	  prevColumnsPage: function prevColumnsPage() {
+	    this.goToColumnsPage(this.state.currentColumnsPage - 1);
+	  },
+	
+	  nextColumnsPage: function nextColumnsPage() {
+	    this.goToColumnsPage(this.state.currentColumnsPage + 1);
+	  },
+	
+	  wrapPageColumn: function wrapPageColumn(column, hasPrev, hasNext) {
+	    var prefixCls = this.props.prefixCls;
+	    var currentColumnsPage = this.state.currentColumnsPage;
+	
+	    var maxColumnsPage = this.getMaxColumnsPage();
+	    var prevHandlerCls = prefixCls + '-prev-columns-page';
+	    if (currentColumnsPage === 0) {
+	      prevHandlerCls += ' ' + prefixCls + '-prev-columns-page-disabled';
+	    }
+	    var prevHandler = _react2['default'].createElement('span', { className: prevHandlerCls, onClick: this.prevColumnsPage });
+	    var nextHandlerCls = prefixCls + '-next-columns-page';
+	    if (currentColumnsPage === maxColumnsPage) {
+	      nextHandlerCls += ' ' + prefixCls + '-next-columns-page-disabled';
+	    }
+	    var nextHandler = _react2['default'].createElement('span', { className: nextHandlerCls, onClick: this.nextColumnsPage });
+	    column.title = hasPrev ? _react2['default'].createElement(
+	      'span',
+	      null,
+	      prevHandler,
+	      column.title
+	    ) : column.title;
+	    column.title = hasNext ? _react2['default'].createElement(
+	      'span',
+	      null,
+	      column.title,
+	      nextHandler
+	    ) : column.title;
+	    return column;
+	  },
+	
 	  findExpandedRow: function findExpandedRow(record) {
 	    var keyFn = this.props.rowKey;
 	    var currentRowKey = keyFn(record);
@@ -19957,6 +20060,9 @@
 	    var className = props.prefixCls;
 	    if (props.className) {
 	      className += ' ' + props.className;
+	    }
+	    if (props.columnsPageRange) {
+	      className += ' ' + prefixCls + '-columns-paging';
 	    }
 	    var headerTable = undefined;
 	    var thead = _react2['default'].createElement(
@@ -20123,6 +20229,51 @@
 
 /***/ },
 /* 164 */
+/***/ function(module, exports) {
+
+	/* eslint-disable no-unused-vars */
+	'use strict';
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+	
+	function toObject(val) {
+		if (val === null || val === undefined) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var to = toObject(target);
+		var symbols;
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = Object(arguments[s]);
+	
+			for (var key in from) {
+				if (hasOwnProperty.call(from, key)) {
+					to[key] = from[key];
+				}
+			}
+	
+			if (Object.getOwnPropertySymbols) {
+				symbols = Object.getOwnPropertySymbols(from);
+				for (var i = 0; i < symbols.length; i++) {
+					if (propIsEnumerable.call(from, symbols[i])) {
+						to[symbols[i]] = from[symbols[i]];
+					}
+				}
+			}
+		}
+	
+		return to;
+	};
+
+
+/***/ },
+/* 165 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

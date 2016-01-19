@@ -1,14 +1,14 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(236);
+	module.exports = __webpack_require__(221);
 
 
 /***/ },
 
-/***/ 236:
+/***/ 221:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint react/no-multi-comp: 0*/
@@ -17,7 +17,7 @@ webpackJsonp([8],{
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(159);
 	var Table = __webpack_require__(160);
-	__webpack_require__(164);
+	__webpack_require__(165);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
 	  title: '操作', dataIndex: '', key: 'd', render: function render() {

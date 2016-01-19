@@ -1,14 +1,14 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(234);
+	module.exports = __webpack_require__(219);
 
 
 /***/ },
 
-/***/ 234:
+/***/ 219:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint react/no-multi-comp: 0*/
@@ -17,7 +17,7 @@ webpackJsonp([6],{
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(159);
 	var Table = __webpack_require__(160);
-	__webpack_require__(164);
+	__webpack_require__(165);
 	
 	var onRowClick = function onRowClick(record, index) {
 	  alert('u click the nth(' + index + ') element of yourFather.children, record.name: ' + record.name);
