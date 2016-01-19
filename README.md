@@ -82,7 +82,7 @@ var table = React.render(
   document.getElementById('__react-content')
 );
 ```
-## API 
+## API
 
 ### property
 
@@ -179,6 +179,18 @@ var table = React.render(
           <td>Function(record, index)</td>
           <th></th>
           <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
+      </tr>
+      <tr>
+          <td>columnsPageRange</td>
+          <td>Array</td>
+          <th></th>
+          <td>columns index range need paging, like [2,10]</td>
+      </tr>
+      <tr>
+          <td>columnsPageSize</td>
+          <td>Number</td>
+          <th>5</th>
+          <td>pageSize of columns</td>
       </tr>
       <tr>
           <td>columns</td>
