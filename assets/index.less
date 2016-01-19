@@ -21,6 +21,7 @@
     background: @table-head-background-color;
     font-weight: bold;
     transition: background .3s ease;
+    position: relative;
 
     &:first-child {
       border-radius: 6px 0 0 0;
@@ -76,6 +77,37 @@
 
     &-collapsed:after {
       content: '+'
+    }
+  }
+  &-column-hidden {
+    display: none;
+  }
+  &-prev-columns-page,
+  &-next-columns-page {
+    cursor: pointer;
+    color: #666;
+    z-index: 1;
+    &:hover {
+      color: #2db7f5;
+    }
+    &-disabled {
+      cursor: not-allowed;
+      color: #999;
+      &:hover {
+        color: #999;
+      }
+    }
+  }
+  &-prev-columns-page {
+    margin-right: 8px;
+    &:before {
+      content: '<';
+    }
+  }
+  &-next-columns-page {
+    float: right;
+    &:before {
+      content: '>';
     }
   }
 }

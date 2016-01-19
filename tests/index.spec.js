@@ -3,6 +3,7 @@ const Table = require('../');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
+import './PagingColumns.spec';
 
 describe('table', function() {
   const div = document.createElement('div');
@@ -102,5 +103,9 @@ describe('table', function() {
     expect(node.find('table').length).to.be(1);
     const rowspanNum = 2;
     expect(node.find('tbody tr').eq(1).find('td').length).to.be(columns.length - (rowspanNum - 1));
+  });
+
+  it('should has pager for columns', function() {
+
   });
 });
