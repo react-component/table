@@ -84,7 +84,6 @@
   }
   &-prev-columns-page,
   &-next-columns-page {
-    position: absolute;
     cursor: pointer;
     color: #666;
     z-index: 1;
@@ -100,9 +99,15 @@
     }
   }
   &-prev-columns-page {
-    left: 0;
+    margin-right: 8px;
+    &:before {
+      content: '<';
+    }
   }
   &-next-columns-page {
-    right: 0;
+    float: right;
+    &:before {
+      content: '>';
+    }
   }
 }
