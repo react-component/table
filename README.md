@@ -152,7 +152,7 @@ var table = React.render(
       </tr>
       <tr>
           <td>onExpandedRowsChange</td>
-          <td>Function(expandedRows)</td>
+          <td>Function(currentExpandedRows, preExpandedRows)</td>
           <th>save the expanded rows in the internal state</th>
           <td>function to call when the expanded rows change</td>
       </tr>

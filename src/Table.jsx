@@ -73,13 +73,13 @@ const Table = React.createClass({
     }
   },
 
-  onExpandedRowsChange(expandedRowKeys, preExpandedRows) {
+  onExpandedRowsChange(currentExpandedRowKeys, preExpandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({
-        expandedRowKeys: expandedRowKeys,
+        expandedRowKeys: currentExpandedRowKeys,
       });
     }
-    this.props.onExpandedRowsChange(expandedRowKeys, preExpandedRows);
+    this.props.onExpandedRowsChange(currentExpandedRowKeys, preExpandedRowKeys);
   },
 
   onExpanded(expanded, record) {
