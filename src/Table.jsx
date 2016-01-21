@@ -73,13 +73,13 @@ const Table = React.createClass({
     }
   },
 
-  onExpandedRowsChange(expandedRowKeys) {
+  onExpandedRowsChange(currentExpandedRowKeys, preExpandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({
-        expandedRowKeys: expandedRowKeys,
+        expandedRowKeys: currentExpandedRowKeys,
       });
     }
-    this.props.onExpandedRowsChange(expandedRowKeys);
+    this.props.onExpandedRowsChange(currentExpandedRowKeys, preExpandedRowKeys);
   },
 
   onExpanded(expanded, record) {
@@ -88,13 +88,13 @@ const Table = React.createClass({
       this.onRowDestroy(record);
     } else if (!info && expanded) {
       const expandedRows = this.getExpandedRows().concat();
-      expandedRows.push(this.props.rowKey(record));
-      this.onExpandedRowsChange(expandedRows);
+      this.onExpandedRowsChange(expandedRows.concat(this.props.rowKey(record)), expandedRows);
     }
   },
 
   onRowDestroy(record) {
     const expandedRows = this.getExpandedRows().concat();
+    const preExpandedRows = expandedRows.concat();
     const rowKey = this.props.rowKey(record);
     let index = -1;
     expandedRows.forEach((r, i) => {
@@ -105,7 +105,7 @@ const Table = React.createClass({
     if (index !== -1) {
       expandedRows.splice(index, 1);
     }
-    this.onExpandedRowsChange(expandedRows);
+    this.onExpandedRowsChange(expandedRows, preExpandedRows);
   },
 
   getExpandedRows() {
