@@ -20024,18 +20024,24 @@
 	      nextHandlerCls += ' ' + prefixCls + '-next-columns-page-disabled';
 	    }
 	    var nextHandler = _react2['default'].createElement('span', { className: nextHandlerCls, onClick: this.nextColumnsPage });
-	    column.title = hasPrev ? _react2['default'].createElement(
-	      'span',
-	      null,
-	      prevHandler,
-	      column.title
-	    ) : column.title;
-	    column.title = hasNext ? _react2['default'].createElement(
-	      'span',
-	      null,
-	      column.title,
-	      nextHandler
-	    ) : column.title;
+	    if (hasPrev) {
+	      column.title = _react2['default'].createElement(
+	        'span',
+	        null,
+	        prevHandler,
+	        column.title
+	      );
+	      column.className = (column.className || '') + (' ' + prefixCls + '-column-has-prev');
+	    }
+	    if (hasNext) {
+	      column.title = _react2['default'].createElement(
+	        'span',
+	        null,
+	        column.title,
+	        nextHandler
+	      );
+	      column.className = (column.className || '') + (' ' + prefixCls + '-column-has-next');
+	    }
 	    return column;
 	  },
 	
