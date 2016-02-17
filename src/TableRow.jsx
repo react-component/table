@@ -55,8 +55,16 @@ const TableRow = React.createClass({
       }
 
       if (render) {
-        text = render(text, record, index) || {};
+        text = render(text, record, index);
+        if (text == null) {
+          text = {}
+        }
+
         tdProps = text.props || {};
+
+        if (typeof text === 'number' || typeof text === 'boolean') {
+          text = String(text)
+        }
 
         if (typeof text !== 'string' && !React.isValidElement(text) && 'children' in text) {
           text = text.children;
