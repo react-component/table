@@ -20202,14 +20202,14 @@
 	      }
 	
 	      if (render) {
-	        text = render(text, record, index) || {};
-	        tdProps = text.props || {};
+	        text = render(text, record, index);
 	
-	        if (typeof text !== 'string' && typeof text !== 'number' && !_react2['default'].isValidElement(text) && 'children' in text) {
+	        if (text && typeof text === 'object' && !_react2['default'].isValidElement(text)) {
+	          tdProps = text.props || {};
+	          rowSpan = tdProps.rowSpan;
+	          colSpan = tdProps.colSpan;
 	          text = text.children;
 	        }
-	        rowSpan = tdProps.rowSpan;
-	        colSpan = tdProps.colSpan;
 	      }
 	
 	      if (rowSpan === 0 || colSpan === 0) {
