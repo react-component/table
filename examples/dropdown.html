@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dropdown.js - example - rc-table@3.9.1</title>
+  <title>dropdown.js - example - rc-table@3.9.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.9.1</h1>
+    <h1>rc-table@3.9.2</h1>
 
     <p>table ui component for react</p>
   </div>
@@ -284,7 +284,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   });
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRowKey</span><span class="hljs-params">(record)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRowKey</span>(<span class="hljs-params">record</span>) </span>{
   <span class="hljs-keyword">return</span> record.key;
 }
 
@@ -337,11 +337,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
             <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.confirmFilter}</span>&gt;</span>确定<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Menu.Item</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">Menu</span>&gt;</span>
-    );
+    )</span>;
 
-    const columns = [
+    <span class="hljs-keyword">const</span> columns = [
       {
-        title: (<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>表头1
+        title: (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>表头1
           <span class="hljs-tag">&lt;<span class="hljs-title">DropDown</span> <span class="hljs-attribute">trigger</span>=<span class="hljs-value">"click"</span>
             <span class="hljs-attribute">onVisibleChange</span>=<span class="hljs-value">{this.handleVisibleChange}</span>
             <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>
@@ -349,22 +349,22 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
             <span class="hljs-attribute">overlay</span>=<span class="hljs-value">{menu}</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>filter<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">DropDown</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>), key: 'a', dataIndex: 'a', width: 100,
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>, key: <span class="hljs-string">'a'</span>, dataIndex: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>,
       },
-      {id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100},
-      {title: '表头3', key: 'c', dataIndex: 'c', width: 200},
+      {id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
+      {title: <span class="hljs-string">'表头3'</span>, key: <span class="hljs-string">'c'</span>, dataIndex: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>},
     ];
-    return (
-      <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
         <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
         <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{getRowKey}</span>
         <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>/&gt;</span>
-    );
+    )</span>;
   },
 });
 
 ReactDOM.render(
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>use dropdown<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Test</span>/&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,

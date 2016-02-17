@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>subTable.js - example - rc-table@3.9.1</title>
+  <title>subTable.js - example - rc-table@3.9.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.9.1</h1>
+    <h1>rc-table@3.9.2</h1>
 
     <p>table ui component for react</p>
   </div>
@@ -271,7 +271,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
 <span class="hljs-keyword">const</span> MyTable = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">return</span> {
       data: props.data,
@@ -287,7 +287,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-built_in">console</span>.log(record.a);
   },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">const</span> state = <span class="hljs-keyword">this</span>.state;
     <span class="hljs-keyword">const</span> columns = [
       {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>},
@@ -303,37 +303,37 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
              <span class="hljs-attribute">expandIconAsCell</span>
              <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{this.getRowKey}</span>/&gt;</span>
-    );
+    )</span>;
   },
 });
 
-const data = [
+<span class="hljs-keyword">const</span> data = [
   {
-    a: 'a1',
+    a: <span class="hljs-string">'a1'</span>,
   },
   {
-    a: 'a2',
-    b: 'b2',
+    a: <span class="hljs-string">'a2'</span>,
+    b: <span class="hljs-string">'b2'</span>,
     children: [
       {
-        a: 'a2-1',
-        b: 'b2-1',
+        a: <span class="hljs-string">'a2-1'</span>,
+        b: <span class="hljs-string">'b2-1'</span>,
       },
       {
-        a: 'a2-2',
-        b: 'b2-2',
+        a: <span class="hljs-string">'a2-2'</span>,
+        b: <span class="hljs-string">'b2-2'</span>,
       },
     ],
   },
   {
-    a: 'a3',
-    c: 'c3',
-    d: 'd3',
+    a: <span class="hljs-string">'a3'</span>,
+    c: <span class="hljs-string">'c3'</span>,
+    d: <span class="hljs-string">'d3'</span>,
   },
 ];
 
 ReactDOM.render(
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>sub table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>/&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
