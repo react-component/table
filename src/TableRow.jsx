@@ -57,7 +57,7 @@ const TableRow = React.createClass({
       if (render) {
         text = render(text, record, index);
 
-        if (text && typeof text === 'object' && !React.isValidElement(text)) {
+        if (text && Object.prototype.toString.call(text) === '[object Object]' && !React.isValidElement(text)) {
           tdProps = text.props || {};
           rowSpan = tdProps.rowSpan;
           colSpan = tdProps.colSpan;
