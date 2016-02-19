@@ -20204,7 +20204,7 @@
 	      if (render) {
 	        text = render(text, record, index);
 	
-	        if (text && typeof text === 'object' && !_react2['default'].isValidElement(text)) {
+	        if (text && Object.prototype.toString.call(text) === '[object Object]' && !_react2['default'].isValidElement(text)) {
 	          tdProps = text.props || {};
 	          rowSpan = tdProps.rowSpan;
 	          colSpan = tdProps.colSpan;
