@@ -20250,7 +20250,7 @@
 	    return _react2['default'].createElement(
 	      'tr',
 	      { onClick: onRowClick.bind(null, record, index),
-	        className: prefixCls + ' ' + props.className,
+	        className: prefixCls + ' ' + props.className + ' ' + prefixCls + '-level-' + indent,
 	        style: { display: props.visible ? '' : 'none' } },
 	      cells
 	    );
