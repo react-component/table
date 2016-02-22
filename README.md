@@ -127,6 +127,12 @@ var table = React.render(
           <td>whether render expandIcon as a cell</td>
       </tr>
       <tr>
+          <td>expandIconColumnIndex</td>
+          <td>Number</td>
+          <th>0</th>
+          <td>The index of expandIcon which column will be inserted when expandIconAsCell is false</td>
+      </tr>
+      <tr>
           <td>rowKey</td>
           <td>Function(recode,index):string</td>
           <th>record.key</th>

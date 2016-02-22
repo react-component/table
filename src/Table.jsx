@@ -22,6 +22,7 @@ const Table = React.createClass({
     onRowClick: React.PropTypes.func,
     columnsPageRange: React.PropTypes.array,
     columnsPageSize: React.PropTypes.number,
+    expandIconColumnIndex: React.PropTypes.number,
   },
 
   getDefaultProps() {
@@ -48,6 +49,7 @@ const Table = React.createClass({
       childrenColumnName: 'children',
       indentSize: 15,
       columnsPageSize: 5,
+      expandIconColumnIndex: 0,
     };
   },
 
@@ -152,6 +154,8 @@ const Table = React.createClass({
     const needIndentSpaced = props.data.some(record =>
       record[childrenColumnName] && record[childrenColumnName].length > 0);
     const onRowClick = props.onRowClick;
+    const expandIconColumnIndex = props.expandIconColumnIndex;
+
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = keyFn ? keyFn(record, i) : undefined;
@@ -178,6 +182,7 @@ const Table = React.createClass({
         prefixCls={`${props.prefixCls}-row`}
         childrenColumnName={childrenColumnName}
         columns={columns}
+        expandIconColumnIndex={expandIconColumnIndex}
         onRowClick={onRowClick}
         key={key}/>);
 
