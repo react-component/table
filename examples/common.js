@@ -19755,7 +19755,8 @@
 	    indentSize: _react2['default'].PropTypes.number,
 	    onRowClick: _react2['default'].PropTypes.func,
 	    columnsPageRange: _react2['default'].PropTypes.array,
-	    columnsPageSize: _react2['default'].PropTypes.number
+	    columnsPageSize: _react2['default'].PropTypes.number,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19780,7 +19781,8 @@
 	      style: {},
 	      childrenColumnName: 'children',
 	      indentSize: 15,
-	      columnsPageSize: 5
+	      columnsPageSize: 5,
+	      expandIconColumnIndex: 0
 	    };
 	  },
 	
@@ -19894,6 +19896,8 @@
 	      return record[childrenColumnName] && record[childrenColumnName].length > 0;
 	    });
 	    var onRowClick = props.onRowClick;
+	    var expandIconColumnIndex = props.expandIconColumnIndex;
+	
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
 	      var key = keyFn ? keyFn(record, i) : undefined;
@@ -19920,6 +19924,7 @@
 	        prefixCls: props.prefixCls + '-row',
 	        childrenColumnName: childrenColumnName,
 	        columns: columns,
+	        expandIconColumnIndex: expandIconColumnIndex,
 	        onRowClick: onRowClick,
 	        key: key }));
 	
@@ -20146,8 +20151,18 @@
 	
 	  propTypes: {
 	    onDestroy: _react2['default'].PropTypes.func,
+	    onRowClick: _react2['default'].PropTypes.func,
 	    record: _react2['default'].PropTypes.object,
-	    prefixCls: _react2['default'].PropTypes.string
+	    prefixCls: _react2['default'].PropTypes.string,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      onRowClick: function onRowClick() {},
+	      onDestroy: function onDestroy() {},
+	      expandIconColumnIndex: 0
+	    };
 	  },
 	
 	  componentWillUnmount: function componentWillUnmount() {
@@ -20168,6 +20183,7 @@
 	    var indentSize = props.indentSize;
 	    var needIndentSpaced = props.needIndentSpaced;
 	    var onRowClick = props.onRowClick;
+	    var expandIconColumnIndex = props.expandIconColumnIndex;
 	
 	    for (var i = 0; i < columns.length; i++) {
 	      var col = columns[i];
@@ -20175,21 +20191,20 @@
 	      var render = col.render;
 	      var text = record[col.dataIndex];
 	
-	      var expandIcon = null;
+	      var expandIcon = undefined;
 	      var tdProps = undefined;
 	      var colSpan = undefined;
 	      var rowSpan = undefined;
 	      var notRender = false;
-	      var indentText = undefined;
 	
-	      if (i === 0 && expandable) {
-	        expandIcon = _react2['default'].createElement('span', {
-	          className: prefixCls + '-expand-icon ' + prefixCls + '-' + (expanded ? 'expanded' : 'collapsed'),
+	      if (expandable) {
+	        expandIcon = _react2['default'].createElement('span', { className: prefixCls + '-expand-icon ' + prefixCls + '-' + (expanded ? 'expanded' : 'collapsed'),
 	          onClick: props.onExpand.bind(null, !expanded, record) });
-	      } else if (i === 0 && needIndentSpaced) {
-	        expandIcon = _react2['default'].createElement('span', {
-	          className: prefixCls + '-expand-icon ' + prefixCls + '-spaced' });
+	      } else if (needIndentSpaced) {
+	        expandIcon = _react2['default'].createElement('span', { className: prefixCls + '-expand-icon ' + prefixCls + '-spaced' });
 	      }
+	
+	      var isColumnHaveExpandIcon = i === expandIconColumnIndex;
 	
 	      if (expandIconAsCell && i === 0) {
 	        cells.push(_react2['default'].createElement(
@@ -20198,7 +20213,7 @@
 	            key: 'rc-table-expand-icon-cell' },
 	          expandIcon
 	        ));
-	        expandIcon = null;
+	        isColumnHaveExpandIcon = false;
 	      }
 	
 	      if (render) {
@@ -20216,21 +20231,27 @@
 	        notRender = true;
 	      }
 	
-	      indentText = i === 0 ? _react2['default'].createElement('span', { style: { paddingLeft: indentSize * indent + 'px' }, className: prefixCls + '-indent indent-level-' + indent }) : null;
+	      var indentText = _react2['default'].createElement('span', { style: { paddingLeft: indentSize * indent + 'px' },
+	        className: prefixCls + '-indent indent-level-' + indent });
 	
 	      if (!notRender) {
 	        cells.push(_react2['default'].createElement(
 	          'td',
-	          { key: col.key, colSpan: colSpan, rowSpan: rowSpan, className: '' + colClassName },
-	          indentText,
-	          expandIcon,
+	          { key: col.key,
+	            colSpan: colSpan,
+	            rowSpan: rowSpan,
+	            className: colClassName },
+	          isColumnHaveExpandIcon ? indentText : null,
+	          isColumnHaveExpandIcon ? expandIcon : null,
 	          text
 	        ));
 	      }
 	    }
 	    return _react2['default'].createElement(
 	      'tr',
-	      { onClick: onRowClick ? onRowClick.bind(null, record, index) : null, className: prefixCls + ' ' + props.className, style: { display: props.visible ? '' : 'none' } },
+	      { onClick: onRowClick.bind(null, record, index),
+	        className: prefixCls + ' ' + props.className,
+	        style: { display: props.visible ? '' : 'none' } },
 	      cells
 	    );
 	  }
