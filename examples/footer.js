@@ -1,14 +1,14 @@
-webpackJsonp([11],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(225);
+	module.exports = __webpack_require__(219);
 
 
 /***/ },
 
-/***/ 225:
+/***/ 219:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
@@ -31,6 +31,16 @@ webpackJsonp([11],{
 	
 	var data = [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', d: 2, key: '3' }];
 	
+	var footer = function footer(currentData) {
+	  return React.createElement(
+	    'div',
+	    null,
+	    'Footer: ',
+	    currentData.length,
+	    ' items'
+	  );
+	};
+	
 	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
@@ -41,10 +51,10 @@ webpackJsonp([11],{
 	  ),
 	  React.createElement(Table, { columns: columns,
 	    data: data,
-	    className: 'table' })
+	    footer: footer })
 	), document.getElementById('__react-content'));
 
 /***/ }
 
 });
-//# sourceMappingURL=simple.js.map
+//# sourceMappingURL=footer.js.map

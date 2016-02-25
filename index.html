@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-table@3.10.1 - table ui component for react</title>
+  <title>rc-table@3.11.0 - table ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-table@3.10.1</h1>
+  <h1>rc-table@3.11.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -753,6 +753,10 @@
       <li><a href="examples/dropdown.html">dropdown</a></li>
       
       <li><a href="examples/expandedRowRender.html">expandedRowRender</a></li>
+      
+      <li><a href="examples/footer.html">footer</a></li>
+      
+      <li><a href="examples/hide-header.html">hide-header</a></li>
       
       <li><a href="examples/key.html">key</a></li>
       
@@ -931,6 +935,18 @@ var table = React.render(
           <td>Number</td>
           <th>5</th>
           <td>pageSize of columns</td>
+      </tr>
+      <tr>
+          <td>showHeader</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether table head is shown</td>
+      </tr>
+      <tr>
+          <td>footer</td>
+          <td>Function(currentData)</td>
+          <th></th>
+          <td>table footer render function</td>
       </tr>
       <tr>
           <td>columns</td>

@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		11:0
+/******/ 		13:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"key","6":"pagingColumns","7":"rowClick","8":"scrollBody","9":"simple","10":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"footer","6":"hide-header","7":"key","8":"pagingColumns","9":"rowClick","10":"scrollBody","11":"simple","12":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -19756,7 +19756,9 @@
 	    onRowClick: _react2['default'].PropTypes.func,
 	    columnsPageRange: _react2['default'].PropTypes.array,
 	    columnsPageSize: _react2['default'].PropTypes.number,
-	    expandIconColumnIndex: _react2['default'].PropTypes.number
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    showHeader: _react2['default'].PropTypes.bool,
+	    footer: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19782,7 +19784,8 @@
 	      childrenColumnName: 'children',
 	      indentSize: 15,
 	      columnsPageSize: 5,
-	      expandIconColumnIndex: 0
+	      expandIconColumnIndex: 0,
+	      showHeader: true
 	    };
 	  },
 	
@@ -20082,7 +20085,7 @@
 	      className += ' ' + prefixCls + '-columns-paging';
 	    }
 	    var headerTable = undefined;
-	    var thead = _react2['default'].createElement(
+	    var thead = props.showHeader ? _react2['default'].createElement(
 	      'thead',
 	      { className: prefixCls + '-thead' },
 	      _react2['default'].createElement(
@@ -20090,7 +20093,7 @@
 	        null,
 	        columns
 	      )
-	    );
+	    ) : null;
 	    if (props.useFixedHeader) {
 	      headerTable = _react2['default'].createElement(
 	        'div',
@@ -20120,6 +20123,19 @@
 	            'tbody',
 	            { className: prefixCls + '-tbody' },
 	            rows
+	          ),
+	          _react2['default'].createElement(
+	            'tfoot',
+	            { className: prefixCls + '-tfoot' },
+	            _react2['default'].createElement(
+	              'tr',
+	              null,
+	              _react2['default'].createElement(
+	                'td',
+	                { colSpan: '0' },
+	                props.footer && props.footer(this.state.data)
+	              )
+	            )
 	          )
 	        )
 	      )

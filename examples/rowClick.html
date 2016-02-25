@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowClick.js - example - rc-table@3.10.1</title>
+  <title>rowClick.js - example - rc-table@3.11.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,25 +257,25 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@3.10.1</h1>
+    <h1>rc-table@3.11.0</h1>
 
     <p>table ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="rowClick.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint react/no-multi-comp: 0*/</span>
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console,func-names,react/no-multi-comp */</span>
 <span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
 <span class="hljs-keyword">const</span> onRowClick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">record, index</span>) </span>{
-  alert(<span class="hljs-string">`u click the nth(<span class="hljs-subst">${index}</span>) element of yourFather.children, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`u click the nth(<span class="hljs-subst">${index}</span>) element of yourFather.children, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
 };
 
 <span class="hljs-keyword">const</span> onOperationClick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text, record</span>) </span>{
-  alert(<span class="hljs-string">`u click <span class="hljs-subst">${text}</span>, record.name is <span class="hljs-subst">${record.name}</span>`</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`u click <span class="hljs-subst">${text}</span>, record.name is <span class="hljs-subst">${record.name}</span>`</span>);
 };
 
 <span class="hljs-keyword">const</span> columns = [{
