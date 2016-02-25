@@ -199,6 +199,12 @@ var table = React.render(
           <td>pageSize of columns</td>
       </tr>
       <tr>
+          <td>showHeader</td>
+          <td>Boolean</td>
+          <th>true</th>
+          <td>whether table head is shown</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>

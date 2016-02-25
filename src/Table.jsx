@@ -23,6 +23,7 @@ const Table = React.createClass({
     columnsPageRange: React.PropTypes.array,
     columnsPageSize: React.PropTypes.number,
     expandIconColumnIndex: React.PropTypes.number,
+    showHeader: React.PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -50,6 +51,7 @@ const Table = React.createClass({
       indentSize: 15,
       columnsPageSize: 5,
       expandIconColumnIndex: 0,
+      showHeader: true,
     };
   },
 
@@ -315,11 +317,11 @@ const Table = React.createClass({
       className += ` ${prefixCls}-columns-paging`;
     }
     let headerTable;
-    let thead = (<thead className={`${prefixCls}-thead`}>
-    <tr>
-      {columns}
-    </tr>
-    </thead>);
+    let thead = props.showHeader ? (
+      <thead className={`${prefixCls}-thead`}>
+        <tr>{columns}</tr>
+      </thead>
+    ) : null;
     if (props.useFixedHeader) {
       headerTable = (<div className={`${prefixCls}-header`}>
         <table>
