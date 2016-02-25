@@ -1,15 +1,15 @@
-/* eslint react/no-multi-comp: 0*/
+/* eslint-disable no-console,func-names,react/no-multi-comp */
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 const onRowClick = function(record, index) {
-  alert(`u click the nth(${index}) element of yourFather.children, record.name: ${record.name}`);
+  console.log(`u click the nth(${index}) element of yourFather.children, record.name: ${record.name}`);
 };
 
 const onOperationClick = function(text, record) {
-  alert(`u click ${text}, record.name is ${record.name}`);
+  console.log(`u click ${text}, record.name is ${record.name}`);
 };
 
 const columns = [{

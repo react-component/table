@@ -1,3 +1,4 @@
+/* eslint-disable no-console,func-names,react/no-multi-comp */
 const expect = require('expect.js');
 const Table = require('../');
 const React = require('react');
