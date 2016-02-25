@@ -24,6 +24,7 @@ const Table = React.createClass({
     columnsPageSize: React.PropTypes.number,
     expandIconColumnIndex: React.PropTypes.number,
     showHeader: React.PropTypes.bool,
+    footer: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -341,6 +342,11 @@ const Table = React.createClass({
             <tbody className={`${prefixCls}-tbody`}>
             {rows}
             </tbody>
+            <tfoot className={`${prefixCls}-tfoot`}>
+              <tr>
+                <td colSpan="0">{props.footer && props.footer(this.state.data)}</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

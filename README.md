@@ -205,6 +205,12 @@ var table = React.render(
           <td>whether table head is shown</td>
       </tr>
       <tr>
+          <td>footer</td>
+          <td>Function(currentData)</td>
+          <th></th>
+          <td>table footer render function</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>
