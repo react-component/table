@@ -1,6 +1,15 @@
 # History
 ----
 
+## 3.11.0 / 2016-02-25
+
+- Add prop `showHeader`
+- support render footer via `footer={() => <div>xxx</div>}`
+
+## 3.10.0 / 2016-02-22
+
+- Add prop expandIconColumnIndex
+
 ## 3.9.0 / 2016-01-19
 
 - support pinned and paging columns.
