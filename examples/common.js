@@ -20220,7 +20220,7 @@
 	        expandIcon = _react2['default'].createElement('span', { className: prefixCls + '-expand-icon ' + prefixCls + '-spaced' });
 	      }
 	
-	      var isColumnHaveExpandIcon = i === expandIconColumnIndex;
+	      var isColumnHaveExpandIcon = expandIconAsCell ? false : i === expandIconColumnIndex;
 	
 	      if (expandIconAsCell && i === 0) {
 	        cells.push(_react2['default'].createElement(
@@ -20229,7 +20229,6 @@
 	            key: 'rc-table-expand-icon-cell' },
 	          expandIcon
 	        ));
-	        isColumnHaveExpandIcon = false;
 	      }
 	
 	      if (render) {
