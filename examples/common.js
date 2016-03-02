@@ -20124,7 +20124,7 @@
 	            { className: prefixCls + '-tbody' },
 	            rows
 	          ),
-	          _react2['default'].createElement(
+	          props.footer ? _react2['default'].createElement(
 	            'tfoot',
 	            { className: prefixCls + '-tfoot' },
 	            _react2['default'].createElement(
@@ -20133,10 +20133,10 @@
 	              _react2['default'].createElement(
 	                'td',
 	                { colSpan: '0' },
-	                props.footer && props.footer(this.state.data)
+	                props.footer(this.state.data)
 	              )
 	            )
-	          )
+	          ) : null
 	        )
 	      )
 	    );
