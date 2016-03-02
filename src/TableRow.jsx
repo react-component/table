@@ -58,7 +58,7 @@ const TableRow = React.createClass({
         expandIcon = <span className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />;
       }
 
-      let isColumnHaveExpandIcon = (i === expandIconColumnIndex);
+      const isColumnHaveExpandIcon = expandIconAsCell ? false : (i === expandIconColumnIndex);
 
       if (expandIconAsCell && i === 0) {
         cells.push(
@@ -67,7 +67,6 @@ const TableRow = React.createClass({
             {expandIcon}
           </td>
         );
-        isColumnHaveExpandIcon = false;
       }
 
       if (render) {
