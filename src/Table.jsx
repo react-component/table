@@ -342,11 +342,11 @@ const Table = React.createClass({
             <tbody className={`${prefixCls}-tbody`}>
             {rows}
             </tbody>
-            <tfoot className={`${prefixCls}-tfoot`}>
-              <tr>
-                <td colSpan="0">{props.footer && props.footer(this.state.data)}</td>
-              </tr>
-            </tfoot>
+            {props.footer ? (
+              <tfoot className={`${prefixCls}-tfoot`}>
+                <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
+              </tfoot>
+            ) : null}
           </table>
         </div>
       </div>
