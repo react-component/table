@@ -21,6 +21,11 @@ const TableRow = React.createClass({
     this.props.onDestroy(this.props.record);
   },
 
+  isInvalidRenderCellText(text) {
+    return text && !React.isValidElement(text) &&
+      Object.prototype.toString.call(text) === '[object Object]';
+  },
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
@@ -71,13 +76,17 @@ const TableRow = React.createClass({
 
       if (render) {
         text = render(text, record, index);
-
-        if (text && Object.prototype.toString.call(text) === '[object Object]' && !React.isValidElement(text)) {
+        if (this.isInvalidRenderCellText(text)) {
           tdProps = text.props || {};
           rowSpan = tdProps.rowSpan;
           colSpan = tdProps.colSpan;
           text = text.children;
         }
+      }
+
+      // Fix https://github.com/ant-design/ant-design/issues/1202
+      if (this.isInvalidRenderCellText(text)) {
+        text = null;
       }
 
       if (rowSpan === 0 || colSpan === 0) {

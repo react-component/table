@@ -82,7 +82,12 @@ describe('table', function() {
       },
     },
   ];
-  const data = [{a: '123', key: '1'}, {a: 'cdd', b: 'edd', key: '2'}, {a: '1333', c: 'eee', d: 2, key: '3'}];
+  const data = [
+    {a: '123', key: '1'},
+    {a: 'cdd', b: 'edd', key: '2'},
+    {a: '1333', c: 'eee', d: 2, key: '3'},
+    {a: {}, key: '4'},
+  ];
   let node = $(div);
 
   beforeEach(function() {
@@ -145,5 +150,11 @@ describe('table', function() {
     expect(trLstTds.eq(7).text()).to.be('text'); // string
     expect(trLstTds.eq(8).text()).to.be(''); // false
     expect(trLstTds.eq(9).find('a').length).to.be(2); // array
+  });
+
+  // https://github.com/ant-design/ant-design/issues/1202
+  it('should not render object in cell', function() {
+    const trLstTds = node.find('tbody tr:last td');
+    expect(trLstTds.eq(0).text()).to.be('');
   });
 });
