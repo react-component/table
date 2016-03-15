@@ -20185,6 +20185,10 @@
 	    this.props.onDestroy(this.props.record);
 	  },
 	
+	  isInvalidRenderCellText: function isInvalidRenderCellText(text) {
+	    return text && !_react2['default'].isValidElement(text) && Object.prototype.toString.call(text) === '[object Object]';
+	  },
+	
 	  render: function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
@@ -20233,13 +20237,17 @@
 	
 	      if (render) {
 	        text = render(text, record, index);
-	
-	        if (text && Object.prototype.toString.call(text) === '[object Object]' && !_react2['default'].isValidElement(text)) {
+	        if (this.isInvalidRenderCellText(text)) {
 	          tdProps = text.props || {};
 	          rowSpan = tdProps.rowSpan;
 	          colSpan = tdProps.colSpan;
 	          text = text.children;
 	        }
+	      }
+	
+	      // Fix https://github.com/ant-design/ant-design/issues/1202
+	      if (this.isInvalidRenderCellText(text)) {
+	        text = null;
 	      }
 	
 	      if (rowSpan === 0 || colSpan === 0) {
