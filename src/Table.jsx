@@ -324,14 +324,21 @@ const Table = React.createClass({
       </thead>
     ) : null;
     if (props.useFixedHeader) {
-      headerTable = (<div className={`${prefixCls}-header`}>
-        <table>
-          {this.getColGroup()}
-          {thead}
-        </table>
-      </div>);
+      headerTable = (
+        <div className={`${prefixCls}-header`}>
+          <table>
+            {this.getColGroup()}
+            {thead}
+          </table>
+        </div>
+      );
       thead = null;
     }
+    const tfoot = props.footer ? (
+      <tfoot className={`${prefixCls}-tfoot`}>
+        <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
+      </tfoot>
+    ) : null;
     return (
       <div className={className} style={props.style}>
         {headerTable}
@@ -339,14 +346,8 @@ const Table = React.createClass({
           <table>
             {this.getColGroup()}
             {thead}
-            <tbody className={`${prefixCls}-tbody`}>
-            {rows}
-            </tbody>
-            {props.footer ? (
-              <tfoot className={`${prefixCls}-tfoot`}>
-                <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
-              </tfoot>
-            ) : null}
+            <tbody className={`${prefixCls}-tbody`}>{rows}</tbody>
+            {tfoot}
           </table>
         </div>
       </div>
