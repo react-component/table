@@ -357,9 +357,9 @@ const Table = React.createClass({
     }
 
     const tfoot = props.footer ? (
-      <tfoot className={`${prefixCls}-tfoot`}>
-        <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
-      </tfoot>
+      <div className={`${prefixCls}-footer`}>
+        {props.footer(this.state.data)}
+      </div>
     ) : null;
 
     return (
@@ -373,9 +373,9 @@ const Table = React.createClass({
               {this.getColGroup()}
               {thead}
               <tbody className={`${prefixCls}-tbody`}>{rows}</tbody>
-              {tfoot}
             </table>
           </div>
+          {tfoot}
         </div>
       </div>
     );
