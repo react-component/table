@@ -7,6 +7,7 @@ const TableRow = React.createClass({
     record: React.PropTypes.object,
     prefixCls: React.PropTypes.string,
     expandIconColumnIndex: React.PropTypes.number,
+    onHover: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -14,6 +15,7 @@ const TableRow = React.createClass({
       onRowClick() {},
       onDestroy() {},
       expandIconColumnIndex: 0,
+      onHover() {},
     };
   },
 
@@ -113,6 +115,8 @@ const TableRow = React.createClass({
     }
     return (
       <tr onClick={onRowClick.bind(null, record, index)}
+        onMouseEnter={props.onHover.bind(null, true, index)}
+        onMouseLeave={props.onHover.bind(null, false, index)}
         className={`${prefixCls} ${props.className} ${prefixCls}-level-${indent}`}
         style={{display: props.visible ? '' : 'none'}}>
         {cells}

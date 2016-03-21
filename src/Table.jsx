@@ -64,6 +64,7 @@ const Table = React.createClass({
       expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
       data: this.props.data,
       currentColumnsPage: 0,
+      currentHoverIndex: null,
     };
   },
 
@@ -174,26 +175,32 @@ const Table = React.createClass({
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i);
       }
-      const className = rowClassName(record, i);
-      rst.push(<TableRow
-        indent={indent}
-        indentSize={props.indentSize}
-        needIndentSpaced={needIndentSpaced}
-        className={className}
-        record={record}
-        expandIconAsCell={expandIconAsCell}
-        onDestroy={this.onRowDestroy}
-        index={i}
-        visible={visible}
-        onExpand={this.onExpanded}
-        expandable={childrenColumn || expandedRowRender}
-        expanded={isRowExpanded}
-        prefixCls={`${props.prefixCls}-row`}
-        childrenColumnName={childrenColumnName}
-        columns={columns || this.getCurrentColumns()}
-        expandIconColumnIndex={expandIconColumnIndex}
-        onRowClick={onRowClick}
-        key={key}/>);
+      let className = rowClassName(record, i);
+      if (this.state.currentHoverIndex === i) {
+        className += ' ' + props.prefixCls + '-row-hover';
+      }
+      rst.push(
+        <TableRow
+          indent={indent}
+          indentSize={props.indentSize}
+          needIndentSpaced={needIndentSpaced}
+          className={className}
+          record={record}
+          expandIconAsCell={expandIconAsCell}
+          onDestroy={this.onRowDestroy}
+          index={i}
+          visible={visible}
+          onExpand={this.onExpanded}
+          expandable={childrenColumn || expandedRowRender}
+          expanded={isRowExpanded}
+          prefixCls={`${props.prefixCls}-row`}
+          childrenColumnName={childrenColumnName}
+          columns={columns || this.getCurrentColumns()}
+          expandIconColumnIndex={expandIconColumnIndex}
+          onRowClick={onRowClick}
+          onHover={this.handleRowHover}
+          key={key} />
+    );
 
       const subVisible = visible && isRowExpanded;
 
@@ -207,17 +214,17 @@ const Table = React.createClass({
     return rst;
   },
 
-  getRows() {
-    return this.getRowsByData(this.state.data, true, 0);
+  getRows(columns) {
+    return this.getRowsByData(this.state.data, true, 0, columns);
   },
 
-  getColGroup() {
+  getColGroup(columns) {
     let cols = [];
     if (this.props.expandIconAsCell) {
       cols.push(<col className={`${this.props.prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col"></col>);
     }
-    cols = cols.concat(this.props.columns.map((c)=> {
-      return <col key={c.key} style={{width: c.width}}></col>;
+    cols = cols.concat((columns || this.props.columns).map(c => {
+      return <col key={c.key} style={{width: c.width}} />;
     }));
     return <colgroup>{cols}</colgroup>;
   },
@@ -247,7 +254,8 @@ const Table = React.createClass({
   },
 
   getLeftFixedTable() {
-    const fixedColumns = this.props.columns.map(
+    const { columns } = this.props;
+    const fixedColumns = columns.filter(
       column => column.fixed === 'left' || column.fixed === true
     );
     return this.getTable({
@@ -256,27 +264,42 @@ const Table = React.createClass({
   },
 
   getRightFixedTable() {
-    const fixedColumns = this.props.columns.map(column => column.fixed === 'right');
+    const { columns } = this.props;
+    const fixedColumns = columns.filter(column => column.fixed === 'right');
     return this.getTable({
       columns: fixedColumns,
     });
   },
 
   getTable(options = {}) {
-    const { head = true, body = true } = options;
-    const { scroll, prefixCls } = this.props;
+    const { head = true, body = true, columns } = options;
+    const { scroll = {}, prefixCls, bodyStyle = {} } = this.props;
     let tableClassName = '';
-    if (scroll && scroll.x) {
+    if (scroll.x || columns) {
       tableClassName = `${prefixCls}-fixed`;
     }
-    return (
+    if (scroll.y) {
+      bodyStyle.height = bodyStyle.height || scroll.y;
+      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+    }
+    const table = (
       <table className={tableClassName}>
-        {this.getColGroup()}
+        {this.getColGroup(options.columns)}
         {head ? this.getHeader(options.columns) : null}
         {body ? <tbody className={`${prefixCls}-tbody`}>
-          {this.getRows(options.columns)}
+        {this.getRows(options.columns)}
         </tbody> : null}
       </table>
+    );
+    if (head && !body) {
+      return table;
+    }
+    return (
+      <div className={`${prefixCls}-body`}
+        style={bodyStyle}
+        onScroll={this.handleBodyScroll}>
+        {table}
+      </div>
     );
   },
 
@@ -361,15 +384,25 @@ const Table = React.createClass({
     }
   },
 
+  handleRowHover(isHover, index) {
+    if (isHover) {
+      this.setState({
+        currentHoverIndex: index,
+      });
+    } else {
+      this.setState({
+        currentHoverIndex: null,
+      });
+    }
+  },
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
     const scroll = props.scroll || {};
-    const bodyStyle = props.bodyStyle;
-
+    let useFixedHeader = props.useFixedHeader;
     if (scroll.y) {
-      bodyStyle.height = bodyStyle.height || scroll.y;
-      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+      useFixedHeader = true;
     }
 
     let className = props.prefixCls;
@@ -380,7 +413,7 @@ const Table = React.createClass({
       className += ` ${prefixCls}-columns-paging`;
     }
 
-    const fixedHeader = props.useFixedHeader ? (
+    const fixedHeader = useFixedHeader ? (
       <div className={`${prefixCls}-header`} ref="headTable">
         {this.getTable({ body: false })}
       </div>
@@ -388,19 +421,16 @@ const Table = React.createClass({
 
     return (
       <div className={className} style={props.style}>
-        {this.getLeftFixedTable()}
+        <div className={`${prefixCls}-fixed-left`}>{this.getLeftFixedTable()}</div>
         <div className={`${prefixCls}-scroll`}>
           {fixedHeader}
-          <div className={`${prefixCls}-body`}
-            style={bodyStyle}
-            onScroll={this.handleBodyScroll}>
-            {this.getTable({
-              head: !props.useFixedHeader,
-              body: true,
-            })}
-          </div>
+          {this.getTable({
+            head: !useFixedHeader,
+            body: true,
+          })}
           {this.getFooter()}
         </div>
+        <div className={`${prefixCls}-fixed-right`}>{this.getRightFixedTable()}</div>
       </div>
     );
   },

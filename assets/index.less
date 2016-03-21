@@ -9,6 +9,7 @@
   color: @text-color;
   border-radius: 6px;
   transition: opacity 0.3s ease;
+  position: relative;
 
   .@{tablePrefixCls}-scroll {
     overflow: auto;
@@ -16,6 +17,10 @@
 
   .@{tablePrefixCls}-fixed {
     table-layout: fixed;
+    th, td {
+      box-sizing: content-box;
+      height: 18px;
+    }
   }
 
   .@{tablePrefixCls}-header {
@@ -55,6 +60,9 @@
   tr {
     transition: all .3s ease;
     &:hover {
+      background: #eaf8fe;
+    }
+    &.@{tablePrefixCls}-row-hover {
       background: #eaf8fe;
     }
   }
@@ -126,5 +134,27 @@
     &:before {
       content: '>';
     }
+  }
+
+  &-fixed-left,
+  &-fixed-right {
+    position: absolute;
+    top: 0;
+    overflow-y: auto;
+    background: #fff;
+    z-index: 1;
+    table {
+      width: auto;
+    }
+  }
+
+  &-fixed-left {
+    left: 0;
+    box-shadow: 4px 0 4px rgba(100,100,100,0.1);
+  }
+
+  &-fixed-right {
+    right: 0;
+    box-shadow: -4px 0 4px rgba(100,100,100,0.1);
   }
 }
