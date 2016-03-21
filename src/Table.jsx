@@ -25,6 +25,7 @@ const Table = React.createClass({
     expandIconColumnIndex: React.PropTypes.number,
     showHeader: React.PropTypes.bool,
     footer: React.PropTypes.func,
+    scroll: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -53,6 +54,7 @@ const Table = React.createClass({
       columnsPageSize: 5,
       expandIconColumnIndex: 0,
       showHeader: true,
+      scroll: {},
     };
   },
 
@@ -305,9 +307,28 @@ const Table = React.createClass({
     return !!this.findExpandedRow(record);
   },
 
+  handleBodyScroll(e) {
+    const scroll = this.props.scroll || {};
+    if (!scroll.x) {
+      return;
+    }
+    this.refs.headTable.scrollLeft = e.target.scrollLeft;
+  },
+
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
+    const scroll = props.scroll || {};
+    const bodyStyle = props.bodyStyle;
+    let tableClassName = '';
+    if (scroll.x) {
+      tableClassName = `${prefixCls}-fixed`;
+    }
+    if (scroll.y) {
+      bodyStyle.height = bodyStyle.height || scroll.y;
+      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+    }
+
     const columns = this.getThs();
     const rows = this.getRows();
     let className = props.prefixCls;
@@ -325,8 +346,8 @@ const Table = React.createClass({
     ) : null;
     if (props.useFixedHeader) {
       headerTable = (
-        <div className={`${prefixCls}-header`}>
-          <table>
+        <div className={`${prefixCls}-header`} ref="headTable">
+          <table className={tableClassName}>
             {this.getColGroup()}
             {thead}
           </table>
@@ -334,21 +355,27 @@ const Table = React.createClass({
       );
       thead = null;
     }
+
     const tfoot = props.footer ? (
       <tfoot className={`${prefixCls}-tfoot`}>
         <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
       </tfoot>
     ) : null;
+
     return (
       <div className={className} style={props.style}>
-        {headerTable}
-        <div className={`${prefixCls}-body`} style={props.bodyStyle}>
-          <table>
-            {this.getColGroup()}
-            {thead}
-            <tbody className={`${prefixCls}-tbody`}>{rows}</tbody>
-            {tfoot}
-          </table>
+        <div className={`${prefixCls}-scroll`}>
+          {headerTable}
+          <div className={`${prefixCls}-body`}
+            style={bodyStyle}
+            onScroll={this.handleBodyScroll}>
+            <table className={tableClassName}>
+              {this.getColGroup()}
+              {thead}
+              <tbody className={`${prefixCls}-tbody`}>{rows}</tbody>
+              {tfoot}
+            </table>
+          </div>
         </div>
       </div>
     );
