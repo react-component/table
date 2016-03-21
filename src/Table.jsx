@@ -200,7 +200,7 @@ const Table = React.createClass({
           onRowClick={onRowClick}
           onHover={this.handleRowHover}
           key={key} />
-    );
+      );
 
       const subVisible = visible && isRowExpanded;
 
@@ -272,35 +272,77 @@ const Table = React.createClass({
   },
 
   getTable(options = {}) {
-    const { head = true, body = true, columns } = options;
-    const { scroll = {}, prefixCls, bodyStyle = {} } = this.props;
+    const { columns } = options;
+    const { prefixCls, scroll = {} } = this.props;
+    let { useFixedHeader } = this.props;
+    const bodyStyle = { ...this.props.bodyStyle };
+
     let tableClassName = '';
     if (scroll.x || columns) {
       tableClassName = `${prefixCls}-fixed`;
     }
+
     if (scroll.y) {
       bodyStyle.height = bodyStyle.height || scroll.y;
       bodyStyle.overflow = bodyStyle.overflow || 'auto';
+      useFixedHeader = true;
     }
-    const table = (
+
+    const renderTable = (hasHead = true, hasBody = true) => (
       <table className={tableClassName}>
         {this.getColGroup(options.columns)}
-        {head ? this.getHeader(options.columns) : null}
-        {body ? <tbody className={`${prefixCls}-tbody`}>
+        {hasHead ? this.getHeader(options.columns) : null}
+        {hasBody ? <tbody className={`${prefixCls}-tbody`}>
         {this.getRows(options.columns)}
         </tbody> : null}
       </table>
     );
-    if (head && !body) {
-      return table;
+
+    let headTable;
+    if (useFixedHeader) {
+      headTable = (
+        <div
+          className={`${prefixCls}-header`}
+          ref={columns ? null : 'headTable'}>
+          {renderTable(true, false)}
+        </div>
+      );
     }
-    return (
-      <div className={`${prefixCls}-body`}
+
+    let BodyTable = (
+      <div
+        className={`${prefixCls}-body`}
         style={bodyStyle}
+        ref="bodyTable"
+        onMouseEnter={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}>
-        {table}
+        {renderTable(!useFixedHeader)}
       </div>
     );
+
+    if (columns && columns.length) {
+      let refName;
+      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
+        refName = 'fixedColumnsBodyLeft';
+      } else if (columns[0].fixed === 'right') {
+        refName = 'fixedColumnsBodyRight';
+      }
+      BodyTable = (
+        <div
+          className={`${prefixCls}-body-outer`}
+          style={{ ...bodyStyle, overflow: 'hidden' }}>
+          <div
+            className={`${prefixCls}-body-inner`}
+            ref={refName}
+            onMouseEnter={this.detectScrollTarget}
+            onScroll={this.handleBodyScroll}>
+            {renderTable(!useFixedHeader)}
+          </div>
+        </div>
+      );
+    }
+
+    return <span>{headTable}{BodyTable}</span>;
   },
 
   getFooter() {
@@ -377,14 +419,51 @@ const Table = React.createClass({
     return !!this.findExpandedRow(record);
   },
 
+  detectScrollTarget(e) {
+    this.scrollTarget = e.currentTarget;
+  },
+
+  isAnyColumnsFixed() {
+    return this.getCurrentColumns().some(column => !!column.fixed);
+  },
+
+  isAnyColumnsLeftFixed() {
+    return this.getCurrentColumns().some(
+      column => column.fixed === 'left' || column.fixed === true
+    );
+  },
+
+  isAnyColumnsRightFixed() {
+    return this.getCurrentColumns().some(column => column.fixed === 'right');
+  },
+
   handleBodyScroll(e) {
+    // Prevent scrollTop setter trigger onScroll event
+    // http://stackoverflow.com/q/1386696
+    if (e.target !== this.scrollTarget) {
+      return;
+    }
     const scroll = this.props.scroll || {};
     if (scroll.x) {
       this.refs.headTable.scrollLeft = e.target.scrollLeft;
     }
+    if (scroll.y) {
+      if (this.refs.fixedColumnsBodyLeft) {
+        this.refs.fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+      }
+      if (this.refs.fixedColumnsBodyRight) {
+        this.refs.fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+      }
+      if (this.refs.bodyTable) {
+        this.refs.bodyTable.scrollTop = e.target.scrollTop;
+      }
+    }
   },
 
   handleRowHover(isHover, index) {
+    if (!this.isAnyColumnsFixed()) {
+      return;
+    }
     if (isHover) {
       this.setState({
         currentHoverIndex: index,
@@ -399,11 +478,6 @@ const Table = React.createClass({
   render() {
     const props = this.props;
     const prefixCls = props.prefixCls;
-    const scroll = props.scroll || {};
-    let useFixedHeader = props.useFixedHeader;
-    if (scroll.y) {
-      useFixedHeader = true;
-    }
 
     let className = props.prefixCls;
     if (props.className) {
@@ -413,24 +487,16 @@ const Table = React.createClass({
       className += ` ${prefixCls}-columns-paging`;
     }
 
-    const fixedHeader = useFixedHeader ? (
-      <div className={`${prefixCls}-header`} ref="headTable">
-        {this.getTable({ body: false })}
-      </div>
-    ) : null;
-
     return (
       <div className={className} style={props.style}>
-        <div className={`${prefixCls}-fixed-left`}>{this.getLeftFixedTable()}</div>
+        {this.isAnyColumnsLeftFixed() &&
+         <div className={`${prefixCls}-fixed-left`}>{this.getLeftFixedTable()}</div>}
         <div className={`${prefixCls}-scroll`}>
-          {fixedHeader}
-          {this.getTable({
-            head: !useFixedHeader,
-            body: true,
-          })}
+          {this.getTable()}
           {this.getFooter()}
         </div>
-        <div className={`${prefixCls}-fixed-right`}>{this.getRightFixedTable()}</div>
+        {this.isAnyColumnsRightFixed() &&
+         <div className={`${prefixCls}-fixed-right`}>{this.getRightFixedTable()}</div>}
       </div>
     );
   },

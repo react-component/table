@@ -27,6 +27,16 @@
     overflow: hidden;
   }
 
+  .@{tablePrefixCls}-body-outer {
+    margin-right: -20px;
+  }
+
+  .@{tablePrefixCls}-body-inner {
+    overflow-y: scroll;
+    padding-right: 20px;
+    height: 100%;
+  }
+
   .@{tablePrefixCls}-footer {
     padding: 16px 8px;
     border-bottom: 1px solid #e9e9e9;
@@ -140,7 +150,7 @@
   &-fixed-right {
     position: absolute;
     top: 0;
-    overflow-y: auto;
+    overflow: hidden;
     background: #fff;
     z-index: 1;
     table {
