@@ -175,6 +175,7 @@ const Table = React.createClass({
       record[childrenColumnName] && record[childrenColumnName].length > 0);
     const onRowClick = props.onRowClick;
     const expandIconColumnIndex = props.expandIconColumnIndex;
+    const isAnyColumnsFixed = this.isAnyColumnsFixed();
 
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
@@ -189,6 +190,12 @@ const Table = React.createClass({
       if (this.state.currentHoverIndex === i) {
         className += ' ' + props.prefixCls + '-row-hover';
       }
+
+      const onHoverProps = {};
+      if (isAnyColumnsFixed) {
+        onHoverProps.onHover = this.handleRowHover;
+      }
+
       rst.push(
         <TableRow
           indent={indent}
@@ -208,7 +215,7 @@ const Table = React.createClass({
           columns={columns || this.getCurrentColumns()}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
-          onHover={this.handleRowHover}
+          { ...onHoverProps }
           key={key} />
       );
 
@@ -478,9 +485,6 @@ const Table = React.createClass({
   },
 
   handleRowHover(isHover, index) {
-    if (!this.isAnyColumnsFixed()) {
-      return;
-    }
     if (isHover) {
       this.setState({
         currentHoverIndex: index,
