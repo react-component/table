@@ -121,6 +121,12 @@ var table = React.render(
           <td>whether use separator table for header. better set width for columns</td>
       </tr>
       <tr>
+          <td>scroll</td>
+          <td>Object</td>
+          <th>{x: false, y: false}</th>
+          <td>whether table can be scroll in x/y direction, `y` can be a number that indicated the height of table body</td>
+      </tr>
+      <tr>
           <td>expandIconAsCell</td>
           <td>Boolean</td>
           <th>false</th>
@@ -187,16 +193,16 @@ var table = React.render(
           <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
       </tr>
       <tr>
-          <td>columnsPageRange</td>
-          <td>Array</td>
-          <th></th>
-          <td>columns index range need paging, like [2,10]</td>
-      </tr>
-      <tr>
           <td>columnsPageSize</td>
           <td>Number</td>
           <th>5</th>
-          <td>pageSize of columns</td>
+          <td>pageSize of columns. (Deprecated, use fixed columns)</td>
+      </tr>
+      <tr>
+          <td>columnsPageRange</td>
+          <td>Array</td>
+          <th></th>
+          <td>columns index range need paging, like [2,10]. (Deprecated, use column.fixed)</td>
       </tr>
       <tr>
           <td>showHeader</td>
@@ -254,7 +260,13 @@ var table = React.render(
                       <td>width</td>
                       <td>String|Number</td>
                       <th></th>
-                      <td>he width of the specific proportion calculation according to the width of the columns</td>
+                      <td>width of the specific proportion calculation according to the width of the columns</td>
+                  </tr>
+                  <tr>
+                      <td>fixed</td>
+                      <td>String|Boolean</td>
+                      <th></th>
+                      <td>this column will be fixed when table scroll horizontally: true or 'left' or 'right'</td>
                   </tr>
                   <tr>
                       <td>render</td>

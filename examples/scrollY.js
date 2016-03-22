@@ -48,14 +48,12 @@ const Test = React.createClass({
     return (
       <Table columns={columns}
         data={data}
-        useFixedHeader
+        scroll={{ y: 300 }}
         rowKey={getRowKey}
         bodyStyle={{
-          overflow: 'auto',
-          height: 200,
           display: this.state.showBody ? '' : 'none',
         }}
-        className="table"/>
+        className="table" />
     );
   },
 });
