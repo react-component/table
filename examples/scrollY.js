@@ -1,14 +1,14 @@
-webpackJsonp([10],{
+webpackJsonp([13],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(224);
+	module.exports = __webpack_require__(227);
 
 
 /***/ },
 
-/***/ 224:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
@@ -68,11 +68,9 @@ webpackJsonp([10],{
 	    }];
 	    return React.createElement(Table, { columns: columns,
 	      data: data,
-	      useFixedHeader: true,
+	      scroll: { y: 300 },
 	      rowKey: getRowKey,
 	      bodyStyle: {
-	        overflow: 'auto',
-	        height: 200,
 	        display: this.state.showBody ? '' : 'none'
 	      },
 	      className: 'table' });
@@ -93,4 +91,4 @@ webpackJsonp([10],{
 /***/ }
 
 });
-//# sourceMappingURL=scrollBody.js.map
+//# sourceMappingURL=scrollY.js.map

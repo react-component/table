@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-table@3.11.3 - table ui component for react</title>
+  <title>rc-table@4.0.0-beta.0 - table ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-table@3.11.3</h1>
+  <h1>rc-table@4.0.0-beta.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -754,6 +754,8 @@
       
       <li><a href="examples/expandedRowRender.html">expandedRowRender</a></li>
       
+      <li><a href="examples/fixedColumns.html">fixedColumns</a></li>
+      
       <li><a href="examples/footer.html">footer</a></li>
       
       <li><a href="examples/hide-header.html">hide-header</a></li>
@@ -764,7 +766,11 @@
       
       <li><a href="examples/rowClick.html">rowClick</a></li>
       
-      <li><a href="examples/scrollBody.html">scrollBody</a></li>
+      <li><a href="examples/scrollX.html">scrollX</a></li>
+      
+      <li><a href="examples/scrollXY.html">scrollXY</a></li>
+      
+      <li><a href="examples/scrollY.html">scrollY</a></li>
       
       <li><a href="examples/simple.html">simple</a></li>
       
@@ -859,6 +865,12 @@ var table = React.render(
           <td>whether use separator table for header. better set width for columns</td>
       </tr>
       <tr>
+          <td>scroll</td>
+          <td>Object</td>
+          <th>{x: false, y: false}</th>
+          <td>whether table can be scroll in x/y direction, <code>y</code> can be a number that indicated the height of table body</td>
+      </tr>
+      <tr>
           <td>expandIconAsCell</td>
           <td>Boolean</td>
           <th>false</th>
@@ -925,16 +937,16 @@ var table = React.render(
           <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
       </tr>
       <tr>
-          <td>columnsPageRange</td>
-          <td>Array</td>
-          <th></th>
-          <td>columns index range need paging, like [2,10]</td>
-      </tr>
-      <tr>
           <td>columnsPageSize</td>
           <td>Number</td>
           <th>5</th>
-          <td>pageSize of columns</td>
+          <td>pageSize of columns. (Deprecated, use fixed columns)</td>
+      </tr>
+      <tr>
+          <td>columnsPageRange</td>
+          <td>Array</td>
+          <th></th>
+          <td>columns index range need paging, like [2,10]. (Deprecated, use column.fixed)</td>
       </tr>
       <tr>
           <td>showHeader</td>
@@ -992,7 +1004,13 @@ var table = React.render(
                       <td>width</td>
                       <td>String|Number</td>
                       <th></th>
-                      <td>he width of the specific proportion calculation according to the width of the columns</td>
+                      <td>width of the specific proportion calculation according to the width of the columns</td>
+                  </tr>
+                  <tr>
+                      <td>fixed</td>
+                      <td>String|Boolean</td>
+                      <th></th>
+                      <td>this column will be fixed when table scroll horizontally: true or &#39;left&#39; or &#39;right&#39;</td>
                   </tr>
                   <tr>
                       <td>render</td>

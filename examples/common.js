@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		13:0
+/******/ 		16:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"footer","6":"hide-header","7":"key","8":"pagingColumns","9":"rowClick","10":"scrollBody","11":"simple","12":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"fixedColumns","6":"footer","7":"hide-header","8":"key","9":"pagingColumns","10":"rowClick","11":"scrollX","12":"scrollXY","13":"scrollY","14":"simple","15":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -19720,6 +19720,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _react = __webpack_require__(2);
@@ -19758,7 +19760,8 @@
 	    columnsPageSize: _react2['default'].PropTypes.number,
 	    expandIconColumnIndex: _react2['default'].PropTypes.number,
 	    showHeader: _react2['default'].PropTypes.bool,
-	    footer: _react2['default'].PropTypes.func
+	    footer: _react2['default'].PropTypes.func,
+	    scroll: _react2['default'].PropTypes.object
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19785,7 +19788,8 @@
 	      indentSize: 15,
 	      columnsPageSize: 5,
 	      expandIconColumnIndex: 0,
-	      showHeader: true
+	      showHeader: true,
+	      scroll: {}
 	    };
 	  },
 	
@@ -19794,8 +19798,19 @@
 	    return {
 	      expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
 	      data: this.props.data,
-	      currentColumnsPage: 0
+	      currentColumnsPage: 0,
+	      currentHoverIndex: null,
+	      scrollPosition: 'left'
 	    };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    if (this.refs.headTable) {
+	      this.refs.headTable.scrollLeft = 0;
+	    }
+	    if (this.refs.bodyTable) {
+	      this.refs.bodyTable.scrollLeft = 0;
+	    }
 	  },
 	
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -19850,17 +19865,21 @@
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
 	  },
 	
-	  getThs: function getThs() {
+	  getHeader: function getHeader(columns) {
+	    var _props = this.props;
+	    var showHeader = _props.showHeader;
+	    var expandIconAsCell = _props.expandIconAsCell;
+	    var prefixCls = _props.prefixCls;
+	
 	    var ths = [];
-	    if (this.props.expandIconAsCell) {
+	    if (expandIconAsCell) {
 	      ths.push({
 	        key: 'rc-table-expandIconAsCell',
-	        className: this.props.prefixCls + '-expand-icon-th',
+	        className: prefixCls + '-expand-icon-th',
 	        title: ''
 	      });
 	    }
-	    ths = ths.concat(this.getCurrentColumns());
-	    return ths.map(function (c) {
+	    ths = ths.concat(columns || this.getCurrentColumns()).map(function (c) {
 	      if (c.colSpan !== 0) {
 	        return _react2['default'].createElement(
 	          'th',
@@ -19869,6 +19888,15 @@
 	        );
 	      }
 	    });
+	    return showHeader ? _react2['default'].createElement(
+	      'thead',
+	      { className: prefixCls + '-thead' },
+	      _react2['default'].createElement(
+	        'tr',
+	        null,
+	        ths
+	      )
+	    ) : null;
 	  },
 	
 	  getExpandedRow: function getExpandedRow(key, content, visible, className) {
@@ -19885,9 +19913,8 @@
 	    );
 	  },
 	
-	  getRowsByData: function getRowsByData(data, visible, indent) {
+	  getRowsByData: function getRowsByData(data, visible, indent, columns) {
 	    var props = this.props;
-	    var columns = this.getCurrentColumns();
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
 	    var expandIconAsCell = props.expandIconAsCell;
@@ -19900,6 +19927,7 @@
 	    });
 	    var onRowClick = props.onRowClick;
 	    var expandIconColumnIndex = props.expandIconColumnIndex;
+	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
 	
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
@@ -19911,7 +19939,16 @@
 	        expandedRowContent = expandedRowRender(record, i);
 	      }
 	      var className = rowClassName(record, i);
-	      rst.push(_react2['default'].createElement(_TableRow2['default'], {
+	      if (this.state.currentHoverIndex === i) {
+	        className += ' ' + props.prefixCls + '-row-hover';
+	      }
+	
+	      var onHoverProps = {};
+	      if (isAnyColumnsFixed) {
+	        onHoverProps.onHover = this.handleRowHover;
+	      }
+	
+	      rst.push(_react2['default'].createElement(_TableRow2['default'], _extends({
 	        indent: indent,
 	        indentSize: props.indentSize,
 	        needIndentSpaced: needIndentSpaced,
@@ -19926,10 +19963,11 @@
 	        expanded: isRowExpanded,
 	        prefixCls: props.prefixCls + '-row',
 	        childrenColumnName: childrenColumnName,
-	        columns: columns,
+	        columns: columns || this.getCurrentColumns(),
 	        expandIconColumnIndex: expandIconColumnIndex,
-	        onRowClick: onRowClick,
-	        key: key }));
+	        onRowClick: onRowClick
+	      }, onHoverProps, {
+	        key: key })));
 	
 	      var subVisible = visible && isRowExpanded;
 	
@@ -19943,16 +19981,16 @@
 	    return rst;
 	  },
 	
-	  getRows: function getRows() {
-	    return this.getRowsByData(this.state.data, true, 0);
+	  getRows: function getRows(columns) {
+	    return this.getRowsByData(this.state.data, true, 0, columns);
 	  },
 	
-	  getColGroup: function getColGroup() {
+	  getColGroup: function getColGroup(columns) {
 	    var cols = [];
 	    if (this.props.expandIconAsCell) {
 	      cols.push(_react2['default'].createElement('col', { className: this.props.prefixCls + '-expand-icon-col', key: 'rc-table-expand-icon-col' }));
 	    }
-	    cols = cols.concat(this.props.columns.map(function (c) {
+	    cols = cols.concat((columns || this.props.columns).map(function (c) {
 	      return _react2['default'].createElement('col', { key: c.key, style: { width: c.width } });
 	    }));
 	    return _react2['default'].createElement(
@@ -19965,11 +20003,11 @@
 	  getCurrentColumns: function getCurrentColumns() {
 	    var _this = this;
 	
-	    var _props = this.props;
-	    var columns = _props.columns;
-	    var columnsPageRange = _props.columnsPageRange;
-	    var columnsPageSize = _props.columnsPageSize;
-	    var prefixCls = _props.prefixCls;
+	    var _props2 = this.props;
+	    var columns = _props2.columns;
+	    var columnsPageRange = _props2.columnsPageRange;
+	    var columnsPageSize = _props2.columnsPageSize;
+	    var prefixCls = _props2.prefixCls;
 	    var currentColumnsPage = this.state.currentColumnsPage;
 	
 	    if (!columnsPageRange || columnsPageRange[0] > columnsPageRange[1]) {
@@ -19993,10 +20031,138 @@
 	    });
 	  },
 	
+	  getLeftFixedTable: function getLeftFixedTable() {
+	    var columns = this.props.columns;
+	
+	    var fixedColumns = columns.filter(function (column) {
+	      return column.fixed === 'left' || column.fixed === true;
+	    });
+	    return this.getTable({
+	      columns: fixedColumns
+	    });
+	  },
+	
+	  getRightFixedTable: function getRightFixedTable() {
+	    var columns = this.props.columns;
+	
+	    var fixedColumns = columns.filter(function (column) {
+	      return column.fixed === 'right';
+	    });
+	    return this.getTable({
+	      columns: fixedColumns
+	    });
+	  },
+	
+	  getTable: function getTable() {
+	    var _this2 = this;
+	
+	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var columns = options.columns;
+	    var _props3 = this.props;
+	    var prefixCls = _props3.prefixCls;
+	    var _props3$scroll = _props3.scroll;
+	    var scroll = _props3$scroll === undefined ? {} : _props3$scroll;
+	    var useFixedHeader = this.props.useFixedHeader;
+	
+	    var bodyStyle = _extends({}, this.props.bodyStyle);
+	
+	    var tableClassName = '';
+	    if (scroll.x || columns) {
+	      tableClassName = prefixCls + '-fixed';
+	    }
+	
+	    if (scroll.y) {
+	      bodyStyle.height = bodyStyle.height || scroll.y;
+	      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+	      useFixedHeader = true;
+	    }
+	
+	    var renderTable = function renderTable() {
+	      var hasHead = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	      var hasBody = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	      return _react2['default'].createElement(
+	        'table',
+	        { className: tableClassName },
+	        _this2.getColGroup(options.columns),
+	        hasHead ? _this2.getHeader(options.columns) : null,
+	        hasBody ? _react2['default'].createElement(
+	          'tbody',
+	          { className: prefixCls + '-tbody' },
+	          _this2.getRows(options.columns)
+	        ) : null
+	      );
+	    };
+	
+	    var headTable = undefined;
+	    if (useFixedHeader) {
+	      headTable = _react2['default'].createElement(
+	        'div',
+	        {
+	          className: prefixCls + '-header',
+	          ref: columns ? null : 'headTable' },
+	        renderTable(true, false)
+	      );
+	    }
+	
+	    var BodyTable = _react2['default'].createElement(
+	      'div',
+	      {
+	        className: prefixCls + '-body',
+	        style: bodyStyle,
+	        ref: 'bodyTable',
+	        onMouseEnter: this.detectScrollTarget,
+	        onScroll: this.handleBodyScroll },
+	      renderTable(!useFixedHeader)
+	    );
+	
+	    if (columns && columns.length) {
+	      var refName = undefined;
+	      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
+	        refName = 'fixedColumnsBodyLeft';
+	      } else if (columns[0].fixed === 'right') {
+	        refName = 'fixedColumnsBodyRight';
+	      }
+	      BodyTable = _react2['default'].createElement(
+	        'div',
+	        {
+	          className: prefixCls + '-body-outer',
+	          style: _extends({}, bodyStyle, { overflow: 'hidden' }) },
+	        _react2['default'].createElement(
+	          'div',
+	          {
+	            className: prefixCls + '-body-inner',
+	            ref: refName,
+	            onMouseEnter: this.detectScrollTarget,
+	            onScroll: this.handleBodyScroll },
+	          renderTable(!useFixedHeader)
+	        )
+	      );
+	    }
+	
+	    return _react2['default'].createElement(
+	      'span',
+	      null,
+	      headTable,
+	      BodyTable
+	    );
+	  },
+	
+	  getFooter: function getFooter() {
+	    var _props4 = this.props;
+	    var footer = _props4.footer;
+	    var prefixCls = _props4.prefixCls;
+	
+	    return footer ? _react2['default'].createElement(
+	      'div',
+	      { className: prefixCls + '-footer' },
+	      footer(this.state.data)
+	    ) : null;
+	  },
+	
 	  getMaxColumnsPage: function getMaxColumnsPage() {
-	    var _props2 = this.props;
-	    var columnsPageRange = _props2.columnsPageRange;
-	    var columnsPageSize = _props2.columnsPageSize;
+	    var _props5 = this.props;
+	    var columnsPageRange = _props5.columnsPageRange;
+	    var columnsPageSize = _props5.columnsPageSize;
 	
 	    return Math.floor((columnsPageRange[1] - columnsPageRange[0] - 1) / columnsPageSize);
 	  },
@@ -20072,11 +20238,74 @@
 	    return !!this.findExpandedRow(record);
 	  },
 	
+	  detectScrollTarget: function detectScrollTarget(e) {
+	    this.scrollTarget = e.currentTarget;
+	  },
+	
+	  isAnyColumnsFixed: function isAnyColumnsFixed() {
+	    return this.getCurrentColumns().some(function (column) {
+	      return !!column.fixed;
+	    });
+	  },
+	
+	  isAnyColumnsLeftFixed: function isAnyColumnsLeftFixed() {
+	    return this.getCurrentColumns().some(function (column) {
+	      return column.fixed === 'left' || column.fixed === true;
+	    });
+	  },
+	
+	  isAnyColumnsRightFixed: function isAnyColumnsRightFixed() {
+	    return this.getCurrentColumns().some(function (column) {
+	      return column.fixed === 'right';
+	    });
+	  },
+	
+	  handleBodyScroll: function handleBodyScroll(e) {
+	    // Prevent scrollTop setter trigger onScroll event
+	    // http://stackoverflow.com/q/1386696
+	    if (e.target !== this.scrollTarget) {
+	      return;
+	    }
+	    var scroll = this.props.scroll || {};
+	    if (scroll.x && e.target === this.refs.bodyTable) {
+	      this.refs.headTable.scrollLeft = e.target.scrollLeft;
+	      if (e.target.scrollLeft === 0) {
+	        this.setState({ scrollPosition: 'left' });
+	      } else if (e.target.scrollLeft === e.target.children[0].offsetWidth - e.target.offsetWidth) {
+	        this.setState({ scrollPosition: 'right' });
+	      } else if (this.state.scrollPosition !== 'middle') {
+	        this.setState({ scrollPosition: 'middle' });
+	      }
+	    }
+	    if (scroll.y) {
+	      if (this.refs.fixedColumnsBodyLeft) {
+	        this.refs.fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+	      }
+	      if (this.refs.fixedColumnsBodyRight) {
+	        this.refs.fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+	      }
+	      if (this.refs.bodyTable) {
+	        this.refs.bodyTable.scrollTop = e.target.scrollTop;
+	      }
+	    }
+	  },
+	
+	  handleRowHover: function handleRowHover(isHover, index) {
+	    if (isHover) {
+	      this.setState({
+	        currentHoverIndex: index
+	      });
+	    } else {
+	      this.setState({
+	        currentHoverIndex: null
+	      });
+	    }
+	  },
+	
 	  render: function render() {
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
-	    var columns = this.getThs();
-	    var rows = this.getRows();
+	
 	    var className = props.prefixCls;
 	    if (props.className) {
 	      className += ' ' + props.className;
@@ -20084,60 +20313,26 @@
 	    if (props.columnsPageRange) {
 	      className += ' ' + prefixCls + '-columns-paging';
 	    }
-	    var headerTable = undefined;
-	    var thead = props.showHeader ? _react2['default'].createElement(
-	      'thead',
-	      { className: prefixCls + '-thead' },
-	      _react2['default'].createElement(
-	        'tr',
-	        null,
-	        columns
-	      )
-	    ) : null;
-	    if (props.useFixedHeader) {
-	      headerTable = _react2['default'].createElement(
-	        'div',
-	        { className: prefixCls + '-header' },
-	        _react2['default'].createElement(
-	          'table',
-	          null,
-	          this.getColGroup(),
-	          thead
-	        )
-	      );
-	      thead = null;
-	    }
+	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
+	
 	    return _react2['default'].createElement(
 	      'div',
 	      { className: className, style: props.style },
-	      headerTable,
+	      this.isAnyColumnsLeftFixed() && _react2['default'].createElement(
+	        'div',
+	        { className: prefixCls + '-fixed-left' },
+	        this.getLeftFixedTable()
+	      ),
 	      _react2['default'].createElement(
 	        'div',
-	        { className: prefixCls + '-body', style: props.bodyStyle },
-	        _react2['default'].createElement(
-	          'table',
-	          null,
-	          this.getColGroup(),
-	          thead,
-	          _react2['default'].createElement(
-	            'tbody',
-	            { className: prefixCls + '-tbody' },
-	            rows
-	          ),
-	          props.footer ? _react2['default'].createElement(
-	            'tfoot',
-	            { className: prefixCls + '-tfoot' },
-	            _react2['default'].createElement(
-	              'tr',
-	              null,
-	              _react2['default'].createElement(
-	                'td',
-	                { colSpan: '0' },
-	                props.footer(this.state.data)
-	              )
-	            )
-	          ) : null
-	        )
+	        { className: prefixCls + '-scroll' },
+	        this.getTable(),
+	        this.getFooter()
+	      ),
+	      this.isAnyColumnsRightFixed() && _react2['default'].createElement(
+	        'div',
+	        { className: prefixCls + '-fixed-right' },
+	        this.getRightFixedTable()
 	      )
 	    );
 	  }
@@ -20170,14 +20365,16 @@
 	    onRowClick: _react2['default'].PropTypes.func,
 	    record: _react2['default'].PropTypes.object,
 	    prefixCls: _react2['default'].PropTypes.string,
-	    expandIconColumnIndex: _react2['default'].PropTypes.number
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    onHover: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      onRowClick: function onRowClick() {},
 	      onDestroy: function onDestroy() {},
-	      expandIconColumnIndex: 0
+	      expandIconColumnIndex: 0,
+	      onHover: function onHover() {}
 	    };
 	  },
 	
@@ -20273,6 +20470,8 @@
 	    return _react2['default'].createElement(
 	      'tr',
 	      { onClick: onRowClick.bind(null, record, index),
+	        onMouseEnter: props.onHover.bind(null, true, index),
+	        onMouseLeave: props.onHover.bind(null, false, index),
 	        className: prefixCls + ' ' + props.className + ' ' + prefixCls + '-level-' + indent,
 	        style: { display: props.visible ? '' : 'none' } },
 	      cells
