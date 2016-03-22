@@ -65,7 +65,17 @@ const Table = React.createClass({
       data: this.props.data,
       currentColumnsPage: 0,
       currentHoverIndex: null,
+      scrollPosition: 'left',
     };
+  },
+
+  componentDidMount() {
+    if (this.refs.headTable) {
+      this.refs.headTable.scrollLeft = 0;
+    }
+    if (this.refs.bodyTable) {
+      this.refs.bodyTable.scrollLeft = 0;
+    }
   },
 
   componentWillReceiveProps(nextProps) {
@@ -444,8 +454,15 @@ const Table = React.createClass({
       return;
     }
     const scroll = this.props.scroll || {};
-    if (scroll.x) {
+    if (scroll.x && e.target === this.refs.bodyTable) {
       this.refs.headTable.scrollLeft = e.target.scrollLeft;
+      if (e.target.scrollLeft === 0) {
+        this.setState({ scrollPosition: 'left' });
+      } else if (e.target.scrollLeft === e.target.children[0].offsetWidth - e.target.offsetWidth) {
+        this.setState({ scrollPosition: 'right' });
+      } else if (this.state.scrollPosition !== 'middle') {
+        this.setState({ scrollPosition: 'middle' });
+      }
     }
     if (scroll.y) {
       if (this.refs.fixedColumnsBodyLeft) {
@@ -486,17 +503,22 @@ const Table = React.createClass({
     if (props.columnsPageRange) {
       className += ` ${prefixCls}-columns-paging`;
     }
+    className += ` ${prefixCls}-scroll-position-${this.state.scrollPosition}`;
 
     return (
       <div className={className} style={props.style}>
         {this.isAnyColumnsLeftFixed() &&
-         <div className={`${prefixCls}-fixed-left`}>{this.getLeftFixedTable()}</div>}
+        <div className={`${prefixCls}-fixed-left`}>
+          {this.getLeftFixedTable()}
+        </div>}
         <div className={`${prefixCls}-scroll`}>
           {this.getTable()}
           {this.getFooter()}
         </div>
         {this.isAnyColumnsRightFixed() &&
-         <div className={`${prefixCls}-fixed-right`}>{this.getRightFixedTable()}</div>}
+        <div className={`${prefixCls}-fixed-right`}>
+          {this.getRightFixedTable()}
+        </div>}
       </div>
     );
   },
