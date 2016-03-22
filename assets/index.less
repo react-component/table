@@ -7,7 +7,6 @@
 .@{tablePrefixCls} {
   font-size: @font-size-base;
   color: @text-color;
-  border-radius: 6px;
   transition: opacity 0.3s ease;
   position: relative;
 
@@ -25,15 +24,11 @@
 
   .@{tablePrefixCls}-header {
     overflow: hidden;
-  }
-
-  .@{tablePrefixCls}-body-outer {
-    margin-right: -20px;
+    background: #f4f4f4;
   }
 
   .@{tablePrefixCls}-body-inner {
-    overflow-y: scroll;
-    padding-right: 20px;
+    overflow: scroll;
     height: 100%;
   }
 
@@ -54,13 +49,6 @@
     font-weight: bold;
     transition: background .3s ease;
     position: relative;
-
-    &:first-child {
-      border-radius: 6px 0 0 0;
-    }
-    &:last-child {
-      border-radius: 0 6px 0 0;
-    }
   }
 
   td {
@@ -151,16 +139,19 @@
     position: absolute;
     top: 0;
     overflow: hidden;
-    background: #fff;
     z-index: 1;
     table {
       width: auto;
+      background: #fff;
     }
   }
 
   &-fixed-left {
     left: 0;
     box-shadow: 4px 0 4px rgba(100,100,100,0.1);
+    & .@{tablePrefixCls}-body-inner {
+      margin-right: -20px;
+    }
   }
 
   &-fixed-right {
