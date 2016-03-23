@@ -113,12 +113,13 @@ const TableRow = React.createClass({
         );
       }
     }
+
     return (
       <tr onClick={onRowClick.bind(null, record, index)}
         onMouseEnter={props.onHover.bind(null, true, index)}
         onMouseLeave={props.onHover.bind(null, false, index)}
         className={`${prefixCls} ${props.className} ${prefixCls}-level-${indent}`}
-        style={{display: props.visible ? '' : 'none'}}>
+        style={props.visible ? null : { display: 'none' }}>
         {cells}
       </tr>
     );
