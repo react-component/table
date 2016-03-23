@@ -20271,7 +20271,7 @@
 	      this.refs.headTable.scrollLeft = e.target.scrollLeft;
 	      if (e.target.scrollLeft === 0) {
 	        this.setState({ scrollPosition: 'left' });
-	      } else if (e.target.scrollLeft === e.target.children[0].offsetWidth - e.target.offsetWidth) {
+	      } else if (e.target.scrollLeft >= e.target.children[0].offsetWidth - e.target.offsetWidth) {
 	        this.setState({ scrollPosition: 'right' });
 	      } else if (this.state.scrollPosition !== 'middle') {
 	        this.setState({ scrollPosition: 'middle' });
@@ -20467,13 +20467,14 @@
 	        ));
 	      }
 	    }
+	
 	    return _react2['default'].createElement(
 	      'tr',
 	      { onClick: onRowClick.bind(null, record, index),
 	        onMouseEnter: props.onHover.bind(null, true, index),
 	        onMouseLeave: props.onHover.bind(null, false, index),
 	        className: prefixCls + ' ' + props.className + ' ' + prefixCls + '-level-' + indent,
-	        style: { display: props.visible ? '' : 'none' } },
+	        style: props.visible ? null : { display: 'none' } },
 	      cells
 	    );
 	  }
