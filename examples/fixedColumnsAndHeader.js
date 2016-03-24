@@ -33,7 +33,7 @@ const data = [
 
 ReactDOM.render(
   <div>
-    <h2>Fixed columns</h2>
-    <Table columns={columns} scroll={{ x: true }} data={data} style={{ width: 800 }} />
+    <h2>Fixed columns and header</h2>
+    <Table columns={columns} scroll={{ x: true, y: 300 }} data={data} style={{ width: 800 }} />
   </div>
 , document.getElementById('__react-content'));

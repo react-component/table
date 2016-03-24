@@ -297,11 +297,12 @@ const Table = React.createClass({
     let tableClassName = '';
     if (scroll.x || columns) {
       tableClassName = `${prefixCls}-fixed`;
+      bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
     }
 
     if (scroll.y) {
       bodyStyle.height = bodyStyle.height || scroll.y;
-      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       useFixedHeader = true;
     }
 
@@ -462,7 +463,9 @@ const Table = React.createClass({
     }
     const scroll = this.props.scroll || {};
     if (scroll.x && e.target === this.refs.bodyTable) {
-      this.refs.headTable.scrollLeft = e.target.scrollLeft;
+      if (this.refs.headTable) {
+        this.refs.headTable.scrollLeft = e.target.scrollLeft;
+      }
       if (e.target.scrollLeft === 0) {
         this.setState({ scrollPosition: 'left' });
       } else if (e.target.scrollLeft >= e.target.children[0].offsetWidth - e.target.offsetWidth) {
@@ -506,6 +509,9 @@ const Table = React.createClass({
     }
     if (props.columnsPageRange) {
       className += ` ${prefixCls}-columns-paging`;
+    }
+    if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
+      className += ` ${prefixCls}-fixed-header`;
     }
     className += ` ${prefixCls}-scroll-position-${this.state.scrollPosition}`;
 
