@@ -1,14 +1,14 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(219);
+	module.exports = __webpack_require__(220);
 
 
 /***/ },
 
-/***/ 219:
+/***/ 220:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
@@ -29,12 +29,12 @@ webpackJsonp([5],{
 	  React.createElement(
 	    'h2',
 	    null,
-	    'Fixed columns'
+	    'Fixed columns and header'
 	  ),
-	  React.createElement(Table, { columns: columns, scroll: { x: true }, data: data, style: { width: 800 } })
+	  React.createElement(Table, { columns: columns, scroll: { x: true, y: 300 }, data: data, style: { width: 800 } })
 	), document.getElementById('__react-content'));
 
 /***/ }
 
 });
-//# sourceMappingURL=fixedColumns.js.map
+//# sourceMappingURL=fixedColumnsAndHeader.js.map

@@ -20,8 +20,10 @@
   background: #f4f4f4;
 }
 .rc-table .rc-table-body-inner {
-  overflow: scroll;
   height: 100%;
+}
+.rc-table-fixed-header .rc-table-body-inner {
+  overflow: scroll;
 }
 .rc-table .rc-table-footer {
   padding: 16px 8px;

@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		16:0
+/******/ 		17:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"fixedColumns","6":"footer","7":"hide-header","8":"key","9":"pagingColumns","10":"rowClick","11":"scrollX","12":"scrollXY","13":"scrollY","14":"simple","15":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"fixedColumns","6":"fixedColumnsAndHeader","7":"footer","8":"hide-header","9":"key","10":"pagingColumns","11":"rowClick","12":"scrollX","13":"scrollXY","14":"scrollY","15":"simple","16":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -20069,11 +20069,12 @@
 	    var tableClassName = '';
 	    if (scroll.x || columns) {
 	      tableClassName = prefixCls + '-fixed';
+	      bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
 	    }
 	
 	    if (scroll.y) {
 	      bodyStyle.height = bodyStyle.height || scroll.y;
-	      bodyStyle.overflow = bodyStyle.overflow || 'auto';
+	      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
 	      useFixedHeader = true;
 	    }
 	
@@ -20268,7 +20269,9 @@
 	    }
 	    var scroll = this.props.scroll || {};
 	    if (scroll.x && e.target === this.refs.bodyTable) {
-	      this.refs.headTable.scrollLeft = e.target.scrollLeft;
+	      if (this.refs.headTable) {
+	        this.refs.headTable.scrollLeft = e.target.scrollLeft;
+	      }
 	      if (e.target.scrollLeft === 0) {
 	        this.setState({ scrollPosition: 'left' });
 	      } else if (e.target.scrollLeft >= e.target.children[0].offsetWidth - e.target.offsetWidth) {
@@ -20312,6 +20315,9 @@
 	    }
 	    if (props.columnsPageRange) {
 	      className += ' ' + prefixCls + '-columns-paging';
+	    }
+	    if (props.useFixedHeader || props.scroll && props.scroll.y) {
+	      className += ' ' + prefixCls + '-fixed-header';
 	    }
 	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
 	
