@@ -20081,9 +20081,14 @@
 	    var renderTable = function renderTable() {
 	      var hasHead = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 	      var hasBody = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	
+	      var tableStyle = {};
+	      if (!options.columns && scroll.x) {
+	        tableStyle.width = scroll.x;
+	      }
 	      return _react2['default'].createElement(
 	        'table',
-	        { className: tableClassName },
+	        { className: tableClassName, style: tableStyle },
 	        _this2.getColGroup(options.columns),
 	        hasHead ? _this2.getHeader(options.columns) : null,
 	        hasBody ? _react2['default'].createElement(
