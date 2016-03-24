@@ -306,15 +306,21 @@ const Table = React.createClass({
       useFixedHeader = true;
     }
 
-    const renderTable = (hasHead = true, hasBody = true) => (
-      <table className={tableClassName}>
-        {this.getColGroup(options.columns)}
-        {hasHead ? this.getHeader(options.columns) : null}
-        {hasBody ? <tbody className={`${prefixCls}-tbody`}>
-        {this.getRows(options.columns)}
-        </tbody> : null}
-      </table>
-    );
+    const renderTable = (hasHead = true, hasBody = true) => {
+      const tableStyle = {};
+      if (!options.columns && scroll.x) {
+        tableStyle.width = scroll.x;
+      }
+      return (
+        <table className={tableClassName} style={tableStyle}>
+          {this.getColGroup(options.columns)}
+          {hasHead ? this.getHeader(options.columns) : null}
+          {hasBody ? <tbody className={`${prefixCls}-tbody`}>
+          {this.getRows(options.columns)}
+          </tbody> : null}
+        </table>
+      );
+    };
 
     let headTable;
     if (useFixedHeader) {

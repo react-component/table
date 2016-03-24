@@ -124,7 +124,7 @@ var table = React.render(
           <td>scroll</td>
           <td>Object</td>
           <th>{x: false, y: false}</th>
-          <td>whether table can be scroll in x/y direction, `y` can be a number that indicated the height of table body</td>
+          <td>whether table can be scroll in x/y direction, `x` or `y` can be a number that indicated the width and height of table body</td>
       </tr>
       <tr>
           <td>expandIconAsCell</td>
