@@ -19724,6 +19724,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -19742,6 +19744,7 @@
 	  propTypes: {
 	    data: _react2['default'].PropTypes.array,
 	    expandIconAsCell: _react2['default'].PropTypes.bool,
+	    defaultExpandAllRows: _react2['default'].PropTypes.bool,
 	    expandedRowKeys: _react2['default'].PropTypes.array,
 	    defaultExpandedRowKeys: _react2['default'].PropTypes.array,
 	    useFixedHeader: _react2['default'].PropTypes.bool,
@@ -19770,6 +19773,7 @@
 	      useFixedHeader: false,
 	      expandIconAsCell: false,
 	      columns: [],
+	      defaultExpandAllRows: false,
 	      defaultExpandedRowKeys: [],
 	      rowKey: function rowKey(o) {
 	        return o.key;
@@ -19795,9 +19799,22 @@
 	
 	  getInitialState: function getInitialState() {
 	    var props = this.props;
+	    var expandedRowKeys = [];
+	    var rows = [].concat(_toConsumableArray(props.data));
+	    if (props.defaultExpandAllRows) {
+	      for (var i = 0; i < rows.length; i++) {
+	        var row = rows[i];
+	        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
+	          expandedRowKeys.push(props.rowKey(row));
+	          rows = rows.concat(row[props.childrenColumnName]);
+	        }
+	      }
+	    } else {
+	      expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
+	    }
 	    return {
-	      expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
-	      data: this.props.data,
+	      expandedRowKeys: expandedRowKeys,
+	      data: props.data,
 	      currentColumnsPage: 0,
 	      currentHoverIndex: null,
 	      scrollPosition: 'left'
@@ -20232,12 +20249,12 @@
 	  },
 	
 	  findExpandedRow: function findExpandedRow(record) {
-	    var keyFn = this.props.rowKey;
-	    var currentRowKey = keyFn(record);
+	    var _this3 = this;
+	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === currentRowKey;
+	      return i === _this3.props.rowKey(record);
 	    });
-	    return rows[0] || null;
+	    return rows[0];
 	  },
 	
 	  isRowExpanded: function isRowExpanded(record) {

@@ -90,7 +90,7 @@ webpackJsonp([0],[
 	  address: '我是b'
 	}];
 	
-	ReactDOM.render(React.createElement(Table, { columns: columns, data: data, indentSize: 30 }), document.getElementById('__react-content'));
+	ReactDOM.render(React.createElement(Table, { defaultExpandAllRows: true, columns: columns, data: data, indentSize: 30 }), document.getElementById('__react-content'));
 
 /***/ }
 ]);
