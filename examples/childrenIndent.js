@@ -78,6 +78,6 @@ const data = [{
 }];
 
 ReactDOM.render(
-  <Table columns={columns} data={data} indentSize={30} />,
+  <Table defaultExpandAllRows columns={columns} data={data} indentSize={30} />,
   document.getElementById('__react-content')
 );

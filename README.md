@@ -163,6 +163,12 @@ var table = React.render(
           <td>current expanded rows keys</td>
       </tr>
       <tr>
+          <td>defaultExpandAllRows</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>Expand All Rows initially</td>
+      </tr>
+      <tr>
           <td>onExpandedRowsChange</td>
           <td>Function(expandedRows)</td>
           <th>save the expanded rows in the internal state</th>

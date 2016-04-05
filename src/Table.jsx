@@ -6,6 +6,7 @@ const Table = React.createClass({
   propTypes: {
     data: React.PropTypes.array,
     expandIconAsCell: React.PropTypes.bool,
+    defaultExpandAllRows: React.PropTypes.bool,
     expandedRowKeys: React.PropTypes.array,
     defaultExpandedRowKeys: React.PropTypes.array,
     useFixedHeader: React.PropTypes.bool,
@@ -34,6 +35,7 @@ const Table = React.createClass({
       useFixedHeader: false,
       expandIconAsCell: false,
       columns: [],
+      defaultExpandAllRows: false,
       defaultExpandedRowKeys: [],
       rowKey(o) {
         return o.key;
@@ -60,9 +62,22 @@ const Table = React.createClass({
 
   getInitialState() {
     const props = this.props;
+    let expandedRowKeys = [];
+    let rows = [ ...props.data ];
+    if (props.defaultExpandAllRows) {
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
+          expandedRowKeys.push(props.rowKey(row));
+          rows = rows.concat(row[props.childrenColumnName]);
+        }
+      }
+    } else {
+      expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
+    }
     return {
-      expandedRowKeys: props.expandedRowKeys || props.defaultExpandedRowKeys,
-      data: this.props.data,
+      expandedRowKeys,
+      data: props.data,
       currentColumnsPage: 0,
       currentHoverIndex: null,
       scrollPosition: 'left',
