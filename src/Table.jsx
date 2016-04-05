@@ -431,12 +431,8 @@ const Table = React.createClass({
   },
 
   findExpandedRow(record) {
-    const keyFn = this.props.rowKey;
-    const currentRowKey = keyFn(record);
-    const rows = this.getExpandedRows().filter((i) => {
-      return i === currentRowKey;
-    });
-    return rows[0] || null;
+    const rows = this.getExpandedRows().filter(i => i === this.props.rowKey(record));
+    return rows[0];
   },
 
   isRowExpanded(record) {
