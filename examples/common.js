@@ -19764,7 +19764,8 @@
 	    expandIconColumnIndex: _react2['default'].PropTypes.number,
 	    showHeader: _react2['default'].PropTypes.bool,
 	    footer: _react2['default'].PropTypes.func,
-	    scroll: _react2['default'].PropTypes.object
+	    scroll: _react2['default'].PropTypes.object,
+	    rowRef: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19793,7 +19794,10 @@
 	      columnsPageSize: 5,
 	      expandIconColumnIndex: 0,
 	      showHeader: true,
-	      scroll: {}
+	      scroll: {},
+	      rowRef: function rowRef() {
+	        return null;
+	      }
 	    };
 	  },
 	
@@ -19938,6 +19942,7 @@
 	    var rst = [];
 	    var keyFn = props.rowKey;
 	    var rowClassName = props.rowClassName;
+	    var rowRef = props.rowRef;
 	    var expandedRowClassName = props.expandedRowClassName;
 	    var needIndentSpaced = props.data.some(function (record) {
 	      return record[childrenColumnName] && record[childrenColumnName].length > 0;
@@ -19984,7 +19989,9 @@
 	        expandIconColumnIndex: expandIconColumnIndex,
 	        onRowClick: onRowClick
 	      }, onHoverProps, {
-	        key: key })));
+	        key: key,
+	        ref: rowRef(record, i)
+	      })));
 	
 	      var subVisible = visible && isRowExpanded;
 	
