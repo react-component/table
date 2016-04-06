@@ -151,6 +151,12 @@ var table = React.render(
           <td>get row's className</td>
       </tr>
       <tr>
+          <td>rowRef</td>
+          <td>Function(record,index):string</td>
+          <th></th>
+          <td>get row's ref key</td>
+      </tr>
+      <tr>
           <td>defaultExpandedRowKeys</td>
           <td>String[]</td>
           <th>[]</th>
