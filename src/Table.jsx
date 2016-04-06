@@ -27,6 +27,7 @@ const Table = React.createClass({
     showHeader: React.PropTypes.bool,
     footer: React.PropTypes.func,
     scroll: React.PropTypes.object,
+    rowRef: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -57,6 +58,9 @@ const Table = React.createClass({
       expandIconColumnIndex: 0,
       showHeader: true,
       scroll: {},
+      rowRef() {
+        return null;
+      },
     };
   },
 
@@ -185,6 +189,7 @@ const Table = React.createClass({
     let rst = [];
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
+    const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record =>
       record[childrenColumnName] && record[childrenColumnName].length > 0);
@@ -231,7 +236,9 @@ const Table = React.createClass({
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           { ...onHoverProps }
-          key={key} />
+          key={key}
+          ref={rowRef(record, i)}
+        />
       );
 
       const subVisible = visible && isRowExpanded;
