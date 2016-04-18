@@ -77,7 +77,11 @@ const data = [{
   address: '我是b',
 }];
 
+function onExpand(expanded, record) {
+  console.log('onExpand', expanded, record);
+}
+
 ReactDOM.render(
-  <Table defaultExpandAllRows columns={columns} data={data} indentSize={30} />,
+  <Table defaultExpandAllRows columns={columns} data={data} indentSize={30} onExpand={onExpand} />,
   document.getElementById('__react-content')
 );

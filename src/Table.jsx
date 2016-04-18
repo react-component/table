@@ -18,6 +18,7 @@ const Table = React.createClass({
     rowClassName: React.PropTypes.func,
     expandedRowClassName: React.PropTypes.func,
     childrenColumnName: React.PropTypes.string,
+    onExpand: React.PropTypes.func,
     onExpandedRowsChange: React.PropTypes.func,
     indentSize: React.PropTypes.number,
     onRowClick: React.PropTypes.func,
@@ -128,6 +129,7 @@ const Table = React.createClass({
       expandedRows.push(this.props.rowKey(record));
       this.onExpandedRowsChange(expandedRows);
     }
+    this.props.onExpand(expanded, record);
   },
 
   onRowDestroy(record) {

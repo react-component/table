@@ -25,6 +25,10 @@ const MyTable = React.createClass({
     };
   },
 
+  onExpand(expanded, record) {
+    console.log('onExpand', expanded, record);
+  },
+
   onExpandedRowsChange(rows) {
     this.setState({
       expandedRowKeys: rows,
@@ -89,6 +93,7 @@ const MyTable = React.createClass({
           expandedRowRender={this.expandedRowRender}
           expandedRowKeys={this.state.expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
+          onExpand={this.onExpand}
           data={state.data}
           className="table"
           rowKey={this.getRowKey}
