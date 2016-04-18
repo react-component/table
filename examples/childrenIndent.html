@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>childrenIndent.js - example - rc-table@4.0.0-beta.7</title>
+  <title>childrenIndent.js - example - rc-table@4.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@4.0.0-beta.7</h1>
+    <h1>rc-table@4.0.0</h1>
 
     <p>table ui component for react</p>
   </div>
@@ -343,8 +343,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   address: <span class="hljs-string">'我是b'</span>,
 }];
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onExpand</span>(<span class="hljs-params">expanded, record</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expanded, record);
+}
+
 ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">defaultExpandAllRows</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">indentSize</span>=<span class="hljs-value">{30}</span> /&gt;</span>,
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">defaultExpandAllRows</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">indentSize</span>=<span class="hljs-value">{30}</span> <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{onExpand}</span> /&gt;</span>,
   document.getElementById('__react-content')
 );
 </span></code></pre></div>

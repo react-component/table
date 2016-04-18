@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>expandedRowRender.js - example - rc-table@4.0.0-beta.7</title>
+  <title>expandedRowRender.js - example - rc-table@4.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-table@4.0.0-beta.7</h1>
+    <h1>rc-table@4.0.0</h1>
 
     <p>table ui component for react</p>
   </div>
@@ -289,6 +289,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       data: props.data,
       expandedRowKeys: [],
     };
+  },
+
+  onExpand(expanded, record) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expanded, record);
   },
 
   onExpandedRowsChange(rows) {
@@ -355,6 +359,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           <span class="hljs-attribute">expandedRowRender</span>=<span class="hljs-value">{this.expandedRowRender}</span>
           <span class="hljs-attribute">expandedRowKeys</span>=<span class="hljs-value">{this.state.expandedRowKeys}</span>
           <span class="hljs-attribute">onExpandedRowsChange</span>=<span class="hljs-value">{this.onExpandedRowsChange}</span>
+          <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
           <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span>
           <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>
           <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{this.getRowKey}</span>

@@ -90,7 +90,11 @@ webpackJsonp([0],[
 	  address: '我是b'
 	}];
 	
-	ReactDOM.render(React.createElement(Table, { defaultExpandAllRows: true, columns: columns, data: data, indentSize: 30 }), document.getElementById('__react-content'));
+	function onExpand(expanded, record) {
+	  console.log('onExpand', expanded, record);
+	}
+	
+	ReactDOM.render(React.createElement(Table, { defaultExpandAllRows: true, columns: columns, data: data, indentSize: 30, onExpand: onExpand }), document.getElementById('__react-content'));
 
 /***/ }
 ]);

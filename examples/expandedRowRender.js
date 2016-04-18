@@ -44,6 +44,10 @@ webpackJsonp([4],{
 	    };
 	  },
 	
+	  onExpand: function onExpand(expanded, record) {
+	    console.log('onExpand', expanded, record);
+	  },
+	
 	  onExpandedRowsChange: function onExpandedRowsChange(rows) {
 	    this.setState({
 	      expandedRowKeys: rows
@@ -127,6 +131,7 @@ webpackJsonp([4],{
 	        expandedRowRender: this.expandedRowRender,
 	        expandedRowKeys: this.state.expandedRowKeys,
 	        onExpandedRowsChange: this.onExpandedRowsChange,
+	        onExpand: this.onExpand,
 	        data: state.data,
 	        className: 'table',
 	        rowKey: this.getRowKey

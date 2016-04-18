@@ -7992,6 +7992,10 @@
 	  }
 	};
 	
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+	
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8000,7 +8004,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -18723,7 +18727,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.7';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 148 */
@@ -19756,6 +19760,7 @@
 	    rowClassName: _react2['default'].PropTypes.func,
 	    expandedRowClassName: _react2['default'].PropTypes.func,
 	    childrenColumnName: _react2['default'].PropTypes.string,
+	    onExpand: _react2['default'].PropTypes.func,
 	    onExpandedRowsChange: _react2['default'].PropTypes.func,
 	    indentSize: _react2['default'].PropTypes.number,
 	    onRowClick: _react2['default'].PropTypes.func,
@@ -19865,6 +19870,7 @@
 	      expandedRows.push(this.props.rowKey(record));
 	      this.onExpandedRowsChange(expandedRows);
 	    }
+	    this.props.onExpand(expanded, record);
 	  },
 	
 	  onRowDestroy: function onRowDestroy(record) {
