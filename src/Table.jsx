@@ -216,10 +216,6 @@ const Table = React.createClass({
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      const expandable = (
-        childrenColumn && childrenColumn.length > 0
-      ) || expandedRowRender;
-
       rst.push(
         <TableRow
           indent={indent}
@@ -232,7 +228,7 @@ const Table = React.createClass({
           index={i}
           visible={visible}
           onExpand={this.onExpanded}
-          expandable={expandable}
+          expandable={childrenColumn || expandedRowRender}
           expanded={isRowExpanded}
           prefixCls={`${props.prefixCls}-row`}
           childrenColumnName={childrenColumnName}
