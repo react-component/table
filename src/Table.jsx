@@ -193,8 +193,7 @@ const Table = React.createClass({
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
-    const needIndentSpaced = props.data.some(record =>
-      record[childrenColumnName] && record[childrenColumnName].length > 0);
+    const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
     const onRowClick = props.onRowClick;
     const expandIconColumnIndex = props.expandIconColumnIndex;
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
