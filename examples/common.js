@@ -19970,8 +19970,6 @@
 	        onHoverProps.onHover = this.handleRowHover;
 	      }
 	
-	      var expandable = childrenColumn && childrenColumn.length > 0 || expandedRowRender;
-	
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], _extends({
 	        indent: indent,
 	        indentSize: props.indentSize,
@@ -19983,7 +19981,7 @@
 	        index: i,
 	        visible: visible,
 	        onExpand: this.onExpanded,
-	        expandable: expandable,
+	        expandable: childrenColumn || expandedRowRender,
 	        expanded: isRowExpanded,
 	        prefixCls: props.prefixCls + '-row',
 	        childrenColumnName: childrenColumnName,
