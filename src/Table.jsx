@@ -48,6 +48,8 @@ const Table = React.createClass({
       expandedRowClassName() {
         return '';
       },
+      onExpand() {
+      },
       onExpandedRowsChange() {
       },
       prefixCls: 'rc-table',
