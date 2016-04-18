@@ -19790,6 +19790,7 @@
 	      expandedRowClassName: function expandedRowClassName() {
 	        return '';
 	      },
+	      onExpand: function onExpand() {},
 	      onExpandedRowsChange: function onExpandedRowsChange() {},
 	      prefixCls: 'rc-table',
 	      bodyStyle: {},
