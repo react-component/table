@@ -19951,7 +19951,7 @@
 	    var rowRef = props.rowRef;
 	    var expandedRowClassName = props.expandedRowClassName;
 	    var needIndentSpaced = props.data.some(function (record) {
-	      return record[childrenColumnName] && record[childrenColumnName].length > 0;
+	      return record[childrenColumnName];
 	    });
 	    var onRowClick = props.onRowClick;
 	    var expandIconColumnIndex = props.expandIconColumnIndex;
