@@ -1,6 +1,14 @@
 # History
 ----
 
+## 4.0.0 / 2016-04-18
+
+- Support fixed columns
+- Add `scroll` prop
+- Add `defaultExpandAllRows` prop
+- Add `onExpand` prop
+- Add `rowRef` prop
+
 ## 3.11.0 / 2016-02-25
 
 - Add prop `showHeader`

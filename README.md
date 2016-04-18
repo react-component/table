@@ -181,6 +181,12 @@ var table = React.render(
           <td>function to call when the expanded rows change</td>
       </tr>
       <tr>
+          <td>onExpand</td>
+          <td>Function(expanded, record)</td>
+          <th></th>
+          <td>function to call when click expand icon</td>
+      </tr>
+      <tr>
           <td>expandedRowClassName</td>
           <td>Function(recode,index):string</td>
           <th></th>
