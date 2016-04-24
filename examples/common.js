@@ -19864,7 +19864,7 @@
 	
 	  onExpanded: function onExpanded(expanded, record) {
 	    var info = this.findExpandedRow(record);
-	    if (info && !expanded) {
+	    if (typeof info !== 'undefined' && !expanded) {
 	      this.onRowDestroy(record);
 	    } else if (!info && expanded) {
 	      var expandedRows = this.getExpandedRows().concat();
@@ -20272,7 +20272,7 @@
 	  },
 	
 	  isRowExpanded: function isRowExpanded(record) {
-	    return !!this.findExpandedRow(record);
+	    return typeof this.findExpandedRow(record) !== 'undefined';
 	  },
 	
 	  detectScrollTarget: function detectScrollTarget(e) {
