@@ -124,7 +124,7 @@ const Table = React.createClass({
 
   onExpanded(expanded, record) {
     const info = this.findExpandedRow(record);
-    if (info && !expanded) {
+    if (typeof info !== 'undefined' && !expanded) {
       this.onRowDestroy(record);
     } else if (!info && expanded) {
       const expandedRows = this.getExpandedRows().concat();
@@ -461,7 +461,7 @@ const Table = React.createClass({
   },
 
   isRowExpanded(record) {
-    return !!this.findExpandedRow(record);
+    return typeof this.findExpandedRow(record) !== 'undefined';
   },
 
   detectScrollTarget(e) {
