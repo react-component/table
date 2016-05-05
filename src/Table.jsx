@@ -344,7 +344,7 @@ const Table = React.createClass({
             </tbody>
             {props.footer ? (
               <tfoot className={`${prefixCls}-tfoot`}>
-                <tr><td colSpan="0">{props.footer(this.state.data)}</td></tr>
+                <tr><td colSpan="100">{props.footer(this.state.data)}</td></tr>
               </tfoot>
             ) : null}
           </table>
