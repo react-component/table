@@ -20310,7 +20310,7 @@
 	      }
 	      if (e.target.scrollLeft === 0) {
 	        this.setState({ scrollPosition: 'left' });
-	      } else if (e.target.scrollLeft >= e.target.children[0].offsetWidth - e.target.offsetWidth) {
+	      } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
 	        this.setState({ scrollPosition: 'right' });
 	      } else if (this.state.scrollPosition !== 'middle') {
 	        this.setState({ scrollPosition: 'middle' });
