@@ -376,10 +376,12 @@ const Table = React.createClass({
       } else if (columns[0].fixed === 'right') {
         refName = 'fixedColumnsBodyRight';
       }
+      delete bodyStyle.overflowX;
+      delete bodyStyle.overflowY;
       BodyTable = (
         <div
           className={`${prefixCls}-body-outer`}
-          style={{ ...bodyStyle, overflow: 'hidden' }}>
+          style={{ ...bodyStyle }}>
           <div
             className={`${prefixCls}-body-inner`}
             ref={refName}
