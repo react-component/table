@@ -153,10 +153,10 @@ const Table = React.createClass({
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
   },
 
-  getHeader(columns) {
+  getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, prefixCls} = this.props;
     let ths = [];
-    if (expandIconAsCell) {
+    if (expandIconAsCell && fixed !== 'right') {
       ths.push({
         key: 'rc-table-expandIconAsCell',
         className: `${prefixCls}-expand-icon-th`,
@@ -185,11 +185,10 @@ const Table = React.createClass({
     </tr>);
   },
 
-  getRowsByData(data, visible, indent, columns) {
+  getRowsByData(data, visible, indent, columns, fixed) {
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
-    const expandIconAsCell = props.expandIconAsCell;
     let rst = [];
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
@@ -197,8 +196,10 @@ const Table = React.createClass({
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
     const onRowClick = props.onRowClick;
-    const expandIconColumnIndex = props.expandIconColumnIndex;
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
+
+    const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
+    const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
 
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
@@ -256,13 +257,13 @@ const Table = React.createClass({
     return rst;
   },
 
-  getRows(columns) {
-    return this.getRowsByData(this.state.data, true, 0, columns);
+  getRows(columns, fixed) {
+    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
   },
 
-  getColGroup(columns) {
+  getColGroup(columns, fixed) {
     let cols = [];
-    if (this.props.expandIconAsCell) {
+    if (this.props.expandIconAsCell && fixed !== 'right') {
       cols.push(<col className={`${this.props.prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col"></col>);
     }
     cols = cols.concat((columns || this.props.columns).map(c => {
@@ -302,6 +303,7 @@ const Table = React.createClass({
     );
     return this.getTable({
       columns: fixedColumns,
+      fixed: 'left',
     });
   },
 
@@ -310,11 +312,12 @@ const Table = React.createClass({
     const fixedColumns = columns.filter(column => column.fixed === 'right');
     return this.getTable({
       columns: fixedColumns,
+      fixed: 'right',
     });
   },
 
   getTable(options = {}) {
-    const { columns } = options;
+    const { columns, fixed } = options;
     const { prefixCls, scroll = {} } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
@@ -333,15 +336,15 @@ const Table = React.createClass({
 
     const renderTable = (hasHead = true, hasBody = true) => {
       const tableStyle = {};
-      if (!options.columns && scroll.x) {
+      if (!columns && scroll.x) {
         tableStyle.width = scroll.x;
       }
       return (
         <table className={tableClassName} style={tableStyle}>
-          {this.getColGroup(options.columns)}
-          {hasHead ? this.getHeader(options.columns) : null}
+          {this.getColGroup(columns, fixed)}
+          {hasHead ? this.getHeader(columns, fixed) : null}
           {hasBody ? <tbody className={`${prefixCls}-tbody`}>
-          {this.getRows(options.columns)}
+          {this.getRows(columns, fixed)}
           </tbody> : null}
         </table>
       );

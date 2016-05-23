@@ -15,7 +15,6 @@
   }
 
   .@{tablePrefixCls}-fixed {
-    table-layout: fixed;
     th, td {
       height: 18px;
     }
@@ -26,12 +25,9 @@
     background: #f4f4f4;
   }
 
-  .@{tablePrefixCls}-body-inner {
-    height: 100%;
-  }
-
-  &-fixed-header .@{tablePrefixCls}-body-inner {
-    overflow: scroll;
+  &-fixed-header &-body-inner,
+  &-fixed-header &-header {
+    overflow-y: scroll;
   }
 
   .@{tablePrefixCls}-footer {
@@ -79,14 +75,13 @@
     &-expand-icon {
       cursor: pointer;
       display: inline-block;
-      margin: 5px;
-      width: 21px;
-      height: 28px;
+      width: 16px;
+      height: 16px;
       text-align: center;
-      line-height: 28px;
-      border: 1px solid red;
-      -webkit-user-select: none;
+      line-height: 16px;
+      border: 1px solid #e9e9e9;
       user-select: none;
+      background: #fff;
     }
     &-spaced {
       visibility: hidden;
@@ -152,6 +147,10 @@
     box-shadow: 4px 0 4px rgba(100,100,100,0.1);
     & .@{tablePrefixCls}-body-inner {
       margin-right: -20px;
+      padding-right: 20px;
+    }
+    .@{tablePrefixCls}-fixed-header & .@{tablePrefixCls}-body-inner {
+      padding-right: 0;
     }
   }
 
