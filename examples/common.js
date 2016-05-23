@@ -20159,11 +20159,13 @@
 	      } else if (columns[0].fixed === 'right') {
 	        refName = 'fixedColumnsBodyRight';
 	      }
+	      delete bodyStyle.overflowX;
+	      delete bodyStyle.overflowY;
 	      BodyTable = _react2['default'].createElement(
 	        'div',
 	        {
 	          className: prefixCls + '-body-outer',
-	          style: _extends({}, bodyStyle, { overflow: 'hidden' }) },
+	          style: _extends({}, bodyStyle) },
 	        _react2['default'].createElement(
 	          'div',
 	          {
