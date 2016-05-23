@@ -19893,14 +19893,14 @@
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
 	  },
 	
-	  getHeader: function getHeader(columns) {
+	  getHeader: function getHeader(columns, fixed) {
 	    var _props = this.props;
 	    var showHeader = _props.showHeader;
 	    var expandIconAsCell = _props.expandIconAsCell;
 	    var prefixCls = _props.prefixCls;
 	
 	    var ths = [];
-	    if (expandIconAsCell) {
+	    if (expandIconAsCell && fixed !== 'right') {
 	      ths.push({
 	        key: 'rc-table-expandIconAsCell',
 	        className: prefixCls + '-expand-icon-th',
@@ -19941,11 +19941,10 @@
 	    );
 	  },
 	
-	  getRowsByData: function getRowsByData(data, visible, indent, columns) {
+	  getRowsByData: function getRowsByData(data, visible, indent, columns, fixed) {
 	    var props = this.props;
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
-	    var expandIconAsCell = props.expandIconAsCell;
 	    var rst = [];
 	    var keyFn = props.rowKey;
 	    var rowClassName = props.rowClassName;
@@ -19955,8 +19954,10 @@
 	      return record[childrenColumnName];
 	    });
 	    var onRowClick = props.onRowClick;
-	    var expandIconColumnIndex = props.expandIconColumnIndex;
 	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
+	
+	    var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
+	    var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
 	
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
@@ -20012,13 +20013,13 @@
 	    return rst;
 	  },
 	
-	  getRows: function getRows(columns) {
-	    return this.getRowsByData(this.state.data, true, 0, columns);
+	  getRows: function getRows(columns, fixed) {
+	    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
 	  },
 	
-	  getColGroup: function getColGroup(columns) {
+	  getColGroup: function getColGroup(columns, fixed) {
 	    var cols = [];
-	    if (this.props.expandIconAsCell) {
+	    if (this.props.expandIconAsCell && fixed !== 'right') {
 	      cols.push(_react2['default'].createElement('col', { className: this.props.prefixCls + '-expand-icon-col', key: 'rc-table-expand-icon-col' }));
 	    }
 	    cols = cols.concat((columns || this.props.columns).map(function (c) {
@@ -20069,7 +20070,8 @@
 	      return column.fixed === 'left' || column.fixed === true;
 	    });
 	    return this.getTable({
-	      columns: fixedColumns
+	      columns: fixedColumns,
+	      fixed: 'left'
 	    });
 	  },
 	
@@ -20080,7 +20082,8 @@
 	      return column.fixed === 'right';
 	    });
 	    return this.getTable({
-	      columns: fixedColumns
+	      columns: fixedColumns,
+	      fixed: 'right'
 	    });
 	  },
 	
@@ -20089,6 +20092,7 @@
 	
 	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	    var columns = options.columns;
+	    var fixed = options.fixed;
 	    var _props3 = this.props;
 	    var prefixCls = _props3.prefixCls;
 	    var _props3$scroll = _props3.scroll;
@@ -20114,18 +20118,18 @@
 	      var hasBody = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	
 	      var tableStyle = {};
-	      if (!options.columns && scroll.x) {
+	      if (!columns && scroll.x) {
 	        tableStyle.width = scroll.x;
 	      }
 	      return _react2['default'].createElement(
 	        'table',
 	        { className: tableClassName, style: tableStyle },
-	        _this2.getColGroup(options.columns),
-	        hasHead ? _this2.getHeader(options.columns) : null,
+	        _this2.getColGroup(columns, fixed),
+	        hasHead ? _this2.getHeader(columns, fixed) : null,
 	        hasBody ? _react2['default'].createElement(
 	          'tbody',
 	          { className: prefixCls + '-tbody' },
-	          _this2.getRows(options.columns)
+	          _this2.getRows(columns, fixed)
 	        ) : null
 	      );
 	    };

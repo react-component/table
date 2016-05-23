@@ -8,9 +8,6 @@
 .rc-table .rc-table-scroll {
   overflow: auto;
 }
-.rc-table .rc-table-fixed {
-  table-layout: fixed;
-}
 .rc-table .rc-table-fixed th,
 .rc-table .rc-table-fixed td {
   height: 18px;
@@ -19,11 +16,9 @@
   overflow: hidden;
   background: #f4f4f4;
 }
-.rc-table .rc-table-body-inner {
-  height: 100%;
-}
-.rc-table-fixed-header .rc-table-body-inner {
-  overflow: scroll;
+.rc-table-fixed-header .rc-table-body-inner,
+.rc-table-fixed-header .rc-table-header {
+  overflow-y: scroll;
 }
 .rc-table .rc-table-footer {
   padding: 16px 8px;
@@ -65,16 +60,16 @@
 .rc-table-expanded-row-expand-icon {
   cursor: pointer;
   display: inline-block;
-  margin: 5px;
-  width: 21px;
-  height: 28px;
+  width: 16px;
+  height: 16px;
   text-align: center;
-  line-height: 28px;
-  border: 1px solid red;
+  line-height: 16px;
+  border: 1px solid #e9e9e9;
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background: #fff;
 }
 .rc-table-row-spaced,
 .rc-table-expanded-row-spaced {
@@ -144,6 +139,10 @@
 }
 .rc-table-fixed-left .rc-table-body-inner {
   margin-right: -20px;
+  padding-right: 20px;
+}
+.rc-table-fixed-header .rc-table-fixed-left .rc-table-body-inner {
+  padding-right: 0;
 }
 .rc-table-fixed-right {
   right: 0;
