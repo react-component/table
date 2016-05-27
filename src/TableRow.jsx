@@ -1,4 +1,5 @@
 import React from 'react';
+import objectPath from 'object-path';
 
 const TableRow = React.createClass({
   propTypes: {
@@ -26,7 +27,7 @@ const TableRow = React.createClass({
       const col = columns[i];
       const colClassName = col.className || '';
       const render = col.render;
-      let text = record[col.dataIndex];
+      let text = objectPath.get(record, col.dataIndex);
 
       let expandIcon = null;
       let tdProps;

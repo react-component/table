@@ -39,6 +39,9 @@
     "browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover",
     "validate": "npm ls"
   },
+  "dependencies": {
+    "object-path": "^0.9.2"
+  },
   "devDependencies": {
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
