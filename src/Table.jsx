@@ -336,7 +336,12 @@ const Table = React.createClass({
     const renderTable = (hasHead = true, hasBody = true) => {
       const tableStyle = {};
       if (!columns && scroll.x) {
-        tableStyle.width = scroll.x;
+        // not set width, then use content fixed width
+        if (scroll.x === true) {
+          tableStyle.tableLayout = 'fixed';
+        } else {
+          tableStyle.width = scroll.x;
+        }
       }
       return (
         <table className={tableClassName} style={tableStyle}>
