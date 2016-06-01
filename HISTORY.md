@@ -1,6 +1,11 @@
 # History
 ----
 
+## 4.1.0 / 2016-06-01
+
+- Support nested string of `dataIndex`
+- Fix fixed Table with expand row
+
 ## 4.0.0 / 2016-04-18
 
 - Support fixed columns
