@@ -183,7 +183,7 @@ const Table = React.createClass({
         className={`${prefixCls}-expanded-row ${className}`}>
         {(this.props.expandIconAsCell && fixed !== 'right') ? <td key="rc-table-expand-icon-placeholder" /> : null}
         <td colSpan={this.props.columns.length}>
-          {content}
+          {fixed !== 'right' ? content : '&nbsp;'}
         </td>
       </tr>
     );
