@@ -19935,7 +19935,7 @@
 	      _react2['default'].createElement(
 	        'td',
 	        { colSpan: this.props.columns.length },
-	        content
+	        fixed !== 'right' ? content : '&nbsp;'
 	      )
 	    );
 	  },
