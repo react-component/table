@@ -1,6 +1,5 @@
 import React from 'react';
 import TableRow from './TableRow';
-import objectAssign from 'object-assign';
 
 const Table = React.createClass({
   propTypes: {
@@ -279,7 +278,7 @@ const Table = React.createClass({
       return columns;
     }
     return columns.map((column, i) => {
-      let newColumn = objectAssign({}, column);
+      let newColumn = { ...column };
       if (i >= columnsPageRange[0] && i <= columnsPageRange[1]) {
         const pageIndexStart = columnsPageRange[0] + currentColumnsPage * columnsPageSize;
         let pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize - 1;

@@ -52,8 +52,5 @@
   },
   "pre-commit": [
     "lint"
-  ],
-  "dependencies": {
-    "object-assign": "^4.0.1"
-  }
+  ]
 }
