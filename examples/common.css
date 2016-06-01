@@ -16,6 +16,9 @@
   overflow: hidden;
   background: #f4f4f4;
 }
+.rc-table-fixed-header .rc-table-body-inner {
+  height: 100%;
+}
 .rc-table-fixed-header .rc-table-body-inner,
 .rc-table-fixed-header .rc-table-header {
   overflow-y: scroll;
@@ -87,6 +90,12 @@
 .rc-table-expanded-row-collapsed:after {
   content: '+';
 }
+tr.rc-table-expanded-row {
+  background: #f7f7f7;
+}
+tr.rc-table-expanded-row:hover {
+  background: #f7f7f7;
+}
 .rc-table-column-hidden {
   display: none;
 }
@@ -147,6 +156,10 @@
 .rc-table-fixed-right {
   right: 0;
   box-shadow: -4px 0 4px rgba(100, 100, 100, 0.1);
+}
+.rc-table-fixed-right .rc-table-expanded-row {
+  color: transparent;
+  pointer-events: none;
 }
 .rc-table.rc-table-scroll-position-left .rc-table-fixed-left {
   box-shadow: none;
