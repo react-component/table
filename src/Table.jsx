@@ -174,14 +174,19 @@ const Table = React.createClass({
     ) : null;
   },
 
-  getExpandedRow(key, content, visible, className) {
+  getExpandedRow(key, content, visible, className, fixed) {
     const prefixCls = this.props.prefixCls;
-    return (<tr key={key + '-extra-row'} style={{display: visible ? '' : 'none'}} className={`${prefixCls}-expanded-row ${className}`}>
-      {this.props.expandIconAsCell ? <td key="rc-table-expand-icon-placeholder"></td> : ''}
-      <td colSpan={this.props.columns.length}>
-        {content}
-      </td>
-    </tr>);
+    return (
+      <tr
+        key={key + '-extra-row'}
+        style={{display: visible ? '' : 'none'}}
+        className={`${prefixCls}-expanded-row ${className}`}>
+        {(this.props.expandIconAsCell && fixed !== 'right') ? <td key="rc-table-expand-icon-placeholder" /> : null}
+        <td colSpan={this.props.columns.length}>
+          {content}
+        </td>
+      </tr>
+    );
   },
 
   getRowsByData(data, visible, indent, columns, fixed) {
@@ -238,7 +243,7 @@ const Table = React.createClass({
           columns={columns || this.getCurrentColumns()}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
-          { ...onHoverProps }
+          {...onHoverProps}
           key={key}
           ref={rowRef(record, i)}
         />
@@ -247,7 +252,7 @@ const Table = React.createClass({
       const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
-        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i)));
+        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed));
       }
       if (childrenColumn) {
         rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1));
@@ -347,9 +352,11 @@ const Table = React.createClass({
         <table className={tableClassName} style={tableStyle}>
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
-          {hasBody ? <tbody className={`${prefixCls}-tbody`}>
-          {this.getRows(columns, fixed)}
-          </tbody> : null}
+          {hasBody ? (
+            <tbody className={`${prefixCls}-tbody`}>
+              {this.getRows(columns, fixed)}
+            </tbody>
+          ) : null}
         </table>
       );
     };

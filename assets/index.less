@@ -102,6 +102,12 @@
       content: '+'
     }
   }
+  tr&-expanded-row {
+    background: #f7f7f7;
+    &:hover {
+      background: #f7f7f7;
+    }
+  }
   &-column-hidden {
     display: none;
   }
@@ -161,6 +167,13 @@
   &-fixed-right {
     right: 0;
     box-shadow: -4px 0 4px rgba(100,100,100,0.1);
+
+    // hide expand row content in right fixed Table
+    // https://github.com/ant-design/ant-design/issues/1898
+    .@{tablePrefixCls}-expanded-row {
+      color: transparent;
+      pointer-events: none;
+    }
   }
 
   &&-scroll-position-left &-fixed-left {
