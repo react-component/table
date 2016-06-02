@@ -4,6 +4,7 @@
   -webkit-transition: opacity 0.3s ease;
           transition: opacity 0.3s ease;
   position: relative;
+  line-height: 1.5;
 }
 .rc-table .rc-table-scroll {
   overflow: auto;
@@ -11,6 +12,7 @@
 .rc-table .rc-table-fixed th,
 .rc-table .rc-table-fixed td {
   height: 18px;
+  white-space: nowrap;
 }
 .rc-table .rc-table-header {
   overflow: hidden;

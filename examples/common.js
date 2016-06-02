@@ -20022,7 +20022,7 @@
 	      cols.push(_react2['default'].createElement('col', { className: this.props.prefixCls + '-expand-icon-col', key: 'rc-table-expand-icon-col' }));
 	    }
 	    cols = cols.concat((columns || this.props.columns).map(function (c) {
-	      return _react2['default'].createElement('col', { key: c.key, style: { width: c.width } });
+	      return _react2['default'].createElement('col', { key: c.key, style: { width: c.width, minWidth: c.width } });
 	    }));
 	    return _react2['default'].createElement(
 	      'colgroup',
