@@ -271,7 +271,7 @@ const Table = React.createClass({
       cols.push(<col className={`${this.props.prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col"></col>);
     }
     cols = cols.concat((columns || this.props.columns).map(c => {
-      return <col key={c.key} style={{width: c.width}} />;
+      return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
   },
