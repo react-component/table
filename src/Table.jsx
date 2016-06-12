@@ -559,7 +559,7 @@ const Table = React.createClass({
     }
     className += ` ${prefixCls}-scroll-position-${this.state.scrollPosition}`;
 
-    const isTabScroll = this.isAnyColumnsFixed() || 'scroll' in props;
+    const isTableScroll = this.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 
     return (
       <div className={className} style={props.style}>
@@ -567,7 +567,7 @@ const Table = React.createClass({
         <div className={`${prefixCls}-fixed-left`}>
           {this.getLeftFixedTable()}
         </div>}
-        <div className={isTabScroll ? `${prefixCls}-scroll` : ''}>
+        <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
           {this.getTable()}
           {this.getFooter()}
         </div>
