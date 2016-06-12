@@ -20367,6 +20367,8 @@
 	    }
 	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
 	
+	    var isTabScroll = this.isAnyColumnsFixed() || 'scroll' in props;
+	
 	    return _react2['default'].createElement(
 	      'div',
 	      { className: className, style: props.style },
@@ -20377,7 +20379,7 @@
 	      ),
 	      _react2['default'].createElement(
 	        'div',
-	        { className: prefixCls + '-scroll' },
+	        { className: isTabScroll ? prefixCls + '-scroll' : '' },
 	        this.getTable(),
 	        this.getFooter()
 	      ),
