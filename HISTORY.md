@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.2.0 / 2016-06-16
+
+- Header can be scroll in fixed-columns Table
+
 ## 4.1.0 / 2016-06-01
 
 - Support nested string of `dataIndex`
