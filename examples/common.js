@@ -20144,7 +20144,9 @@
 	        'div',
 	        {
 	          className: prefixCls + '-header',
-	          ref: columns ? null : 'headTable' },
+	          ref: columns ? null : 'headTable',
+	          onMouseEnter: this.detectScrollTarget,
+	          onScroll: this.handleBodyScroll },
 	        renderTable(true, false)
 	      );
 	    }
@@ -20313,10 +20315,14 @@
 	    if (e.target !== this.scrollTarget) {
 	      return;
 	    }
-	    var scroll = this.props.scroll || {};
-	    if (scroll.x && e.target === this.refs.bodyTable) {
-	      if (this.refs.headTable) {
+	    var _props$scroll = this.props.scroll;
+	    var scroll = _props$scroll === undefined ? {} : _props$scroll;
+	
+	    if (scroll.x) {
+	      if (e.target === this.refs.bodyTable && this.refs.headTable) {
 	        this.refs.headTable.scrollLeft = e.target.scrollLeft;
+	      } else if (e.target === this.refs.headTable && this.refs.bodyTable) {
+	        this.refs.bodyTable.scrollLeft = e.target.scrollLeft;
 	      }
 	      if (e.target.scrollLeft === 0) {
 	        this.setState({ scrollPosition: 'left' });

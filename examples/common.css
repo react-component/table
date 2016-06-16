@@ -18,12 +18,19 @@
   overflow: hidden;
   background: #f4f4f4;
 }
+.rc-table-fixed-header .rc-table-body {
+  background: #fff;
+  position: relative;
+}
 .rc-table-fixed-header .rc-table-body-inner {
   height: 100%;
-}
-.rc-table-fixed-header .rc-table-body-inner,
-.rc-table-fixed-header .rc-table-header {
   overflow-y: scroll;
+}
+.rc-table-fixed-header .rc-table-header {
+  overflow-x: scroll;
+  padding-bottom: 20px;
+  margin-bottom: -20px;
+  overflow-y: hidden;
 }
 .rc-table .rc-table-footer {
   padding: 16px 8px;
