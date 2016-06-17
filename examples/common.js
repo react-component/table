@@ -20213,7 +20213,7 @@
 	    var columnsPageRange = _props5.columnsPageRange;
 	    var columnsPageSize = _props5.columnsPageSize;
 	
-	    return Math.floor((columnsPageRange[1] - columnsPageRange[0] - 1) / columnsPageSize);
+	    return Math.floor((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize);
 	  },
 	
 	  goToColumnsPage: function goToColumnsPage(currentColumnsPage) {
