@@ -423,7 +423,7 @@ const Table = React.createClass({
 
   getMaxColumnsPage() {
     const { columnsPageRange, columnsPageSize } = this.props;
-    return Math.floor((columnsPageRange[1] - columnsPageRange[0] - 1) / columnsPageSize);
+    return Math.floor((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize);
   },
 
   goToColumnsPage(currentColumnsPage) {
