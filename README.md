@@ -140,13 +140,16 @@ var table = React.render(
       </tr>
       <tr>
           <td>rowKey</td>
-          <td>Function(recode,index):string</td>
-          <th>record.key</th>
-          <td>default use record.key as rowKey</td>
+          <td>string or Function(record,index):string</td>
+          <th>'key'</th>
+          <td>
+              If rowKey is string, `record[rowKey]` will be used as key.
+              If rowKey is function, the return value of `rowKey(record, index)` will be use as key.
+          </td>
       </tr>
       <tr>
           <td>rowClassName</td>
-          <td>Function(recode,index):string</td>
+          <td>Function(record,index):string</td>
           <th></th>
           <td>get row's className</td>
       </tr>
