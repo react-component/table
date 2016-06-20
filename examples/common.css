@@ -26,6 +26,8 @@
   padding-bottom: 20px;
   margin-bottom: -20px;
   overflow-y: hidden;
+  height: 70px;
+  box-sizing: border-box;
 }
 .rc-table .rc-table-footer {
   padding: 16px 8px;
