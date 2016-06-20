@@ -87,6 +87,7 @@ const Table = React.createClass({
       currentColumnsPage: 0,
       currentHoverIndex: null,
       scrollPosition: 'left',
+      fixedColumnsRowsHeight: [],
     };
   },
 
@@ -97,6 +98,14 @@ const Table = React.createClass({
     if (this.refs.bodyTable) {
       this.refs.bodyTable.scrollLeft = 0;
     }
+    const { prefixCls } = this.props;
+    const rows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`);
+    const fixedColumnsRowsHeight = [].slice.call(rows).map(
+      row => row.getBoundingClientRect().height || 'auto'
+    );
+    this.timer = setTimeout(() => {
+      this.setState({ fixedColumnsRowsHeight });
+    });
   },
 
   componentWillReceiveProps(nextProps) {
@@ -110,6 +119,10 @@ const Table = React.createClass({
         expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
+  },
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   },
 
   onExpandedRowsChange(expandedRowKeys) {
@@ -193,6 +206,7 @@ const Table = React.createClass({
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
+    const { fixedColumnsRowsHeight } = this.state;
     let rst = [];
     const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
@@ -224,6 +238,10 @@ const Table = React.createClass({
         onHoverProps.onHover = this.handleRowHover;
       }
 
+      const style = (fixed && fixedColumnsRowsHeight[i]) ? {
+        height: fixedColumnsRowsHeight[i],
+      } : {};
+
       rst.push(
         <TableRow
           indent={indent}
@@ -243,6 +261,7 @@ const Table = React.createClass({
           columns={columns || this.getCurrentColumns()}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
+          style={style}
           {...onHoverProps}
           key={key}
           ref={rowRef(record, i)}
