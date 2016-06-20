@@ -20356,13 +20356,13 @@
 	      }
 	    }
 	    if (scroll.y) {
-	      if (this.refs.fixedColumnsBodyLeft) {
+	      if (e.target !== this.refs.fixedColumnsBodyLeft) {
 	        this.refs.fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
 	      }
-	      if (this.refs.fixedColumnsBodyRight) {
+	      if (e.target !== this.refs.fixedColumnsBodyRight) {
 	        this.refs.fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
 	      }
-	      if (this.refs.bodyTable) {
+	      if (e.target !== this.refs.bodyTable) {
 	        this.refs.bodyTable.scrollTop = e.target.scrollTop;
 	      }
 	    }
