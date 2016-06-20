@@ -164,7 +164,6 @@ const Table = React.createClass({
     if (typeof rowKey === 'function') {
       return rowKey(record, index);
     }
-
     return record[rowKey] || index;
   },
 
@@ -227,7 +226,7 @@ const Table = React.createClass({
 
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
-      const key = this.getRowKey(record, i) || undefined;
+      const key = this.getRowKey(record, i);
       const childrenColumn = record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record);
       let expandedRowContent;
