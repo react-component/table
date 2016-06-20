@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
 
 const Table = React.createClass({
   propTypes: {
-    data: React.PropTypes.array,
-    expandIconAsCell: React.PropTypes.bool,
-    defaultExpandAllRows: React.PropTypes.bool,
-    expandedRowKeys: React.PropTypes.array,
-    defaultExpandedRowKeys: React.PropTypes.array,
-    useFixedHeader: React.PropTypes.bool,
-    columns: React.PropTypes.array,
-    prefixCls: React.PropTypes.string,
-    bodyStyle: React.PropTypes.object,
-    style: React.PropTypes.object,
-    rowKey: React.PropTypes.func,
-    rowClassName: React.PropTypes.func,
-    expandedRowClassName: React.PropTypes.func,
-    childrenColumnName: React.PropTypes.string,
-    onExpand: React.PropTypes.func,
-    onExpandedRowsChange: React.PropTypes.func,
-    indentSize: React.PropTypes.number,
-    onRowClick: React.PropTypes.func,
-    columnsPageRange: React.PropTypes.array,
-    columnsPageSize: React.PropTypes.number,
-    expandIconColumnIndex: React.PropTypes.number,
-    showHeader: React.PropTypes.bool,
-    footer: React.PropTypes.func,
-    scroll: React.PropTypes.object,
-    rowRef: React.PropTypes.func,
+    data: PropTypes.array,
+    expandIconAsCell: PropTypes.bool,
+    defaultExpandAllRows: PropTypes.bool,
+    expandedRowKeys: PropTypes.array,
+    defaultExpandedRowKeys: PropTypes.array,
+    useFixedHeader: PropTypes.bool,
+    columns: PropTypes.array,
+    prefixCls: PropTypes.string,
+    bodyStyle: PropTypes.object,
+    style: PropTypes.object,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    rowClassName: PropTypes.func,
+    expandedRowClassName: PropTypes.func,
+    childrenColumnName: PropTypes.string,
+    onExpand: PropTypes.func,
+    onExpandedRowsChange: PropTypes.func,
+    indentSize: PropTypes.number,
+    onRowClick: PropTypes.func,
+    columnsPageRange: PropTypes.array,
+    columnsPageSize: PropTypes.number,
+    expandIconColumnIndex: PropTypes.number,
+    showHeader: PropTypes.bool,
+    footer: PropTypes.func,
+    scroll: PropTypes.object,
+    rowRef: PropTypes.func,
   },
 
   getDefaultProps() {
@@ -38,9 +38,7 @@ const Table = React.createClass({
       columns: [],
       defaultExpandAllRows: false,
       defaultExpandedRowKeys: [],
-      rowKey(o) {
-        return o.key;
-      },
+      rowKey: 'key',
       rowClassName() {
         return '';
       },
@@ -74,7 +72,7 @@ const Table = React.createClass({
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
-          expandedRowKeys.push(props.rowKey(row));
+          expandedRowKeys.push(this.getRowKey(row));
           rows = rows.concat(row[props.childrenColumnName]);
         }
       }
@@ -127,7 +125,7 @@ const Table = React.createClass({
       this.onRowDestroy(record);
     } else if (!info && expanded) {
       const expandedRows = this.getExpandedRows().concat();
-      expandedRows.push(this.props.rowKey(record));
+      expandedRows.push(this.getRowKey(record));
       this.onExpandedRowsChange(expandedRows);
     }
     this.props.onExpand(expanded, record);
@@ -135,7 +133,7 @@ const Table = React.createClass({
 
   onRowDestroy(record) {
     const expandedRows = this.getExpandedRows().concat();
-    const rowKey = this.props.rowKey(record);
+    const rowKey = this.getRowKey(record);
     let index = -1;
     expandedRows.forEach((r, i) => {
       if (r === rowKey) {
@@ -146,6 +144,15 @@ const Table = React.createClass({
       expandedRows.splice(index, 1);
     }
     this.onExpandedRowsChange(expandedRows);
+  },
+
+  getRowKey(record, index) {
+    const rowKey = this.props.rowKey;
+    if (typeof rowKey === 'function') {
+      return rowKey(record, index);
+    }
+
+    return record[rowKey] || index;
   },
 
   getExpandedRows() {
@@ -194,7 +201,6 @@ const Table = React.createClass({
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
     let rst = [];
-    const keyFn = props.rowKey;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
@@ -207,7 +213,7 @@ const Table = React.createClass({
 
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
-      const key = keyFn ? keyFn(record, i) : undefined;
+      const key = this.getRowKey(record, i) || undefined;
       const childrenColumn = record[childrenColumnName];
       const isRowExpanded = this.isRowExpanded(record);
       let expandedRowContent;
@@ -474,7 +480,7 @@ const Table = React.createClass({
   },
 
   findExpandedRow(record) {
-    const rows = this.getExpandedRows().filter(i => i === this.props.rowKey(record));
+    const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record));
     return rows[0];
   },
 

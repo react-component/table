@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import objectPath from 'object-path';
 
 const TableRow = React.createClass({
   propTypes: {
-    onDestroy: React.PropTypes.func,
-    onRowClick: React.PropTypes.func,
-    record: React.PropTypes.object,
-    prefixCls: React.PropTypes.string,
-    expandIconColumnIndex: React.PropTypes.number,
-    onHover: React.PropTypes.func,
+    onDestroy: PropTypes.func,
+    onRowClick: PropTypes.func,
+    record: PropTypes.object,
+    prefixCls: PropTypes.string,
+    expandIconColumnIndex: PropTypes.number,
+    onHover: PropTypes.func,
   },
 
   getDefaultProps() {
