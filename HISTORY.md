@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.3.0 / 2016-06-20
+
+- support `rowKey="uid"`
+
 ## 4.2.0 / 2016-06-16
 
 - Header can be scroll in fixed-columns Table
