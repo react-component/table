@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		18:0
+/******/ 		19:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"fixedColumns","6":"fixedColumnsAndHeader","7":"footer","8":"hide-header","9":"key","10":"nested","11":"pagingColumns","12":"rowClick","13":"scrollX","14":"scrollXY","15":"scrollY","16":"simple","17":"subTable"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"childrenIndent","1":"className","2":"colspan-rowspan","3":"dropdown","4":"expandedRowRender","5":"fixedColumns","6":"fixedColumns-auto-height","7":"fixedColumnsAndHeader","8":"footer","9":"hide-header","10":"key","11":"nested","12":"pagingColumns","13":"rowClick","14":"scrollX","15":"scrollXY","16":"scrollY","17":"simple","18":"subTable"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -19742,31 +19742,31 @@
 	  displayName: 'Table',
 	
 	  propTypes: {
-	    data: _react.PropTypes.array,
-	    expandIconAsCell: _react.PropTypes.bool,
-	    defaultExpandAllRows: _react.PropTypes.bool,
-	    expandedRowKeys: _react.PropTypes.array,
-	    defaultExpandedRowKeys: _react.PropTypes.array,
-	    useFixedHeader: _react.PropTypes.bool,
-	    columns: _react.PropTypes.array,
-	    prefixCls: _react.PropTypes.string,
-	    bodyStyle: _react.PropTypes.object,
-	    style: _react.PropTypes.object,
-	    rowKey: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	    rowClassName: _react.PropTypes.func,
-	    expandedRowClassName: _react.PropTypes.func,
-	    childrenColumnName: _react.PropTypes.string,
-	    onExpand: _react.PropTypes.func,
-	    onExpandedRowsChange: _react.PropTypes.func,
-	    indentSize: _react.PropTypes.number,
-	    onRowClick: _react.PropTypes.func,
-	    columnsPageRange: _react.PropTypes.array,
-	    columnsPageSize: _react.PropTypes.number,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    showHeader: _react.PropTypes.bool,
-	    footer: _react.PropTypes.func,
-	    scroll: _react.PropTypes.object,
-	    rowRef: _react.PropTypes.func
+	    data: _react2['default'].PropTypes.array,
+	    expandIconAsCell: _react2['default'].PropTypes.bool,
+	    defaultExpandAllRows: _react2['default'].PropTypes.bool,
+	    expandedRowKeys: _react2['default'].PropTypes.array,
+	    defaultExpandedRowKeys: _react2['default'].PropTypes.array,
+	    useFixedHeader: _react2['default'].PropTypes.bool,
+	    columns: _react2['default'].PropTypes.array,
+	    prefixCls: _react2['default'].PropTypes.string,
+	    bodyStyle: _react2['default'].PropTypes.object,
+	    style: _react2['default'].PropTypes.object,
+	    rowKey: _react2['default'].PropTypes.func,
+	    rowClassName: _react2['default'].PropTypes.func,
+	    expandedRowClassName: _react2['default'].PropTypes.func,
+	    childrenColumnName: _react2['default'].PropTypes.string,
+	    onExpand: _react2['default'].PropTypes.func,
+	    onExpandedRowsChange: _react2['default'].PropTypes.func,
+	    indentSize: _react2['default'].PropTypes.number,
+	    onRowClick: _react2['default'].PropTypes.func,
+	    columnsPageRange: _react2['default'].PropTypes.array,
+	    columnsPageSize: _react2['default'].PropTypes.number,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    showHeader: _react2['default'].PropTypes.bool,
+	    footer: _react2['default'].PropTypes.func,
+	    scroll: _react2['default'].PropTypes.object,
+	    rowRef: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19777,7 +19777,9 @@
 	      columns: [],
 	      defaultExpandAllRows: false,
 	      defaultExpandedRowKeys: [],
-	      rowKey: 'key',
+	      rowKey: function rowKey(o) {
+	        return o.key;
+	      },
 	      rowClassName: function rowClassName() {
 	        return '';
 	      },
@@ -19809,7 +19811,7 @@
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
 	        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
-	          expandedRowKeys.push(this.getRowKey(row));
+	          expandedRowKeys.push(props.rowKey(row));
 	          rows = rows.concat(row[props.childrenColumnName]);
 	        }
 	      }
@@ -19821,17 +19823,29 @@
 	      data: props.data,
 	      currentColumnsPage: 0,
 	      currentHoverIndex: null,
-	      scrollPosition: 'left'
+	      scrollPosition: 'left',
+	      fixedColumnsRowsHeight: []
 	    };
 	  },
 	
 	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+	
 	    if (this.refs.headTable) {
 	      this.refs.headTable.scrollLeft = 0;
 	    }
 	    if (this.refs.bodyTable) {
 	      this.refs.bodyTable.scrollLeft = 0;
 	    }
+	    var prefixCls = this.props.prefixCls;
+	
+	    var rows = this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row');
+	    var fixedColumnsRowsHeight = [].slice.call(rows).map(function (row) {
+	      return row.getBoundingClientRect().height || 'auto';
+	    });
+	    this.timer = setTimeout(function () {
+	      _this.setState({ fixedColumnsRowsHeight: fixedColumnsRowsHeight });
+	    });
 	  },
 	
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -19845,6 +19859,10 @@
 	        expandedRowKeys: nextProps.expandedRowKeys
 	      });
 	    }
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    clearTimeout(this.timer);
 	  },
 	
 	  onExpandedRowsChange: function onExpandedRowsChange(expandedRowKeys) {
@@ -19862,7 +19880,7 @@
 	      this.onRowDestroy(record);
 	    } else if (!info && expanded) {
 	      var expandedRows = this.getExpandedRows().concat();
-	      expandedRows.push(this.getRowKey(record));
+	      expandedRows.push(this.props.rowKey(record));
 	      this.onExpandedRowsChange(expandedRows);
 	    }
 	    this.props.onExpand(expanded, record);
@@ -19870,7 +19888,7 @@
 	
 	  onRowDestroy: function onRowDestroy(record) {
 	    var expandedRows = this.getExpandedRows().concat();
-	    var rowKey = this.getRowKey(record);
+	    var rowKey = this.props.rowKey(record);
 	    var index = -1;
 	    expandedRows.forEach(function (r, i) {
 	      if (r === rowKey) {
@@ -19881,15 +19899,6 @@
 	      expandedRows.splice(index, 1);
 	    }
 	    this.onExpandedRowsChange(expandedRows);
-	  },
-	
-	  getRowKey: function getRowKey(record, index) {
-	    var rowKey = this.props.rowKey;
-	    if (typeof rowKey === 'function') {
-	      return rowKey(record, index);
-	    }
-	
-	    return record[rowKey] || index;
 	  },
 	
 	  getExpandedRows: function getExpandedRows() {
@@ -19951,7 +19960,10 @@
 	    var props = this.props;
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
+	    var fixedColumnsRowsHeight = this.state.fixedColumnsRowsHeight;
+	
 	    var rst = [];
+	    var keyFn = props.rowKey;
 	    var rowClassName = props.rowClassName;
 	    var rowRef = props.rowRef;
 	    var expandedRowClassName = props.expandedRowClassName;
@@ -19966,7 +19978,7 @@
 	
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
-	      var key = this.getRowKey(record, i) || undefined;
+	      var key = keyFn ? keyFn(record, i) : undefined;
 	      var childrenColumn = record[childrenColumnName];
 	      var isRowExpanded = this.isRowExpanded(record);
 	      var expandedRowContent = undefined;
@@ -19982,6 +19994,10 @@
 	      if (isAnyColumnsFixed) {
 	        onHoverProps.onHover = this.handleRowHover;
 	      }
+	
+	      var style = fixed && fixedColumnsRowsHeight[i] ? {
+	        height: fixedColumnsRowsHeight[i]
+	      } : {};
 	
 	      rst.push(_react2['default'].createElement(_TableRow2['default'], _extends({
 	        indent: indent,
@@ -20000,7 +20016,8 @@
 	        childrenColumnName: childrenColumnName,
 	        columns: columns || this.getCurrentColumns(),
 	        expandIconColumnIndex: expandIconColumnIndex,
-	        onRowClick: onRowClick
+	        onRowClick: onRowClick,
+	        style: style
 	      }, onHoverProps, {
 	        key: key,
 	        ref: rowRef(record, i)
@@ -20038,7 +20055,7 @@
 	  },
 	
 	  getCurrentColumns: function getCurrentColumns() {
-	    var _this = this;
+	    var _this2 = this;
 	
 	    var _props2 = this.props;
 	    var columns = _props2.columns;
@@ -20062,7 +20079,7 @@
 	          newColumn.className = newColumn.className || '';
 	          newColumn.className += ' ' + prefixCls + '-column-hidden';
 	        }
-	        newColumn = _this.wrapPageColumn(newColumn, i === pageIndexStart, i === pageIndexEnd);
+	        newColumn = _this2.wrapPageColumn(newColumn, i === pageIndexStart, i === pageIndexEnd);
 	      }
 	      return newColumn;
 	    });
@@ -20093,7 +20110,7 @@
 	  },
 	
 	  getTable: function getTable() {
-	    var _this2 = this;
+	    var _this3 = this;
 	
 	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	    var columns = options.columns;
@@ -20134,12 +20151,12 @@
 	      return _react2['default'].createElement(
 	        'table',
 	        { className: tableClassName, style: tableStyle },
-	        _this2.getColGroup(columns, fixed),
-	        hasHead ? _this2.getHeader(columns, fixed) : null,
+	        _this3.getColGroup(columns, fixed),
+	        hasHead ? _this3.getHeader(columns, fixed) : null,
 	        hasBody ? _react2['default'].createElement(
 	          'tbody',
 	          { className: prefixCls + '-tbody' },
-	          _this2.getRows(columns, fixed)
+	          _this3.getRows(columns, fixed)
 	        ) : null
 	      );
 	    };
@@ -20281,10 +20298,10 @@
 	  },
 	
 	  findExpandedRow: function findExpandedRow(record) {
-	    var _this3 = this;
+	    var _this4 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this3.getRowKey(record);
+	      return i === _this4.props.rowKey(record);
 	    });
 	    return rows[0];
 	  },
@@ -20417,6 +20434,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _react = __webpack_require__(2);
@@ -20431,12 +20450,12 @@
 	  displayName: 'TableRow',
 	
 	  propTypes: {
-	    onDestroy: _react.PropTypes.func,
-	    onRowClick: _react.PropTypes.func,
-	    record: _react.PropTypes.object,
-	    prefixCls: _react.PropTypes.string,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    onHover: _react.PropTypes.func
+	    onDestroy: _react2['default'].PropTypes.func,
+	    onRowClick: _react2['default'].PropTypes.func,
+	    record: _react2['default'].PropTypes.object,
+	    prefixCls: _react2['default'].PropTypes.string,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    onHover: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -20461,6 +20480,8 @@
 	    var prefixCls = props.prefixCls;
 	    var columns = props.columns;
 	    var record = props.record;
+	    var style = props.style;
+	    var visible = props.visible;
 	    var index = props.index;
 	    var cells = [];
 	    var expanded = props.expanded;
@@ -20544,7 +20565,7 @@
 	        onMouseEnter: props.onHover.bind(null, true, index),
 	        onMouseLeave: props.onHover.bind(null, false, index),
 	        className: prefixCls + ' ' + props.className + ' ' + prefixCls + '-level-' + indent,
-	        style: props.visible ? null : { display: 'none' } },
+	        style: visible ? style : _extends({}, style, { display: 'none' }) },
 	      cells
 	    );
 	  }

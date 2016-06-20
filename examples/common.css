@@ -9,11 +9,6 @@
 .rc-table .rc-table-scroll {
   overflow: auto;
 }
-.rc-table .rc-table-fixed th,
-.rc-table .rc-table-fixed td {
-  height: 18px;
-  white-space: nowrap;
-}
 .rc-table .rc-table-header {
   overflow: hidden;
   background: #f4f4f4;
