@@ -34,6 +34,8 @@ const TableRow = React.createClass({
     const prefixCls = props.prefixCls;
     const columns = props.columns;
     const record = props.record;
+    const style = props.style;
+    const visible = props.visible;
     const index = props.index;
     const cells = [];
     const expanded = props.expanded;
@@ -120,7 +122,7 @@ const TableRow = React.createClass({
         onMouseEnter={props.onHover.bind(null, true, index)}
         onMouseLeave={props.onHover.bind(null, false, index)}
         className={`${prefixCls} ${props.className} ${prefixCls}-level-${indent}`}
-        style={props.visible ? null : { display: 'none' }}>
+        style={visible ? style : { ...style, display: 'none' }}>
         {cells}
       </tr>
     );
