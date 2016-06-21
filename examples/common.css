@@ -19,15 +19,13 @@
 }
 .rc-table-fixed-header .rc-table-body-inner {
   height: 100%;
-  overflow-y: scroll;
+  overflow: scroll;
 }
-.rc-table-fixed-header .rc-table-header {
+.rc-table-fixed-header .rc-table-scroll .rc-table-header {
   overflow-x: scroll;
   padding-bottom: 20px;
   margin-bottom: -20px;
   overflow-y: hidden;
-  height: 70px;
-  box-sizing: border-box;
 }
 .rc-table .rc-table-footer {
   padding: 16px 8px;

@@ -19738,35 +19738,37 @@
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
+	var _utils = __webpack_require__(165);
+	
 	var Table = _react2['default'].createClass({
 	  displayName: 'Table',
 	
 	  propTypes: {
-	    data: _react.PropTypes.array,
-	    expandIconAsCell: _react.PropTypes.bool,
-	    defaultExpandAllRows: _react.PropTypes.bool,
-	    expandedRowKeys: _react.PropTypes.array,
-	    defaultExpandedRowKeys: _react.PropTypes.array,
-	    useFixedHeader: _react.PropTypes.bool,
-	    columns: _react.PropTypes.array,
-	    prefixCls: _react.PropTypes.string,
-	    bodyStyle: _react.PropTypes.object,
-	    style: _react.PropTypes.object,
-	    rowKey: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	    rowClassName: _react.PropTypes.func,
-	    expandedRowClassName: _react.PropTypes.func,
-	    childrenColumnName: _react.PropTypes.string,
-	    onExpand: _react.PropTypes.func,
-	    onExpandedRowsChange: _react.PropTypes.func,
-	    indentSize: _react.PropTypes.number,
-	    onRowClick: _react.PropTypes.func,
-	    columnsPageRange: _react.PropTypes.array,
-	    columnsPageSize: _react.PropTypes.number,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    showHeader: _react.PropTypes.bool,
-	    footer: _react.PropTypes.func,
-	    scroll: _react.PropTypes.object,
-	    rowRef: _react.PropTypes.func
+	    data: _react2['default'].PropTypes.array,
+	    expandIconAsCell: _react2['default'].PropTypes.bool,
+	    defaultExpandAllRows: _react2['default'].PropTypes.bool,
+	    expandedRowKeys: _react2['default'].PropTypes.array,
+	    defaultExpandedRowKeys: _react2['default'].PropTypes.array,
+	    useFixedHeader: _react2['default'].PropTypes.bool,
+	    columns: _react2['default'].PropTypes.array,
+	    prefixCls: _react2['default'].PropTypes.string,
+	    bodyStyle: _react2['default'].PropTypes.object,
+	    style: _react2['default'].PropTypes.object,
+	    rowKey: _react2['default'].PropTypes.func,
+	    rowClassName: _react2['default'].PropTypes.func,
+	    expandedRowClassName: _react2['default'].PropTypes.func,
+	    childrenColumnName: _react2['default'].PropTypes.string,
+	    onExpand: _react2['default'].PropTypes.func,
+	    onExpandedRowsChange: _react2['default'].PropTypes.func,
+	    indentSize: _react2['default'].PropTypes.number,
+	    onRowClick: _react2['default'].PropTypes.func,
+	    columnsPageRange: _react2['default'].PropTypes.array,
+	    columnsPageSize: _react2['default'].PropTypes.number,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    showHeader: _react2['default'].PropTypes.bool,
+	    footer: _react2['default'].PropTypes.func,
+	    scroll: _react2['default'].PropTypes.object,
+	    rowRef: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -19777,7 +19779,9 @@
 	      columns: [],
 	      defaultExpandAllRows: false,
 	      defaultExpandedRowKeys: [],
-	      rowKey: 'key',
+	      rowKey: function rowKey(o) {
+	        return o.key;
+	      },
 	      rowClassName: function rowClassName() {
 	        return '';
 	      },
@@ -19809,7 +19813,7 @@
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
 	        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
-	          expandedRowKeys.push(this.getRowKey(row));
+	          expandedRowKeys.push(props.rowKey(row));
 	          rows = rows.concat(row[props.childrenColumnName]);
 	        }
 	      }
@@ -19878,7 +19882,7 @@
 	      this.onRowDestroy(record);
 	    } else if (!info && expanded) {
 	      var expandedRows = this.getExpandedRows().concat();
-	      expandedRows.push(this.getRowKey(record));
+	      expandedRows.push(this.props.rowKey(record));
 	      this.onExpandedRowsChange(expandedRows);
 	    }
 	    this.props.onExpand(expanded, record);
@@ -19886,7 +19890,7 @@
 	
 	  onRowDestroy: function onRowDestroy(record) {
 	    var expandedRows = this.getExpandedRows().concat();
-	    var rowKey = this.getRowKey(record);
+	    var rowKey = this.props.rowKey(record);
 	    var index = -1;
 	    expandedRows.forEach(function (r, i) {
 	      if (r === rowKey) {
@@ -19897,14 +19901,6 @@
 	      expandedRows.splice(index, 1);
 	    }
 	    this.onExpandedRowsChange(expandedRows);
-	  },
-	
-	  getRowKey: function getRowKey(record, index) {
-	    var rowKey = this.props.rowKey;
-	    if (typeof rowKey === 'function') {
-	      return rowKey(record, index);
-	    }
-	    return record[rowKey] || index;
 	  },
 	
 	  getExpandedRows: function getExpandedRows() {
@@ -19969,6 +19965,7 @@
 	    var fixedColumnsRowsHeight = this.state.fixedColumnsRowsHeight;
 	
 	    var rst = [];
+	    var keyFn = props.rowKey;
 	    var rowClassName = props.rowClassName;
 	    var rowRef = props.rowRef;
 	    var expandedRowClassName = props.expandedRowClassName;
@@ -19983,7 +19980,7 @@
 	
 	    for (var i = 0; i < data.length; i++) {
 	      var record = data[i];
-	      var key = this.getRowKey(record, i);
+	      var key = keyFn ? keyFn(record, i) : undefined;
 	      var childrenColumn = record[childrenColumnName];
 	      var isRowExpanded = this.isRowExpanded(record);
 	      var expandedRowContent = undefined;
@@ -20127,6 +20124,7 @@
 	    var useFixedHeader = this.props.useFixedHeader;
 	
 	    var bodyStyle = _extends({}, this.props.bodyStyle);
+	    var headStyle = {};
 	
 	    var tableClassName = '';
 	    if (scroll.x || columns) {
@@ -20138,6 +20136,13 @@
 	      bodyStyle.height = bodyStyle.height || scroll.y;
 	      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
 	      useFixedHeader = true;
+	
+	      // Add negative margin bottom for scroll bar overflow bug
+	      var scrollbarWidth = (0, _utils.measureScrollbar)();
+	      if (scrollbarWidth > 0) {
+	        (fixed ? bodyStyle : headStyle).marginBottom = '-' + scrollbarWidth + 'px';
+	        (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+	      }
 	    }
 	
 	    var renderTable = function renderTable() {
@@ -20173,6 +20178,7 @@
 	        {
 	          className: prefixCls + '-header',
 	          ref: columns ? null : 'headTable',
+	          style: headStyle,
 	          onMouseEnter: this.detectScrollTarget,
 	          onScroll: this.handleBodyScroll },
 	        renderTable(true, false)
@@ -20306,7 +20312,7 @@
 	    var _this4 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this4.getRowKey(record);
+	      return i === _this4.props.rowKey(record);
 	    });
 	    return rows[0];
 	  },
@@ -20455,12 +20461,12 @@
 	  displayName: 'TableRow',
 	
 	  propTypes: {
-	    onDestroy: _react.PropTypes.func,
-	    onRowClick: _react.PropTypes.func,
-	    record: _react.PropTypes.object,
-	    prefixCls: _react.PropTypes.string,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    onHover: _react.PropTypes.func
+	    onDestroy: _react2['default'].PropTypes.func,
+	    onRowClick: _react2['default'].PropTypes.func,
+	    record: _react2['default'].PropTypes.object,
+	    prefixCls: _react2['default'].PropTypes.string,
+	    expandIconColumnIndex: _react2['default'].PropTypes.number,
+	    onHover: _react2['default'].PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -20865,6 +20871,44 @@
 
 /***/ },
 /* 165 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.measureScrollbar = measureScrollbar;
+	var scrollbarWidth = undefined;
+	
+	// Measure scrollbar width for padding body during modal show/hide
+	var scrollbarMeasure = {
+	  position: 'absolute',
+	  top: '-9999px',
+	  width: '50px',
+	  height: '50px',
+	  overflow: 'scroll'
+	};
+	
+	function measureScrollbar() {
+	  if (scrollbarWidth) {
+	    return scrollbarWidth;
+	  }
+	  var scrollDiv = document.createElement('div');
+	  for (var scrollProp in scrollbarMeasure) {
+	    if (scrollbarMeasure.hasOwnProperty(scrollProp)) {
+	      scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
+	    }
+	  }
+	  document.body.appendChild(scrollDiv);
+	  var width = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	  document.body.removeChild(scrollDiv);
+	  scrollbarWidth = width;
+	  return scrollbarWidth;
+	}
+
+/***/ },
+/* 166 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
