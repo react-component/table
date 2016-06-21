@@ -1,5 +1,6 @@
 import React from 'react';
 import TableRow from './TableRow';
+import { measureScrollbar } from './utils';
 
 const Table = React.createClass({
   propTypes: {
@@ -344,6 +345,7 @@ const Table = React.createClass({
     const { prefixCls, scroll = {} } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
+    const headStyle = {};
 
     let tableClassName = '';
     if (scroll.x || columns) {
@@ -355,6 +357,13 @@ const Table = React.createClass({
       bodyStyle.height = bodyStyle.height || scroll.y;
       bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
       useFixedHeader = true;
+
+      // Add negative margin bottom for scroll bar overflow bug
+      const scrollbarWidth = measureScrollbar();
+      if (scrollbarWidth > 0) {
+        (fixed ? bodyStyle : headStyle).marginBottom = `-${scrollbarWidth}px`;
+        (fixed ? bodyStyle : headStyle).paddingBottom = '0px';
+      }
     }
 
     const renderTable = (hasHead = true, hasBody = true) => {
@@ -386,6 +395,7 @@ const Table = React.createClass({
         <div
           className={`${prefixCls}-header`}
           ref={columns ? null : 'headTable'}
+          style={headStyle}
           onMouseEnter={this.detectScrollTarget}
           onScroll={this.handleBodyScroll}>
           {renderTable(true, false)}
