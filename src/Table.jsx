@@ -541,11 +541,12 @@ const Table = React.createClass({
       return;
     }
     const { scroll = {} } = this.props;
+    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     if (scroll.x) {
-      if (e.target === this.refs.bodyTable && this.refs.headTable) {
-        this.refs.headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === this.refs.headTable && this.refs.bodyTable) {
-        this.refs.bodyTable.scrollLeft = e.target.scrollLeft;
+      if (e.target === bodyTable && headTable) {
+        headTable.scrollLeft = e.target.scrollLeft;
+      } else if (e.target === headTable && bodyTable) {
+        bodyTable.scrollLeft = e.target.scrollLeft;
       }
       if (e.target.scrollLeft === 0) {
         this.setState({ scrollPosition: 'left' });
@@ -557,14 +558,14 @@ const Table = React.createClass({
       }
     }
     if (scroll.y) {
-      if (e.target !== this.refs.fixedColumnsBodyLeft) {
-        this.refs.fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }
-      if (e.target !== this.refs.fixedColumnsBodyRight) {
-        this.refs.fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+      if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
       }
-      if (e.target !== this.refs.bodyTable) {
-        this.refs.bodyTable.scrollTop = e.target.scrollTop;
+      if (bodyTable && e.target !== bodyTable) {
+        bodyTable.scrollTop = e.target.scrollTop;
       }
     }
   },
