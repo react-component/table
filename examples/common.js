@@ -19822,7 +19822,7 @@
 	      expandedRowKeys: expandedRowKeys,
 	      data: props.data,
 	      currentColumnsPage: 0,
-	      currentHoverIndex: null,
+	      currentHoverKey: null,
 	      scrollPosition: 'left',
 	      fixedColumnsRowsHeight: []
 	    };
@@ -19840,7 +19840,8 @@
 	    var prefixCls = this.props.prefixCls;
 	
 	    var rows = this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row');
-	    var fixedColumnsRowsHeight = [].slice.call(rows).map(function (row) {
+	
+	    var fixedColumnsRowsHeight = [].map.call(rows, function (row) {
 	      return row.getBoundingClientRect().height || 'auto';
 	    });
 	    this.timer = setTimeout(function () {
@@ -19993,7 +19994,7 @@
 	        expandedRowContent = expandedRowRender(record, i);
 	      }
 	      var className = rowClassName(record, i);
-	      if (this.state.currentHoverIndex === i) {
+	      if (this.state.currentHoverKey === key) {
 	        className += ' ' + props.prefixCls + '-row-hover';
 	      }
 	
@@ -20027,6 +20028,7 @@
 	        style: style
 	      }, onHoverProps, {
 	        key: key,
+	        hoverKey: key,
 	        ref: rowRef(record, i)
 	      })));
 	
@@ -20036,7 +20038,7 @@
 	        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed));
 	      }
 	      if (childrenColumn) {
-	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1));
+	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed));
 	      }
 	    }
 	    return rst;
@@ -20184,7 +20186,7 @@
 	          className: prefixCls + '-header',
 	          ref: columns ? null : 'headTable',
 	          style: headStyle,
-	          onMouseEnter: this.detectScrollTarget,
+	          onMouseOver: this.detectScrollTarget,
 	          onScroll: this.handleBodyScroll },
 	        renderTable(true, false)
 	      );
@@ -20196,7 +20198,7 @@
 	        className: prefixCls + '-body',
 	        style: bodyStyle,
 	        ref: 'bodyTable',
-	        onMouseEnter: this.detectScrollTarget,
+	        onMouseOver: this.detectScrollTarget,
 	        onScroll: this.handleBodyScroll },
 	      renderTable(!useFixedHeader)
 	    );
@@ -20220,7 +20222,7 @@
 	          {
 	            className: prefixCls + '-body-inner',
 	            ref: refName,
-	            onMouseEnter: this.detectScrollTarget,
+	            onMouseOver: this.detectScrollTarget,
 	            onScroll: this.handleBodyScroll },
 	          renderTable(!useFixedHeader)
 	        )
@@ -20327,7 +20329,9 @@
 	  },
 	
 	  detectScrollTarget: function detectScrollTarget(e) {
-	    this.scrollTarget = e.currentTarget;
+	    if (this.scrollTarget !== e.currentTarget) {
+	      this.scrollTarget = e.currentTarget;
+	    }
 	  },
 	
 	  isAnyColumnsFixed: function isAnyColumnsFixed() {
@@ -20389,14 +20393,14 @@
 	    }
 	  },
 	
-	  handleRowHover: function handleRowHover(isHover, index) {
+	  handleRowHover: function handleRowHover(isHover, key) {
 	    if (isHover) {
 	      this.setState({
-	        currentHoverIndex: index
+	        currentHoverKey: key
 	      });
 	    } else {
 	      this.setState({
-	        currentHoverIndex: null
+	        currentHoverKey: null
 	      });
 	    }
 	  },
@@ -20504,6 +20508,7 @@
 	    var style = props.style;
 	    var visible = props.visible;
 	    var index = props.index;
+	    var hoverKey = props.hoverKey;
 	    var cells = [];
 	    var expanded = props.expanded;
 	    var expandable = props.expandable;
@@ -20583,8 +20588,8 @@
 	    return _react2['default'].createElement(
 	      'tr',
 	      { onClick: onRowClick.bind(null, record, index),
-	        onMouseEnter: props.onHover.bind(null, true, index),
-	        onMouseLeave: props.onHover.bind(null, false, index),
+	        onMouseEnter: props.onHover.bind(null, true, hoverKey),
+	        onMouseLeave: props.onHover.bind(null, false, hoverKey),
 	        className: prefixCls + ' ' + props.className + ' ' + prefixCls + '-level-' + indent,
 	        style: visible ? style : _extends({}, style, { display: 'none' }) },
 	      cells
