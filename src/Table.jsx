@@ -403,7 +403,7 @@ const Table = React.createClass({
           className={`${prefixCls}-header`}
           ref={columns ? null : 'headTable'}
           style={headStyle}
-          onMouseEnter={this.detectScrollTarget}
+          onMouseOver={this.detectScrollTarget}
           onScroll={this.handleBodyScroll}>
           {renderTable(true, false)}
         </div>
@@ -415,7 +415,7 @@ const Table = React.createClass({
         className={`${prefixCls}-body`}
         style={bodyStyle}
         ref="bodyTable"
-        onMouseEnter={this.detectScrollTarget}
+        onMouseOver={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}>
         {renderTable(!useFixedHeader)}
       </div>
@@ -437,7 +437,7 @@ const Table = React.createClass({
           <div
             className={`${prefixCls}-body-inner`}
             ref={refName}
-            onMouseEnter={this.detectScrollTarget}
+            onMouseOver={this.detectScrollTarget}
             onScroll={this.handleBodyScroll}>
             {renderTable(!useFixedHeader)}
           </div>
@@ -519,7 +519,9 @@ const Table = React.createClass({
   },
 
   detectScrollTarget(e) {
-    this.scrollTarget = e.currentTarget;
+    if (this.scrollTarget !== e.currentTarget) {
+      this.scrollTarget = e.currentTarget;
+    }
   },
 
   isAnyColumnsFixed() {
