@@ -99,8 +99,9 @@ const Table = React.createClass({
     }
     const { prefixCls } = this.props;
     const rows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`);
-    const fixedColumnsRowsHeight = [].slice.call(rows).map(
-      row => row.getBoundingClientRect().height || 'auto'
+
+    const fixedColumnsRowsHeight = [].map.call(
+      rows, row => row.getBoundingClientRect().height || 'auto'
     );
     this.timer = setTimeout(() => {
       this.setState({ fixedColumnsRowsHeight });
