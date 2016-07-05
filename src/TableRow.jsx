@@ -37,6 +37,7 @@ const TableRow = React.createClass({
     const style = props.style;
     const visible = props.visible;
     const index = props.index;
+    const hoverKey = props.hoverKey;
     const cells = [];
     const expanded = props.expanded;
     const expandable = props.expandable;
@@ -119,8 +120,8 @@ const TableRow = React.createClass({
 
     return (
       <tr onClick={onRowClick.bind(null, record, index)}
-        onMouseEnter={props.onHover.bind(null, true, index)}
-        onMouseLeave={props.onHover.bind(null, false, index)}
+        onMouseEnter={props.onHover.bind(null, true, hoverKey)}
+        onMouseLeave={props.onHover.bind(null, false, hoverKey)}
         className={`${prefixCls} ${props.className} ${prefixCls}-level-${indent}`}
         style={visible ? style : { ...style, display: 'none' }}>
         {cells}

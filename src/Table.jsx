@@ -84,7 +84,7 @@ const Table = React.createClass({
       expandedRowKeys,
       data: props.data,
       currentColumnsPage: 0,
-      currentHoverIndex: null,
+      currentHoverKey: null,
       scrollPosition: 'left',
       fixedColumnsRowsHeight: [],
     };
@@ -235,7 +235,7 @@ const Table = React.createClass({
         expandedRowContent = expandedRowRender(record, i);
       }
       let className = rowClassName(record, i);
-      if (this.state.currentHoverIndex === i) {
+      if (this.state.currentHoverKey === key) {
         className += ' ' + props.prefixCls + '-row-hover';
       }
 
@@ -270,6 +270,7 @@ const Table = React.createClass({
           style={style}
           {...onHoverProps}
           key={key}
+          hoverKey={key}
           ref={rowRef(record, i)}
         />
       );
@@ -280,7 +281,7 @@ const Table = React.createClass({
         rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed));
       }
       if (childrenColumn) {
-        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1));
+        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed));
       }
     }
     return rst;
@@ -570,14 +571,14 @@ const Table = React.createClass({
     }
   },
 
-  handleRowHover(isHover, index) {
+  handleRowHover(isHover, key) {
     if (isHover) {
       this.setState({
-        currentHoverIndex: index,
+        currentHoverKey: key,
       });
     } else {
       this.setState({
-        currentHoverIndex: null,
+        currentHoverKey: null,
       });
     }
   },
