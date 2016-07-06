@@ -69,7 +69,7 @@ const Table = React.createClass({
   getInitialState() {
     const props = this.props;
     let expandedRowKeys = [];
-    let rows = [...props.data];
+    let rows = [ ...props.data ];
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -191,7 +191,7 @@ const Table = React.createClass({
     });
     return showHeader ? (
       <thead className={`${prefixCls}-thead`}>
-      <tr>{ths}</tr>
+        <tr>{ths}</tr>
       </thead>
     ) : null;
   },
