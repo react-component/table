@@ -29,6 +29,7 @@ const Table = React.createClass({
     footer: PropTypes.func,
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
+    rowWrapper: PropTypes.any,
   },
 
   getDefaultProps() {
@@ -68,7 +69,7 @@ const Table = React.createClass({
   getInitialState() {
     const props = this.props;
     let expandedRowKeys = [];
-    let rows = [ ...props.data ];
+    let rows = [...props.data];
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -190,7 +191,7 @@ const Table = React.createClass({
     });
     return showHeader ? (
       <thead className={`${prefixCls}-thead`}>
-        <tr>{ths}</tr>
+      <tr>{ths}</tr>
       </thead>
     ) : null;
   },
@@ -349,7 +350,7 @@ const Table = React.createClass({
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {} } = this.props;
+    const { prefixCls, scroll = {}, rowWrapper } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -383,15 +384,15 @@ const Table = React.createClass({
           tableStyle.width = scroll.x;
         }
       }
+      let row = hasBody ? (<tbody className={`${prefixCls}-tbody`}>
+      {this.getRows(columns, fixed)}
+      </tbody>) : null;
+      row = rowWrapper && row ? rowWrapper(row) : row;
       return (
         <table className={tableClassName} style={tableStyle}>
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
-          {hasBody ? (
-            <tbody className={`${prefixCls}-tbody`}>
-              {this.getRows(columns, fixed)}
-            </tbody>
-          ) : null}
+          {row}
         </table>
       );
     };
