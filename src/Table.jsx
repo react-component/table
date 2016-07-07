@@ -22,6 +22,9 @@ const Table = React.createClass({
     onExpandedRowsChange: PropTypes.func,
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
+    onRowSelectionChange: PropTypes.func,
+    highlightSelectedRow: PropTypes.bool,
+    selectedKey: PropTypes.string,
     columnsPageRange: PropTypes.array,
     columnsPageSize: PropTypes.number,
     expandIconColumnIndex: PropTypes.number,
@@ -58,6 +61,8 @@ const Table = React.createClass({
       columnsPageSize: 5,
       expandIconColumnIndex: 0,
       showHeader: true,
+      highlightSelectedRow: false,
+      selectedKey: null,
       scroll: {},
       rowRef() {
         return null;
@@ -85,6 +90,7 @@ const Table = React.createClass({
       data: props.data,
       currentColumnsPage: 0,
       currentHoverKey: null,
+      currentSelectedKey: props.selectedKey,
       scrollPosition: 'left',
       fixedColumnsRowsHeight: [],
     };
@@ -114,6 +120,11 @@ const Table = React.createClass({
         data: nextProps.data,
       });
     }
+    if ('selectedKey' in nextProps) {
+      this.setState({
+        currentSelectedKey: nextProps.selectedKey,
+      });
+    }
     if ('expandedRowKeys' in nextProps) {
       this.setState({
         expandedRowKeys: nextProps.expandedRowKeys,
@@ -123,6 +134,32 @@ const Table = React.createClass({
 
   componentWillUnmount() {
     clearTimeout(this.timer);
+  },
+
+  onRowClick(record, i, e) {
+    const {onRowClick} = this.props;
+    const {currentSelectedKey} = this.state;
+    const eventTag = e.target.tagName.toLowerCase();
+    const eventParentTag = e.target.parentElement.tagName.toLowerCase();
+    if (eventTag !== 'input' && eventParentTag !== 'label') {
+      const key = this.getRowKey(record, i);
+      if (currentSelectedKey !== key) {
+        this.onRowSelectionChange(record, key, i);
+      }
+    }
+    if (onRowClick) {
+      onRowClick.apply(null, arguments);
+    }
+  },
+
+  onRowSelectionChange(record, key, index) { // eslint-disable-line no-unused-vars
+    const {onRowSelectionChange} = this.props;
+    this.setState({
+      currentSelectedKey: key,
+    });
+    if (onRowSelectionChange) {
+      onRowSelectionChange.apply(null, arguments);
+    }
   },
 
   onExpandedRowsChange(expandedRowKeys) {
@@ -214,13 +251,12 @@ const Table = React.createClass({
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
-    const { fixedColumnsRowsHeight } = this.state;
+    const { fixedColumnsRowsHeight, currentSelectedKey } = this.state;
     let rst = [];
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
-    const onRowClick = props.onRowClick;
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
@@ -238,6 +274,10 @@ const Table = React.createClass({
       let className = rowClassName(record, i);
       if (this.state.currentHoverKey === key) {
         className += ' ' + props.prefixCls + '-row-hover';
+      }
+
+      if (props.highlightSelectedRow && currentSelectedKey === key) {
+        className += ' ' + props.prefixCls + '-row-selected';
       }
 
       const onHoverProps = {};
@@ -267,7 +307,7 @@ const Table = React.createClass({
           childrenColumnName={childrenColumnName}
           columns={columns || this.getCurrentColumns()}
           expandIconColumnIndex={expandIconColumnIndex}
-          onRowClick={onRowClick}
+          onRowClick={this.onRowClick}
           style={style}
           {...onHoverProps}
           key={key}
