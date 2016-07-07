@@ -1,4 +1,4 @@
-/* eslint-disable no-console,func-names,react/no-multi-comp */
+/* eslint-disable no-console,func-names,react/no-multi-comp,react/jsx-boolean-value */
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Table = require('rc-table');
@@ -17,7 +17,7 @@ const MyTable = React.createClass({
     const columns = [
       {title: '表头1', dataIndex: 'a', key: 'a', width: 100},
       {id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100},
-      {title: '表头3', dataIndex: 'c', key: 'c', width: 200}
+      {title: '表头3', dataIndex: 'c', key: 'c', width: 200},
     ];
     return (
       <Table

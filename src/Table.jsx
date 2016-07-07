@@ -616,7 +616,7 @@ const Table = React.createClass({
     }
   },
 
-  onRowSelectionChange(record, key, index) {
+  onRowSelectionChange(record, key, index) { // eslint-disable-line no-unused-vars
     const {onRowSelectionChange} = this.props;
     this.setState({
       currentSelectedKey: key,
