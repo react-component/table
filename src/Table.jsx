@@ -471,6 +471,22 @@ const Table = React.createClass({
     ) : null;
   },
 
+  onRowClick(record, i, e) {
+    const {onRowClick} = this.props;
+    const {currentSelectedKey} = this.state;
+    const eventTag = e.target.tagName.toLowerCase();
+    const eventParentTag = e.target.parentElement.tagName.toLowerCase();
+    if (eventTag !== 'input' && eventParentTag !== 'label') {
+      const key = this.getRowKey(record, i);
+      if (currentSelectedKey !== key) {
+        this.onRowSelectionChange(record, key, i);
+      }
+    }
+    if (onRowClick) {
+      onRowClick.apply(null, arguments);
+    }
+  },
+
   getMaxColumnsPage() {
     const { columnsPageRange, columnsPageSize } = this.props;
     return Math.ceil((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize) - 1;
@@ -597,22 +613,6 @@ const Table = React.createClass({
       this.setState({
         currentHoverKey: null,
       });
-    }
-  },
-
-  onRowClick(record, i, e) {
-    const {onRowClick} = this.props;
-    const {currentSelectedKey} = this.state;
-    const eventTag = e.target.tagName.toLowerCase();
-    const eventParentTag = e.target.parentElement.tagName.toLowerCase();
-    if (eventTag !== 'input' && eventParentTag !== 'label') {
-      const key = this.getRowKey(record, i);
-      if (currentSelectedKey !== key) {
-        this.onRowSelectionChange(record, key, i);
-      }
-    }
-    if (onRowClick) {
-      onRowClick.apply(null, arguments);
     }
   },
 
