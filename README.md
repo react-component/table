@@ -214,6 +214,24 @@ var table = React.render(
           <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
       </tr>
       <tr>
+          <td>highlightSelectedRow</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>whether clicked row should be highlighted</td>
+      </tr>
+      <tr>
+          <td>selectedKey</td>
+          <td>String</td>
+          <th></th>
+          <td>the key of the row that will be highlighted</td>
+      </tr>
+      <tr>
+          <td>onRowSelectionChange</td>
+          <td>Function(record, key, index)</td>
+          <th></th>
+          <td>handle rowSelectionChange action</td>
+      </tr>
+      <tr>
           <td>columnsPageSize</td>
           <td>Number</td>
           <th>5</th>
