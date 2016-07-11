@@ -361,8 +361,8 @@ const Table = React.createClass({
     }
 
     if (scroll.y) {
-      bodyStyle.height = bodyStyle.height || scroll.y;
-      bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+      bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+      bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
       useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
