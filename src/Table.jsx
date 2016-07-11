@@ -361,7 +361,7 @@ const Table = React.createClass({
     }
 
     if (scroll.y) {
-      bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+      bodyStyle.height = bodyStyle.height || scroll.y;
       bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
       useFixedHeader = true;
 
