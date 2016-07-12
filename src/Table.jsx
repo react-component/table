@@ -88,7 +88,8 @@ const Table = React.createClass({
       currentColumnsPage: 0,
       currentHoverKey: null,
       scrollPosition: 'left',
-      fixedColumnsRowsHeight: [],
+      fixedColumnsHeadRowsHeight: [],
+      fixedColumnsBodyRowsHeight: [],
     };
   },
 
@@ -100,7 +101,10 @@ const Table = React.createClass({
       this.refs.bodyTable.scrollLeft = 0;
     }
     this.syncFixedTableRowHeight();
-    this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 200));
+    const isAnyColumnsFixed = this.isAnyColumnsFixed();
+    if (isAnyColumnsFixed) {
+      this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 200));
+    }
   },
 
   componentWillReceiveProps(nextProps) {
@@ -190,9 +194,13 @@ const Table = React.createClass({
         return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
       }
     });
+    const { fixedColumnsHeadRowsHeight } = this.state;
+    const trStyle = (fixedColumnsHeadRowsHeight[0] && columns) ? {
+      height: fixedColumnsHeadRowsHeight[0],
+    } : null;
     return showHeader ? (
       <thead className={`${prefixCls}-thead`}>
-        <tr>{ths}</tr>
+        <tr style={trStyle}>{ths}</tr>
       </thead>
     ) : null;
   },
@@ -216,7 +224,7 @@ const Table = React.createClass({
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
-    const { fixedColumnsRowsHeight } = this.state;
+    const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
@@ -247,8 +255,8 @@ const Table = React.createClass({
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      const style = (fixed && fixedColumnsRowsHeight[i]) ? {
-        height: fixedColumnsRowsHeight[i],
+      const style = (fixed && fixedColumnsBodyRowsHeight[i]) ? {
+        height: fixedColumnsBodyRowsHeight[i],
       } : {};
 
       rst.push(
@@ -483,16 +491,23 @@ const Table = React.createClass({
 
   syncFixedTableRowHeight() {
     const { prefixCls } = this.props;
-    const rows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`);
-
-    const fixedColumnsRowsHeight = [].map.call(
-      rows, row => row.getBoundingClientRect().height || 'auto'
+    const headRows = this.refs.headTable.querySelectorAll(`tr`) || [];
+    const bodyRows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
+    const fixedColumnsHeadRowsHeight = [].map.call(
+      headRows, row => row.getBoundingClientRect().height || 'auto'
     );
-    if (shallowequal(this.state.fixedColumnsRowsHeight, fixedColumnsRowsHeight)) {
+    const fixedColumnsBodyRowsHeight = [].map.call(
+      bodyRows, row => row.getBoundingClientRect().height || 'auto'
+    );
+    if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
+        shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
     this.timer = setTimeout(() => {
-      this.setState({ fixedColumnsRowsHeight });
+      this.setState({
+        fixedColumnsHeadRowsHeight,
+        fixedColumnsBodyRowsHeight,
+      });
     });
   },
 
