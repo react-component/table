@@ -404,6 +404,7 @@ const Table = React.createClass({
           ref={columns ? null : 'headTable'}
           style={headStyle}
           onMouseOver={this.detectScrollTarget}
+          onTouchStart={this.detectScrollTarget}
           onScroll={this.handleBodyScroll}>
           {renderTable(true, false)}
         </div>
@@ -416,6 +417,7 @@ const Table = React.createClass({
         style={bodyStyle}
         ref="bodyTable"
         onMouseOver={this.detectScrollTarget}
+        onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}>
         {renderTable(!useFixedHeader)}
       </div>
@@ -438,6 +440,7 @@ const Table = React.createClass({
             className={`${prefixCls}-body-inner`}
             ref={refName}
             onMouseOver={this.detectScrollTarget}
+            onTouchStart={this.detectScrollTarget}
             onScroll={this.handleBodyScroll}>
             {renderTable(!useFixedHeader)}
           </div>
