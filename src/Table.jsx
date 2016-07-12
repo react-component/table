@@ -74,10 +74,8 @@ const Table = React.createClass({
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
-        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
-          expandedRowKeys.push(this.getRowKey(row));
-          rows = rows.concat(row[props.childrenColumnName]);
-        }
+        expandedRowKeys.push(this.getRowKey(row));
+        rows = rows.concat(row[props.childrenColumnName] || []);
       }
     } else {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
