@@ -28,10 +28,10 @@ export function measureScrollbar() {
 
 export function debounce(func, wait, immediate) {
   let timeout;
-  return function() {
+  return () => {
     const context = this;
     const args = arguments;
-    const later = function() {
+    const later = () => {
       timeout = null;
       if (!immediate) {
         func.apply(context, args);

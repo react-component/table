@@ -103,7 +103,7 @@ const Table = React.createClass({
     this.syncFixedTableRowHeight();
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
     if (isAnyColumnsFixed) {
-      this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 200));
+      this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 150));
     }
   },
 
