@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
-import { measureScrollbar } from './utils';
+import { measureScrollbar, debounce } from './utils';
+import shallowequal from 'shallowequal';
+import addEventListener from 'rc-util/lib/Dom/addEventListener';
 
 const Table = React.createClass({
   propTypes: {
@@ -97,15 +99,8 @@ const Table = React.createClass({
     if (this.refs.bodyTable) {
       this.refs.bodyTable.scrollLeft = 0;
     }
-    const { prefixCls } = this.props;
-    const rows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`);
-
-    const fixedColumnsRowsHeight = [].map.call(
-      rows, row => row.getBoundingClientRect().height || 'auto'
-    );
-    this.timer = setTimeout(() => {
-      this.setState({ fixedColumnsRowsHeight });
-    });
+    this.syncFixedTableRowHeight();
+    this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 200));
   },
 
   componentWillReceiveProps(nextProps) {
@@ -121,8 +116,15 @@ const Table = React.createClass({
     }
   },
 
+  componentDidUpdate() {
+    this.syncFixedTableRowHeight();
+  },
+
   componentWillUnmount() {
     clearTimeout(this.timer);
+    if (this.resizeEvent) {
+      this.resizeEvent.remove();
+    }
   },
 
   onExpandedRowsChange(expandedRowKeys) {
@@ -476,6 +478,21 @@ const Table = React.createClass({
     }
     this.setState({
       currentColumnsPage: page,
+    });
+  },
+
+  syncFixedTableRowHeight() {
+    const { prefixCls } = this.props;
+    const rows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`);
+
+    const fixedColumnsRowsHeight = [].map.call(
+      rows, row => row.getBoundingClientRect().height || 'auto'
+    );
+    if (shallowequal(this.state.fixedColumnsRowsHeight, fixedColumnsRowsHeight)) {
+      return;
+    }
+    this.timer = setTimeout(() => {
+      this.setState({ fixedColumnsRowsHeight });
     });
   },
 
