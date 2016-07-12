@@ -118,6 +118,11 @@ const Table = React.createClass({
         expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
+    if (nextProps.columns !== this.props.columns) {
+      delete this.isAnyColumnsFixed;
+      delete this.isAnyColumnsLeftFixed;
+      delete this.isAnyColumnsRightFixed;
+    }
   },
 
   componentDidUpdate() {
@@ -560,17 +565,29 @@ const Table = React.createClass({
   },
 
   isAnyColumnsFixed() {
-    return this.getCurrentColumns().some(column => !!column.fixed);
+    if ('isAnyColumnsFixed' in this) {
+      return this.isAnyColumnsFixed;
+    }
+    this.isAnyColumnsFixed = this.getCurrentColumns().some(column => !!column.fixed);
+    return this.isAnyColumnsFixed;
   },
 
   isAnyColumnsLeftFixed() {
-    return this.getCurrentColumns().some(
+    if ('isAnyColumnsLeftFixed' in this) {
+      return this.isAnyColumnsLeftFixed;
+    }
+    this.isAnyColumnsLeftFixed = this.getCurrentColumns().some(
       column => column.fixed === 'left' || column.fixed === true
     );
+    return this.isAnyColumnsLeftFixed;
   },
 
   isAnyColumnsRightFixed() {
-    return this.getCurrentColumns().some(column => column.fixed === 'right');
+    if ('isAnyColumnsRightFixed' in this) {
+      return this.isAnyColumnsRightFixed;
+    }
+    this.isAnyColumnsRightFixed = this.getCurrentColumns().some(column => column.fixed === 'right');
+    return this.isAnyColumnsRightFixed;
   },
 
   handleBodyScroll(e) {
