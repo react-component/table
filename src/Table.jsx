@@ -119,9 +119,9 @@ const Table = React.createClass({
       });
     }
     if (nextProps.columns !== this.props.columns) {
-      delete this.isAnyColumnsFixed;
-      delete this.isAnyColumnsLeftFixed;
-      delete this.isAnyColumnsRightFixed;
+      delete this.isAnyColumnsFixedCache;
+      delete this.isAnyColumnsLeftFixedCache;
+      delete this.isAnyColumnsRightFixedCache;
     }
   },
 
@@ -565,29 +565,29 @@ const Table = React.createClass({
   },
 
   isAnyColumnsFixed() {
-    if ('isAnyColumnsFixed' in this) {
-      return this.isAnyColumnsFixed;
+    if ('isAnyColumnsFixedCache' in this) {
+      return this.isAnyColumnsFixedCache;
     }
-    this.isAnyColumnsFixed = this.getCurrentColumns().some(column => !!column.fixed);
-    return this.isAnyColumnsFixed;
+    this.isAnyColumnsFixedCache = this.getCurrentColumns().some(column => !!column.fixed);
+    return this.isAnyColumnsFixedCache;
   },
 
   isAnyColumnsLeftFixed() {
-    if ('isAnyColumnsLeftFixed' in this) {
-      return this.isAnyColumnsLeftFixed;
+    if ('isAnyColumnsLeftFixedCache' in this) {
+      return this.isAnyColumnsLeftFixedCache;
     }
-    this.isAnyColumnsLeftFixed = this.getCurrentColumns().some(
+    this.isAnyColumnsLeftFixedCache = this.getCurrentColumns().some(
       column => column.fixed === 'left' || column.fixed === true
     );
-    return this.isAnyColumnsLeftFixed;
+    return this.isAnyColumnsLeftFixedCache;
   },
 
   isAnyColumnsRightFixed() {
-    if ('isAnyColumnsRightFixed' in this) {
-      return this.isAnyColumnsRightFixed;
+    if ('isAnyColumnsRightFixedCache' in this) {
+      return this.isAnyColumnsRightFixedCache;
     }
-    this.isAnyColumnsRightFixed = this.getCurrentColumns().some(column => column.fixed === 'right');
-    return this.isAnyColumnsRightFixed;
+    this.isAnyColumnsRightFixedCache = this.getCurrentColumns().some(column => column.fixed === 'right');
+    return this.isAnyColumnsRightFixedCache;
   },
 
   handleBodyScroll(e) {
