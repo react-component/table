@@ -19818,10 +19818,8 @@
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
-	        if (row[props.childrenColumnName] && row[props.childrenColumnName].length > 0) {
-	          expandedRowKeys.push(this.getRowKey(row));
-	          rows = rows.concat(row[props.childrenColumnName]);
-	        }
+	        expandedRowKeys.push(this.getRowKey(row));
+	        rows = rows.concat(row[props.childrenColumnName] || []);
 	      }
 	    } else {
 	      expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
@@ -19863,9 +19861,9 @@
 	      });
 	    }
 	    if (nextProps.columns !== this.props.columns) {
-	      delete this.isAnyColumnsFixed;
-	      delete this.isAnyColumnsLeftFixed;
-	      delete this.isAnyColumnsRightFixed;
+	      delete this.isAnyColumnsFixedCache;
+	      delete this.isAnyColumnsLeftFixedCache;
+	      delete this.isAnyColumnsRightFixedCache;
 	    }
 	  },
 	
@@ -20298,7 +20296,7 @@
 	
 	    var prefixCls = this.props.prefixCls;
 	
-	    var headRows = this.refs.headTable.querySelectorAll('tr') || [];
+	    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('tr') : [];
 	    var bodyRows = this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row') || [];
 	    var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
 	      return row.getBoundingClientRect().height || 'auto';
@@ -20381,33 +20379,33 @@
 	  },
 	
 	  isAnyColumnsFixed: function isAnyColumnsFixed() {
-	    if ('isAnyColumnsFixed' in this) {
-	      return this.isAnyColumnsFixed;
+	    if ('isAnyColumnsFixedCache' in this) {
+	      return this.isAnyColumnsFixedCache;
 	    }
-	    this.isAnyColumnsFixed = this.getCurrentColumns().some(function (column) {
+	    this.isAnyColumnsFixedCache = this.getCurrentColumns().some(function (column) {
 	      return !!column.fixed;
 	    });
-	    return this.isAnyColumnsFixed;
+	    return this.isAnyColumnsFixedCache;
 	  },
 	
 	  isAnyColumnsLeftFixed: function isAnyColumnsLeftFixed() {
-	    if ('isAnyColumnsLeftFixed' in this) {
-	      return this.isAnyColumnsLeftFixed;
+	    if ('isAnyColumnsLeftFixedCache' in this) {
+	      return this.isAnyColumnsLeftFixedCache;
 	    }
-	    this.isAnyColumnsLeftFixed = this.getCurrentColumns().some(function (column) {
+	    this.isAnyColumnsLeftFixedCache = this.getCurrentColumns().some(function (column) {
 	      return column.fixed === 'left' || column.fixed === true;
 	    });
-	    return this.isAnyColumnsLeftFixed;
+	    return this.isAnyColumnsLeftFixedCache;
 	  },
 	
 	  isAnyColumnsRightFixed: function isAnyColumnsRightFixed() {
-	    if ('isAnyColumnsRightFixed' in this) {
-	      return this.isAnyColumnsRightFixed;
+	    if ('isAnyColumnsRightFixedCache' in this) {
+	      return this.isAnyColumnsRightFixedCache;
 	    }
-	    this.isAnyColumnsRightFixed = this.getCurrentColumns().some(function (column) {
+	    this.isAnyColumnsRightFixedCache = this.getCurrentColumns().some(function (column) {
 	      return column.fixed === 'right';
 	    });
-	    return this.isAnyColumnsRightFixed;
+	    return this.isAnyColumnsRightFixedCache;
 	  },
 	
 	  handleBodyScroll: function handleBodyScroll(e) {
