@@ -28,6 +28,7 @@ const Table = React.createClass({
     columnsPageSize: PropTypes.number,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
+    title: PropTypes.func,
     footer: PropTypes.func,
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
@@ -464,6 +465,15 @@ const Table = React.createClass({
     return <span>{headTable}{BodyTable}</span>;
   },
 
+  getTitle() {
+    const { title, prefixCls } = this.props;
+    return title ? (
+      <div className={`${prefixCls}-title`}>
+        {title(this.state.data)}
+      </div>
+    ) : null;
+  },
+
   getFooter() {
     const { footer, prefixCls } = this.props;
     return footer ? (
@@ -656,18 +666,21 @@ const Table = React.createClass({
 
     return (
       <div className={className} style={props.style}>
-        {this.isAnyColumnsLeftFixed() &&
-        <div className={`${prefixCls}-fixed-left`}>
-          {this.getLeftFixedTable()}
-        </div>}
-        <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
-          {this.getTable()}
-          {this.getFooter()}
+        {this.getTitle()}
+        <div className={`${prefixCls}-content`}>
+          {this.isAnyColumnsLeftFixed() &&
+          <div className={`${prefixCls}-fixed-left`}>
+            {this.getLeftFixedTable()}
+          </div>}
+          <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
+            {this.getTable()}
+            {this.getFooter()}
+          </div>
+          {this.isAnyColumnsRightFixed() &&
+          <div className={`${prefixCls}-fixed-right`}>
+            {this.getRightFixedTable()}
+          </div>}
         </div>
-        {this.isAnyColumnsRightFixed() &&
-        <div className={`${prefixCls}-fixed-right`}>
-          {this.getRightFixedTable()}
-        </div>}
       </div>
     );
   },
