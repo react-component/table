@@ -1,6 +1,6 @@
 # rc-table
 
-react table component
+React table component.
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -26,7 +26,6 @@ react table component
 
 [![rc-table](https://nodei.co/npm/rc-table.png)](https://npmjs.org/package/rc-table)
 
-
 ## Development
 
 ```
@@ -43,45 +42,27 @@ online example: http://react-component.github.io/table/examples/
 ## Usage
 
 ```js
-var React = require('react');
-var Table = require('rc-table');
-require('rc-table/assets/index.css');
+import Table from 'rc-table';
 
-var columns = [
-  {title: '表头1', dataIndex: 'a', colSpan: 2,key:'a',width: 100},
-  {id: '123', title: '表头2', dataIndex: 'b', colSpan: 0,key:'b', width: 100, render: function(o, row, index){
-      let obj ={
-        children:o,
-        props:{}
-      }
-      if(index === 0){
-        obj.props.rowSpan = 2;
-      }
-      if(index === 1){
-        obj.props.rowSpan = 0;
-      }
-      return obj;
-    }},
-  {title: '表头3', dataIndex: 'c',  key:'c',width: 200},
-  {
-    title: '操作', dataIndex: '',  key:'d',render: function () {
-    return <a href="#">操作</a>
-  }
-  }
+var columns = [{
+  title: '表头1', dataIndex: 'a', key:'a', width: 100,
+}, {
+  title: '表头2', dataIndex: 'b', key:'b', width: 100,
+}, {
+  title: '表头3', dataIndex: 'c', key:'c', width: 200,
+}, {
+  title: '操作', dataIndex: '', key:'d', render: () => <a href="#">操作</a>,
+}];
+
+const data = [
+  { a: '123', b: '123', c: '123', key:'1' },
+  { a: '123', b: '123', c: '123', key:'2' },
+  { a: '123', b: '123', c: '123', key:'3' },
 ];
 
-var data = [{a: '123',key:'1'}, {a: 'cdd', b: 'edd',key:'2'}, {a: '1333', c: 'eee', d: 2,key:'3'}];
-
-var table = React.render(
-  <div>
-    <h2>simple table</h2>
-    <Table columns={columns}
-      data={data}
-      className="table"/>
-  </div>,
-  document.getElementById('__react-content')
-);
+React.render(<Table columns={columns} data={data} />, mountNode);
 ```
+
 ## API
 
 ### property
@@ -307,14 +288,6 @@ var table = React.render(
       </tr>
     </tbody>
 </table>
-
-## Test Case
-
-http://localhost:8000/tests/runner.html?coverage
-
-## Coverage
-
-http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8000/tests/runner.html?coverage
 
 ## License
 
