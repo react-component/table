@@ -8,9 +8,9 @@ const data = [];
 for (let i = 0; i < 10; i++) {
   data.push({
     key: i,
-    a: `a{i}`,
-    b: `b{i}`,
-    c: `c{i}`,
+    a: `a${i}`,
+    b: `b${i}`,
+    c: `c${i}`,
   });
 }
 
