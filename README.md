@@ -90,12 +90,6 @@ React.render(<Table columns={columns} data={data} />, mountNode);
           <td>additional className</td>
       </tr>
       <tr>
-         <td>colSpan</td>
-         <td>Number</td>
-         <th></th>
-         <td>thead colSpan of this column</td>
-      </tr>
-      <tr>
           <td>useFixedHeader</td>
           <td>Boolean</td>
           <th>false</th>
@@ -225,6 +219,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
           <td>table footer render function</td>
       </tr>
       <tr>
+          <td>getBodyWrapper</td>
+          <td>Function(body)</td>
+          <th></th>
+          <td>get wrapper of tbody, [demoe](http://react-component.github.io/table/examples/animation.html)</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>
@@ -251,6 +251,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
                       <td>String</td>
                       <th></th>
                       <td>className of this column</td>
+                  </tr>
+                  <tr>
+                     <td>colSpan</td>
+                     <td>Number</td>
+                     <th></th>
+                     <td>thead colSpan of this column</td>
                   </tr>
                   <tr>
                       <td>title</td>
@@ -280,7 +286,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
                       <td>render</td>
                       <td>Function(value, row, index)</td>
                       <th></th>
-                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{children: value, props:{colSpan: 1, rowSpan:1}}==>'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
+                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
                   </tr>
                 </tbody>
             </table>
