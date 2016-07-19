@@ -232,6 +232,12 @@ var table = React.render(
           <td>whether table head is shown</td>
       </tr>
       <tr>
+          <td>title</td>
+          <td>Function(currentData)</td>
+          <th></th>
+          <td>table title render function</td>
+      </tr>
+      <tr>
           <td>footer</td>
           <td>Function(currentData)</td>
           <th></th>
