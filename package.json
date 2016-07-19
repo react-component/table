@@ -54,7 +54,8 @@
     "rc-tools": "5.x",
     "react": "~0.14.0",
     "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "rc-animate": "^2.3.0"
   },
   "pre-commit": [
     "lint"
