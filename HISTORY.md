@@ -1,6 +1,12 @@
 # History
 ----
 
+## 4.4.0 / 2016-07-19
+
+- Add `title` prop [demo](http://react-component.github.io/table/examples/title-and-footer.html)
+- Add `getBodyWrapper` prop [demo](http://react-component.github.io/table/examples/animation.html)
+- Use `maxHeight` for fixed-header Table [#65](https://github.com/react-component/table/issues/65)
+
 ## 4.3.0 / 2016-06-20
 
 - support `rowKey="uid"`
