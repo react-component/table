@@ -4,12 +4,12 @@ const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
-const onRowClick = function(record, index) {
-  console.log(`u click the nth(${index}) element of yourFather.children, record.name: ${record.name}`);
+const onRowClick = (record, index) => {
+  console.log(`click nth(${index}) element of parent, record.name: ${record.name}`);
 };
 
-const onOperationClick = function(text, record) {
-  console.log(`u click ${text}, record.name is ${record.name}`);
+const onOperationClick = (text, record) => {
+  console.log(`click ${text}, record.name is ${record.name}`);
 };
 
 const columns = [{
@@ -22,7 +22,11 @@ const columns = [{
   dataIndex: 'age',
   key: 'age',
   width: 100,
-  render: (text, record) => <a href="#" onClick={onOperationClick.bind(null, text, record)}>Alert: {text}, click will pop to row click</a>,
+  render: (text, record) => (
+    <a href="#" onClick={onOperationClick.bind(null, text, record)}>
+      Alert: {text}, click will pop to row click
+    </a>
+  ),
 }, {
   title: '住址',
   dataIndex: 'address',
@@ -82,6 +86,6 @@ const data = [{
 }];
 
 ReactDOM.render(
-  <Table columns={columns} data={data} onRowClick={onRowClick}/>,
+  <Table columns={columns} data={data} onRowClick={onRowClick} />,
   document.getElementById('__react-content')
 );

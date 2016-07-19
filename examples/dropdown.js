@@ -12,14 +12,10 @@ const data = [];
 for (let i = 0; i < 10; i++) {
   data.push({
     key: i,
-    a: 'a' + i,
-    b: 'b' + i,
-    c: 'c' + i,
+    a: `a{i}`,
+    b: `b{i}`,
+    c: `c{i}`,
   });
-}
-
-function getRowKey(record) {
-  return record.key;
 }
 
 const Test = React.createClass({
@@ -31,9 +27,7 @@ const Test = React.createClass({
   },
 
   handleVisibleChange(visible) {
-    this.setState({
-      visible: visible,
-    });
+    this.setState({ visible });
   },
 
   handleSelect(selected) {
@@ -56,7 +50,12 @@ const Test = React.createClass({
 
   render() {
     const menu = (
-      <Menu style={{width: 200}} multiple onSelect={this.handleSelect} onDeselect={this.handleDeselect}>
+      <Menu
+        style={{ width: 200 }}
+        multiple
+        onSelect={this.handleSelect}
+        onDeselect={this.handleDeselect}
+      >
         <Menu.Item key="1">one</Menu.Item>
         <Menu.Item key="2">two</Menu.Item>
         <Menu.Item key="3">three</Menu.Item>
@@ -66,33 +65,41 @@ const Test = React.createClass({
             style={{
               cursor: 'pointer',
               color: '#000',
-              'pointerEvents': 'visible',
+              pointerEvents: 'visible',
             }}
-            onClick={this.confirmFilter}>确定</button>
+            onClick={this.confirmFilter}
+          >确定</button>
         </Menu.Item>
       </Menu>
     );
 
     const columns = [
       {
-        title: (<div>表头1
-          <DropDown trigger="click"
-            onVisibleChange={this.handleVisibleChange}
-            visible={this.state.visible}
-            closeOnSelect={false}
-            overlay={menu}>
-            <a href="#">filter</a>
-          </DropDown>
-        </div>), key: 'a', dataIndex: 'a', width: 100,
+        title: (
+          <div>
+            表头1
+            <DropDown
+              trigger="click"
+              onVisibleChange={this.handleVisibleChange}
+              visible={this.state.visible}
+              closeOnSelect={false}
+              overlay={menu}
+            >
+              <a href="#">filter</a>
+            </DropDown>
+          </div>
+        ), key: 'a', dataIndex: 'a', width: 100,
       },
-      {id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100},
-      {title: '表头3', key: 'c', dataIndex: 'c', width: 200},
+      { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: '表头3', key: 'c', dataIndex: 'c', width: 200 },
     ];
     return (
-      <Table columns={columns}
+      <Table
+        columns={columns}
         data={data}
-        rowKey={getRowKey}
-        className="table"/>
+        rowKey={record => record.key}
+        className="table"
+      />
     );
   },
 });

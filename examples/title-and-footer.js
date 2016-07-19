@@ -23,11 +23,12 @@ const data = [
 
 ReactDOM.render(
   <div>
-    <h2>hide table head</h2>
+    <h2>title and footer</h2>
     <Table
       columns={columns}
-      showHeader={false}
       data={data}
+      title={currentData => <div>Title: {currentData.length} items</div>}
+      footer={currentData => <div>Footer: {currentData.length} items</div>}
     />
   </div>,
   document.getElementById('__react-content')

@@ -61,9 +61,12 @@ const TableRow = React.createClass({
       let notRender = false;
 
       if (expandable) {
+        const expandClassName = expanded ? 'expanded' : 'collapsed';
         expandIcon = (
-          <span className={`${prefixCls}-expand-icon ${prefixCls}-${expanded ? 'expanded' : 'collapsed'}`}
-            onClick={props.onExpand.bind(null, !expanded, record)} />
+          <span
+            className={`${prefixCls}-expand-icon ${prefixCls}-${expandClassName}`}
+            onClick={props.onExpand.bind(null, !expanded, record)}
+          />
         );
       } else if (needIndentSpaced) {
         expandIcon = <span className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />;
@@ -73,8 +76,10 @@ const TableRow = React.createClass({
 
       if (expandIconAsCell && i === 0) {
         cells.push(
-          <td className={`${prefixCls}-expand-icon-cell`}
-            key="rc-table-expand-icon-cell">
+          <td
+            className={`${prefixCls}-expand-icon-cell`}
+            key="rc-table-expand-icon-cell"
+          >
             {expandIcon}
           </td>
         );
@@ -100,16 +105,20 @@ const TableRow = React.createClass({
       }
 
       const indentText = (
-        <span style={{paddingLeft: indentSize * indent + 'px'}}
-          className={`${prefixCls}-indent indent-level-${indent}`} />
+        <span
+          style={{ paddingLeft: `${indentSize * indent}px` }}
+          className={`${prefixCls}-indent indent-level-${indent}`}
+        />
       );
 
       if (!notRender) {
         cells.push(
-          <td key={col.key}
+          <td
+            key={col.key}
             colSpan={colSpan}
             rowSpan={rowSpan}
-            className={colClassName}>
+            className={colClassName}
+          >
             {isColumnHaveExpandIcon ? indentText : null}
             {isColumnHaveExpandIcon ? expandIcon : null}
             {text}
@@ -119,11 +128,13 @@ const TableRow = React.createClass({
     }
 
     return (
-      <tr onClick={onRowClick.bind(null, record, index)}
+      <tr
+        onClick={onRowClick.bind(null, record, index)}
         onMouseEnter={props.onHover.bind(null, true, hoverKey)}
         onMouseLeave={props.onHover.bind(null, false, hoverKey)}
         className={`${prefixCls} ${props.className} ${prefixCls}-level-${indent}`}
-        style={visible ? style : { ...style, display: 'none' }}>
+        style={visible ? style : { ...style, display: 'none' }}
+      >
         {cells}
       </tr>
     );

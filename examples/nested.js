@@ -4,9 +4,9 @@ const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 const columns = [
-  {title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100},
-  {title: 'Last Name', dataIndex: 'names.last', key: 'b', width: 100},
-  {title: 'Age', dataIndex: 'age', key: 'c', width: 100},
+  { title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 },
+  { title: 'Last Name', dataIndex: 'names.last', key: 'b', width: 100 },
+  { title: 'Age', dataIndex: 'age', key: 'c', width: 100 },
 ];
 
 const data = [{

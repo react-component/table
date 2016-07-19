@@ -19,7 +19,11 @@ class Demo extends React.Component {
       },
     ];
     this.state = {
-      data: [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', key: '3' }],
+      data: [
+        { a: '123', key: '1' },
+        { a: 'cdd', b: 'edd', key: '2' },
+        { a: '1333', c: 'eee', key: '3' },
+      ],
     };
   }
 

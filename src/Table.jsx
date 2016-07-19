@@ -73,7 +73,7 @@ const Table = React.createClass({
   getInitialState() {
     const props = this.props;
     let expandedRowKeys = [];
-    let rows = [ ...props.data ];
+    let rows = [...props.data];
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -104,7 +104,9 @@ const Table = React.createClass({
     this.syncFixedTableRowHeight();
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
     if (isAnyColumnsFixed) {
-      this.resizeEvent = addEventListener(window, 'resize', debounce(this.syncFixedTableRowHeight, 150));
+      this.resizeEvent = addEventListener(
+        window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
+      );
     }
   },
 
@@ -139,9 +141,7 @@ const Table = React.createClass({
 
   onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
-      this.setState({
-        expandedRowKeys: expandedRowKeys,
-      });
+      this.setState({ expandedRowKeys });
     }
     this.props.onExpandedRowsChange(expandedRowKeys);
   },
@@ -186,7 +186,7 @@ const Table = React.createClass({
   },
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, prefixCls} = this.props;
+    const { showHeader, expandIconAsCell, prefixCls } = this.props;
     let ths = [];
     if (expandIconAsCell && fixed !== 'right') {
       ths.push({
@@ -215,10 +215,13 @@ const Table = React.createClass({
     const prefixCls = this.props.prefixCls;
     return (
       <tr
-        key={key + '-extra-row'}
-        style={{display: visible ? '' : 'none'}}
-        className={`${prefixCls}-expanded-row ${className}`}>
-        {(this.props.expandIconAsCell && fixed !== 'right') ? <td key="rc-table-expand-icon-placeholder" /> : null}
+        key={`${key}-extra-row`}
+        style={{ display: visible ? '' : 'none' }}
+        className={`${prefixCls}-expanded-row ${className}`}
+      >
+        {(this.props.expandIconAsCell && fixed !== 'right')
+           ? <td key="rc-table-expand-icon-placeholder" />
+           : null}
         <td colSpan={this.props.columns.length}>
           {fixed !== 'right' ? content : '&nbsp;'}
         </td>
@@ -253,7 +256,7 @@ const Table = React.createClass({
       }
       let className = rowClassName(record, i);
       if (this.state.currentHoverKey === key) {
-        className += ' ' + props.prefixCls + '-row-hover';
+        className += ` ${props.prefixCls}-row-hover`;
       }
 
       const onHoverProps = {};
@@ -295,10 +298,14 @@ const Table = React.createClass({
       const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
-        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed));
+        rst.push(this.getExpandedRow(
+          key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed
+        ));
       }
       if (childrenColumn) {
-        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed));
+        rst = rst.concat(this.getRowsByData(
+          childrenColumn, subVisible, indent + 1, columns, fixed
+        ));
       }
     }
     return rst;
@@ -311,7 +318,12 @@ const Table = React.createClass({
   getColGroup(columns, fixed) {
     let cols = [];
     if (this.props.expandIconAsCell && fixed !== 'right') {
-      cols.push(<col className={`${this.props.prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col"></col>);
+      cols.push(
+        <col
+          className={`${this.props.prefixCls}-expand-icon-col`}
+          key="rc-table-expand-icon-col"
+        />
+      );
     }
     cols = cols.concat((columns || this.props.columns).map(c => {
       return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
@@ -335,7 +347,7 @@ const Table = React.createClass({
         }
         if (i < pageIndexStart || i > pageIndexEnd) {
           newColumn.className = newColumn.className || '';
-          newColumn.className += ' ' + prefixCls + '-column-hidden';
+          newColumn.className += ` ${prefixCls}-column-hidden`;
         }
         newColumn = this.wrapPageColumn(newColumn, (i === pageIndexStart), (i === pageIndexEnd));
       }
@@ -422,7 +434,8 @@ const Table = React.createClass({
           style={headStyle}
           onMouseOver={this.detectScrollTarget}
           onTouchStart={this.detectScrollTarget}
-          onScroll={this.handleBodyScroll}>
+          onScroll={this.handleBodyScroll}
+        >
           {renderTable(true, false)}
         </div>
       );
@@ -435,7 +448,8 @@ const Table = React.createClass({
         ref="bodyTable"
         onMouseOver={this.detectScrollTarget}
         onTouchStart={this.detectScrollTarget}
-        onScroll={this.handleBodyScroll}>
+        onScroll={this.handleBodyScroll}
+      >
         {renderTable(!useFixedHeader)}
       </div>
     );
@@ -452,13 +466,15 @@ const Table = React.createClass({
       BodyTable = (
         <div
           className={`${prefixCls}-body-outer`}
-          style={{ ...bodyStyle }}>
+          style={{ ...bodyStyle }}
+        >
           <div
             className={`${prefixCls}-body-inner`}
             ref={refName}
             onMouseOver={this.detectScrollTarget}
             onTouchStart={this.detectScrollTarget}
-            onScroll={this.handleBodyScroll}>
+            onScroll={this.handleBodyScroll}
+          >
             {renderTable(!useFixedHeader)}
           </div>
         </div>
@@ -551,11 +567,11 @@ const Table = React.createClass({
     const nextHandler = <span className={nextHandlerCls} onClick={this.nextColumnsPage}></span>;
     if (hasPrev) {
       column.title = <span>{prevHandler}{column.title}</span>;
-      column.className = (column.className || '') + ` ${prefixCls}-column-has-prev`;
+      column.className = `${column.className || ''} ${prefixCls}-column-has-prev`;
     }
     if (hasNext) {
       column.title = <span>{column.title}{nextHandler}</span>;
-      column.className = (column.className || '') + ` ${prefixCls}-column-has-next`;
+      column.className = `${column.className || ''} ${prefixCls}-column-has-next`;
     }
     return column;
   },
@@ -597,7 +613,9 @@ const Table = React.createClass({
     if ('isAnyColumnsRightFixedCache' in this) {
       return this.isAnyColumnsRightFixedCache;
     }
-    this.isAnyColumnsRightFixedCache = this.getCurrentColumns().some(column => column.fixed === 'right');
+    this.isAnyColumnsRightFixedCache = this.getCurrentColumns().some(
+      column => column.fixed === 'right'
+    );
     return this.isAnyColumnsRightFixedCache;
   },
 
@@ -618,7 +636,8 @@ const Table = React.createClass({
       if (e.target.scrollLeft === 0) {
         this.setState({ scrollPosition: 'left' });
       } else if (e.target.scrollLeft + 1 >=
-        e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
+        e.target.children[0].getBoundingClientRect().width -
+        e.target.getBoundingClientRect().width) {
         this.setState({ scrollPosition: 'right' });
       } else if (this.state.scrollPosition !== 'middle') {
         this.setState({ scrollPosition: 'middle' });
@@ -638,15 +657,9 @@ const Table = React.createClass({
   },
 
   handleRowHover(isHover, key) {
-    if (isHover) {
-      this.setState({
-        currentHoverKey: key,
-      });
-    } else {
-      this.setState({
-        currentHoverKey: null,
-      });
-    }
+    this.setState({
+      currentHoverKey: isHover ? key : null,
+    });
   },
 
   render() {
@@ -655,7 +668,7 @@ const Table = React.createClass({
 
     let className = props.prefixCls;
     if (props.className) {
-      className += ' ' + props.className;
+      className += ` ${props.className}`;
     }
     if (props.columnsPageRange) {
       className += ` ${prefixCls}-columns-paging`;
