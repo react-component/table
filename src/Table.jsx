@@ -32,7 +32,7 @@ const Table = React.createClass({
     footer: PropTypes.func,
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
-    rowWrapper: PropTypes.any,
+    getBodyWrapper: PropTypes.func,
   },
 
   getDefaultProps() {
@@ -66,6 +66,7 @@ const Table = React.createClass({
       rowRef() {
         return null;
       },
+      getBodyWrapper: body => body,
     };
   },
 
@@ -364,7 +365,7 @@ const Table = React.createClass({
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {}, rowWrapper } = this.props;
+    const { prefixCls, scroll = {}, getBodyWrapper } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -398,15 +399,16 @@ const Table = React.createClass({
           tableStyle.width = scroll.x;
         }
       }
-      let row = hasBody ? (<tbody className={`${prefixCls}-tbody`}>
-      {this.getRows(columns, fixed)}
-      </tbody>) : null;
-      row = rowWrapper && row ? rowWrapper(row) : row;
+      const tableBody = hasBody ? getBodyWrapper(
+        <tbody className={`${prefixCls}-tbody`}>
+          {this.getRows(columns, fixed)}
+        </tbody>
+      ) : null;
       return (
         <table className={tableClassName} style={tableStyle}>
           {this.getColGroup(columns, fixed)}
           {hasHead ? this.getHeader(columns, fixed) : null}
-          {row}
+          {tableBody}
         </table>
       );
     };
