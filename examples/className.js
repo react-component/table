@@ -1,23 +1,23 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(177);
+	module.exports = __webpack_require__(200);
 
 
 /***/ },
 
-/***/ 177:
+/***/ 200:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(176);
+	/* eslint-disable no-console,func-names,react/no-multi-comp */
+	var React = __webpack_require__(4);
+	var ReactDOM = __webpack_require__(38);
+	var Table = __webpack_require__(182);
+	__webpack_require__(197);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a',
 	  className: 'a',
@@ -39,37 +39,33 @@ webpackJsonp([1],{
 	
 	var data = [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', d: 2, key: '3' }];
 	
-	function rowClassName(record, i) {
-	  return 'row-' + i;
-	}
-	
-	function expandedRowClassName(record, i) {
-	  return 'ex-row-' + i;
-	}
-	
-	function expandedRowRender(record) {
-	  return React.createElement(
-	    'p',
-	    null,
-	    'extra: ',
-	    record.a
-	  );
-	}
-	
 	ReactDOM.render(React.createElement(
 	  'div',
 	  null,
 	  React.createElement(
 	    'h2',
 	    null,
-	    'simple table'
+	    'rowClassName and className'
 	  ),
-	  React.createElement(Table, { columns: columns,
-	    rowClassName: rowClassName,
-	    expandedRowRender: expandedRowRender,
-	    expandedRowClassName: expandedRowClassName,
+	  React.createElement(Table, {
+	    columns: columns,
+	    rowClassName: function rowClassName(record, i) {
+	      return 'row-' + i;
+	    },
+	    expandedRowRender: function expandedRowRender(record) {
+	      return React.createElement(
+	        'p',
+	        null,
+	        'extra: ',
+	        record.a
+	      );
+	    },
+	    expandedRowClassName: function expandedRowClassName(record, i) {
+	      return 'ex-row-' + i;
+	    },
 	    data: data,
-	    className: 'table' })
+	    className: 'table'
+	  })
 	), document.getElementById('__react-content'));
 
 /***/ }

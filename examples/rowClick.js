@@ -3,28 +3,28 @@ webpackJsonp([14],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(276);
+	module.exports = __webpack_require__(295);
 
 
 /***/ },
 
-/***/ 276:
+/***/ 295:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(176);
+	/* eslint-disable no-console,func-names,react/no-multi-comp */
+	var React = __webpack_require__(4);
+	var ReactDOM = __webpack_require__(38);
+	var Table = __webpack_require__(182);
+	__webpack_require__(197);
 	
 	var onRowClick = function onRowClick(record, index) {
-	  console.log('u click the nth(' + index + ') element of yourFather.children, record.name: ' + record.name);
+	  console.log('click nth(' + index + ') element of parent, record.name: ' + record.name);
 	};
 	
 	var onOperationClick = function onOperationClick(text, record) {
-	  console.log('u click ' + text + ', record.name is ' + record.name);
+	  console.log('click ' + text + ', record.name is ' + record.name);
 	};
 	
 	var columns = [{

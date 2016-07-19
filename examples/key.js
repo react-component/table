@@ -3,25 +3,24 @@ webpackJsonp([11],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(273);
+	module.exports = __webpack_require__(292);
 
 
 /***/ },
 
-/***/ 273:
+/***/ 292:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(176);
+	/* eslint-disable no-console,func-names,react/no-multi-comp */
+	var React = __webpack_require__(4);
+	var ReactDOM = __webpack_require__(38);
+	var Table = __webpack_require__(182);
+	__webpack_require__(197);
 	
 	var CheckBox = React.createClass({
 	  displayName: 'CheckBox',
-	
 	  render: function render() {
 	    var props = this.props;
 	    return React.createElement(
@@ -37,14 +36,10 @@ webpackJsonp([11],{
 	  displayName: 'MyTable',
 	
 	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	    var props = undefined.props;
 	    return {
 	      data: props.data
 	    };
-	  },
-	
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
 	  },
 	
 	  remove: function remove(index) {
@@ -54,18 +49,15 @@ webpackJsonp([11],{
 	      data: rows
 	    });
 	  },
-	
 	  handleClick: function handleClick(index) {
 	    var self = this;
 	    return function () {
 	      self.remove(index);
 	    };
 	  },
-	
 	  checkbox: function checkbox(a) {
 	    return React.createElement(CheckBox, { id: a });
 	  },
-	
 	  renderAction: function renderAction(o, row, index) {
 	    return React.createElement(
 	      'a',
@@ -73,11 +65,12 @@ webpackJsonp([11],{
 	      '删除'
 	    );
 	  },
-	
 	  render: function render() {
 	    var state = this.state;
 	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
-	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: this.getRowKey });
+	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: function rowKey(record) {
+	        return record.a;
+	      } });
 	  }
 	});
 	
@@ -91,7 +84,7 @@ webpackJsonp([11],{
 	    null,
 	    'specify key'
 	  ),
-	  React.createElement(MyTable, { data: data, className: 'table' })
+	  React.createElement(MyTable, { data: data })
 	), document.getElementById('__react-content'));
 
 /***/ }

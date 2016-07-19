@@ -3,60 +3,21 @@ webpackJsonp([19],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(281);
+	module.exports = __webpack_require__(300);
 
 
 /***/ },
 
-/***/ 281:
+/***/ 300:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(176);
-	
-	var MyTable = React.createClass({
-	  displayName: 'MyTable',
-	
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
-	    return {
-	      data: props.data
-	    };
-	  },
-	
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
-	  },
-	
-	  handleClick: function handleClick(record, e) {
-	    e.preventDefault();
-	    console.log(record.a);
-	  },
-	
-	  render: function render() {
-	    var _this = this;
-	
-	    var state = this.state;
-	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
-	      title: '操作', dataIndex: '', key: 'x', render: function render(_, record) {
-	        return React.createElement(
-	          'a',
-	          { href: 'a', onClick: _this.handleClick.bind(null, record) },
-	          'click ',
-	          record.a
-	        );
-	      }
-	    }];
-	    return React.createElement(Table, { columns: columns,
-	      expandIconAsCell: true,
-	      data: state.data, className: 'table', rowKey: this.getRowKey });
-	  }
-	});
+	/* eslint-disable no-console,func-names,react/no-multi-comp */
+	var React = __webpack_require__(4);
+	var ReactDOM = __webpack_require__(38);
+	var Table = __webpack_require__(182);
+	__webpack_require__(197);
 	
 	var data = [{
 	  a: 'a1'
@@ -76,16 +37,48 @@ webpackJsonp([19],{
 	  d: 'd3'
 	}];
 	
-	ReactDOM.render(React.createElement(
-	  'div',
-	  null,
-	  React.createElement(
-	    'h2',
-	    null,
-	    'sub table'
-	  ),
-	  React.createElement(MyTable, { data: data, className: 'table' })
-	), document.getElementById('__react-content'));
+	var MyTable = React.createClass({
+	  displayName: 'MyTable',
+	  handleClick: function handleClick(record, e) {
+	    e.preventDefault();
+	    console.log(record.a);
+	  },
+	  render: function render() {
+	    var _this = this;
+	
+	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
+	      title: '操作', dataIndex: '', key: 'x', render: function render(text, record) {
+	        return React.createElement(
+	          'a',
+	          { href: '#', onClick: function onClick(e) {
+	              return _this.handleClick(record, e);
+	            } },
+	          'click ',
+	          record.a
+	        );
+	      }
+	    }];
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'sub table'
+	      ),
+	      React.createElement(Table, {
+	        columns: columns,
+	        expandIconAsCell: true,
+	        data: data,
+	        rowKey: function rowKey(record) {
+	          return record.a;
+	        }
+	      })
+	    );
+	  }
+	});
+	
+	ReactDOM.render(React.createElement(MyTable, null), document.getElementById('__react-content'));
 
 /***/ }
 

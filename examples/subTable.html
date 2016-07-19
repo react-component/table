@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <title>subTable.js - example - rc-table@4.3.9</title>
+  <title>subTable.js - example - rc-table@4.4.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,61 +251,24 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-table@4.3.9</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-table@4.4.0</h1>
 
-    <p>table ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="subTable.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console,func-names,react/no-multi-comp */</span>
+      <p>table ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
+
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console,func-names,react/no-multi-comp */</span>
 <span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
-
-<span class="hljs-keyword">const</span> MyTable = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> {
-      data: props.data,
-    };
-  },
-
-  getRowKey(record) {
-    <span class="hljs-keyword">return</span> record.a;
-  },
-
-  handleClick(record, e) {
-    e.preventDefault();
-    <span class="hljs-built_in">console</span>.log(record.a);
-  },
-
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">const</span> state = <span class="hljs-keyword">this</span>.state;
-    <span class="hljs-keyword">const</span> columns = [
-      {title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>},
-      {title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>},
-      {title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>},
-      {
-        title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: (_, record) =&gt; {
-          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"a"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleClick.bind(null,</span> <span class="hljs-attribute">record</span>)}&gt;</span>click {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
-        },
-      },
-    ];
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-             <span class="hljs-attribute">expandIconAsCell</span>
-             <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{this.getRowKey}</span>/&gt;</span>
-    )</span>;
-  },
-});
 
 <span class="hljs-keyword">const</span> data = [
   {
@@ -332,21 +295,48 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   },
 ];
 
-ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>sub table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>/&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
-);
+<span class="hljs-keyword">const</span> MyTable = React.createClass({
+  handleClick(record, e) {
+    e.preventDefault();
+    <span class="hljs-built_in">console</span>.log(record.a);
+  },
+  render() {
+    <span class="hljs-keyword">const</span> columns = [
+      { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
+      { title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
+      { title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
+      {
+        title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: (text, record) =&gt; {
+          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> this.handleClick(record, e)}&gt;click {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+        },
+      },
+    ];
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>sub table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
+          <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
+          <span class="hljs-attribute">expandIconAsCell</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
+          <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{record</span> =&gt;</span> record.a}
+        /&gt;
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>;
+  },
+});
+
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
-</div>
-<a href="http://github.com/react-component/table">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="http://github.com/react-component/table">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="subTable.js?nowrap"></script>
 </body>
 
 </html>

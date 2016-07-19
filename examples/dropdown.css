@@ -105,6 +105,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   display: block !important;
   opacity: 0;
@@ -119,6 +120,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
           transform-origin: 0 0;
   display: block !important;
   opacity: 1;

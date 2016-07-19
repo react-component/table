@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>fixedColumnsAndHeaderSyncRowHeight.js - example - rc-table@4.4.0</title>
+  <title>animation.js - example - rc-table@4.4.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -252,7 +252,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
   
-  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="common.css" /><link rel="stylesheet" href="animation.css" />
 </head>
 
 <body>
@@ -268,41 +268,75 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
+<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/animation.css'</span>);
 
-<span class="hljs-keyword">const</span> columns = [
-  { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
-  { title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
-  { title: <span class="hljs-string">'表头表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span> },
-  { title: <span class="hljs-string">'表头4'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头5'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头6'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'f'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头7'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'g'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头8'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'h'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'表头12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'right'</span> },
-];
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  constructor(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.columns = [
+      { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
+      { id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
+      { title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
+      {
+        title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'d'</span>, render: (text, record) =&gt;
+        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> this.onDelete(record.key, e)} href="#"&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
+      },
+    ];
+    this.state = {
+      data: [
+        { a: '123', key: '1' },
+        { a: 'cdd', b: 'edd', key: '2' },
+        { a: '1333', c: 'eee', key: '3' },
+      ],
+    };
+  }
 
-<span class="hljs-keyword">const</span> data = [
-  { a: <span class="hljs-string">'aaa'</span>, b: <span class="hljs-string">'bbb'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'1'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, b: <span class="hljs-string">'bbb'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'2'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'4'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'5'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'6'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'7'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'8'</span> },
-  { a: <span class="hljs-string">'aaa'</span>, c: <span class="hljs-string">'内容内容内容内容内容'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'9'</span> },
-];
+  onDelete(key, e) {
+    console.log('Delete', key);
+    e.preventDefault();
+    const data = this.state.data.filter(item =&gt; item.key !== key);
+    this.setState({ data });
+  }
 
+  onAdd() {
+    const data = [...this.state.data];
+    data.push({
+      a: 'new data',
+      b: 'new data',
+      c: 'new data',
+      key: Date.now(),
+    });
+    this.setState({ data });
+  }
+
+  getBodyWrapper(body) {
+    return (
+      <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"move"</span> <span class="hljs-attribute">component</span>=<span class="hljs-value">"tbody"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">{body.props.className}</span>&gt;</span>
+        {body.props.children}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
+    )</span>;
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">margin:</span> <span class="hljs-attribute">20</span> }}&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Table row with animation<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> this.onAdd()}&gt;添加<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
+          <span class="hljs-attribute">columns</span>=<span class="hljs-value">{this.columns}</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">{this.state.data}</span>
+          <span class="hljs-attribute">getBodyWrapper</span>=<span class="hljs-value">{this.getBodyWrapper}</span>
+        /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>;
+  }
+}
 ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Fixed columns and header, resize window for test<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">scroll</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">x:</span> '<span class="hljs-attribute">150</span>%', <span class="hljs-attribute">y:</span> <span class="hljs-attribute">300</span> }} <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-, document.getElementById('__react-content'));
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>,
+  document.getElementById('__react-content')
+);
 </span></code></pre></div>
   </div>
   <a href="http://github.com/react-component/table">
@@ -313,7 +347,7 @@ ReactDOM.render(
   </a>
   
   <script src="common.js?nowrap"></script>
-  <script src="fixedColumnsAndHeaderSyncRowHeight.js?nowrap"></script>
+  <script src="animation.js?nowrap"></script>
 </body>
 
 </html>

@@ -1,23 +1,23 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(267);
+	module.exports = __webpack_require__(287);
 
 
 /***/ },
 
-/***/ 267:
+/***/ 287:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(159);
-	var Table = __webpack_require__(160);
-	__webpack_require__(176);
+	/* eslint-disable no-console,func-names,react/no-multi-comp */
+	var React = __webpack_require__(4);
+	var ReactDOM = __webpack_require__(38);
+	var Table = __webpack_require__(182);
+	__webpack_require__(197);
 	
 	var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' }, { title: '表头3', dataIndex: 'c', key: 'c' }, { title: '表头4', dataIndex: 'b', key: 'd' }, { title: '表头5', dataIndex: 'b', key: 'e' }, { title: '表头6', dataIndex: 'b', key: 'f' }, { title: '表头7', dataIndex: 'b', key: 'g' }, { title: '表头8', dataIndex: 'b', key: 'h' }, { title: '表头9', dataIndex: 'b', key: 'i' }, { title: '表头10', dataIndex: 'b', key: 'j' }, { title: '表头11', dataIndex: 'b', key: 'k' }, { title: '表头12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' }];
 	
@@ -31,9 +31,15 @@ webpackJsonp([5],{
 	    null,
 	    'Fixed columns'
 	  ),
-	  React.createElement(Table, { columns: columns, expandedRowRender: function (record) {
+	  React.createElement(Table, {
+	    columns: columns,
+	    expandedRowRender: function expandedRowRender(record) {
 	      return record.title;
-	    }, expandIconAsCell: true, scroll: { x: 1200 }, data: data })
+	    },
+	    expandIconAsCell: true,
+	    scroll: { x: 1200 },
+	    data: data
+	  })
 	), document.getElementById('__react-content'));
 
 /***/ }
