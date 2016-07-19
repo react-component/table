@@ -389,7 +389,13 @@ const Table = React.createClass({
     }
 
     if (scroll.y) {
-      bodyStyle.height = bodyStyle.height || scroll.y;
+      // maxHeight will make fixed-Table scrolling not working
+      // so we only set maxHeight to body-Table here
+      if (fixed) {
+        bodyStyle.height = bodyStyle.height || scroll.y;
+      } else {
+        bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+      }
       bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
       useFixedHeader = true;
 
