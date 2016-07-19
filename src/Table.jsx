@@ -18,6 +18,7 @@ const Table = React.createClass({
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     rowClassName: PropTypes.func,
+    expandedRowRender: PropTypes.func,
     expandedRowClassName: PropTypes.func,
     childrenColumnName: PropTypes.string,
     onExpand: PropTypes.func,
@@ -46,6 +47,8 @@ const Table = React.createClass({
       rowKey: 'key',
       rowClassName() {
         return '';
+      },
+      expandedRowRender() {
       },
       expandedRowClassName() {
         return '';
@@ -280,7 +283,7 @@ const Table = React.createClass({
           index={i}
           visible={visible}
           onExpand={this.onExpanded}
-          expandable={childrenColumn || expandedRowRender}
+          expandable={childrenColumn || expandedRowRender(record, i)}
           expanded={isRowExpanded}
           prefixCls={`${props.prefixCls}-row`}
           childrenColumnName={childrenColumnName}
