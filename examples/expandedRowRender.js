@@ -17,7 +17,7 @@ const CheckBox = React.createClass({
 });
 
 const MyTable = React.createClass({
-  getInitialState: () => {
+  getInitialState() {
     const props = this.props;
     return {
       data: props.data,
@@ -33,10 +33,6 @@ const MyTable = React.createClass({
     this.setState({
       expandedRowKeys: rows,
     });
-  },
-
-  getRowKey(record) {
-    return record.a;
   },
 
   toggleButton() {
@@ -95,15 +91,17 @@ const MyTable = React.createClass({
           onExpandedRowsChange={this.onExpandedRowsChange}
           onExpand={this.onExpand}
           data={state.data}
-          className="table"
-          rowKey={this.getRowKey}
         />
       </div>
     );
   },
 });
 
-const data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
+const data = [
+  { key: 0, a: '123' },
+  { key: 1, a: 'cdd', b: 'edd' },
+  { key: 2, a: '1333', c: 'eee', d: 2 },
+];
 
 ReactDOM.render(
   <div>

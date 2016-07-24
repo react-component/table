@@ -178,7 +178,7 @@ const Table = React.createClass({
     if (typeof rowKey === 'function') {
       return rowKey(record, index);
     }
-    return record[rowKey] || index;
+    return typeof record[rowKey] !== 'undefined' ? record[rowKey] : index;
   },
 
   getExpandedRows() {
