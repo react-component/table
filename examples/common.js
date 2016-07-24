@@ -21395,7 +21395,7 @@
 	    if (typeof rowKey === 'function') {
 	      return rowKey(record, index);
 	    }
-	    return record[rowKey] || index;
+	    return typeof record[rowKey] !== 'undefined' ? record[rowKey] : index;
 	  },
 	  getExpandedRows: function getExpandedRows() {
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;

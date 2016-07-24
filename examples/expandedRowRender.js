@@ -34,15 +34,13 @@ webpackJsonp([5],{
 	
 	var MyTable = React.createClass({
 	  displayName: 'MyTable',
-	
 	  getInitialState: function getInitialState() {
-	    var props = undefined.props;
+	    var props = this.props;
 	    return {
 	      data: props.data,
 	      expandedRowKeys: []
 	    };
 	  },
-	
 	  onExpand: function onExpand(expanded, record) {
 	    console.log('onExpand', expanded, record);
 	  },
@@ -50,9 +48,6 @@ webpackJsonp([5],{
 	    this.setState({
 	      expandedRowKeys: rows
 	    });
-	  },
-	  getRowKey: function getRowKey(record) {
-	    return record.a;
 	  },
 	  toggleButton: function toggleButton() {
 	    var _this = this;
@@ -122,15 +117,13 @@ webpackJsonp([5],{
 	        expandedRowKeys: this.state.expandedRowKeys,
 	        onExpandedRowsChange: this.onExpandedRowsChange,
 	        onExpand: this.onExpand,
-	        data: state.data,
-	        className: 'table',
-	        rowKey: this.getRowKey
+	        data: state.data
 	      })
 	    );
 	  }
 	});
 	
-	var data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
+	var data = [{ key: 0, a: '123' }, { key: 1, a: 'cdd', b: 'edd' }, { key: 2, a: '1333', c: 'eee', d: 2 }];
 	
 	ReactDOM.render(React.createElement(
 	  'div',

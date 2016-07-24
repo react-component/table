@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>expandedRowRender.js - example - rc-table@4.4.0</title>
+  <title>expandedRowRender.js - example - rc-table@4.4.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.4.0</h1>
+      <h1>rc-table@4.4.1</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -283,7 +283,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 });
 
 <span class="hljs-keyword">const</span> MyTable = React.createClass({
-  getInitialState: () =&gt; {
+  getInitialState() {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">return</span> {
       data: props.data,
@@ -299,10 +299,6 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">this</span>.setState({
       expandedRowKeys: rows,
     });
-  },
-
-  getRowKey(record) {
-    <span class="hljs-keyword">return</span> record.a;
   },
 
   toggleButton() {
@@ -361,15 +357,17 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           <span class="hljs-attribute">onExpandedRowsChange</span>=<span class="hljs-value">{this.onExpandedRowsChange}</span>
           <span class="hljs-attribute">onExpand</span>=<span class="hljs-value">{this.onExpand}</span>
           <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span>
-          <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>
-          <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{this.getRowKey}</span>
         /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
   },
 });
 
-<span class="hljs-keyword">const</span> data = [{ a: <span class="hljs-string">'123'</span> }, { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span> }, { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span> }];
+<span class="hljs-keyword">const</span> data = [
+  { key: <span class="hljs-number">0</span>, a: <span class="hljs-string">'123'</span> },
+  { key: <span class="hljs-number">1</span>, a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span> },
+  { key: <span class="hljs-number">2</span>, a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span> },
+];
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
