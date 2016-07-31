@@ -28,9 +28,13 @@ export function measureScrollbar() {
 
 export function debounce(func, wait, immediate) {
   let timeout;
-  return () => {
+  return function debounceFunc() {
     const context = this;
     const args = arguments;
+    // https://fb.me/react-event-pooling
+    if (args[0] && args[0].persist) {
+      args[0].persist();
+    }
     const later = () => {
       timeout = null;
       if (!immediate) {
