@@ -40,7 +40,7 @@ const MyTable = React.createClass({
       const closeAll = () => this.setState({ expandedRowKeys: [] });
       return <button onClick={closeAll}>关闭所有</button>;
     }
-    const openAll = () => this.setState({ expandedRowKeys: ['123', 'cdd', '1333'] });
+    const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
     return <button onClick={openAll}>展开全部</button>;
   },
 
