@@ -31,11 +31,11 @@ webpackJsonp([0],{
 	
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(38);
-	var Table = __webpack_require__(182);
+	var ReactDOM = __webpack_require__(40);
+	var Table = __webpack_require__(185);
 	
-	__webpack_require__(197);
-	__webpack_require__(198);
+	__webpack_require__(202);
+	__webpack_require__(203);
 	
 	var Demo = function (_React$Component) {
 	  _inherits(Demo, _React$Component);
@@ -146,13 +146,13 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ChildrenUtils = __webpack_require__(36);
+	var _ChildrenUtils = __webpack_require__(38);
 	
-	var _AnimateChild = __webpack_require__(37);
+	var _AnimateChild = __webpack_require__(39);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
-	var _util = __webpack_require__(181);
+	var _util = __webpack_require__(184);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -466,7 +466,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 36:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -589,7 +589,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 37:
+/***/ 39:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -604,15 +604,15 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _cssAnimation = __webpack_require__(177);
+	var _cssAnimation = __webpack_require__(180);
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
-	var _util = __webpack_require__(181);
+	var _util = __webpack_require__(184);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
@@ -672,7 +672,14 @@ webpackJsonp([0],{
 	    };
 	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
 	      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
-	      this.stopper = (0, _cssAnimation2["default"])(node, name, end);
+	      var activeName = name + '-active';
+	      if (nameIsObj && transitionName[animationType + 'Active']) {
+	        activeName = transitionName[animationType + 'Active'];
+	      }
+	      this.stopper = (0, _cssAnimation2["default"])(node, {
+	        name: name,
+	        active: activeName
+	      }, end);
 	    } else {
 	      this.stopper = props.animation[animationType](node, end);
 	    }
@@ -694,7 +701,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 177:
+/***/ 180:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -703,11 +710,13 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _Event = __webpack_require__(178);
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _Event = __webpack_require__(181);
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
-	var _componentClasses = __webpack_require__(179);
+	var _componentClasses = __webpack_require__(182);
 	
 	var _componentClasses2 = _interopRequireDefault(_componentClasses);
 	
@@ -721,7 +730,7 @@ webpackJsonp([0],{
 	'ms'];
 	var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 	
-	function getDuration(node, name) {
+	function getStyleProperty(node, name) {
 	  var style = window.getComputedStyle(node);
 	
 	  var ret = '';
@@ -736,9 +745,11 @@ webpackJsonp([0],{
 	
 	function fixBrowserByTimeout(node) {
 	  if (isCssAnimationSupported) {
-	    var transitionDuration = parseFloat(getDuration(node, 'transition-duration')) || 0;
-	    var animationDuration = parseFloat(getDuration(node, 'animation-duration')) || 0;
-	    var time = Math.max(transitionDuration, animationDuration);
+	    var transitionDelay = parseFloat(getStyleProperty(node, 'transition-delay')) || 0;
+	    var transitionDuration = parseFloat(getStyleProperty(node, 'transition-duration')) || 0;
+	    var animationDelay = parseFloat(getStyleProperty(node, 'animation-delay')) || 0;
+	    var animationDuration = parseFloat(getStyleProperty(node, 'animation-duration')) || 0;
+	    var time = Math.max(transitionDuration + transitionDelay, animationDuration + animationDelay);
 	    // sometimes, browser bug
 	    node.rcEndAnimTimeout = setTimeout(function () {
 	      node.rcEndAnimTimeout = null;
@@ -757,8 +768,9 @@ webpackJsonp([0],{
 	}
 	
 	var cssAnimation = function cssAnimation(node, transitionName, endCallback) {
-	  var className = transitionName;
-	  var activeClassName = className + '-active';
+	  var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
+	  var className = nameIsObj ? transitionName.name : transitionName;
+	  var activeClassName = nameIsObj ? transitionName.active : transitionName + '-active';
 	  var end = endCallback;
 	  var start = void 0;
 	  var active = void 0;
@@ -885,7 +897,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 178:
+/***/ 181:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -979,7 +991,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 179:
+/***/ 182:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -987,9 +999,9 @@ webpackJsonp([0],{
 	 */
 	
 	try {
-	  var index = __webpack_require__(180);
+	  var index = __webpack_require__(183);
 	} catch (err) {
-	  var index = __webpack_require__(180);
+	  var index = __webpack_require__(183);
 	}
 	
 	/**
@@ -1177,7 +1189,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 180:
+/***/ 183:
 /***/ function(module, exports) {
 
 	module.exports = function(arr, obj){
@@ -1190,7 +1202,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 181:
+/***/ 184:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1223,8 +1235,8 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 198:
-197
+/***/ 203:
+202
 
 });
 //# sourceMappingURL=animation.js.map

@@ -3,21 +3,21 @@ webpackJsonp([11],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(292);
+	module.exports = __webpack_require__(256);
 
 
 /***/ },
 
-/***/ 292:
+/***/ 256:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(38);
-	var Table = __webpack_require__(182);
-	__webpack_require__(197);
+	var ReactDOM = __webpack_require__(40);
+	var Table = __webpack_require__(185);
+	__webpack_require__(202);
 	
 	var CheckBox = React.createClass({
 	  displayName: 'CheckBox',
@@ -34,14 +34,12 @@ webpackJsonp([11],{
 	
 	var MyTable = React.createClass({
 	  displayName: 'MyTable',
-	
 	  getInitialState: function getInitialState() {
-	    var props = undefined.props;
+	    var props = this.props;
 	    return {
 	      data: props.data
 	    };
 	  },
-	
 	  remove: function remove(index) {
 	    var rows = this.state.data;
 	    rows.splice(index, 1);
