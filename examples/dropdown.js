@@ -3,10 +3,10 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
-const Menu = require('rc-menu');
 require('rc-dropdown/assets/index.css');
 require('rc-menu/assets/index.css');
-const DropDown = require('rc-dropdown');
+import Menu, { Item, Divider } from 'rc-menu';
+import DropDown from 'rc-dropdown';
 
 const data = [];
 for (let i = 0; i < 10; i++) {
@@ -56,11 +56,11 @@ const Test = React.createClass({
         onSelect={this.handleSelect}
         onDeselect={this.handleDeselect}
       >
-        <Menu.Item key="1">one</Menu.Item>
-        <Menu.Item key="2">two</Menu.Item>
-        <Menu.Item key="3">three</Menu.Item>
-        <Menu.Divider/>
-        <Menu.Item disabled>
+        <Item key="1">one</Item>
+        <Item key="2">two</Item>
+        <Item key="3">three</Item>
+        <Divider />
+        <Item disabled>
           <button
             style={{
               cursor: 'pointer',
@@ -69,7 +69,7 @@ const Test = React.createClass({
             }}
             onClick={this.confirmFilter}
           >确定</button>
-        </Menu.Item>
+        </Item>
       </Menu>
     );
 
@@ -79,10 +79,9 @@ const Test = React.createClass({
           <div>
             表头1
             <DropDown
-              trigger="click"
+              trigger={['click']}
               onVisibleChange={this.handleVisibleChange}
               visible={this.state.visible}
-              closeOnSelect={false}
               overlay={menu}
             >
               <a href="#">filter</a>
@@ -90,9 +89,10 @@ const Test = React.createClass({
           </div>
         ), key: 'a', dataIndex: 'a', width: 100,
       },
-      { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: '表头2', key: 'b', dataIndex: 'b', width: 100 },
       { title: '表头3', key: 'c', dataIndex: 'c', width: 200 },
     ];
+
     return (
       <Table
         columns={columns}
