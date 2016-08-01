@@ -98,7 +98,6 @@ const Test = React.createClass({
         columns={columns}
         data={data}
         rowKey={record => record.key}
-        className="table"
       />
     );
   },
@@ -107,7 +106,7 @@ const Test = React.createClass({
 ReactDOM.render(
   <div>
     <h2>use dropdown</h2>
-    <Test/>
+    <Test />
   </div>,
   document.getElementById('__react-content')
 );

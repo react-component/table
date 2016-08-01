@@ -17,7 +17,7 @@ const CheckBox = React.createClass({
 });
 
 const MyTable = React.createClass({
-  getInitialState: () => {
+  getInitialState() {
     const props = this.props;
     return {
       data: props.data,
