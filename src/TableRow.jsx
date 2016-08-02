@@ -90,9 +90,9 @@ const TableRow = React.createClass({
 
     return (
       <tr
-        onClick={onRowClick.bind(null, record, index)}
-        onMouseEnter={onHover.bind(null, true, hoverKey)}
-        onMouseLeave={onHover.bind(null, false, hoverKey)}
+        onClick={() => onRowClick(record, index)}
+        onMouseEnter={() => onHover(true, hoverKey)}
+        onMouseLeave={() => onHover(false, hoverKey)}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
         style={visible ? style : { ...style, display: 'none' }}
       >
