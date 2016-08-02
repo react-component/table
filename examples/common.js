@@ -22427,7 +22427,7 @@
 	        ));
 	      }
 	      var isColumnHaveExpandIcon = expandIconAsCell ? false : i === expandIconColumnIndex;
-	      cells.push(_react2.default.createElement(_TableCell2.default, _extends({
+	      cells.push(_react2.default.createElement(_TableCell2.default, {
 	        prefixCls: prefixCls,
 	        record: record,
 	        indentSize: indentSize,
@@ -22437,16 +22437,24 @@
 	        onExpand: onExpand,
 	        needIndentSpaced: needIndentSpaced,
 	        expanded: expanded,
-	        isColumnHaveExpandIcon: isColumnHaveExpandIcon
-	      }, columns[i])));
+	        isColumnHaveExpandIcon: isColumnHaveExpandIcon,
+	        column: columns[i],
+	        key: columns[i].key
+	      }));
 	    }
 	
 	    return _react2.default.createElement(
 	      'tr',
 	      {
-	        onClick: onRowClick.bind(null, record, index),
-	        onMouseEnter: onHover.bind(null, true, hoverKey),
-	        onMouseLeave: onHover.bind(null, false, hoverKey),
+	        onClick: function onClick() {
+	          return onRowClick(record, index);
+	        },
+	        onMouseEnter: function onMouseEnter() {
+	          return onHover(true, hoverKey);
+	        },
+	        onMouseLeave: function onMouseLeave() {
+	          return onHover(false, hoverKey);
+	        },
 	        className: prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent,
 	        style: visible ? style : _extends({}, style, { display: 'none' })
 	      },
@@ -23371,12 +23379,9 @@
 	    expandable: _react.PropTypes.any,
 	    onExpand: _react.PropTypes.func,
 	    needIndentSpaced: _react.PropTypes.bool,
-	    className: _react.PropTypes.string,
 	    indent: _react.PropTypes.number,
 	    indentSize: _react.PropTypes.number,
-	    expandIconAsCell: _react.PropTypes.bool,
-	    dataIndex: _react.PropTypes.string,
-	    render: _react.PropTypes.func
+	    column: _react.PropTypes.object
 	  },
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
 	    return !(0, _shallowequal2.default)(nextProps, this.props);
@@ -23386,9 +23391,6 @@
 	  },
 	  render: function render() {
 	    var _props = this.props;
-	    var className = _props.className;
-	    var dataIndex = _props.dataIndex;
-	    var render = _props.render;
 	    var record = _props.record;
 	    var indentSize = _props.indentSize;
 	    var prefixCls = _props.prefixCls;
@@ -23399,6 +23401,10 @@
 	    var onExpand = _props.onExpand;
 	    var needIndentSpaced = _props.needIndentSpaced;
 	    var expanded = _props.expanded;
+	    var column = _props.column;
+	    var dataIndex = column.dataIndex;
+	    var render = column.render;
+	    var className = column.className;
 	
 	
 	    var text = _objectPath2.default.get(record, dataIndex);
