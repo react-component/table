@@ -43,10 +43,25 @@ const TableRow = React.createClass({
     this.props.onDestroy(this.props.record);
   },
 
+  onRowClick() {
+    const { record, index, onRowClick } = this.props;
+    onRowClick(record, index);
+  },
+
+  onMouseEnter() {
+    const { onHover, hoverKey } = this.props;
+    onHover(true, hoverKey);
+  },
+
+  onMouseLeave() {
+    const { onHover, hoverKey } = this.props;
+    onHover(false, hoverKey);
+  },
+
   render() {
     const {
-      prefixCls, columns, record, style, visible, index, hoverKey,
-      expandIconColumnIndex, expandIconAsCell, onRowClick, onHover, expanded,
+      prefixCls, columns, record, style, visible, index,
+      expandIconColumnIndex, expandIconAsCell, expanded,
       expandable, onExpand, needIndentSpaced, className, indent, indentSize,
     } = this.props;
 
@@ -91,9 +106,9 @@ const TableRow = React.createClass({
 
     return (
       <tr
-        onClick={() => onRowClick(record, index)}
-        onMouseEnter={() => onHover(true, hoverKey)}
-        onMouseLeave={() => onHover(false, hoverKey)}
+        onClick={this.onRowClick}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
         style={visible ? style : { ...style, display: 'none' }}
       >

@@ -76,7 +76,7 @@ const TableCell = React.createClass({
       <td
         colSpan={colSpan}
         rowSpan={rowSpan}
-        className={className}
+        className={className || ''}
       >
         {isColumnHaveExpandIcon ? indentText : null}
         {isColumnHaveExpandIcon ? expandIcon : null}
