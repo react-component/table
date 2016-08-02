@@ -84,6 +84,7 @@ const TableRow = React.createClass({
           expanded={expanded}
           isColumnHaveExpandIcon={isColumnHaveExpandIcon}
           column={columns[i]}
+          key={columns[i].key}
         />
       );
     }
