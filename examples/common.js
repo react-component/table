@@ -248,7 +248,6 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-	
 	var process = module.exports = {};
 	
 	// cached from whatever global is present so that test runners that stub it
@@ -260,21 +259,35 @@
 	var cachedClearTimeout;
 	
 	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
+	    try {
+	        cachedSetTimeout = setTimeout;
+	    } catch (e) {
+	        cachedSetTimeout = function () {
+	            throw new Error('setTimeout is not defined');
+	        }
 	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
+	    try {
+	        cachedClearTimeout = clearTimeout;
+	    } catch (e) {
+	        cachedClearTimeout = function () {
+	            throw new Error('clearTimeout is not defined');
+	        }
 	    }
-	  }
 	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        return setTimeout(fun, 0);
+	    } else {
+	        return cachedSetTimeout.call(null, fun, 0);
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        clearTimeout(marker);
+	    } else {
+	        cachedClearTimeout.call(null, marker);
+	    }
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -299,7 +312,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout.call(null, cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -316,7 +329,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout.call(null, timeout);
+	    runClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -328,7 +341,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout.call(null, drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 	
@@ -22384,26 +22397,45 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.props.onDestroy(this.props.record);
 	  },
-	  render: function render() {
+	  onRowClick: function onRowClick() {
 	    var _props = this.props;
-	    var prefixCls = _props.prefixCls;
-	    var columns = _props.columns;
 	    var record = _props.record;
-	    var style = _props.style;
-	    var visible = _props.visible;
 	    var index = _props.index;
-	    var hoverKey = _props.hoverKey;
-	    var expandIconColumnIndex = _props.expandIconColumnIndex;
-	    var expandIconAsCell = _props.expandIconAsCell;
 	    var onRowClick = _props.onRowClick;
-	    var onHover = _props.onHover;
-	    var expanded = _props.expanded;
-	    var expandable = _props.expandable;
-	    var onExpand = _props.onExpand;
-	    var needIndentSpaced = _props.needIndentSpaced;
-	    var className = _props.className;
-	    var indent = _props.indent;
-	    var indentSize = _props.indentSize;
+	
+	    onRowClick(record, index);
+	  },
+	  onMouseEnter: function onMouseEnter() {
+	    var _props2 = this.props;
+	    var onHover = _props2.onHover;
+	    var hoverKey = _props2.hoverKey;
+	
+	    onHover(true, hoverKey);
+	  },
+	  onMouseLeave: function onMouseLeave() {
+	    var _props3 = this.props;
+	    var onHover = _props3.onHover;
+	    var hoverKey = _props3.hoverKey;
+	
+	    onHover(false, hoverKey);
+	  },
+	  render: function render() {
+	    var _props4 = this.props;
+	    var prefixCls = _props4.prefixCls;
+	    var columns = _props4.columns;
+	    var record = _props4.record;
+	    var style = _props4.style;
+	    var visible = _props4.visible;
+	    var index = _props4.index;
+	    var expandIconColumnIndex = _props4.expandIconColumnIndex;
+	    var expandIconAsCell = _props4.expandIconAsCell;
+	    var expanded = _props4.expanded;
+	    var expandable = _props4.expandable;
+	    var onExpand = _props4.onExpand;
+	    var needIndentSpaced = _props4.needIndentSpaced;
+	    var className = _props4.className;
+	    var indent = _props4.indent;
+	    var indentSize = _props4.indentSize;
 	
 	
 	    var cells = [];
@@ -22446,15 +22478,9 @@
 	    return _react2.default.createElement(
 	      'tr',
 	      {
-	        onClick: function onClick() {
-	          return onRowClick(record, index);
-	        },
-	        onMouseEnter: function onMouseEnter() {
-	          return onHover(true, hoverKey);
-	        },
-	        onMouseLeave: function onMouseLeave() {
-	          return onHover(false, hoverKey);
-	        },
+	        onClick: this.onRowClick,
+	        onMouseEnter: this.onMouseEnter,
+	        onMouseLeave: this.onMouseLeave,
 	        className: prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent,
 	        style: visible ? style : _extends({}, style, { display: 'none' })
 	      },
@@ -23449,7 +23475,7 @@
 	      {
 	        colSpan: colSpan,
 	        rowSpan: rowSpan,
-	        className: className
+	        className: className || ''
 	      },
 	      isColumnHaveExpandIcon ? indentText : null,
 	      isColumnHaveExpandIcon ? expandIcon : null,
