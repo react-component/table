@@ -13,12 +13,9 @@ const TableCell = React.createClass({
     expandable: PropTypes.any,
     onExpand: PropTypes.func,
     needIndentSpaced: PropTypes.bool,
-    className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    expandIconAsCell: PropTypes.bool,
-    dataIndex: PropTypes.string,
-    render: PropTypes.func,
+    column: PropTypes.object,
   },
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
@@ -28,9 +25,11 @@ const TableCell = React.createClass({
       Object.prototype.toString.call(text) === '[object Object]';
   },
   render() {
-    const { className, dataIndex, render, record, indentSize, prefixCls, indent,
-            isColumnHaveExpandIcon, index, expandable, onExpand, needIndentSpaced,
-            expanded } = this.props;
+    const { record, indentSize, prefixCls, indent,
+            isColumnHaveExpandIcon, index, expandable, onExpand,
+            needIndentSpaced, expanded, column } = this.props;
+
+    const { dataIndex, render, className } = column;
 
     let text = objectPath.get(record, dataIndex);
     let tdProps;

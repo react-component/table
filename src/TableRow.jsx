@@ -83,7 +83,7 @@ const TableRow = React.createClass({
           needIndentSpaced={needIndentSpaced}
           expanded={expanded}
           isColumnHaveExpandIcon={isColumnHaveExpandIcon}
-          {...columns[i]}
+          column={columns[i]}
         />
       );
     }
