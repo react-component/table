@@ -6,7 +6,6 @@ React table component.
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-table.svg?style=flat-square
@@ -17,8 +16,6 @@ React table component.
 [coveralls-url]: https://coveralls.io/r/react-component/table?branch=master
 [gemnasium-image]: http://img.shields.io/gemnasium/react-component/table.svg?style=flat-square
 [gemnasium-url]: https://gemnasium.com/react-component/table
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
 [download-image]: https://img.shields.io/npm/dm/rc-table.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-table
 
@@ -35,16 +32,14 @@ npm start
 
 ## Example
 
-http://localhost:8000/examples/
-
-online example: http://react-component.github.io/table/examples/
+http://react-component.github.io/table/examples/
 
 ## Usage
 
 ```js
 import Table from 'rc-table';
 
-var columns = [{
+const columns = [{
   title: '表头1', dataIndex: 'a', key:'a', width: 100,
 }, {
   title: '表头2', dataIndex: 'b', key:'b', width: 100,
@@ -65,7 +60,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 
 ## API
 
-### property
+### Properties
 
 <table class="table table-bordered table-striped">
     <thead>
