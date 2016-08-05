@@ -95,12 +95,7 @@ const Table = React.createClass({
   },
 
   componentDidMount() {
-    if (this.refs.headTable) {
-      this.refs.headTable.scrollLeft = 0;
-    }
-    if (this.refs.bodyTable) {
-      this.refs.bodyTable.scrollLeft = 0;
-    }
+    this.resetScrollY();
     this.syncFixedTableRowHeight();
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
     if (isAnyColumnsFixed) {
@@ -115,6 +110,9 @@ const Table = React.createClass({
       this.setState({
         data: nextProps.data,
       });
+      if (!nextProps.data || nextProps.data.length === 0) {
+        this.resetScrollY();
+      }
     }
     if ('expandedRowKeys' in nextProps) {
       this.setState({
@@ -547,6 +545,15 @@ const Table = React.createClass({
         fixedColumnsBodyRowsHeight,
       });
     });
+  },
+
+  resetScrollY() {
+    if (this.refs.headTable) {
+      this.refs.headTable.scrollLeft = 0;
+    }
+    if (this.refs.bodyTable) {
+      this.refs.bodyTable.scrollLeft = 0;
+    }
   },
 
   prevColumnsPage() {
