@@ -21667,12 +21667,7 @@
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    if (this.refs.headTable) {
-	      this.refs.headTable.scrollLeft = 0;
-	    }
-	    if (this.refs.bodyTable) {
-	      this.refs.bodyTable.scrollLeft = 0;
-	    }
+	    this.resetScrollY();
 	    this.syncFixedTableRowHeight();
 	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
 	    if (isAnyColumnsFixed) {
@@ -21684,6 +21679,9 @@
 	      this.setState({
 	        data: nextProps.data
 	      });
+	      if (!nextProps.data || nextProps.data.length === 0) {
+	        this.resetScrollY();
+	      }
 	    }
 	    if ('expandedRowKeys' in nextProps) {
 	      this.setState({
@@ -22148,6 +22146,14 @@
 	        fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight
 	      });
 	    });
+	  },
+	  resetScrollY: function resetScrollY() {
+	    if (this.refs.headTable) {
+	      this.refs.headTable.scrollLeft = 0;
+	    }
+	    if (this.refs.bodyTable) {
+	      this.refs.bodyTable.scrollLeft = 0;
+	    }
 	  },
 	  prevColumnsPage: function prevColumnsPage() {
 	    this.goToColumnsPage(this.state.currentColumnsPage - 1);
