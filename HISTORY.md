@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.4.6 / 2016-08-05
+
+Fix https://github.com/ant-design/ant-design/issues/2625
+
 ## 4.4.2 / 2016-08-01
 
 - Improve row and cell render perfermance.
