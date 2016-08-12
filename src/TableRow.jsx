@@ -44,7 +44,14 @@ const TableRow = React.createClass({
   },
 
   onRowClick() {
-    const { record, index, onRowClick, expandable, expandIconColumnIndex, expanded, onExpand } = this.props;
+    const {
+      record,
+      index,
+      onRowClick,
+      expandable,
+      expandIconColumnIndex,
+      expanded,
+      onExpand } = this.props;
     if (expandable && expandIconColumnIndex < 0) {
       onExpand(!expanded, record);
     }
