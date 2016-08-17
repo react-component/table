@@ -804,19 +804,18 @@ npm start</code></pre></div><h2>Example<a id="user-content-example" name="exampl
 <h2>Usage<a id="user-content-usage" name="usage" class="anchor" aria-hidden="true" href="#usage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
 
 <span class="hljs-keyword">const</span> columns = [{
-  title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key:<span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>,
+  title: <span class="hljs-string">'Name'</span>, dataIndex: <span class="hljs-string">'name'</span>, key:<span class="hljs-string">'name'</span>, width: <span class="hljs-number">100</span>,
 }, {
-  title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>,
+  title: <span class="hljs-string">'Age'</span>, dataIndex: <span class="hljs-string">'age'</span>, key:<span class="hljs-string">'age'</span>, width: <span class="hljs-number">100</span>,
 }, {
-  title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key:<span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>,
+  title: <span class="hljs-string">'Address'</span>, dataIndex: <span class="hljs-string">'address'</span>, key:<span class="hljs-string">'address'</span>, width: <span class="hljs-number">200</span>,
 }, {
-  title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key:<span class="hljs-string">'d'</span>, render: () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
+  title: <span class="hljs-string">'Apeartions'</span>, dataIndex: <span class="hljs-string">''</span>, key:<span class="hljs-string">'opeartions'</span>, render: () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
 }];
 
 const data = [
-  { a: '123', b: '123', c: '123', key:'1' },
-  { a: '123', b: '123', c: '123', key:'2' },
-  { a: '123', b: '123', c: '123', key:'3' },
+  { name: 'Jack', age: 28, address: 'some where', key:'1' },
+  { name: 'Rose', age: 36, address: 'some where', key:'2' },
 ];
 
 React.render(<span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>, mountNode);</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>Properties<a id="user-content-properties" name="properties" class="anchor" aria-hidden="true" href="#properties"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">

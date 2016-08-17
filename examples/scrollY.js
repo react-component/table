@@ -42,7 +42,7 @@ webpackJsonp([17],{
 	    });
 	  },
 	  render: function render() {
-	    var columns = [{ title: '表头1', key: 'a', dataIndex: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', key: 'c', dataIndex: 'c', width: 200 }, {
+	    var columns = [{ title: 'title1', key: 'a', dataIndex: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', key: 'c', dataIndex: 'c', width: 200 }, {
 	      title: React.createElement(
 	        'a',
 	        { onClick: this.toggleBody, href: '#' },
@@ -55,7 +55,7 @@ webpackJsonp([17],{
 	        return React.createElement(
 	          'a',
 	          { href: '#' },
-	          '操作'
+	          'Operations'
 	        );
 	      }
 	    }];

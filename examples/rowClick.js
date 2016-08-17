@@ -28,12 +28,12 @@ webpackJsonp([14],{
 	};
 	
 	var columns = [{
-	  title: '姓名',
+	  title: 'Name',
 	  dataIndex: 'name',
 	  key: 'name',
 	  width: 400
 	}, {
-	  title: '年龄',
+	  title: 'Age',
 	  dataIndex: 'age',
 	  key: 'age',
 	  width: 100,
@@ -47,7 +47,7 @@ webpackJsonp([14],{
 	    );
 	  }
 	}, {
-	  title: '住址',
+	  title: 'Address',
 	  dataIndex: 'address',
 	  key: 'address',
 	  width: 200
@@ -57,43 +57,43 @@ webpackJsonp([14],{
 	  key: 1,
 	  name: 'a',
 	  age: 32,
-	  address: '我是a',
+	  address: 'I am a',
 	  children: [{
 	    key: 11,
 	    name: 'aa',
 	    age: 33,
-	    address: '我是aa'
+	    address: 'I am aa'
 	  }, {
 	    key: 12,
 	    name: 'ab',
 	    age: 33,
-	    address: '我是ab',
+	    address: 'I am ab',
 	    children: [{
 	      key: 121,
 	      name: 'aba',
 	      age: 33,
-	      address: '我是aba'
+	      address: 'I am aba'
 	    }]
 	  }, {
 	    key: 13,
 	    name: 'ac',
 	    age: 33,
-	    address: '我是ac',
+	    address: 'I am ac',
 	    children: [{
 	      key: 131,
 	      name: 'aca',
 	      age: 33,
-	      address: '我是aca',
+	      address: 'I am aca',
 	      children: [{
 	        key: 1311,
 	        name: 'acaa',
 	        age: 33,
-	        address: '我是acaa'
+	        address: 'I am acaa'
 	      }, {
 	        key: 1312,
 	        name: 'acab',
 	        age: 33,
-	        address: '我是acab'
+	        address: 'I am acab'
 	      }]
 	    }]
 	  }]
@@ -101,7 +101,7 @@ webpackJsonp([14],{
 	  key: 2,
 	  name: 'b',
 	  age: 32,
-	  address: '我是b'
+	  address: 'I am b'
 	}];
 	
 	ReactDOM.render(React.createElement(Table, { columns: columns, data: data, onRowClick: onRowClick }), document.getElementById('__react-content'));

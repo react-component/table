@@ -53,7 +53,7 @@ webpackJsonp([3],{
 	    }
 	    return obj;
 	  }
-	}, { title: '姓名', dataIndex: 'c', width: 100, key: 'c', render: function render(o, row, index) {
+	}, { title: 'Name', dataIndex: 'c', width: 100, key: 'c', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
 	      props: {}
@@ -64,7 +64,7 @@ webpackJsonp([3],{
 	    }
 	    return obj;
 	  }
-	}, { title: '住址', dataIndex: 'd', width: 200, key: 'd', render: function render(o, row, index) {
+	}, { title: 'Address', dataIndex: 'd', width: 200, key: 'd', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
 	      props: {}
@@ -78,7 +78,7 @@ webpackJsonp([3],{
 	
 	    return obj;
 	  }
-	}, { title: '性别', dataIndex: 'e', width: 200, key: 'e', render: function render(o, row, index) {
+	}, { title: 'Gender', dataIndex: 'e', width: 200, key: 'e', render: function render(o, row, index) {
 	    var obj = {
 	      children: o,
 	      props: {}
@@ -89,7 +89,7 @@ webpackJsonp([3],{
 	    return obj;
 	  }
 	}, {
-	  title: '操作', dataIndex: '', key: 'f',
+	  title: 'Operations', dataIndex: '', key: 'f',
 	  render: function render(o, row, index) {
 	    if (index === 5) {
 	      return {
@@ -101,12 +101,12 @@ webpackJsonp([3],{
 	    return React.createElement(
 	      'a',
 	      { href: '#' },
-	      '操作'
+	      'Operations'
 	    );
 	  }
 	}];
 	
-	var data = [{ a: '13812340987', b: '0571-12345678', c: '张三', d: '文一西路', e: '男', key: '1' }, { a: '13812340986', b: '0571-98787658', c: '张夫人', d: '文一西路', e: '女', key: '2' }, { a: '13812988888', b: '0571-099877', c: '李四', d: '文二西路', e: '男', key: '3' }, { a: '1381200008888', b: '0571-099877', c: '王五', d: '文二西路', e: '男', key: '4' }, { a: '0571-88888110', c: '李警官', d: '武林门', e: '男', key: '5' }, { a: '资料统计完毕于xxxx年xxx月xxx日', key: '6' }];
+	var data = [{ a: '13812340987', b: '0571-12345678', c: '张三', d: '文一西路', e: 'Male', key: '1' }, { a: '13812340986', b: '0571-98787658', c: '张夫人', d: '文一西路', e: 'Female', key: '2' }, { a: '13812988888', b: '0571-099877', c: '李四', d: '文二西路', e: 'Male', key: '3' }, { a: '1381200008888', b: '0571-099877', c: '王五', d: '文二西路', e: 'Male', key: '4' }, { a: '0571-88888110', c: '李警官', d: '武林门', e: 'Male', key: '5' }, { a: '资料统计完毕于xxxx年xxx月xxx日', key: '6' }];
 	
 	ReactDOM.render(React.createElement(
 	  'div',
