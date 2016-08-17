@@ -94,7 +94,10 @@ describe('table', () => {
 
   beforeEach(() => {
     ReactDOM.render(
-      <Table columns={columns} data={data} className="table"/>,
+      <Table columns={columns} data={data} className="table"
+        expandedRowRender={(record) => (<p>{record.a}</p>)}
+        expandRowByClick
+      />,
       div
     );
     node = $(div);
@@ -158,5 +161,11 @@ describe('table', () => {
   it('should not render object in cell', () => {
     const trLstTds = node.find('tbody tr:last td');
     expect(trLstTds.eq(0).text()).to.be('');
+  });
+
+  it('should use rowClick to expand', () => {
+    const clickRow = node.find('tbody tr:first').trigger('click');
+    const newRow = clickRow.next();
+    expect(newRow.text()).to.be('123');
   });
 });
