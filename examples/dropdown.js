@@ -77,7 +77,7 @@ const Test = React.createClass({
       {
         title: (
           <div>
-            表头1
+            title1
             <DropDown
               trigger={['click']}
               onVisibleChange={this.handleVisibleChange}
@@ -89,8 +89,8 @@ const Test = React.createClass({
           </div>
         ), key: 'a', dataIndex: 'a', width: 100,
       },
-      { title: '表头2', key: 'b', dataIndex: 'b', width: 100 },
-      { title: '表头3', key: 'c', dataIndex: 'c', width: 200 },
+      { title: 'title2', key: 'b', dataIndex: 'b', width: 100 },
+      { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
     ];
 
     return (

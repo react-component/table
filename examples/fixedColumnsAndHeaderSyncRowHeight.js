@@ -5,18 +5,18 @@ const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 const columns = [
-  { title: '表头1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-  { title: '表头2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
-  { title: '表头表头3', dataIndex: 'c', key: 'c' },
-  { title: '表头4', dataIndex: 'c', key: 'd', width: 150 },
-  { title: '表头5', dataIndex: 'c', key: 'e', width: 150 },
-  { title: '表头6', dataIndex: 'c', key: 'f', width: 150 },
-  { title: '表头7', dataIndex: 'c', key: 'g', width: 150 },
-  { title: '表头8', dataIndex: 'c', key: 'h', width: 150 },
-  { title: '表头9', dataIndex: 'b', key: 'i', width: 150 },
-  { title: '表头10', dataIndex: 'b', key: 'j', width: 150 },
-  { title: '表头11', dataIndex: 'b', key: 'k', width: 150 },
-  { title: '表头12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+  { title: 'titletitle3', dataIndex: 'c', key: 'c' },
+  { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
+  { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+  { title: 'title6', dataIndex: 'c', key: 'f', width: 150 },
+  { title: 'title7', dataIndex: 'c', key: 'g', width: 150 },
+  { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
+  { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
+  { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
+  { title: 'title11', dataIndex: 'b', key: 'k', width: 150 },
+  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
 const data = [

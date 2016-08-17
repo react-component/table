@@ -36,11 +36,11 @@ const MyTable = React.createClass({
   },
   render() {
     const columns = [
-      { title: '表头1', dataIndex: 'a', key: 'a', width: 100 },
-      { title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: '表头3', dataIndex: 'c', key: 'c', width: 200 },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       {
-        title: '操作', dataIndex: '', key: 'x', render: (text, record) => {
+        title: 'Operations', dataIndex: '', key: 'x', render: (text, record) => {
           return <a href="#" onClick={e => this.handleClick(record, e)}>click {record.a}</a>;
         },
       },

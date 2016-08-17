@@ -44,16 +44,16 @@ const MyTable = React.createClass({
   },
 
   renderAction(o, row, index) {
-    return <a href="#" onClick={this.handleClick(index)}>删除</a>;
+    return <a href="#" onClick={this.handleClick(index)}>Delete</a>;
   },
 
   render() {
     const state = this.state;
     const columns = [
-      { title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox },
-      { title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: '表头3', dataIndex: 'c', key: 'c', width: 200 },
-      { title: '操作', dataIndex: '', key: 'x', render: this.renderAction },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
+      { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction },
     ];
     return (
       <Table columns={columns} data={state.data} className="table" rowKey={record => record.a} />

@@ -40,19 +40,18 @@ http://react-component.github.io/table/examples/
 import Table from 'rc-table';
 
 const columns = [{
-  title: '表头1', dataIndex: 'a', key:'a', width: 100,
+  title: 'Name', dataIndex: 'name', key:'name', width: 100,
 }, {
-  title: '表头2', dataIndex: 'b', key:'b', width: 100,
+  title: 'Age', dataIndex: 'age', key:'age', width: 100,
 }, {
-  title: '表头3', dataIndex: 'c', key:'c', width: 200,
+  title: 'Address', dataIndex: 'address', key:'address', width: 200,
 }, {
-  title: '操作', dataIndex: '', key:'d', render: () => <a href="#">操作</a>,
+  title: 'Apeartions', dataIndex: '', key:'opeartions', render: () => <a href="#">Delete</a>,
 }];
 
 const data = [
-  { a: '123', b: '123', c: '123', key:'1' },
-  { a: '123', b: '123', c: '123', key:'2' },
-  { a: '123', b: '123', c: '123', key:'3' },
+  { name: 'Jack', age: 28, address: 'some where', key:'1' },
+  { name: 'Rose', age: 36, address: 'some where', key:'2' },
 ];
 
 React.render(<Table columns={columns} data={data} />, mountNode);

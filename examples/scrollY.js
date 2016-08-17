@@ -29,15 +29,15 @@ const Test = React.createClass({
 
   render() {
     const columns = [
-      { title: '表头1', key: 'a', dataIndex: 'a', width: 100 },
-      { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: '表头3', key: 'c', dataIndex: 'c', width: 200 },
+      { title: 'title1', key: 'a', dataIndex: 'a', width: 100 },
+      { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
       {
         title: <a onClick={this.toggleBody} href="#">{this.state.showBody ? '隐藏' : '显示'}体</a>,
         key: 'x',
         width: 200,
         render() {
-          return <a href="#">操作</a>;
+          return <a href="#">Operations</a>;
         },
       },
     ];
