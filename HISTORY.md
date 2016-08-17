@@ -1,7 +1,11 @@
 # History
 ----
 
-## 4.4.7 / 2016-08-17
+## 4.5.0 / 2016-08-17
+
+Add `expandRowByClicky` prop, allow expanding the row by clicking it.
+
+## 4.4.7 / 2016-08-16
 
 Fix https://github.com/ant-design/ant-design/issues/2729
 
