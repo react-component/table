@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.4.7 / 2016-08-17
+
+Fix https://github.com/ant-design/ant-design/issues/2729
+
 ## 4.4.6 / 2016-08-05
 
 Fix https://github.com/ant-design/ant-design/issues/2625
