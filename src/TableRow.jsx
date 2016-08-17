@@ -24,6 +24,7 @@ const TableRow = React.createClass({
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     expandIconAsCell: PropTypes.bool,
+    expandRowByClick: PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -31,6 +32,7 @@ const TableRow = React.createClass({
       onRowClick() {},
       onDestroy() {},
       expandIconColumnIndex: 0,
+      expandRowByClick: false,
       onHover() {},
     };
   },
@@ -44,8 +46,16 @@ const TableRow = React.createClass({
   },
 
   onRowClick() {
-    const { record, index, onRowClick, expandable, expandIconColumnIndex, expanded, onExpand } = this.props;
-    if (expandable && expandIconColumnIndex < 0) {
+    const {
+      record,
+      index,
+      onRowClick,
+      expandable,
+      expandRowByClick,
+      expanded,
+      onExpand } = this.props;
+
+    if (expandable && expandRowByClick) {
       onExpand(!expanded, record);
     }
     onRowClick(record, index);
@@ -64,14 +74,14 @@ const TableRow = React.createClass({
   render() {
     const {
       prefixCls, columns, record, style, visible, index,
-      expandIconColumnIndex, expandIconAsCell, expanded,
+      expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, className, indent, indentSize,
     } = this.props;
 
     const cells = [];
 
     for (let i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0) {
+      if (expandIconAsCell && i === 0 && !expandRowByClick) {
         cells.push(
           <td
             className={`${prefixCls}-expand-icon-cell`}
@@ -88,7 +98,9 @@ const TableRow = React.createClass({
           </td>
         );
       }
-      const isColumnHaveExpandIcon = expandIconAsCell ? false : (i === expandIconColumnIndex);
+      const isColumnHaveExpandIcon = (expandRowByClick || expandIconAsCell) ?
+        false :
+        (i === expandIconColumnIndex);
       cells.push(
         <TableCell
           prefixCls={prefixCls}
