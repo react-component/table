@@ -21709,7 +21709,11 @@
 	    }
 	    this.props.onExpandedRowsChange(expandedRowKeys);
 	  },
-	  onExpanded: function onExpanded(expanded, record) {
+	  onExpanded: function onExpanded(expanded, record, e) {
+	    if (e) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	    }
 	    var info = this.findExpandedRow(record);
 	    if (typeof info !== 'undefined' && !expanded) {
 	      this.onRowDestroy(record);
@@ -21803,6 +21807,7 @@
 	    var props = this.props;
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
+	    var expandRowByClick = props.expandRowByClick;
 	    var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 	
 	    var rst = [];
@@ -21851,6 +21856,7 @@
 	        onDestroy: this.onRowDestroy,
 	        index: i,
 	        visible: visible,
+	        expandRowByClick: expandRowByClick,
 	        onExpand: this.onExpanded,
 	        expandable: childrenColumn || expandedRowRender,
 	        expanded: isRowExpanded,
@@ -22385,7 +22391,8 @@
 	    className: _react.PropTypes.string,
 	    indent: _react.PropTypes.number,
 	    indentSize: _react.PropTypes.number,
-	    expandIconAsCell: _react.PropTypes.bool
+	    expandIconAsCell: _react.PropTypes.bool,
+	    expandRowByClick: _react.PropTypes.bool
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -22394,6 +22401,7 @@
 	      onDestroy: function onDestroy() {},
 	
 	      expandIconColumnIndex: 0,
+	      expandRowByClick: false,
 	      onHover: function onHover() {}
 	    };
 	  },
@@ -22408,7 +22416,15 @@
 	    var record = _props.record;
 	    var index = _props.index;
 	    var onRowClick = _props.onRowClick;
+	    var expandable = _props.expandable;
+	    var expandRowByClick = _props.expandRowByClick;
+	    var expanded = _props.expanded;
+	    var onExpand = _props.onExpand;
 	
+	
+	    if (expandable && expandRowByClick) {
+	      onExpand(!expanded, record);
+	    }
 	    onRowClick(record, index);
 	  },
 	  onMouseEnter: function onMouseEnter() {
@@ -22436,6 +22452,7 @@
 	    var expandIconColumnIndex = _props4.expandIconColumnIndex;
 	    var expandIconAsCell = _props4.expandIconAsCell;
 	    var expanded = _props4.expanded;
+	    var expandRowByClick = _props4.expandRowByClick;
 	    var expandable = _props4.expandable;
 	    var onExpand = _props4.onExpand;
 	    var needIndentSpaced = _props4.needIndentSpaced;
@@ -22464,7 +22481,7 @@
 	          })
 	        ));
 	      }
-	      var isColumnHaveExpandIcon = expandIconAsCell ? false : i === expandIconColumnIndex;
+	      var isColumnHaveExpandIcon = expandIconAsCell || expandRowByClick ? false : i === expandIconColumnIndex;
 	      cells.push(_react2.default.createElement(_TableCell2.default, {
 	        prefixCls: prefixCls,
 	        record: record,
@@ -23824,8 +23841,8 @@
 	      var expandClassName = expanded ? 'expanded' : 'collapsed';
 	      return _react2.default.createElement('span', {
 	        className: prefixCls + '-expand-icon ' + prefixCls + '-' + expandClassName,
-	        onClick: function onClick() {
-	          return onExpand(!expanded, record);
+	        onClick: function onClick(e) {
+	          return onExpand(!expanded, record, e);
 	        }
 	      });
 	    } else if (needIndentSpaced) {
