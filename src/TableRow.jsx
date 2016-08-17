@@ -53,7 +53,8 @@ const TableRow = React.createClass({
       expandable,
       expandRowByClick,
       expanded,
-      onExpand } = this.props;
+      onExpand,
+   } = this.props;
 
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record);
@@ -81,7 +82,7 @@ const TableRow = React.createClass({
     const cells = [];
 
     for (let i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0 && !expandRowByClick) {
+      if (expandIconAsCell && i === 0) {
         cells.push(
           <td
             className={`${prefixCls}-expand-icon-cell`}
@@ -98,9 +99,8 @@ const TableRow = React.createClass({
           </td>
         );
       }
-      const isColumnHaveExpandIcon = (expandRowByClick || expandIconAsCell) ?
-        false :
-        (i === expandIconColumnIndex);
+      const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick)
+        ? false : (i === expandIconColumnIndex);
       cells.push(
         <TableCell
           prefixCls={prefixCls}

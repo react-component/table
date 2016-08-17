@@ -4,12 +4,25 @@ const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
-const MyTable = React.createClass({
+const tableData = [
+  { key: 0, a: '123' },
+  { key: 1, a: 'cdd', b: 'edd' },
+  { key: 2, a: '1333', c: 'eee', d: 2 },
+];
+
+const App = React.createClass({
   getInitialState() {
-    const props = this.props;
+    this.columns = [
+      { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
+      { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
+      { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
+    ];
     return {
-      data: props.data,
+      data: tableData,
       expandedRowKeys: [],
+      expandIconAsCell: true,
+      expandRowByClick: false,
     };
   },
 
@@ -20,6 +33,18 @@ const MyTable = React.createClass({
   onExpandedRowsChange(rows) {
     this.setState({
       expandedRowKeys: rows,
+    });
+  },
+
+  onExpandIconAsCellChange(e) {
+    this.setState({
+      expandIconAsCell: e.target.checked,
+    });
+  },
+
+  onExpandRowByClickChange(e) {
+    this.setState({
+      expandRowByClick: e.target.checked,
     });
   },
 
@@ -48,44 +73,43 @@ const MyTable = React.createClass({
   },
 
   render() {
-    const state = this.state;
-    const columns = [
-      { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
-      { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
-      { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
-    ];
+    const { expandIconAsCell, expandRowByClick, expandedRowKeys, data } = this.state;
     return (
       <div>
         {this.toggleButton()}
+        <span style={{ display: 'inline-block', width: 20 }} />
+        <input
+          type="checkbox"
+          checked={expandIconAsCell}
+          onChange={this.onExpandIconAsCellChange}
+        />
+        expandIconAsCell
+        <span style={{ display: 'inline-block', width: 20 }} />
+        <input
+          type="checkbox"
+          checked={expandRowByClick}
+          onChange={this.onExpandRowByClickChange}
+        />
+        expandRowByClick
         <Table
-          columns={columns}
-          expandIconAsCell
-          expandRowByClick
+          columns={this.columns}
+          expandIconAsCell={expandIconAsCell}
+          expandRowByClick={expandRowByClick}
           expandedRowRender={this.expandedRowRender}
-          expandedRowKeys={this.state.expandedRowKeys}
+          expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
           onExpand={this.onExpand}
-          data={state.data}
+          data={data}
         />
       </div>
     );
   },
 });
 
-const data = [
-  { key: 0, a: '123' },
-  { key: 1, a: 'cdd', b: 'edd' },
-  { key: 2, a: '1333', c: 'eee', d: 2 },
-];
-
 ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
-    <MyTable
-      data={data}
-      className="table"
-    />
+    <App />
   </div>,
   document.getElementById('__react-content')
 );

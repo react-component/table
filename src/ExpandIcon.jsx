@@ -20,7 +20,7 @@ const ExpandIcon = React.createClass({
       return (
         <span
           className={`${prefixCls}-expand-icon ${prefixCls}-${expandClassName}`}
-          onClick={() => onExpand(!expanded, record)}
+          onClick={(e) => onExpand(!expanded, record, e)}
         />
       );
     } else if (needIndentSpaced) {
