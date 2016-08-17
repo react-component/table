@@ -144,7 +144,11 @@ const Table = React.createClass({
     this.props.onExpandedRowsChange(expandedRowKeys);
   },
 
-  onExpanded(expanded, record) {
+  onExpanded(expanded, record, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const info = this.findExpandedRow(record);
     if (typeof info !== 'undefined' && !expanded) {
       this.onRowDestroy(record);
@@ -231,6 +235,7 @@ const Table = React.createClass({
     const props = this.props;
     const childrenColumnName = props.childrenColumnName;
     const expandedRowRender = props.expandedRowRender;
+    const expandRowByClick = props.expandRowByClick;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
     const rowClassName = props.rowClassName;
@@ -277,6 +282,7 @@ const Table = React.createClass({
           onDestroy={this.onRowDestroy}
           index={i}
           visible={visible}
+          expandRowByClick={expandRowByClick}
           onExpand={this.onExpanded}
           expandable={childrenColumn || expandedRowRender}
           expanded={isRowExpanded}

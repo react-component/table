@@ -4,24 +4,25 @@ const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
-const CheckBox = React.createClass({
-  render() {
-    const props = this.props;
-    return (
-      <label>
-        <input type="checkbox" />
-        {props.id}
-      </label>
-    );
-  },
-});
+const tableData = [
+  { key: 0, a: '123' },
+  { key: 1, a: 'cdd', b: 'edd' },
+  { key: 2, a: '1333', c: 'eee', d: 2 },
+];
 
-const MyTable = React.createClass({
+const App = React.createClass({
   getInitialState() {
-    const props = this.props;
+    this.columns = [
+      { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
+      { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
+      { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
+    ];
     return {
-      data: props.data,
+      data: tableData,
       expandedRowKeys: [],
+      expandIconAsCell: true,
+      expandRowByClick: false,
     };
   },
 
@@ -35,32 +36,31 @@ const MyTable = React.createClass({
     });
   },
 
-  toggleButton() {
-    if (this.state.expandedRowKeys.length) {
-      const closeAll = () => this.setState({ expandedRowKeys: [] });
-      return <button onClick={closeAll}>关闭所有</button>;
-    }
-    const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
-    return <button onClick={openAll}>展开全部</button>;
-  },
-
-  handleClick(index) {
-    const self = this;
-    return () => {
-      self.remove(index);
-    };
-  },
-
-  remove(index) {
-    const rows = this.state.data;
-    rows.splice(index, 1);
+  onExpandIconAsCellChange(e) {
     this.setState({
-      data: rows,
+      expandIconAsCell: e.target.checked,
     });
   },
 
-  checkbox(a) {
-    return <CheckBox id={a} />;
+  onExpandRowByClickChange(e) {
+    this.setState({
+      expandRowByClick: e.target.checked,
+    });
+  },
+
+  toggleButton() {
+    if (this.state.expandedRowKeys.length) {
+      const closeAll = () => this.setState({ expandedRowKeys: [] });
+      return <button onClick={closeAll}>Close All</button>;
+    }
+    const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
+    return <button onClick={openAll}>Expand All</button>;
+  },
+
+  remove(index) {
+    const data = this.state.data;
+    data.splice(index, 1);
+    this.setState({ data });
   },
 
   expandedRowRender(record) {
@@ -69,47 +69,47 @@ const MyTable = React.createClass({
   },
 
   renderAction(o, row, index) {
-    return <a href="#" onClick={this.handleClick(index)}>删除</a>;
+    return <a href="#" onClick={() => this.remove(index)}>Delete</a>;
   },
 
   render() {
-    const state = this.state;
-    const columns = [
-      { title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox },
-      { title: '表头2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: '表头3', dataIndex: 'c', key: 'c', width: 200 },
-      { title: '操作', dataIndex: '', key: 'x', render: this.renderAction },
-    ];
+    const { expandIconAsCell, expandRowByClick, expandedRowKeys, data } = this.state;
     return (
       <div>
         {this.toggleButton()}
+        <span style={{ display: 'inline-block', width: 20 }} />
+        <input
+          type="checkbox"
+          checked={expandIconAsCell}
+          onChange={this.onExpandIconAsCellChange}
+        />
+        expandIconAsCell
+        <span style={{ display: 'inline-block', width: 20 }} />
+        <input
+          type="checkbox"
+          checked={expandRowByClick}
+          onChange={this.onExpandRowByClickChange}
+        />
+        expandRowByClick
         <Table
-          columns={columns}
-          expandIconAsCell
+          columns={this.columns}
+          expandIconAsCell={expandIconAsCell}
+          expandRowByClick={expandRowByClick}
           expandedRowRender={this.expandedRowRender}
-          expandedRowKeys={this.state.expandedRowKeys}
+          expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
           onExpand={this.onExpand}
-          data={state.data}
+          data={data}
         />
       </div>
     );
   },
 });
 
-const data = [
-  { key: 0, a: '123' },
-  { key: 1, a: 'cdd', b: 'edd' },
-  { key: 2, a: '1333', c: 'eee', d: 2 },
-];
-
 ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
-    <MyTable
-      data={data}
-      className="table"
-    />
+    <App />
   </div>,
   document.getElementById('__react-content')
 );
