@@ -23861,6 +23861,9 @@
 	};
 	
 	function measureScrollbar() {
+	  if (typeof document === 'undefined' || typeof window === 'undefined') {
+	    return 0;
+	  }
 	  if (scrollbarWidth) {
 	    return scrollbarWidth;
 	  }
