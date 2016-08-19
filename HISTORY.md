@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.5.1 / 2016-08-19
+
+Add original event param for `onRowClick`
+
 ## 4.5.0 / 2016-08-17
 
 Add `expandRowByClicky` prop, allow expanding the row by clicking it.
