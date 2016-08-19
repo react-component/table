@@ -19,8 +19,12 @@ webpackJsonp([14],{
 	var Table = __webpack_require__(185);
 	__webpack_require__(202);
 	
-	var onRowClick = function onRowClick(record, index) {
+	var onRowClick = function onRowClick(record, index, event) {
 	  console.log('click nth(' + index + ') element of parent, record.name: ' + record.name);
+	  // See https://facebook.github.io/react/docs/events.html for original click event details.
+	  if (event.shiftKey) {
+	    console.log('Shift + mouse click triggered.');
+	  }
 	};
 	
 	var onOperationClick = function onOperationClick(text, record) {

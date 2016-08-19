@@ -22411,7 +22411,7 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.props.onDestroy(this.props.record);
 	  },
-	  onRowClick: function onRowClick() {
+	  onRowClick: function onRowClick(event) {
 	    var _props = this.props;
 	    var record = _props.record;
 	    var index = _props.index;
@@ -22425,7 +22425,7 @@
 	    if (expandable && expandRowByClick) {
 	      onExpand(!expanded, record);
 	    }
-	    onRowClick(record, index);
+	    onRowClick(record, index, event);
 	  },
 	  onMouseEnter: function onMouseEnter() {
 	    var _props2 = this.props;
