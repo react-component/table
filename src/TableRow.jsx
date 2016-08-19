@@ -45,7 +45,7 @@ const TableRow = React.createClass({
     this.props.onDestroy(this.props.record);
   },
 
-  onRowClick() {
+  onRowClick(event) {
     const {
       record,
       index,
@@ -59,7 +59,7 @@ const TableRow = React.createClass({
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record);
     }
-    onRowClick(record, index);
+    onRowClick(record, index, event);
   },
 
   onMouseEnter() {

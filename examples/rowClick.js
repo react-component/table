@@ -4,8 +4,12 @@ const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
-const onRowClick = (record, index) => {
+const onRowClick = (record, index, event) => {
   console.log(`click nth(${index}) element of parent, record.name: ${record.name}`);
+  // See https://facebook.github.io/react/docs/events.html for original click event details.
+  if (event.shiftKey) {
+    console.log('Shift + mouse click triggered.');
+  }
 };
 
 const onOperationClick = (text, record) => {
