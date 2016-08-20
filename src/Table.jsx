@@ -189,28 +189,78 @@ const Table = React.createClass({
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, prefixCls } = this.props;
-    let ths = [];
+    let finalColumns = [];
     if (expandIconAsCell && fixed !== 'right') {
-      ths.push({
+      finalColumns.push({
         key: 'rc-table-expandIconAsCell',
         className: `${prefixCls}-expand-icon-th`,
         title: '',
       });
     }
-    ths = ths.concat(columns || this.getCurrentColumns()).map(c => {
-      if (c.colSpan !== 0) {
-        return <th key={c.key} colSpan={c.colSpan} className={c.className || ''}>{c.title}</th>;
-      }
-    });
+    finalColumns = finalColumns.concat(columns || this.getCurrentColumns());
+    const rows = this.getHeaderRows(finalColumns);
+
     const { fixedColumnsHeadRowsHeight } = this.state;
     const trStyle = (fixedColumnsHeadRowsHeight[0] && columns) ? {
       height: fixedColumnsHeadRowsHeight[0],
     } : null;
     return showHeader ? (
       <thead className={`${prefixCls}-thead`}>
-        <tr style={trStyle}>{ths}</tr>
+        {rows.map(r => {
+          r.children = r.children.map(c => <th {...c} />);
+          return <tr style={trStyle} {...r} />;
+        })}
       </thead>
     ) : null;
+  },
+
+  getHeaderRows(columns, currentRow = 0, parentCell = null, rows = []) {
+    if (!rows[currentRow]) {
+      rows[currentRow] = {
+        key: currentRow,
+        children: [],
+      };
+    }
+    let currentCol = rows[currentRow].children.length;
+    const setRowSpan = cell => {
+      const rowSpan = rows.length - currentRow;
+      if (cell && !cell.hasChildren && rowSpan !== 1 && (!cell.rowSpan || cell.rowSpan < rowSpan)) {
+        cell.rowSpan = rowSpan;
+      }
+    };
+    columns.forEach((column, index) => {
+      const cell = {
+        key: column.key,
+        className: column.className || '',
+        children: column.title,
+      };
+      if (column.children && column.children.length > 0) {
+        cell.hasChildren = true;
+        this.getHeaderRows(column.children, currentRow + 1, cell, rows);
+        if (parentCell) {
+          parentCell.colSpan = parentCell.colSpan || 0;
+          parentCell.colSpan = parentCell.colSpan + cell.colSpan;
+        }
+      } else {
+        if (parentCell) {
+          parentCell.colSpan = parentCell.colSpan || 0;
+          parentCell.colSpan++;
+        }
+      }
+      const prevCell = rows[currentRow].children[currentCol - 1];
+      setRowSpan(prevCell);
+      if (index + 1 === columns.length) {
+        setRowSpan(cell);
+      }
+      if ('colSpan' in column) {
+        cell.colSpan = column.colSpan;
+      }
+      if (cell.colSpan !== 0) {
+        rows[currentRow].children.push(cell);
+      }
+      currentCol++;
+    });
+    return rows;
   },
 
   getExpandedRow(key, content, visible, className, fixed) {
@@ -224,7 +274,7 @@ const Table = React.createClass({
         {(this.props.expandIconAsCell && fixed !== 'right')
            ? <td key="rc-table-expand-icon-placeholder" />
            : null}
-        <td colSpan={this.props.columns.length}>
+        <td colSpan={this.getLeafColumnsCount(this.props.columns)}>
           {fixed !== 'right' ? content : '&nbsp;'}
         </td>
       </tr>
@@ -271,6 +321,8 @@ const Table = React.createClass({
         height: fixedColumnsBodyRowsHeight[i],
       } : {};
 
+      const leafColumns = this.getLeafColumns(columns || this.getCurrentColumns());
+
       rst.push(
         <TableRow
           indent={indent}
@@ -288,7 +340,7 @@ const Table = React.createClass({
           expanded={isRowExpanded}
           prefixCls={`${props.prefixCls}-row`}
           childrenColumnName={childrenColumnName}
-          columns={columns || this.getCurrentColumns()}
+          columns={leafColumns}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           style={style}
@@ -329,7 +381,8 @@ const Table = React.createClass({
         />
       );
     }
-    cols = cols.concat((columns || this.props.columns).map(c => {
+    const leafColumns = this.getLeafColumns(columns || this.props.columns);
+    cols = cols.concat(leafColumns.map(c => {
       return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
@@ -515,6 +568,22 @@ const Table = React.createClass({
   getMaxColumnsPage() {
     const { columnsPageRange, columnsPageSize } = this.props;
     return Math.ceil((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize) - 1;
+  },
+
+  getLeafColumns(columns) {
+    const leafColumns = [];
+    columns.forEach(column => {
+      if (!column.children) {
+        leafColumns.push(column);
+      } else {
+        leafColumns.push(...this.getLeafColumns(column.children));
+      }
+    });
+    return leafColumns;
+  },
+
+  getLeafColumnsCount(columns) {
+    return this.getLeafColumns(columns).length;
   },
 
   goToColumnsPage(currentColumnsPage) {
