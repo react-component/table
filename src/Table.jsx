@@ -189,16 +189,21 @@ const Table = React.createClass({
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, prefixCls } = this.props;
-    let finalColumns = [];
+    let rows;
+    if (columns) {
+      rows = this.getHeaderRows(columns);
+    } else {
+      rows = this.getHeaderRows(this.groupColumns(this.getCurrentColumns()));
+    }
+
     if (expandIconAsCell && fixed !== 'right') {
-      finalColumns.push({
+      rows[0].unshift({
         key: 'rc-table-expandIconAsCell',
-        className: `${prefixCls}-expand-icon-th`,
+        className: `${prefixCls}-expand-icon-th ${prefixCls}-rowspan-${rows.length}`,
         title: '',
+        rowSpan: rows.length,
       });
     }
-    finalColumns = finalColumns.concat(columns || this.getCurrentColumns());
-    const rows = this.getHeaderRows(finalColumns);
 
     const { fixedColumnsHeadRowsHeight } = this.state;
     const trStyle = (fixedColumnsHeadRowsHeight[0] && columns) ? {
@@ -206,59 +211,44 @@ const Table = React.createClass({
     } : null;
     return showHeader ? (
       <thead className={`${prefixCls}-thead`}>
-        {rows.map(r => {
-          r.children = r.children.map(c => <th {...c} />);
-          return <tr style={trStyle} {...r} />;
+        {rows.map((r, i) => {
+          const ths = r.map(c => <th {...c} />);
+          return <tr key={i} style={trStyle} children={ths} />;
         })}
       </thead>
     ) : null;
   },
 
-  getHeaderRows(columns, currentRow = 0, parentCell = null, rows = []) {
-    if (!rows[currentRow]) {
-      rows[currentRow] = {
-        key: currentRow,
-        children: [],
-      };
-    }
-    let currentCol = rows[currentRow].children.length;
-    const setRowSpan = cell => {
-      const rowSpan = rows.length - currentRow;
-      if (cell && !cell.hasChildren && rowSpan !== 1 && (!cell.rowSpan || cell.rowSpan < rowSpan)) {
-        cell.rowSpan = rowSpan;
+  getHeaderRows(columns, currentRow = 0, rows) {
+    const { prefixCls } = this.props;
+
+    rows = rows || [];
+    rows[currentRow] = rows[currentRow] || [];
+
+    columns.forEach(column => {
+      if (column.rowSpan && rows.length < column.rowSpan) {
+        while (rows.length < column.rowSpan) {
+          rows.push([]);
+        }
       }
-    };
-    columns.forEach((column, index) => {
       const cell = {
         key: column.key,
         className: column.className || '',
         children: column.title,
       };
-      if (column.children && column.children.length > 0) {
-        cell.hasChildren = true;
-        this.getHeaderRows(column.children, currentRow + 1, cell, rows);
-        if (parentCell) {
-          parentCell.colSpan = parentCell.colSpan || 0;
-          parentCell.colSpan = parentCell.colSpan + cell.colSpan;
-        }
-      } else {
-        if (parentCell) {
-          parentCell.colSpan = parentCell.colSpan || 0;
-          parentCell.colSpan++;
-        }
-      }
-      const prevCell = rows[currentRow].children[currentCol - 1];
-      setRowSpan(prevCell);
-      if (index + 1 === columns.length) {
-        setRowSpan(cell);
+      if (column.children) {
+        this.getHeaderRows(column.children, currentRow + 1, rows);
       }
       if ('colSpan' in column) {
         cell.colSpan = column.colSpan;
       }
-      if (cell.colSpan !== 0) {
-        rows[currentRow].children.push(cell);
+      if ('rowSpan' in column) {
+        cell.rowSpan = column.rowSpan;
+        cell.className += ` ${prefixCls}-rowspan-${cell.rowSpan}`;
       }
-      currentCol++;
+      if (cell.colSpan !== 0) {
+        rows[currentRow].push(cell);
+      }
     });
     return rows;
   },
@@ -414,7 +404,7 @@ const Table = React.createClass({
 
   getLeftFixedTable() {
     const { columns } = this.props;
-    const fixedColumns = columns.filter(
+    const fixedColumns = this.groupColumns(columns).filter(
       column => column.fixed === 'left' || column.fixed === true
     );
     return this.getTable({
@@ -425,7 +415,7 @@ const Table = React.createClass({
 
   getRightFixedTable() {
     const { columns } = this.props;
-    const fixedColumns = columns.filter(column => column.fixed === 'right');
+    const fixedColumns = this.groupColumns(columns).filter(column => column.fixed === 'right');
     return this.getTable({
       columns: fixedColumns,
       fixed: 'right',
@@ -598,6 +588,41 @@ const Table = React.createClass({
     this.setState({
       currentColumnsPage: page,
     });
+  },
+
+  groupColumns(columns, currentRow = 0, parentColumn = {}, rows = []) {
+    if (!~rows.indexOf(currentRow)) {
+      rows.push(currentRow);
+    }
+    const grouped = [];
+    const setRowSpan = column => {
+      const rowSpan = rows.length - currentRow;
+      if (column &&
+          !column.children &&
+          rowSpan > 1 &&
+          (!column.rowSpan || column.rowSpan < rowSpan)
+      ) {
+        column.rowSpan = rowSpan;
+      }
+    };
+    columns.forEach((column, index) => {
+      const newColumn = { ...column };
+      parentColumn.colSpan = parentColumn.colSpan || 0;
+      if (newColumn.children && newColumn.children.length > 0) {
+        newColumn.children = this.groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
+        parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
+      } else {
+        parentColumn.colSpan++;
+      }
+      for (let i = 0; i < index; ++i) {
+        setRowSpan(grouped[i]);
+      }
+      if (index + 1 === columns.length) {
+        setRowSpan(newColumn);
+      }
+      grouped.push(newColumn);
+    });
+    return grouped;
   },
 
   syncFixedTableRowHeight() {

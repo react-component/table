@@ -1,15 +1,20 @@
 @tablePrefixCls: rc-table;
 @text-color             : #666;
 @font-size-base         : 12px;
+@line-height: 1.5;
 @table-border-color: #e9e9e9;
 @table-head-background-color: #f3f3f3;
+@vertical-padding: 16px;
+@horizontal-padding: 8px;
+@row-height: @font-size-base * @line-height + @vertical-padding * 2;
+
 
 .@{tablePrefixCls} {
   font-size: @font-size-base;
   color: @text-color;
   transition: opacity 0.3s ease;
   position: relative;
-  line-height: 1.5;
+  line-height: @line-height;
   overflow: hidden;
 
   .@{tablePrefixCls}-scroll {
@@ -40,7 +45,7 @@
   }
 
   .@{tablePrefixCls}-title {
-    padding: 16px 8px;
+    padding: @vertical-padding @horizontal-padding;
     border-top: 1px solid #e9e9e9;
   }
 
@@ -49,7 +54,7 @@
   }
 
   .@{tablePrefixCls}-footer {
-    padding: 16px 8px;
+    padding: @vertical-padding @horizontal-padding;
     border-bottom: 1px solid #e9e9e9;
   }
 
@@ -81,7 +86,7 @@
   }
 
   th, td {
-    padding: 16px 8px;
+    padding: @vertical-padding @horizontal-padding;
   }
 }
 
@@ -163,6 +168,15 @@
     table {
       width: auto;
       background: #fff;
+    }
+
+    .generate-rowspan(10);
+
+    .generate-rowspan(@n, @i: 1) when (@i =< @n) {
+      th.@{tablePrefixCls}-rowspan-@{i} {
+        height: @row-height * @i - @vertical-padding * 2;
+      }
+      .generate-rowspan(@n, (@i + 1));
     }
   }
 
