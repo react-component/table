@@ -109,7 +109,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       </tr>
       <tr>
           <td>rowKey</td>
-          <td>string or Function(record,index):string</td>
+          <td>string or Function(record, index):string</td>
           <th>'key'</th>
           <td>
               If rowKey is string, `record[rowKey]` will be used as key.
@@ -118,13 +118,13 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       </tr>
       <tr>
           <td>rowClassName</td>
-          <td>Function(record,index):string</td>
+          <td>Function(record, index, indent):string</td>
           <th></th>
           <td>get row's className</td>
       </tr>
       <tr>
           <td>rowRef</td>
-          <td>Function(record,index):string</td>
+          <td>Function(record, index, indent):string</td>
           <th></th>
           <td>get row's ref key</td>
       </tr>
@@ -160,7 +160,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       </tr>
       <tr>
           <td>expandedRowClassName</td>
-          <td>Function(recode,index):string</td>
+          <td>Function(recode, index, indent):string</td>
           <th></th>
           <td>get expanded row's className</td>
       </tr>

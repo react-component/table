@@ -255,9 +255,9 @@ const Table = React.createClass({
       const isRowExpanded = this.isRowExpanded(record);
       let expandedRowContent;
       if (expandedRowRender && isRowExpanded) {
-        expandedRowContent = expandedRowRender(record, i);
+        expandedRowContent = expandedRowRender(record, i, indent);
       }
-      let className = rowClassName(record, i);
+      let className = rowClassName(record, i, indent);
       if (this.state.currentHoverKey === key) {
         className += ` ${props.prefixCls}-row-hover`;
       }
@@ -295,7 +295,7 @@ const Table = React.createClass({
           {...onHoverProps}
           key={key}
           hoverKey={key}
-          ref={rowRef(record, i)}
+          ref={rowRef(record, i, indent)}
         />
       );
 
@@ -303,7 +303,7 @@ const Table = React.createClass({
 
       if (expandedRowContent && isRowExpanded) {
         rst.push(this.getExpandedRow(
-          key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed
+          key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), fixed
         ));
       }
       if (childrenColumn) {

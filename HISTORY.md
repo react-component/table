@@ -3,6 +3,10 @@
 
 ## 4.5.1 / 2016-08-19
 
+Add `indent` as third argument to `rowClassName` `rowRef` `expandRowClassName`。
+
+## 4.5.1 / 2016-08-19
+
 Add original event param for `onRowClick`
 
 ## 4.5.0 / 2016-08-17
