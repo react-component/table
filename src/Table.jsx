@@ -191,6 +191,7 @@ const Table = React.createClass({
     const { showHeader, expandIconAsCell, prefixCls } = this.props;
     let rows;
     if (columns) {
+      // columns are passed from fixed table function that already grouped.
       rows = this.getHeaderRows(columns);
     } else {
       rows = this.getHeaderRows(this.groupColumns(this.getCurrentColumns()));
@@ -590,7 +591,9 @@ const Table = React.createClass({
     });
   },
 
+  // add appropriate rowspan and colspan to column
   groupColumns(columns, currentRow = 0, parentColumn = {}, rows = []) {
+    // track how many rows we got
     if (!~rows.indexOf(currentRow)) {
       rows.push(currentRow);
     }
@@ -598,7 +601,7 @@ const Table = React.createClass({
     const setRowSpan = column => {
       const rowSpan = rows.length - currentRow;
       if (column &&
-          !column.children &&
+          !column.children && // parent columns are supposed to be one row
           rowSpan > 1 &&
           (!column.rowSpan || column.rowSpan < rowSpan)
       ) {
@@ -614,9 +617,11 @@ const Table = React.createClass({
       } else {
         parentColumn.colSpan++;
       }
+      // update rowspan to all previous columns
       for (let i = 0; i < index; ++i) {
         setRowSpan(grouped[i]);
       }
+      // last column, update rowspan immediately
       if (index + 1 === columns.length) {
         setRowSpan(newColumn);
       }
