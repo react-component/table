@@ -21830,9 +21830,9 @@
 	      var isRowExpanded = this.isRowExpanded(record);
 	      var expandedRowContent = void 0;
 	      if (expandedRowRender && isRowExpanded) {
-	        expandedRowContent = expandedRowRender(record, i);
+	        expandedRowContent = expandedRowRender(record, i, indent);
 	      }
-	      var className = rowClassName(record, i);
+	      var className = rowClassName(record, i, indent);
 	      if (this.state.currentHoverKey === key) {
 	        className += ' ' + props.prefixCls + '-row-hover';
 	      }
@@ -21869,13 +21869,13 @@
 	      }, onHoverProps, {
 	        key: key,
 	        hoverKey: key,
-	        ref: rowRef(record, i)
+	        ref: rowRef(record, i, indent)
 	      })));
 	
 	      var subVisible = visible && isRowExpanded;
 	
 	      if (expandedRowContent && isRowExpanded) {
-	        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i), fixed));
+	        rst.push(this.getExpandedRow(key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), fixed));
 	      }
 	      if (childrenColumn) {
 	        rst = rst.concat(this.getRowsByData(childrenColumn, subVisible, indent + 1, columns, fixed));
