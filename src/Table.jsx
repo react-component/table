@@ -96,9 +96,9 @@ const Table = React.createClass({
 
   componentDidMount() {
     this.resetScrollY();
-    this.syncFixedTableRowHeight();
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
     if (isAnyColumnsFixed) {
+      this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
         window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
       );
