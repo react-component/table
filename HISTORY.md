@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.5.3 / 2016-08-24
+
+[#76](https://github.com/react-component/table/pull/76)
+
 ## 4.5.2 / 2016-08-23
 
 Add `indent` as third argument to `rowClassName` `rowRef` `expandRowClassName`。
