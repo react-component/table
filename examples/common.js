@@ -21668,9 +21668,9 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.resetScrollY();
-	    this.syncFixedTableRowHeight();
 	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
 	    if (isAnyColumnsFixed) {
+	      this.syncFixedTableRowHeight();
 	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
 	    }
 	  },
