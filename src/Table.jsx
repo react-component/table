@@ -30,6 +30,7 @@ const Table = React.createClass({
     showHeader: PropTypes.bool,
     title: PropTypes.func,
     footer: PropTypes.func,
+    emptyText: PropTypes.func,
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
@@ -67,6 +68,9 @@ const Table = React.createClass({
         return null;
       },
       getBodyWrapper: body => body,
+      emptyText() {
+        return '暂无数据';
+      },
     };
   },
 
@@ -512,6 +516,15 @@ const Table = React.createClass({
     ) : null;
   },
 
+  getEmptyText() {
+    const { emptyText, prefixCls, data } = this.props;
+    return !data.length ? (
+      <div className={`${prefixCls}-placeholder`}>
+        {emptyText()}
+      </div>
+    ) : null;
+  },
+
   getMaxColumnsPage() {
     const { columnsPageRange, columnsPageSize } = this.props;
     return Math.ceil((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize) - 1;
@@ -709,6 +722,7 @@ const Table = React.createClass({
           </div>}
           <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
             {this.getTable()}
+            {this.getEmptyText()}
             {this.getFooter()}
           </div>
           {this.isAnyColumnsRightFixed() &&
