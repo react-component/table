@@ -219,6 +219,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
           <td>get wrapper of tbody, [demoe](http://react-component.github.io/table/examples/animation.html)</td>
       </tr>
       <tr>
+          <td>emptyText</td>
+          <td>React.Node</td>
+          <th>`No Data`</th>
+          <td>Display text when data is empty</td>
+      </tr>
+      <tr>
           <td>columns</td>
           <td>Object[]<Object></td>
           <th></th>

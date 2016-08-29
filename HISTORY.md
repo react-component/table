@@ -1,6 +1,10 @@
 # History
 ----
 
+## 4.6.0 / 2016-08-29
+
+Add prop `emptyText`.
+
 ## 4.5.3 / 2016-08-24
 
 [#76](https://github.com/react-component/table/pull/76)

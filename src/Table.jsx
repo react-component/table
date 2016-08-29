@@ -45,16 +45,10 @@ const Table = React.createClass({
       defaultExpandAllRows: false,
       defaultExpandedRowKeys: [],
       rowKey: 'key',
-      rowClassName() {
-        return '';
-      },
-      expandedRowClassName() {
-        return '';
-      },
-      onExpand() {
-      },
-      onExpandedRowsChange() {
-      },
+      rowClassName: () => '',
+      expandedRowClassName: () => '',
+      onExpand() {},
+      onExpandedRowsChange() {},
       prefixCls: 'rc-table',
       bodyStyle: {},
       style: {},
@@ -64,13 +58,9 @@ const Table = React.createClass({
       expandIconColumnIndex: 0,
       showHeader: true,
       scroll: {},
-      rowRef() {
-        return null;
-      },
+      rowRef: () => null,
       getBodyWrapper: body => body,
-      emptyText() {
-        return '暂无数据';
-      },
+      emptyText: () => 'No Data',
     };
   },
 
