@@ -1,14 +1,14 @@
-webpackJsonp([21],{
+webpackJsonp([13],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(266);
+	module.exports = __webpack_require__(258);
 
 
 /***/ },
 
-/***/ 266:
+/***/ 258:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29,7 +29,7 @@ webpackJsonp([21],{
 	  }
 	}];
 	
-	var data = [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', d: 2, key: '3' }];
+	var data = [];
 	
 	ReactDOM.render(React.createElement(
 	  'div',
@@ -37,33 +37,12 @@ webpackJsonp([21],{
 	  React.createElement(
 	    'h2',
 	    null,
-	    'title and footer'
+	    'simple table'
 	  ),
-	  React.createElement(Table, {
-	    columns: columns,
-	    data: data,
-	    title: function title(currentData) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Title: ',
-	        currentData.length,
-	        ' items'
-	      );
-	    },
-	    footer: function footer(currentData) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Footer: ',
-	        currentData.length,
-	        ' items'
-	      );
-	    }
-	  })
+	  React.createElement(Table, { columns: columns, data: data })
 	), document.getElementById('__react-content'));
 
 /***/ }
 
 });
-//# sourceMappingURL=title-and-footer.js.map
+//# sourceMappingURL=no-data.js.map

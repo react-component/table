@@ -51,7 +51,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		21:0
+/******/ 		22:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -97,7 +97,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"hide-header","11":"key","12":"nested","13":"pagingColumns","14":"rowClick","15":"scrollX","16":"scrollXY","17":"scrollY","18":"simple","19":"subTable","20":"title-and-footer"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"hide-header","11":"key","12":"nested","13":"no-data","14":"pagingColumns","15":"rowClick","16":"scrollX","17":"scrollXY","18":"scrollY","19":"simple","20":"subTable","21":"title-and-footer"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -21602,6 +21602,7 @@
 	    showHeader: _react.PropTypes.bool,
 	    title: _react.PropTypes.func,
 	    footer: _react.PropTypes.func,
+	    emptyText: _react.PropTypes.func,
 	    scroll: _react.PropTypes.object,
 	    rowRef: _react.PropTypes.func,
 	    getBodyWrapper: _react.PropTypes.func
@@ -21637,9 +21638,11 @@
 	      rowRef: function rowRef() {
 	        return null;
 	      },
-	
 	      getBodyWrapper: function getBodyWrapper(body) {
 	        return body;
+	      },
+	      emptyText: function emptyText() {
+	        return 'No Data';
 	      }
 	    };
 	  },
@@ -22110,10 +22113,22 @@
 	      footer(this.state.data)
 	    ) : null;
 	  },
-	  getMaxColumnsPage: function getMaxColumnsPage() {
+	  getEmptyText: function getEmptyText() {
 	    var _props6 = this.props;
-	    var columnsPageRange = _props6.columnsPageRange;
-	    var columnsPageSize = _props6.columnsPageSize;
+	    var emptyText = _props6.emptyText;
+	    var prefixCls = _props6.prefixCls;
+	    var data = _props6.data;
+	
+	    return !data.length ? _react2.default.createElement(
+	      'div',
+	      { className: prefixCls + '-placeholder' },
+	      emptyText()
+	    ) : null;
+	  },
+	  getMaxColumnsPage: function getMaxColumnsPage() {
+	    var _props7 = this.props;
+	    var columnsPageRange = _props7.columnsPageRange;
+	    var columnsPageSize = _props7.columnsPageSize;
 	
 	    return Math.ceil((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize) - 1;
 	  },
@@ -22324,6 +22339,7 @@
 	          'div',
 	          { className: isTableScroll ? prefixCls + '-scroll' : '' },
 	          this.getTable(),
+	          this.getEmptyText(),
 	          this.getFooter()
 	        ),
 	        this.isAnyColumnsRightFixed() && _react2.default.createElement(

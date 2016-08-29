@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>key.js - example - rc-table@4.6.0</title>
+  <title>no-data.js - example - rc-table@4.6.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -270,69 +270,23 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">const</span> CheckBox = React.createClass({
-  render() {
-    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> /&gt;</span>
-        {props.id}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-    )</span>;
+<span class="hljs-keyword">const</span> columns = [
+  { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
+  { id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
+  { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
+  {
+    title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'d'</span>, render() {
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+    },
   },
-});
+];
 
-<span class="hljs-keyword">const</span> MyTable = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> {
-      data: props.data,
-    };
-  },
-
-  remove(index) {
-    <span class="hljs-keyword">const</span> rows = <span class="hljs-keyword">this</span>.state.data;
-    rows.splice(index, <span class="hljs-number">1</span>);
-    <span class="hljs-keyword">this</span>.setState({
-      data: rows,
-    });
-  },
-
-  handleClick(index) {
-    <span class="hljs-keyword">const</span> self = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">return</span> () =&gt; {
-      self.remove(index);
-    };
-  },
-
-  checkbox(a) {
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">CheckBox</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">{a}</span> /&gt;</span>;</span>
-  },
-
-  renderAction(o, row, index) {
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleClick(index)}</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
-  },
-
-  render() {
-    <span class="hljs-keyword">const</span> state = <span class="hljs-keyword">this</span>.state;
-    <span class="hljs-keyword">const</span> columns = [
-      { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>, render: <span class="hljs-keyword">this</span>.checkbox },
-      { title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
-      { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
-      { title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: <span class="hljs-keyword">this</span>.renderAction },
-    ];
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{state.data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{record</span> =&gt;</span> record.a} /&gt;
-    )</span>;
-  },
-});
-
-<span class="hljs-keyword">const</span> data = [{ a: <span class="hljs-string">'123'</span> }, { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span> }, { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span> }];
+<span class="hljs-keyword">const</span> data = [];
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>specify key<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );
@@ -346,7 +300,7 @@ ReactDOM.render(
   </a>
   
   <script src="common.js?nowrap"></script>
-  <script src="key.js?nowrap"></script>
+  <script src="no-data.js?nowrap"></script>
 </body>
 
 </html>
