@@ -43,9 +43,9 @@ const TableRow = React.createClass({
     this.props.onDestroy(this.props.record);
   },
 
-  onRowClick() {
+  onRowClick(event) {
     const { record, index, onRowClick } = this.props;
-    onRowClick(record, index);
+    onRowClick(record, index, event);
   },
 
   onMouseEnter() {
