@@ -5,15 +5,21 @@ const Table = require('rc-table');
 require('rc-table/assets/index.less');
 
 const onRowClick = (record, index, event) => {
-  console.log(`click nth(${index}) element of parent, record.name: ${record.name}`);
+  console.log(`Click nth(${index}) element of parent, record.name: ${record.name}`);
   // See https://facebook.github.io/react/docs/events.html for original click event details.
   if (event.shiftKey) {
     console.log('Shift + mouse click triggered.');
   }
 };
 
-const onOperationClick = (text, record) => {
-  console.log(`click ${text}, record.name is ${record.name}`);
+const onRowDoubleClick = (record, index) => {
+  console.log(`Double click nth(${index}) element of parent, record.name: ${record.name}`);
+};
+
+const onOperationClick = (text, record, event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  console.log(`Click Cell ${text}, record.name is ${record.name}`);
 };
 
 const columns = [{
@@ -27,7 +33,7 @@ const columns = [{
   key: 'age',
   width: 100,
   render: (text, record) => (
-    <a href="#" onClick={onOperationClick.bind(null, text, record)}>
+    <a href="#" onClick={e => onOperationClick(text, record, e)}>
       Alert: {text}, click will pop to row click
     </a>
   ),
@@ -90,6 +96,11 @@ const data = [{
 }];
 
 ReactDOM.render(
-  <Table columns={columns} data={data} onRowClick={onRowClick} />,
+  <Table
+    columns={columns}
+    data={data}
+    onRowClick={onRowClick}
+    onRowDoubleClick={onRowDoubleClick}
+  />,
   document.getElementById('__react-content')
 );

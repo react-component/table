@@ -24,6 +24,7 @@ const Table = React.createClass({
     onExpandedRowsChange: PropTypes.func,
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
+    onRowDoubleClick: PropTypes.func,
     columnsPageRange: PropTypes.array,
     columnsPageSize: PropTypes.number,
     expandIconColumnIndex: PropTypes.number,
@@ -49,6 +50,8 @@ const Table = React.createClass({
       expandedRowClassName: () => '',
       onExpand() {},
       onExpandedRowsChange() {},
+      onRowClick() {},
+      onRowDoubleClick() {},
       prefixCls: 'rc-table',
       bodyStyle: {},
       style: {},
@@ -278,6 +281,7 @@ const Table = React.createClass({
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
     const onRowClick = props.onRowClick;
+    const onRowDoubleClick = props.onRowDoubleClick;
     const isAnyColumnsFixed = this.isAnyColumnsFixed();
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
@@ -328,6 +332,7 @@ const Table = React.createClass({
           columns={leafColumns}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
+          onRowDoubleClick={onRowDoubleClick}
           style={style}
           {...onHoverProps}
           key={key}
