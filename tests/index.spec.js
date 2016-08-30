@@ -4,7 +4,6 @@ const Table = require('../');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
-import './PagingColumns.spec';
 
 describe('table', () => {
   const div = document.createElement('div');
