@@ -25,8 +25,6 @@ const Table = React.createClass({
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
-    columnsPageRange: PropTypes.array,
-    columnsPageSize: PropTypes.number,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
     title: PropTypes.func,
@@ -57,7 +55,6 @@ const Table = React.createClass({
       style: {},
       childrenColumnName: 'children',
       indentSize: 15,
-      columnsPageSize: 5,
       expandIconColumnIndex: 0,
       showHeader: true,
       scroll: {},
@@ -191,7 +188,7 @@ const Table = React.createClass({
       // columns are passed from fixed table function that already grouped.
       rows = this.getHeaderRows(columns);
     } else {
-      rows = this.getHeaderRows(this.groupColumns(this.getCurrentColumns()));
+      rows = this.getHeaderRows(this.groupColumns(this.props.columns));
     }
 
     if (expandIconAsCell && fixed !== 'right') {
@@ -310,7 +307,7 @@ const Table = React.createClass({
         height: fixedColumnsBodyRowsHeight[i],
       } : {};
 
-      const leafColumns = this.getLeafColumns(columns || this.getCurrentColumns());
+      const leafColumns = this.getLeafColumns(columns || props.columns);
 
       rst.push(
         <TableRow
@@ -376,30 +373,6 @@ const Table = React.createClass({
       return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
-  },
-
-  getCurrentColumns() {
-    const { columns, columnsPageRange, columnsPageSize, prefixCls } = this.props;
-    const { currentColumnsPage } = this.state;
-    if (!columnsPageRange || columnsPageRange[0] > columnsPageRange[1]) {
-      return columns;
-    }
-    return columns.map((column, i) => {
-      let newColumn = { ...column };
-      if (i >= columnsPageRange[0] && i <= columnsPageRange[1]) {
-        const pageIndexStart = columnsPageRange[0] + currentColumnsPage * columnsPageSize;
-        let pageIndexEnd = columnsPageRange[0] + (currentColumnsPage + 1) * columnsPageSize - 1;
-        if (pageIndexEnd > columnsPageRange[1]) {
-          pageIndexEnd = columnsPageRange[1];
-        }
-        if (i < pageIndexStart || i > pageIndexEnd) {
-          newColumn.className = newColumn.className || '';
-          newColumn.className += ` ${prefixCls}-column-hidden`;
-        }
-        newColumn = this.wrapPageColumn(newColumn, (i === pageIndexStart), (i === pageIndexEnd));
-      }
-      return newColumn;
-    });
   },
 
   getLeftFixedTable() {
@@ -564,11 +537,6 @@ const Table = React.createClass({
     ) : null;
   },
 
-  getMaxColumnsPage() {
-    const { columnsPageRange, columnsPageSize } = this.props;
-    return Math.ceil((columnsPageRange[1] - columnsPageRange[0] + 1) / columnsPageSize) - 1;
-  },
-
   getLeafColumns(columns) {
     const leafColumns = [];
     columns.forEach(column => {
@@ -583,20 +551,6 @@ const Table = React.createClass({
 
   getLeafColumnsCount(columns) {
     return this.getLeafColumns(columns).length;
-  },
-
-  goToColumnsPage(currentColumnsPage) {
-    const maxColumnsPage = this.getMaxColumnsPage();
-    let page = currentColumnsPage;
-    if (page < 0) {
-      page = 0;
-    }
-    if (page > maxColumnsPage) {
-      page = maxColumnsPage;
-    }
-    this.setState({
-      currentColumnsPage: page,
-    });
   },
 
   // add appropriate rowspan and colspan to column
@@ -669,39 +623,6 @@ const Table = React.createClass({
     }
   },
 
-  prevColumnsPage() {
-    this.goToColumnsPage(this.state.currentColumnsPage - 1);
-  },
-
-  nextColumnsPage() {
-    this.goToColumnsPage(this.state.currentColumnsPage + 1);
-  },
-
-  wrapPageColumn(column, hasPrev, hasNext) {
-    const { prefixCls } = this.props;
-    const { currentColumnsPage } = this.state;
-    const maxColumnsPage = this.getMaxColumnsPage();
-    let prevHandlerCls = `${prefixCls}-prev-columns-page`;
-    if (currentColumnsPage === 0) {
-      prevHandlerCls += ` ${prefixCls}-prev-columns-page-disabled`;
-    }
-    const prevHandler = <span className={prevHandlerCls} onClick={this.prevColumnsPage}></span>;
-    let nextHandlerCls = `${prefixCls}-next-columns-page`;
-    if (currentColumnsPage === maxColumnsPage) {
-      nextHandlerCls += ` ${prefixCls}-next-columns-page-disabled`;
-    }
-    const nextHandler = <span className={nextHandlerCls} onClick={this.nextColumnsPage}></span>;
-    if (hasPrev) {
-      column.title = <span>{prevHandler}{column.title}</span>;
-      column.className = `${column.className || ''} ${prefixCls}-column-has-prev`;
-    }
-    if (hasNext) {
-      column.title = <span>{column.title}{nextHandler}</span>;
-      column.className = `${column.className || ''} ${prefixCls}-column-has-next`;
-    }
-    return column;
-  },
-
   findExpandedRow(record) {
     const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record));
     return rows[0];
@@ -721,7 +642,7 @@ const Table = React.createClass({
     if ('isAnyColumnsFixedCache' in this) {
       return this.isAnyColumnsFixedCache;
     }
-    this.isAnyColumnsFixedCache = this.getCurrentColumns().some(column => !!column.fixed);
+    this.isAnyColumnsFixedCache = this.props.columns.some(column => !!column.fixed);
     return this.isAnyColumnsFixedCache;
   },
 
@@ -729,7 +650,7 @@ const Table = React.createClass({
     if ('isAnyColumnsLeftFixedCache' in this) {
       return this.isAnyColumnsLeftFixedCache;
     }
-    this.isAnyColumnsLeftFixedCache = this.getCurrentColumns().some(
+    this.isAnyColumnsLeftFixedCache = this.props.columns.some(
       column => column.fixed === 'left' || column.fixed === true
     );
     return this.isAnyColumnsLeftFixedCache;
@@ -739,7 +660,7 @@ const Table = React.createClass({
     if ('isAnyColumnsRightFixedCache' in this) {
       return this.isAnyColumnsRightFixedCache;
     }
-    this.isAnyColumnsRightFixedCache = this.getCurrentColumns().some(
+    this.isAnyColumnsRightFixedCache = this.props.columns.some(
       column => column.fixed === 'right'
     );
     return this.isAnyColumnsRightFixedCache;
@@ -795,9 +716,6 @@ const Table = React.createClass({
     let className = props.prefixCls;
     if (props.className) {
       className += ` ${props.className}`;
-    }
-    if (props.columnsPageRange) {
-      className += ` ${prefixCls}-columns-paging`;
     }
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${prefixCls}-fixed-header`;

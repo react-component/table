@@ -189,18 +189,6 @@ React.render(<Table columns={columns} data={data} />, mountNode);
           <td>handle rowDoubleClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
       </tr>
       <tr>
-          <td>columnsPageSize</td>
-          <td>Number</td>
-          <th>5</th>
-          <td>pageSize of columns. (Deprecated, use fixed columns)</td>
-      </tr>
-      <tr>
-          <td>columnsPageRange</td>
-          <td>Array</td>
-          <th></th>
-          <td>columns index range need paging, like [2,10]. (Deprecated, use column.fixed)</td>
-      </tr>
-      <tr>
           <td>showHeader</td>
           <td>Boolean</td>
           <th>true</th>
