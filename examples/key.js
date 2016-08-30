@@ -60,12 +60,12 @@ webpackJsonp([11],{
 	    return React.createElement(
 	      'a',
 	      { href: '#', onClick: this.handleClick(index) },
-	      'Delete'
+	      '删除'
 	    );
 	  },
 	  render: function render() {
 	    var state = this.state;
-	    var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction }];
+	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
 	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: function rowKey(record) {
 	        return record.a;
 	      } });

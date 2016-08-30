@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>fixedColumnsAndHeader.js - example - rc-table@4.6.0</title>
+  <title>fixedColumnsAndHeader.js - example - rc-table@4.4.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.6.0</h1>
+      <h1>rc-table@4.4.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -271,18 +271,18 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
 <span class="hljs-keyword">const</span> columns = [
-  { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
-  { title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
-  { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title4'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title5'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title6'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'f'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title7'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'g'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title8'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'h'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span>, width: <span class="hljs-number">150</span> },
-  { title: <span class="hljs-string">'title12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'right'</span> },
+  { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
+  { title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'left'</span> },
+  { title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头4'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头5'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头6'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'f'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头7'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'g'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头8'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'h'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span>, width: <span class="hljs-number">150</span> },
+  { title: <span class="hljs-string">'表头12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'right'</span> },
 ];
 
 <span class="hljs-keyword">const</span> data = [

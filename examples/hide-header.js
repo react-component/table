@@ -19,12 +19,12 @@ webpackJsonp([10],{
 	var Table = __webpack_require__(185);
 	__webpack_require__(202);
 	
-	var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
-	  title: 'Operations', dataIndex: '', key: 'd', render: function render() {
+	var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
+	  title: '操作', dataIndex: '', key: 'd', render: function render() {
 	    return React.createElement(
 	      'a',
 	      { href: '#' },
-	      'Operations'
+	      '操作'
 	    );
 	  }
 	}];

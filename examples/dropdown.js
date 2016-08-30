@@ -1413,7 +1413,7 @@ webpackJsonp([4],[
 	      title: React.createElement(
 	        'div',
 	        null,
-	        'title1',
+	        '表头1',
 	        React.createElement(
 	          _rcDropdown2.default,
 	          {
@@ -1429,7 +1429,7 @@ webpackJsonp([4],[
 	          )
 	        )
 	      ), key: 'a', dataIndex: 'a', width: 100
-	    }, { title: 'title2', key: 'b', dataIndex: 'b', width: 100 }, { title: 'title3', key: 'c', dataIndex: 'c', width: 200 }];
+	    }, { title: '表头2', key: 'b', dataIndex: 'b', width: 100 }, { title: '表头3', key: 'c', dataIndex: 'c', width: 200 }];
 	
 	    return React.createElement(Table, {
 	      columns: columns,

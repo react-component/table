@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>colspan-rowspan.js - example - rc-table@4.6.0</title>
+  <title>colspan-rowspan.js - example - rc-table@4.4.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.6.0</h1>
+      <h1>rc-table@4.4.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -301,7 +301,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     }
     <span class="hljs-keyword">return</span> obj;
   } },
-  { title: <span class="hljs-string">'Name'</span>, dataIndex: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">100</span>, key: <span class="hljs-string">'c'</span>, render(o, row, index) {
+  { title: <span class="hljs-string">'姓名'</span>, dataIndex: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">100</span>, key: <span class="hljs-string">'c'</span>, render(o, row, index) {
     <span class="hljs-keyword">const</span> obj = {
       children: o,
       props: {},
@@ -312,7 +312,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     }
     <span class="hljs-keyword">return</span> obj;
   } },
-  { title: <span class="hljs-string">'Address'</span>, dataIndex: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'d'</span>, render(o, row, index) {
+  { title: <span class="hljs-string">'住址'</span>, dataIndex: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'d'</span>, render(o, row, index) {
     <span class="hljs-keyword">const</span> obj = {
       children: o,
       props: {},
@@ -326,7 +326,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <span class="hljs-keyword">return</span> obj;
   } },
-  { title: <span class="hljs-string">'Gender'</span>, dataIndex: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'e'</span>, render(o, row, index) {
+  { title: <span class="hljs-string">'性别'</span>, dataIndex: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'e'</span>, render(o, row, index) {
     <span class="hljs-keyword">const</span> obj = {
       children: o,
       props: {},
@@ -337,7 +337,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">return</span> obj;
   } },
   {
-    title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'f'</span>,
+    title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'f'</span>,
     render(o, row, index) {
       <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
         <span class="hljs-keyword">return</span> {
@@ -346,17 +346,17 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           },
         };
       }
-      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
     },
   },
 ];
 
 <span class="hljs-keyword">const</span> data = [
-  { a: <span class="hljs-string">'13812340987'</span>, b: <span class="hljs-string">'0571-12345678'</span>, c: <span class="hljs-string">'张三'</span>, d: <span class="hljs-string">'文一西路'</span>, e: <span class="hljs-string">'Male'</span>, key: <span class="hljs-string">'1'</span> },
-  { a: <span class="hljs-string">'13812340986'</span>, b: <span class="hljs-string">'0571-98787658'</span>, c: <span class="hljs-string">'张夫人'</span>, d: <span class="hljs-string">'文一西路'</span>, e: <span class="hljs-string">'Female'</span>, key: <span class="hljs-string">'2'</span> },
-  { a: <span class="hljs-string">'13812988888'</span>, b: <span class="hljs-string">'0571-099877'</span>, c: <span class="hljs-string">'李四'</span>, d: <span class="hljs-string">'文二西路'</span>, e: <span class="hljs-string">'Male'</span>, key: <span class="hljs-string">'3'</span> },
-  { a: <span class="hljs-string">'1381200008888'</span>, b: <span class="hljs-string">'0571-099877'</span>, c: <span class="hljs-string">'王五'</span>, d: <span class="hljs-string">'文二西路'</span>, e: <span class="hljs-string">'Male'</span>, key: <span class="hljs-string">'4'</span> },
-  { a: <span class="hljs-string">'0571-88888110'</span>, c: <span class="hljs-string">'李警官'</span>, d: <span class="hljs-string">'武林门'</span>, e: <span class="hljs-string">'Male'</span>, key: <span class="hljs-string">'5'</span> },
+  { a: <span class="hljs-string">'13812340987'</span>, b: <span class="hljs-string">'0571-12345678'</span>, c: <span class="hljs-string">'张三'</span>, d: <span class="hljs-string">'文一西路'</span>, e: <span class="hljs-string">'男'</span>, key: <span class="hljs-string">'1'</span> },
+  { a: <span class="hljs-string">'13812340986'</span>, b: <span class="hljs-string">'0571-98787658'</span>, c: <span class="hljs-string">'张夫人'</span>, d: <span class="hljs-string">'文一西路'</span>, e: <span class="hljs-string">'女'</span>, key: <span class="hljs-string">'2'</span> },
+  { a: <span class="hljs-string">'13812988888'</span>, b: <span class="hljs-string">'0571-099877'</span>, c: <span class="hljs-string">'李四'</span>, d: <span class="hljs-string">'文二西路'</span>, e: <span class="hljs-string">'男'</span>, key: <span class="hljs-string">'3'</span> },
+  { a: <span class="hljs-string">'1381200008888'</span>, b: <span class="hljs-string">'0571-099877'</span>, c: <span class="hljs-string">'王五'</span>, d: <span class="hljs-string">'文二西路'</span>, e: <span class="hljs-string">'男'</span>, key: <span class="hljs-string">'4'</span> },
+  { a: <span class="hljs-string">'0571-88888110'</span>, c: <span class="hljs-string">'李警官'</span>, d: <span class="hljs-string">'武林门'</span>, e: <span class="hljs-string">'男'</span>, key: <span class="hljs-string">'5'</span> },
   { a: <span class="hljs-string">'资料统计完毕于xxxx年xxx月xxx日'</span>, key: <span class="hljs-string">'6'</span> },
 ];
 

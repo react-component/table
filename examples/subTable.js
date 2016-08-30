@@ -1,14 +1,14 @@
-webpackJsonp([20],{
+webpackJsonp([19],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(265);
+	module.exports = __webpack_require__(264);
 
 
 /***/ },
 
-/***/ 265:
+/***/ 264:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46,8 +46,8 @@ webpackJsonp([20],{
 	  render: function render() {
 	    var _this = this;
 	
-	    var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
-	      title: 'Operations', dataIndex: '', key: 'x', render: function render(text, record) {
+	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
+	      title: '操作', dataIndex: '', key: 'x', render: function render(text, record) {
 	        return React.createElement(
 	          'a',
 	          { href: '#', onClick: function onClick(e) {

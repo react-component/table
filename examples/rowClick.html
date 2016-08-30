@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowClick.js - example - rc-table@4.6.0</title>
+  <title>rowClick.js - example - rc-table@4.4.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.6.0</h1>
+      <h1>rc-table@4.4.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -270,12 +270,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">const</span> onRowClick = (record, index, event) =&gt; {
+<span class="hljs-keyword">const</span> onRowClick = (record, index) =&gt; {
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`click nth(<span class="hljs-subst">${index}</span>) element of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
-  <span class="hljs-comment">// See https://facebook.github.io/react/docs/events.html for original click event details.</span>
-  <span class="hljs-keyword">if</span> (event.shiftKey) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Shift + mouse click triggered.'</span>);
-  }
 };
 
 <span class="hljs-keyword">const</span> onOperationClick = (text, record) =&gt; {
@@ -283,12 +279,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 };
 
 <span class="hljs-keyword">const</span> columns = [{
-  title: <span class="hljs-string">'Name'</span>,
+  title: <span class="hljs-string">'姓名'</span>,
   dataIndex: <span class="hljs-string">'name'</span>,
   key: <span class="hljs-string">'name'</span>,
   width: <span class="hljs-number">400</span>,
 }, {
-  title: <span class="hljs-string">'Age'</span>,
+  title: <span class="hljs-string">'年龄'</span>,
   dataIndex: <span class="hljs-string">'age'</span>,
   key: <span class="hljs-string">'age'</span>,
   width: <span class="hljs-number">100</span>,
@@ -298,7 +294,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   )</span>,
 }, {
-  title: <span class="hljs-string">'Address'</span>,
+  title: <span class="hljs-string">'住址'</span>,
   dataIndex: <span class="hljs-string">'address'</span>,
   key: <span class="hljs-string">'address'</span>,
   width: <span class="hljs-number">200</span>,
@@ -308,43 +304,43 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   key: <span class="hljs-number">1</span>,
   name: <span class="hljs-string">'a'</span>,
   age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am a'</span>,
+  address: <span class="hljs-string">'我是a'</span>,
   children: [{
     key: <span class="hljs-number">11</span>,
     name: <span class="hljs-string">'aa'</span>,
     age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am aa'</span>,
+    address: <span class="hljs-string">'我是aa'</span>,
   }, {
     key: <span class="hljs-number">12</span>,
     name: <span class="hljs-string">'ab'</span>,
     age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ab'</span>,
+    address: <span class="hljs-string">'我是ab'</span>,
     children: [{
       key: <span class="hljs-number">121</span>,
       name: <span class="hljs-string">'aba'</span>,
       age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aba'</span>,
+      address: <span class="hljs-string">'我是aba'</span>,
     }],
   }, {
     key: <span class="hljs-number">13</span>,
     name: <span class="hljs-string">'ac'</span>,
     age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ac'</span>,
+    address: <span class="hljs-string">'我是ac'</span>,
     children: [{
       key: <span class="hljs-number">131</span>,
       name: <span class="hljs-string">'aca'</span>,
       age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aca'</span>,
+      address: <span class="hljs-string">'我是aca'</span>,
       children: [{
         key: <span class="hljs-number">1311</span>,
         name: <span class="hljs-string">'acaa'</span>,
         age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acaa'</span>,
+        address: <span class="hljs-string">'我是acaa'</span>,
       }, {
         key: <span class="hljs-number">1312</span>,
         name: <span class="hljs-string">'acab'</span>,
         age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acab'</span>,
+        address: <span class="hljs-string">'我是acab'</span>,
       }],
     }],
   }],
@@ -352,7 +348,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   key: <span class="hljs-number">2</span>,
   name: <span class="hljs-string">'b'</span>,
   age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am b'</span>,
+  address: <span class="hljs-string">'我是b'</span>,
 }];
 
 ReactDOM.render(

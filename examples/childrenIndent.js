@@ -20,22 +20,22 @@ webpackJsonp([1],{
 	__webpack_require__(202);
 	
 	var columns = [{
-	  title: 'Name',
+	  title: '姓名',
 	  dataIndex: 'name',
 	  key: 'name',
 	  width: 400
 	}, {
-	  title: 'Age',
+	  title: '年龄',
 	  dataIndex: 'age',
 	  key: 'age',
 	  width: 100
 	}, {
-	  title: 'Address',
+	  title: '住址',
 	  dataIndex: 'address',
 	  key: 'address',
 	  width: 200
 	}, {
-	  title: 'Operations',
+	  title: '操作',
 	  dataIndex: 'operation',
 	  key: 'x',
 	  width: 150
@@ -45,43 +45,43 @@ webpackJsonp([1],{
 	  key: 1,
 	  name: 'a',
 	  age: 32,
-	  address: 'I am a',
+	  address: '我是a',
 	  children: [{
 	    key: 11,
 	    name: 'aa',
 	    age: 33,
-	    address: 'I am aa'
+	    address: '我是aa'
 	  }, {
 	    key: 12,
 	    name: 'ab',
 	    age: 33,
-	    address: 'I am ab',
+	    address: '我是ab',
 	    children: [{
 	      key: 121,
 	      name: 'aba',
 	      age: 33,
-	      address: 'I am aba'
+	      address: '我是aba'
 	    }]
 	  }, {
 	    key: 13,
 	    name: 'ac',
 	    age: 33,
-	    address: 'I am ac',
+	    address: '我是ac',
 	    children: [{
 	      key: 131,
 	      name: 'aca',
 	      age: 33,
-	      address: 'I am aca',
+	      address: '我是aca',
 	      children: [{
 	        key: 1311,
 	        name: 'acaa',
 	        age: 33,
-	        address: 'I am acaa'
+	        address: '我是acaa'
 	      }, {
 	        key: 1312,
 	        name: 'acab',
 	        age: 33,
-	        address: 'I am acab'
+	        address: '我是acab'
 	      }]
 	    }]
 	  }]
@@ -89,7 +89,7 @@ webpackJsonp([1],{
 	  key: 2,
 	  name: 'b',
 	  age: 32,
-	  address: 'I am b'
+	  address: '我是b'
 	}];
 	
 	function onExpand(expanded, record) {
