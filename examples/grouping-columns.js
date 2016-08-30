@@ -3,6 +3,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Table = require('rc-table');
 require('rc-table/assets/index.less');
+require('rc-table/assets/bordered.less');
 
 const columns = [
   {
@@ -93,7 +94,7 @@ const data = [{
 ReactDOM.render(
   <div>
     <h2>grouping columns</h2>
-    <Table columns={columns} data={data} />
+    <Table columns={columns} data={data} className="bordered" />
   </div>,
   document.getElementById('__react-content')
 );
