@@ -183,6 +183,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
           <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
       </tr>
       <tr>
+          <td>onRowDoubleClick</td>
+          <td>Function(record, index)</td>
+          <th></th>
+          <td>handle rowDoubleClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
+      </tr>
+      <tr>
           <td>columnsPageSize</td>
           <td>Number</td>
           <th>5</th>

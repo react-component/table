@@ -7,6 +7,7 @@ const TableRow = React.createClass({
   propTypes: {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowDoubleClick: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
     expandIconColumnIndex: PropTypes.number,
@@ -30,6 +31,7 @@ const TableRow = React.createClass({
   getDefaultProps() {
     return {
       onRowClick() {},
+      onRowDoubleClick() {},
       onDestroy() {},
       expandIconColumnIndex: 0,
       expandRowByClick: false,
@@ -54,12 +56,16 @@ const TableRow = React.createClass({
       expandRowByClick,
       expanded,
       onExpand,
-   } = this.props;
-
+    } = this.props;
     if (expandable && expandRowByClick) {
       onExpand(!expanded, record);
     }
     onRowClick(record, index, event);
+  },
+
+  onRowDoubleClick(event) {
+    const { record, index, onRowDoubleClick } = this.props;
+    onRowDoubleClick(record, index, event);
   },
 
   onMouseEnter() {
@@ -122,6 +128,7 @@ const TableRow = React.createClass({
     return (
       <tr
         onClick={this.onRowClick}
+        onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
