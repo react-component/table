@@ -4,6 +4,7 @@ const Table = require('../');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
+const { Simulate } = require('react-addons-test-utils');
 
 describe('table', () => {
   const div = document.createElement('div');
@@ -93,8 +94,10 @@ describe('table', () => {
 
   beforeEach(() => {
     ReactDOM.render(
-      <Table columns={columns} data={data} className="table"
-        expandedRowRender={(record) => (<p>{record.a}</p>)}
+      <Table
+        columns={columns}
+        data={data}
+        expandedRowRender={record => <p>{record.a}</p>}
         expandRowByClick
       />,
       div
@@ -163,8 +166,8 @@ describe('table', () => {
   });
 
   it('should use rowClick to expand', () => {
-    const clickRow = node.find('tbody tr:first').trigger('click');
-    const newRow = clickRow.next();
-    expect(newRow.text()).to.be('123');
+    const clickRow = node.find('tbody tr:first');
+    Simulate.click(clickRow[0]);
+    expect(clickRow.next().text()).to.be('123');
   });
 });

@@ -14,6 +14,10 @@ describe('Table with grouping columns', () => {
     node = $(div);
   });
 
+  afterEach(() => {
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
   it('group columns', () => {
     /**
      * +---+---+---------------+-------+---+

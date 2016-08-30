@@ -52,13 +52,13 @@
     "expect.js": "~0.3.1",
     "jquery": "^1.11.2",
     "pre-commit": "1.x",
+    "rc-animate": "^2.3.0",
     "rc-dropdown": "~1.4.10",
     "rc-menu": "~4.13.0",
     "rc-tools": "5.x",
     "react": "^15.2.1",
-    "react-addons-test-utils": "^15.2.1",
-    "react-dom": "^15.2.1",
-    "rc-animate": "^2.3.0"
+    "react-addons-test-utils": "^15.3.1",
+    "react-dom": "^15.2.1"
   },
   "pre-commit": [
     "lint"
