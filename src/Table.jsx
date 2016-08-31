@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
+import TableHeader from './TableHeader';
 import { measureScrollbar, debounce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
@@ -203,13 +204,14 @@ const Table = React.createClass({
     const trStyle = (fixedColumnsHeadRowsHeight[0] && columns) ? {
       height: fixedColumnsHeadRowsHeight[0],
     } : null;
+
     return showHeader ? (
-      <thead className={`${prefixCls}-thead`}>
-        {rows.map((r, i) => {
-          const ths = r.map(c => <th {...c} />);
-          return <tr key={i} style={trStyle} children={ths} />;
-        })}
-      </thead>
+      <TableHeader
+        prefixCls={prefixCls}
+        rows={rows}
+        rowStyle={trStyle}
+        columns={columns}
+      />
     ) : null;
   },
 
