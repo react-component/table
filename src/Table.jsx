@@ -210,7 +210,6 @@ const Table = React.createClass({
         prefixCls={prefixCls}
         rows={rows}
         rowStyle={trStyle}
-        columns={columns}
       />
     ) : null;
   },
@@ -250,20 +249,32 @@ const Table = React.createClass({
   },
 
   getExpandedRow(key, content, visible, className, fixed) {
-    const prefixCls = this.props.prefixCls;
+    const { prefixCls, expandIconAsCell } = this.props;
+    const columns = [{
+      key: 'extra-row',
+      render: () => ({
+        props: {
+          colSpan: this.getLeafColumnsCount(this.props.columns),
+        },
+        children: fixed !== 'right' ? content : '&nbsp;',
+      }),
+    }];
+    if (expandIconAsCell && fixed !== 'right') {
+      columns.unshift({
+        key: 'expand-icon-placeholder',
+        render: () => null,
+      });
+    }
     return (
-      <tr
+      <TableRow
+        columns={columns}
+        visible={visible}
+        className={className}
         key={`${key}-extra-row`}
-        style={{ display: visible ? '' : 'none' }}
-        className={`${prefixCls}-expanded-row ${className}`}
-      >
-        {(this.props.expandIconAsCell && fixed !== 'right')
-           ? <td key="rc-table-expand-icon-placeholder" />
-           : null}
-        <td colSpan={this.getLeafColumnsCount(this.props.columns)}>
-          {fixed !== 'right' ? content : '&nbsp;'}
-        </td>
-      </tr>
+        prefixCls={`${prefixCls}-expanded-row`}
+        indent={1}
+        expandable={false}
+      />
     );
   },
 

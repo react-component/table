@@ -1,21 +1,16 @@
 import React, { PropTypes } from 'react';
 import objectPath from 'object-path';
 import shallowequal from 'shallowequal';
-import ExpandIcon from './ExpandIcon';
 
 const TableCell = React.createClass({
   propTypes: {
     record: PropTypes.object,
     prefixCls: PropTypes.string,
-    isColumnHaveExpandIcon: PropTypes.bool,
     index: PropTypes.number,
-    expanded: PropTypes.bool,
-    expandable: PropTypes.any,
-    onExpand: PropTypes.func,
-    needIndentSpaced: PropTypes.bool,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     column: PropTypes.object,
+    expandIcon: PropTypes.node,
   },
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
@@ -26,10 +21,8 @@ const TableCell = React.createClass({
   },
   render() {
     const { record, indentSize, prefixCls, indent,
-            isColumnHaveExpandIcon, index, expandable, onExpand,
-            needIndentSpaced, expanded, column } = this.props;
-
-    const { dataIndex, render, className } = column;
+            index, expandIcon, column } = this.props;
+    const { dataIndex, render, className = '' } = column;
 
     let text = objectPath.get(record, dataIndex);
     let tdProps;
@@ -51,23 +44,12 @@ const TableCell = React.createClass({
       text = null;
     }
 
-    const expandIcon = (
-      <ExpandIcon
-        expandable={expandable}
-        prefixCls={prefixCls}
-        onExpand={onExpand}
-        needIndentSpaced={needIndentSpaced}
-        expanded={expanded}
-        record={record}
-      />
-    );
-
-    const indentText = (
+    const indentText = expandIcon ? (
       <span
         style={{ paddingLeft: `${indentSize * indent}px` }}
         className={`${prefixCls}-indent indent-level-${indent}`}
       />
-    );
+    ) : null;
 
     if (rowSpan === 0 || colSpan === 0) {
       return null;
@@ -76,10 +58,10 @@ const TableCell = React.createClass({
       <td
         colSpan={colSpan}
         rowSpan={rowSpan}
-        className={className || ''}
+        className={className}
       >
-        {isColumnHaveExpandIcon ? indentText : null}
-        {isColumnHaveExpandIcon ? expandIcon : null}
+        {indentText}
+        {expandIcon}
         {text}
       </td>
     );

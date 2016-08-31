@@ -3,7 +3,6 @@ import shallowequal from 'shallowequal';
 
 export default React.createClass({
   propTypes: {
-    columns: PropTypes.array,
     prefixCls: PropTypes.string,
     rowStyle: PropTypes.object,
     rows: PropTypes.array,
@@ -12,7 +11,7 @@ export default React.createClass({
     return !shallowequal(nextProps, this.props);
   },
   render() {
-    const { prefixCls, columns, rowStyle, rows } = this.props;
+    const { prefixCls, rowStyle, rows } = this.props;
     return (
       <thead className={`${prefixCls}-thead`}>
         {

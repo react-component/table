@@ -87,6 +87,17 @@ const TableRow = React.createClass({
 
     const cells = [];
 
+    const expandIcon = (
+      <ExpandIcon
+        expandable={expandable}
+        prefixCls={prefixCls}
+        onExpand={onExpand}
+        needIndentSpaced={needIndentSpaced}
+        expanded={expanded}
+        record={record}
+      />
+    );
+
     for (let i = 0; i < columns.length; i++) {
       if (expandIconAsCell && i === 0) {
         cells.push(
@@ -94,14 +105,7 @@ const TableRow = React.createClass({
             className={`${prefixCls}-expand-icon-cell`}
             key="rc-table-expand-icon-cell"
           >
-            <ExpandIcon
-              expandable={expandable}
-              prefixCls={prefixCls}
-              onExpand={onExpand}
-              needIndentSpaced={needIndentSpaced}
-              expanded={expanded}
-              record={record}
-            />
+            {expandIcon}
           </td>
         );
       }
@@ -114,13 +118,9 @@ const TableRow = React.createClass({
           indentSize={indentSize}
           indent={indent}
           index={index}
-          expandable={expandable}
-          onExpand={onExpand}
-          needIndentSpaced={needIndentSpaced}
-          expanded={expanded}
-          isColumnHaveExpandIcon={isColumnHaveExpandIcon}
           column={columns[i]}
           key={columns[i].key}
+          expandIcon={isColumnHaveExpandIcon ? expandIcon : null}
         />
       );
     }
