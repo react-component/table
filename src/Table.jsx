@@ -80,7 +80,6 @@ const Table = React.createClass({
     return {
       expandedRowKeys,
       data: props.data,
-      currentColumnsPage: 0,
       currentHoverKey: null,
       scrollPosition: 'left',
       fixedColumnsHeadRowsHeight: [],
