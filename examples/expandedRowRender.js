@@ -3,12 +3,12 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(250);
+	module.exports = __webpack_require__(251);
 
 
 /***/ },
 
-/***/ 250:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,28 +17,19 @@ webpackJsonp([5],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(40);
 	var Table = __webpack_require__(185);
-	__webpack_require__(202);
+	__webpack_require__(203);
 	
-	var CheckBox = React.createClass({
-	  displayName: 'CheckBox',
-	  render: function render() {
-	    var props = this.props;
-	    return React.createElement(
-	      'label',
-	      null,
-	      React.createElement('input', { type: 'checkbox' }),
-	      props.id
-	    );
-	  }
-	});
+	var tableData = [{ key: 0, a: '123' }, { key: 1, a: 'cdd', b: 'edd' }, { key: 2, a: '1333', c: 'eee', d: 2 }];
 	
-	var MyTable = React.createClass({
-	  displayName: 'MyTable',
+	var App = React.createClass({
+	  displayName: 'App',
 	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	    this.columns = [{ title: 'title 1', dataIndex: 'a', key: 'a', width: 100 }, { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 }, { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction }];
 	    return {
-	      data: props.data,
-	      expandedRowKeys: []
+	      data: tableData,
+	      expandedRowKeys: [],
+	      expandIconAsCell: true,
+	      expandRowByClick: false
 	    };
 	  },
 	  onExpand: function onExpand(expanded, record) {
@@ -47,6 +38,16 @@ webpackJsonp([5],{
 	  onExpandedRowsChange: function onExpandedRowsChange(rows) {
 	    this.setState({
 	      expandedRowKeys: rows
+	    });
+	  },
+	  onExpandIconAsCellChange: function onExpandIconAsCellChange(e) {
+	    this.setState({
+	      expandIconAsCell: e.target.checked
+	    });
+	  },
+	  onExpandRowByClickChange: function onExpandRowByClickChange(e) {
+	    this.setState({
+	      expandRowByClick: e.target.checked
 	    });
 	  },
 	  toggleButton: function toggleButton() {
@@ -59,7 +60,7 @@ webpackJsonp([5],{
 	      return React.createElement(
 	        'button',
 	        { onClick: closeAll },
-	        '关闭所有'
+	        'Close All'
 	      );
 	    }
 	    var openAll = function openAll() {
@@ -68,24 +69,13 @@ webpackJsonp([5],{
 	    return React.createElement(
 	      'button',
 	      { onClick: openAll },
-	      '展开全部'
+	      'Expand All'
 	    );
 	  },
-	  handleClick: function handleClick(index) {
-	    var self = this;
-	    return function () {
-	      self.remove(index);
-	    };
-	  },
 	  remove: function remove(index) {
-	    var rows = this.state.data;
-	    rows.splice(index, 1);
-	    this.setState({
-	      data: rows
-	    });
-	  },
-	  checkbox: function checkbox(a) {
-	    return React.createElement(CheckBox, { id: a });
+	    var data = this.state.data;
+	    data.splice(index, 1);
+	    this.setState({ data: data });
 	  },
 	  expandedRowRender: function expandedRowRender(record) {
 	    console.log(record);
@@ -97,33 +87,54 @@ webpackJsonp([5],{
 	    );
 	  },
 	  renderAction: function renderAction(o, row, index) {
+	    var _this2 = this;
+	
 	    return React.createElement(
 	      'a',
-	      { href: '#', onClick: this.handleClick(index) },
-	      '删除'
+	      { href: '#', onClick: function onClick() {
+	          return _this2.remove(index);
+	        } },
+	      'Delete'
 	    );
 	  },
 	  render: function render() {
-	    var state = this.state;
-	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
+	    var _state = this.state;
+	    var expandIconAsCell = _state.expandIconAsCell;
+	    var expandRowByClick = _state.expandRowByClick;
+	    var expandedRowKeys = _state.expandedRowKeys;
+	    var data = _state.data;
+	
 	    return React.createElement(
 	      'div',
 	      null,
 	      this.toggleButton(),
+	      React.createElement('span', { style: { display: 'inline-block', width: 20 } }),
+	      React.createElement('input', {
+	        type: 'checkbox',
+	        checked: expandIconAsCell,
+	        onChange: this.onExpandIconAsCellChange
+	      }),
+	      'expandIconAsCell',
+	      React.createElement('span', { style: { display: 'inline-block', width: 20 } }),
+	      React.createElement('input', {
+	        type: 'checkbox',
+	        checked: expandRowByClick,
+	        onChange: this.onExpandRowByClickChange
+	      }),
+	      'expandRowByClick',
 	      React.createElement(Table, {
-	        columns: columns,
-	        expandIconAsCell: true,
+	        columns: this.columns,
+	        expandIconAsCell: expandIconAsCell,
+	        expandRowByClick: expandRowByClick,
 	        expandedRowRender: this.expandedRowRender,
-	        expandedRowKeys: this.state.expandedRowKeys,
+	        expandedRowKeys: expandedRowKeys,
 	        onExpandedRowsChange: this.onExpandedRowsChange,
 	        onExpand: this.onExpand,
-	        data: state.data
+	        data: data
 	      })
 	    );
 	  }
 	});
-	
-	var data = [{ key: 0, a: '123' }, { key: 1, a: 'cdd', b: 'edd' }, { key: 2, a: '1333', c: 'eee', d: 2 }];
 	
 	ReactDOM.render(React.createElement(
 	  'div',
@@ -133,10 +144,7 @@ webpackJsonp([5],{
 	    null,
 	    'expandedRowRender'
 	  ),
-	  React.createElement(MyTable, {
-	    data: data,
-	    className: 'table'
-	  })
+	  React.createElement(App, null)
 	), document.getElementById('__react-content'));
 
 /***/ }

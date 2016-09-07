@@ -34,8 +34,8 @@ webpackJsonp([0],{
 	var ReactDOM = __webpack_require__(40);
 	var Table = __webpack_require__(185);
 	
-	__webpack_require__(202);
 	__webpack_require__(203);
+	__webpack_require__(204);
 	
 	var Demo = function (_React$Component) {
 	  _inherits(Demo, _React$Component);
@@ -45,8 +45,8 @@ webpackJsonp([0],{
 	
 	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	    _this.columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, {
-	      title: '操作', dataIndex: '', key: 'd', render: function render(text, record) {
+	    _this.columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
+	      title: 'Operations', dataIndex: '', key: 'd', render: function render(text, record) {
 	        return React.createElement(
 	          'a',
 	          { onClick: function onClick(e) {
@@ -1235,8 +1235,8 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 203:
-202
+/***/ 204:
+203
 
 });
 //# sourceMappingURL=animation.js.map

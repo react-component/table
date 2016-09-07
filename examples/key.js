@@ -1,14 +1,14 @@
-webpackJsonp([11],{
+webpackJsonp([12],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(256);
+	module.exports = __webpack_require__(259);
 
 
 /***/ },
 
-/***/ 256:
+/***/ 259:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([11],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(40);
 	var Table = __webpack_require__(185);
-	__webpack_require__(202);
+	__webpack_require__(203);
 	
 	var CheckBox = React.createClass({
 	  displayName: 'CheckBox',
@@ -60,12 +60,12 @@ webpackJsonp([11],{
 	    return React.createElement(
 	      'a',
 	      { href: '#', onClick: this.handleClick(index) },
-	      '删除'
+	      'Delete'
 	    );
 	  },
 	  render: function render() {
 	    var state = this.state;
-	    var columns = [{ title: '表头1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: '表头2', dataIndex: 'b', key: 'b', width: 100 }, { title: '表头3', dataIndex: 'c', key: 'c', width: 200 }, { title: '操作', dataIndex: '', key: 'x', render: this.renderAction }];
+	    var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction }];
 	    return React.createElement(Table, { columns: columns, data: state.data, className: 'table', rowKey: function rowKey(record) {
 	        return record.a;
 	      } });

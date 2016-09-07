@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>animation.js - example - rc-table@4.4.8</title>
+  <title>animation.js - example - rc-table@5.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.4.8</h1>
+      <h1>rc-table@5.0.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -276,11 +276,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   constructor(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.columns = [
-      { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
-      { id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
-      { title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
+      { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
+      { id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
+      { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
       {
-        title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'d'</span>, render: (text, record) =&gt;
+        title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'d'</span>, render: (text, record) =&gt;
         <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> this.onDelete(record.key, e)} href="#"&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
       },
     ];

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>pagingColumns.js - example - rc-table@4.4.8</title>
+  <title>grouping-columns.js - example - rc-table@5.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -252,13 +252,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
   
-  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="common.css" /><link rel="stylesheet" href="grouping-columns.css" />
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@4.4.8</h1>
+      <h1>rc-table@5.0.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -269,37 +269,98 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/bordered.css'</span>);
 
 <span class="hljs-keyword">const</span> columns = [
-  { title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span> },
-  { title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span> },
-  { title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'c'</span> },
-  { title: <span class="hljs-string">'表头4'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'d'</span> },
-  { title: <span class="hljs-string">'表头5'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'e'</span> },
-  { title: <span class="hljs-string">'表头6'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'f'</span> },
-  { title: <span class="hljs-string">'表头7'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'g'</span> },
-  { title: <span class="hljs-string">'表头8'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'h'</span> },
-  { title: <span class="hljs-string">'表头9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span> },
-  { title: <span class="hljs-string">'表头10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span> },
-  { title: <span class="hljs-string">'表头11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span> },
-  { title: <span class="hljs-string">'表头12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span> },
+  {
+    title: <span class="hljs-string">'姓名'</span>,
+    dataIndex: <span class="hljs-string">'name'</span>,
+    key: <span class="hljs-string">'name'</span>,
+  },
+  {
+    title: <span class="hljs-string">'其它'</span>,
+    children: [
+      {
+        title: <span class="hljs-string">'年龄'</span>,
+        dataIndex: <span class="hljs-string">'age'</span>,
+        key: <span class="hljs-string">'age'</span>,
+      },
+      {
+        title: <span class="hljs-string">'住址'</span>,
+        children: [
+          {
+            title: <span class="hljs-string">'街道'</span>,
+            dataIndex: <span class="hljs-string">'street'</span>,
+            key: <span class="hljs-string">'street'</span>,
+          },
+          {
+            title: <span class="hljs-string">'小区'</span>,
+            children: [
+              {
+                title: <span class="hljs-string">'单元'</span>,
+                dataIndex: <span class="hljs-string">'building'</span>,
+                key: <span class="hljs-string">'building'</span>,
+              },
+              {
+                title: <span class="hljs-string">'门牌'</span>,
+                dataIndex: <span class="hljs-string">'number'</span>,
+                key: <span class="hljs-string">'number'</span>,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: <span class="hljs-string">'公司'</span>,
+    children: [
+      {
+        title: <span class="hljs-string">'地址'</span>,
+        dataIndex: <span class="hljs-string">'companyAddress'</span>,
+        key: <span class="hljs-string">'companyAddress'</span>,
+      },
+      {
+        title: <span class="hljs-string">'名称'</span>,
+        dataIndex: <span class="hljs-string">'companyName'</span>,
+        key: <span class="hljs-string">'companyName'</span>,
+      },
+    ],
+  },
+  {
+    title: <span class="hljs-string">'性别'</span>,
+    dataIndex: <span class="hljs-string">'gender'</span>,
+    key: <span class="hljs-string">'gender'</span>,
+  },
 ];
 
-<span class="hljs-keyword">const</span> data = [
-  { a: <span class="hljs-string">'123'</span>, key: <span class="hljs-string">'1'</span> },
-  { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span> },
-  { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
-];
+
+<span class="hljs-keyword">const</span> data = [{
+  key: <span class="hljs-string">'1'</span>,
+  name: <span class="hljs-string">'胡彦斌'</span>,
+  age: <span class="hljs-number">32</span>,
+  street: <span class="hljs-string">'拱墅区和睦街道'</span>,
+  building: <span class="hljs-number">1</span>,
+  number: <span class="hljs-number">2033</span>,
+  companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
+  companyName: <span class="hljs-string">'湖底有限公司'</span>,
+  gender: <span class="hljs-string">'男'</span>,
+}, {
+  key: <span class="hljs-string">'2'</span>,
+  name: <span class="hljs-string">'胡彦祖'</span>,
+  age: <span class="hljs-number">42</span>,
+  street: <span class="hljs-string">'拱墅区和睦街道'</span>,
+  building: <span class="hljs-number">3</span>,
+  number: <span class="hljs-number">2035</span>,
+  companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
+  companyName: <span class="hljs-string">'湖底有限公司'</span>,
+  gender: <span class="hljs-string">'男'</span>,
+}];
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>paging columns table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-      <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-      <span class="hljs-attribute">columnsPageRange</span>=<span class="hljs-value">{[1,</span> <span class="hljs-attribute">10</span>]}
-      <span class="hljs-attribute">columnsPageSize</span>=<span class="hljs-value">{4}</span>
-      <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-    /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>grouping columns<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"bordered"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );
@@ -313,7 +374,7 @@ ReactDOM.render(
   </a>
   
   <script src="common.js?nowrap"></script>
-  <script src="pagingColumns.js?nowrap"></script>
+  <script src="grouping-columns.js?nowrap"></script>
 </body>
 
 </html>

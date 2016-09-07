@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-table@4.4.8 - table ui component for react</title>
+  <title>rc-table@5.0.0 - table ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-table@4.4.8</h1>
+  <h1>rc-table@5.0.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -764,13 +764,15 @@
       
       <li><a href="examples/fixedColumnsAndHeaderSyncRowHeight.html">fixedColumnsAndHeaderSyncRowHeight</a></li>
       
+      <li><a href="examples/grouping-columns.html">grouping-columns</a></li>
+      
       <li><a href="examples/hide-header.html">hide-header</a></li>
       
       <li><a href="examples/key.html">key</a></li>
       
       <li><a href="examples/nested.html">nested</a></li>
       
-      <li><a href="examples/pagingColumns.html">pagingColumns</a></li>
+      <li><a href="examples/no-data.html">no-data</a></li>
       
       <li><a href="examples/rowClick.html">rowClick</a></li>
       
@@ -804,247 +806,246 @@ npm start</code></pre></div><h2>Example<a id="user-content-example" name="exampl
 <h2>Usage<a id="user-content-usage" name="usage" class="anchor" aria-hidden="true" href="#usage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
 
 <span class="hljs-keyword">const</span> columns = [{
-  title: <span class="hljs-string">'表头1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key:<span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span>,
+  title: <span class="hljs-string">'Name'</span>, dataIndex: <span class="hljs-string">'name'</span>, key:<span class="hljs-string">'name'</span>, width: <span class="hljs-number">100</span>,
 }, {
-  title: <span class="hljs-string">'表头2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key:<span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span>,
+  title: <span class="hljs-string">'Age'</span>, dataIndex: <span class="hljs-string">'age'</span>, key:<span class="hljs-string">'age'</span>, width: <span class="hljs-number">100</span>,
 }, {
-  title: <span class="hljs-string">'表头3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key:<span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span>,
+  title: <span class="hljs-string">'Address'</span>, dataIndex: <span class="hljs-string">'address'</span>, key:<span class="hljs-string">'address'</span>, width: <span class="hljs-number">200</span>,
 }, {
-  title: <span class="hljs-string">'操作'</span>, dataIndex: <span class="hljs-string">''</span>, key:<span class="hljs-string">'d'</span>, render: () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>操作<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
+  title: <span class="hljs-string">'Apeartions'</span>, dataIndex: <span class="hljs-string">''</span>, key:<span class="hljs-string">'opeartions'</span>, render: () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>,
 }];
 
 const data = [
-  { a: '123', b: '123', c: '123', key:'1' },
-  { a: '123', b: '123', c: '123', key:'2' },
-  { a: '123', b: '123', c: '123', key:'3' },
+  { name: 'Jack', age: 28, address: 'some where', key:'1' },
+  { name: 'Rose', age: 36, address: 'some where', key:'2' },
 ];
 
 React.render(<span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>, mountNode);</span></code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>Properties<a id="user-content-properties" name="properties" class="anchor" aria-hidden="true" href="#properties"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
-    <thead>
+  <thead>
     <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
+      <th style="width: 100px;">Name</th>
+      <th style="width: 50px;">Type</th>
+      <th>Default</th>
+      <th>Description</th>
     </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>prefixCls</td>
-          <td>String</td>
-          <th>rc-table</th>
-          <td></td>
-      </tr>
-      <tr>
-          <td>className</td>
-          <td>String</td>
-          <th></th>
-          <td>additional className</td>
-      </tr>
-      <tr>
-          <td>useFixedHeader</td>
-          <td>Boolean</td>
-          <th>false</th>
-          <td>whether use separator table for header. better set width for columns</td>
-      </tr>
-      <tr>
-          <td>scroll</td>
-          <td>Object</td>
-          <th>{x: false, y: false}</th>
-          <td>whether table can be scroll in x/y direction, <code>x</code> or <code>y</code> can be a number that indicated the width and height of table body</td>
-      </tr>
-      <tr>
-          <td>expandIconAsCell</td>
-          <td>Boolean</td>
-          <th>false</th>
-          <td>whether render expandIcon as a cell</td>
-      </tr>
-      <tr>
-          <td>expandIconColumnIndex</td>
-          <td>Number</td>
-          <th>0</th>
-          <td>The index of expandIcon which column will be inserted when expandIconAsCell is false</td>
-      </tr>
-      <tr>
-          <td>rowKey</td>
-          <td>string or Function(record,index):string</td>
-          <th>&#39;key&#39;</th>
-          <td>
-              If rowKey is string, <code>record[rowKey]</code> will be used as key.
-              If rowKey is function, the return value of <code>rowKey(record, index)</code> will be use as key.
-          </td>
-      </tr>
-      <tr>
-          <td>rowClassName</td>
-          <td>Function(record,index):string</td>
-          <th></th>
-          <td>get row&#39;s className</td>
-      </tr>
-      <tr>
-          <td>rowRef</td>
-          <td>Function(record,index):string</td>
-          <th></th>
-          <td>get row&#39;s ref key</td>
-      </tr>
-      <tr>
-          <td>defaultExpandedRowKeys</td>
-          <td>String[]</td>
-          <th>[]</th>
-          <td>initial expanded rows keys</td>
-      </tr>
-      <tr>
-          <td>expandedRowKeys</td>
-          <td>String[]</td>
-          <th></th>
-          <td>current expanded rows keys</td>
-      </tr>
-      <tr>
-          <td>defaultExpandAllRows</td>
-          <td>Boolean</td>
-          <th>false</th>
-          <td>Expand All Rows initially</td>
-      </tr>
-      <tr>
-          <td>onExpandedRowsChange</td>
-          <td>Function(expandedRows)</td>
-          <th>save the expanded rows in the internal state</th>
-          <td>function to call when the expanded rows change</td>
-      </tr>
-      <tr>
-          <td>onExpand</td>
-          <td>Function(expanded, record)</td>
-          <th></th>
-          <td>function to call when click expand icon</td>
-      </tr>
-      <tr>
-          <td>expandedRowClassName</td>
-          <td>Function(recode,index):string</td>
-          <th></th>
-          <td>get expanded row&#39;s className</td>
-      </tr>
-      <tr>
-          <td>data</td>
-          <td>Object[]</td>
-          <th></th>
-          <td>data record array to be rendered</td>
-      </tr>
-      <tr>
-          <td>indentSize</td>
-          <td>Number</td>
-          <th>15</th>
-          <td>indentSize for every level of data.i.children, better using with column.width specified</td>
-      </tr>
-      <tr>
-          <td>onRowClick</td>
-          <td>Function(record, index)</td>
-          <th></th>
-          <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
-      </tr>
-      <tr>
-          <td>columnsPageSize</td>
-          <td>Number</td>
-          <th>5</th>
-          <td>pageSize of columns. (Deprecated, use fixed columns)</td>
-      </tr>
-      <tr>
-          <td>columnsPageRange</td>
-          <td>Array</td>
-          <th></th>
-          <td>columns index range need paging, like [2,10]. (Deprecated, use column.fixed)</td>
-      </tr>
-      <tr>
-          <td>showHeader</td>
-          <td>Boolean</td>
-          <th>true</th>
-          <td>whether table head is shown</td>
-      </tr>
-      <tr>
-          <td>title</td>
-          <td>Function(currentData)</td>
-          <th></th>
-          <td>table title render function</td>
-      </tr>
-      <tr>
-          <td>footer</td>
-          <td>Function(currentData)</td>
-          <th></th>
-          <td>table footer render function</td>
-      </tr>
-      <tr>
-          <td>getBodyWrapper</td>
-          <td>Function(body)</td>
-          <th></th>
-          <td>get wrapper of tbody, <a href="http://react-component.github.io/table/examples/animation.html" title="null">demoe</a></td>
-      </tr>
-      <tr>
-          <td>columns</td>
-          <td>Object[]<Object></td>
-          <th></th>
-          <td>
-            The columns config of table. contains
-            <table>
-             <thead>
-                <tr>
-                    <th style="width: 100px;">name</th>
-                    <th style="width: 50px;">type</th>
-                    <th>default</th>
-                    <th>description</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                      <td>key</td>
-                      <td>String</td>
-                      <th></th>
-                      <td>key of this column</td>
-                  </tr>
-                  <tr>
-                      <td>className</td>
-                      <td>String</td>
-                      <th></th>
-                      <td>className of this column</td>
-                  </tr>
-                  <tr>
-                     <td>colSpan</td>
-                     <td>Number</td>
-                     <th></th>
-                     <td>thead colSpan of this column</td>
-                  </tr>
-                  <tr>
-                      <td>title</td>
-                      <td>React Node</td>
-                      <th></th>
-                      <td>title of this column</td>
-                  </tr>
-                  <tr>
-                      <td>dataIndex</td>
-                      <td>String</td>
-                      <th></th>
-                      <td>display field of the data record</td>
-                  </tr>
-                  <tr>
-                      <td>width</td>
-                      <td>String|Number</td>
-                      <th></th>
-                      <td>width of the specific proportion calculation according to the width of the columns</td>
-                  </tr>
-                  <tr>
-                      <td>fixed</td>
-                      <td>String|Boolean</td>
-                      <th></th>
-                      <td>this column will be fixed when table scroll horizontally: true or &#39;left&#39; or &#39;right&#39;</td>
-                  </tr>
-                  <tr>
-                      <td>render</td>
-                      <td>Function(value, row, index)</td>
-                      <th></th>
-                      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it&#39;s return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==&gt; &#39;children&#39; is the text of this cell, props is some setting of this cell, eg: &#39;colspan&#39; set td colspan, &#39;rowspan&#39; set td rowspan</td>
-                  </tr>
-                </tbody>
-            </table>
-          </td>
-      </tr>
-    </tbody>
+  </thead>
+  <tbody>
+    <tr>
+      <td>prefixCls</td>
+      <td>String</td>
+      <td>rc-table</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>className</td>
+      <td>String</td>
+      <td></td>
+      <td>additional className</td>
+    </tr>
+    <tr>
+      <td>useFixedHeader</td>
+      <td>Boolean</td>
+      <td>false</td>
+      <td>whether use separator table for header. better set width for columns</td>
+    </tr>
+    <tr>
+      <td>scroll</td>
+      <td>Object</td>
+      <td>{x: false, y: false}</td>
+      <td>whether table can be scroll in x/y direction, <code>x</code> or <code>y</code> can be a number that indicated the width and height of table body</td>
+    </tr>
+    <tr>
+      <td>expandIconAsCell</td>
+      <td>Boolean</td>
+      <td>false</td>
+      <td>whether render expandIcon as a cell</td>
+    </tr>
+    <tr>
+      <td>expandIconColumnIndex</td>
+      <td>Number</td>
+      <td>0</td>
+      <td>The index of expandIcon which column will be inserted when expandIconAsCell is false</td>
+    </tr>
+    <tr>
+      <td>rowKey</td>
+      <td>string or Function(record, index):string</td>
+      <td>&#39;key&#39;</td>
+      <td>
+        If rowKey is string, <code>record[rowKey]</code> will be used as key.
+        If rowKey is function, the return value of <code>rowKey(record, index)</code> will be use as key.
+      </td>
+    </tr>
+    <tr>
+      <td>rowClassName</td>
+      <td>Function(record, index, indent):string</td>
+      <td></td>
+      <td>get row&#39;s className</td>
+    </tr>
+    <tr>
+      <td>rowRef</td>
+      <td>Function(record, index, indent):string</td>
+      <td></td>
+      <td>get row&#39;s ref key</td>
+    </tr>
+    <tr>
+      <td>defaultExpandedRowKeys</td>
+      <td>String[]</td>
+      <td>[]</td>
+      <td>initial expanded rows keys</td>
+    </tr>
+    <tr>
+      <td>expandedRowKeys</td>
+      <td>String[]</td>
+      <td></td>
+      <td>current expanded rows keys</td>
+    </tr>
+    <tr>
+      <td>defaultExpandAllRows</td>
+      <td>Boolean</td>
+      <td>false</td>
+      <td>Expand All Rows initially</td>
+    </tr>
+    <tr>
+      <td>onExpandedRowsChange</td>
+      <td>Function(expandedRows)</td>
+      <td>save the expanded rows in the internal state</td>
+      <td>function to call when the expanded rows change</td>
+    </tr>
+    <tr>
+      <td>onExpand</td>
+      <td>Function(expanded, record)</td>
+      <td></td>
+      <td>function to call when click expand icon</td>
+    </tr>
+    <tr>
+      <td>expandedRowClassName</td>
+      <td>Function(recode, index, indent):string</td>
+      <td></td>
+      <td>get expanded row&#39;s className</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>Object[]</td>
+      <td></td>
+      <td>data record array to be rendered</td>
+    </tr>
+    <tr>
+      <td>indentSize</td>
+      <td>Number</td>
+      <td>15</td>
+      <td>indentSize for every level of data.i.children, better using with column.width specified</td>
+    </tr>
+    <tr>
+      <td>onRowClick</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>onRowDoubleClick</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle rowDoubleClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>showHeader</td>
+      <td>Boolean</td>
+      <td>true</td>
+      <td>whether table head is shown</td>
+    </tr>
+    <tr>
+      <td>title</td>
+      <td>Function(currentData)</td>
+      <td></td>
+      <td>table title render function</td>
+    </tr>
+    <tr>
+      <td>footer</td>
+      <td>Function(currentData)</td>
+      <td></td>
+      <td>table footer render function</td>
+    </tr>
+    <tr>
+      <td>getBodyWrapper</td>
+      <td>Function(body)</td>
+      <td></td>
+      <td>get wrapper of tbody, <a href="http://react-component.github.io/table/examples/animation.html" title="null">demoe</a></td>
+    </tr>
+    <tr>
+      <td>emptyText</td>
+      <td>React.Node</td>
+      <td><code>No Data</code></td>
+      <td>Display text when data is empty</td>
+    </tr>
+    <tr>
+      <td>columns</td>
+      <td>Object[]<Object></td>
+      <td></td>
+      <td>
+        The columns config of table. contains
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 100px;">Name</th>
+              <th style="width: 50px;">Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>key</td>
+              <td>String</td>
+              <td></td>
+              <td>key of this column</td>
+            </tr>
+            <tr>
+              <td>className</td>
+              <td>String</td>
+              <td></td>
+              <td>className of this column</td>
+            </tr>
+            <tr>
+              <td>colSpan</td>
+              <td>Number</td>
+              <td></td>
+              <td>thead colSpan of this column</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>React Node</td>
+              <td></td>
+              <td>title of this column</td>
+            </tr>
+            <tr>
+              <td>dataIndex</td>
+              <td>String</td>
+              <td></td>
+              <td>display field of the data record</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>String|Number</td>
+              <td></td>
+              <td>width of the specific proportion calculation according to the width of the columns</td>
+            </tr>
+            <tr>
+              <td>fixed</td>
+              <td>String|Boolean</td>
+              <td></td>
+              <td>this column will be fixed when table scroll horizontally: true or &#39;left&#39; or &#39;right&#39;</td>
+            </tr>
+            <tr>
+              <td>render</td>
+              <td>Function(value, row, index)</td>
+              <td></td>
+              <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it&#39;s return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==&gt; &#39;children&#39; is the text of this cell, props is some setting of this cell, eg: &#39;colspan&#39; set td colspan, &#39;rowspan&#39; set td rowspan</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <h2>License<a id="user-content-license" name="license" class="anchor" aria-hidden="true" href="#license"><span class="octicon octicon-link"></span></a></h2><p>rc-table is released under the MIT license.</p>
