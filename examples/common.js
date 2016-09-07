@@ -23897,6 +23897,8 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -23927,12 +23929,12 @@
 	    return _react2.default.createElement(
 	      'thead',
 	      { className: prefixCls + '-thead' },
-	      rows.map(function (row, i) {
+	      rows.map(function (row, index) {
 	        return _react2.default.createElement(
 	          'tr',
-	          { key: i, style: rowStyle },
-	          row.map(function (cellProps) {
-	            return _react2.default.createElement('th', cellProps);
+	          { key: index, style: rowStyle },
+	          row.map(function (cellProps, i) {
+	            return _react2.default.createElement('th', _extends({}, cellProps, { key: i }));
 	          })
 	        );
 	      })
