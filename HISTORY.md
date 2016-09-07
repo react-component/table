@@ -1,6 +1,12 @@
 # History
 ----
 
+## 5.0.0 / 2016-09-07
+
+- Remove props `columnsPageSize` and `columnsPageRange`, use fixed columns instead.
+- Add prop `onRowDoubleClick`.
+- Improve perfermance when expand row.
+
 ## 4.6.0 / 2016-08-29
 
 Add prop `emptyText`.
