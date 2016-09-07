@@ -15,9 +15,9 @@ export default React.createClass({
     return (
       <thead className={`${prefixCls}-thead`}>
         {
-          rows.map((row, i) => (
-            <tr key={i} style={rowStyle}>
-              {row.map(cellProps => <th {...cellProps} />)}
+          rows.map((row, index) => (
+            <tr key={index} style={rowStyle}>
+              {row.map((cellProps, i) => <th {...cellProps} key={i} />)}
             </tr>
           ))
         }
