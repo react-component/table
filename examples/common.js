@@ -22222,7 +22222,7 @@
 	
 	    var prefixCls = this.props.prefixCls;
 	
-	    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('tr') : [];
+	    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('tr') : this.refs.bodyTable.querySelectorAll('thead > tr');
 	    var bodyRows = this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row') || [];
 	    var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
 	      return row.getBoundingClientRect().height || 'auto';
