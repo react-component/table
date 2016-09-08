@@ -409,10 +409,14 @@ const Table = React.createClass({
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {}, getBodyWrapper } = this.props;
-    let { useFixedHeader } = this.props;
+    const { prefixCls, scroll = {}, getBodyWrapper, useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
+
+    let useStandaloneHeader = useFixedHeader;
+    if (scroll.x || scroll.y) {
+      useStandaloneHeader = true;
+    }
 
     let tableClassName = '';
     if (scroll.x || columns) {
@@ -429,7 +433,6 @@ const Table = React.createClass({
         bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       }
       bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
-      useFixedHeader = true;
 
       // Add negative margin bottom for scroll bar overflow bug
       const scrollbarWidth = measureScrollbar();
@@ -464,7 +467,7 @@ const Table = React.createClass({
     };
 
     let headTable;
-    if (useFixedHeader) {
+    if (useStandaloneHeader) {
       headTable = (
         <div
           className={`${prefixCls}-header`}
@@ -488,7 +491,7 @@ const Table = React.createClass({
         onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}
       >
-        {renderTable(!useFixedHeader)}
+        {renderTable(!useStandaloneHeader)}
       </div>
     );
 
@@ -513,7 +516,7 @@ const Table = React.createClass({
             onTouchStart={this.detectScrollTarget}
             onScroll={this.handleBodyScroll}
           >
-            {renderTable(!useFixedHeader)}
+            {renderTable(!useStandaloneHeader)}
           </div>
         </div>
       );
