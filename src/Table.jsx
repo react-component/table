@@ -606,7 +606,9 @@ const Table = React.createClass({
 
   syncFixedTableRowHeight() {
     const { prefixCls } = this.props;
-    const headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll(`tr`) : [];
+    const headRows = this.refs.headTable ?
+            this.refs.headTable.querySelectorAll('tr') :
+            this.refs.bodyTable.querySelectorAll('thead > tr');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
