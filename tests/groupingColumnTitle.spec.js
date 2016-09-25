@@ -114,12 +114,12 @@ describe('Table with grouping columns', () => {
       div
     );
 
+    const fixedRows = node.find('.rc-table-fixed-left thead tr');
     const titleA = node.find('.rc-table-fixed-left .title-a');
     const titleE = node.find('.rc-table-fixed-right .title-e');
 
+    expect(fixedRows.length).to.be(1);
     expect(titleA.attr('rowspan')).to.be('2');
-    expect(titleA.hasClass('rc-table-rowspan-2')).to.be(true);
     expect(titleE.attr('rowspan')).to.be('2');
-    expect(titleE.hasClass('rc-table-rowspan-2')).to.be(true);
   });
 });

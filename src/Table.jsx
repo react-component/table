@@ -194,16 +194,13 @@ const Table = React.createClass({
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
         key: 'rc-table-expandIconAsCell',
-        className: `${prefixCls}-expand-icon-th ${prefixCls}-rowspan-${rows.length}`,
+        className: `${prefixCls}-expand-icon-th`,
         title: '',
         rowSpan: rows.length,
       });
     }
 
-    const { fixedColumnsHeadRowsHeight } = this.state;
-    const trStyle = (fixedColumnsHeadRowsHeight[0] && columns) ? {
-      height: fixedColumnsHeadRowsHeight[0],
-    } : null;
+    const trStyle = this.getHeaderRowStyle(columns, rows);
 
     return showHeader ? (
       <TableHeader
@@ -215,8 +212,6 @@ const Table = React.createClass({
   },
 
   getHeaderRows(columns, currentRow = 0, rows) {
-    const { prefixCls } = this.props;
-
     rows = rows || [];
     rows[currentRow] = rows[currentRow] || [];
 
@@ -239,13 +234,12 @@ const Table = React.createClass({
       }
       if ('rowSpan' in column) {
         cell.rowSpan = column.rowSpan;
-        cell.className += ` ${prefixCls}-rowspan-${cell.rowSpan}`;
       }
       if (cell.colSpan !== 0) {
         rows[currentRow].push(cell);
       }
     });
-    return rows;
+    return rows.filter(row => row.length > 0);
   },
 
   getExpandedRow(key, content, visible, className, fixed) {
@@ -565,6 +559,18 @@ const Table = React.createClass({
     return this.getLeafColumns(columns).length;
   },
 
+  getHeaderRowStyle(columns, rows) {
+    const { fixedColumnsHeadRowsHeight } = this.state;
+    const headerHeight = fixedColumnsHeadRowsHeight[0];
+    if (headerHeight && columns) {
+      if (headerHeight === 'auto') {
+        return { height: 'auto' };
+      }
+      return { height: headerHeight / rows.length };
+    }
+    return null;
+  },
+
   // add appropriate rowspan and colspan to column
   groupColumns(columns, currentRow = 0, parentColumn = {}, rows = []) {
     // track how many rows we got
@@ -607,8 +613,8 @@ const Table = React.createClass({
   syncFixedTableRowHeight() {
     const { prefixCls } = this.props;
     const headRows = this.refs.headTable ?
-            this.refs.headTable.querySelectorAll('tr') :
-            this.refs.bodyTable.querySelectorAll('thead > tr');
+            this.refs.headTable.querySelectorAll('thead') :
+            this.refs.bodyTable.querySelectorAll('thead');
     const bodyRows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
