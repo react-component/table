@@ -161,46 +161,6 @@ tr.rc-table-expanded-row:hover {
   width: auto;
   background: #fff;
 }
-.rc-table-fixed-left th.rc-table-rowspan-1,
-.rc-table-fixed-right th.rc-table-rowspan-1 {
-  height: 18px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-2,
-.rc-table-fixed-right th.rc-table-rowspan-2 {
-  height: 68px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-3,
-.rc-table-fixed-right th.rc-table-rowspan-3 {
-  height: 118px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-4,
-.rc-table-fixed-right th.rc-table-rowspan-4 {
-  height: 168px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-5,
-.rc-table-fixed-right th.rc-table-rowspan-5 {
-  height: 218px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-6,
-.rc-table-fixed-right th.rc-table-rowspan-6 {
-  height: 268px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-7,
-.rc-table-fixed-right th.rc-table-rowspan-7 {
-  height: 318px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-8,
-.rc-table-fixed-right th.rc-table-rowspan-8 {
-  height: 368px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-9,
-.rc-table-fixed-right th.rc-table-rowspan-9 {
-  height: 418px;
-}
-.rc-table-fixed-left th.rc-table-rowspan-10,
-.rc-table-fixed-right th.rc-table-rowspan-10 {
-  height: 468px;
-}
 .rc-table-fixed-left {
   left: 0;
   box-shadow: 4px 0 4px rgba(100, 100, 100, 0.1);

@@ -3,21 +3,21 @@ webpackJsonp([15],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(262);
+	module.exports = __webpack_require__(260);
 
 
 /***/ },
 
-/***/ 262:
+/***/ 260:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(40);
-	var Table = __webpack_require__(185);
-	__webpack_require__(203);
+	var ReactDOM = __webpack_require__(39);
+	var Table = __webpack_require__(182);
+	__webpack_require__(200);
 	
 	var onRowClick = function onRowClick(record, index, event) {
 	  console.log('Click nth(' + index + ') element of parent, record.name: ' + record.name);
