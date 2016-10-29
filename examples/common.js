@@ -22297,6 +22297,8 @@
 	    if (e.target !== this.scrollTarget) {
 	      return;
 	    }
+	    // Remember last scrollLeft for scroll direction detecting.
+	    this.lastScrollLeft = e.target.scrollLeft;
 	    var _props$scroll = this.props.scroll;
 	    var scroll = _props$scroll === undefined ? {} : _props$scroll;
 	    var _refs = this.refs;
@@ -22305,7 +22307,7 @@
 	    var fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft;
 	    var fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
 	
-	    if (scroll.x) {
+	    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
 	      if (e.target === bodyTable && headTable) {
 	        headTable.scrollLeft = e.target.scrollLeft;
 	      } else if (e.target === headTable && bodyTable) {
