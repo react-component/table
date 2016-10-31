@@ -1,5 +1,2 @@
-require('./basic.spec.js');
-require('./groupingColumnTitle.spec.js');
-require('./rowClick.spec.js');
-require('./fixedColumns.spec.js');
-require('./ColumnManager.spec.js');
+const req = require.context('.', false, /\.spec\.js$/);
+req.keys().forEach(req);
