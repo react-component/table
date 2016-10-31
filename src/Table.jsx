@@ -692,8 +692,6 @@ const Table = React.createClass({
     if (e.target !== this.scrollTarget) {
       return;
     }
-    // Remember last scrollLeft for scroll direction detecting.
-    this.lastScrollLeft = e.target.scrollLeft;
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
@@ -723,6 +721,8 @@ const Table = React.createClass({
         bodyTable.scrollTop = e.target.scrollTop;
       }
     }
+    // Remember last scrollLeft for scroll direction detecting.
+    this.lastScrollLeft = e.target.scrollLeft;
   },
 
   handleRowHover(isHover, key) {
