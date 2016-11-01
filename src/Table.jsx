@@ -309,9 +309,9 @@ const Table = React.createClass({
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      const style = (fixed && fixedColumnsBodyRowsHeight[i]) ? {
-        height: fixedColumnsBodyRowsHeight[i],
-      } : {};
+      const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
+        fixedColumnsBodyRowsHeight[i] : null;
+
 
       let leafColumns;
       if (fixed === 'left') {
@@ -343,7 +343,7 @@ const Table = React.createClass({
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
-          style={style}
+          height={height}
           {...onHoverProps}
           key={key}
           hoverKey={key}
