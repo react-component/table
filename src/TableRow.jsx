@@ -13,7 +13,10 @@ const TableRow = React.createClass({
     expandIconColumnIndex: PropTypes.number,
     onHover: PropTypes.func,
     columns: PropTypes.array,
-    style: PropTypes.object,
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     visible: PropTypes.bool,
     index: PropTypes.number,
     hoverKey: PropTypes.any,
@@ -80,7 +83,7 @@ const TableRow = React.createClass({
 
   render() {
     const {
-      prefixCls, columns, record, style, visible, index,
+      prefixCls, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, className, indent, indentSize,
     } = this.props;
@@ -124,6 +127,10 @@ const TableRow = React.createClass({
         />
       );
     }
+    const style = { height };
+    if (!visible) {
+      style.display = 'none';
+    }
 
     return (
       <tr
@@ -132,7 +139,7 @@ const TableRow = React.createClass({
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
-        style={visible ? style : { ...style, display: 'none' }}
+        style={style}
       >
         {cells}
       </tr>

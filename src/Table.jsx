@@ -4,6 +4,7 @@ import TableHeader from './TableHeader';
 import { measureScrollbar, debounce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
+import ColumnManager from './ColumnManager';
 
 const Table = React.createClass({
   propTypes: {
@@ -67,6 +68,7 @@ const Table = React.createClass({
 
   getInitialState() {
     const props = this.props;
+    this.columnManager = new ColumnManager(props.columns);
     let expandedRowKeys = [];
     let rows = [...props.data];
     if (props.defaultExpandAllRows) {
@@ -90,8 +92,7 @@ const Table = React.createClass({
 
   componentDidMount() {
     this.resetScrollY();
-    const isAnyColumnsFixed = this.isAnyColumnsFixed();
-    if (isAnyColumnsFixed) {
+    if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.resizeEvent = addEventListener(
         window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
@@ -114,9 +115,7 @@ const Table = React.createClass({
       });
     }
     if (nextProps.columns !== this.props.columns) {
-      delete this.isAnyColumnsFixedCache;
-      delete this.isAnyColumnsLeftFixedCache;
-      delete this.isAnyColumnsRightFixedCache;
+      this.columnManager.reset(nextProps.columns);
     }
   },
 
@@ -183,13 +182,7 @@ const Table = React.createClass({
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, prefixCls } = this.props;
-    let rows;
-    if (columns) {
-      // columns are passed from fixed table function that already grouped.
-      rows = this.getHeaderRows(columns);
-    } else {
-      rows = this.getHeaderRows(this.groupColumns(this.props.columns));
-    }
+    const rows = this.getHeaderRows(columns);
 
     if (expandIconAsCell && fixed !== 'right') {
       rows[0].unshift({
@@ -244,11 +237,19 @@ const Table = React.createClass({
 
   getExpandedRow(key, content, visible, className, fixed) {
     const { prefixCls, expandIconAsCell } = this.props;
+    let colCount;
+    if (fixed === 'left') {
+      colCount = this.columnManager.leftLeafColumns().length;
+    } else if (fixed === 'right') {
+      colCount = this.columnManager.rightLeafColumns().length;
+    } else {
+      colCount = this.columnManager.leafColumns().length;
+    }
     const columns = [{
       key: 'extra-row',
       render: () => ({
         props: {
-          colSpan: this.getLeafColumnsCount(this.props.columns),
+          colSpan: colCount,
         },
         children: fixed !== 'right' ? content : '&nbsp;',
       }),
@@ -285,7 +286,6 @@ const Table = React.createClass({
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
     const onRowClick = props.onRowClick;
     const onRowDoubleClick = props.onRowDoubleClick;
-    const isAnyColumnsFixed = this.isAnyColumnsFixed();
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
@@ -305,15 +305,22 @@ const Table = React.createClass({
       }
 
       const onHoverProps = {};
-      if (isAnyColumnsFixed) {
+      if (this.columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      const style = (fixed && fixedColumnsBodyRowsHeight[i]) ? {
-        height: fixedColumnsBodyRowsHeight[i],
-      } : {};
+      const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
+        fixedColumnsBodyRowsHeight[i] : null;
 
-      const leafColumns = this.getLeafColumns(columns || props.columns);
+
+      let leafColumns;
+      if (fixed === 'left') {
+        leafColumns = this.columnManager.leftLeafColumns();
+      } else if (fixed === 'right') {
+        leafColumns = this.columnManager.rightLeafColumns();
+      } else {
+        leafColumns = this.columnManager.leafColumns();
+      }
 
       rst.push(
         <TableRow
@@ -336,7 +343,7 @@ const Table = React.createClass({
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
-          style={style}
+          height={height}
           {...onHoverProps}
           key={key}
           hoverKey={key}
@@ -374,7 +381,14 @@ const Table = React.createClass({
         />
       );
     }
-    const leafColumns = this.getLeafColumns(columns || this.props.columns);
+    let leafColumns;
+    if (fixed === 'left') {
+      leafColumns = this.columnManager.leftLeafColumns();
+    } else if (fixed === 'right') {
+      leafColumns = this.columnManager.rightLeafColumns();
+    } else {
+      leafColumns = this.columnManager.leafColumns();
+    }
     cols = cols.concat(leafColumns.map(c => {
       return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
     }));
@@ -382,21 +396,15 @@ const Table = React.createClass({
   },
 
   getLeftFixedTable() {
-    const { columns } = this.props;
-    const fixedColumns = this.groupColumns(columns).filter(
-      column => column.fixed === 'left' || column.fixed === true
-    );
     return this.getTable({
-      columns: fixedColumns,
+      columns: this.columnManager.leftColumns(),
       fixed: 'left',
     });
   },
 
   getRightFixedTable() {
-    const { columns } = this.props;
-    const fixedColumns = this.groupColumns(columns).filter(column => column.fixed === 'right');
     return this.getTable({
-      columns: fixedColumns,
+      columns: this.columnManager.rightColumns(),
       fixed: 'right',
     });
   },
@@ -458,11 +466,12 @@ const Table = React.createClass({
     };
 
     let headTable;
+
     if (useFixedHeader) {
       headTable = (
         <div
           className={`${prefixCls}-header`}
-          ref={columns ? null : 'headTable'}
+          ref={fixed ? null : 'headTable'}
           style={headStyle}
           onMouseOver={this.detectScrollTarget}
           onTouchStart={this.detectScrollTarget}
@@ -486,7 +495,7 @@ const Table = React.createClass({
       </div>
     );
 
-    if (columns && columns.length) {
+    if (fixed && columns.length) {
       let refName;
       if (columns[0].fixed === 'left' || columns[0].fixed === true) {
         refName = 'fixedColumnsBodyLeft';
@@ -543,22 +552,6 @@ const Table = React.createClass({
     ) : null;
   },
 
-  getLeafColumns(columns) {
-    const leafColumns = [];
-    columns.forEach(column => {
-      if (!column.children) {
-        leafColumns.push(column);
-      } else {
-        leafColumns.push(...this.getLeafColumns(column.children));
-      }
-    });
-    return leafColumns;
-  },
-
-  getLeafColumnsCount(columns) {
-    return this.getLeafColumns(columns).length;
-  },
-
   getHeaderRowStyle(columns, rows) {
     const { fixedColumnsHeadRowsHeight } = this.state;
     const headerHeight = fixedColumnsHeadRowsHeight[0];
@@ -569,45 +562,6 @@ const Table = React.createClass({
       return { height: headerHeight / rows.length };
     }
     return null;
-  },
-
-  // add appropriate rowspan and colspan to column
-  groupColumns(columns, currentRow = 0, parentColumn = {}, rows = []) {
-    // track how many rows we got
-    if (!~rows.indexOf(currentRow)) {
-      rows.push(currentRow);
-    }
-    const grouped = [];
-    const setRowSpan = column => {
-      const rowSpan = rows.length - currentRow;
-      if (column &&
-          !column.children && // parent columns are supposed to be one row
-          rowSpan > 1 &&
-          (!column.rowSpan || column.rowSpan < rowSpan)
-      ) {
-        column.rowSpan = rowSpan;
-      }
-    };
-    columns.forEach((column, index) => {
-      const newColumn = { ...column };
-      parentColumn.colSpan = parentColumn.colSpan || 0;
-      if (newColumn.children && newColumn.children.length > 0) {
-        newColumn.children = this.groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
-        parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
-      } else {
-        parentColumn.colSpan++;
-      }
-      // update rowspan to all previous columns
-      for (let i = 0; i < index; ++i) {
-        setRowSpan(grouped[i]);
-      }
-      // last column, update rowspan immediately
-      if (index + 1 === columns.length) {
-        setRowSpan(newColumn);
-      }
-      grouped.push(newColumn);
-    });
-    return grouped;
   },
 
   syncFixedTableRowHeight() {
@@ -656,34 +610,6 @@ const Table = React.createClass({
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
     }
-  },
-
-  isAnyColumnsFixed() {
-    if ('isAnyColumnsFixedCache' in this) {
-      return this.isAnyColumnsFixedCache;
-    }
-    this.isAnyColumnsFixedCache = this.props.columns.some(column => !!column.fixed);
-    return this.isAnyColumnsFixedCache;
-  },
-
-  isAnyColumnsLeftFixed() {
-    if ('isAnyColumnsLeftFixedCache' in this) {
-      return this.isAnyColumnsLeftFixedCache;
-    }
-    this.isAnyColumnsLeftFixedCache = this.props.columns.some(
-      column => column.fixed === 'left' || column.fixed === true
-    );
-    return this.isAnyColumnsLeftFixedCache;
-  },
-
-  isAnyColumnsRightFixed() {
-    if ('isAnyColumnsRightFixedCache' in this) {
-      return this.isAnyColumnsRightFixedCache;
-    }
-    this.isAnyColumnsRightFixedCache = this.props.columns.some(
-      column => column.fixed === 'right'
-    );
-    return this.isAnyColumnsRightFixedCache;
   },
 
   handleBodyScroll(e) {
@@ -744,22 +670,24 @@ const Table = React.createClass({
     }
     className += ` ${prefixCls}-scroll-position-${this.state.scrollPosition}`;
 
-    const isTableScroll = this.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
+    const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
+                          props.scroll.x ||
+                          props.scroll.y;
 
     return (
       <div className={className} style={props.style}>
         {this.getTitle()}
         <div className={`${prefixCls}-content`}>
-          {this.isAnyColumnsLeftFixed() &&
+          {this.columnManager.isAnyColumnsLeftFixed() &&
           <div className={`${prefixCls}-fixed-left`}>
             {this.getLeftFixedTable()}
           </div>}
           <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
-            {this.getTable()}
+            {this.getTable({ columns: this.columnManager.groupedColumns() })}
             {this.getEmptyText()}
             {this.getFooter()}
           </div>
-          {this.isAnyColumnsRightFixed() &&
+          {this.columnManager.isAnyColumnsRightFixed() &&
           <div className={`${prefixCls}-fixed-right`}>
             {this.getRightFixedTable()}
           </div>}
