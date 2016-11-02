@@ -5,6 +5,7 @@ import { measureScrollbar, debounce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import ColumnManager from './ColumnManager';
+import createStore from './createStore';
 
 const Table = React.createClass({
   propTypes: {
@@ -68,9 +69,12 @@ const Table = React.createClass({
 
   getInitialState() {
     const props = this.props;
-    this.columnManager = new ColumnManager(props.columns);
     let expandedRowKeys = [];
     let rows = [...props.data];
+
+    this.columnManager = new ColumnManager(props.columns);
+    this.store = createStore({ currentHoverKey: null });
+
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
@@ -269,6 +273,7 @@ const Table = React.createClass({
         prefixCls={`${prefixCls}-expanded-row`}
         indent={1}
         expandable={false}
+        store={this.store}
       />
     );
   },
@@ -299,10 +304,7 @@ const Table = React.createClass({
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
       }
-      let className = rowClassName(record, i, indent);
-      if (this.state.currentHoverKey === key) {
-        className += ` ${props.prefixCls}-row-hover`;
-      }
+      const className = rowClassName(record, i, indent);
 
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
@@ -348,6 +350,7 @@ const Table = React.createClass({
           key={key}
           hoverKey={key}
           ref={rowRef(record, i, indent)}
+          store={this.store}
         />
       );
 
@@ -652,7 +655,7 @@ const Table = React.createClass({
   },
 
   handleRowHover(isHover, key) {
-    this.setState({
+    this.store.setState({
       currentHoverKey: isHover ? key : null,
     });
   },

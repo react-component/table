@@ -29,6 +29,7 @@ const TableRow = React.createClass({
     indentSize: PropTypes.number,
     expandIconAsCell: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
+    store: PropTypes.object.isRequired,
   },
 
   getDefaultProps() {
@@ -42,12 +43,33 @@ const TableRow = React.createClass({
     };
   },
 
-  shouldComponentUpdate(nextProps) {
-    return !shallowequal(nextProps, this.props);
+  getInitialState() {
+    return {
+      hovered: false,
+    };
+  },
+
+  componentDidMount() {
+    const { store, hoverKey } = this.props;
+    this.unsubscribe = store.subscribe(() => {
+      if (store.getState().currentHoverKey === hoverKey) {
+        this.setState({ hovered: true });
+      } else if (this.state.hovered === true) {
+        this.setState({ hovered: false });
+      }
+    });
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowequal(nextProps, this.props) ||
+           !shallowequal(nextState, this.state);
   },
 
   componentWillUnmount() {
     this.props.onDestroy(this.props.record);
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   },
 
   onRowClick(event) {
@@ -85,8 +107,14 @@ const TableRow = React.createClass({
     const {
       prefixCls, columns, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, className, indent, indentSize,
+      expandable, onExpand, needIndentSpaced, indent, indentSize,
     } = this.props;
+
+    let { className } = this.props;
+
+    if (this.state.hovered) {
+      className += ` ${prefixCls}-hover`;
+    }
 
     const cells = [];
 
