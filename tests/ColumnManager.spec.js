@@ -3,6 +3,31 @@ const expect = require('expect.js');
 const ColumnManager = require('../src/ColumnManager');
 
 describe('ColumnManager', () => {
+  describe('includesCustomRender', () => {
+    it('return true', () => {
+      const columns = [
+        {
+          title: 'a',
+          dataIndex: 'a',
+          render: () => 'a',
+        },
+      ];
+
+      expect(ColumnManager.includesCustomRender(columns)).to.be(true);
+    });
+
+    it('return false', () => {
+      const columns = [
+        {
+          title: 'a',
+          dataIndex: 'a',
+        },
+      ];
+
+      expect(ColumnManager.includesCustomRender(columns)).to.be(false);
+    });
+  });
+
   describe('groupedColumns', () => {
     it('add appropriate rowspan and colspan to column', () => {
       const columns = [

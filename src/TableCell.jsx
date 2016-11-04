@@ -13,7 +13,7 @@ const TableCell = React.createClass({
     expandIcon: PropTypes.node,
   },
   shouldComponentUpdate(nextProps) {
-    return !shallowequal(nextProps, this.props);
+    return !shallowequal(nextProps, this.props) || !!nextProps.column.render;
   },
   isInvalidRenderCellText(text) {
     return text && !React.isValidElement(text) &&
