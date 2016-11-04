@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import objectPath from 'object-path';
-import shallowequal from 'shallowequal';
 
 const TableCell = React.createClass({
   propTypes: {
@@ -11,9 +10,6 @@ const TableCell = React.createClass({
     indentSize: PropTypes.number,
     column: PropTypes.object,
     expandIcon: PropTypes.node,
-  },
-  shouldComponentUpdate(nextProps) {
-    return !shallowequal(nextProps, this.props);
   },
   isInvalidRenderCellText(text) {
     return text && !React.isValidElement(text) &&
