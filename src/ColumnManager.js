@@ -107,7 +107,7 @@ export default class ColumnManager {
 
   reset(columns) {
     this.columns = columns;
-    this._cache = {};
+    this._cached = {};
   }
 
   _cache(name, fn) {
