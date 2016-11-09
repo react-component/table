@@ -223,68 +223,77 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Object[]<Object></td>
       <td></td>
       <td>
-        The columns config of table. contains
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 100px;">Name</th>
-              <th style="width: 50px;">Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>key</td>
-              <td>String</td>
-              <td></td>
-              <td>key of this column</td>
-            </tr>
-            <tr>
-              <td>className</td>
-              <td>String</td>
-              <td></td>
-              <td>className of this column</td>
-            </tr>
-            <tr>
-              <td>colSpan</td>
-              <td>Number</td>
-              <td></td>
-              <td>thead colSpan of this column</td>
-            </tr>
-            <tr>
-              <td>title</td>
-              <td>React Node</td>
-              <td></td>
-              <td>title of this column</td>
-            </tr>
-            <tr>
-              <td>dataIndex</td>
-              <td>String</td>
-              <td></td>
-              <td>display field of the data record</td>
-            </tr>
-            <tr>
-              <td>width</td>
-              <td>String|Number</td>
-              <td></td>
-              <td>width of the specific proportion calculation according to the width of the columns</td>
-            </tr>
-            <tr>
-              <td>fixed</td>
-              <td>String|Boolean</td>
-              <td></td>
-              <td>this column will be fixed when table scroll horizontally: true or 'left' or 'right'</td>
-            </tr>
-            <tr>
-              <td>render</td>
-              <td>Function(value, row, index)</td>
-              <td></td>
-              <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
-            </tr>
-          </tbody>
-        </table>
+        The columns config of table, see table below
       </td>
+    </tr>
+  </tbody>
+</table>
+
+## Column Props
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 100px;">Name</th>
+      <th style="width: 50px;">Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>key</td>
+      <td>String</td>
+      <td></td>
+      <td>key of this column</td>
+    </tr>
+    <tr>
+      <td>className</td>
+      <td>String</td>
+      <td></td>
+      <td>className of this column</td>
+    </tr>
+    <tr>
+      <td>colSpan</td>
+      <td>Number</td>
+      <td></td>
+      <td>thead colSpan of this column</td>
+    </tr>
+    <tr>
+      <td>title</td>
+      <td>React Node</td>
+      <td></td>
+      <td>title of this column</td>
+    </tr>
+    <tr>
+      <td>dataIndex</td>
+      <td>String</td>
+      <td></td>
+      <td>display field of the data record</td>
+    </tr>
+    <tr>
+      <td>width</td>
+      <td>String|Number</td>
+      <td></td>
+      <td>width of the specific proportion calculation according to the width of the columns</td>
+    </tr>
+    <tr>
+      <td>fixed</td>
+      <td>String|Boolean</td>
+      <td></td>
+      <td>this column will be fixed when table scroll horizontally: true or 'left' or 'right'</td>
+    </tr>
+    <tr>
+      <td>render</td>
+      <td>Function(value, row, index)</td>
+      <td></td>
+      <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
+    </tr>
+    <tr>
+      <td>onCellClick</td>
+      <td>Function(row, event)</td>
+      <td></td>
+      <td>Called when column's cell is clicked</td>
     </tr>
   </tbody>
 </table>

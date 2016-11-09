@@ -19,6 +19,12 @@ const TableCell = React.createClass({
     return text && !React.isValidElement(text) &&
       Object.prototype.toString.call(text) === '[object Object]';
   },
+  handleClick(e) {
+    const { record, column: { onCellClick } } = this.props;
+    if (onCellClick) {
+      onCellClick(record, e);
+    }
+  },
   render() {
     const { record, indentSize, prefixCls, indent,
             index, expandIcon, column } = this.props;
@@ -59,6 +65,7 @@ const TableCell = React.createClass({
         colSpan={colSpan}
         rowSpan={rowSpan}
         className={className}
+        onClick={this.handleClick}
       >
         {indentText}
         {expandIcon}
