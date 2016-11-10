@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import shallowequal from 'shallowequal';
 import TableCell from './TableCell';
 import ExpandIcon from './ExpandIcon';
+import ColumnManager from './ColumnManager';
 
 const TableRow = React.createClass({
   propTypes: {
@@ -62,7 +63,8 @@ const TableRow = React.createClass({
 
   shouldComponentUpdate(nextProps, nextState) {
     return !shallowequal(nextProps, this.props) ||
-           !shallowequal(nextState, this.state);
+           !shallowequal(nextState, this.state) ||
+           ColumnManager.includesCustomRender(nextProps.columns);
   },
 
   componentWillUnmount() {
