@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowClick.js - example - rc-table@5.0.4</title>
+  <title>rowAndCellClick.js - example - rc-table@5.1.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -251,14 +251,19 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
-  
+  <script src="https://as.alipayobjects.com/g/component/??modernizr/2.8.3/modernizr.js,fastclick/1.0.6/fastclick.js"></script>
+  <script>
+  if(!window.Promise) {
+    document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+  }
+  </script>
   <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.0.4</h1>
+      <h1>rc-table@5.1.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -271,7 +276,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
 <span class="hljs-keyword">const</span> onRowClick = (record, index, event) =&gt; {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click nth(<span class="hljs-subst">${index}</span>) element of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click nth(<span class="hljs-subst">${index}</span>) row of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
   <span class="hljs-comment">// See https://facebook.github.io/react/docs/events.html for original click event details.</span>
   <span class="hljs-keyword">if</span> (event.shiftKey) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Shift + mouse click triggered.'</span>);
@@ -279,13 +284,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 };
 
 <span class="hljs-keyword">const</span> onRowDoubleClick = (record, index) =&gt; {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Double click nth(<span class="hljs-subst">${index}</span>) element of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
-};
-
-<span class="hljs-keyword">const</span> onOperationClick = (text, record, event) =&gt; {
-  event.preventDefault();
-  event.stopPropagation();
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click Cell <span class="hljs-subst">${text}</span>, record.name is <span class="hljs-subst">${record.name}</span>`</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Double click nth(<span class="hljs-subst">${index}</span>) row of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
 };
 
 <span class="hljs-keyword">const</span> columns = [{
@@ -298,11 +297,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   dataIndex: <span class="hljs-string">'age'</span>,
   key: <span class="hljs-string">'age'</span>,
   width: <span class="hljs-number">100</span>,
-  render: (text, record) =&gt; (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> onOperationClick(text, record, e)}&gt;
-      Alert: {text}, click will pop to row click
-    <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+  render: (text) =&gt; (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
   )</span>,
+  onCellClick: (record, e) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Click cell'</span>, record, e.target);
+  },
 }, {
   title: <span class="hljs-string">'Address'</span>,
   dataIndex: <span class="hljs-string">'address'</span>,
@@ -378,9 +378,9 @@ ReactDOM.render(
          alt="Fork me on GitHub"
          data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
   </a>
-  
+  <script>FastClick.attach(document.body);</script>
   <script src="common.js?nowrap"></script>
-  <script src="rowClick.js?nowrap"></script>
+  <script src="rowAndCellClick.js?nowrap"></script>
 </body>
 
 </html>

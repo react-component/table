@@ -3,12 +3,12 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(249);
+	module.exports = __webpack_require__(290);
 
 
 /***/ },
 
-/***/ 249:
+/***/ 290:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([5],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(39);
 	var Table = __webpack_require__(182);
-	__webpack_require__(200);
+	__webpack_require__(202);
 	
 	var tableData = [{ key: 0, a: '123' }, { key: 1, a: 'cdd', b: 'edd' }, { key: 2, a: '1333', c: 'eee', d: 2 }];
 	
@@ -98,11 +98,11 @@ webpackJsonp([5],{
 	    );
 	  },
 	  render: function render() {
-	    var _state = this.state;
-	    var expandIconAsCell = _state.expandIconAsCell;
-	    var expandRowByClick = _state.expandRowByClick;
-	    var expandedRowKeys = _state.expandedRowKeys;
-	    var data = _state.data;
+	    var _state = this.state,
+	        expandIconAsCell = _state.expandIconAsCell,
+	        expandRowByClick = _state.expandRowByClick,
+	        expandedRowKeys = _state.expandedRowKeys,
+	        data = _state.data;
 	
 	    return React.createElement(
 	      'div',

@@ -34,8 +34,8 @@ webpackJsonp([0],{
 	var ReactDOM = __webpack_require__(39);
 	var Table = __webpack_require__(182);
 	
-	__webpack_require__(200);
-	__webpack_require__(201);
+	__webpack_require__(202);
+	__webpack_require__(203);
 	
 	var Demo = function (_React$Component) {
 	  _inherits(Demo, _React$Component);
@@ -106,7 +106,7 @@ webpackJsonp([0],{
 	        { onClick: function onClick() {
 	            return _this2.onAdd();
 	          } },
-	        '添加'
+	        '\u6DFB\u52A0'
 	      ),
 	      React.createElement(Table, {
 	        columns: this.columns,
@@ -1235,8 +1235,8 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 201:
-200
+/***/ 203:
+202
 
 });
 //# sourceMappingURL=animation.js.map

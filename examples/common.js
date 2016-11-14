@@ -97,7 +97,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"grouping-columns","11":"hide-header","12":"key","13":"nested","14":"no-data","15":"rowClick","16":"scrollX","17":"scrollXY","18":"scrollY","19":"simple","20":"subTable","21":"title-and-footer"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"grouping-columns","11":"hide-header","12":"key","13":"nested","14":"no-data","15":"rowAndCellClick","16":"scrollX","17":"scrollXY","18":"scrollY","19":"simple","20":"subTable","21":"title-and-footer"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -1136,14 +1136,6 @@
 	  var source = null;
 	
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.createElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-	
 	    if (hasValidRef(config)) {
 	      ref = config.ref;
 	    }
@@ -1244,14 +1236,6 @@
 	  var owner = element._owner;
 	
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.cloneElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-	
 	    if (hasValidRef(config)) {
 	      // Silently steal the ref from the parent.
 	      ref = config.ref;
@@ -4285,7 +4269,7 @@
 	
 	'use strict';
 	
-	module.exports = '15.3.1';
+	module.exports = '15.3.2';
 
 /***/ },
 /* 36 */
@@ -5269,8 +5253,10 @@
 	function getFallbackBeforeInputChars(topLevelType, nativeEvent) {
 	  // If we are currently composing (IME) and using a fallback to do so,
 	  // try to extract the composed characters from the fallback object.
+	  // If composition event is available, we extract a string only at
+	  // compositionevent, otherwise extract it at fallback events.
 	  if (currentComposition) {
-	    if (topLevelType === topLevelTypes.topCompositionEnd || isFallbackCompositionEnd(topLevelType, nativeEvent)) {
+	    if (topLevelType === topLevelTypes.topCompositionEnd || !canUseCompositionEvent && isFallbackCompositionEnd(topLevelType, nativeEvent)) {
 	      var chars = currentComposition.getData();
 	      FallbackCompositionState.release(currentComposition);
 	      currentComposition = null;
@@ -6879,7 +6865,8 @@
 	
 	    if (event.preventDefault) {
 	      event.preventDefault();
-	    } else {
+	    } else if (typeof event.returnValue !== 'unknown') {
+	      // eslint-disable-line valid-typeof
 	      event.returnValue = false;
 	    }
 	    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
@@ -7136,7 +7123,7 @@
 	var doesChangeEventBubble = false;
 	if (ExecutionEnvironment.canUseDOM) {
 	  // See `handleChange` comment below
-	  doesChangeEventBubble = isEventSupported('change') && (!('documentMode' in document) || document.documentMode > 8);
+	  doesChangeEventBubble = isEventSupported('change') && (!document.documentMode || document.documentMode > 8);
 	}
 	
 	function manualDispatchChangeEvent(nativeEvent) {
@@ -7202,7 +7189,7 @@
 	  // deleting text, so we ignore its input events.
 	  // IE10+ fire input events to often, such when a placeholder
 	  // changes or when an input with a placeholder is focused.
-	  isInputEventSupported = isEventSupported('input') && (!('documentMode' in document) || document.documentMode > 11);
+	  isInputEventSupported = isEventSupported('input') && (!document.documentMode || document.documentMode > 11);
 	}
 	
 	/**
@@ -8431,12 +8418,6 @@
 	    endLifeCycleTimer(debugID, timerType);
 	    emitEvent('onEndLifeCycleTimer', debugID, timerType);
 	  },
-	  onError: function (debugID) {
-	    if (currentTimerDebugID != null) {
-	      endLifeCycleTimer(currentTimerDebugID, currentTimerType);
-	    }
-	    emitEvent('onError', debugID);
-	  },
 	  onBeginProcessingChildContext: function () {
 	    emitEvent('onBeginProcessingChildContext');
 	  },
@@ -9510,6 +9491,8 @@
 	    allowFullScreen: HAS_BOOLEAN_VALUE,
 	    allowTransparency: 0,
 	    alt: 0,
+	    // specifies target context for links with `preload` type
+	    as: 0,
 	    async: HAS_BOOLEAN_VALUE,
 	    autoComplete: 0,
 	    // autoFocus is polyfilled/normalized by AutoFocusUtils
@@ -9590,6 +9573,7 @@
 	    optimum: 0,
 	    pattern: 0,
 	    placeholder: 0,
+	    playsInline: HAS_BOOLEAN_VALUE,
 	    poster: 0,
 	    preload: 0,
 	    profile: 0,
@@ -10112,9 +10096,9 @@
 	  if (node.namespaceURI === DOMNamespaces.svg && !('innerHTML' in node)) {
 	    reusableSVGContainer = reusableSVGContainer || document.createElement('div');
 	    reusableSVGContainer.innerHTML = '<svg>' + html + '</svg>';
-	    var newNodes = reusableSVGContainer.firstChild.childNodes;
-	    for (var i = 0; i < newNodes.length; i++) {
-	      node.appendChild(newNodes[i]);
+	    var svgNode = reusableSVGContainer.firstChild;
+	    while (svgNode.firstChild) {
+	      node.appendChild(svgNode.firstChild);
 	    }
 	  } else {
 	    node.innerHTML = html;
@@ -11042,9 +11026,9 @@
 	  ReactDOMOption.postMountWrapper(inst);
 	}
 	
-	var setContentChildForInstrumentation = emptyFunction;
+	var setAndValidateContentChildDev = emptyFunction;
 	if (process.env.NODE_ENV !== 'production') {
-	  setContentChildForInstrumentation = function (content) {
+	  setAndValidateContentChildDev = function (content) {
 	    var hasExistingContent = this._contentDebugID != null;
 	    var debugID = this._debugID;
 	    // This ID represents the inlined child that has no backing instance:
@@ -11058,6 +11042,7 @@
 	      return;
 	    }
 	
+	    validateDOMNesting(null, String(content), this, this._ancestorInfo);
 	    this._contentDebugID = contentDebugID;
 	    if (hasExistingContent) {
 	      ReactInstrumentation.debugTool.onBeforeUpdateComponent(contentDebugID, content);
@@ -11232,7 +11217,7 @@
 	  this._flags = 0;
 	  if (process.env.NODE_ENV !== 'production') {
 	    this._ancestorInfo = null;
-	    setContentChildForInstrumentation.call(this, null);
+	    setAndValidateContentChildDev.call(this, null);
 	  }
 	}
 	
@@ -11332,7 +11317,7 @@
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting(this._tag, this, parentInfo);
+	        validateDOMNesting(this._tag, null, this, parentInfo);
 	      }
 	      this._ancestorInfo = validateDOMNesting.updatedAncestorInfo(parentInfo, this._tag, this);
 	    }
@@ -11501,7 +11486,7 @@
 	        // TODO: Validate that text is allowed as a child of this node
 	        ret = escapeTextContentForBrowser(contentToUse);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	      } else if (childrenToUse != null) {
 	        var mountImages = this.mountChildren(childrenToUse, transaction, context);
@@ -11538,7 +11523,7 @@
 	      if (contentToUse != null) {
 	        // TODO: Validate that text is allowed as a child of this node
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	        DOMLazyTree.queueText(lazyTree, contentToUse);
 	      } else if (childrenToUse != null) {
@@ -11770,7 +11755,7 @@
 	      if (lastContent !== nextContent) {
 	        this.updateTextContent('' + nextContent);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, nextContent);
+	          setAndValidateContentChildDev.call(this, nextContent);
 	        }
 	      }
 	    } else if (nextHtml != null) {
@@ -11782,7 +11767,7 @@
 	      }
 	    } else if (nextChildren != null) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        setContentChildForInstrumentation.call(this, null);
+	        setAndValidateContentChildDev.call(this, null);
 	      }
 	
 	      this.updateChildren(nextChildren, transaction, context);
@@ -11837,7 +11822,7 @@
 	    this._wrapperState = null;
 	
 	    if (process.env.NODE_ENV !== 'production') {
-	      setContentChildForInstrumentation.call(this, null);
+	      setAndValidateContentChildDev.call(this, null);
 	    }
 	  },
 	
@@ -13110,6 +13095,19 @@
 	  },
 	
 	  /**
+	   * Protect against document.createEvent() returning null
+	   * Some popup blocker extensions appear to do this:
+	   * https://github.com/facebook/react/issues/6887
+	   */
+	  supportsEventPageXY: function () {
+	    if (!document.createEvent) {
+	      return false;
+	    }
+	    var ev = document.createEvent('MouseEvent');
+	    return ev != null && 'pageX' in ev;
+	  },
+	
+	  /**
 	   * Listens to window scroll and resize events. We cache scroll values so that
 	   * application code can access them without triggering reflows.
 	   *
@@ -13122,7 +13120,7 @@
 	   */
 	  ensureScrollValueMonitoring: function () {
 	    if (hasEventPageXY === undefined) {
-	      hasEventPageXY = document.createEvent && 'pageX' in document.createEvent('MouseEvent');
+	      hasEventPageXY = ReactBrowserEventEmitter.supportsEventPageXY();
 	    }
 	    if (!hasEventPageXY && !isMonitoringScrollValue) {
 	      var refresh = ViewportMetrics.refreshScrollValues;
@@ -13408,7 +13406,7 @@
 	
 	function isControlled(props) {
 	  var usesChecked = props.type === 'checkbox' || props.type === 'radio';
-	  return usesChecked ? props.checked !== undefined : props.value !== undefined;
+	  return usesChecked ? props.checked != null : props.value != null;
 	}
 	
 	/**
@@ -15181,34 +15179,29 @@
 	  }
 	}
 	
-	function invokeComponentDidMountWithTimer() {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	  publicInstance.componentDidMount();
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	}
-	
-	function invokeComponentDidUpdateWithTimer(prevProps, prevState, prevContext) {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	  publicInstance.componentDidUpdate(prevProps, prevState, prevContext);
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	}
-	
 	function shouldConstruct(Component) {
 	  return !!(Component.prototype && Component.prototype.isReactComponent);
 	}
 	
 	function isPureComponent(Component) {
 	  return !!(Component.prototype && Component.prototype.isPureReactComponent);
+	}
+	
+	// Separated into a function to contain deoptimizations caused by try/finally.
+	function measureLifeCyclePerf(fn, debugID, timerType) {
+	  if (debugID === 0) {
+	    // Top-level wrappers (see ReactMount) and empty components (see
+	    // ReactDOMEmptyComponent) are invisible to hooks and devtools.
+	    // Both are implementation details that should go away in the future.
+	    return fn();
+	  }
+	
+	  ReactInstrumentation.debugTool.onBeginLifeCycleTimer(debugID, timerType);
+	  try {
+	    return fn();
+	  } finally {
+	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(debugID, timerType);
+	  }
 	}
 	
 	/**
@@ -15302,6 +15295,8 @@
 	   * @internal
 	   */
 	  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+	    var _this = this;
+	
 	    this._context = context;
 	    this._mountOrder = nextMountID++;
 	    this._hostParent = hostParent;
@@ -15391,7 +15386,11 @@
 	
 	    if (inst.componentDidMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidMountWithTimer, this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentDidMount();
+	          }, _this._debugID, 'componentDidMount');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
 	      }
@@ -15415,35 +15414,26 @@
 	
 	  _constructComponentWithoutOwner: function (doConstruct, publicProps, publicContext, updateQueue) {
 	    var Component = this._currentElement.type;
-	    var instanceOrElement;
+	
 	    if (doConstruct) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	      instanceOrElement = new Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	    } else {
-	      // This can still be an instance in case of factory components
-	      // but we'll count this as time spent rendering as the more common case.
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	        }
-	      }
-	      instanceOrElement = Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	        }
+	        return measureLifeCyclePerf(function () {
+	          return new Component(publicProps, publicContext, updateQueue);
+	        }, this._debugID, 'ctor');
+	      } else {
+	        return new Component(publicProps, publicContext, updateQueue);
 	      }
 	    }
-	    return instanceOrElement;
+	
+	    // This can still be an instance in case of factory components
+	    // but we'll count this as time spent rendering as the more common case.
+	    if (process.env.NODE_ENV !== 'production') {
+	      return measureLifeCyclePerf(function () {
+	        return Component(publicProps, publicContext, updateQueue);
+	      }, this._debugID, 'render');
+	    } else {
+	      return Component(publicProps, publicContext, updateQueue);
+	    }
 	  },
 	
 	  performInitialMountWithErrorHandling: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
@@ -15452,11 +15442,6 @@
 	    try {
 	      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
 	    } catch (e) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onError();
-	        }
-	      }
 	      // Roll back to checkpoint, handle error (which may add items to the transaction), and take a new checkpoint
 	      transaction.rollback(checkpoint);
 	      this._instance.unstable_handleError(e);
@@ -15477,17 +15462,19 @@
 	
 	  performInitialMount: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
 	    var inst = this._instance;
+	
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+	
 	    if (inst.componentWillMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
-	      }
-	      inst.componentWillMount();
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillMount();
+	        }, debugID, 'componentWillMount');
+	      } else {
+	        inst.componentWillMount();
 	      }
 	      // When mounting, calls to `setState` by `componentWillMount` will set
 	      // `this._pendingStateQueue` without triggering a re-render.
@@ -15507,15 +15494,12 @@
 	    );
 	    this._renderedComponent = child;
 	
-	    var selfDebugID = 0;
-	    if (process.env.NODE_ENV !== 'production') {
-	      selfDebugID = this._debugID;
-	    }
-	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), selfDebugID);
+	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), debugID);
 	
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	      if (debugID !== 0) {
+	        var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	        ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	      }
 	    }
 	
@@ -15536,24 +15520,22 @@
 	    if (!this._renderedComponent) {
 	      return;
 	    }
+	
 	    var inst = this._instance;
 	
 	    if (inst.componentWillUnmount && !inst._calledComponentWillUnmount) {
 	      inst._calledComponentWillUnmount = true;
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUnmount');
-	        }
-	      }
+	
 	      if (safely) {
 	        var name = this.getName() + '.componentWillUnmount()';
 	        ReactErrorUtils.invokeGuardedCallback(name, inst.componentWillUnmount.bind(inst));
 	      } else {
-	        inst.componentWillUnmount();
-	      }
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUnmount');
+	        if (process.env.NODE_ENV !== 'production') {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentWillUnmount();
+	          }, this._debugID, 'componentWillUnmount');
+	        } else {
+	          inst.componentWillUnmount();
 	        }
 	      }
 	    }
@@ -15640,13 +15622,21 @@
 	  _processChildContext: function (currentContext) {
 	    var Component = this._currentElement.type;
 	    var inst = this._instance;
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	    var childContext;
+	
+	    if (inst.getChildContext) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	        try {
+	          childContext = inst.getChildContext();
+	        } finally {
+	          ReactInstrumentation.debugTool.onEndProcessingChildContext();
+	        }
+	      } else {
+	        childContext = inst.getChildContext();
+	      }
 	    }
-	    var childContext = inst.getChildContext && inst.getChildContext();
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onEndProcessingChildContext();
-	    }
+	
 	    if (childContext) {
 	      !(typeof Component.childContextTypes === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : _prodInvariant('107', this.getName() || 'ReactCompositeComponent') : void 0;
 	      if (process.env.NODE_ENV !== 'production') {
@@ -15741,15 +15731,11 @@
 	    // immediately reconciled instead of waiting for the next batch.
 	    if (willReceive && inst.componentWillReceiveProps) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
-	      }
-	      inst.componentWillReceiveProps(nextProps, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillReceiveProps(nextProps, nextContext);
+	        }, this._debugID, 'componentWillReceiveProps');
+	      } else {
+	        inst.componentWillReceiveProps(nextProps, nextContext);
 	      }
 	    }
 	
@@ -15759,15 +15745,11 @@
 	    if (!this._pendingForceUpdate) {
 	      if (inst.shouldComponentUpdate) {
 	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
-	        }
-	        shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
-	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
+	          shouldUpdate = measureLifeCyclePerf(function () {
+	            return inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+	          }, this._debugID, 'shouldComponentUpdate');
+	        } else {
+	          shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
 	        }
 	      } else {
 	        if (this._compositeType === CompositeTypes.PureClass) {
@@ -15833,6 +15815,8 @@
 	   * @private
 	   */
 	  _performComponentUpdate: function (nextElement, nextProps, nextState, nextContext, transaction, unmaskedContext) {
+	    var _this2 = this;
+	
 	    var inst = this._instance;
 	
 	    var hasComponentDidUpdate = Boolean(inst.componentDidUpdate);
@@ -15847,15 +15831,11 @@
 	
 	    if (inst.componentWillUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
-	      }
-	      inst.componentWillUpdate(nextProps, nextState, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillUpdate(nextProps, nextState, nextContext);
+	        }, this._debugID, 'componentWillUpdate');
+	      } else {
+	        inst.componentWillUpdate(nextProps, nextState, nextContext);
 	      }
 	    }
 	
@@ -15869,7 +15849,9 @@
 	
 	    if (hasComponentDidUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidUpdateWithTimer.bind(this, prevProps, prevState, prevContext), this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), _this2._debugID, 'componentDidUpdate');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), inst);
 	      }
@@ -15886,6 +15868,12 @@
 	    var prevComponentInstance = this._renderedComponent;
 	    var prevRenderedElement = prevComponentInstance._currentElement;
 	    var nextRenderedElement = this._renderValidatedComponent();
+	
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+	
 	    if (shouldUpdateReactComponent(prevRenderedElement, nextRenderedElement)) {
 	      ReactReconciler.receiveComponent(prevComponentInstance, nextRenderedElement, transaction, this._processChildContext(context));
 	    } else {
@@ -15898,15 +15886,12 @@
 	      );
 	      this._renderedComponent = child;
 	
-	      var selfDebugID = 0;
-	      if (process.env.NODE_ENV !== 'production') {
-	        selfDebugID = this._debugID;
-	      }
-	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), selfDebugID);
+	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), debugID);
 	
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	        if (debugID !== 0) {
+	          var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	          ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	        }
 	      }
 	
@@ -15928,17 +15913,14 @@
 	   */
 	  _renderValidatedComponentWithoutOwnerOrContext: function () {
 	    var inst = this._instance;
+	    var renderedComponent;
 	
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	      }
-	    }
-	    var renderedComponent = inst.render();
-	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	      }
+	      renderedComponent = measureLifeCyclePerf(function () {
+	        return inst.render();
+	      }, this._debugID, 'render');
+	    } else {
+	      renderedComponent = inst.render();
 	    }
 	
 	    if (process.env.NODE_ENV !== 'production') {
@@ -15989,7 +15971,7 @@
 	    var publicComponentInstance = component.getPublicInstance();
 	    if (process.env.NODE_ENV !== 'production') {
 	      var componentName = component && component.getName ? component.getName() : 'a component';
-	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
+	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null || component._compositeType !== CompositeTypes.StatelessFunctional, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
 	    }
 	    var refs = inst.refs === emptyObject ? inst.refs = {} : inst.refs;
 	    refs[ref] = publicComponentInstance;
@@ -16126,7 +16108,8 @@
 	  if (x === y) {
 	    // Steps 1-5, 7-10
 	    // Steps 6.b-6.e: +0 != -0
-	    return x !== 0 || 1 / x === 1 / y;
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
 	  } else {
 	    // Step 6.a: NaN == NaN
 	    return x !== x && y !== y;
@@ -17180,10 +17163,15 @@
 	
 	  var didWarn = {};
 	
-	  validateDOMNesting = function (childTag, childInstance, ancestorInfo) {
+	  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
 	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
 	    var parentInfo = ancestorInfo.current;
 	    var parentTag = parentInfo && parentInfo.tag;
+	
+	    if (childText != null) {
+	      process.env.NODE_ENV !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
+	      childTag = '#text';
+	    }
 	
 	    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
 	    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
@@ -17232,7 +17220,15 @@
 	      didWarn[warnKey] = true;
 	
 	      var tagDisplayName = childTag;
-	      if (childTag !== '#text') {
+	      var whitespaceInfo = '';
+	      if (childTag === '#text') {
+	        if (/\S/.test(childText)) {
+	          tagDisplayName = 'Text nodes';
+	        } else {
+	          tagDisplayName = 'Whitespace text nodes';
+	          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+	        }
+	      } else {
 	        tagDisplayName = '<' + childTag + '>';
 	      }
 	
@@ -17241,7 +17237,7 @@
 	        if (ancestorTag === 'table' && childTag === 'tr') {
 	          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
 	        }
-	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>. ' + 'See %s.%s', tagDisplayName, ancestorTag, ownerInfo, info) : void 0;
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
 	      } else {
 	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
 	      }
@@ -17548,7 +17544,7 @@
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting('#text', this, parentInfo);
+	        validateDOMNesting(null, this._stringText, this, parentInfo);
 	      }
 	    }
 	
@@ -19141,7 +19137,7 @@
 	      bubbled: keyOf({ onSelect: null }),
 	      captured: keyOf({ onSelectCapture: null })
 	    },
-	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
+	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topKeyUp, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
 	  }
 	};
 	
@@ -21553,19 +21549,27 @@
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
-	var _TableHeader = __webpack_require__(194);
+	var _TableHeader = __webpack_require__(195);
 	
 	var _TableHeader2 = _interopRequireDefault(_TableHeader);
 	
-	var _utils = __webpack_require__(195);
+	var _utils = __webpack_require__(196);
 	
 	var _shallowequal = __webpack_require__(186);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
-	var _addEventListener = __webpack_require__(196);
+	var _addEventListener = __webpack_require__(197);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
+	
+	var _ColumnManager = __webpack_require__(194);
+	
+	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
+	
+	var _createStore = __webpack_require__(201);
+	
+	var _createStore2 = _interopRequireDefault(_createStore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21647,6 +21651,10 @@
 	    var props = this.props;
 	    var expandedRowKeys = [];
 	    var rows = [].concat(_toConsumableArray(props.data));
+	
+	    this.columnManager = new _ColumnManager2.default(props.columns);
+	    this.store = (0, _createStore2.default)({ currentHoverKey: null });
+	
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
@@ -21667,8 +21675,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.resetScrollY();
-	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
-	    if (isAnyColumnsFixed) {
+	    if (this.columnManager.isAnyColumnsFixed()) {
 	      this.syncFixedTableRowHeight();
 	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
 	    }
@@ -21688,9 +21695,7 @@
 	      });
 	    }
 	    if (nextProps.columns !== this.props.columns) {
-	      delete this.isAnyColumnsFixedCache;
-	      delete this.isAnyColumnsLeftFixedCache;
-	      delete this.isAnyColumnsRightFixedCache;
+	      this.columnManager.reset(nextProps.columns);
 	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
@@ -21748,18 +21753,12 @@
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
 	  },
 	  getHeader: function getHeader(columns, fixed) {
-	    var _props = this.props;
-	    var showHeader = _props.showHeader;
-	    var expandIconAsCell = _props.expandIconAsCell;
-	    var prefixCls = _props.prefixCls;
+	    var _props = this.props,
+	        showHeader = _props.showHeader,
+	        expandIconAsCell = _props.expandIconAsCell,
+	        prefixCls = _props.prefixCls;
 	
-	    var rows = void 0;
-	    if (columns) {
-	      // columns are passed from fixed table function that already grouped.
-	      rows = this.getHeaderRows(columns);
-	    } else {
-	      rows = this.getHeaderRows(this.groupColumns(this.props.columns));
-	    }
+	    var rows = this.getHeaderRows(columns);
 	
 	    if (expandIconAsCell && fixed !== 'right') {
 	      rows[0].unshift({
@@ -21781,7 +21780,7 @@
 	  getHeaderRows: function getHeaderRows(columns) {
 	    var _this = this;
 	
-	    var currentRow = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	    var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 	    var rows = arguments[2];
 	
 	    rows = rows || [];
@@ -21816,18 +21815,24 @@
 	    });
 	  },
 	  getExpandedRow: function getExpandedRow(key, content, visible, className, fixed) {
-	    var _this2 = this;
+	    var _props2 = this.props,
+	        prefixCls = _props2.prefixCls,
+	        expandIconAsCell = _props2.expandIconAsCell;
 	
-	    var _props2 = this.props;
-	    var prefixCls = _props2.prefixCls;
-	    var expandIconAsCell = _props2.expandIconAsCell;
-	
+	    var colCount = void 0;
+	    if (fixed === 'left') {
+	      colCount = this.columnManager.leftLeafColumns().length;
+	    } else if (fixed === 'right') {
+	      colCount = this.columnManager.rightLeafColumns().length;
+	    } else {
+	      colCount = this.columnManager.leafColumns().length;
+	    }
 	    var columns = [{
 	      key: 'extra-row',
 	      render: function render() {
 	        return {
 	          props: {
-	            colSpan: _this2.getLeafColumnsCount(_this2.props.columns)
+	            colSpan: colCount
 	          },
 	          children: fixed !== 'right' ? content : '&nbsp;'
 	        };
@@ -21848,7 +21853,8 @@
 	      key: key + '-extra-row',
 	      prefixCls: prefixCls + '-expanded-row',
 	      indent: 1,
-	      expandable: false
+	      expandable: false,
+	      store: this.store
 	    });
 	  },
 	  getRowsByData: function getRowsByData(data, visible, indent, columns, fixed) {
@@ -21867,7 +21873,6 @@
 	    });
 	    var onRowClick = props.onRowClick;
 	    var onRowDoubleClick = props.onRowDoubleClick;
-	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
 	
 	    var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
 	    var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
@@ -21882,20 +21887,22 @@
 	        expandedRowContent = expandedRowRender(record, i, indent);
 	      }
 	      var className = rowClassName(record, i, indent);
-	      if (this.state.currentHoverKey === key) {
-	        className += ' ' + props.prefixCls + '-row-hover';
-	      }
 	
 	      var onHoverProps = {};
-	      if (isAnyColumnsFixed) {
+	      if (this.columnManager.isAnyColumnsFixed()) {
 	        onHoverProps.onHover = this.handleRowHover;
 	      }
 	
-	      var style = fixed && fixedColumnsBodyRowsHeight[i] ? {
-	        height: fixedColumnsBodyRowsHeight[i]
-	      } : {};
+	      var height = fixed && fixedColumnsBodyRowsHeight[i] ? fixedColumnsBodyRowsHeight[i] : null;
 	
-	      var leafColumns = this.getLeafColumns(columns || props.columns);
+	      var leafColumns = void 0;
+	      if (fixed === 'left') {
+	        leafColumns = this.columnManager.leftLeafColumns();
+	      } else if (fixed === 'right') {
+	        leafColumns = this.columnManager.rightLeafColumns();
+	      } else {
+	        leafColumns = this.columnManager.leafColumns();
+	      }
 	
 	      rst.push(_react2.default.createElement(_TableRow2.default, _extends({
 	        indent: indent,
@@ -21917,11 +21924,12 @@
 	        expandIconColumnIndex: expandIconColumnIndex,
 	        onRowClick: onRowClick,
 	        onRowDoubleClick: onRowDoubleClick,
-	        style: style
+	        height: height
 	      }, onHoverProps, {
 	        key: key,
 	        hoverKey: key,
-	        ref: rowRef(record, i, indent)
+	        ref: rowRef(record, i, indent),
+	        store: this.store
 	      })));
 	
 	      var subVisible = visible && isRowExpanded;
@@ -21946,7 +21954,14 @@
 	        key: 'rc-table-expand-icon-col'
 	      }));
 	    }
-	    var leafColumns = this.getLeafColumns(columns || this.props.columns);
+	    var leafColumns = void 0;
+	    if (fixed === 'left') {
+	      leafColumns = this.columnManager.leftLeafColumns();
+	    } else if (fixed === 'right') {
+	      leafColumns = this.columnManager.rightLeafColumns();
+	    } else {
+	      leafColumns = this.columnManager.leafColumns();
+	    }
 	    cols = cols.concat(leafColumns.map(function (c) {
 	      return _react2.default.createElement('col', { key: c.key, style: { width: c.width, minWidth: c.width } });
 	    }));
@@ -21957,38 +21972,28 @@
 	    );
 	  },
 	  getLeftFixedTable: function getLeftFixedTable() {
-	    var columns = this.props.columns;
-	
-	    var fixedColumns = this.groupColumns(columns).filter(function (column) {
-	      return column.fixed === 'left' || column.fixed === true;
-	    });
 	    return this.getTable({
-	      columns: fixedColumns,
+	      columns: this.columnManager.leftColumns(),
 	      fixed: 'left'
 	    });
 	  },
 	  getRightFixedTable: function getRightFixedTable() {
-	    var columns = this.props.columns;
-	
-	    var fixedColumns = this.groupColumns(columns).filter(function (column) {
-	      return column.fixed === 'right';
-	    });
 	    return this.getTable({
-	      columns: fixedColumns,
+	      columns: this.columnManager.rightColumns(),
 	      fixed: 'right'
 	    });
 	  },
 	  getTable: function getTable() {
-	    var _this3 = this;
+	    var _this2 = this;
 	
-	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	    var columns = options.columns;
-	    var fixed = options.fixed;
-	    var _props3 = this.props;
-	    var prefixCls = _props3.prefixCls;
-	    var _props3$scroll = _props3.scroll;
-	    var scroll = _props3$scroll === undefined ? {} : _props3$scroll;
-	    var getBodyWrapper = _props3.getBodyWrapper;
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	    var columns = options.columns,
+	        fixed = options.fixed;
+	    var _props3 = this.props,
+	        prefixCls = _props3.prefixCls,
+	        _props3$scroll = _props3.scroll,
+	        scroll = _props3$scroll === undefined ? {} : _props3$scroll,
+	        getBodyWrapper = _props3.getBodyWrapper;
 	    var useFixedHeader = this.props.useFixedHeader;
 	
 	    var bodyStyle = _extends({}, this.props.bodyStyle);
@@ -22020,8 +22025,8 @@
 	    }
 	
 	    var renderTable = function renderTable() {
-	      var hasHead = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-	      var hasBody = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	      var hasHead = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+	      var hasBody = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 	
 	      var tableStyle = {};
 	      if (!columns && scroll.x) {
@@ -22035,24 +22040,25 @@
 	      var tableBody = hasBody ? getBodyWrapper(_react2.default.createElement(
 	        'tbody',
 	        { className: prefixCls + '-tbody' },
-	        _this3.getRows(columns, fixed)
+	        _this2.getRows(columns, fixed)
 	      )) : null;
 	      return _react2.default.createElement(
 	        'table',
 	        { className: tableClassName, style: tableStyle },
-	        _this3.getColGroup(columns, fixed),
-	        hasHead ? _this3.getHeader(columns, fixed) : null,
+	        _this2.getColGroup(columns, fixed),
+	        hasHead ? _this2.getHeader(columns, fixed) : null,
 	        tableBody
 	      );
 	    };
 	
 	    var headTable = void 0;
+	
 	    if (useFixedHeader) {
 	      headTable = _react2.default.createElement(
 	        'div',
 	        {
 	          className: prefixCls + '-header',
-	          ref: columns ? null : 'headTable',
+	          ref: fixed ? null : 'headTable',
 	          style: headStyle,
 	          onMouseOver: this.detectScrollTarget,
 	          onTouchStart: this.detectScrollTarget,
@@ -22075,7 +22081,7 @@
 	      renderTable(!useFixedHeader)
 	    );
 	
-	    if (columns && columns.length) {
+	    if (fixed && columns.length) {
 	      var refName = void 0;
 	      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
 	        refName = 'fixedColumnsBodyLeft';
@@ -22112,9 +22118,9 @@
 	    );
 	  },
 	  getTitle: function getTitle() {
-	    var _props4 = this.props;
-	    var title = _props4.title;
-	    var prefixCls = _props4.prefixCls;
+	    var _props4 = this.props,
+	        title = _props4.title,
+	        prefixCls = _props4.prefixCls;
 	
 	    return title ? _react2.default.createElement(
 	      'div',
@@ -22123,9 +22129,9 @@
 	    ) : null;
 	  },
 	  getFooter: function getFooter() {
-	    var _props5 = this.props;
-	    var footer = _props5.footer;
-	    var prefixCls = _props5.prefixCls;
+	    var _props5 = this.props,
+	        footer = _props5.footer,
+	        prefixCls = _props5.prefixCls;
 	
 	    return footer ? _react2.default.createElement(
 	      'div',
@@ -22134,32 +22140,16 @@
 	    ) : null;
 	  },
 	  getEmptyText: function getEmptyText() {
-	    var _props6 = this.props;
-	    var emptyText = _props6.emptyText;
-	    var prefixCls = _props6.prefixCls;
-	    var data = _props6.data;
+	    var _props6 = this.props,
+	        emptyText = _props6.emptyText,
+	        prefixCls = _props6.prefixCls,
+	        data = _props6.data;
 	
 	    return !data.length ? _react2.default.createElement(
 	      'div',
 	      { className: prefixCls + '-placeholder' },
 	      emptyText()
 	    ) : null;
-	  },
-	  getLeafColumns: function getLeafColumns(columns) {
-	    var _this4 = this;
-	
-	    var leafColumns = [];
-	    columns.forEach(function (column) {
-	      if (!column.children) {
-	        leafColumns.push(column);
-	      } else {
-	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this4.getLeafColumns(column.children)));
-	      }
-	    });
-	    return leafColumns;
-	  },
-	  getLeafColumnsCount: function getLeafColumnsCount(columns) {
-	    return this.getLeafColumns(columns).length;
 	  },
 	  getHeaderRowStyle: function getHeaderRowStyle(columns, rows) {
 	    var fixedColumnsHeadRowsHeight = this.state.fixedColumnsHeadRowsHeight;
@@ -22173,52 +22163,8 @@
 	    }
 	    return null;
 	  },
-	
-	
-	  // add appropriate rowspan and colspan to column
-	  groupColumns: function groupColumns(columns) {
-	    var currentRow = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-	
-	    var _this5 = this;
-	
-	    var parentColumn = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-	    var rows = arguments.length <= 3 || arguments[3] === undefined ? [] : arguments[3];
-	
-	    // track how many rows we got
-	    if (!~rows.indexOf(currentRow)) {
-	      rows.push(currentRow);
-	    }
-	    var grouped = [];
-	    var setRowSpan = function setRowSpan(column) {
-	      var rowSpan = rows.length - currentRow;
-	      if (column && !column.children && // parent columns are supposed to be one row
-	      rowSpan > 1 && (!column.rowSpan || column.rowSpan < rowSpan)) {
-	        column.rowSpan = rowSpan;
-	      }
-	    };
-	    columns.forEach(function (column, index) {
-	      var newColumn = _extends({}, column);
-	      parentColumn.colSpan = parentColumn.colSpan || 0;
-	      if (newColumn.children && newColumn.children.length > 0) {
-	        newColumn.children = _this5.groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
-	        parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
-	      } else {
-	        parentColumn.colSpan++;
-	      }
-	      // update rowspan to all previous columns
-	      for (var i = 0; i < index; ++i) {
-	        setRowSpan(grouped[i]);
-	      }
-	      // last column, update rowspan immediately
-	      if (index + 1 === columns.length) {
-	        setRowSpan(newColumn);
-	      }
-	      grouped.push(newColumn);
-	    });
-	    return grouped;
-	  },
 	  syncFixedTableRowHeight: function syncFixedTableRowHeight() {
-	    var _this6 = this;
+	    var _this3 = this;
 	
 	    var prefixCls = this.props.prefixCls;
 	
@@ -22234,7 +22180,7 @@
 	      return;
 	    }
 	    this.timer = setTimeout(function () {
-	      _this6.setState({
+	      _this3.setState({
 	        fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
 	        fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight
 	      });
@@ -22249,10 +22195,10 @@
 	    }
 	  },
 	  findExpandedRow: function findExpandedRow(record) {
-	    var _this7 = this;
+	    var _this4 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this7.getRowKey(record);
+	      return i === _this4.getRowKey(record);
 	    });
 	    return rows[0];
 	  },
@@ -22264,48 +22210,19 @@
 	      this.scrollTarget = e.currentTarget;
 	    }
 	  },
-	  isAnyColumnsFixed: function isAnyColumnsFixed() {
-	    if ('isAnyColumnsFixedCache' in this) {
-	      return this.isAnyColumnsFixedCache;
-	    }
-	    this.isAnyColumnsFixedCache = this.props.columns.some(function (column) {
-	      return !!column.fixed;
-	    });
-	    return this.isAnyColumnsFixedCache;
-	  },
-	  isAnyColumnsLeftFixed: function isAnyColumnsLeftFixed() {
-	    if ('isAnyColumnsLeftFixedCache' in this) {
-	      return this.isAnyColumnsLeftFixedCache;
-	    }
-	    this.isAnyColumnsLeftFixedCache = this.props.columns.some(function (column) {
-	      return column.fixed === 'left' || column.fixed === true;
-	    });
-	    return this.isAnyColumnsLeftFixedCache;
-	  },
-	  isAnyColumnsRightFixed: function isAnyColumnsRightFixed() {
-	    if ('isAnyColumnsRightFixedCache' in this) {
-	      return this.isAnyColumnsRightFixedCache;
-	    }
-	    this.isAnyColumnsRightFixedCache = this.props.columns.some(function (column) {
-	      return column.fixed === 'right';
-	    });
-	    return this.isAnyColumnsRightFixedCache;
-	  },
 	  handleBodyScroll: function handleBodyScroll(e) {
 	    // Prevent scrollTop setter trigger onScroll event
 	    // http://stackoverflow.com/q/1386696
 	    if (e.target !== this.scrollTarget) {
 	      return;
 	    }
-	    // Remember last scrollLeft for scroll direction detecting.
-	    this.lastScrollLeft = e.target.scrollLeft;
-	    var _props$scroll = this.props.scroll;
-	    var scroll = _props$scroll === undefined ? {} : _props$scroll;
-	    var _refs = this.refs;
-	    var headTable = _refs.headTable;
-	    var bodyTable = _refs.bodyTable;
-	    var fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft;
-	    var fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
+	    var _props$scroll = this.props.scroll,
+	        scroll = _props$scroll === undefined ? {} : _props$scroll;
+	    var _refs = this.refs,
+	        headTable = _refs.headTable,
+	        bodyTable = _refs.bodyTable,
+	        fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
+	        fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
 	
 	    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
 	      if (e.target === bodyTable && headTable) {
@@ -22332,9 +22249,11 @@
 	        bodyTable.scrollTop = e.target.scrollTop;
 	      }
 	    }
+	    // Remember last scrollLeft for scroll direction detecting.
+	    this.lastScrollLeft = e.target.scrollLeft;
 	  },
 	  handleRowHover: function handleRowHover(isHover, key) {
-	    this.setState({
+	    this.store.setState({
 	      currentHoverKey: isHover ? key : null
 	    });
 	  },
@@ -22351,7 +22270,7 @@
 	    }
 	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
 	
-	    var isTableScroll = this.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
+	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
 	    return _react2.default.createElement(
 	      'div',
@@ -22360,7 +22279,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
-	        this.isAnyColumnsLeftFixed() && _react2.default.createElement(
+	        this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-left' },
 	          this.getLeftFixedTable()
@@ -22368,11 +22287,11 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: isTableScroll ? prefixCls + '-scroll' : '' },
-	          this.getTable(),
+	          this.getTable({ columns: this.columnManager.groupedColumns() }),
 	          this.getEmptyText(),
 	          this.getFooter()
 	        ),
-	        this.isAnyColumnsRightFixed() && _react2.default.createElement(
+	        this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-right' },
 	          this.getRightFixedTable()
@@ -22395,8 +22314,6 @@
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -22413,6 +22330,10 @@
 	
 	var _ExpandIcon2 = _interopRequireDefault(_ExpandIcon);
 	
+	var _ColumnManager = __webpack_require__(194);
+	
+	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var TableRow = _react2.default.createClass({
@@ -22427,7 +22348,7 @@
 	    expandIconColumnIndex: _react.PropTypes.number,
 	    onHover: _react.PropTypes.func,
 	    columns: _react.PropTypes.array,
-	    style: _react.PropTypes.object,
+	    height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	    visible: _react.PropTypes.bool,
 	    index: _react.PropTypes.number,
 	    hoverKey: _react.PropTypes.any,
@@ -22439,7 +22360,8 @@
 	    indent: _react.PropTypes.number,
 	    indentSize: _react.PropTypes.number,
 	    expandIconAsCell: _react.PropTypes.bool,
-	    expandRowByClick: _react.PropTypes.bool
+	    expandRowByClick: _react.PropTypes.bool,
+	    store: _react.PropTypes.object.isRequired
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -22453,21 +22375,44 @@
 	      onHover: function onHover() {}
 	    };
 	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return !(0, _shallowequal2.default)(nextProps, this.props);
+	  getInitialState: function getInitialState() {
+	    return {
+	      hovered: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+	
+	    var _props = this.props,
+	        store = _props.store,
+	        hoverKey = _props.hoverKey;
+	
+	    this.unsubscribe = store.subscribe(function () {
+	      if (store.getState().currentHoverKey === hoverKey) {
+	        _this.setState({ hovered: true });
+	      } else if (_this.state.hovered === true) {
+	        _this.setState({ hovered: false });
+	      }
+	    });
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    return !(0, _shallowequal2.default)(nextProps, this.props) || _ColumnManager2.default.includesCustomRender(nextProps.columns) || !(0, _shallowequal2.default)(nextState, this.state);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.props.onDestroy(this.props.record);
+	    if (this.unsubscribe) {
+	      this.unsubscribe();
+	    }
 	  },
 	  onRowClick: function onRowClick(event) {
-	    var _props = this.props;
-	    var record = _props.record;
-	    var index = _props.index;
-	    var onRowClick = _props.onRowClick;
-	    var expandable = _props.expandable;
-	    var expandRowByClick = _props.expandRowByClick;
-	    var expanded = _props.expanded;
-	    var onExpand = _props.onExpand;
+	    var _props2 = this.props,
+	        record = _props2.record,
+	        index = _props2.index,
+	        onRowClick = _props2.onRowClick,
+	        expandable = _props2.expandable,
+	        expandRowByClick = _props2.expandRowByClick,
+	        expanded = _props2.expanded,
+	        onExpand = _props2.onExpand;
 	
 	    if (expandable && expandRowByClick) {
 	      onExpand(!expanded, record);
@@ -22475,46 +22420,50 @@
 	    onRowClick(record, index, event);
 	  },
 	  onRowDoubleClick: function onRowDoubleClick(event) {
-	    var _props2 = this.props;
-	    var record = _props2.record;
-	    var index = _props2.index;
-	    var onRowDoubleClick = _props2.onRowDoubleClick;
+	    var _props3 = this.props,
+	        record = _props3.record,
+	        index = _props3.index,
+	        onRowDoubleClick = _props3.onRowDoubleClick;
 	
 	    onRowDoubleClick(record, index, event);
 	  },
 	  onMouseEnter: function onMouseEnter() {
-	    var _props3 = this.props;
-	    var onHover = _props3.onHover;
-	    var hoverKey = _props3.hoverKey;
+	    var _props4 = this.props,
+	        onHover = _props4.onHover,
+	        hoverKey = _props4.hoverKey;
 	
 	    onHover(true, hoverKey);
 	  },
 	  onMouseLeave: function onMouseLeave() {
-	    var _props4 = this.props;
-	    var onHover = _props4.onHover;
-	    var hoverKey = _props4.hoverKey;
+	    var _props5 = this.props,
+	        onHover = _props5.onHover,
+	        hoverKey = _props5.hoverKey;
 	
 	    onHover(false, hoverKey);
 	  },
 	  render: function render() {
-	    var _props5 = this.props;
-	    var prefixCls = _props5.prefixCls;
-	    var columns = _props5.columns;
-	    var record = _props5.record;
-	    var style = _props5.style;
-	    var visible = _props5.visible;
-	    var index = _props5.index;
-	    var expandIconColumnIndex = _props5.expandIconColumnIndex;
-	    var expandIconAsCell = _props5.expandIconAsCell;
-	    var expanded = _props5.expanded;
-	    var expandRowByClick = _props5.expandRowByClick;
-	    var expandable = _props5.expandable;
-	    var onExpand = _props5.onExpand;
-	    var needIndentSpaced = _props5.needIndentSpaced;
-	    var className = _props5.className;
-	    var indent = _props5.indent;
-	    var indentSize = _props5.indentSize;
+	    var _props6 = this.props,
+	        prefixCls = _props6.prefixCls,
+	        columns = _props6.columns,
+	        record = _props6.record,
+	        height = _props6.height,
+	        visible = _props6.visible,
+	        index = _props6.index,
+	        expandIconColumnIndex = _props6.expandIconColumnIndex,
+	        expandIconAsCell = _props6.expandIconAsCell,
+	        expanded = _props6.expanded,
+	        expandRowByClick = _props6.expandRowByClick,
+	        expandable = _props6.expandable,
+	        onExpand = _props6.onExpand,
+	        needIndentSpaced = _props6.needIndentSpaced,
+	        indent = _props6.indent,
+	        indentSize = _props6.indentSize;
+	    var className = this.props.className;
 	
+	
+	    if (this.state.hovered) {
+	      className += ' ' + prefixCls + '-hover';
+	    }
 	
 	    var cells = [];
 	
@@ -22550,6 +22499,10 @@
 	        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
 	      }));
 	    }
+	    var style = { height: height };
+	    if (!visible) {
+	      style.display = 'none';
+	    }
 	
 	    return _react2.default.createElement(
 	      'tr',
@@ -22559,7 +22512,7 @@
 	        onMouseEnter: this.onMouseEnter,
 	        onMouseLeave: this.onMouseLeave,
 	        className: prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent,
-	        style: visible ? style : _extends({}, style, { display: 'none' })
+	        style: style
 	      },
 	      cells
 	    );
@@ -23446,10 +23399,6 @@
 	
 	var _objectPath2 = _interopRequireDefault(_objectPath);
 	
-	var _shallowequal = __webpack_require__(186);
-	
-	var _shallowequal2 = _interopRequireDefault(_shallowequal);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var TableCell = _react2.default.createClass({
@@ -23464,25 +23413,31 @@
 	    column: _react.PropTypes.object,
 	    expandIcon: _react.PropTypes.node
 	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return !(0, _shallowequal2.default)(nextProps, this.props);
-	  },
 	  isInvalidRenderCellText: function isInvalidRenderCellText(text) {
 	    return text && !_react2.default.isValidElement(text) && Object.prototype.toString.call(text) === '[object Object]';
 	  },
+	  handleClick: function handleClick(e) {
+	    var _props = this.props,
+	        record = _props.record,
+	        onCellClick = _props.column.onCellClick;
+	
+	    if (onCellClick) {
+	      onCellClick(record, e);
+	    }
+	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var record = _props.record;
-	    var indentSize = _props.indentSize;
-	    var prefixCls = _props.prefixCls;
-	    var indent = _props.indent;
-	    var index = _props.index;
-	    var expandIcon = _props.expandIcon;
-	    var column = _props.column;
-	    var dataIndex = column.dataIndex;
-	    var render = column.render;
-	    var _column$className = column.className;
-	    var className = _column$className === undefined ? '' : _column$className;
+	    var _props2 = this.props,
+	        record = _props2.record,
+	        indentSize = _props2.indentSize,
+	        prefixCls = _props2.prefixCls,
+	        indent = _props2.indent,
+	        index = _props2.index,
+	        expandIcon = _props2.expandIcon,
+	        column = _props2.column;
+	    var dataIndex = column.dataIndex,
+	        render = column.render,
+	        _column$className = column.className,
+	        className = _column$className === undefined ? '' : _column$className;
 	
 	
 	    var text = _objectPath2.default.get(record, dataIndex);
@@ -23518,7 +23473,8 @@
 	      {
 	        colSpan: colSpan,
 	        rowSpan: rowSpan,
-	        className: className
+	        className: className,
+	        onClick: this.handleClick
 	      },
 	      indentText,
 	      expandIcon,
@@ -23862,13 +23818,13 @@
 	    return !(0, _shallowequal2.default)(nextProps, this.props);
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var expandable = _props.expandable;
-	    var prefixCls = _props.prefixCls;
-	    var onExpand = _props.onExpand;
-	    var needIndentSpaced = _props.needIndentSpaced;
-	    var expanded = _props.expanded;
-	    var record = _props.record;
+	    var _props = this.props,
+	        expandable = _props.expandable,
+	        prefixCls = _props.prefixCls,
+	        onExpand = _props.onExpand,
+	        needIndentSpaced = _props.needIndentSpaced,
+	        expanded = _props.expanded,
+	        record = _props.record;
 	
 	    if (expandable) {
 	      var expandClassName = expanded ? 'expanded' : 'collapsed';
@@ -23890,6 +23846,193 @@
 
 /***/ },
 /* 194 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ColumnManager = function () {
+	  function ColumnManager(columns) {
+	    _classCallCheck(this, ColumnManager);
+	
+	    this._cached = {};
+	
+	    this.columns = columns;
+	  }
+	
+	  ColumnManager.includesCustomRender = function includesCustomRender(columns) {
+	    return columns.some(function (column) {
+	      return !!column.render;
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsFixed = function isAnyColumnsFixed() {
+	    var _this = this;
+	
+	    return this._cache('isAnyColumnsFixed', function () {
+	      return _this.columns.some(function (column) {
+	        return !!column.fixed;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsLeftFixed = function isAnyColumnsLeftFixed() {
+	    var _this2 = this;
+	
+	    return this._cache('isAnyColumnsLeftFixed', function () {
+	      return _this2.columns.some(function (column) {
+	        return column.fixed === 'left' || column.fixed === true;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsRightFixed = function isAnyColumnsRightFixed() {
+	    var _this3 = this;
+	
+	    return this._cache('isAnyColumnsRightFixed', function () {
+	      return _this3.columns.some(function (column) {
+	        return column.fixed === 'right';
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.leftColumns = function leftColumns() {
+	    var _this4 = this;
+	
+	    return this._cache('leftColumns', function () {
+	      return _this4.groupedColumns().filter(function (column) {
+	        return column.fixed === 'left' || column.fixed === true;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.rightColumns = function rightColumns() {
+	    var _this5 = this;
+	
+	    return this._cache('rightColumns', function () {
+	      return _this5.groupedColumns().filter(function (column) {
+	        return column.fixed === 'right';
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.leafColumns = function leafColumns() {
+	    var _this6 = this;
+	
+	    return this._cache('leafColumns', function () {
+	      return _this6._leafColumns(_this6.columns);
+	    });
+	  };
+	
+	  ColumnManager.prototype.leftLeafColumns = function leftLeafColumns() {
+	    var _this7 = this;
+	
+	    return this._cache('leftLeafColumns', function () {
+	      return _this7._leafColumns(_this7.leftColumns());
+	    });
+	  };
+	
+	  ColumnManager.prototype.rightLeafColumns = function rightLeafColumns() {
+	    var _this8 = this;
+	
+	    return this._cache('rightLeafColumns', function () {
+	      return _this8._leafColumns(_this8.rightColumns());
+	    });
+	  };
+	
+	  // add appropriate rowspan and colspan to column
+	
+	
+	  ColumnManager.prototype.groupedColumns = function groupedColumns() {
+	    var _this9 = this;
+	
+	    return this._cache('groupedColumns', function () {
+	      var _groupColumns = function _groupColumns(columns) {
+	        var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	        var parentColumn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+	        var rows = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+	
+	        // track how many rows we got
+	        if (!~rows.indexOf(currentRow)) {
+	          rows.push(currentRow);
+	        }
+	        var grouped = [];
+	        var setRowSpan = function setRowSpan(column) {
+	          var rowSpan = rows.length - currentRow;
+	          if (column && !column.children && // parent columns are supposed to be one row
+	          rowSpan > 1 && (!column.rowSpan || column.rowSpan < rowSpan)) {
+	            column.rowSpan = rowSpan;
+	          }
+	        };
+	        columns.forEach(function (column, index) {
+	          var newColumn = _extends({}, column);
+	          parentColumn.colSpan = parentColumn.colSpan || 0;
+	          if (newColumn.children && newColumn.children.length > 0) {
+	            newColumn.children = _groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
+	            parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
+	          } else {
+	            parentColumn.colSpan++;
+	          }
+	          // update rowspan to all previous columns
+	          for (var i = 0; i < index; ++i) {
+	            setRowSpan(grouped[i]);
+	          }
+	          // last column, update rowspan immediately
+	          if (index + 1 === columns.length) {
+	            setRowSpan(newColumn);
+	          }
+	          grouped.push(newColumn);
+	        });
+	        return grouped;
+	      };
+	      return _groupColumns(_this9.columns);
+	    });
+	  };
+	
+	  ColumnManager.prototype.reset = function reset(columns) {
+	    this.columns = columns;
+	    this._cached = {};
+	  };
+	
+	  ColumnManager.prototype._cache = function _cache(name, fn) {
+	    if (name in this._cached) {
+	      return this._cached[name];
+	    }
+	    this._cached[name] = fn();
+	    return this._cached[name];
+	  };
+	
+	  ColumnManager.prototype._leafColumns = function _leafColumns(columns) {
+	    var _this10 = this;
+	
+	    var leafColumns = [];
+	    columns.forEach(function (column) {
+	      if (!column.children) {
+	        leafColumns.push(column);
+	      } else {
+	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this10._leafColumns(column.children)));
+	      }
+	    });
+	    return leafColumns;
+	  };
+	
+	  return ColumnManager;
+	}();
+	
+	exports.default = ColumnManager;
+	module.exports = exports['default'];
+
+/***/ },
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23922,10 +24065,10 @@
 	    return !(0, _shallowequal2.default)(nextProps, this.props);
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var prefixCls = _props.prefixCls;
-	    var rowStyle = _props.rowStyle;
-	    var rows = _props.rows;
+	    var _props = this.props,
+	        prefixCls = _props.prefixCls,
+	        rowStyle = _props.rowStyle,
+	        rows = _props.rows;
 	
 	    return _react2.default.createElement(
 	      'thead',
@@ -23945,7 +24088,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24011,7 +24154,7 @@
 	}
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24021,7 +24164,7 @@
 	});
 	exports["default"] = addEventListenerWrap;
 	
-	var _addDomEventListener = __webpack_require__(197);
+	var _addDomEventListener = __webpack_require__(198);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -24041,7 +24184,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24053,7 +24196,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(198);
+	var _EventObject = __webpack_require__(199);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -24083,7 +24226,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24100,7 +24243,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(199);
+	var _EventBaseObject = __webpack_require__(200);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -24366,7 +24509,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports) {
 
 	/**
@@ -24434,7 +24577,52 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 200 */
+/* 201 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = createStore;
+	function createStore(initialState) {
+	  var state = initialState;
+	  var listeners = [];
+	
+	  function setState(partial) {
+	    state = _extends({}, state, partial);
+	    for (var i = 0; i < listeners.length; i++) {
+	      listeners[i]();
+	    }
+	  }
+	
+	  function getState() {
+	    return state;
+	  }
+	
+	  function subscribe(listener) {
+	    listeners.push(listener);
+	
+	    return function unsubscribe() {
+	      var index = listeners.indexOf(listener);
+	      listeners.splice(index, 1);
+	    };
+	  }
+	
+	  return {
+	    setState: setState,
+	    getState: getState,
+	    subscribe: subscribe
+	  };
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 202 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

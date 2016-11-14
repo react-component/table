@@ -3,12 +3,12 @@ webpackJsonp([10],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(254);
+	module.exports = __webpack_require__(295);
 
 
 /***/ },
 
-/***/ 254:
+/***/ 295:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,8 +17,8 @@ webpackJsonp([10],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(39);
 	var Table = __webpack_require__(182);
-	__webpack_require__(200);
-	__webpack_require__(255);
+	__webpack_require__(202);
+	__webpack_require__(296);
 	
 	var columns = [{
 	  title: '姓名',
@@ -101,8 +101,8 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 255:
-200
+/***/ 296:
+202
 
 });
 //# sourceMappingURL=grouping-columns.js.map
