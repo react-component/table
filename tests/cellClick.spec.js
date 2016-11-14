@@ -73,16 +73,14 @@ describe('click table cell', () => {
     expect(cellSpy.callArgs[0].dataIndex).to.be(columns[0].dataIndex);
     expect(cellSpy.callArgs[0]).to.have.key('key');
     expect(cellSpy.callArgs[0].key).to.be(columns[0].key);
-    expect(cellSpy.callArgs[1]).to.be(columns[0].key);
-    expect(cellSpy.callArgs[2].type).to.be('click');
+    expect(cellSpy.callArgs[1].type).to.be('click');
   });
 
   it('click for first td', () => {
     Simulate.click(node.find('tbody tr:first td:first')[0]);
     expect(cellSpy.callCount).to.be(1);
     expect(cellSpy.callArgs[0]).to.be(data[0]);
-    expect(cellSpy.callArgs[1]).to.be(columns[0].key);
-    expect(cellSpy.callArgs[2].type).to.be('click');
+    expect(cellSpy.callArgs[1].type).to.be('click');
   });
 
   it('no click for second td', () => {

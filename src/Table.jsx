@@ -224,7 +224,7 @@ const Table = React.createClass({
         children: column.title,
       };
       if (column.onCellClick) {
-        cell.onClick = (e) => column.onCellClick(column, column.key, e);
+        cell.onClick = (e) => column.onCellClick(column, e);
       }
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);

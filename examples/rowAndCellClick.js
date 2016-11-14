@@ -29,8 +29,8 @@ const columns = [{
   render: (text) => (
     <span>{text} (Trigger Cell Click)</span>
   ),
-  onCellClick: (record, columnKey, e) => {
-    console.log('Click cell', record, columnKey, e.target);
+  onCellClick: (record, e) => {
+    console.log('Click cell', record, e.target);
   },
 }, {
   title: 'Address',

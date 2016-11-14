@@ -20,9 +20,9 @@ const TableCell = React.createClass({
       Object.prototype.toString.call(text) === '[object Object]';
   },
   handleClick(e) {
-    const { record, column: { key, onCellClick } } = this.props;
+    const { record, column: { onCellClick } } = this.props;
     if (onCellClick) {
-      onCellClick(record, key, e);
+      onCellClick(record, e);
     }
   },
   render() {
