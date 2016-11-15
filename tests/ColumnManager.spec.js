@@ -1,6 +1,9 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp,indent */
+const React = require('react');
 const expect = require('expect.js');
 const ColumnManager = require('../src/ColumnManager');
+const Column = require('../src/Column');
+const ColumnGroup = require('../src/ColumnGroup');
 
 describe('ColumnManager', () => {
   describe('includesCustomRender', () => {
@@ -91,6 +94,55 @@ describe('ColumnManager', () => {
           colSpan: 2,
         },
         { title: '表头M', className: 'title-m', dataIndex: 'i', key: 'i', rowSpan: 4 },
+      ]);
+    });
+  });
+
+  describe('normalize', () => {
+    it('normalize React elements to columns', () => {
+      const elements = [
+        <ColumnGroup title="a">
+          <Column
+            title="b"
+            dataIndex="b"
+            key="b"
+          />
+          <Column
+            title="c"
+            dataIndex="c"
+            key="c"
+          />
+        </ColumnGroup>,
+        <Column
+          title="d"
+          dataIndex="d"
+          key="d"
+        />,
+      ];
+
+      const columnManager = new ColumnManager(null, elements);
+
+      expect(columnManager.columns).to.eql([
+        {
+          title: 'a',
+          children: [
+            {
+              title: 'b',
+              dataIndex: 'b',
+              key: 'b',
+            },
+            {
+              title: 'c',
+              dataIndex: 'c',
+              key: 'c',
+            },
+          ],
+        },
+        {
+          title: 'd',
+          dataIndex: 'd',
+          key: 'd',
+        },
       ]);
     });
   });

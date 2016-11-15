@@ -1,8 +1,12 @@
+import React from 'react';
+import Column from './Column';
+import ColumnGroup from './ColumnGroup';
+
 export default class ColumnManager {
   _cached = {}
 
-  constructor(columns) {
-    this.columns = columns;
+  constructor(columns, elements) {
+    this.columns = columns || this.normalize(elements);
   }
 
   static includesCustomRender(columns) {
@@ -109,8 +113,29 @@ export default class ColumnManager {
     });
   }
 
-  reset(columns) {
-    this.columns = columns;
+  normalize(elements) {
+    const columns = [];
+    React.Children.forEach(elements, element => {
+      if (!this.isColumnElement(element)) return;
+      const clonedElement = React.cloneElement(element);
+      const column = { ...clonedElement.props };
+      if (clonedElement.key) {
+        column.key = clonedElement.key;
+      }
+      if (element.type === ColumnGroup) {
+        column.children = this.normalize(column.children);
+      }
+      columns.push(column);
+    });
+    return columns;
+  }
+
+  isColumnElement(element) {
+    return element && (element.type === Column || element.type === ColumnGroup);
+  }
+
+  reset(columns, elements) {
+    this.columns = columns || this.normalize(elements);
     this._cached = {};
   }
 
