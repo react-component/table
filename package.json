@@ -10,10 +10,19 @@
     "ui"
   ],
   "files": [
-    "lib",
-    "assets/*.css"
+    "assets/*.css",
+    "dist",
+    "lib"
   ],
   "main": "./lib/index",
+  "entry": {
+    "rc-table": [
+      "./assets/animation.less",
+      "./assets/bordered.less",
+      "./assets/index.less",
+      "./src/index.js"
+    ]
+  },
   "homepage": "http://github.com/react-component/table",
   "maintainers": [
     "yiminghe@gmail.com",
@@ -55,7 +64,7 @@
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~1.4.10",
     "rc-menu": "~4.13.0",
-    "rc-tools": "5.x",
+    "rc-tools": "^5.9.2",
     "react": "^15.2.1",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.2.1"
