@@ -41,6 +41,7 @@
   },
   "scripts": {
     "build": "rc-tools run build",
+    "compile": "rc-tools run compile",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "pub": "rc-tools run pub",
