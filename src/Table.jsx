@@ -409,7 +409,7 @@ const Table = React.createClass({
     const headStyle = {};
 
     let tableClassName = '';
-    if (scroll.x || columns) {
+    if (scroll.x || fixed) {
       tableClassName = `${prefixCls}-fixed`;
       bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
     }
@@ -435,7 +435,7 @@ const Table = React.createClass({
 
     const renderTable = (hasHead = true, hasBody = true) => {
       const tableStyle = {};
-      if (!columns && scroll.x) {
+      if (!fixed && scroll.x) {
         // not set width, then use content fixed width
         if (scroll.x === true) {
           tableStyle.tableLayout = 'fixed';
