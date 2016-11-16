@@ -36,6 +36,7 @@ const Table = React.createClass({
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
+    children: PropTypes.node,
   },
 
   getDefaultProps() {
@@ -43,7 +44,6 @@ const Table = React.createClass({
       data: [],
       useFixedHeader: false,
       expandIconAsCell: false,
-      columns: [],
       defaultExpandAllRows: false,
       defaultExpandedRowKeys: [],
       rowKey: 'key',
@@ -71,8 +71,7 @@ const Table = React.createClass({
     const props = this.props;
     let expandedRowKeys = [];
     let rows = [...props.data];
-
-    this.columnManager = new ColumnManager(props.columns);
+    this.columnManager = new ColumnManager(props.columns, props.children);
     this.store = createStore({ currentHoverKey: null });
 
     if (props.defaultExpandAllRows) {
@@ -118,8 +117,10 @@ const Table = React.createClass({
         expandedRowKeys: nextProps.expandedRowKeys,
       });
     }
-    if (nextProps.columns !== this.props.columns) {
+    if (nextProps.columns && nextProps.columns !== this.props.columns) {
       this.columnManager.reset(nextProps.columns);
+    } else if (nextProps.children !== this.props.children) {
+      this.columnManager.reset(null, nextProps.children);
     }
   },
 
