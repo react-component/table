@@ -117,10 +117,9 @@ export default class ColumnManager {
     const columns = [];
     React.Children.forEach(elements, element => {
       if (!this.isColumnElement(element)) return;
-      const clonedElement = React.cloneElement(element);
-      const column = { ...clonedElement.props };
-      if (clonedElement.key) {
-        column.key = clonedElement.key;
+      const column = { ...element.props };
+      if (element.key) {
+        column.key = element.key;
       }
       if (element.type === ColumnGroup) {
         column.children = this.normalize(column.children);
