@@ -125,7 +125,6 @@ const Table = React.createClass({
   },
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
@@ -626,11 +625,9 @@ const Table = React.createClass({
         shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
-    this.timer = setTimeout(() => {
-      this.setState({
-        fixedColumnsHeadRowsHeight,
-        fixedColumnsBodyRowsHeight,
-      });
+    this.setState({
+      fixedColumnsHeadRowsHeight,
+      fixedColumnsBodyRowsHeight,
     });
   },
 
