@@ -3,12 +3,12 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(290);
+	module.exports = __webpack_require__(251);
 
 
 /***/ },
 
-/***/ 290:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -98,11 +98,11 @@ webpackJsonp([5],{
 	    );
 	  },
 	  render: function render() {
-	    var _state = this.state,
-	        expandIconAsCell = _state.expandIconAsCell,
-	        expandRowByClick = _state.expandRowByClick,
-	        expandedRowKeys = _state.expandedRowKeys,
-	        data = _state.data;
+	    var _state = this.state;
+	    var expandIconAsCell = _state.expandIconAsCell;
+	    var expandRowByClick = _state.expandRowByClick;
+	    var expandedRowKeys = _state.expandedRowKeys;
+	    var data = _state.data;
 	
 	    return React.createElement(
 	      'div',
