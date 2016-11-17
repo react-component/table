@@ -6,6 +6,7 @@ notifications:
   email:
   - yiminghe@gmail.com
   - afc163@gmail.com
+  - yesmeck@gmail.com
 
 node_js:
 - 4.0.0
