@@ -3,12 +3,12 @@ webpackJsonp([18],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(265);
+	module.exports = __webpack_require__(304);
 
 
 /***/ },
 
-/***/ 265:
+/***/ 304:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47,7 +47,7 @@ webpackJsonp([18],{
 	        'a',
 	        { onClick: this.toggleBody, href: '#' },
 	        this.state.showBody ? '隐藏' : '显示',
-	        '体'
+	        '\u4F53'
 	      ),
 	      key: 'x',
 	      width: 200,

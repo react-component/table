@@ -3,12 +3,12 @@ webpackJsonp([7],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(253);
+	module.exports = __webpack_require__(292);
 
 
 /***/ },
 
-/***/ 253:
+/***/ 292:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24,7 +24,7 @@ webpackJsonp([7],{
 	    return React.createElement(
 	      'div',
 	      { style: { height: '40px', lineHeight: '40px' } },
-	      '我很高'
+	      '\u6211\u5F88\u9AD8'
 	    );
 	  } }, { title: 'title7', dataIndex: 'b', key: 'g' }, { title: 'title8', dataIndex: 'b', key: 'h' }, { title: 'title9', dataIndex: 'b', key: 'i' }, { title: 'title10', dataIndex: 'b', key: 'j' }, { title: 'title11', dataIndex: 'b', key: 'k' }, { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' }];
 	

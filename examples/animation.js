@@ -106,7 +106,7 @@ webpackJsonp([0],{
 	        { onClick: function onClick() {
 	            return _this2.onAdd();
 	          } },
-	        '添加'
+	        '\u6DFB\u52A0'
 	      ),
 	      React.createElement(Table, {
 	        columns: this.columns,
