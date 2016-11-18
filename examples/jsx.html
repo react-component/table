@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowClick.js - example - rc-table@5.0.6</title>
+  <title>jsx.js - example - rc-table@5.2.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.0.6</h1>
+      <h1>rc-table@5.2.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -275,104 +275,47 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">const</span> onRowClick = (record, index, event) =&gt; {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click nth(<span class="hljs-subst">${index}</span>) element of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
-  <span class="hljs-comment">// See https://facebook.github.io/react/docs/events.html for original click event details.</span>
-  <span class="hljs-keyword">if</span> (event.shiftKey) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Shift + mouse click triggered.'</span>);
-  }
-};
+<span class="hljs-keyword">const</span> { ColumnGroup, Column } = Table;
 
-<span class="hljs-keyword">const</span> onRowDoubleClick = (record, index) =&gt; {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Double click nth(<span class="hljs-subst">${index}</span>) element of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
-};
-
-<span class="hljs-keyword">const</span> onOperationClick = (text, record, event) =&gt; {
-  event.preventDefault();
-  event.stopPropagation();
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click Cell <span class="hljs-subst">${text}</span>, record.name is <span class="hljs-subst">${record.name}</span>`</span>);
-};
-
-<span class="hljs-keyword">const</span> columns = [{
-  title: <span class="hljs-string">'Name'</span>,
-  dataIndex: <span class="hljs-string">'name'</span>,
-  key: <span class="hljs-string">'name'</span>,
-  width: <span class="hljs-number">400</span>,
-}, {
-  title: <span class="hljs-string">'Age'</span>,
-  dataIndex: <span class="hljs-string">'age'</span>,
-  key: <span class="hljs-string">'age'</span>,
-  width: <span class="hljs-number">100</span>,
-  render: (text, record) =&gt; (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> onOperationClick(text, record, e)}&gt;
-      Alert: {text}, click will pop to row click
-    <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-  )</span>,
-}, {
-  title: <span class="hljs-string">'Address'</span>,
-  dataIndex: <span class="hljs-string">'address'</span>,
-  key: <span class="hljs-string">'address'</span>,
-  width: <span class="hljs-number">200</span>,
-}];
-
-<span class="hljs-keyword">const</span> data = [{
-  key: <span class="hljs-number">1</span>,
-  name: <span class="hljs-string">'a'</span>,
-  age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am a'</span>,
-  children: [{
-    key: <span class="hljs-number">11</span>,
-    name: <span class="hljs-string">'aa'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am aa'</span>,
-  }, {
-    key: <span class="hljs-number">12</span>,
-    name: <span class="hljs-string">'ab'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ab'</span>,
-    children: [{
-      key: <span class="hljs-number">121</span>,
-      name: <span class="hljs-string">'aba'</span>,
-      age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aba'</span>,
-    }],
-  }, {
-    key: <span class="hljs-number">13</span>,
-    name: <span class="hljs-string">'ac'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ac'</span>,
-    children: [{
-      key: <span class="hljs-number">131</span>,
-      name: <span class="hljs-string">'aca'</span>,
-      age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aca'</span>,
-      children: [{
-        key: <span class="hljs-number">1311</span>,
-        name: <span class="hljs-string">'acaa'</span>,
-        age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acaa'</span>,
-      }, {
-        key: <span class="hljs-number">1312</span>,
-        name: <span class="hljs-string">'acab'</span>,
-        age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acab'</span>,
-      }],
-    }],
-  }],
-}, {
-  key: <span class="hljs-number">2</span>,
-  name: <span class="hljs-string">'b'</span>,
-  age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am b'</span>,
-}];
+<span class="hljs-keyword">const</span> data = [
+  { a: <span class="hljs-string">'123'</span>, key: <span class="hljs-string">'1'</span> },
+  { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span> },
+  { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
+];
 
 ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-    <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-    <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-    <span class="hljs-attribute">onRowClick</span>=<span class="hljs-value">{onRowClick}</span>
-    <span class="hljs-attribute">onRowDoubleClick</span>=<span class="hljs-value">{onRowDoubleClick}</span>
-  /&gt;</span>,
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>JSX table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ColumnGroup</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Bazinga"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
+          <span class="hljs-attribute">title</span>=<span class="hljs-value">"title1"</span>
+          <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"a"</span>
+          <span class="hljs-attribute">key</span>=<span class="hljs-value">"a"</span>
+          <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span>
+        /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
+          <span class="hljs-attribute">id</span>=<span class="hljs-value">"123"</span>
+          <span class="hljs-attribute">title</span>=<span class="hljs-value">"title2"</span>
+          <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"b"</span>
+          <span class="hljs-attribute">key</span>=<span class="hljs-value">"b"</span>
+          <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span>
+        /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">ColumnGroup</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
+        <span class="hljs-attribute">title</span>=<span class="hljs-value">"title3"</span>
+        <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"c"</span>
+        <span class="hljs-attribute">key</span>=<span class="hljs-value">"c"</span>
+        <span class="hljs-attribute">width</span>=<span class="hljs-value">{200}</span>
+      /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
+        <span class="hljs-attribute">title</span>=<span class="hljs-value">"Operations"</span>
+        <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">""</span>
+        <span class="hljs-attribute">key</span>=<span class="hljs-value">"d"</span>
+        <span class="hljs-attribute">render</span>=<span class="hljs-value">{()</span> =&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>}
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Table</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );
 </span></code></pre></div>
@@ -385,7 +328,7 @@ ReactDOM.render(
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="common.js?nowrap"></script>
-  <script src="rowClick.js?nowrap"></script>
+  <script src="jsx.js?nowrap"></script>
 </body>
 
 </html>

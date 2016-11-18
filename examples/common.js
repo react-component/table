@@ -51,7 +51,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		22:0
+/******/ 		23:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -97,7 +97,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"grouping-columns","11":"hide-header","12":"key","13":"nested","14":"no-data","15":"rowClick","16":"scrollX","17":"scrollXY","18":"scrollY","19":"simple","20":"subTable","21":"title-and-footer"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"grouping-columns","11":"hide-header","12":"jsx","13":"key","14":"nested","15":"no-data","16":"rowAndCellClick","17":"scrollX","18":"scrollXY","19":"scrollY","20":"simple","21":"subTable","22":"title-and-footer"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -714,7 +714,7 @@
 
 /***/ },
 /* 9 */
-[312, 10],
+[317, 10],
 /* 10 */
 /***/ function(module, exports) {
 
@@ -6373,7 +6373,7 @@
 
 /***/ },
 /* 55 */
-[312, 40],
+[317, 40],
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21063,7 +21063,14 @@
 
 	'use strict';
 	
-	module.exports = __webpack_require__(190);
+	var Table = __webpack_require__(190);
+	var Column = __webpack_require__(201);
+	var ColumnGroup = __webpack_require__(202);
+	
+	Table.Column = Column;
+	Table.ColumnGroup = ColumnGroup;
+	
+	module.exports = Table;
 
 /***/ },
 /* 190 */
@@ -21085,19 +21092,27 @@
 	
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 	
-	var _TableHeader = __webpack_require__(200);
+	var _TableHeader = __webpack_require__(203);
 	
 	var _TableHeader2 = _interopRequireDefault(_TableHeader);
 	
-	var _utils = __webpack_require__(201);
+	var _utils = __webpack_require__(204);
 	
 	var _shallowequal = __webpack_require__(192);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
-	var _addEventListener = __webpack_require__(202);
+	var _addEventListener = __webpack_require__(205);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
+	
+	var _ColumnManager = __webpack_require__(200);
+	
+	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
+	
+	var _createStore = __webpack_require__(209);
+	
+	var _createStore2 = _interopRequireDefault(_createStore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21133,7 +21148,8 @@
 	    emptyText: _react.PropTypes.func,
 	    scroll: _react.PropTypes.object,
 	    rowRef: _react.PropTypes.func,
-	    getBodyWrapper: _react.PropTypes.func
+	    getBodyWrapper: _react.PropTypes.func,
+	    children: _react.PropTypes.node
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -21141,7 +21157,6 @@
 	      data: [],
 	      useFixedHeader: false,
 	      expandIconAsCell: false,
-	      columns: [],
 	      defaultExpandAllRows: false,
 	      defaultExpandedRowKeys: [],
 	      rowKey: 'key',
@@ -21179,6 +21194,9 @@
 	    var props = this.props;
 	    var expandedRowKeys = [];
 	    var rows = [].concat(_toConsumableArray(props.data));
+	    this.columnManager = new _ColumnManager2.default(props.columns, props.children);
+	    this.store = (0, _createStore2.default)({ currentHoverKey: null });
+	
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
@@ -21199,8 +21217,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.resetScrollY();
-	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
-	    if (isAnyColumnsFixed) {
+	    if (this.columnManager.isAnyColumnsFixed()) {
 	      this.syncFixedTableRowHeight();
 	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', (0, _utils.debounce)(this.syncFixedTableRowHeight, 150));
 	    }
@@ -21219,10 +21236,10 @@
 	        expandedRowKeys: nextProps.expandedRowKeys
 	      });
 	    }
-	    if (nextProps.columns !== this.props.columns) {
-	      delete this.isAnyColumnsFixedCache;
-	      delete this.isAnyColumnsLeftFixedCache;
-	      delete this.isAnyColumnsRightFixedCache;
+	    if (nextProps.columns && nextProps.columns !== this.props.columns) {
+	      this.columnManager.reset(nextProps.columns);
+	    } else if (nextProps.children !== this.props.children) {
+	      this.columnManager.reset(null, nextProps.children);
 	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
@@ -21284,13 +21301,7 @@
 	        expandIconAsCell = _props.expandIconAsCell,
 	        prefixCls = _props.prefixCls;
 	
-	    var rows = void 0;
-	    if (columns) {
-	      // columns are passed from fixed table function that already grouped.
-	      rows = this.getHeaderRows(columns);
-	    } else {
-	      rows = this.getHeaderRows(this.groupColumns(this.props.columns));
-	    }
+	    var rows = this.getHeaderRows(columns);
 	
 	    if (expandIconAsCell && fixed !== 'right') {
 	      rows[0].unshift({
@@ -21347,18 +21358,24 @@
 	    });
 	  },
 	  getExpandedRow: function getExpandedRow(key, content, visible, className, fixed) {
-	    var _this2 = this;
-	
 	    var _props2 = this.props,
 	        prefixCls = _props2.prefixCls,
 	        expandIconAsCell = _props2.expandIconAsCell;
 	
+	    var colCount = void 0;
+	    if (fixed === 'left') {
+	      colCount = this.columnManager.leftLeafColumns().length;
+	    } else if (fixed === 'right') {
+	      colCount = this.columnManager.rightLeafColumns().length;
+	    } else {
+	      colCount = this.columnManager.leafColumns().length;
+	    }
 	    var columns = [{
 	      key: 'extra-row',
 	      render: function render() {
 	        return {
 	          props: {
-	            colSpan: _this2.getLeafColumnsCount(_this2.props.columns)
+	            colSpan: colCount
 	          },
 	          children: fixed !== 'right' ? content : '&nbsp;'
 	        };
@@ -21379,7 +21396,8 @@
 	      key: key + '-extra-row',
 	      prefixCls: prefixCls + '-expanded-row',
 	      indent: 1,
-	      expandable: false
+	      expandable: false,
+	      store: this.store
 	    });
 	  },
 	  getRowsByData: function getRowsByData(data, visible, indent, columns, fixed) {
@@ -21398,7 +21416,6 @@
 	    });
 	    var onRowClick = props.onRowClick;
 	    var onRowDoubleClick = props.onRowDoubleClick;
-	    var isAnyColumnsFixed = this.isAnyColumnsFixed();
 	
 	    var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
 	    var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
@@ -21413,20 +21430,22 @@
 	        expandedRowContent = expandedRowRender(record, i, indent);
 	      }
 	      var className = rowClassName(record, i, indent);
-	      if (this.state.currentHoverKey === key) {
-	        className += ' ' + props.prefixCls + '-row-hover';
-	      }
 	
 	      var onHoverProps = {};
-	      if (isAnyColumnsFixed) {
+	      if (this.columnManager.isAnyColumnsFixed()) {
 	        onHoverProps.onHover = this.handleRowHover;
 	      }
 	
-	      var style = fixed && fixedColumnsBodyRowsHeight[i] ? {
-	        height: fixedColumnsBodyRowsHeight[i]
-	      } : {};
+	      var height = fixed && fixedColumnsBodyRowsHeight[i] ? fixedColumnsBodyRowsHeight[i] : null;
 	
-	      var leafColumns = this.getLeafColumns(columns || props.columns);
+	      var leafColumns = void 0;
+	      if (fixed === 'left') {
+	        leafColumns = this.columnManager.leftLeafColumns();
+	      } else if (fixed === 'right') {
+	        leafColumns = this.columnManager.rightLeafColumns();
+	      } else {
+	        leafColumns = this.columnManager.leafColumns();
+	      }
 	
 	      rst.push(_react2.default.createElement(_TableRow2.default, _extends({
 	        indent: indent,
@@ -21448,11 +21467,12 @@
 	        expandIconColumnIndex: expandIconColumnIndex,
 	        onRowClick: onRowClick,
 	        onRowDoubleClick: onRowDoubleClick,
-	        style: style
+	        height: height
 	      }, onHoverProps, {
 	        key: key,
 	        hoverKey: key,
-	        ref: rowRef(record, i, indent)
+	        ref: rowRef(record, i, indent),
+	        store: this.store
 	      })));
 	
 	      var subVisible = visible && isRowExpanded;
@@ -21477,7 +21497,14 @@
 	        key: 'rc-table-expand-icon-col'
 	      }));
 	    }
-	    var leafColumns = this.getLeafColumns(columns || this.props.columns);
+	    var leafColumns = void 0;
+	    if (fixed === 'left') {
+	      leafColumns = this.columnManager.leftLeafColumns();
+	    } else if (fixed === 'right') {
+	      leafColumns = this.columnManager.rightLeafColumns();
+	    } else {
+	      leafColumns = this.columnManager.leafColumns();
+	    }
 	    cols = cols.concat(leafColumns.map(function (c) {
 	      return _react2.default.createElement('col', { key: c.key, style: { width: c.width, minWidth: c.width } });
 	    }));
@@ -21488,29 +21515,19 @@
 	    );
 	  },
 	  getLeftFixedTable: function getLeftFixedTable() {
-	    var columns = this.props.columns;
-	
-	    var fixedColumns = this.groupColumns(columns).filter(function (column) {
-	      return column.fixed === 'left' || column.fixed === true;
-	    });
 	    return this.getTable({
-	      columns: fixedColumns,
+	      columns: this.columnManager.leftColumns(),
 	      fixed: 'left'
 	    });
 	  },
 	  getRightFixedTable: function getRightFixedTable() {
-	    var columns = this.props.columns;
-	
-	    var fixedColumns = this.groupColumns(columns).filter(function (column) {
-	      return column.fixed === 'right';
-	    });
 	    return this.getTable({
-	      columns: fixedColumns,
+	      columns: this.columnManager.rightColumns(),
 	      fixed: 'right'
 	    });
 	  },
 	  getTable: function getTable() {
-	    var _this3 = this;
+	    var _this2 = this;
 	
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var columns = options.columns,
@@ -21566,24 +21583,25 @@
 	      var tableBody = hasBody ? getBodyWrapper(_react2.default.createElement(
 	        'tbody',
 	        { className: prefixCls + '-tbody' },
-	        _this3.getRows(columns, fixed)
+	        _this2.getRows(columns, fixed)
 	      )) : null;
 	      return _react2.default.createElement(
 	        'table',
 	        { className: tableClassName, style: tableStyle },
-	        _this3.getColGroup(columns, fixed),
-	        hasHead ? _this3.getHeader(columns, fixed) : null,
+	        _this2.getColGroup(columns, fixed),
+	        hasHead ? _this2.getHeader(columns, fixed) : null,
 	        tableBody
 	      );
 	    };
 	
 	    var headTable = void 0;
+	
 	    if (useFixedHeader) {
 	      headTable = _react2.default.createElement(
 	        'div',
 	        {
 	          className: prefixCls + '-header',
-	          ref: columns ? null : 'headTable',
+	          ref: fixed ? null : 'headTable',
 	          style: headStyle,
 	          onMouseOver: this.detectScrollTarget,
 	          onTouchStart: this.detectScrollTarget,
@@ -21606,7 +21624,7 @@
 	      renderTable(!useFixedHeader)
 	    );
 	
-	    if (columns && columns.length) {
+	    if (fixed && columns.length) {
 	      var refName = void 0;
 	      if (columns[0].fixed === 'left' || columns[0].fixed === true) {
 	        refName = 'fixedColumnsBodyLeft';
@@ -21676,22 +21694,6 @@
 	      emptyText()
 	    ) : null;
 	  },
-	  getLeafColumns: function getLeafColumns(columns) {
-	    var _this4 = this;
-	
-	    var leafColumns = [];
-	    columns.forEach(function (column) {
-	      if (!column.children) {
-	        leafColumns.push(column);
-	      } else {
-	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this4.getLeafColumns(column.children)));
-	      }
-	    });
-	    return leafColumns;
-	  },
-	  getLeafColumnsCount: function getLeafColumnsCount(columns) {
-	    return this.getLeafColumns(columns).length;
-	  },
 	  getHeaderRowStyle: function getHeaderRowStyle(columns, rows) {
 	    var fixedColumnsHeadRowsHeight = this.state.fixedColumnsHeadRowsHeight;
 	
@@ -21703,50 +21705,6 @@
 	      return { height: headerHeight / rows.length };
 	    }
 	    return null;
-	  },
-	
-	
-	  // add appropriate rowspan and colspan to column
-	  groupColumns: function groupColumns(columns) {
-	    var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-	
-	    var _this5 = this;
-	
-	    var parentColumn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	    var rows = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-	
-	    // track how many rows we got
-	    if (!~rows.indexOf(currentRow)) {
-	      rows.push(currentRow);
-	    }
-	    var grouped = [];
-	    var setRowSpan = function setRowSpan(column) {
-	      var rowSpan = rows.length - currentRow;
-	      if (column && !column.children && // parent columns are supposed to be one row
-	      rowSpan > 1 && (!column.rowSpan || column.rowSpan < rowSpan)) {
-	        column.rowSpan = rowSpan;
-	      }
-	    };
-	    columns.forEach(function (column, index) {
-	      var newColumn = _extends({}, column);
-	      parentColumn.colSpan = parentColumn.colSpan || 0;
-	      if (newColumn.children && newColumn.children.length > 0) {
-	        newColumn.children = _this5.groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
-	        parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
-	      } else {
-	        parentColumn.colSpan++;
-	      }
-	      // update rowspan to all previous columns
-	      for (var i = 0; i < index; ++i) {
-	        setRowSpan(grouped[i]);
-	      }
-	      // last column, update rowspan immediately
-	      if (index + 1 === columns.length) {
-	        setRowSpan(newColumn);
-	      }
-	      grouped.push(newColumn);
-	    });
-	    return grouped;
 	  },
 	  syncFixedTableRowHeight: function syncFixedTableRowHeight() {
 	    var prefixCls = this.props.prefixCls;
@@ -21776,10 +21734,10 @@
 	    }
 	  },
 	  findExpandedRow: function findExpandedRow(record) {
-	    var _this6 = this;
+	    var _this3 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this6.getRowKey(record);
+	      return i === _this3.getRowKey(record);
 	    });
 	    return rows[0];
 	  },
@@ -21790,33 +21748,6 @@
 	    if (this.scrollTarget !== e.currentTarget) {
 	      this.scrollTarget = e.currentTarget;
 	    }
-	  },
-	  isAnyColumnsFixed: function isAnyColumnsFixed() {
-	    if ('isAnyColumnsFixedCache' in this) {
-	      return this.isAnyColumnsFixedCache;
-	    }
-	    this.isAnyColumnsFixedCache = this.props.columns.some(function (column) {
-	      return !!column.fixed;
-	    });
-	    return this.isAnyColumnsFixedCache;
-	  },
-	  isAnyColumnsLeftFixed: function isAnyColumnsLeftFixed() {
-	    if ('isAnyColumnsLeftFixedCache' in this) {
-	      return this.isAnyColumnsLeftFixedCache;
-	    }
-	    this.isAnyColumnsLeftFixedCache = this.props.columns.some(function (column) {
-	      return column.fixed === 'left' || column.fixed === true;
-	    });
-	    return this.isAnyColumnsLeftFixedCache;
-	  },
-	  isAnyColumnsRightFixed: function isAnyColumnsRightFixed() {
-	    if ('isAnyColumnsRightFixedCache' in this) {
-	      return this.isAnyColumnsRightFixedCache;
-	    }
-	    this.isAnyColumnsRightFixedCache = this.props.columns.some(function (column) {
-	      return column.fixed === 'right';
-	    });
-	    return this.isAnyColumnsRightFixedCache;
 	  },
 	  handleBodyScroll: function handleBodyScroll(e) {
 	    // Prevent scrollTop setter trigger onScroll event
@@ -21861,7 +21792,7 @@
 	    this.lastScrollLeft = e.target.scrollLeft;
 	  },
 	  handleRowHover: function handleRowHover(isHover, key) {
-	    this.setState({
+	    this.store.setState({
 	      currentHoverKey: isHover ? key : null
 	    });
 	  },
@@ -21878,7 +21809,7 @@
 	    }
 	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
 	
-	    var isTableScroll = this.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
+	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
 	    return _react2.default.createElement(
 	      'div',
@@ -21887,7 +21818,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
-	        this.isAnyColumnsLeftFixed() && _react2.default.createElement(
+	        this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-left' },
 	          this.getLeftFixedTable()
@@ -21895,11 +21826,11 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: isTableScroll ? prefixCls + '-scroll' : '' },
-	          this.getTable(),
+	          this.getTable({ columns: this.columnManager.groupedColumns() }),
 	          this.getEmptyText(),
 	          this.getFooter()
 	        ),
-	        this.isAnyColumnsRightFixed() && _react2.default.createElement(
+	        this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-right' },
 	          this.getRightFixedTable()
@@ -21922,8 +21853,6 @@
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -21940,6 +21869,10 @@
 	
 	var _ExpandIcon2 = _interopRequireDefault(_ExpandIcon);
 	
+	var _ColumnManager = __webpack_require__(200);
+	
+	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var TableRow = _react2.default.createClass({
@@ -21954,7 +21887,7 @@
 	    expandIconColumnIndex: _react.PropTypes.number,
 	    onHover: _react.PropTypes.func,
 	    columns: _react.PropTypes.array,
-	    style: _react.PropTypes.object,
+	    height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	    visible: _react.PropTypes.bool,
 	    index: _react.PropTypes.number,
 	    hoverKey: _react.PropTypes.any,
@@ -21966,7 +21899,8 @@
 	    indent: _react.PropTypes.number,
 	    indentSize: _react.PropTypes.number,
 	    expandIconAsCell: _react.PropTypes.bool,
-	    expandRowByClick: _react.PropTypes.bool
+	    expandRowByClick: _react.PropTypes.bool,
+	    store: _react.PropTypes.object.isRequired
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -21980,21 +21914,44 @@
 	      onHover: function onHover() {}
 	    };
 	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return !(0, _shallowequal2.default)(nextProps, this.props);
+	  getInitialState: function getInitialState() {
+	    return {
+	      hovered: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+	
+	    var _props = this.props,
+	        store = _props.store,
+	        hoverKey = _props.hoverKey;
+	
+	    this.unsubscribe = store.subscribe(function () {
+	      if (store.getState().currentHoverKey === hoverKey) {
+	        _this.setState({ hovered: true });
+	      } else if (_this.state.hovered === true) {
+	        _this.setState({ hovered: false });
+	      }
+	    });
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    return !(0, _shallowequal2.default)(nextProps, this.props) || _ColumnManager2.default.includesCustomRender(nextProps.columns) || !(0, _shallowequal2.default)(nextState, this.state);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.props.onDestroy(this.props.record);
+	    if (this.unsubscribe) {
+	      this.unsubscribe();
+	    }
 	  },
 	  onRowClick: function onRowClick(event) {
-	    var _props = this.props,
-	        record = _props.record,
-	        index = _props.index,
-	        onRowClick = _props.onRowClick,
-	        expandable = _props.expandable,
-	        expandRowByClick = _props.expandRowByClick,
-	        expanded = _props.expanded,
-	        onExpand = _props.onExpand;
+	    var _props2 = this.props,
+	        record = _props2.record,
+	        index = _props2.index,
+	        onRowClick = _props2.onRowClick,
+	        expandable = _props2.expandable,
+	        expandRowByClick = _props2.expandRowByClick,
+	        expanded = _props2.expanded,
+	        onExpand = _props2.onExpand;
 	
 	    if (expandable && expandRowByClick) {
 	      onExpand(!expanded, record);
@@ -22002,46 +21959,50 @@
 	    onRowClick(record, index, event);
 	  },
 	  onRowDoubleClick: function onRowDoubleClick(event) {
-	    var _props2 = this.props,
-	        record = _props2.record,
-	        index = _props2.index,
-	        onRowDoubleClick = _props2.onRowDoubleClick;
+	    var _props3 = this.props,
+	        record = _props3.record,
+	        index = _props3.index,
+	        onRowDoubleClick = _props3.onRowDoubleClick;
 	
 	    onRowDoubleClick(record, index, event);
 	  },
 	  onMouseEnter: function onMouseEnter() {
-	    var _props3 = this.props,
-	        onHover = _props3.onHover,
-	        hoverKey = _props3.hoverKey;
-	
-	    onHover(true, hoverKey);
-	  },
-	  onMouseLeave: function onMouseLeave() {
 	    var _props4 = this.props,
 	        onHover = _props4.onHover,
 	        hoverKey = _props4.hoverKey;
 	
+	    onHover(true, hoverKey);
+	  },
+	  onMouseLeave: function onMouseLeave() {
+	    var _props5 = this.props,
+	        onHover = _props5.onHover,
+	        hoverKey = _props5.hoverKey;
+	
 	    onHover(false, hoverKey);
 	  },
 	  render: function render() {
-	    var _props5 = this.props,
-	        prefixCls = _props5.prefixCls,
-	        columns = _props5.columns,
-	        record = _props5.record,
-	        style = _props5.style,
-	        visible = _props5.visible,
-	        index = _props5.index,
-	        expandIconColumnIndex = _props5.expandIconColumnIndex,
-	        expandIconAsCell = _props5.expandIconAsCell,
-	        expanded = _props5.expanded,
-	        expandRowByClick = _props5.expandRowByClick,
-	        expandable = _props5.expandable,
-	        onExpand = _props5.onExpand,
-	        needIndentSpaced = _props5.needIndentSpaced,
-	        className = _props5.className,
-	        indent = _props5.indent,
-	        indentSize = _props5.indentSize;
+	    var _props6 = this.props,
+	        prefixCls = _props6.prefixCls,
+	        columns = _props6.columns,
+	        record = _props6.record,
+	        height = _props6.height,
+	        visible = _props6.visible,
+	        index = _props6.index,
+	        expandIconColumnIndex = _props6.expandIconColumnIndex,
+	        expandIconAsCell = _props6.expandIconAsCell,
+	        expanded = _props6.expanded,
+	        expandRowByClick = _props6.expandRowByClick,
+	        expandable = _props6.expandable,
+	        onExpand = _props6.onExpand,
+	        needIndentSpaced = _props6.needIndentSpaced,
+	        indent = _props6.indent,
+	        indentSize = _props6.indentSize;
+	    var className = this.props.className;
 	
+	
+	    if (this.state.hovered) {
+	      className += ' ' + prefixCls + '-hover';
+	    }
 	
 	    var cells = [];
 	
@@ -22077,6 +22038,10 @@
 	        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
 	      }));
 	    }
+	    var style = { height: height };
+	    if (!visible) {
+	      style.display = 'none';
+	    }
 	
 	    return _react2.default.createElement(
 	      'tr',
@@ -22086,7 +22051,7 @@
 	        onMouseEnter: this.onMouseEnter,
 	        onMouseLeave: this.onMouseLeave,
 	        className: prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent,
-	        style: visible ? style : _extends({}, style, { display: 'none' })
+	        style: style
 	      },
 	      cells
 	    );
@@ -22973,10 +22938,6 @@
 	
 	var _objectPath2 = _interopRequireDefault(_objectPath);
 	
-	var _shallowequal = __webpack_require__(192);
-	
-	var _shallowequal2 = _interopRequireDefault(_shallowequal);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var TableCell = _react2.default.createClass({
@@ -22991,21 +22952,27 @@
 	    column: _react.PropTypes.object,
 	    expandIcon: _react.PropTypes.node
 	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	    return !(0, _shallowequal2.default)(nextProps, this.props);
-	  },
 	  isInvalidRenderCellText: function isInvalidRenderCellText(text) {
 	    return text && !_react2.default.isValidElement(text) && Object.prototype.toString.call(text) === '[object Object]';
 	  },
-	  render: function render() {
+	  handleClick: function handleClick(e) {
 	    var _props = this.props,
 	        record = _props.record,
-	        indentSize = _props.indentSize,
-	        prefixCls = _props.prefixCls,
-	        indent = _props.indent,
-	        index = _props.index,
-	        expandIcon = _props.expandIcon,
-	        column = _props.column;
+	        onCellClick = _props.column.onCellClick;
+	
+	    if (onCellClick) {
+	      onCellClick(record, e);
+	    }
+	  },
+	  render: function render() {
+	    var _props2 = this.props,
+	        record = _props2.record,
+	        indentSize = _props2.indentSize,
+	        prefixCls = _props2.prefixCls,
+	        indent = _props2.indent,
+	        index = _props2.index,
+	        expandIcon = _props2.expandIcon,
+	        column = _props2.column;
 	    var dataIndex = column.dataIndex,
 	        render = column.render,
 	        _column$className = column.className,
@@ -23045,7 +23012,8 @@
 	      {
 	        colSpan: colSpan,
 	        rowSpan: rowSpan,
-	        className: className
+	        className: className,
+	        onClick: this.handleClick
 	      },
 	      indentText,
 	      expandIcon,
@@ -23431,6 +23399,312 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Column = __webpack_require__(201);
+	
+	var _Column2 = _interopRequireDefault(_Column);
+	
+	var _ColumnGroup = __webpack_require__(202);
+	
+	var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ColumnManager = function () {
+	  function ColumnManager(columns, elements) {
+	    _classCallCheck(this, ColumnManager);
+	
+	    this._cached = {};
+	
+	    this.columns = columns || this.normalize(elements);
+	  }
+	
+	  ColumnManager.includesCustomRender = function includesCustomRender(columns) {
+	    return columns.some(function (column) {
+	      return !!column.render;
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsFixed = function isAnyColumnsFixed() {
+	    var _this = this;
+	
+	    return this._cache('isAnyColumnsFixed', function () {
+	      return _this.columns.some(function (column) {
+	        return !!column.fixed;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsLeftFixed = function isAnyColumnsLeftFixed() {
+	    var _this2 = this;
+	
+	    return this._cache('isAnyColumnsLeftFixed', function () {
+	      return _this2.columns.some(function (column) {
+	        return column.fixed === 'left' || column.fixed === true;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.isAnyColumnsRightFixed = function isAnyColumnsRightFixed() {
+	    var _this3 = this;
+	
+	    return this._cache('isAnyColumnsRightFixed', function () {
+	      return _this3.columns.some(function (column) {
+	        return column.fixed === 'right';
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.leftColumns = function leftColumns() {
+	    var _this4 = this;
+	
+	    return this._cache('leftColumns', function () {
+	      return _this4.groupedColumns().filter(function (column) {
+	        return column.fixed === 'left' || column.fixed === true;
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.rightColumns = function rightColumns() {
+	    var _this5 = this;
+	
+	    return this._cache('rightColumns', function () {
+	      return _this5.groupedColumns().filter(function (column) {
+	        return column.fixed === 'right';
+	      });
+	    });
+	  };
+	
+	  ColumnManager.prototype.leafColumns = function leafColumns() {
+	    var _this6 = this;
+	
+	    return this._cache('leafColumns', function () {
+	      return _this6._leafColumns(_this6.columns);
+	    });
+	  };
+	
+	  ColumnManager.prototype.leftLeafColumns = function leftLeafColumns() {
+	    var _this7 = this;
+	
+	    return this._cache('leftLeafColumns', function () {
+	      return _this7._leafColumns(_this7.leftColumns());
+	    });
+	  };
+	
+	  ColumnManager.prototype.rightLeafColumns = function rightLeafColumns() {
+	    var _this8 = this;
+	
+	    return this._cache('rightLeafColumns', function () {
+	      return _this8._leafColumns(_this8.rightColumns());
+	    });
+	  };
+	
+	  // add appropriate rowspan and colspan to column
+	
+	
+	  ColumnManager.prototype.groupedColumns = function groupedColumns() {
+	    var _this9 = this;
+	
+	    return this._cache('groupedColumns', function () {
+	      var _groupColumns = function _groupColumns(columns) {
+	        var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	        var parentColumn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+	        var rows = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+	
+	        // track how many rows we got
+	        if (!~rows.indexOf(currentRow)) {
+	          rows.push(currentRow);
+	        }
+	        var grouped = [];
+	        var setRowSpan = function setRowSpan(column) {
+	          var rowSpan = rows.length - currentRow;
+	          if (column && !column.children && // parent columns are supposed to be one row
+	          rowSpan > 1 && (!column.rowSpan || column.rowSpan < rowSpan)) {
+	            column.rowSpan = rowSpan;
+	          }
+	        };
+	        columns.forEach(function (column, index) {
+	          var newColumn = _extends({}, column);
+	          parentColumn.colSpan = parentColumn.colSpan || 0;
+	          if (newColumn.children && newColumn.children.length > 0) {
+	            newColumn.children = _groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
+	            parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
+	          } else {
+	            parentColumn.colSpan++;
+	          }
+	          // update rowspan to all previous columns
+	          for (var i = 0; i < index; ++i) {
+	            setRowSpan(grouped[i]);
+	          }
+	          // last column, update rowspan immediately
+	          if (index + 1 === columns.length) {
+	            setRowSpan(newColumn);
+	          }
+	          grouped.push(newColumn);
+	        });
+	        return grouped;
+	      };
+	      return _groupColumns(_this9.columns);
+	    });
+	  };
+	
+	  ColumnManager.prototype.normalize = function normalize(elements) {
+	    var _this10 = this;
+	
+	    var columns = [];
+	    _react2.default.Children.forEach(elements, function (element) {
+	      if (!_this10.isColumnElement(element)) return;
+	      var column = _extends({}, element.props);
+	      if (element.key) {
+	        column.key = element.key;
+	      }
+	      if (element.type === _ColumnGroup2.default) {
+	        column.children = _this10.normalize(column.children);
+	      }
+	      columns.push(column);
+	    });
+	    return columns;
+	  };
+	
+	  ColumnManager.prototype.isColumnElement = function isColumnElement(element) {
+	    return element && (element.type === _Column2.default || element.type === _ColumnGroup2.default);
+	  };
+	
+	  ColumnManager.prototype.reset = function reset(columns, elements) {
+	    this.columns = columns || this.normalize(elements);
+	    this._cached = {};
+	  };
+	
+	  ColumnManager.prototype._cache = function _cache(name, fn) {
+	    if (name in this._cached) {
+	      return this._cached[name];
+	    }
+	    this._cached[name] = fn();
+	    return this._cached[name];
+	  };
+	
+	  ColumnManager.prototype._leafColumns = function _leafColumns(columns) {
+	    var _this11 = this;
+	
+	    var leafColumns = [];
+	    columns.forEach(function (column) {
+	      if (!column.children) {
+	        leafColumns.push(column);
+	      } else {
+	        leafColumns.push.apply(leafColumns, _toConsumableArray(_this11._leafColumns(column.children)));
+	      }
+	    });
+	    return leafColumns;
+	  };
+	
+	  return ColumnManager;
+	}();
+	
+	exports.default = ColumnManager;
+	module.exports = exports['default'];
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var Column = function (_Component) {
+	  _inherits(Column, _Component);
+	
+	  function Column() {
+	    _classCallCheck(this, Column);
+	
+	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+	  }
+	
+	  return Column;
+	}(_react.Component);
+	
+	Column.propTypes = {
+	  className: _react.PropTypes.string,
+	  colSpan: _react.PropTypes.number,
+	  title: _react.PropTypes.node,
+	  dataIndex: _react.PropTypes.string,
+	  width: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	  fixed: _react.PropTypes.oneOf([true, 'left', 'right']),
+	  render: _react.PropTypes.func,
+	  onCellClick: _react.PropTypes.func
+	};
+	exports.default = Column;
+	module.exports = exports['default'];
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var ColumnGroup = function (_Component) {
+	  _inherits(ColumnGroup, _Component);
+	
+	  function ColumnGroup() {
+	    _classCallCheck(this, ColumnGroup);
+	
+	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+	  }
+	
+	  return ColumnGroup;
+	}(_react.Component);
+	
+	ColumnGroup.propTypes = {
+	  title: _react.PropTypes.node
+	};
+	exports.default = ColumnGroup;
+	module.exports = exports['default'];
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	var _shallowequal = __webpack_require__(192);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
@@ -23472,7 +23746,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 201 */
+/* 204 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23538,7 +23812,7 @@
 	}
 
 /***/ },
-/* 202 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23548,7 +23822,7 @@
 	});
 	exports["default"] = addEventListenerWrap;
 	
-	var _addDomEventListener = __webpack_require__(203);
+	var _addDomEventListener = __webpack_require__(206);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -23568,7 +23842,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 203 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23580,7 +23854,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(204);
+	var _EventObject = __webpack_require__(207);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -23610,7 +23884,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 204 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23627,7 +23901,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(205);
+	var _EventBaseObject = __webpack_require__(208);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -23893,7 +24167,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 205 */
+/* 208 */
 /***/ function(module, exports) {
 
 	/**
@@ -23961,16 +24235,57 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 206 */
+/* 209 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = createStore;
+	function createStore(initialState) {
+	  var state = initialState;
+	  var listeners = [];
+	
+	  function setState(partial) {
+	    state = _extends({}, state, partial);
+	    for (var i = 0; i < listeners.length; i++) {
+	      listeners[i]();
+	    }
+	  }
+	
+	  function getState() {
+	    return state;
+	  }
+	
+	  function subscribe(listener) {
+	    listeners.push(listener);
+	
+	    return function unsubscribe() {
+	      var index = listeners.indexOf(listener);
+	      listeners.splice(index, 1);
+	    };
+	  }
+	
+	  return {
+	    setState: setState,
+	    getState: getState,
+	    subscribe: subscribe
+	  };
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 210 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
 /* 211 */,
 /* 212 */,
 /* 213 */,
@@ -24072,7 +24387,12 @@
 /* 309 */,
 /* 310 */,
 /* 311 */,
-/* 312 */
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**

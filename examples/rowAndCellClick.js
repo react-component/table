@@ -1,14 +1,14 @@
-webpackJsonp([15],{
+webpackJsonp([16],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(305);
+	module.exports = __webpack_require__(310);
 
 
 /***/ },
 
-/***/ 305:
+/***/ 310:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,10 +17,10 @@ webpackJsonp([15],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
-	__webpack_require__(206);
+	__webpack_require__(210);
 	
 	var onRowClick = function onRowClick(record, index, event) {
-	  console.log('Click nth(' + index + ') element of parent, record.name: ' + record.name);
+	  console.log('Click nth(' + index + ') row of parent, record.name: ' + record.name);
 	  // See https://facebook.github.io/react/docs/events.html for original click event details.
 	  if (event.shiftKey) {
 	    console.log('Shift + mouse click triggered.');
@@ -28,13 +28,7 @@ webpackJsonp([15],{
 	};
 	
 	var onRowDoubleClick = function onRowDoubleClick(record, index) {
-	  console.log('Double click nth(' + index + ') element of parent, record.name: ' + record.name);
-	};
-	
-	var onOperationClick = function onOperationClick(text, record, event) {
-	  event.preventDefault();
-	  event.stopPropagation();
-	  console.log('Click Cell ' + text + ', record.name is ' + record.name);
+	  console.log('Double click nth(' + index + ') row of parent, record.name: ' + record.name);
 	};
 	
 	var columns = [{
@@ -47,16 +41,16 @@ webpackJsonp([15],{
 	  dataIndex: 'age',
 	  key: 'age',
 	  width: 100,
-	  render: function render(text, record) {
+	  render: function render(text) {
 	    return React.createElement(
-	      'a',
-	      { href: '#', onClick: function onClick(e) {
-	          return onOperationClick(text, record, e);
-	        } },
-	      'Alert: ',
+	      'span',
+	      null,
 	      text,
-	      ', click will pop to row click'
+	      ' (Trigger Cell Click)'
 	    );
+	  },
+	  onCellClick: function onCellClick(record, e) {
+	    console.log('Click cell', record, e.target);
 	  }
 	}, {
 	  title: 'Address',
@@ -126,4 +120,4 @@ webpackJsonp([15],{
 /***/ }
 
 });
-//# sourceMappingURL=rowClick.js.map
+//# sourceMappingURL=rowAndCellClick.js.map

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>scrollXY.js - example - rc-table@5.2.0</title>
+  <title>rowAndCellClick.js - example - rc-table@5.2.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -275,45 +275,101 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
 <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
 
-<span class="hljs-keyword">const</span> columns = [
-  { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title4'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title5'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title6'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'f'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title7'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'g'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title8'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'h'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span>, width: <span class="hljs-number">100</span> },
-  { title: <span class="hljs-string">'title12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span>, width: <span class="hljs-number">100</span> },
-];
+<span class="hljs-keyword">const</span> onRowClick = (record, index, event) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Click nth(<span class="hljs-subst">${index}</span>) row of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
+  <span class="hljs-comment">// See https://facebook.github.io/react/docs/events.html for original click event details.</span>
+  <span class="hljs-keyword">if</span> (event.shiftKey) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Shift + mouse click triggered.'</span>);
+  }
+};
 
-<span class="hljs-keyword">const</span> data = [
-  { a: <span class="hljs-string">'123'</span>, b: <span class="hljs-string">'xxxxxxxx xxxxxxxx'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'1'</span> },
-  { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'2'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'4'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'5'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'6'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'7'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'8'</span> },
-  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221 edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'9'</span> },
-];
+<span class="hljs-keyword">const</span> onRowDoubleClick = (record, index) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Double click nth(<span class="hljs-subst">${index}</span>) row of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
+};
+
+<span class="hljs-keyword">const</span> columns = [{
+  title: <span class="hljs-string">'Name'</span>,
+  dataIndex: <span class="hljs-string">'name'</span>,
+  key: <span class="hljs-string">'name'</span>,
+  width: <span class="hljs-number">400</span>,
+}, {
+  title: <span class="hljs-string">'Age'</span>,
+  dataIndex: <span class="hljs-string">'age'</span>,
+  key: <span class="hljs-string">'age'</span>,
+  width: <span class="hljs-number">100</span>,
+  render: (text) =&gt; (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  )</span>,
+  onCellClick: (record, e) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Click cell'</span>, record, e.target);
+  },
+}, {
+  title: <span class="hljs-string">'Address'</span>,
+  dataIndex: <span class="hljs-string">'address'</span>,
+  key: <span class="hljs-string">'address'</span>,
+  width: <span class="hljs-number">200</span>,
+}];
+
+<span class="hljs-keyword">const</span> data = [{
+  key: <span class="hljs-number">1</span>,
+  name: <span class="hljs-string">'a'</span>,
+  age: <span class="hljs-number">32</span>,
+  address: <span class="hljs-string">'I am a'</span>,
+  children: [{
+    key: <span class="hljs-number">11</span>,
+    name: <span class="hljs-string">'aa'</span>,
+    age: <span class="hljs-number">33</span>,
+    address: <span class="hljs-string">'I am aa'</span>,
+  }, {
+    key: <span class="hljs-number">12</span>,
+    name: <span class="hljs-string">'ab'</span>,
+    age: <span class="hljs-number">33</span>,
+    address: <span class="hljs-string">'I am ab'</span>,
+    children: [{
+      key: <span class="hljs-number">121</span>,
+      name: <span class="hljs-string">'aba'</span>,
+      age: <span class="hljs-number">33</span>,
+      address: <span class="hljs-string">'I am aba'</span>,
+    }],
+  }, {
+    key: <span class="hljs-number">13</span>,
+    name: <span class="hljs-string">'ac'</span>,
+    age: <span class="hljs-number">33</span>,
+    address: <span class="hljs-string">'I am ac'</span>,
+    children: [{
+      key: <span class="hljs-number">131</span>,
+      name: <span class="hljs-string">'aca'</span>,
+      age: <span class="hljs-number">33</span>,
+      address: <span class="hljs-string">'I am aca'</span>,
+      children: [{
+        key: <span class="hljs-number">1311</span>,
+        name: <span class="hljs-string">'acaa'</span>,
+        age: <span class="hljs-number">33</span>,
+        address: <span class="hljs-string">'I am acaa'</span>,
+      }, {
+        key: <span class="hljs-number">1312</span>,
+        name: <span class="hljs-string">'acab'</span>,
+        age: <span class="hljs-number">33</span>,
+        address: <span class="hljs-string">'I am acab'</span>,
+      }],
+    }],
+  }],
+}, {
+  key: <span class="hljs-number">2</span>,
+  name: <span class="hljs-string">'b'</span>,
+  age: <span class="hljs-number">32</span>,
+  address: <span class="hljs-string">'I am b'</span>,
+}];
 
 ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Scroll X/Y<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-      <span class="hljs-attribute">useFixedHeader</span>
-      <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">width:</span> <span class="hljs-attribute">800</span> }}
-      <span class="hljs-attribute">scroll</span>=<span class="hljs-value">{{</span> <span class="hljs-attribute">x:</span> <span class="hljs-attribute">true</span>, <span class="hljs-attribute">y:</span> <span class="hljs-attribute">300</span> }}
-      <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-      <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-    /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-, document.getElementById('__react-content'));
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
+    <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
+    <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
+    <span class="hljs-attribute">onRowClick</span>=<span class="hljs-value">{onRowClick}</span>
+    <span class="hljs-attribute">onRowDoubleClick</span>=<span class="hljs-value">{onRowDoubleClick}</span>
+  /&gt;</span>,
+  document.getElementById('__react-content')
+);
 </span></code></pre></div>
   </div>
   <a href="http://github.com/react-component/table">
@@ -324,7 +380,7 @@ ReactDOM.render(
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="common.js?nowrap"></script>
-  <script src="scrollXY.js?nowrap"></script>
+  <script src="rowAndCellClick.js?nowrap"></script>
 </body>
 
 </html>
