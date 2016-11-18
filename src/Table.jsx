@@ -199,7 +199,7 @@ const Table = React.createClass({
       });
     }
 
-    const trStyle = this.getHeaderRowStyle(columns, rows);
+    const trStyle = fixed ? this.getHeaderRowStyle(columns, rows) : null;
 
     return showHeader ? (
       <TableHeader
