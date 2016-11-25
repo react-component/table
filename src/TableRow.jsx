@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
-import shallowequal from 'shallowequal';
 import TableCell from './TableCell';
 import ExpandIcon from './ExpandIcon';
-import ColumnManager from './ColumnManager';
 
 const TableRow = React.createClass({
   propTypes: {
@@ -59,12 +57,6 @@ const TableRow = React.createClass({
         this.setState({ hovered: false });
       }
     });
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (!shallowequal(nextProps, this.props) ||
-            ColumnManager.includesCustomRender(nextProps.columns)) ||
-            !shallowequal(nextState, this.state);
   },
 
   componentWillUnmount() {

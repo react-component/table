@@ -9,10 +9,6 @@ export default class ColumnManager {
     this.columns = columns || this.normalize(elements);
   }
 
-  static includesCustomRender(columns) {
-    return columns.some(column => !!column.render);
-  }
-
   isAnyColumnsFixed() {
     return this._cache('isAnyColumnsFixed', () => {
       return this.columns.some(column => !!column.fixed);
