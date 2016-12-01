@@ -122,4 +122,51 @@ describe('Table with grouping columns', () => {
     expect(titleA.attr('rowspan')).to.be('2');
     expect(titleE.attr('rowspan')).to.be('2');
   });
+
+  it('https://github.com/ant-design/ant-design/issues/4061', () => {
+    /**
+     * +-------+
+     * | A | C |
+     * +-------+
+     * |   | D |
+     * | B +---+
+     * |   | E |
+     * +---+---+
+     */
+    const columns = [
+      {
+        title: 'A',
+        children: [
+          {
+            title: 'B',
+            dataIndex: 'b',
+            key: 'b',
+            className: 'title-b',
+          },
+        ],
+      },
+      {
+        title: 'C',
+        children: [
+          {
+            title: 'D',
+            children: [
+              {
+                title: 'E',
+                dataIndex: 'e',
+                key: 'e',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    ReactDOM.render(
+      <Table columns={columns} data={[]} />,
+      div
+    );
+    const titleB = node.find('.title-b');
+    expect(titleB.attr('rowspan')).to.be('2');
+  });
 });
