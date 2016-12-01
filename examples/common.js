@@ -24043,9 +24043,7 @@
 	        var rows = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
 	
 	        // track how many rows we got
-	        if (!~rows.indexOf(currentRow)) {
-	          rows.push(currentRow);
-	        }
+	        rows[currentRow] = rows[currentRow] || [];
 	        var grouped = [];
 	        var setRowSpan = function setRowSpan(column) {
 	          var rowSpan = rows.length - currentRow;
@@ -24056,6 +24054,7 @@
 	        };
 	        columns.forEach(function (column, index) {
 	          var newColumn = _extends({}, column);
+	          rows[currentRow].push(newColumn);
 	          parentColumn.colSpan = parentColumn.colSpan || 0;
 	          if (newColumn.children && newColumn.children.length > 0) {
 	            newColumn.children = _groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
@@ -24063,9 +24062,9 @@
 	          } else {
 	            parentColumn.colSpan++;
 	          }
-	          // update rowspan to all previous columns
-	          for (var i = 0; i < index; ++i) {
-	            setRowSpan(grouped[i]);
+	          // update rowspan to all same row columns
+	          for (var i = 0; i < rows[currentRow].length - 1; ++i) {
+	            setRowSpan(rows[currentRow][i]);
 	          }
 	          // last column, update rowspan immediately
 	          if (index + 1 === columns.length) {
