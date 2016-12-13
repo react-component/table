@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce } from './utils';
+import { measureScrollbar, debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -77,7 +77,7 @@ const Table = React.createClass({
     if (props.defaultExpandAllRows) {
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
-        expandedRowKeys.push(this.getRowKey(row));
+        expandedRowKeys.push(this.getRowKey(row, i));
         rows = rows.concat(row[props.childrenColumnName] || []);
       }
     } else {
@@ -141,25 +141,25 @@ const Table = React.createClass({
     this.props.onExpandedRowsChange(expandedRowKeys);
   },
 
-  onExpanded(expanded, record, e) {
+  onExpanded(expanded, record, e, index) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     const info = this.findExpandedRow(record);
     if (typeof info !== 'undefined' && !expanded) {
-      this.onRowDestroy(record);
+      this.onRowDestroy(record, index);
     } else if (!info && expanded) {
       const expandedRows = this.getExpandedRows().concat();
-      expandedRows.push(this.getRowKey(record));
+      expandedRows.push(this.getRowKey(record, index));
       this.onExpandedRowsChange(expandedRows);
     }
     this.props.onExpand(expanded, record);
   },
 
-  onRowDestroy(record) {
+  onRowDestroy(record, rowIndex) {
     const expandedRows = this.getExpandedRows().concat();
-    const rowKey = this.getRowKey(record);
+    const rowKey = this.getRowKey(record, rowIndex);
     let index = -1;
     expandedRows.forEach((r, i) => {
       if (r === rowKey) {
@@ -174,10 +174,14 @@ const Table = React.createClass({
 
   getRowKey(record, index) {
     const rowKey = this.props.rowKey;
-    if (typeof rowKey === 'function') {
-      return rowKey(record, index);
-    }
-    return typeof record[rowKey] !== 'undefined' ? record[rowKey] : index;
+    const key = (typeof rowKey === 'function') ?
+      rowKey(record, index) : record[rowKey];
+    warningOnce(
+      key !== undefined,
+      'Each record in table should have a unique `key` prop,' +
+      'or set `rowKey` to an unique primary key.'
+    );
+    return key;
   },
 
   getExpandedRows() {
@@ -299,7 +303,7 @@ const Table = React.createClass({
       const record = data[i];
       const key = this.getRowKey(record, i);
       const childrenColumn = record[childrenColumnName];
-      const isRowExpanded = this.isRowExpanded(record);
+      const isRowExpanded = this.isRowExpanded(record, i);
       let expandedRowContent;
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
@@ -598,13 +602,13 @@ const Table = React.createClass({
     }
   },
 
-  findExpandedRow(record) {
-    const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record));
+  findExpandedRow(record, index) {
+    const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
     return rows[0];
   },
 
-  isRowExpanded(record) {
-    return typeof this.findExpandedRow(record) !== 'undefined';
+  isRowExpanded(record, index) {
+    return typeof this.findExpandedRow(record, index) !== 'undefined';
   },
 
   detectScrollTarget(e) {

@@ -56,7 +56,8 @@
   "dependencies": {
     "object-path": "^0.11.1",
     "rc-util": "3.x",
-    "shallowequal": "^0.2.2"
+    "shallowequal": "^0.2.2",
+    "warning": "^3.0.0"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",

@@ -109,11 +109,11 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>rowKey</td>
-      <td>string or Function(record, index):string</td>
+      <td>string or Function(record):string</td>
       <td>'key'</td>
       <td>
         If rowKey is string, `record[rowKey]` will be used as key.
-        If rowKey is function, the return value of `rowKey(record, index)` will be use as key.
+        If rowKey is function, the return value of `rowKey(record)` will be use as key.
       </td>
     </tr>
     <tr>
