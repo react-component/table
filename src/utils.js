@@ -1,3 +1,5 @@
+import warning from 'warning';
+
 let scrollbarWidth;
 
 // Measure scrollbar width for padding body during modal show/hide
@@ -51,4 +53,12 @@ export function debounce(func, wait, immediate) {
       func.apply(context, args);
     }
   };
+}
+
+const warned = {};
+export function warningOnce(condition, format, args) {
+  if (!warned[format]) {
+    warning(condition, format, args);
+    warned[format] = true;
+  }
 }

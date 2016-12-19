@@ -60,7 +60,8 @@ const TableRow = React.createClass({
   },
 
   componentWillUnmount() {
-    this.props.onDestroy(this.props.record);
+    const { record, onDestroy, index } = this.props;
+    onDestroy(record, index);
     if (this.unsubscribe) {
       this.unsubscribe();
     }
@@ -77,7 +78,7 @@ const TableRow = React.createClass({
       onExpand,
     } = this.props;
     if (expandable && expandRowByClick) {
-      onExpand(!expanded, record);
+      onExpand(!expanded, record, index);
     }
     onRowClick(record, index, event);
   },
