@@ -226,6 +226,14 @@ React.render(<Table columns={columns} data={data} />, mountNode);
         The columns config of table, see table below
       </td>
     </tr>
+    <tr>
+      <td>columnExtraInfo</td>
+      <td>any</td>
+      <td></td>
+      <td>
+        With this prop, Column render will accept the forth argument, columnExtraInfo.
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -285,7 +293,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>render</td>
-      <td>Function(value, row, index)</td>
+      <td>Function(value, row, index, columnExtraInfo)</td>
       <td></td>
       <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
     </tr>

@@ -12,6 +12,7 @@ const TableRow = React.createClass({
     expandIconColumnIndex: PropTypes.number,
     onHover: PropTypes.func,
     columns: PropTypes.array,
+    columnExtraInfo: PropTypes.any,
     height: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
@@ -100,7 +101,7 @@ const TableRow = React.createClass({
 
   render() {
     const {
-      prefixCls, columns, record, height, visible, index,
+      prefixCls, columns, columnExtraInfo, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, indent, indentSize,
     } = this.props;
@@ -145,6 +146,7 @@ const TableRow = React.createClass({
           indent={indent}
           index={index}
           column={columns[i]}
+          columnExtraInfo={columnExtraInfo}
           key={columns[i].key}
           expandIcon={isColumnHaveExpandIcon ? expandIcon : null}
         />

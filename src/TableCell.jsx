@@ -9,6 +9,7 @@ const TableCell = React.createClass({
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     column: PropTypes.object,
+    columnExtraInfo: PropTypes.any,
     expandIcon: PropTypes.node,
   },
   isInvalidRenderCellText(text) {
@@ -23,7 +24,7 @@ const TableCell = React.createClass({
   },
   render() {
     const { record, indentSize, prefixCls, indent,
-            index, expandIcon, column } = this.props;
+            index, expandIcon, column, columnExtraInfo } = this.props;
     const { dataIndex, render, className = '' } = column;
 
     let text = objectPath.get(record, dataIndex);
@@ -32,7 +33,7 @@ const TableCell = React.createClass({
     let rowSpan;
 
     if (render) {
-      text = render(text, record, index);
+      text = render(text, record, index, columnExtraInfo);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
         rowSpan = tdProps.rowSpan;
