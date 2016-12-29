@@ -21289,7 +21289,7 @@
 	    var rowKey = this.props.rowKey;
 	    var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
 	    (0, _utils.warningOnce)(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
-	    return key || index;
+	    return key === undefined ? index : key;
 	  },
 	  getExpandedRows: function getExpandedRows() {
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
