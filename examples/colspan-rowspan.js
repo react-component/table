@@ -3,12 +3,12 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(214);
+	module.exports = __webpack_require__(215);
 
 
 /***/ },
 
-/***/ 214:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([3],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
-	__webpack_require__(210);
+	__webpack_require__(211);
 	
 	var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function render(o, row, index) {
 	    var obj = {

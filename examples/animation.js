@@ -34,8 +34,8 @@ webpackJsonp([0],{
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
 	
-	__webpack_require__(210);
 	__webpack_require__(211);
+	__webpack_require__(212);
 	
 	var Demo = function (_React$Component) {
 	  _inherits(Demo, _React$Component);
@@ -1235,8 +1235,8 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 211:
-210
+/***/ 212:
+211
 
 });
 //# sourceMappingURL=animation.js.map

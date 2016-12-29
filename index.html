@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-table@5.2.2 - table ui component for react</title>
+  <title>rc-table@5.2.3 - table ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-table@5.2.2</h1>
+  <h1>rc-table@5.2.3</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -870,11 +870,11 @@ React.render(<span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <s
     </tr>
     <tr>
       <td>rowKey</td>
-      <td>string or Function(record, index):string</td>
+      <td>string or Function(record):string</td>
       <td>&#39;key&#39;</td>
       <td>
         If rowKey is string, <code>record[rowKey]</code> will be used as key.
-        If rowKey is function, the return value of <code>rowKey(record, index)</code> will be use as key.
+        If rowKey is function, the return value of <code>rowKey(record)</code> will be use as key.
       </td>
     </tr>
     <tr>

@@ -714,7 +714,7 @@
 
 /***/ },
 /* 9 */
-[317, 10],
+[318, 10],
 /* 10 */
 /***/ function(module, exports) {
 
@@ -6373,7 +6373,7 @@
 
 /***/ },
 /* 55 */
-[317, 40],
+[318, 40],
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21064,8 +21064,8 @@
 	'use strict';
 	
 	var Table = __webpack_require__(190);
-	var Column = __webpack_require__(207);
-	var ColumnGroup = __webpack_require__(208);
+	var Column = __webpack_require__(208);
+	var ColumnGroup = __webpack_require__(209);
 	
 	Table.Column = Column;
 	Table.ColumnGroup = ColumnGroup;
@@ -21102,15 +21102,15 @@
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
-	var _addEventListener = __webpack_require__(202);
+	var _addEventListener = __webpack_require__(203);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _ColumnManager = __webpack_require__(206);
+	var _ColumnManager = __webpack_require__(207);
 	
 	var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
 	
-	var _createStore = __webpack_require__(209);
+	var _createStore = __webpack_require__(210);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
@@ -21200,7 +21200,7 @@
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
-	        expandedRowKeys.push(this.getRowKey(row));
+	        expandedRowKeys.push(this.getRowKey(row, i));
 	        rows = rows.concat(row[props.childrenColumnName] || []);
 	      }
 	    } else {
@@ -21256,24 +21256,24 @@
 	    }
 	    this.props.onExpandedRowsChange(expandedRowKeys);
 	  },
-	  onExpanded: function onExpanded(expanded, record, e) {
+	  onExpanded: function onExpanded(expanded, record, e, index) {
 	    if (e) {
 	      e.preventDefault();
 	      e.stopPropagation();
 	    }
 	    var info = this.findExpandedRow(record);
 	    if (typeof info !== 'undefined' && !expanded) {
-	      this.onRowDestroy(record);
+	      this.onRowDestroy(record, index);
 	    } else if (!info && expanded) {
 	      var expandedRows = this.getExpandedRows().concat();
-	      expandedRows.push(this.getRowKey(record));
+	      expandedRows.push(this.getRowKey(record, index));
 	      this.onExpandedRowsChange(expandedRows);
 	    }
 	    this.props.onExpand(expanded, record);
 	  },
-	  onRowDestroy: function onRowDestroy(record) {
+	  onRowDestroy: function onRowDestroy(record, rowIndex) {
 	    var expandedRows = this.getExpandedRows().concat();
-	    var rowKey = this.getRowKey(record);
+	    var rowKey = this.getRowKey(record, rowIndex);
 	    var index = -1;
 	    expandedRows.forEach(function (r, i) {
 	      if (r === rowKey) {
@@ -21287,10 +21287,9 @@
 	  },
 	  getRowKey: function getRowKey(record, index) {
 	    var rowKey = this.props.rowKey;
-	    if (typeof rowKey === 'function') {
-	      return rowKey(record, index);
-	    }
-	    return typeof record[rowKey] !== 'undefined' ? record[rowKey] : index;
+	    var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
+	    (0, _utils.warningOnce)(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
+	    return key || index;
 	  },
 	  getExpandedRows: function getExpandedRows() {
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
@@ -21424,7 +21423,7 @@
 	      var record = data[i];
 	      var key = this.getRowKey(record, i);
 	      var childrenColumn = record[childrenColumnName];
-	      var isRowExpanded = this.isRowExpanded(record);
+	      var isRowExpanded = this.isRowExpanded(record, i);
 	      var expandedRowContent = void 0;
 	      if (expandedRowRender && isRowExpanded) {
 	        expandedRowContent = expandedRowRender(record, i, indent);
@@ -21733,16 +21732,16 @@
 	      this.refs.bodyTable.scrollLeft = 0;
 	    }
 	  },
-	  findExpandedRow: function findExpandedRow(record) {
+	  findExpandedRow: function findExpandedRow(record, index) {
 	    var _this3 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this3.getRowKey(record);
+	      return i === _this3.getRowKey(record, index);
 	    });
 	    return rows[0];
 	  },
-	  isRowExpanded: function isRowExpanded(record) {
-	    return typeof this.findExpandedRow(record) !== 'undefined';
+	  isRowExpanded: function isRowExpanded(record, index) {
+	    return typeof this.findExpandedRow(record, index) !== 'undefined';
 	  },
 	  detectScrollTarget: function detectScrollTarget(e) {
 	    if (this.scrollTarget !== e.currentTarget) {
@@ -21927,65 +21926,70 @@
 	    });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    this.props.onDestroy(this.props.record);
+	    var _props2 = this.props,
+	        record = _props2.record,
+	        onDestroy = _props2.onDestroy,
+	        index = _props2.index;
+	
+	    onDestroy(record, index);
 	    if (this.unsubscribe) {
 	      this.unsubscribe();
 	    }
 	  },
 	  onRowClick: function onRowClick(event) {
-	    var _props2 = this.props,
-	        record = _props2.record,
-	        index = _props2.index,
-	        onRowClick = _props2.onRowClick,
-	        expandable = _props2.expandable,
-	        expandRowByClick = _props2.expandRowByClick,
-	        expanded = _props2.expanded,
-	        onExpand = _props2.onExpand;
+	    var _props3 = this.props,
+	        record = _props3.record,
+	        index = _props3.index,
+	        onRowClick = _props3.onRowClick,
+	        expandable = _props3.expandable,
+	        expandRowByClick = _props3.expandRowByClick,
+	        expanded = _props3.expanded,
+	        onExpand = _props3.onExpand;
 	
 	    if (expandable && expandRowByClick) {
-	      onExpand(!expanded, record);
+	      onExpand(!expanded, record, index);
 	    }
 	    onRowClick(record, index, event);
 	  },
 	  onRowDoubleClick: function onRowDoubleClick(event) {
-	    var _props3 = this.props,
-	        record = _props3.record,
-	        index = _props3.index,
-	        onRowDoubleClick = _props3.onRowDoubleClick;
+	    var _props4 = this.props,
+	        record = _props4.record,
+	        index = _props4.index,
+	        onRowDoubleClick = _props4.onRowDoubleClick;
 	
 	    onRowDoubleClick(record, index, event);
 	  },
 	  onMouseEnter: function onMouseEnter() {
-	    var _props4 = this.props,
-	        onHover = _props4.onHover,
-	        hoverKey = _props4.hoverKey;
-	
-	    onHover(true, hoverKey);
-	  },
-	  onMouseLeave: function onMouseLeave() {
 	    var _props5 = this.props,
 	        onHover = _props5.onHover,
 	        hoverKey = _props5.hoverKey;
 	
+	    onHover(true, hoverKey);
+	  },
+	  onMouseLeave: function onMouseLeave() {
+	    var _props6 = this.props,
+	        onHover = _props6.onHover,
+	        hoverKey = _props6.hoverKey;
+	
 	    onHover(false, hoverKey);
 	  },
 	  render: function render() {
-	    var _props6 = this.props,
-	        prefixCls = _props6.prefixCls,
-	        columns = _props6.columns,
-	        record = _props6.record,
-	        height = _props6.height,
-	        visible = _props6.visible,
-	        index = _props6.index,
-	        expandIconColumnIndex = _props6.expandIconColumnIndex,
-	        expandIconAsCell = _props6.expandIconAsCell,
-	        expanded = _props6.expanded,
-	        expandRowByClick = _props6.expandRowByClick,
-	        expandable = _props6.expandable,
-	        onExpand = _props6.onExpand,
-	        needIndentSpaced = _props6.needIndentSpaced,
-	        indent = _props6.indent,
-	        indentSize = _props6.indentSize;
+	    var _props7 = this.props,
+	        prefixCls = _props7.prefixCls,
+	        columns = _props7.columns,
+	        record = _props7.record,
+	        height = _props7.height,
+	        visible = _props7.visible,
+	        index = _props7.index,
+	        expandIconColumnIndex = _props7.expandIconColumnIndex,
+	        expandIconAsCell = _props7.expandIconAsCell,
+	        expanded = _props7.expanded,
+	        expandRowByClick = _props7.expandRowByClick,
+	        expandable = _props7.expandable,
+	        onExpand = _props7.onExpand,
+	        needIndentSpaced = _props7.needIndentSpaced,
+	        indent = _props7.indent,
+	        indentSize = _props7.indentSize;
 	    var className = this.props.className;
 	
 	
@@ -23430,7 +23434,7 @@
 
 /***/ },
 /* 201 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -23439,6 +23443,14 @@
 	});
 	exports.measureScrollbar = measureScrollbar;
 	exports.debounce = debounce;
+	exports.warningOnce = warningOnce;
+	
+	var _warning = __webpack_require__(202);
+	
+	var _warning2 = _interopRequireDefault(_warning);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var scrollbarWidth = void 0;
 	
 	// Measure scrollbar width for padding body during modal show/hide
@@ -23493,9 +23505,84 @@
 	    }
 	  };
 	}
+	
+	var warned = {};
+	function warningOnce(condition, format, args) {
+	  if (!warned[format]) {
+	    (0, _warning2.default)(condition, format, args);
+	    warned[format] = true;
+	  }
+	}
 
 /***/ },
 /* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+	
+	var warning = function() {};
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  warning = function(condition, format, args) {
+	    var len = arguments.length;
+	    args = new Array(len > 2 ? len - 2 : 0);
+	    for (var key = 2; key < len; key++) {
+	      args[key - 2] = arguments[key];
+	    }
+	    if (format === undefined) {
+	      throw new Error(
+	        '`warning(condition, format, ...args)` requires a warning ' +
+	        'message argument'
+	      );
+	    }
+	
+	    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
+	      throw new Error(
+	        'The warning format should be able to uniquely identify this ' +
+	        'warning. Please, use a more descriptive format than: ' + format
+	      );
+	    }
+	
+	    if (!condition) {
+	      var argIndex = 0;
+	      var message = 'Warning: ' +
+	        format.replace(/%s/g, function() {
+	          return args[argIndex++];
+	        });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch(x) {}
+	    }
+	  };
+	}
+	
+	module.exports = warning;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23505,7 +23592,7 @@
 	});
 	exports["default"] = addEventListenerWrap;
 	
-	var _addDomEventListener = __webpack_require__(203);
+	var _addDomEventListener = __webpack_require__(204);
 	
 	var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 	
@@ -23525,7 +23612,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23537,7 +23624,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventObject = __webpack_require__(204);
+	var _EventObject = __webpack_require__(205);
 	
 	var _EventObject2 = _interopRequireDefault(_EventObject);
 	
@@ -23567,7 +23654,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23584,7 +23671,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _EventBaseObject = __webpack_require__(205);
+	var _EventBaseObject = __webpack_require__(206);
 	
 	var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 	
@@ -23850,7 +23937,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports) {
 
 	/**
@@ -23918,7 +24005,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23933,11 +24020,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Column = __webpack_require__(207);
+	var _Column = __webpack_require__(208);
 	
 	var _Column2 = _interopRequireDefault(_Column);
 	
-	var _ColumnGroup = __webpack_require__(208);
+	var _ColumnGroup = __webpack_require__(209);
 	
 	var _ColumnGroup2 = _interopRequireDefault(_ColumnGroup);
 	
@@ -24134,7 +24221,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24179,7 +24266,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24217,7 +24304,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24262,13 +24349,12 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 211 */,
 /* 212 */,
 /* 213 */,
 /* 214 */,
@@ -24374,7 +24460,8 @@
 /* 314 */,
 /* 315 */,
 /* 316 */,
-/* 317 */
+/* 317 */,
+/* 318 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**

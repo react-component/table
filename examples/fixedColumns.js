@@ -3,12 +3,12 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(299);
+	module.exports = __webpack_require__(300);
 
 
 /***/ },
 
-/***/ 299:
+/***/ 300:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([6],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
-	__webpack_require__(210);
+	__webpack_require__(211);
 	
 	var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' }, { title: 'title3', dataIndex: 'c', key: 'c' }, { title: 'title4', dataIndex: 'b', key: 'd' }, { title: 'title5', dataIndex: 'b', key: 'e' }, { title: 'title6', dataIndex: 'b', key: 'f' }, { title: React.createElement(
 	    'div',

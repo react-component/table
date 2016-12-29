@@ -3,12 +3,12 @@ webpackJsonp([16],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(310);
+	module.exports = __webpack_require__(311);
 
 
 /***/ },
 
-/***/ 310:
+/***/ 311:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17,7 +17,7 @@ webpackJsonp([16],{
 	var React = __webpack_require__(4);
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
-	__webpack_require__(210);
+	__webpack_require__(211);
 	
 	var onRowClick = function onRowClick(record, index, event) {
 	  console.log('Click nth(' + index + ') row of parent, record.name: ' + record.name);
