@@ -181,7 +181,7 @@ const Table = React.createClass({
       'Each record in table should have a unique `key` prop,' +
       'or set `rowKey` to an unique primary key.'
     );
-    return key;
+    return key || index;
   },
 
   getExpandedRows() {
