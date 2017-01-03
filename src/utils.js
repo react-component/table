@@ -33,7 +33,7 @@ export function measureScrollbar() {
 
 export function debounce(func, wait, immediate) {
   let timeout;
-  return function debounceFunc() {
+  function debounceFunc() {
     const context = this;
     const args = arguments;
     // https://fb.me/react-event-pooling
@@ -52,7 +52,14 @@ export function debounce(func, wait, immediate) {
     if (callNow) {
       func.apply(context, args);
     }
+  }
+  debounceFunc.clear = function () {
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
   };
+  return debounceFunc;
 }
 
 const warned = {};

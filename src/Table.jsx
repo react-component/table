@@ -97,8 +97,9 @@ const Table = React.createClass({
     this.resetScrollY();
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
+      this.debouncedSyncFixedTableRowHeight = debounce(this.syncFixedTableRowHeight, 150);
       this.resizeEvent = addEventListener(
-        window, 'resize', debounce(this.syncFixedTableRowHeight, 150)
+        window, 'resize', this.debouncedSyncFixedTableRowHeight
       );
     }
   },
@@ -131,6 +132,9 @@ const Table = React.createClass({
   componentWillUnmount() {
     if (this.resizeEvent) {
       this.resizeEvent.remove();
+    }
+    if (this.debouncedSyncFixedTableRowHeight) {
+      this.debouncedSyncFixedTableRowHeight.cancel();
     }
   },
 
