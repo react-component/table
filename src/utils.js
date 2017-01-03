@@ -53,7 +53,7 @@ export function debounce(func, wait, immediate) {
       func.apply(context, args);
     }
   }
-  debounceFunc.clear = function () {
+  debounceFunc.cancel = function () {
     if (timeout) {
       clearTimeout(timeout);
       timeout = null;
