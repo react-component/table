@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import objectPath from 'object-path';
+import get from 'lodash.get';
 
 const TableCell = React.createClass({
   propTypes: {
@@ -26,7 +26,7 @@ const TableCell = React.createClass({
             index, expandIcon, column } = this.props;
     const { dataIndex, render, className = '' } = column;
 
-    let text = objectPath.get(record, dataIndex);
+    let text = get(record, dataIndex);
     let tdProps;
     let colSpan;
     let rowSpan;
