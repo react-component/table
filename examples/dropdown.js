@@ -1335,8 +1335,8 @@ webpackJsonp([4],[
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
 	__webpack_require__(211);
-	__webpack_require__(297);
-	__webpack_require__(298);
+	__webpack_require__(300);
+	__webpack_require__(301);
 	
 	
 	var data = [];
@@ -4417,7 +4417,7 @@ webpackJsonp([4],[
 	
 	var _rcTrigger2 = _interopRequireDefault(_rcTrigger);
 	
-	var _placements = __webpack_require__(296);
+	var _placements = __webpack_require__(299);
 	
 	var _placements2 = _interopRequireDefault(_placements);
 	
@@ -4607,21 +4607,21 @@ webpackJsonp([4],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _contains = __webpack_require__(232);
+	var _contains = __webpack_require__(278);
 	
 	var _contains2 = _interopRequireDefault(_contains);
 	
-	var _addEventListener = __webpack_require__(203);
+	var _addEventListener = __webpack_require__(279);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _Popup = __webpack_require__(278);
+	var _Popup = __webpack_require__(280);
 	
 	var _Popup2 = _interopRequireDefault(_Popup);
 	
-	var _utils = __webpack_require__(294);
+	var _utils = __webpack_require__(297);
 	
-	var _getContainerRenderMixin = __webpack_require__(295);
+	var _getContainerRenderMixin = __webpack_require__(298);
 	
 	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
 	
@@ -4681,41 +4681,6 @@ webpackJsonp([4],[
 	      var mountNode = instance.props.getPopupContainer ? instance.props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : document.body;
 	      mountNode.appendChild(popupContainer);
 	      return popupContainer;
-	    },
-	    getComponent: function getComponent(instance) {
-	      var props = instance.props;
-	      var state = instance.state;
-	
-	      var mouseProps = {};
-	      if (instance.isMouseEnterToShow()) {
-	        mouseProps.onMouseEnter = instance.onPopupMouseEnter;
-	      }
-	      if (instance.isMouseLeaveToHide()) {
-	        mouseProps.onMouseLeave = instance.onPopupMouseLeave;
-	      }
-	      return _react2["default"].createElement(
-	        _Popup2["default"],
-	        (0, _extends3["default"])({
-	          prefixCls: props.prefixCls,
-	          destroyPopupOnHide: props.destroyPopupOnHide,
-	          visible: state.popupVisible,
-	          className: props.popupClassName,
-	          action: props.action,
-	          align: instance.getPopupAlign(),
-	          onAlign: props.onPopupAlign,
-	          animation: props.popupAnimation,
-	          getClassNameFromAlign: instance.getPopupClassNameFromAlign
-	        }, mouseProps, {
-	          getRootDomNode: instance.getRootDomNode,
-	          style: props.popupStyle,
-	          mask: props.mask,
-	          zIndex: props.zIndex,
-	          transitionName: props.popupTransitionName,
-	          maskAnimation: props.maskAnimation,
-	          maskTransitionName: props.maskTransitionName
-	        }),
-	        typeof props.popup === 'function' ? props.popup() : props.popup
-	      );
 	    }
 	  })],
 	
@@ -4902,9 +4867,9 @@ webpackJsonp([4],[
 	  getPopupClassNameFromAlign: function getPopupClassNameFromAlign(align) {
 	    var className = [];
 	    var props = this.props;
-	    var popupPlacement = props.popupPlacement;
-	    var builtinPlacements = props.builtinPlacements;
-	    var prefixCls = props.prefixCls;
+	    var popupPlacement = props.popupPlacement,
+	        builtinPlacements = props.builtinPlacements,
+	        prefixCls = props.prefixCls;
 	
 	    if (popupPlacement && builtinPlacements) {
 	      className.push((0, _utils.getPopupClassNameFromAlign)(builtinPlacements, prefixCls, align));
@@ -4916,14 +4881,49 @@ webpackJsonp([4],[
 	  },
 	  getPopupAlign: function getPopupAlign() {
 	    var props = this.props;
-	    var popupPlacement = props.popupPlacement;
-	    var popupAlign = props.popupAlign;
-	    var builtinPlacements = props.builtinPlacements;
+	    var popupPlacement = props.popupPlacement,
+	        popupAlign = props.popupAlign,
+	        builtinPlacements = props.builtinPlacements;
 	
 	    if (popupPlacement && builtinPlacements) {
 	      return (0, _utils.getAlignFromPlacement)(builtinPlacements, popupPlacement, popupAlign);
 	    }
 	    return popupAlign;
+	  },
+	  getComponent: function getComponent() {
+	    var props = this.props,
+	        state = this.state;
+	
+	    var mouseProps = {};
+	    if (this.isMouseEnterToShow()) {
+	      mouseProps.onMouseEnter = this.onPopupMouseEnter;
+	    }
+	    if (this.isMouseLeaveToHide()) {
+	      mouseProps.onMouseLeave = this.onPopupMouseLeave;
+	    }
+	    return _react2["default"].createElement(
+	      _Popup2["default"],
+	      (0, _extends3["default"])({
+	        prefixCls: props.prefixCls,
+	        destroyPopupOnHide: props.destroyPopupOnHide,
+	        visible: state.popupVisible,
+	        className: props.popupClassName,
+	        action: props.action,
+	        align: this.getPopupAlign(),
+	        onAlign: props.onPopupAlign,
+	        animation: props.popupAnimation,
+	        getClassNameFromAlign: this.getPopupClassNameFromAlign
+	      }, mouseProps, {
+	        getRootDomNode: this.getRootDomNode,
+	        style: props.popupStyle,
+	        mask: props.mask,
+	        zIndex: props.zIndex,
+	        transitionName: props.popupTransitionName,
+	        maskAnimation: props.maskAnimation,
+	        maskTransitionName: props.maskTransitionName
+	      }),
+	      typeof props.popup === 'function' ? props.popup() : props.popup
+	    );
 	  },
 	  setPopupVisible: function setPopupVisible(popupVisible) {
 	    this.clearDelayTimer();
@@ -4965,44 +4965,44 @@ webpackJsonp([4],[
 	    return childPros[event] || props[event];
 	  },
 	  isClickToShow: function isClickToShow() {
-	    var _props = this.props;
-	    var action = _props.action;
-	    var showAction = _props.showAction;
+	    var _props = this.props,
+	        action = _props.action,
+	        showAction = _props.showAction;
 	
 	    return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
 	  },
 	  isClickToHide: function isClickToHide() {
-	    var _props2 = this.props;
-	    var action = _props2.action;
-	    var hideAction = _props2.hideAction;
+	    var _props2 = this.props,
+	        action = _props2.action,
+	        hideAction = _props2.hideAction;
 	
 	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
 	  },
 	  isMouseEnterToShow: function isMouseEnterToShow() {
-	    var _props3 = this.props;
-	    var action = _props3.action;
-	    var showAction = _props3.showAction;
+	    var _props3 = this.props,
+	        action = _props3.action,
+	        showAction = _props3.showAction;
 	
 	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
 	  },
 	  isMouseLeaveToHide: function isMouseLeaveToHide() {
-	    var _props4 = this.props;
-	    var action = _props4.action;
-	    var hideAction = _props4.hideAction;
+	    var _props4 = this.props,
+	        action = _props4.action,
+	        hideAction = _props4.hideAction;
 	
 	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
 	  },
 	  isFocusToShow: function isFocusToShow() {
-	    var _props5 = this.props;
-	    var action = _props5.action;
-	    var showAction = _props5.showAction;
+	    var _props5 = this.props,
+	        action = _props5.action,
+	        showAction = _props5.showAction;
 	
 	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
 	  },
 	  isBlurToHide: function isBlurToHide() {
-	    var _props6 = this.props;
-	    var action = _props6.action;
-	    var hideAction = _props6.hideAction;
+	    var _props6 = this.props,
+	        action = _props6.action,
+	        hideAction = _props6.hideAction;
 	
 	    return action.indexOf('focus') !== -1 || hideAction.indexOf('blur') !== -1;
 	  },
@@ -5599,6 +5599,31 @@ webpackJsonp([4],[
 
 /***/ },
 /* 278 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = contains;
+	function contains(root, n) {
+	  var node = n;
+	  while (node) {
+	    if (node === root) {
+	      return true;
+	    }
+	    node = node.parentNode;
+	  }
+	
+	  return false;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 279 */
+203,
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5619,7 +5644,7 @@ webpackJsonp([4],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAlign = __webpack_require__(279);
+	var _rcAlign = __webpack_require__(281);
 	
 	var _rcAlign2 = _interopRequireDefault(_rcAlign);
 	
@@ -5627,11 +5652,11 @@ webpackJsonp([4],[
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _PopupInner = __webpack_require__(291);
+	var _PopupInner = __webpack_require__(294);
 	
 	var _PopupInner2 = _interopRequireDefault(_PopupInner);
 	
-	var _LazyRenderBox = __webpack_require__(292);
+	var _LazyRenderBox = __webpack_require__(295);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -5695,11 +5720,11 @@ webpackJsonp([4],[
 	  },
 	  getPopupElement: function getPopupElement() {
 	    var props = this.props;
-	    var align = props.align;
-	    var style = props.style;
-	    var visible = props.visible;
-	    var prefixCls = props.prefixCls;
-	    var destroyPopupOnHide = props.destroyPopupOnHide;
+	    var align = props.align,
+	        style = props.style,
+	        visible = props.visible,
+	        prefixCls = props.prefixCls,
+	        destroyPopupOnHide = props.destroyPopupOnHide;
 	
 	    var className = this.getClassName(this.currentAlignClassName || props.getClassNameFromAlign(align));
 	    var hiddenClassName = prefixCls + '-hidden';
@@ -5829,7 +5854,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 279 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5838,7 +5863,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _Align = __webpack_require__(280);
+	var _Align = __webpack_require__(282);
 	
 	var _Align2 = _interopRequireDefault(_Align);
 	
@@ -5849,7 +5874,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 280 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5866,15 +5891,15 @@ webpackJsonp([4],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _domAlign = __webpack_require__(281);
+	var _domAlign = __webpack_require__(283);
 	
 	var _domAlign2 = _interopRequireDefault(_domAlign);
 	
-	var _addEventListener = __webpack_require__(203);
+	var _addEventListener = __webpack_require__(292);
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _isWindow = __webpack_require__(290);
+	var _isWindow = __webpack_require__(293);
 	
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 	
@@ -5986,9 +6011,9 @@ webpackJsonp([4],[
 	    }
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var childrenProps = _props.childrenProps;
-	    var children = _props.children;
+	    var _props = this.props,
+	        childrenProps = _props.childrenProps,
+	        children = _props.children;
 	
 	    var child = _react2["default"].Children.only(children);
 	    if (childrenProps) {
@@ -6008,7 +6033,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 281 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6017,27 +6042,27 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(282);
+	var _utils = __webpack_require__(284);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(284);
+	var _getOffsetParent = __webpack_require__(286);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
-	var _getVisibleRectForElement = __webpack_require__(285);
+	var _getVisibleRectForElement = __webpack_require__(287);
 	
 	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
 	
-	var _adjustForViewport = __webpack_require__(286);
+	var _adjustForViewport = __webpack_require__(288);
 	
 	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
 	
-	var _getRegion = __webpack_require__(287);
+	var _getRegion = __webpack_require__(289);
 	
 	var _getRegion2 = _interopRequireDefault(_getRegion);
 	
-	var _getElFuturePos = __webpack_require__(288);
+	var _getElFuturePos = __webpack_require__(290);
 	
 	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
 	
@@ -6231,7 +6256,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 282 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6242,7 +6267,7 @@ webpackJsonp([4],[
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _propertyUtils = __webpack_require__(283);
+	var _propertyUtils = __webpack_require__(285);
 	
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
 	
@@ -6794,7 +6819,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 283 */
+/* 285 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6909,7 +6934,7 @@ webpackJsonp([4],[
 	}
 
 /***/ },
-/* 284 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6918,7 +6943,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(282);
+	var _utils = __webpack_require__(284);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -6967,7 +6992,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 285 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6976,11 +7001,11 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(282);
+	var _utils = __webpack_require__(284);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var _getOffsetParent = __webpack_require__(284);
+	var _getOffsetParent = __webpack_require__(286);
 	
 	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
 	
@@ -7048,7 +7073,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 286 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7057,7 +7082,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(282);
+	var _utils = __webpack_require__(284);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -7108,7 +7133,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 287 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7117,7 +7142,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(282);
+	var _utils = __webpack_require__(284);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -7149,7 +7174,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 288 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7158,7 +7183,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _getAlignOffset = __webpack_require__(289);
+	var _getAlignOffset = __webpack_require__(291);
 	
 	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
 	
@@ -7190,7 +7215,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 289 */
+/* 291 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7235,7 +7260,9 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 290 */
+/* 292 */
+203,
+/* 293 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7252,7 +7279,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 291 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7265,7 +7292,7 @@ webpackJsonp([4],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _LazyRenderBox = __webpack_require__(292);
+	var _LazyRenderBox = __webpack_require__(295);
 	
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 	
@@ -7309,7 +7336,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 292 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7318,7 +7345,7 @@ webpackJsonp([4],[
 	  value: true
 	});
 	
-	var _objectWithoutProperties2 = __webpack_require__(293);
+	var _objectWithoutProperties2 = __webpack_require__(296);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
@@ -7341,10 +7368,10 @@ webpackJsonp([4],[
 	    return nextProps.hiddenClassName || nextProps.visible;
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var hiddenClassName = _props.hiddenClassName;
-	    var visible = _props.visible;
-	    var props = (0, _objectWithoutProperties3["default"])(_props, ['hiddenClassName', 'visible']);
+	    var _props = this.props,
+	        hiddenClassName = _props.hiddenClassName,
+	        visible = _props.visible,
+	        props = (0, _objectWithoutProperties3["default"])(_props, ['hiddenClassName', 'visible']);
 	
 	
 	    if (hiddenClassName || _react2["default"].Children.count(props.children) > 1) {
@@ -7362,7 +7389,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 293 */
+/* 296 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7382,7 +7409,7 @@ webpackJsonp([4],[
 	};
 
 /***/ },
-/* 294 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7422,7 +7449,7 @@ webpackJsonp([4],[
 	}
 
 /***/ },
-/* 295 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7448,14 +7475,14 @@ webpackJsonp([4],[
 	}
 	
 	function getContainerRenderMixin(config) {
-	  var _config$autoMount = config.autoMount;
-	  var autoMount = _config$autoMount === undefined ? true : _config$autoMount;
-	  var _config$autoDestroy = config.autoDestroy;
-	  var autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy;
-	  var isVisible = config.isVisible;
-	  var getComponent = config.getComponent;
-	  var _config$getContainer = config.getContainer;
-	  var getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
+	  var _config$autoMount = config.autoMount,
+	      autoMount = _config$autoMount === undefined ? true : _config$autoMount,
+	      _config$autoDestroy = config.autoDestroy,
+	      autoDestroy = _config$autoDestroy === undefined ? true : _config$autoDestroy,
+	      isVisible = config.isVisible,
+	      getComponent = config.getComponent,
+	      _config$getContainer = config.getContainer,
+	      getContainer = _config$getContainer === undefined ? defaultGetContainer : _config$getContainer;
 	
 	
 	  var mixin = void 0;
@@ -7465,7 +7492,13 @@ webpackJsonp([4],[
 	      if (!instance._container) {
 	        instance._container = getContainer(instance);
 	      }
-	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, getComponent(instance, componentArg), instance._container, function callback() {
+	      var component = void 0;
+	      if (instance.getComponent) {
+	        component = instance.getComponent(componentArg);
+	      } else {
+	        component = getComponent(instance, componentArg);
+	      }
+	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, component, instance._container, function callback() {
 	        instance._component = this;
 	        if (ready) {
 	          ready.call(this);
@@ -7521,7 +7554,7 @@ webpackJsonp([4],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 296 */
+/* 299 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7578,9 +7611,9 @@ webpackJsonp([4],[
 	exports["default"] = placements;
 
 /***/ },
-/* 297 */
+/* 300 */
 211,
-/* 298 */
+/* 301 */
 211
 ]);
 //# sourceMappingURL=dropdown.js.map
