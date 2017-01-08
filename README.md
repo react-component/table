@@ -210,7 +210,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>getBodyWrapper</td>
       <td>Function(body)</td>
       <td></td>
-      <td>get wrapper of tbody, [demoe](http://react-component.github.io/table/examples/animation.html)</td>
+      <td>get wrapper of tbody, [demo](http://react-component.github.io/table/examples/animation.html)</td>
     </tr>
     <tr>
       <td>emptyText</td>
