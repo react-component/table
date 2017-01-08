@@ -26,7 +26,16 @@ const TableCell = React.createClass({
             index, expandIcon, column } = this.props;
     const { dataIndex, render, className = '' } = column;
 
-    let text = get(record, dataIndex);
+    // We should return undefined if no dataIndex is specified, but in order to
+    // be compatible with object-path's behavior, we return the record object instead.
+    let text;
+    if (typeof dataIndex === 'number') {
+      text = get(record, dataIndex);
+    } else if (!dataIndex || dataIndex.length === 0) {
+      text = record;
+    } else {
+      text = get(record, dataIndex);
+    }
     let tdProps;
     let colSpan;
     let rowSpan;
