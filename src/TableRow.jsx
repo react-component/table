@@ -6,6 +6,9 @@ const TableRow = React.createClass({
   propTypes: {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowMouseOver: PropTypes.func,
+    onRowMouseOut: PropTypes.func,
+    onRowMouseUp: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
@@ -34,6 +37,9 @@ const TableRow = React.createClass({
   getDefaultProps() {
     return {
       onRowClick() {},
+      onRowMouseOver() {},
+      onRowMouseOut() {},
+      onRowMouseUp() {},
       onRowDoubleClick() {},
       onDestroy() {},
       expandIconColumnIndex: 0,
@@ -81,6 +87,21 @@ const TableRow = React.createClass({
       onExpand(!expanded, record, index);
     }
     onRowClick(record, index, event);
+  },
+
+  onRowMouseOver(event) {
+    const { record, index, onRowMouseOver } = this.props;
+    onRowMouseOver(record, index, event);
+  },
+
+  onRowMouseOut(event) {
+    const { record, index, onRowMouseOut } = this.props;
+    onRowMouseOut(record, index, event);
+  },
+
+  onRowMouseUp(event) {
+    const { record, index, onRowMouseUp } = this.props;
+    onRowMouseUp(record, index, event);
   },
 
   onRowDoubleClick(event) {
@@ -158,6 +179,9 @@ const TableRow = React.createClass({
     return (
       <tr
         onClick={this.onRowClick}
+        onMouseOver={this.onRowMouseOver}
+        onMouseOut={this.onRowMouseOut}
+        onMouseUp={this.onRowMouseUp}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
