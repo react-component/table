@@ -20,6 +20,8 @@ const Table = React.createClass({
     bodyStyle: PropTypes.object,
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    bodyCellClassName: PropTypes.func,
+    headerCellClassName: PropTypes.func,
     rowClassName: PropTypes.func,
     expandedRowClassName: PropTypes.func,
     childrenColumnName: PropTypes.string,
@@ -47,6 +49,8 @@ const Table = React.createClass({
       defaultExpandAllRows: false,
       defaultExpandedRowKeys: [],
       rowKey: 'key',
+      bodyCellClassName: () => '',
+      headerCellClassName: () => '',
       rowClassName: () => '',
       expandedRowClassName: () => '',
       onExpand() {},
@@ -193,7 +197,7 @@ const Table = React.createClass({
   },
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, prefixCls } = this.props;
+    const { headerCellClassName, showHeader, expandIconAsCell, prefixCls } = this.props;
     const rows = this.getHeaderRows(columns);
 
     if (expandIconAsCell && fixed !== 'right') {
@@ -209,6 +213,7 @@ const Table = React.createClass({
 
     return showHeader ? (
       <TableHeader
+        headerCellClassName={headerCellClassName}
         prefixCls={prefixCls}
         rows={rows}
         rowStyle={trStyle}
@@ -293,6 +298,7 @@ const Table = React.createClass({
     const expandRowByClick = props.expandRowByClick;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
+    const bodyCellClassName = props.bodyCellClassName;
     const rowClassName = props.rowClassName;
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
@@ -338,6 +344,7 @@ const Table = React.createClass({
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
           className={className}
+          bodyCellClassName={bodyCellClassName}
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
