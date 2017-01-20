@@ -123,6 +123,18 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>get row's className</td>
     </tr>
     <tr>
+      <td>bodyCellClassName</td>
+      <td>Function(record, index):string</td>
+      <td></td>
+      <td>used to compute a table body cell's className</td>
+    </tr>
+    <tr>
+      <td>headerCellClassName</td>
+      <td>Function(headerCellConfig):string</td>
+      <td></td>
+      <td>used to compute a header cell's className based on the config data for that column header.</td>
+    </tr>
+    <tr>
       <td>rowRef</td>
       <td>Function(record, index, indent):string</td>
       <td></td>
