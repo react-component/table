@@ -1,6 +1,4 @@
 import React from 'react';
-import Column from './Column';
-import ColumnGroup from './ColumnGroup';
 
 export default class ColumnManager {
   _cached = {}
@@ -111,21 +109,19 @@ export default class ColumnManager {
   normalize(elements) {
     const columns = [];
     React.Children.forEach(elements, element => {
-      if (!this.isColumnElement(element)) return;
+      if (!React.isValidElement(element)) {
+        return;
+      }
       const column = { ...element.props };
       if (element.key) {
         column.key = element.key;
       }
-      if (element.type === ColumnGroup) {
+      if (element.type.isTableColumnGroup) {
         column.children = this.normalize(column.children);
       }
       columns.push(column);
     });
     return columns;
-  }
-
-  isColumnElement(element) {
-    return element && (element.type === Column || element.type === ColumnGroup);
   }
 
   reset(columns, elements) {
