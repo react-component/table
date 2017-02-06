@@ -59,6 +59,7 @@
     ]
   },
   "dependencies": {
+    "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
     "rc-util": "3.x",
     "shallowequal": "^0.2.2",
