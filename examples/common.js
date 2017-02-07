@@ -21118,8 +21118,215 @@
 /***/ },
 /* 183 */,
 /* 184 */,
-/* 185 */,
-/* 186 */,
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Module dependencies.
+	 */
+	
+	try {
+	  var index = __webpack_require__(186);
+	} catch (err) {
+	  var index = __webpack_require__(186);
+	}
+	
+	/**
+	 * Whitespace regexp.
+	 */
+	
+	var re = /\s+/;
+	
+	/**
+	 * toString reference.
+	 */
+	
+	var toString = Object.prototype.toString;
+	
+	/**
+	 * Wrap `el` in a `ClassList`.
+	 *
+	 * @param {Element} el
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	module.exports = function(el){
+	  return new ClassList(el);
+	};
+	
+	/**
+	 * Initialize a new ClassList for `el`.
+	 *
+	 * @param {Element} el
+	 * @api private
+	 */
+	
+	function ClassList(el) {
+	  if (!el || !el.nodeType) {
+	    throw new Error('A DOM element reference is required');
+	  }
+	  this.el = el;
+	  this.list = el.classList;
+	}
+	
+	/**
+	 * Add class `name` if not already present.
+	 *
+	 * @param {String} name
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.add = function(name){
+	  // classList
+	  if (this.list) {
+	    this.list.add(name);
+	    return this;
+	  }
+	
+	  // fallback
+	  var arr = this.array();
+	  var i = index(arr, name);
+	  if (!~i) arr.push(name);
+	  this.el.className = arr.join(' ');
+	  return this;
+	};
+	
+	/**
+	 * Remove class `name` when present, or
+	 * pass a regular expression to remove
+	 * any which match.
+	 *
+	 * @param {String|RegExp} name
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.remove = function(name){
+	  if ('[object RegExp]' == toString.call(name)) {
+	    return this.removeMatching(name);
+	  }
+	
+	  // classList
+	  if (this.list) {
+	    this.list.remove(name);
+	    return this;
+	  }
+	
+	  // fallback
+	  var arr = this.array();
+	  var i = index(arr, name);
+	  if (~i) arr.splice(i, 1);
+	  this.el.className = arr.join(' ');
+	  return this;
+	};
+	
+	/**
+	 * Remove all classes matching `re`.
+	 *
+	 * @param {RegExp} re
+	 * @return {ClassList}
+	 * @api private
+	 */
+	
+	ClassList.prototype.removeMatching = function(re){
+	  var arr = this.array();
+	  for (var i = 0; i < arr.length; i++) {
+	    if (re.test(arr[i])) {
+	      this.remove(arr[i]);
+	    }
+	  }
+	  return this;
+	};
+	
+	/**
+	 * Toggle class `name`, can force state via `force`.
+	 *
+	 * For browsers that support classList, but do not support `force` yet,
+	 * the mistake will be detected and corrected.
+	 *
+	 * @param {String} name
+	 * @param {Boolean} force
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.toggle = function(name, force){
+	  // classList
+	  if (this.list) {
+	    if ("undefined" !== typeof force) {
+	      if (force !== this.list.toggle(name, force)) {
+	        this.list.toggle(name); // toggle again to correct
+	      }
+	    } else {
+	      this.list.toggle(name);
+	    }
+	    return this;
+	  }
+	
+	  // fallback
+	  if ("undefined" !== typeof force) {
+	    if (!force) {
+	      this.remove(name);
+	    } else {
+	      this.add(name);
+	    }
+	  } else {
+	    if (this.has(name)) {
+	      this.remove(name);
+	    } else {
+	      this.add(name);
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Return an array of classes.
+	 *
+	 * @return {Array}
+	 * @api public
+	 */
+	
+	ClassList.prototype.array = function(){
+	  var className = this.el.getAttribute('class') || '';
+	  var str = className.replace(/^\s+|\s+$/g, '');
+	  var arr = str.split(re);
+	  if ('' === arr[0]) arr.shift();
+	  return arr;
+	};
+	
+	/**
+	 * Check if class `name` is present.
+	 *
+	 * @param {String} name
+	 * @return {ClassList}
+	 * @api public
+	 */
+	
+	ClassList.prototype.has =
+	ClassList.prototype.contains = function(name){
+	  return this.list
+	    ? this.list.contains(name)
+	    : !! ~index(this.array(), name);
+	};
+
+
+/***/ },
+/* 186 */
+/***/ function(module, exports) {
+
+	module.exports = function(arr, obj){
+	  if (arr.indexOf) return arr.indexOf(obj);
+	  for (var i = 0; i < arr.length; ++i) {
+	    if (arr[i] === obj) return i;
+	  }
+	  return -1;
+	};
+
+/***/ },
 /* 187 */,
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
@@ -21184,6 +21391,10 @@
 	var _createStore = __webpack_require__(208);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
+	
+	var _componentClasses = __webpack_require__(185);
+	
+	var _componentClasses2 = _interopRequireDefault(_componentClasses);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21267,6 +21478,7 @@
 	    var rows = [].concat(_toConsumableArray(props.data));
 	    this.columnManager = new _ColumnManager2.default(props.columns, props.children);
 	    this.store = (0, _createStore2.default)({ currentHoverKey: null });
+	    this.setScrollPosition('left');
 	
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
@@ -21281,7 +21493,6 @@
 	      expandedRowKeys: expandedRowKeys,
 	      data: props.data,
 	      currentHoverKey: null,
-	      scrollPosition: 'left',
 	      fixedColumnsHeadRowsHeight: [],
 	      fixedColumnsBodyRowsHeight: []
 	    };
@@ -21780,6 +21991,14 @@
 	    }
 	    return null;
 	  },
+	  setScrollPosition: function setScrollPosition(position) {
+	    this.scrollPosition = position;
+	    if (this.tableNode) {
+	      var prefixCls = this.props.prefixCls;
+	
+	      (0, _componentClasses2.default)(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
+	    }
+	  },
 	  syncFixedTableRowHeight: function syncFixedTableRowHeight() {
 	    var prefixCls = this.props.prefixCls;
 	
@@ -21844,11 +22063,11 @@
 	        bodyTable.scrollLeft = e.target.scrollLeft;
 	      }
 	      if (e.target.scrollLeft === 0) {
-	        this.setState({ scrollPosition: 'left' });
+	        this.setScrollPosition('left');
 	      } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
-	        this.setState({ scrollPosition: 'right' });
-	      } else if (this.state.scrollPosition !== 'middle') {
-	        this.setState({ scrollPosition: 'middle' });
+	        this.setScrollPosition('right');
+	      } else if (this.scrollPosition !== 'middle') {
+	        this.setScrollPosition('middle');
 	      }
 	    }
 	    if (scroll.y) {
@@ -21871,6 +22090,8 @@
 	    });
 	  },
 	  render: function render() {
+	    var _this4 = this;
+	
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
 	
@@ -21881,13 +22102,15 @@
 	    if (props.useFixedHeader || props.scroll && props.scroll.y) {
 	      className += ' ' + prefixCls + '-fixed-header';
 	    }
-	    className += ' ' + prefixCls + '-scroll-position-' + this.state.scrollPosition;
+	    className += ' ' + prefixCls + '-scroll-position-' + this.scrollPosition;
 	
 	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
 	    return _react2.default.createElement(
 	      'div',
-	      { className: className, style: props.style },
+	      { ref: function ref(node) {
+	          return _this4.tableNode = node;
+	        }, className: className, style: props.style },
 	      this.getTitle(),
 	      _react2.default.createElement(
 	        'div',
