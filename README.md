@@ -183,6 +183,24 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
     </tr>
     <tr>
+      <td>onRowMouseOver</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle rowMouseOver action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>onRowMouseOut</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle rowMouseOut action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>onRowMouseUp</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle rowMouseUp action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
       <td>onRowDoubleClick</td>
       <td>Function(record, index)</td>
       <td></td>
