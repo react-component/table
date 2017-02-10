@@ -23,6 +23,7 @@ const TableRow = React.createClass({
     expandable: PropTypes.any,
     onExpand: PropTypes.func,
     needIndentSpaced: PropTypes.bool,
+    bodyCellClassName: PropTypes.func,
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
@@ -36,6 +37,7 @@ const TableRow = React.createClass({
       onRowClick() {},
       onRowDoubleClick() {},
       onDestroy() {},
+      bodyCellClassName: () => {},
       expandIconColumnIndex: 0,
       expandRowByClick: false,
       onHover() {},
@@ -100,7 +102,7 @@ const TableRow = React.createClass({
 
   render() {
     const {
-      prefixCls, columns, record, height, visible, index,
+      prefixCls, columns, bodyCellClassName, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, indent, indentSize,
     } = this.props;
@@ -125,10 +127,11 @@ const TableRow = React.createClass({
     );
 
     for (let i = 0; i < columns.length; i++) {
+      const tdClassName = bodyCellClassName(record, index);
       if (expandIconAsCell && i === 0) {
         cells.push(
           <td
-            className={`${prefixCls}-expand-icon-cell`}
+            className={`${prefixCls}-expand-icon-cell ${tdClassName}`.trim()}
             key="rc-table-expand-icon-cell"
           >
             {expandIcon}
@@ -140,6 +143,7 @@ const TableRow = React.createClass({
       cells.push(
         <TableCell
           prefixCls={prefixCls}
+          bodyCellClassName={tdClassName}
           record={record}
           indentSize={indentSize}
           indent={indent}

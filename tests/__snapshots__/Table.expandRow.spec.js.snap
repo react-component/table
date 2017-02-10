@@ -1,5 +1,6 @@
 exports[`Table.expand controlled by expandedRowKeys 1`] = `
 <Table
+  bodyCellClassName={[Function]}
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -43,6 +44,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
   }
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerCellClassName={[Function]}
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -90,6 +92,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   } />
               </colgroup>
               <TableHeader
+                headerCellClassName={[Function]}
                 prefixCls="rc-table"
                 rowStyle={null}
                 rows={
@@ -126,6 +129,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               <tbody
                 className="rc-table-tbody">
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -186,6 +190,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -250,6 +255,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",
@@ -278,6 +284,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   className=""
                   columns={
                     Array [
@@ -355,6 +362,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -415,6 +423,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -479,6 +488,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",
@@ -518,6 +528,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
 
 exports[`Table.expand controlled by expandedRowKeys 2`] = `
 <Table
+  bodyCellClassName={[Function]}
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -561,6 +572,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
   }
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerCellClassName={[Function]}
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -608,6 +620,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   } />
               </colgroup>
               <TableHeader
+                headerCellClassName={[Function]}
                 prefixCls="rc-table"
                 rowStyle={null}
                 rows={
@@ -644,6 +657,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               <tbody
                 className="rc-table-tbody">
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -704,6 +718,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -768,6 +783,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",
@@ -796,6 +812,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -856,6 +873,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -920,6 +938,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",
@@ -948,6 +967,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   className=""
                   columns={
                     Array [
@@ -1134,6 +1154,7 @@ exports[`Table.expand expand all rows by default 1`] = `
 
 exports[`Table.expand expand row by click 1`] = `
 <Table
+  bodyCellClassName={[Function]}
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -1172,6 +1193,7 @@ exports[`Table.expand expand row by click 1`] = `
   expandedRowClassName={[Function]}
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerCellClassName={[Function]}
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -1219,6 +1241,7 @@ exports[`Table.expand expand row by click 1`] = `
                   } />
               </colgroup>
               <TableHeader
+                headerCellClassName={[Function]}
                 prefixCls="rc-table"
                 rowStyle={null}
                 rows={
@@ -1255,6 +1278,7 @@ exports[`Table.expand expand row by click 1`] = `
               <tbody
                 className="rc-table-tbody">
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -1315,6 +1339,7 @@ exports[`Table.expand expand row by click 1`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -1379,6 +1404,7 @@ exports[`Table.expand expand row by click 1`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",
@@ -1407,6 +1433,7 @@ exports[`Table.expand expand row by click 1`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   className=""
                   columns={
                     Array [
@@ -1484,6 +1511,7 @@ exports[`Table.expand expand row by click 1`] = `
                   </tr>
                 </TableRow>
                 <TableRow
+                  bodyCellClassName={[Function]}
                   childrenColumnName="children"
                   className=""
                   columns={
@@ -1544,6 +1572,7 @@ exports[`Table.expand expand row by click 1`] = `
                       }
                     }>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "name",
@@ -1608,6 +1637,7 @@ exports[`Table.expand expand row by click 1`] = `
                       </td>
                     </TableCell>
                     <TableCell
+                      bodyCellClassName=""
                       column={
                         Object {
                           "dataIndex": "age",

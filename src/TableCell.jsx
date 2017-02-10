@@ -3,6 +3,7 @@ import get from 'lodash.get';
 
 const TableCell = React.createClass({
   propTypes: {
+    bodyCellClassName: PropTypes.string,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
     index: PropTypes.number,
@@ -23,7 +24,7 @@ const TableCell = React.createClass({
   },
   render() {
     const { record, indentSize, prefixCls, indent,
-            index, expandIcon, column } = this.props;
+            index, expandIcon, bodyCellClassName, column } = this.props;
     const { dataIndex, render, className = '' } = column;
 
     // We should return undefined if no dataIndex is specified, but in order to
@@ -65,11 +66,13 @@ const TableCell = React.createClass({
     if (rowSpan === 0 || colSpan === 0) {
       return null;
     }
+
+    const tdClassName = bodyCellClassName ? `${className} ${bodyCellClassName}`.trim() : className;
     return (
       <td
         colSpan={colSpan}
         rowSpan={rowSpan}
-        className={className}
+        className={tdClassName}
         onClick={this.handleClick}
       >
         {indentText}
