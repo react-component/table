@@ -586,7 +586,7 @@ export default class Table extends React.Component {
     const tableRect = this.tableNode.getBoundingClientRect();
     // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
     // see: https://github.com/ant-design/ant-design/issues/4836
-    if (tableRect.height <= 0) {
+    if (tableRect.height !== undefined && tableRect.height <= 0) {
       return;
     }
     const { prefixCls } = this.props;
