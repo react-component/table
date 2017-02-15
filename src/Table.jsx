@@ -28,6 +28,9 @@ const Table = React.createClass({
     onExpandedRowsChange: PropTypes.func,
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
+    onRowMouseOver: PropTypes.func,
+    onRowMouseOut: PropTypes.func,
+    onRowMouseUp: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
@@ -53,6 +56,9 @@ const Table = React.createClass({
       onExpand() {},
       onExpandedRowsChange() {},
       onRowClick() {},
+      onRowMouseOver() {},
+      onRowMouseOut() {},
+      onRowMouseUp() {},
       onRowDoubleClick() {},
       prefixCls: 'rc-table',
       bodyStyle: {},
@@ -298,7 +304,11 @@ const Table = React.createClass({
     const rowRef = props.rowRef;
     const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
+
     const onRowClick = props.onRowClick;
+    const onRowMouseOver = props.onRowMouseOver;
+    const onRowMouseOut = props.onRowMouseOut;
+    const onRowMouseUp = props.onRowMouseUp;
     const onRowDoubleClick = props.onRowDoubleClick;
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
@@ -353,6 +363,9 @@ const Table = React.createClass({
           columns={leafColumns}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
+          onRowMouseOver={onRowMouseOver}
+          onRowMouseOut={onRowMouseOut}
+          onRowMouseUp={onRowMouseUp}
           onRowDoubleClick={onRowDoubleClick}
           height={height}
           {...onHoverProps}
