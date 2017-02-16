@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce, warningOnce } from './utils';
+import { measureScrollbar, debounce, warningOnce, hasScrollX } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -93,7 +93,9 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    this.resetScrollY();
+    if (hasScrollX(this.props)) {
+      this.resetScrollX();
+    }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.debouncedSyncFixedTableRowHeight = debounce(this.syncFixedTableRowHeight, 150);
@@ -108,8 +110,8 @@ export default class Table extends React.Component {
       this.setState({
         data: nextProps.data,
       });
-      if (!nextProps.data || nextProps.data.length === 0) {
-        this.resetScrollY();
+      if ((!nextProps.data || nextProps.data.length === 0) && hasScrollX(nextProps)) {
+        this.resetScrollX();
       }
     }
     if ('expandedRowKeys' in nextProps) {
@@ -606,7 +608,7 @@ export default class Table extends React.Component {
     });
   }
 
-  resetScrollY() {
+  resetScrollX() {
     if (this.refs.headTable) {
       this.refs.headTable.scrollLeft = 0;
     }

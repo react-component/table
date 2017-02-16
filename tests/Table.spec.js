@@ -297,4 +297,20 @@ describe('Table', () => {
       'or set `rowKey` to an unique primary key.'
     );
   });
+
+  describe('resetScrollX', () => {
+    beforeEach(() => {
+      Table.prototype.resetScrollX = jest.fn();
+    });
+
+    it('is called if scroll.x is present', () => {
+      mount(createTable({ scroll: { x: 100 } }));
+      expect(Table.prototype.resetScrollX).toHaveBeenCalled();
+    });
+
+    it('is not called if scroll.x is absent', () => {
+      mount(createTable());
+      expect(Table.prototype.resetScrollX).not.toHaveBeenCalled();
+    });
+  });
 });
