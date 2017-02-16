@@ -582,7 +582,7 @@ export default class Table extends React.Component {
     }
   }
 
-  syncFixedTableRowHeight() {
+  syncFixedTableRowHeight = () => {
     const { prefixCls } = this.props;
     const headRows = this.refs.headTable ?
             this.refs.headTable.querySelectorAll('thead') :
@@ -633,7 +633,7 @@ export default class Table extends React.Component {
     return 'x' in scroll;
   }
 
-  handleBodyScroll(e) {
+  handleBodyScroll = (e) => {
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
     if (e.target !== this.scrollTarget) {
