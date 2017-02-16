@@ -298,19 +298,25 @@ describe('Table', () => {
     );
   });
 
-  describe('resetScrollX', () => {
+  describe('data change to empty', () => {
+    beforeAll(() => {
+      spyOn(Table.prototype, 'resetScrollX');
+    });
+
     beforeEach(() => {
-      Table.prototype.resetScrollX = jest.fn();
+      Table.prototype.resetScrollX.calls.reset();
     });
 
-    it('is called if scroll.x is present', () => {
-      mount(createTable({ scroll: { x: 100 } }));
-      expect(Table.prototype.resetScrollX).toHaveBeenCalled();
+    it('reset scrollLeft when scroll.x is present', () => {
+      const wrapper = mount(createTable({ scroll: { x: 100 } }));
+      wrapper.setProps({ data: [] });
+      expect(Table.prototype.resetScrollX.calls.count()).toBe(1);
     });
 
-    it('is not called if scroll.x is absent', () => {
-      mount(createTable());
-      expect(Table.prototype.resetScrollX).not.toHaveBeenCalled();
+    it('resetScrollX is not called when scroll.x is absent', () => {
+      const wrapper = mount(createTable());
+      wrapper.setProps({ data: [] });
+      expect(Table.prototype.resetScrollX.calls.count()).toBe(0);
     });
   });
 });

@@ -93,9 +93,6 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (hasScrollX(this.props)) {
-      this.resetScrollX();
-    }
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.debouncedSyncFixedTableRowHeight = debounce(this.syncFixedTableRowHeight, 150);
