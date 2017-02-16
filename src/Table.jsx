@@ -85,7 +85,6 @@ export default class Table extends React.Component {
     }
     this.state = {
       expandedRowKeys,
-      data: props.data,
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
@@ -104,9 +103,6 @@ export default class Table extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
-      this.setState({
-        data: nextProps.data,
-      });
       if ((!nextProps.data || nextProps.data.length === 0) && hasScrollX(nextProps)) {
         this.resetScrollX();
       }
@@ -377,7 +373,7 @@ export default class Table extends React.Component {
   }
 
   getRows(columns, fixed) {
-    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
+    return this.getRowsByData(this.props.data, true, 0, columns, fixed);
   }
 
   getColGroup(columns, fixed) {
@@ -538,7 +534,7 @@ export default class Table extends React.Component {
     const { title, prefixCls } = this.props;
     return title ? (
       <div className={`${prefixCls}-title`}>
-        {title(this.state.data)}
+        {title(this.props.data)}
       </div>
     ) : null;
   }
@@ -547,7 +543,7 @@ export default class Table extends React.Component {
     const { footer, prefixCls } = this.props;
     return footer ? (
       <div className={`${prefixCls}-footer`}>
-        {footer(this.state.data)}
+        {footer(this.props.data)}
       </div>
     ) : null;
   }
