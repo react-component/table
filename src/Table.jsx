@@ -476,6 +476,7 @@ export default class Table extends React.Component {
     if (useFixedHeader) {
       headTable = (
         <div
+          key="headTable"
           className={`${prefixCls}-header`}
           ref={fixed ? null : 'headTable'}
           style={headStyle}
@@ -488,8 +489,9 @@ export default class Table extends React.Component {
       );
     }
 
-    let BodyTable = (
+    let bodyTable = (
       <div
+        key="bodyTable"
         className={`${prefixCls}-body`}
         style={bodyStyle}
         ref="bodyTable"
@@ -510,8 +512,9 @@ export default class Table extends React.Component {
       }
       delete bodyStyle.overflowX;
       delete bodyStyle.overflowY;
-      BodyTable = (
+      bodyTable = (
         <div
+          key="bodyTable"
           className={`${prefixCls}-body-outer`}
           style={{ ...bodyStyle }}
         >
@@ -527,8 +530,7 @@ export default class Table extends React.Component {
         </div>
       );
     }
-
-    return <span>{headTable}{BodyTable}</span>;
+    return [headTable, bodyTable];
   }
 
   getTitle() {
@@ -693,23 +695,38 @@ export default class Table extends React.Component {
                           props.scroll.x ||
                           props.scroll.y;
 
+    const isAnyColumnsFixed =
+      this.columnManager.isAnyColumnsLeftFixed() || this.columnManager.isAnyColumnsRightFixed();
+
+    if (isAnyColumnsFixed) {
+      return (
+        <div ref={node => (this.tableNode = node)} className={className} style={props.style}>
+          {this.getTitle()}
+          <div className={`${prefixCls}-content`}>
+            {this.columnManager.isAnyColumnsLeftFixed() &&
+            <div className={`${prefixCls}-fixed-left`}>
+              {this.getLeftFixedTable()}
+            </div>}
+            <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
+              {this.getTable({ columns: this.columnManager.groupedColumns() })}
+              {this.getEmptyText()}
+              {this.getFooter()}
+            </div>
+            {this.columnManager.isAnyColumnsRightFixed() &&
+            <div className={`${prefixCls}-fixed-right`}>
+              {this.getRightFixedTable()}
+            </div>}
+          </div>
+        </div>
+      );
+    }
     return (
       <div ref={node => (this.tableNode = node)} className={className} style={props.style}>
         {this.getTitle()}
         <div className={`${prefixCls}-content`}>
-          {this.columnManager.isAnyColumnsLeftFixed() &&
-          <div className={`${prefixCls}-fixed-left`}>
-            {this.getLeftFixedTable()}
-          </div>}
-          <div className={isTableScroll ? `${prefixCls}-scroll` : ''}>
-            {this.getTable({ columns: this.columnManager.groupedColumns() })}
-            {this.getEmptyText()}
-            {this.getFooter()}
-          </div>
-          {this.columnManager.isAnyColumnsRightFixed() &&
-          <div className={`${prefixCls}-fixed-right`}>
-            {this.getRightFixedTable()}
-          </div>}
+          {this.getTable({ columns: this.columnManager.groupedColumns() })}
+          {this.getEmptyText()}
+          {this.getFooter()}
         </div>
       </div>
     );
