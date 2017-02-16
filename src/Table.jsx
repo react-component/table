@@ -120,7 +120,9 @@ export default class Table extends React.Component {
   }
 
   componentDidUpdate() {
-    this.syncFixedTableRowHeight();
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.syncFixedTableRowHeight();
+    }
   }
 
   componentWillUnmount() {
