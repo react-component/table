@@ -69,8 +69,3 @@ export function warningOnce(condition, format, args) {
     warned[format] = !condition;
   }
 }
-
-export function hasScrollX(props) {
-  const { scroll = {} } = props;
-  return 'x' in scroll;
-}

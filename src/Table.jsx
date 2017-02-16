@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-import { measureScrollbar, debounce, warningOnce, hasScrollX } from './utils';
+import { measureScrollbar, debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import ColumnManager from './ColumnManager';
@@ -102,11 +102,6 @@ export default class Table extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ('data' in nextProps) {
-      if ((!nextProps.data || nextProps.data.length === 0) && hasScrollX(nextProps)) {
-        this.resetScrollX();
-      }
-    }
     if ('expandedRowKeys' in nextProps) {
       this.setState({
         expandedRowKeys: nextProps.expandedRowKeys,
@@ -119,9 +114,13 @@ export default class Table extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
+    }
+    // when table changes to empty, reset scrollLeft
+    if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
+      this.resetScrollX();
     }
   }
 
@@ -625,6 +624,11 @@ export default class Table extends React.Component {
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
     }
+  }
+
+  hasScrollX() {
+    const { scroll = {} } = this.props;
+    return 'x' in scroll;
   }
 
   handleBodyScroll(e) {
