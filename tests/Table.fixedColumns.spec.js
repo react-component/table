@@ -60,4 +60,96 @@ describe('Table.fixedColumns', () => {
     expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
     expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
   });
+
+  it('calculate fixedColumns row height', () => {
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={data}
+        scroll={{ x: 1200 }}
+      />
+    );
+    const tableNode = wrapper.instance().tableNode;
+    const rows = tableNode.querySelectorAll('tr');
+    const theads = tableNode.querySelectorAll('thead');
+    const fixedLeftRows = tableNode.querySelectorAll('.rc-table-fixed-left tr');
+    const fixedRightRows = tableNode.querySelectorAll('.rc-table-fixed-right tr');
+    const rowHeight = '30px';
+
+    // see:
+    // https://github.com/airbnb/enzyme/issues/49#issuecomment-270250193
+    // https://github.com/tmpvar/jsdom/issues/653
+    function mockClientRect(node, rect) {
+      node.getBoundingClientRect = () => ({
+        ...rect,
+      });
+    }
+    function simulateTableShow() {
+      mockClientRect(tableNode, {
+        top: 0,
+        left: 0,
+        right: 500,
+        bottom: 300,
+        width: 500,
+        height: 300,
+      });
+      theads.forEach(thead => {
+        mockClientRect(thead, {
+          top: 0,
+          left: 0,
+          right: 500,
+          bottom: 30,
+          width: 500,
+          height: 30,
+        });
+      });
+
+      const height = parseInt(rowHeight, 10);
+      let i = 0;
+      rows.forEach(row => {
+        i = (rows.length / 3 === i ? 0 : (i + 1));
+        mockClientRect(row, {
+          top: i * height,
+          left: 0,
+          right: 500,
+          bottom: (i + 1) * height,
+          width: 500,
+          height,
+        });
+      });
+    }
+    function simulateTableHidden() {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: 0,
+        height: 0,
+      };
+      mockClientRect(tableNode, rect);
+      mockClientRect(theads, rect);
+      rows.forEach(row => mockClientRect(row, rect));
+    }
+
+    // <Table /> is show.
+    simulateTableShow();
+    wrapper.update();
+    fixedLeftRows.forEach(tr => {
+      expect(tr.style.height).toBe(rowHeight);
+    });
+    fixedRightRows.forEach(tr => {
+      expect(tr.style.height).toBe(rowHeight);
+    });
+
+    // <Table /> is hidden.
+    simulateTableHidden();
+    wrapper.update();
+    fixedLeftRows.forEach(tr => {
+      expect(tr.style.height).toBe(rowHeight);
+    });
+    fixedRightRows.forEach(tr => {
+      expect(tr.style.height).toBe(rowHeight);
+    });
+  });
 });
