@@ -4,63 +4,58 @@ exports[`Table dataIndex render text by path 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  First Name
-                </th>
-                <th
-                  class="">
-                  Last Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  John
-                </td>
-                <td
-                  class="">
-                  Doe
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Terry
-                </td>
-                <td
-                  class="">
-                  Garner
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              First Name
+            </th>
+            <th
+              class="">
+              Last Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              John
+            </td>
+            <td
+              class="">
+              Doe
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Terry
+            </td>
+            <td
+              class="">
+              Garner
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -72,57 +67,52 @@ exports[`Table renders colSpan correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class=""
-                  colspan="2">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class=""
-                  colspan="2">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  John
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Terry
-                </td>
-                <td
-                  class="">
-                  Garner
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class=""
+              colspan="2">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class=""
+              colspan="2">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              John
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Terry
+            </td>
+            <td
+              class="">
+              Garner
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -134,51 +124,46 @@ exports[`Table renders column correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col
-                style="width:100px;min-width:100px;" />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="name-class">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="name-class">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="name-class">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col
+            style="width:100px;min-width:100px;" />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="name-class">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="name-class">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="name-class">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -190,50 +175,45 @@ exports[`Table renders correctly 1`] = `
   <div
     class="test-prefix-content">
     <div
-      class="">
-      <span>
-        <div
-          class="test-prefix-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="test-prefix-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="test-prefix-tbody">
-              <tr
-                class="test-prefix-row  test-prefix-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="test-prefix-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="test-prefix-row  test-prefix-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="test-prefix-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="test-prefix-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="test-prefix-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="test-prefix-tbody">
+          <tr
+            class="test-prefix-row  test-prefix-row-level-0">
+            <td
+              class="">
+              <span
+                class="test-prefix-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="test-prefix-row  test-prefix-row-level-0">
+            <td
+              class="">
+              <span
+                class="test-prefix-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -245,54 +225,49 @@ exports[`Table renders custom cell correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  <p>
-                    Lucy
-                  </p>
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  <p>
-                    Jack
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              <p>
+                Lucy
+              </p>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              <p>
+                Jack
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -304,59 +279,54 @@ exports[`Table renders fixed header correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-header">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-header">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -368,56 +338,51 @@ exports[`Table renders footer correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
-      <div
-        class="rc-table-footer">
-        <p>
-          footer
-        </p>
-      </div>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="rc-table-footer">
+      <p>
+        footer
+      </p>
     </div>
   </div>
 </div>
@@ -429,60 +394,55 @@ exports[`Table renders rowSpan correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  First Name
-                </th>
-                <th
-                  class="">
-                  Last Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  John
-                </td>
-                <td
-                  class=""
-                  rowspan="2">
-                  Doe
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Terry
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              First Name
+            </th>
+            <th
+              class="">
+              Last Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              John
+            </td>
+            <td
+              class=""
+              rowspan="2">
+              Doe
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Terry
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -494,50 +454,45 @@ exports[`Table renders table body to the wrapper 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="custom-wapper">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="custom-wapper">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -555,50 +510,45 @@ exports[`Table renders title correctly 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -610,41 +560,36 @@ exports[`Table renders without header 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="">
-      <span>
-        <div
-          class="rc-table-body">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -656,52 +601,47 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-scroll">
-      <span>
-        <div
-          class="rc-table-body"
-          style="overflow-x:auto;">
-          <table
-            class="rc-table-fixed"
-            style="width:200px;">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body"
+      style="overflow-x:auto;">
+      <table
+        class="rc-table-fixed"
+        style="width:200px;">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -713,52 +653,47 @@ exports[`Table scroll renders scroll.x is true 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-scroll">
-      <span>
-        <div
-          class="rc-table-body"
-          style="overflow-x:auto;">
-          <table
-            class="rc-table-fixed"
-            style="table-layout:fixed;">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-body"
+      style="overflow-x:auto;">
+      <table
+        class="rc-table-fixed"
+        style="table-layout:fixed;">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -770,60 +705,55 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-scroll">
-      <span>
-        <div
-          class="rc-table-header">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <thead
-              class="rc-table-thead">
-              <tr>
-                <th
-                  class="">
-                  Name
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-        <div
-          class="rc-table-body"
-          style="max-height:200px;overflow-y:scroll;">
-          <table
-            class="">
-            <colgroup>
-              <col />
-            </colgroup>
-            <tbody
-              class="rc-table-tbody">
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Lucy
-                </td>
-              </tr>
-              <tr
-                class="rc-table-row  rc-table-row-level-0">
-                <td
-                  class="">
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px;" />
-                  Jack
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </span>
+      class="rc-table-header">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body"
+      style="max-height:200px;overflow-y:scroll;">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
