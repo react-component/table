@@ -621,7 +621,7 @@ export default class Table extends React.Component {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   }
 
-  detectScrollTarget(e) {
+  detectScrollTarget = (e) => {
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
     }
