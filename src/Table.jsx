@@ -8,8 +8,8 @@ import ColumnManager from './ColumnManager';
 import createStore from './createStore';
 import classes from 'component-classes';
 
-const Table = React.createClass({
-  propTypes: {
+export default class Table extends React.Component {
+  static propTypes = {
     data: PropTypes.array,
     expandIconAsCell: PropTypes.bool,
     defaultExpandAllRows: PropTypes.bool,
@@ -38,38 +38,36 @@ const Table = React.createClass({
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      data: [],
-      useFixedHeader: false,
-      expandIconAsCell: false,
-      defaultExpandAllRows: false,
-      defaultExpandedRowKeys: [],
-      rowKey: 'key',
-      rowClassName: () => '',
-      expandedRowClassName: () => '',
-      onExpand() {},
-      onExpandedRowsChange() {},
-      onRowClick() {},
-      onRowDoubleClick() {},
-      prefixCls: 'rc-table',
-      bodyStyle: {},
-      style: {},
-      childrenColumnName: 'children',
-      indentSize: 15,
-      expandIconColumnIndex: 0,
-      showHeader: true,
-      scroll: {},
-      rowRef: () => null,
-      getBodyWrapper: body => body,
-      emptyText: () => 'No Data',
-    };
-  },
+  static defaultProps = {
+    data: [],
+    useFixedHeader: false,
+    expandIconAsCell: false,
+    defaultExpandAllRows: false,
+    defaultExpandedRowKeys: [],
+    rowKey: 'key',
+    rowClassName: () => '',
+    expandedRowClassName: () => '',
+    onExpand() {},
+    onExpandedRowsChange() {},
+    onRowClick() {},
+    onRowDoubleClick() {},
+    prefixCls: 'rc-table',
+    bodyStyle: {},
+    style: {},
+    childrenColumnName: 'children',
+    indentSize: 15,
+    expandIconColumnIndex: 0,
+    showHeader: true,
+    scroll: {},
+    rowRef: () => null,
+    getBodyWrapper: body => body,
+    emptyText: () => 'No Data',
+  }
 
-  getInitialState() {
-    const props = this.props;
+  constructor(props) {
+    super(props);
     let expandedRowKeys = [];
     let rows = [...props.data];
     this.columnManager = new ColumnManager(props.columns, props.children);
@@ -85,14 +83,14 @@ const Table = React.createClass({
     } else {
       expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
     }
-    return {
+    this.state = {
       expandedRowKeys,
       data: props.data,
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     };
-  },
+  }
 
   componentDidMount() {
     this.resetScrollY();
@@ -103,7 +101,7 @@ const Table = React.createClass({
         window, 'resize', this.debouncedSyncFixedTableRowHeight
       );
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if ('data' in nextProps) {
@@ -124,11 +122,11 @@ const Table = React.createClass({
     } else if (nextProps.children !== this.props.children) {
       this.columnManager.reset(null, nextProps.children);
     }
-  },
+  }
 
   componentDidUpdate() {
     this.syncFixedTableRowHeight();
-  },
+  }
 
   componentWillUnmount() {
     if (this.resizeEvent) {
@@ -137,16 +135,16 @@ const Table = React.createClass({
     if (this.debouncedSyncFixedTableRowHeight) {
       this.debouncedSyncFixedTableRowHeight.cancel();
     }
-  },
+  }
 
   onExpandedRowsChange(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.setState({ expandedRowKeys });
     }
     this.props.onExpandedRowsChange(expandedRowKeys);
-  },
+  }
 
-  onExpanded(expanded, record, e, index) {
+  onExpanded = (expanded, record, e, index) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -160,9 +158,9 @@ const Table = React.createClass({
       this.onExpandedRowsChange(expandedRows);
     }
     this.props.onExpand(expanded, record);
-  },
+  }
 
-  onRowDestroy(record, rowIndex) {
+  onRowDestroy = (record, rowIndex) => {
     const expandedRows = this.getExpandedRows().concat();
     const rowKey = this.getRowKey(record, rowIndex);
     let index = -1;
@@ -175,7 +173,7 @@ const Table = React.createClass({
       expandedRows.splice(index, 1);
     }
     this.onExpandedRowsChange(expandedRows);
-  },
+  }
 
   getRowKey(record, index) {
     const rowKey = this.props.rowKey;
@@ -187,11 +185,11 @@ const Table = React.createClass({
       'or set `rowKey` to an unique primary key.'
     );
     return key === undefined ? index : key;
-  },
+  }
 
   getExpandedRows() {
     return this.props.expandedRowKeys || this.state.expandedRowKeys;
-  },
+  }
 
   getHeader(columns, fixed) {
     const { showHeader, expandIconAsCell, prefixCls } = this.props;
@@ -215,7 +213,7 @@ const Table = React.createClass({
         rowStyle={trStyle}
       />
     ) : null;
-  },
+  }
 
   getHeaderRows(columns, currentRow = 0, rows) {
     rows = rows || [];
@@ -246,7 +244,7 @@ const Table = React.createClass({
       }
     });
     return rows.filter(row => row.length > 0);
-  },
+  }
 
   getExpandedRow(key, content, visible, className, fixed) {
     const { prefixCls, expandIconAsCell } = this.props;
@@ -285,7 +283,7 @@ const Table = React.createClass({
         store={this.store}
       />
     );
-  },
+  }
 
   getRowsByData(data, visible, indent, columns, fixed) {
     const props = this.props;
@@ -377,11 +375,11 @@ const Table = React.createClass({
       }
     }
     return rst;
-  },
+  }
 
   getRows(columns, fixed) {
     return this.getRowsByData(this.state.data, true, 0, columns, fixed);
-  },
+  }
 
   getColGroup(columns, fixed) {
     let cols = [];
@@ -405,21 +403,21 @@ const Table = React.createClass({
       return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
-  },
+  }
 
   getLeftFixedTable() {
     return this.getTable({
       columns: this.columnManager.leftColumns(),
       fixed: 'left',
     });
-  },
+  }
 
   getRightFixedTable() {
     return this.getTable({
       columns: this.columnManager.rightColumns(),
       fixed: 'right',
     });
-  },
+  }
 
   getTable(options = {}) {
     const { columns, fixed } = options;
@@ -535,7 +533,7 @@ const Table = React.createClass({
     }
 
     return <span>{headTable}{BodyTable}</span>;
-  },
+  }
 
   getTitle() {
     const { title, prefixCls } = this.props;
@@ -544,7 +542,7 @@ const Table = React.createClass({
         {title(this.state.data)}
       </div>
     ) : null;
-  },
+  }
 
   getFooter() {
     const { footer, prefixCls } = this.props;
@@ -553,7 +551,7 @@ const Table = React.createClass({
         {footer(this.state.data)}
       </div>
     ) : null;
-  },
+  }
 
   getEmptyText() {
     const { emptyText, prefixCls, data } = this.props;
@@ -562,7 +560,7 @@ const Table = React.createClass({
         {emptyText()}
       </div>
     ) : null;
-  },
+  }
 
   getHeaderRowStyle(columns, rows) {
     const { fixedColumnsHeadRowsHeight } = this.state;
@@ -574,7 +572,7 @@ const Table = React.createClass({
       return { height: headerHeight / rows.length };
     }
     return null;
-  },
+  }
 
   setScrollPosition(position) {
     this.scrollPosition = position;
@@ -584,7 +582,7 @@ const Table = React.createClass({
         .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
         .add(`${prefixCls}-scroll-position-${position}`);
     }
-  },
+  }
 
   syncFixedTableRowHeight() {
     const { prefixCls } = this.props;
@@ -606,7 +604,7 @@ const Table = React.createClass({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
     });
-  },
+  }
 
   resetScrollY() {
     if (this.refs.headTable) {
@@ -615,22 +613,22 @@ const Table = React.createClass({
     if (this.refs.bodyTable) {
       this.refs.bodyTable.scrollLeft = 0;
     }
-  },
+  }
 
   findExpandedRow(record, index) {
     const rows = this.getExpandedRows().filter(i => i === this.getRowKey(record, index));
     return rows[0];
-  },
+  }
 
   isRowExpanded(record, index) {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
-  },
+  }
 
   detectScrollTarget(e) {
     if (this.scrollTarget !== e.currentTarget) {
       this.scrollTarget = e.currentTarget;
     }
-  },
+  }
 
   handleBodyScroll(e) {
     // Prevent scrollTop setter trigger onScroll event
@@ -669,13 +667,13 @@ const Table = React.createClass({
     }
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = e.target.scrollLeft;
-  },
+  }
 
-  handleRowHover(isHover, key) {
+  handleRowHover = (isHover, key) => {
     this.store.setState({
       currentHoverKey: isHover ? key : null,
     });
-  },
+  }
 
   render() {
     const props = this.props;
@@ -714,7 +712,5 @@ const Table = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-export default Table;
+  }
+}
