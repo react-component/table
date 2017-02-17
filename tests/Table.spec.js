@@ -102,6 +102,80 @@ describe('Table', () => {
       const wrapper = render(createTable({ scroll: { y: 200 } }));
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
+
+    it('fire scroll event', () => {
+      const newColumns = [
+        { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+        { title: 'title2', dataIndex: 'b', key: 'b' },
+        { title: 'title3', dataIndex: 'c', key: 'c' },
+        { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
+      ];
+      const newData = [
+        { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
+        { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
+      ];
+      const wrapper = mount(
+        <Table
+          columns={newColumns}
+          data={newData}
+          scroll={{
+            x: 200,
+            y: 200,
+          }}
+        />
+      );
+      const inst = wrapper.instance();
+      const headTable = wrapper.ref('headTable');
+      const bodyTable = wrapper.ref('bodyTable');
+      const fixedColumnsBodyLeft = wrapper.ref('fixedColumnsBodyLeft');
+      const fixedColumnsBodyRight = wrapper.ref('fixedColumnsBodyRight');
+
+      expect(inst.lastScrollLeft).toBe(undefined);
+
+      // fire headTable scroll.
+      headTable.getNode().scrollTop = 0;
+      headTable.getNode().scrollLeft = 20;
+      headTable.simulate('mouseover');
+      headTable.simulate('scroll');
+      expect(bodyTable.getNode().scrollLeft).toBe(20);
+      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(0);
+      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(0);
+
+      expect(inst.lastScrollLeft).toBe(20);
+
+      // fire bodyTable scroll.
+      bodyTable.getNode().scrollTop = 10;
+      bodyTable.getNode().scrollLeft = 40;
+      bodyTable.simulate('mouseover');
+      bodyTable.simulate('scroll');
+      expect(headTable.getNode().scrollLeft).toBe(40);
+      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(10);
+      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(10);
+
+      expect(inst.lastScrollLeft).toBe(40);
+
+      // fire fixedColumnsBodyLeft scroll.
+      fixedColumnsBodyLeft.getNode().scrollTop = 30;
+      fixedColumnsBodyLeft.simulate('mouseover');
+      fixedColumnsBodyLeft.simulate('scroll');
+      expect(headTable.getNode().scrollLeft).toBe(40);
+      expect(bodyTable.getNode().scrollLeft).toBe(40);
+      expect(bodyTable.getNode().scrollTop).toBe(30);
+      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(30);
+
+      expect(inst.lastScrollLeft).toBe(0);
+
+      // fire fixedColumnsBodyRight scroll.
+      fixedColumnsBodyRight.getNode().scrollTop = 15;
+      fixedColumnsBodyRight.simulate('mouseover');
+      fixedColumnsBodyRight.simulate('scroll');
+      expect(headTable.getNode().scrollLeft).toBe(40);
+      expect(bodyTable.getNode().scrollLeft).toBe(40);
+      expect(bodyTable.getNode().scrollTop).toBe(15);
+      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(15);
+
+      expect(inst.lastScrollLeft).toBe(0);
+    });
   });
 
   describe('row click', () => {
