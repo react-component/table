@@ -3,12 +3,12 @@ webpackJsonp([10],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(307);
+	module.exports = __webpack_require__(306);
 
 
 /***/ },
 
-/***/ 307:
+/***/ 306:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18,7 +18,7 @@ webpackJsonp([10],{
 	var ReactDOM = __webpack_require__(37);
 	var Table = __webpack_require__(188);
 	__webpack_require__(211);
-	__webpack_require__(308);
+	__webpack_require__(307);
 	
 	var columns = [{
 	  title: '姓名',
@@ -101,7 +101,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 308:
+/***/ 307:
 211
 
 });

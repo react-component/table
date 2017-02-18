@@ -721,7 +721,7 @@
 
 /***/ },
 /* 9 */
-[321, 10],
+[320, 10],
 /* 10 */
 /***/ function(module, exports) {
 
@@ -6435,7 +6435,7 @@
 
 /***/ },
 /* 55 */
-[321, 40],
+[320, 40],
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21398,122 +21398,169 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	var Table = _react2.default.createClass({
-	  displayName: 'Table',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  propTypes: {
-	    data: _react.PropTypes.array,
-	    expandIconAsCell: _react.PropTypes.bool,
-	    defaultExpandAllRows: _react.PropTypes.bool,
-	    expandedRowKeys: _react.PropTypes.array,
-	    defaultExpandedRowKeys: _react.PropTypes.array,
-	    useFixedHeader: _react.PropTypes.bool,
-	    columns: _react.PropTypes.array,
-	    prefixCls: _react.PropTypes.string,
-	    bodyStyle: _react.PropTypes.object,
-	    style: _react.PropTypes.object,
-	    rowKey: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	    rowClassName: _react.PropTypes.func,
-	    expandedRowClassName: _react.PropTypes.func,
-	    childrenColumnName: _react.PropTypes.string,
-	    onExpand: _react.PropTypes.func,
-	    onExpandedRowsChange: _react.PropTypes.func,
-	    indentSize: _react.PropTypes.number,
-	    onRowClick: _react.PropTypes.func,
-	    onRowDoubleClick: _react.PropTypes.func,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    showHeader: _react.PropTypes.bool,
-	    title: _react.PropTypes.func,
-	    footer: _react.PropTypes.func,
-	    emptyText: _react.PropTypes.func,
-	    scroll: _react.PropTypes.object,
-	    rowRef: _react.PropTypes.func,
-	    getBodyWrapper: _react.PropTypes.func,
-	    children: _react.PropTypes.node
-	  },
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      data: [],
-	      useFixedHeader: false,
-	      expandIconAsCell: false,
-	      defaultExpandAllRows: false,
-	      defaultExpandedRowKeys: [],
-	      rowKey: 'key',
-	      rowClassName: function rowClassName() {
-	        return '';
-	      },
-	      expandedRowClassName: function expandedRowClassName() {
-	        return '';
-	      },
-	      onExpand: function onExpand() {},
-	      onExpandedRowsChange: function onExpandedRowsChange() {},
-	      onRowClick: function onRowClick() {},
-	      onRowDoubleClick: function onRowDoubleClick() {},
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	      prefixCls: 'rc-table',
-	      bodyStyle: {},
-	      style: {},
-	      childrenColumnName: 'children',
-	      indentSize: 15,
-	      expandIconColumnIndex: 0,
-	      showHeader: true,
-	      scroll: {},
-	      rowRef: function rowRef() {
-	        return null;
-	      },
-	      getBodyWrapper: function getBodyWrapper(body) {
-	        return body;
-	      },
-	      emptyText: function emptyText() {
-	        return 'No Data';
+	var Table = function (_React$Component) {
+	  _inherits(Table, _React$Component);
+	
+	  function Table(props) {
+	    _classCallCheck(this, Table);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.onExpanded = function (expanded, record, e, index) {
+	      if (e) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	      }
+	      var info = _this.findExpandedRow(record);
+	      if (typeof info !== 'undefined' && !expanded) {
+	        _this.onRowDestroy(record, index);
+	      } else if (!info && expanded) {
+	        var expandedRows = _this.getExpandedRows().concat();
+	        expandedRows.push(_this.getRowKey(record, index));
+	        _this.onExpandedRowsChange(expandedRows);
+	      }
+	      _this.props.onExpand(expanded, record);
+	    };
+	
+	    _this.onRowDestroy = function (record, rowIndex) {
+	      var expandedRows = _this.getExpandedRows().concat();
+	      var rowKey = _this.getRowKey(record, rowIndex);
+	      var index = -1;
+	      expandedRows.forEach(function (r, i) {
+	        if (r === rowKey) {
+	          index = i;
+	        }
+	      });
+	      if (index !== -1) {
+	        expandedRows.splice(index, 1);
+	      }
+	      _this.onExpandedRowsChange(expandedRows);
+	    };
+	
+	    _this.syncFixedTableRowHeight = function () {
+	      var tableRect = _this.tableNode.getBoundingClientRect();
+	      // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
+	      // see: https://github.com/ant-design/ant-design/issues/4836
+	      if (tableRect.height !== undefined && tableRect.height <= 0) {
+	        return;
+	      }
+	      var prefixCls = _this.props.prefixCls;
+	
+	      var headRows = _this.refs.headTable ? _this.refs.headTable.querySelectorAll('thead') : _this.refs.bodyTable.querySelectorAll('thead');
+	      var bodyRows = _this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row') || [];
+	      var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
+	        return row.getBoundingClientRect().height || 'auto';
+	      });
+	      var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
+	        return row.getBoundingClientRect().height || 'auto';
+	      });
+	      if ((0, _shallowequal2.default)(_this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2.default)(_this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+	        return;
+	      }
+	      _this.setState({
+	        fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
+	        fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight
+	      });
+	    };
+	
+	    _this.detectScrollTarget = function (e) {
+	      if (_this.scrollTarget !== e.currentTarget) {
+	        _this.scrollTarget = e.currentTarget;
 	      }
 	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var props = this.props;
+	
+	    _this.handleBodyScroll = function (e) {
+	      // Prevent scrollTop setter trigger onScroll event
+	      // http://stackoverflow.com/q/1386696
+	      if (e.target !== _this.scrollTarget) {
+	        return;
+	      }
+	      var _this$props$scroll = _this.props.scroll,
+	          scroll = _this$props$scroll === undefined ? {} : _this$props$scroll;
+	      var _this$refs = _this.refs,
+	          headTable = _this$refs.headTable,
+	          bodyTable = _this$refs.bodyTable,
+	          fixedColumnsBodyLeft = _this$refs.fixedColumnsBodyLeft,
+	          fixedColumnsBodyRight = _this$refs.fixedColumnsBodyRight;
+	
+	      if (scroll.x && e.target.scrollLeft !== _this.lastScrollLeft) {
+	        if (e.target === bodyTable && headTable) {
+	          headTable.scrollLeft = e.target.scrollLeft;
+	        } else if (e.target === headTable && bodyTable) {
+	          bodyTable.scrollLeft = e.target.scrollLeft;
+	        }
+	        if (e.target.scrollLeft === 0) {
+	          _this.setScrollPosition('left');
+	        } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
+	          _this.setScrollPosition('right');
+	        } else if (_this.scrollPosition !== 'middle') {
+	          _this.setScrollPosition('middle');
+	        }
+	      }
+	      if (scroll.y) {
+	        if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
+	          fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+	        }
+	        if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
+	          fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
+	        }
+	        if (bodyTable && e.target !== bodyTable) {
+	          bodyTable.scrollTop = e.target.scrollTop;
+	        }
+	      }
+	      // Remember last scrollLeft for scroll direction detecting.
+	      _this.lastScrollLeft = e.target.scrollLeft;
+	    };
+	
+	    _this.handleRowHover = function (isHover, key) {
+	      _this.store.setState({
+	        currentHoverKey: isHover ? key : null
+	      });
+	    };
+	
 	    var expandedRowKeys = [];
 	    var rows = [].concat(_toConsumableArray(props.data));
-	    this.columnManager = new _ColumnManager2.default(props.columns, props.children);
-	    this.store = (0, _createStore2.default)({ currentHoverKey: null });
-	    this.setScrollPosition('left');
+	    _this.columnManager = new _ColumnManager2.default(props.columns, props.children);
+	    _this.store = (0, _createStore2.default)({ currentHoverKey: null });
+	    _this.setScrollPosition('left');
 	
 	    if (props.defaultExpandAllRows) {
 	      for (var i = 0; i < rows.length; i++) {
 	        var row = rows[i];
-	        expandedRowKeys.push(this.getRowKey(row, i));
+	        expandedRowKeys.push(_this.getRowKey(row, i));
 	        rows = rows.concat(row[props.childrenColumnName] || []);
 	      }
 	    } else {
 	      expandedRowKeys = props.expandedRowKeys || props.defaultExpandedRowKeys;
 	    }
-	    return {
+	    _this.state = {
 	      expandedRowKeys: expandedRowKeys,
-	      data: props.data,
 	      currentHoverKey: null,
 	      fixedColumnsHeadRowsHeight: [],
 	      fixedColumnsBodyRowsHeight: []
 	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.resetScrollY();
+	    return _this;
+	  }
+	
+	  Table.prototype.componentDidMount = function componentDidMount() {
 	    if (this.columnManager.isAnyColumnsFixed()) {
 	      this.syncFixedTableRowHeight();
 	      this.debouncedSyncFixedTableRowHeight = (0, _utils.debounce)(this.syncFixedTableRowHeight, 150);
 	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', this.debouncedSyncFixedTableRowHeight);
 	    }
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if ('data' in nextProps) {
-	      this.setState({
-	        data: nextProps.data
-	      });
-	      if (!nextProps.data || nextProps.data.length === 0) {
-	        this.resetScrollY();
-	      }
-	    }
+	  };
+	
+	  Table.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
 	    if ('expandedRowKeys' in nextProps) {
 	      this.setState({
 	        expandedRowKeys: nextProps.expandedRowKeys
@@ -21524,63 +21571,46 @@
 	    } else if (nextProps.children !== this.props.children) {
 	      this.columnManager.reset(null, nextProps.children);
 	    }
-	  },
-	  componentDidUpdate: function componentDidUpdate() {
-	    this.syncFixedTableRowHeight();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	  };
+	
+	  Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
+	    if (this.columnManager.isAnyColumnsFixed()) {
+	      this.syncFixedTableRowHeight();
+	    }
+	    // when table changes to empty, reset scrollLeft
+	    if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
+	      this.resetScrollX();
+	    }
+	  };
+	
+	  Table.prototype.componentWillUnmount = function componentWillUnmount() {
 	    if (this.resizeEvent) {
 	      this.resizeEvent.remove();
 	    }
 	    if (this.debouncedSyncFixedTableRowHeight) {
 	      this.debouncedSyncFixedTableRowHeight.cancel();
 	    }
-	  },
-	  onExpandedRowsChange: function onExpandedRowsChange(expandedRowKeys) {
+	  };
+	
+	  Table.prototype.onExpandedRowsChange = function onExpandedRowsChange(expandedRowKeys) {
 	    if (!this.props.expandedRowKeys) {
 	      this.setState({ expandedRowKeys: expandedRowKeys });
 	    }
 	    this.props.onExpandedRowsChange(expandedRowKeys);
-	  },
-	  onExpanded: function onExpanded(expanded, record, e, index) {
-	    if (e) {
-	      e.preventDefault();
-	      e.stopPropagation();
-	    }
-	    var info = this.findExpandedRow(record);
-	    if (typeof info !== 'undefined' && !expanded) {
-	      this.onRowDestroy(record, index);
-	    } else if (!info && expanded) {
-	      var expandedRows = this.getExpandedRows().concat();
-	      expandedRows.push(this.getRowKey(record, index));
-	      this.onExpandedRowsChange(expandedRows);
-	    }
-	    this.props.onExpand(expanded, record);
-	  },
-	  onRowDestroy: function onRowDestroy(record, rowIndex) {
-	    var expandedRows = this.getExpandedRows().concat();
-	    var rowKey = this.getRowKey(record, rowIndex);
-	    var index = -1;
-	    expandedRows.forEach(function (r, i) {
-	      if (r === rowKey) {
-	        index = i;
-	      }
-	    });
-	    if (index !== -1) {
-	      expandedRows.splice(index, 1);
-	    }
-	    this.onExpandedRowsChange(expandedRows);
-	  },
-	  getRowKey: function getRowKey(record, index) {
+	  };
+	
+	  Table.prototype.getRowKey = function getRowKey(record, index) {
 	    var rowKey = this.props.rowKey;
 	    var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
 	    (0, _utils.warningOnce)(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
 	    return key === undefined ? index : key;
-	  },
-	  getExpandedRows: function getExpandedRows() {
+	  };
+	
+	  Table.prototype.getExpandedRows = function getExpandedRows() {
 	    return this.props.expandedRowKeys || this.state.expandedRowKeys;
-	  },
-	  getHeader: function getHeader(columns, fixed) {
+	  };
+	
+	  Table.prototype.getHeader = function getHeader(columns, fixed) {
 	    var _props = this.props,
 	        showHeader = _props.showHeader,
 	        expandIconAsCell = _props.expandIconAsCell,
@@ -21604,9 +21634,10 @@
 	      rows: rows,
 	      rowStyle: trStyle
 	    }) : null;
-	  },
-	  getHeaderRows: function getHeaderRows(columns) {
-	    var _this = this;
+	  };
+	
+	  Table.prototype.getHeaderRows = function getHeaderRows(columns) {
+	    var _this2 = this;
 	
 	    var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 	    var rows = arguments[2];
@@ -21626,7 +21657,7 @@
 	        children: column.title
 	      };
 	      if (column.children) {
-	        _this.getHeaderRows(column.children, currentRow + 1, rows);
+	        _this2.getHeaderRows(column.children, currentRow + 1, rows);
 	      }
 	      if ('colSpan' in column) {
 	        cell.colSpan = column.colSpan;
@@ -21641,8 +21672,9 @@
 	    return rows.filter(function (row) {
 	      return row.length > 0;
 	    });
-	  },
-	  getExpandedRow: function getExpandedRow(key, content, visible, className, fixed) {
+	  };
+	
+	  Table.prototype.getExpandedRow = function getExpandedRow(key, content, visible, className, fixed) {
 	    var _props2 = this.props,
 	        prefixCls = _props2.prefixCls,
 	        expandIconAsCell = _props2.expandIconAsCell;
@@ -21684,8 +21716,9 @@
 	      expandable: false,
 	      store: this.store
 	    });
-	  },
-	  getRowsByData: function getRowsByData(data, visible, indent, columns, fixed) {
+	  };
+	
+	  Table.prototype.getRowsByData = function getRowsByData(data, visible, indent, columns, fixed) {
 	    var props = this.props;
 	    var childrenColumnName = props.childrenColumnName;
 	    var expandedRowRender = props.expandedRowRender;
@@ -21770,11 +21803,13 @@
 	      }
 	    }
 	    return rst;
-	  },
-	  getRows: function getRows(columns, fixed) {
-	    return this.getRowsByData(this.state.data, true, 0, columns, fixed);
-	  },
-	  getColGroup: function getColGroup(columns, fixed) {
+	  };
+	
+	  Table.prototype.getRows = function getRows(columns, fixed) {
+	    return this.getRowsByData(this.props.data, true, 0, columns, fixed);
+	  };
+	
+	  Table.prototype.getColGroup = function getColGroup(columns, fixed) {
 	    var cols = [];
 	    if (this.props.expandIconAsCell && fixed !== 'right') {
 	      cols.push(_react2.default.createElement('col', {
@@ -21798,21 +21833,24 @@
 	      null,
 	      cols
 	    );
-	  },
-	  getLeftFixedTable: function getLeftFixedTable() {
+	  };
+	
+	  Table.prototype.getLeftFixedTable = function getLeftFixedTable() {
 	    return this.getTable({
 	      columns: this.columnManager.leftColumns(),
 	      fixed: 'left'
 	    });
-	  },
-	  getRightFixedTable: function getRightFixedTable() {
+	  };
+	
+	  Table.prototype.getRightFixedTable = function getRightFixedTable() {
 	    return this.getTable({
 	      columns: this.columnManager.rightColumns(),
 	      fixed: 'right'
 	    });
-	  },
-	  getTable: function getTable() {
-	    var _this2 = this;
+	  };
+	
+	  Table.prototype.getTable = function getTable() {
+	    var _this3 = this;
 	
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var columns = options.columns,
@@ -21868,13 +21906,13 @@
 	      var tableBody = hasBody ? getBodyWrapper(_react2.default.createElement(
 	        'tbody',
 	        { className: prefixCls + '-tbody' },
-	        _this2.getRows(columns, fixed)
+	        _this3.getRows(columns, fixed)
 	      )) : null;
 	      return _react2.default.createElement(
 	        'table',
 	        { className: tableClassName, style: tableStyle },
-	        _this2.getColGroup(columns, fixed),
-	        hasHead ? _this2.getHeader(columns, fixed) : null,
+	        _this3.getColGroup(columns, fixed),
+	        hasHead ? _this3.getHeader(columns, fixed) : null,
 	        tableBody
 	      );
 	    };
@@ -21885,6 +21923,7 @@
 	      headTable = _react2.default.createElement(
 	        'div',
 	        {
+	          key: 'headTable',
 	          className: prefixCls + '-header',
 	          ref: fixed ? null : 'headTable',
 	          style: headStyle,
@@ -21896,9 +21935,10 @@
 	      );
 	    }
 	
-	    var BodyTable = _react2.default.createElement(
+	    var bodyTable = _react2.default.createElement(
 	      'div',
 	      {
+	        key: 'bodyTable',
 	        className: prefixCls + '-body',
 	        style: bodyStyle,
 	        ref: 'bodyTable',
@@ -21918,9 +21958,10 @@
 	      }
 	      delete bodyStyle.overflowX;
 	      delete bodyStyle.overflowY;
-	      BodyTable = _react2.default.createElement(
+	      bodyTable = _react2.default.createElement(
 	        'div',
 	        {
+	          key: 'bodyTable',
 	          className: prefixCls + '-body-outer',
 	          style: _extends({}, bodyStyle)
 	        },
@@ -21937,15 +21978,10 @@
 	        )
 	      );
 	    }
+	    return [headTable, bodyTable];
+	  };
 	
-	    return _react2.default.createElement(
-	      'span',
-	      null,
-	      headTable,
-	      BodyTable
-	    );
-	  },
-	  getTitle: function getTitle() {
+	  Table.prototype.getTitle = function getTitle() {
 	    var _props4 = this.props,
 	        title = _props4.title,
 	        prefixCls = _props4.prefixCls;
@@ -21953,10 +21989,11 @@
 	    return title ? _react2.default.createElement(
 	      'div',
 	      { className: prefixCls + '-title' },
-	      title(this.state.data)
+	      title(this.props.data)
 	    ) : null;
-	  },
-	  getFooter: function getFooter() {
+	  };
+	
+	  Table.prototype.getFooter = function getFooter() {
 	    var _props5 = this.props,
 	        footer = _props5.footer,
 	        prefixCls = _props5.prefixCls;
@@ -21964,10 +22001,11 @@
 	    return footer ? _react2.default.createElement(
 	      'div',
 	      { className: prefixCls + '-footer' },
-	      footer(this.state.data)
+	      footer(this.props.data)
 	    ) : null;
-	  },
-	  getEmptyText: function getEmptyText() {
+	  };
+	
+	  Table.prototype.getEmptyText = function getEmptyText() {
 	    var _props6 = this.props,
 	        emptyText = _props6.emptyText,
 	        prefixCls = _props6.prefixCls,
@@ -21978,8 +22016,9 @@
 	      { className: prefixCls + '-placeholder' },
 	      emptyText()
 	    ) : null;
-	  },
-	  getHeaderRowStyle: function getHeaderRowStyle(columns, rows) {
+	  };
+	
+	  Table.prototype.getHeaderRowStyle = function getHeaderRowStyle(columns, rows) {
 	    var fixedColumnsHeadRowsHeight = this.state.fixedColumnsHeadRowsHeight;
 	
 	    var headerHeight = fixedColumnsHeadRowsHeight[0];
@@ -21990,107 +22029,48 @@
 	      return { height: headerHeight / rows.length };
 	    }
 	    return null;
-	  },
-	  setScrollPosition: function setScrollPosition(position) {
+	  };
+	
+	  Table.prototype.setScrollPosition = function setScrollPosition(position) {
 	    this.scrollPosition = position;
 	    if (this.tableNode) {
 	      var prefixCls = this.props.prefixCls;
 	
 	      (0, _componentClasses2.default)(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
 	    }
-	  },
-	  syncFixedTableRowHeight: function syncFixedTableRowHeight() {
-	    var prefixCls = this.props.prefixCls;
+	  };
 	
-	    var headRows = this.refs.headTable ? this.refs.headTable.querySelectorAll('thead') : this.refs.bodyTable.querySelectorAll('thead');
-	    var bodyRows = this.refs.bodyTable.querySelectorAll('.' + prefixCls + '-row') || [];
-	    var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
-	      return row.getBoundingClientRect().height || 'auto';
-	    });
-	    var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
-	      return row.getBoundingClientRect().height || 'auto';
-	    });
-	    if ((0, _shallowequal2.default)(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2.default)(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
-	      return;
-	    }
-	    this.setState({
-	      fixedColumnsHeadRowsHeight: fixedColumnsHeadRowsHeight,
-	      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight
-	    });
-	  },
-	  resetScrollY: function resetScrollY() {
+	  Table.prototype.resetScrollX = function resetScrollX() {
 	    if (this.refs.headTable) {
 	      this.refs.headTable.scrollLeft = 0;
 	    }
 	    if (this.refs.bodyTable) {
 	      this.refs.bodyTable.scrollLeft = 0;
 	    }
-	  },
-	  findExpandedRow: function findExpandedRow(record, index) {
-	    var _this3 = this;
+	  };
+	
+	  Table.prototype.findExpandedRow = function findExpandedRow(record, index) {
+	    var _this4 = this;
 	
 	    var rows = this.getExpandedRows().filter(function (i) {
-	      return i === _this3.getRowKey(record, index);
+	      return i === _this4.getRowKey(record, index);
 	    });
 	    return rows[0];
-	  },
-	  isRowExpanded: function isRowExpanded(record, index) {
+	  };
+	
+	  Table.prototype.isRowExpanded = function isRowExpanded(record, index) {
 	    return typeof this.findExpandedRow(record, index) !== 'undefined';
-	  },
-	  detectScrollTarget: function detectScrollTarget(e) {
-	    if (this.scrollTarget !== e.currentTarget) {
-	      this.scrollTarget = e.currentTarget;
-	    }
-	  },
-	  handleBodyScroll: function handleBodyScroll(e) {
-	    // Prevent scrollTop setter trigger onScroll event
-	    // http://stackoverflow.com/q/1386696
-	    if (e.target !== this.scrollTarget) {
-	      return;
-	    }
+	  };
+	
+	  Table.prototype.hasScrollX = function hasScrollX() {
 	    var _props$scroll = this.props.scroll,
 	        scroll = _props$scroll === undefined ? {} : _props$scroll;
-	    var _refs = this.refs,
-	        headTable = _refs.headTable,
-	        bodyTable = _refs.bodyTable,
-	        fixedColumnsBodyLeft = _refs.fixedColumnsBodyLeft,
-	        fixedColumnsBodyRight = _refs.fixedColumnsBodyRight;
 	
-	    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
-	      if (e.target === bodyTable && headTable) {
-	        headTable.scrollLeft = e.target.scrollLeft;
-	      } else if (e.target === headTable && bodyTable) {
-	        bodyTable.scrollLeft = e.target.scrollLeft;
-	      }
-	      if (e.target.scrollLeft === 0) {
-	        this.setScrollPosition('left');
-	      } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
-	        this.setScrollPosition('right');
-	      } else if (this.scrollPosition !== 'middle') {
-	        this.setScrollPosition('middle');
-	      }
-	    }
-	    if (scroll.y) {
-	      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
-	        fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
-	      }
-	      if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
-	        fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
-	      }
-	      if (bodyTable && e.target !== bodyTable) {
-	        bodyTable.scrollTop = e.target.scrollTop;
-	      }
-	    }
-	    // Remember last scrollLeft for scroll direction detecting.
-	    this.lastScrollLeft = e.target.scrollLeft;
-	  },
-	  handleRowHover: function handleRowHover(isHover, key) {
-	    this.store.setState({
-	      currentHoverKey: isHover ? key : null
-	    });
-	  },
-	  render: function render() {
-	    var _this4 = this;
+	    return 'x' in scroll;
+	  };
+	
+	  Table.prototype.render = function render() {
+	    var _this5 = this;
 	
 	    var props = this.props;
 	    var prefixCls = props.prefixCls;
@@ -22106,37 +22086,123 @@
 	
 	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
+	    var isAnyColumnsFixed = this.columnManager.isAnyColumnsLeftFixed() || this.columnManager.isAnyColumnsRightFixed();
+	
+	    if (isAnyColumnsFixed) {
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: function ref(node) {
+	            return _this5.tableNode = node;
+	          }, className: className, style: props.style },
+	        this.getTitle(),
+	        _react2.default.createElement(
+	          'div',
+	          { className: prefixCls + '-content' },
+	          this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
+	            'div',
+	            { className: prefixCls + '-fixed-left' },
+	            this.getLeftFixedTable()
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: isTableScroll ? prefixCls + '-scroll' : '' },
+	            this.getTable({ columns: this.columnManager.groupedColumns() }),
+	            this.getEmptyText(),
+	            this.getFooter()
+	          ),
+	          this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
+	            'div',
+	            { className: prefixCls + '-fixed-right' },
+	            this.getRightFixedTable()
+	          )
+	        )
+	      );
+	    }
 	    return _react2.default.createElement(
 	      'div',
 	      { ref: function ref(node) {
-	          return _this4.tableNode = node;
+	          return _this5.tableNode = node;
 	        }, className: className, style: props.style },
 	      this.getTitle(),
 	      _react2.default.createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
-	        this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
-	          'div',
-	          { className: prefixCls + '-fixed-left' },
-	          this.getLeftFixedTable()
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: isTableScroll ? prefixCls + '-scroll' : '' },
-	          this.getTable({ columns: this.columnManager.groupedColumns() }),
-	          this.getEmptyText(),
-	          this.getFooter()
-	        ),
-	        this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
-	          'div',
-	          { className: prefixCls + '-fixed-right' },
-	          this.getRightFixedTable()
-	        )
+	        this.getTable({ columns: this.columnManager.groupedColumns() }),
+	        this.getEmptyText(),
+	        this.getFooter()
 	      )
 	    );
-	  }
-	});
+	  };
 	
+	  return Table;
+	}(_react2.default.Component);
+	
+	Table.propTypes = {
+	  data: _react.PropTypes.array,
+	  expandIconAsCell: _react.PropTypes.bool,
+	  defaultExpandAllRows: _react.PropTypes.bool,
+	  expandedRowKeys: _react.PropTypes.array,
+	  defaultExpandedRowKeys: _react.PropTypes.array,
+	  useFixedHeader: _react.PropTypes.bool,
+	  columns: _react.PropTypes.array,
+	  prefixCls: _react.PropTypes.string,
+	  bodyStyle: _react.PropTypes.object,
+	  style: _react.PropTypes.object,
+	  rowKey: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
+	  rowClassName: _react.PropTypes.func,
+	  expandedRowClassName: _react.PropTypes.func,
+	  childrenColumnName: _react.PropTypes.string,
+	  onExpand: _react.PropTypes.func,
+	  onExpandedRowsChange: _react.PropTypes.func,
+	  indentSize: _react.PropTypes.number,
+	  onRowClick: _react.PropTypes.func,
+	  onRowDoubleClick: _react.PropTypes.func,
+	  expandIconColumnIndex: _react.PropTypes.number,
+	  showHeader: _react.PropTypes.bool,
+	  title: _react.PropTypes.func,
+	  footer: _react.PropTypes.func,
+	  emptyText: _react.PropTypes.func,
+	  scroll: _react.PropTypes.object,
+	  rowRef: _react.PropTypes.func,
+	  getBodyWrapper: _react.PropTypes.func,
+	  children: _react.PropTypes.node
+	};
+	Table.defaultProps = {
+	  data: [],
+	  useFixedHeader: false,
+	  expandIconAsCell: false,
+	  defaultExpandAllRows: false,
+	  defaultExpandedRowKeys: [],
+	  rowKey: 'key',
+	  rowClassName: function rowClassName() {
+	    return '';
+	  },
+	  expandedRowClassName: function expandedRowClassName() {
+	    return '';
+	  },
+	  onExpand: function onExpand() {},
+	  onExpandedRowsChange: function onExpandedRowsChange() {},
+	  onRowClick: function onRowClick() {},
+	  onRowDoubleClick: function onRowDoubleClick() {},
+	
+	  prefixCls: 'rc-table',
+	  bodyStyle: {},
+	  style: {},
+	  childrenColumnName: 'children',
+	  indentSize: 15,
+	  expandIconColumnIndex: 0,
+	  showHeader: true,
+	  scroll: {},
+	  rowRef: function rowRef() {
+	    return null;
+	  },
+	  getBodyWrapper: function getBodyWrapper(body) {
+	    return body;
+	  },
+	  emptyText: function emptyText() {
+	    return 'No Data';
+	  }
+	};
 	exports.default = Table;
 	module.exports = exports['default'];
 
@@ -22164,52 +22230,66 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var TableRow = _react2.default.createClass({
-	  displayName: 'TableRow',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    onDestroy: _react.PropTypes.func,
-	    onRowClick: _react.PropTypes.func,
-	    onRowDoubleClick: _react.PropTypes.func,
-	    record: _react.PropTypes.object,
-	    prefixCls: _react.PropTypes.string,
-	    expandIconColumnIndex: _react.PropTypes.number,
-	    onHover: _react.PropTypes.func,
-	    columns: _react.PropTypes.array,
-	    height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	    visible: _react.PropTypes.bool,
-	    index: _react.PropTypes.number,
-	    hoverKey: _react.PropTypes.any,
-	    expanded: _react.PropTypes.bool,
-	    expandable: _react.PropTypes.any,
-	    onExpand: _react.PropTypes.func,
-	    needIndentSpaced: _react.PropTypes.bool,
-	    className: _react.PropTypes.string,
-	    indent: _react.PropTypes.number,
-	    indentSize: _react.PropTypes.number,
-	    expandIconAsCell: _react.PropTypes.bool,
-	    expandRowByClick: _react.PropTypes.bool,
-	    store: _react.PropTypes.object.isRequired
-	  },
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      onRowClick: function onRowClick() {},
-	      onRowDoubleClick: function onRowDoubleClick() {},
-	      onDestroy: function onDestroy() {},
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	      expandIconColumnIndex: 0,
-	      expandRowByClick: false,
-	      onHover: function onHover() {}
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var TableRow = function (_React$Component) {
+	  _inherits(TableRow, _React$Component);
+	
+	  function TableRow() {
+	    var _temp, _this, _ret;
+	
+	    _classCallCheck(this, TableRow);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
 	      hovered: false
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var _this = this;
+	    }, _this.onRowClick = function (event) {
+	      var _this$props = _this.props,
+	          record = _this$props.record,
+	          index = _this$props.index,
+	          onRowClick = _this$props.onRowClick,
+	          expandable = _this$props.expandable,
+	          expandRowByClick = _this$props.expandRowByClick,
+	          expanded = _this$props.expanded,
+	          onExpand = _this$props.onExpand;
+	
+	      if (expandable && expandRowByClick) {
+	        onExpand(!expanded, record, event, index);
+	      }
+	      onRowClick(record, index, event);
+	    }, _this.onRowDoubleClick = function (event) {
+	      var _this$props2 = _this.props,
+	          record = _this$props2.record,
+	          index = _this$props2.index,
+	          onRowDoubleClick = _this$props2.onRowDoubleClick;
+	
+	      onRowDoubleClick(record, index, event);
+	    }, _this.onMouseEnter = function () {
+	      var _this$props3 = _this.props,
+	          onHover = _this$props3.onHover,
+	          hoverKey = _this$props3.hoverKey;
+	
+	      onHover(true, hoverKey);
+	    }, _this.onMouseLeave = function () {
+	      var _this$props4 = _this.props,
+	          onHover = _this$props4.onHover,
+	          hoverKey = _this$props4.hoverKey;
+	
+	      onHover(false, hoverKey);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+	
+	  TableRow.prototype.componentDidMount = function componentDidMount() {
+	    var _this2 = this;
 	
 	    var _props = this.props,
 	        store = _props.store,
@@ -22217,13 +22297,14 @@
 	
 	    this.unsubscribe = store.subscribe(function () {
 	      if (store.getState().currentHoverKey === hoverKey) {
-	        _this.setState({ hovered: true });
-	      } else if (_this.state.hovered === true) {
-	        _this.setState({ hovered: false });
+	        _this2.setState({ hovered: true });
+	      } else if (_this2.state.hovered === true) {
+	        _this2.setState({ hovered: false });
 	      }
 	    });
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	  };
+	
+	  TableRow.prototype.componentWillUnmount = function componentWillUnmount() {
 	    var _props2 = this.props,
 	        record = _props2.record,
 	        onDestroy = _props2.onDestroy,
@@ -22233,61 +22314,25 @@
 	    if (this.unsubscribe) {
 	      this.unsubscribe();
 	    }
-	  },
-	  onRowClick: function onRowClick(event) {
+	  };
+	
+	  TableRow.prototype.render = function render() {
 	    var _props3 = this.props,
+	        prefixCls = _props3.prefixCls,
+	        columns = _props3.columns,
 	        record = _props3.record,
+	        height = _props3.height,
+	        visible = _props3.visible,
 	        index = _props3.index,
-	        onRowClick = _props3.onRowClick,
-	        expandable = _props3.expandable,
-	        expandRowByClick = _props3.expandRowByClick,
+	        expandIconColumnIndex = _props3.expandIconColumnIndex,
+	        expandIconAsCell = _props3.expandIconAsCell,
 	        expanded = _props3.expanded,
-	        onExpand = _props3.onExpand;
-	
-	    if (expandable && expandRowByClick) {
-	      onExpand(!expanded, record, event, index);
-	    }
-	    onRowClick(record, index, event);
-	  },
-	  onRowDoubleClick: function onRowDoubleClick(event) {
-	    var _props4 = this.props,
-	        record = _props4.record,
-	        index = _props4.index,
-	        onRowDoubleClick = _props4.onRowDoubleClick;
-	
-	    onRowDoubleClick(record, index, event);
-	  },
-	  onMouseEnter: function onMouseEnter() {
-	    var _props5 = this.props,
-	        onHover = _props5.onHover,
-	        hoverKey = _props5.hoverKey;
-	
-	    onHover(true, hoverKey);
-	  },
-	  onMouseLeave: function onMouseLeave() {
-	    var _props6 = this.props,
-	        onHover = _props6.onHover,
-	        hoverKey = _props6.hoverKey;
-	
-	    onHover(false, hoverKey);
-	  },
-	  render: function render() {
-	    var _props7 = this.props,
-	        prefixCls = _props7.prefixCls,
-	        columns = _props7.columns,
-	        record = _props7.record,
-	        height = _props7.height,
-	        visible = _props7.visible,
-	        index = _props7.index,
-	        expandIconColumnIndex = _props7.expandIconColumnIndex,
-	        expandIconAsCell = _props7.expandIconAsCell,
-	        expanded = _props7.expanded,
-	        expandRowByClick = _props7.expandRowByClick,
-	        expandable = _props7.expandable,
-	        onExpand = _props7.onExpand,
-	        needIndentSpaced = _props7.needIndentSpaced,
-	        indent = _props7.indent,
-	        indentSize = _props7.indentSize;
+	        expandRowByClick = _props3.expandRowByClick,
+	        expandable = _props3.expandable,
+	        onExpand = _props3.onExpand,
+	        needIndentSpaced = _props3.needIndentSpaced,
+	        indent = _props3.indent,
+	        indentSize = _props3.indentSize;
 	    var className = this.props.className;
 	
 	
@@ -22346,9 +22391,44 @@
 	      },
 	      cells
 	    );
-	  }
-	});
+	  };
 	
+	  return TableRow;
+	}(_react2.default.Component);
+	
+	TableRow.propTypes = {
+	  onDestroy: _react.PropTypes.func,
+	  onRowClick: _react.PropTypes.func,
+	  onRowDoubleClick: _react.PropTypes.func,
+	  record: _react.PropTypes.object,
+	  prefixCls: _react.PropTypes.string,
+	  expandIconColumnIndex: _react.PropTypes.number,
+	  onHover: _react.PropTypes.func,
+	  columns: _react.PropTypes.array,
+	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  visible: _react.PropTypes.bool,
+	  index: _react.PropTypes.number,
+	  hoverKey: _react.PropTypes.any,
+	  expanded: _react.PropTypes.bool,
+	  expandable: _react.PropTypes.any,
+	  onExpand: _react.PropTypes.func,
+	  needIndentSpaced: _react.PropTypes.bool,
+	  className: _react.PropTypes.string,
+	  indent: _react.PropTypes.number,
+	  indentSize: _react.PropTypes.number,
+	  expandIconAsCell: _react.PropTypes.bool,
+	  expandRowByClick: _react.PropTypes.bool,
+	  store: _react.PropTypes.object.isRequired
+	};
+	TableRow.defaultProps = {
+	  onRowClick: function onRowClick() {},
+	  onRowDoubleClick: function onRowDoubleClick() {},
+	  onDestroy: function onDestroy() {},
+	
+	  expandIconColumnIndex: 0,
+	  expandRowByClick: false,
+	  onHover: function onHover() {}
+	};
 	exports.default = TableRow;
 	module.exports = exports['default'];
 
@@ -22372,39 +22452,50 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var TableCell = _react2.default.createClass({
-	  displayName: 'TableCell',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    record: _react.PropTypes.object,
-	    prefixCls: _react.PropTypes.string,
-	    index: _react.PropTypes.number,
-	    indent: _react.PropTypes.number,
-	    indentSize: _react.PropTypes.number,
-	    column: _react.PropTypes.object,
-	    expandIcon: _react.PropTypes.node
-	  },
-	  isInvalidRenderCellText: function isInvalidRenderCellText(text) {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var TableCell = function (_React$Component) {
+	  _inherits(TableCell, _React$Component);
+	
+	  function TableCell() {
+	    var _temp, _this, _ret;
+	
+	    _classCallCheck(this, TableCell);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.handleClick = function (e) {
+	      var _this$props = _this.props,
+	          record = _this$props.record,
+	          onCellClick = _this$props.column.onCellClick;
+	
+	      if (onCellClick) {
+	        onCellClick(record, e);
+	      }
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+	
+	  TableCell.prototype.isInvalidRenderCellText = function isInvalidRenderCellText(text) {
 	    return text && !_react2.default.isValidElement(text) && Object.prototype.toString.call(text) === '[object Object]';
-	  },
-	  handleClick: function handleClick(e) {
+	  };
+	
+	  TableCell.prototype.render = function render() {
 	    var _props = this.props,
 	        record = _props.record,
-	        onCellClick = _props.column.onCellClick;
-	
-	    if (onCellClick) {
-	      onCellClick(record, e);
-	    }
-	  },
-	  render: function render() {
-	    var _props2 = this.props,
-	        record = _props2.record,
-	        indentSize = _props2.indentSize,
-	        prefixCls = _props2.prefixCls,
-	        indent = _props2.indent,
-	        index = _props2.index,
-	        expandIcon = _props2.expandIcon,
-	        column = _props2.column;
+	        indentSize = _props.indentSize,
+	        prefixCls = _props.prefixCls,
+	        indent = _props.indent,
+	        index = _props.index,
+	        expandIcon = _props.expandIcon,
+	        column = _props.column;
 	    var dataIndex = column.dataIndex,
 	        render = column.render,
 	        _column$className = column.className,
@@ -22460,9 +22551,20 @@
 	      expandIcon,
 	      text
 	    );
-	  }
-	});
+	  };
 	
+	  return TableCell;
+	}(_react2.default.Component);
+	
+	TableCell.propTypes = {
+	  record: _react.PropTypes.object,
+	  prefixCls: _react.PropTypes.string,
+	  index: _react.PropTypes.number,
+	  indent: _react.PropTypes.number,
+	  indentSize: _react.PropTypes.number,
+	  column: _react.PropTypes.object,
+	  expandIcon: _react.PropTypes.node
+	};
 	exports.default = TableCell;
 	module.exports = exports['default'];
 
@@ -23424,21 +23526,28 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var ExpandIcon = _react2.default.createClass({
-	  displayName: 'ExpandIcon',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    record: _react.PropTypes.object,
-	    prefixCls: _react.PropTypes.string,
-	    expandable: _react.PropTypes.any,
-	    expanded: _react.PropTypes.bool,
-	    needIndentSpaced: _react.PropTypes.bool,
-	    onExpand: _react.PropTypes.func
-	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var ExpandIcon = function (_React$Component) {
+	  _inherits(ExpandIcon, _React$Component);
+	
+	  function ExpandIcon() {
+	    _classCallCheck(this, ExpandIcon);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  ExpandIcon.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
 	    return !(0, _shallowequal2.default)(nextProps, this.props);
-	  },
-	  render: function render() {
+	  };
+	
+	  ExpandIcon.prototype.render = function render() {
 	    var _props = this.props,
 	        expandable = _props.expandable,
 	        prefixCls = _props.prefixCls,
@@ -23459,9 +23568,19 @@
 	      return _react2.default.createElement('span', { className: prefixCls + '-expand-icon ' + prefixCls + '-spaced' });
 	    }
 	    return null;
-	  }
-	});
+	  };
 	
+	  return ExpandIcon;
+	}(_react2.default.Component);
+	
+	ExpandIcon.propTypes = {
+	  record: _react.PropTypes.object,
+	  prefixCls: _react.PropTypes.string,
+	  expandable: _react.PropTypes.any,
+	  expanded: _react.PropTypes.bool,
+	  needIndentSpaced: _react.PropTypes.bool,
+	  onExpand: _react.PropTypes.func
+	};
 	exports.default = ExpandIcon;
 	module.exports = exports['default'];
 
@@ -24346,18 +24465,28 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = _react2.default.createClass({
-	  displayName: 'TableHeader',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    prefixCls: _react.PropTypes.string,
-	    rowStyle: _react.PropTypes.object,
-	    rows: _react.PropTypes.array
-	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var TableHeader = function (_React$Component) {
+	  _inherits(TableHeader, _React$Component);
+	
+	  function TableHeader() {
+	    _classCallCheck(this, TableHeader);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  TableHeader.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
 	    return !(0, _shallowequal2.default)(nextProps, this.props);
-	  },
-	  render: function render() {
+	  };
+	
+	  TableHeader.prototype.render = function render() {
 	    var _props = this.props,
 	        prefixCls = _props.prefixCls,
 	        rowStyle = _props.rowStyle,
@@ -24376,8 +24505,17 @@
 	        );
 	      })
 	    );
-	  }
-	});
+	  };
+	
+	  return TableHeader;
+	}(_react2.default.Component);
+	
+	TableHeader.propTypes = {
+	  prefixCls: _react.PropTypes.string,
+	  rowStyle: _react.PropTypes.object,
+	  rows: _react.PropTypes.array
+	};
+	exports.default = TableHeader;
 	module.exports = exports['default'];
 
 /***/ },
@@ -24452,7 +24590,7 @@
 	      func.apply(context, args);
 	    }
 	  }
-	  debounceFunc.cancel = function () {
+	  debounceFunc.cancel = function cancel() {
 	    if (timeout) {
 	      clearTimeout(timeout);
 	      timeout = null;
@@ -25404,8 +25542,7 @@
 /* 317 */,
 /* 318 */,
 /* 319 */,
-/* 320 */,
-/* 321 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
