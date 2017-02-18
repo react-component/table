@@ -133,6 +133,19 @@ describe('Table.expand', () => {
     expect(onExpandedRowsChange).toBeCalledWith([0]);
   });
 
+  it('fires onExpandedRowsChange event when row is removed', () => {
+    const onExpandedRowsChange = jest.fn();
+    const wrapper = mount(createTable({
+      defaultExpandAllRows: true,
+      expandedRowRender,
+      onExpandedRowsChange,
+    }));
+    wrapper.setProps({ data: [
+      { key: 1, name: 'Jack', age: 28 },
+    ] });
+    expect(onExpandedRowsChange).toBeCalledWith([1]);
+  });
+
   it('expand row by click', () => {
     const wrapper = mount(createTable({ expandedRowRender }));
     wrapper.find('ExpandIcon').first().simulate('click');
