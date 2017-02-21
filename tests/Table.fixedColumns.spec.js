@@ -5,6 +5,14 @@ import { renderToJson } from 'enzyme-to-json';
 import Table from '..';
 
 describe('Table.fixedColumns', () => {
+  // see:
+  // https://github.com/airbnb/enzyme/issues/49#issuecomment-270250193
+  // https://github.com/tmpvar/jsdom/issues/653
+  function mockClientRect(node, rect) {
+    node.getBoundingClientRect = () => ({
+      ...rect,
+    });
+  }
   const columns = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
     { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
@@ -76,14 +84,6 @@ describe('Table.fixedColumns', () => {
     const fixedRightRows = tableNode.querySelectorAll('.rc-table-fixed-right tr');
     const rowHeight = '30px';
 
-    // see:
-    // https://github.com/airbnb/enzyme/issues/49#issuecomment-270250193
-    // https://github.com/tmpvar/jsdom/issues/653
-    function mockClientRect(node, rect) {
-      node.getBoundingClientRect = () => ({
-        ...rect,
-      });
-    }
     function simulateTableShow() {
       mockClientRect(tableNode, {
         top: 0,
@@ -151,5 +151,30 @@ describe('Table.fixedColumns', () => {
     fixedRightRows.forEach(tr => {
       expect(tr.style.height).toBe(rowHeight);
     });
+  });
+
+  it('has correct scroll classNames when table resize', () => {
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={data}
+        scroll={{ x: true }}
+        style={{ width: 2000 }}
+      />
+    );
+    const tableNode = wrapper.instance().tableNode;
+    const tableBodyContainer = tableNode.querySelectorAll('.rc-table-scroll > .rc-table-body')[0];
+    const tableBodyNode = tableBodyContainer.children[0];
+    expect(tableNode.className).toContain('rc-table-scroll-position-left');
+    expect(tableNode.className).toContain('rc-table-scroll-position-right');
+    mockClientRect(tableBodyContainer, {
+      width: 500,
+    });
+    mockClientRect(tableBodyNode, {
+      width: 800,
+    });
+    wrapper.setProps({ style: { width: 500 } });
+    expect(tableNode.className).toContain('rc-table-scroll-position-left');
+    expect(tableNode.className).not.toContain('rc-table-scroll-position-right');
   });
 });
