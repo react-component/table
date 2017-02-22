@@ -38,7 +38,7 @@ ReactDOM.render(
       columns={columns}
       expandedRowRender={record => record.title}
       expandIconAsCell
-      scroll={{ x: true }}
+      scroll={{ x: 800 }}
       data={data}
     />
   </div>
