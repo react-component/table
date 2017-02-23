@@ -17,6 +17,10 @@
 
   .@{tablePrefixCls}-scroll {
     overflow: auto;
+    table {
+      width: auto;
+      min-width: 100%;
+    }
   }
 
   .@{tablePrefixCls}-header {
@@ -92,12 +96,13 @@
 
   th, td {
     padding: @vertical-padding @horizontal-padding;
+    white-space: nowrap;
   }
 }
 
 .@{tablePrefixCls} {
   &-expand-icon-col {
-    width: 10px;
+    width: 34px;
   }
   &-row, &-expanded-row {
     &-expand-icon {

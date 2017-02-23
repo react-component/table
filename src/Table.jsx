@@ -93,10 +93,10 @@ export default class Table extends React.Component {
 
   componentDidMount() {
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
-      this.debouncedSyncFixedTableRowHeight = debounce(this.syncFixedTableRowHeight, 150);
+      this.handleWindowResize();
+      this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
       this.resizeEvent = addEventListener(
-        window, 'resize', this.debouncedSyncFixedTableRowHeight
+        window, 'resize', this.debouncedWindowResize
       );
     }
   }
@@ -116,7 +116,7 @@ export default class Table extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
+      this.handleWindowResize();
     }
     // when table changes to empty, reset scrollLeft
     if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
@@ -128,8 +128,8 @@ export default class Table extends React.Component {
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
-    if (this.debouncedSyncFixedTableRowHeight) {
-      this.debouncedSyncFixedTableRowHeight.cancel();
+    if (this.debouncedWindowResize) {
+      this.debouncedWindowResize.cancel();
     }
   }
 
@@ -576,10 +576,39 @@ export default class Table extends React.Component {
     this.scrollPosition = position;
     if (this.tableNode) {
       const { prefixCls } = this.props;
-      classes(this.tableNode)
-        .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
-        .add(`${prefixCls}-scroll-position-${position}`);
+      if (position === 'both') {
+        classes(this.tableNode)
+          .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
+          .add(`${prefixCls}-scroll-position-left`)
+          .add(`${prefixCls}-scroll-position-right`);
+      } else {
+        classes(this.tableNode)
+          .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
+          .add(`${prefixCls}-scroll-position-${position}`);
+      }
     }
+  }
+
+  setScrollPositionClassName(target) {
+    const node = target || this.refs.bodyTable;
+    const scrollToLeft = node.scrollLeft === 0;
+    const scrollToRight = node.scrollLeft + 1 >=
+      node.children[0].getBoundingClientRect().width -
+      node.getBoundingClientRect().width;
+    if (scrollToLeft && scrollToRight) {
+      this.setScrollPosition('both');
+    } else if (scrollToLeft) {
+      this.setScrollPosition('left');
+    } else if (scrollToRight) {
+      this.setScrollPosition('right');
+    } else if (this.scrollPosition !== 'middle') {
+      this.setScrollPosition('middle');
+    }
+  }
+
+  handleWindowResize = () => {
+    this.syncFixedTableRowHeight();
+    this.setScrollPositionClassName();
   }
 
   syncFixedTableRowHeight = () => {
@@ -653,15 +682,7 @@ export default class Table extends React.Component {
       } else if (e.target === headTable && bodyTable) {
         bodyTable.scrollLeft = e.target.scrollLeft;
       }
-      if (e.target.scrollLeft === 0) {
-        this.setScrollPosition('left');
-      } else if (e.target.scrollLeft + 1 >=
-        e.target.children[0].getBoundingClientRect().width -
-        e.target.getBoundingClientRect().width) {
-        this.setScrollPosition('right');
-      } else if (this.scrollPosition !== 'middle') {
-        this.setScrollPosition('middle');
-      }
+      this.setScrollPositionClassName(e.target);
     }
     if (scroll.y) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
@@ -695,7 +716,11 @@ export default class Table extends React.Component {
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${prefixCls}-fixed-header`;
     }
-    className += ` ${prefixCls}-scroll-position-${this.scrollPosition}`;
+    if (this.scrollPosition === 'both') {
+      className += ` ${prefixCls}-scroll-position-left ${prefixCls}-scroll-position-right`;
+    } else {
+      className += ` ${prefixCls}-scroll-position-${this.scrollPosition}`;
+    }
 
     const isTableScroll = this.columnManager.isAnyColumnsFixed() ||
                           props.scroll.x ||
