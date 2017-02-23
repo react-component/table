@@ -601,47 +601,50 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-body"
-      style="overflow-x:auto;">
-      <table
-        class="rc-table-fixed"
-        style="width:200px;">
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead">
-          <tr>
-            <th
-              class="">
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody">
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      class="rc-table-scroll">
+      <div
+        class="rc-table-body"
+        style="overflow-x:auto;">
+        <table
+          class="rc-table-fixed"
+          style="width:200px;">
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead">
+            <tr>
+              <th
+                class="">
+                Name
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="rc-table-tbody">
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Lucy
+              </td>
+            </tr>
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Jack
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -653,47 +656,50 @@ exports[`Table scroll renders scroll.x is true 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-body"
-      style="overflow-x:auto;">
-      <table
-        class="rc-table-fixed"
-        style="table-layout:fixed;">
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead">
-          <tr>
-            <th
-              class="">
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody">
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      class="rc-table-scroll">
+      <div
+        class="rc-table-body"
+        style="overflow-x:auto;">
+        <table
+          class="rc-table-fixed"
+          style="table-layout:fixed;">
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead">
+            <tr>
+              <th
+                class="">
+                Name
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="rc-table-tbody">
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Lucy
+              </td>
+            </tr>
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Jack
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -705,55 +711,58 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
   <div
     class="rc-table-content">
     <div
-      class="rc-table-header">
-      <table
-        class="">
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead">
-          <tr>
-            <th
-              class="">
-              Name
-            </th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <div
-      class="rc-table-body"
-      style="max-height:200px;overflow-y:scroll;">
-      <table
-        class="">
-        <colgroup>
-          <col />
-        </colgroup>
-        <tbody
-          class="rc-table-tbody">
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row  rc-table-row-level-0">
-            <td
-              class="">
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      class="rc-table-scroll">
+      <div
+        class="rc-table-header">
+        <table
+          class="">
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead">
+            <tr>
+              <th
+                class="">
+                Name
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div
+        class="rc-table-body"
+        style="max-height:200px;overflow-y:scroll;">
+        <table
+          class="">
+          <colgroup>
+            <col />
+          </colgroup>
+          <tbody
+            class="rc-table-tbody">
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Lucy
+              </td>
+            </tr>
+            <tr
+              class="rc-table-row  rc-table-row-level-0">
+              <td
+                class="">
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px;" />
+                Jack
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
