@@ -10,6 +10,10 @@
 .rc-table .rc-table-scroll {
   overflow: auto;
 }
+.rc-table .rc-table-scroll table {
+  width: auto;
+  min-width: 100%;
+}
 .rc-table .rc-table-header {
   overflow: hidden;
   background: #f7f7f7;
@@ -74,9 +78,10 @@
 .rc-table th,
 .rc-table td {
   padding: 16px 8px;
+  white-space: nowrap;
 }
 .rc-table-expand-icon-col {
-  width: 10px;
+  width: 34px;
 }
 .rc-table-row-expand-icon,
 .rc-table-expanded-row-expand-icon {
@@ -154,7 +159,6 @@ tr.rc-table-expanded-row:hover {
   position: absolute;
   top: 0;
   overflow: hidden;
-  z-index: 1;
 }
 .rc-table-fixed-left table,
 .rc-table-fixed-right table {

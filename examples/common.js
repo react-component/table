@@ -51,7 +51,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		23:0
+/******/ 		24:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -97,7 +97,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"grouping-columns","11":"hide-header","12":"jsx","13":"key","14":"nested","15":"no-data","16":"rowAndCellClick","17":"scrollX","18":"scrollXY","19":"scrollY","20":"simple","21":"subTable","22":"title-and-footer"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"animation","1":"childrenIndent","2":"className","3":"colspan-rowspan","4":"dropdown","5":"expandedRowRender","6":"fixedColumns","7":"fixedColumns-auto-height","8":"fixedColumnsAndHeader","9":"fixedColumnsAndHeaderSyncRowHeight","10":"fixedColumnsWhenResize","11":"grouping-columns","12":"hide-header","13":"jsx","14":"key","15":"nested","16":"no-data","17":"rowAndCellClick","18":"scrollX","19":"scrollXY","20":"scrollY","21":"simple","22":"subTable","23":"title-and-footer"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -721,7 +721,7 @@
 
 /***/ },
 /* 9 */
-[320, 10],
+[321, 10],
 /* 10 */
 /***/ function(module, exports) {
 
@@ -6435,7 +6435,7 @@
 
 /***/ },
 /* 55 */
-[320, 40],
+[321, 40],
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21447,6 +21447,11 @@
 	      _this.onExpandedRowsChange(expandedRows);
 	    };
 	
+	    _this.handleWindowResize = function () {
+	      _this.syncFixedTableRowHeight();
+	      _this.setScrollPositionClassName();
+	    };
+	
 	    _this.syncFixedTableRowHeight = function () {
 	      var tableRect = _this.tableNode.getBoundingClientRect();
 	      // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
@@ -21499,13 +21504,7 @@
 	        } else if (e.target === headTable && bodyTable) {
 	          bodyTable.scrollLeft = e.target.scrollLeft;
 	        }
-	        if (e.target.scrollLeft === 0) {
-	          _this.setScrollPosition('left');
-	        } else if (e.target.scrollLeft + 1 >= e.target.children[0].getBoundingClientRect().width - e.target.getBoundingClientRect().width) {
-	          _this.setScrollPosition('right');
-	        } else if (_this.scrollPosition !== 'middle') {
-	          _this.setScrollPosition('middle');
-	        }
+	        _this.setScrollPositionClassName(e.target);
 	      }
 	      if (scroll.y) {
 	        if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
@@ -21554,9 +21553,9 @@
 	
 	  Table.prototype.componentDidMount = function componentDidMount() {
 	    if (this.columnManager.isAnyColumnsFixed()) {
-	      this.syncFixedTableRowHeight();
-	      this.debouncedSyncFixedTableRowHeight = (0, _utils.debounce)(this.syncFixedTableRowHeight, 150);
-	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', this.debouncedSyncFixedTableRowHeight);
+	      this.handleWindowResize();
+	      this.debouncedWindowResize = (0, _utils.debounce)(this.handleWindowResize, 150);
+	      this.resizeEvent = (0, _addEventListener2.default)(window, 'resize', this.debouncedWindowResize);
 	    }
 	  };
 	
@@ -21575,7 +21574,7 @@
 	
 	  Table.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
 	    if (this.columnManager.isAnyColumnsFixed()) {
-	      this.syncFixedTableRowHeight();
+	      this.handleWindowResize();
 	    }
 	    // when table changes to empty, reset scrollLeft
 	    if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
@@ -21587,8 +21586,8 @@
 	    if (this.resizeEvent) {
 	      this.resizeEvent.remove();
 	    }
-	    if (this.debouncedSyncFixedTableRowHeight) {
-	      this.debouncedSyncFixedTableRowHeight.cancel();
+	    if (this.debouncedWindowResize) {
+	      this.debouncedWindowResize.cancel();
 	    }
 	  };
 	
@@ -22036,7 +22035,26 @@
 	    if (this.tableNode) {
 	      var prefixCls = this.props.prefixCls;
 	
-	      (0, _componentClasses2.default)(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
+	      if (position === 'both') {
+	        (0, _componentClasses2.default)(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-left').add(prefixCls + '-scroll-position-right');
+	      } else {
+	        (0, _componentClasses2.default)(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
+	      }
+	    }
+	  };
+	
+	  Table.prototype.setScrollPositionClassName = function setScrollPositionClassName(target) {
+	    var node = target || this.refs.bodyTable;
+	    var scrollToLeft = node.scrollLeft === 0;
+	    var scrollToRight = node.scrollLeft + 1 >= node.children[0].getBoundingClientRect().width - node.getBoundingClientRect().width;
+	    if (scrollToLeft && scrollToRight) {
+	      this.setScrollPosition('both');
+	    } else if (scrollToLeft) {
+	      this.setScrollPosition('left');
+	    } else if (scrollToRight) {
+	      this.setScrollPosition('right');
+	    } else if (this.scrollPosition !== 'middle') {
+	      this.setScrollPosition('middle');
 	    }
 	  };
 	
@@ -22082,7 +22100,11 @@
 	    if (props.useFixedHeader || props.scroll && props.scroll.y) {
 	      className += ' ' + prefixCls + '-fixed-header';
 	    }
-	    className += ' ' + prefixCls + '-scroll-position-' + this.scrollPosition;
+	    if (this.scrollPosition === 'both') {
+	      className += ' ' + prefixCls + '-scroll-position-left ' + prefixCls + '-scroll-position-right';
+	    } else {
+	      className += ' ' + prefixCls + '-scroll-position-' + this.scrollPosition;
+	    }
 	
 	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
@@ -22098,17 +22120,17 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-content' },
-	          this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
-	            'div',
-	            { className: prefixCls + '-fixed-left' },
-	            this.getLeftFixedTable()
-	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { className: isTableScroll ? prefixCls + '-scroll' : '' },
 	            this.getTable({ columns: this.columnManager.groupedColumns() }),
 	            this.getEmptyText(),
 	            this.getFooter()
+	          ),
+	          this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
+	            'div',
+	            { className: prefixCls + '-fixed-left' },
+	            this.getLeftFixedTable()
 	          ),
 	          this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
 	            'div',
@@ -25542,7 +25564,8 @@
 /* 317 */,
 /* 318 */,
 /* 319 */,
-/* 320 */
+/* 320 */,
+/* 321 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
