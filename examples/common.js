@@ -21909,7 +21909,7 @@
 	      )) : null;
 	      return _react2.default.createElement(
 	        'table',
-	        { className: tableClassName, style: tableStyle },
+	        { className: tableClassName, style: tableStyle, key: 'table' },
 	        _this3.getColGroup(columns, fixed),
 	        hasHead ? _this3.getHeader(columns, fixed) : null,
 	        tableBody
@@ -21987,7 +21987,7 @@
 	
 	    return title ? _react2.default.createElement(
 	      'div',
-	      { className: prefixCls + '-title' },
+	      { className: prefixCls + '-title', key: 'title' },
 	      title(this.props.data)
 	    ) : null;
 	  };
@@ -21999,7 +21999,7 @@
 	
 	    return footer ? _react2.default.createElement(
 	      'div',
-	      { className: prefixCls + '-footer' },
+	      { className: prefixCls + '-footer', key: 'footer' },
 	      footer(this.props.data)
 	    ) : null;
 	  };
@@ -22012,7 +22012,7 @@
 	
 	    return !data.length ? _react2.default.createElement(
 	      'div',
-	      { className: prefixCls + '-placeholder' },
+	      { className: prefixCls + '-placeholder', key: 'emptyText' },
 	      emptyText()
 	    ) : null;
 	  };
@@ -22108,38 +22108,14 @@
 	
 	    var isTableScroll = this.columnManager.isAnyColumnsFixed() || props.scroll.x || props.scroll.y;
 	
-	    var isAnyColumnsFixed = this.columnManager.isAnyColumnsLeftFixed() || this.columnManager.isAnyColumnsRightFixed();
+	    var content = [this.getTable({ columns: this.columnManager.groupedColumns() }), this.getEmptyText(), this.getFooter()];
 	
-	    if (isAnyColumnsFixed) {
-	      return _react2.default.createElement(
-	        'div',
-	        { ref: function ref(node) {
-	            return _this5.tableNode = node;
-	          }, className: className, style: props.style },
-	        this.getTitle(),
-	        _react2.default.createElement(
-	          'div',
-	          { className: prefixCls + '-content' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: isTableScroll ? prefixCls + '-scroll' : '' },
-	            this.getTable({ columns: this.columnManager.groupedColumns() }),
-	            this.getEmptyText(),
-	            this.getFooter()
-	          ),
-	          this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
-	            'div',
-	            { className: prefixCls + '-fixed-left' },
-	            this.getLeftFixedTable()
-	          ),
-	          this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
-	            'div',
-	            { className: prefixCls + '-fixed-right' },
-	            this.getRightFixedTable()
-	          )
-	        )
-	      );
-	    }
+	    var scrollTable = isTableScroll ? _react2.default.createElement(
+	      'div',
+	      { className: prefixCls + '-scroll' },
+	      content
+	    ) : content;
+	
 	    return _react2.default.createElement(
 	      'div',
 	      { ref: function ref(node) {
@@ -22149,9 +22125,17 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
-	        this.getTable({ columns: this.columnManager.groupedColumns() }),
-	        this.getEmptyText(),
-	        this.getFooter()
+	        this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
+	          'div',
+	          { className: prefixCls + '-fixed-left' },
+	          this.getLeftFixedTable()
+	        ),
+	        scrollTable,
+	        this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
+	          'div',
+	          { className: prefixCls + '-fixed-right' },
+	          this.getRightFixedTable()
+	        )
 	      )
 	    );
 	  };
