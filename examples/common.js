@@ -22125,12 +22125,12 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: prefixCls + '-content' },
+	        scrollTable,
 	        this.columnManager.isAnyColumnsLeftFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-left' },
 	          this.getLeftFixedTable()
 	        ),
-	        scrollTable,
 	        this.columnManager.isAnyColumnsRightFixed() && _react2.default.createElement(
 	          'div',
 	          { className: prefixCls + '-fixed-right' },
