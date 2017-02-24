@@ -739,11 +739,11 @@ export default class Table extends React.Component {
       <div ref={node => (this.tableNode = node)} className={className} style={props.style}>
         {this.getTitle()}
         <div className={`${prefixCls}-content`}>
+          {scrollTable}
           {this.columnManager.isAnyColumnsLeftFixed() &&
           <div className={`${prefixCls}-fixed-left`}>
             {this.getLeftFixedTable()}
           </div>}
-          {scrollTable}
           {this.columnManager.isAnyColumnsRightFixed() &&
           <div className={`${prefixCls}-fixed-right`}>
             {this.getRightFixedTable()}
