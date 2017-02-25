@@ -225,6 +225,7 @@ export default class Table extends React.Component {
         key: column.key,
         className: column.className || '',
         children: column.title,
+        onClick: column.onHeaderClick,
       };
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);

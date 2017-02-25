@@ -295,6 +295,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td></td>
       <td>Called when column's cell is clicked</td>
     </tr>
+    <tr>
+      <td>onHeaderClick</td>
+      <td>Function(event)</td>
+      <td></td>
+      <td>Called when column's header is clicked</td>
+    </tr>
   </tbody>
 </table>
 
