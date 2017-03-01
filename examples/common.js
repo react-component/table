@@ -21870,11 +21870,13 @@
 	      bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
 	    }
 	
+	    var innerBodyStyle = {};
 	    if (scroll.y) {
 	      // maxHeight will make fixed-Table scrolling not working
 	      // so we only set maxHeight to body-Table here
 	      if (fixed) {
-	        bodyStyle.height = bodyStyle.height || scroll.y;
+	        innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
+	        innerBodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
 	      } else {
 	        bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
 	      }
@@ -21968,6 +21970,7 @@
 	          'div',
 	          {
 	            className: prefixCls + '-body-inner',
+	            style: innerBodyStyle,
 	            ref: refName,
 	            onMouseOver: this.detectScrollTarget,
 	            onTouchStart: this.detectScrollTarget,
