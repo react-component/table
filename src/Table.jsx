@@ -63,7 +63,7 @@ export default class Table extends React.Component {
     scroll: {},
     rowRef: () => null,
     getBodyWrapper: body => body,
-    emptyText: 'No Data',
+    emptyText: () => 'No Data',
   }
 
   constructor(props) {
