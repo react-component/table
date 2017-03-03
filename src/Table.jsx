@@ -33,7 +33,7 @@ export default class Table extends React.Component {
     showHeader: PropTypes.bool,
     title: PropTypes.func,
     footer: PropTypes.func,
-    emptyText: PropTypes.func,
+    emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
@@ -63,7 +63,7 @@ export default class Table extends React.Component {
     scroll: {},
     rowRef: () => null,
     getBodyWrapper: body => body,
-    emptyText: () => 'No Data',
+    emptyText: 'No Data',
   }
 
   constructor(props) {
@@ -558,7 +558,7 @@ export default class Table extends React.Component {
     const { emptyText, prefixCls, data } = this.props;
     return !data.length ? (
       <div className={`${prefixCls}-placeholder`} key="emptyText">
-        {emptyText()}
+        {(typeof emptyText === 'function') ? emptyText() : emptyText}
       </div>
     ) : null;
   }
