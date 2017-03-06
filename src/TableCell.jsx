@@ -48,9 +48,6 @@ export default class TableCell extends React.Component {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
-        rowSpan = tdProps.rowSpan;
-        colSpan = tdProps.colSpan;
-        style = tdProps.style;
         text = text.children;
       }
     }
@@ -72,10 +69,8 @@ export default class TableCell extends React.Component {
     }
     return (
       <td
-        colSpan={colSpan}
-        rowSpan={rowSpan}
         className={className}
-        style={style}
+        {...tdProps}
         onClick={this.handleClick}
       >
         {indentText}
