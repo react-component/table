@@ -42,12 +42,13 @@ export default class TableCell extends React.Component {
     let tdProps;
     let colSpan;
     let rowSpan;
-    let style;
 
     if (render) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
+        colSpan = tdProps.colSpan;
+        rowSpan = tdProps.rowSpan;
         text = text.children;
       }
     }
