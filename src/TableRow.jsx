@@ -12,6 +12,7 @@ export default class TableRow extends React.Component {
     expandIconColumnIndex: PropTypes.number,
     onHover: PropTypes.func,
     columns: PropTypes.array,
+    columnExtraInfo: PropTypes.any,
     height: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
@@ -96,7 +97,7 @@ export default class TableRow extends React.Component {
 
   render() {
     const {
-      prefixCls, columns, record, height, visible, index,
+      prefixCls, columns, columnExtraInfo, record, height, visible, index,
       expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
       expandable, onExpand, needIndentSpaced, indent, indentSize,
     } = this.props;
@@ -141,6 +142,7 @@ export default class TableRow extends React.Component {
           indent={indent}
           index={index}
           column={columns[i]}
+          columnExtraInfo={columnExtraInfo}
           key={columns[i].key}
           expandIcon={isColumnHaveExpandIcon ? expandIcon : null}
         />

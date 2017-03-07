@@ -17,6 +17,7 @@ export default class Table extends React.Component {
     defaultExpandedRowKeys: PropTypes.array,
     useFixedHeader: PropTypes.bool,
     columns: PropTypes.array,
+    columnExtraInfo: PropTypes.any,
     prefixCls: PropTypes.string,
     bodyStyle: PropTypes.object,
     style: PropTypes.object,
@@ -243,7 +244,7 @@ export default class Table extends React.Component {
   }
 
   getExpandedRow(key, content, visible, className, fixed) {
-    const { prefixCls, expandIconAsCell } = this.props;
+    const { prefixCls, expandIconAsCell, columnExtraInfo } = this.props;
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -270,6 +271,7 @@ export default class Table extends React.Component {
     return (
       <TableRow
         columns={columns}
+        columnExtraInfo={columnExtraInfo}
         visible={visible}
         className={className}
         key={`${key}-extra-row`}
@@ -345,6 +347,7 @@ export default class Table extends React.Component {
           prefixCls={`${props.prefixCls}-row`}
           childrenColumnName={childrenColumnName}
           columns={leafColumns}
+          columnExtraInfo={props.columnExtraInfo}
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}

@@ -9,6 +9,7 @@ export default class TableCell extends React.Component {
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     column: PropTypes.object,
+    columnExtraInfo: PropTypes.any,
     expandIcon: PropTypes.node,
   }
 
@@ -26,7 +27,7 @@ export default class TableCell extends React.Component {
 
   render() {
     const { record, indentSize, prefixCls, indent,
-            index, expandIcon, column } = this.props;
+            index, expandIcon, column, columnExtraInfo } = this.props;
     const { dataIndex, render, className = '' } = column;
 
     // We should return undefined if no dataIndex is specified, but in order to
@@ -44,7 +45,7 @@ export default class TableCell extends React.Component {
     let rowSpan;
 
     if (render) {
-      text = render(text, record, index);
+      text = render(text, record, index, columnExtraInfo);
       if (this.isInvalidRenderCellText(text)) {
         tdProps = text.props || {};
         colSpan = tdProps.colSpan;
