@@ -21530,7 +21530,10 @@
 	    var expandedRowKeys = [];
 	    var rows = [].concat(_toConsumableArray(props.data));
 	    _this.columnManager = new _ColumnManager2.default(props.columns, props.children);
-	    _this.store = (0, _createStore2.default)({ currentHoverKey: null });
+	    _this.store = (0, _createStore2.default)({
+	      currentHoverKey: null,
+	      expandedRowsHeight: {}
+	    });
 	    _this.setScrollPosition('left');
 	
 	    if (props.defaultExpandAllRows) {
@@ -21710,10 +21713,13 @@
 	      visible: visible,
 	      className: className,
 	      key: key + '-extra-row',
+	      rowKey: key + '-extra-row',
 	      prefixCls: prefixCls + '-expanded-row',
 	      indent: 1,
 	      expandable: false,
-	      store: this.store
+	      store: this.store,
+	      expandedRow: true,
+	      fixed: !!fixed
 	    });
 	  };
 	
@@ -22260,7 +22266,8 @@
 	    }
 	
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
-	      hovered: false
+	      hovered: false,
+	      height: null
 	    }, _this.onRowClick = function (event) {
 	      var _this$props = _this.props,
 	          record = _this$props.record,
@@ -22300,24 +22307,21 @@
 	  TableRow.prototype.componentDidMount = function componentDidMount() {
 	    var _this2 = this;
 	
-	    var _props = this.props,
-	        store = _props.store,
-	        hoverKey = _props.hoverKey;
+	    var store = this.props.store;
 	
+	    this.pushHeight();
+	    this.pullHeight();
 	    this.unsubscribe = store.subscribe(function () {
-	      if (store.getState().currentHoverKey === hoverKey) {
-	        _this2.setState({ hovered: true });
-	      } else if (_this2.state.hovered === true) {
-	        _this2.setState({ hovered: false });
-	      }
+	      _this2.setHover();
+	      _this2.pullHeight();
 	    });
 	  };
 	
 	  TableRow.prototype.componentWillUnmount = function componentWillUnmount() {
-	    var _props2 = this.props,
-	        record = _props2.record,
-	        onDestroy = _props2.onDestroy,
-	        index = _props2.index;
+	    var _props = this.props,
+	        record = _props.record,
+	        onDestroy = _props.onDestroy,
+	        index = _props.index;
 	
 	    onDestroy(record, index);
 	    if (this.unsubscribe) {
@@ -22325,23 +22329,71 @@
 	    }
 	  };
 	
-	  TableRow.prototype.render = function render() {
+	  TableRow.prototype.setHover = function setHover() {
+	    var _props2 = this.props,
+	        store = _props2.store,
+	        hoverKey = _props2.hoverKey;
+	
+	    var _store$getState = store.getState(),
+	        currentHoverKey = _store$getState.currentHoverKey;
+	
+	    if (currentHoverKey === hoverKey) {
+	      this.setState({ hovered: true });
+	    } else if (this.state.hovered === true) {
+	      this.setState({ hovered: false });
+	    }
+	  };
+	
+	  TableRow.prototype.pullHeight = function pullHeight() {
 	    var _props3 = this.props,
-	        prefixCls = _props3.prefixCls,
-	        columns = _props3.columns,
-	        record = _props3.record,
-	        height = _props3.height,
-	        visible = _props3.visible,
-	        index = _props3.index,
-	        expandIconColumnIndex = _props3.expandIconColumnIndex,
-	        expandIconAsCell = _props3.expandIconAsCell,
-	        expanded = _props3.expanded,
-	        expandRowByClick = _props3.expandRowByClick,
-	        expandable = _props3.expandable,
-	        onExpand = _props3.onExpand,
-	        needIndentSpaced = _props3.needIndentSpaced,
-	        indent = _props3.indent,
-	        indentSize = _props3.indentSize;
+	        store = _props3.store,
+	        expandedRow = _props3.expandedRow,
+	        fixed = _props3.fixed,
+	        rowKey = _props3.rowKey;
+	
+	    var _store$getState2 = store.getState(),
+	        expandedRowsHeight = _store$getState2.expandedRowsHeight;
+	
+	    if (expandedRow && fixed && expandedRowsHeight[rowKey]) {
+	      this.setState({ height: expandedRowsHeight[rowKey] });
+	    }
+	  };
+	
+	  TableRow.prototype.pushHeight = function pushHeight() {
+	    var _props4 = this.props,
+	        store = _props4.store,
+	        expandedRow = _props4.expandedRow,
+	        fixed = _props4.fixed,
+	        rowKey = _props4.rowKey;
+	
+	    if (expandedRow && !fixed) {
+	      var _store$getState3 = store.getState(),
+	          expandedRowsHeight = _store$getState3.expandedRowsHeight;
+	
+	      var height = this.trRef.getBoundingClientRect().height;
+	      expandedRowsHeight[rowKey] = height;
+	      store.setState({ expandedRowsHeight: expandedRowsHeight });
+	    }
+	  };
+	
+	  TableRow.prototype.render = function render() {
+	    var _this3 = this;
+	
+	    var _props5 = this.props,
+	        prefixCls = _props5.prefixCls,
+	        columns = _props5.columns,
+	        record = _props5.record,
+	        visible = _props5.visible,
+	        index = _props5.index,
+	        expandIconColumnIndex = _props5.expandIconColumnIndex,
+	        expandIconAsCell = _props5.expandIconAsCell,
+	        expanded = _props5.expanded,
+	        expandRowByClick = _props5.expandRowByClick,
+	        expandable = _props5.expandable,
+	        onExpand = _props5.onExpand,
+	        needIndentSpaced = _props5.needIndentSpaced,
+	        indent = _props5.indent,
+	        indentSize = _props5.indentSize;
 	    var className = this.props.className;
 	
 	
@@ -22383,6 +22435,7 @@
 	        expandIcon: isColumnHaveExpandIcon ? expandIcon : null
 	      }));
 	    }
+	    var height = this.props.height || this.state.height;
 	    var style = { height: height };
 	    if (!visible) {
 	      style.display = 'none';
@@ -22391,6 +22444,9 @@
 	    return _react2.default.createElement(
 	      'tr',
 	      {
+	        ref: function ref(node) {
+	          return _this3.trRef = node;
+	        },
 	        onClick: this.onRowClick,
 	        onDoubleClick: this.onRowDoubleClick,
 	        onMouseEnter: this.onMouseEnter,
@@ -22427,7 +22483,10 @@
 	  indentSize: _react.PropTypes.number,
 	  expandIconAsCell: _react.PropTypes.bool,
 	  expandRowByClick: _react.PropTypes.bool,
-	  store: _react.PropTypes.object.isRequired
+	  store: _react.PropTypes.object.isRequired,
+	  expandedRow: _react.PropTypes.bool,
+	  fixed: _react.PropTypes.bool,
+	  rowKey: _react.PropTypes.string
 	};
 	TableRow.defaultProps = {
 	  onRowClick: function onRowClick() {},
@@ -22450,6 +22509,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _react = __webpack_require__(4);
 	
@@ -22529,8 +22590,8 @@
 	      text = render(text, record, index);
 	      if (this.isInvalidRenderCellText(text)) {
 	        tdProps = text.props || {};
-	        rowSpan = tdProps.rowSpan;
 	        colSpan = tdProps.colSpan;
+	        rowSpan = tdProps.rowSpan;
 	        text = text.children;
 	      }
 	    }
@@ -22550,12 +22611,11 @@
 	    }
 	    return _react2.default.createElement(
 	      'td',
-	      {
-	        colSpan: colSpan,
-	        rowSpan: rowSpan,
-	        className: className,
+	      _extends({
+	        className: className
+	      }, tdProps, {
 	        onClick: this.handleClick
-	      },
+	      }),
 	      indentText,
 	      expandIcon,
 	      text
