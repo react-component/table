@@ -71,7 +71,10 @@ export default class Table extends React.Component {
     let expandedRowKeys = [];
     let rows = [...props.data];
     this.columnManager = new ColumnManager(props.columns, props.children);
-    this.store = createStore({ currentHoverKey: null });
+    this.store = createStore({
+      currentHoverKey: null,
+      expandedRowsHeight: {},
+    });
     this.setScrollPosition('left');
 
     if (props.defaultExpandAllRows) {
@@ -273,10 +276,13 @@ export default class Table extends React.Component {
         visible={visible}
         className={className}
         key={`${key}-extra-row`}
+        rowKey={`${key}-extra-row`}
         prefixCls={`${prefixCls}-expanded-row`}
         indent={1}
         expandable={false}
         store={this.store}
+        expandedRow
+        fixed={!!fixed}
       />
     );
   }

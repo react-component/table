@@ -287,12 +287,15 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               expandIconColumnIndex={0}
               expandRowByClick={false}
               expandable={false}
+              expandedRow={true}
+              fixed={false}
               indent={1}
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
               prefixCls="rc-table-expanded-row"
+              rowKey="0-extra-row"
               store={
                 Object {
                   "getState": [Function],
@@ -309,7 +312,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
-                    "height": undefined,
+                    "height": null,
                   }
                 }>
                 <TableCell
@@ -952,12 +955,15 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               expandIconColumnIndex={0}
               expandRowByClick={false}
               expandable={false}
+              expandedRow={true}
+              fixed={false}
               indent={1}
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
               prefixCls="rc-table-expanded-row"
+              rowKey="1-extra-row"
               store={
                 Object {
                   "getState": [Function],
@@ -974,7 +980,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
-                    "height": undefined,
+                    "height": null,
                   }
                 }>
                 <TableCell
@@ -1401,12 +1407,15 @@ exports[`Table.expand expand row by click 1`] = `
               expandIconColumnIndex={0}
               expandRowByClick={false}
               expandable={false}
+              expandedRow={true}
+              fixed={false}
               indent={1}
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
               prefixCls="rc-table-expanded-row"
+              rowKey="0-extra-row"
               store={
                 Object {
                   "getState": [Function],
@@ -1423,7 +1432,7 @@ exports[`Table.expand expand row by click 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
-                    "height": undefined,
+                    "height": null,
                   }
                 }>
                 <TableCell
