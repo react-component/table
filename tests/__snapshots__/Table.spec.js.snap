@@ -273,6 +273,72 @@ exports[`Table renders custom cell correctly 1`] = `
 </div>
 `;
 
+exports[`Table renders empty text correctly 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left">
+  <div
+    class="rc-table-content">
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody" />
+      </table>
+    </div>
+    <div
+      class="rc-table-placeholder">
+      No data
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table renders empty text correctly 2`] = `
+<div
+  class="rc-table rc-table-scroll-position-left">
+  <div
+    class="rc-table-content">
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody" />
+      </table>
+    </div>
+    <div
+      class="rc-table-placeholder">
+      No data
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table renders fixed header correctly 1`] = `
 <div
   class="rc-table rc-table-fixed-header rc-table-scroll-position-left">

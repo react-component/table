@@ -31,6 +31,13 @@ describe('Table', () => {
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
 
+  it('renders empty text correctly', () => {
+    const wrapper1 = render(createTable({ data: [], emptyText: 'No data' }));
+    const wrapper2 = render(createTable({ data: [], emptyText: () => 'No data' }));
+    expect(renderToJson(wrapper1)).toMatchSnapshot();
+    expect(renderToJson(wrapper2)).toMatchSnapshot();
+  });
+
   it('renders without header', () => {
     const wrapper = render(createTable({ showHeader: false }));
     expect(renderToJson(wrapper)).toMatchSnapshot();
