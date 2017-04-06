@@ -214,7 +214,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>emptyText</td>
-      <td>React.Node</td>
+      <td>React.Node or Function</td>
       <td>`No Data`</td>
       <td>Display text when data is empty</td>
     </tr>
