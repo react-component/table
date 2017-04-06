@@ -1,6 +1,10 @@
 # History
 ----
 
+## 5.3.0 / 2017-04-06
+
+- `emptyText` support React.Node
+
 ## 5.0.0 / 2016-09-07
 
 - Remove props `columnsPageSize` and `columnsPageRange`, use fixed columns instead.
