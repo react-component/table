@@ -1,23 +1,23 @@
 webpackJsonp([3],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(215);
+	module.exports = __webpack_require__(221);
 
 
-/***/ },
+/***/ }),
 
-/***/ 215:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 221:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(37);
-	var Table = __webpack_require__(188);
-	__webpack_require__(211);
+	var ReactDOM = __webpack_require__(41);
+	var Table = __webpack_require__(192);
+	__webpack_require__(217);
 	
 	var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function render(o, row, index) {
 	    var obj = {
@@ -123,7 +123,7 @@ webpackJsonp([3],{
 	  })
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=colspan-rowspan.js.map

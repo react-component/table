@@ -1,22 +1,22 @@
 webpackJsonp([15],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(312);
+	module.exports = __webpack_require__(318);
 
 
-/***/ },
+/***/ }),
 
-/***/ 312:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 318:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(37);
-	var Table = __webpack_require__(188);
-	__webpack_require__(211);
+	var ReactDOM = __webpack_require__(41);
+	var Table = __webpack_require__(192);
+	__webpack_require__(217);
 	
 	var columns = [{ title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 }, { title: 'Last Name', dataIndex: 'names.last', key: 'b', width: 100 }, { title: 'Age', dataIndex: 'age', key: 'c', width: 100 }];
 	
@@ -58,7 +58,7 @@ webpackJsonp([15],{
 	  })
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=nested.js.map

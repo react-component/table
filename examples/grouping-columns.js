@@ -1,24 +1,24 @@
 webpackJsonp([11],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(307);
+	module.exports = __webpack_require__(313);
 
 
-/***/ },
+/***/ }),
 
-/***/ 307:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 313:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* eslint-disable no-console,func-names,react/no-multi-comp */
 	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(37);
-	var Table = __webpack_require__(188);
-	__webpack_require__(211);
-	__webpack_require__(308);
+	var ReactDOM = __webpack_require__(41);
+	var Table = __webpack_require__(192);
+	__webpack_require__(217);
+	__webpack_require__(314);
 	
 	var columns = [{
 	  title: '姓名',
@@ -99,10 +99,10 @@ webpackJsonp([11],{
 	  React.createElement(Table, { columns: columns, data: data, className: 'bordered' })
 	), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 308:
-211
+/***/ 314:
+217
 
 });
 //# sourceMappingURL=grouping-columns.js.map
