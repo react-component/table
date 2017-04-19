@@ -5,9 +5,10 @@ const Table = require('rc-table');
 require('rc-table/assets/index.less');
 require('rc-table/assets/dragList.less');
 
-const closest = function(el, selector, rootNode) {
+const closest = function (el, selector, rootNode) {
   rootNode = rootNode || document.body;
-  const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+  const matchesSelector = el.matches || el.webkitMatchesSelector
+        || el.mozMatchesSelector || el.msMatchesSelector;
   while (el) {
     const flagRoot = el === rootNode;
     if (flagRoot || matchesSelector.call(el, selector)) {
@@ -35,52 +36,61 @@ class Demo extends React.Component {
         {
           title: '0',
           content: 'row_0',
-          key: '1'
+          key: '1',
         }, {
           title: '1',
           content: 'row_1',
-          key: '2'
+          key: '2',
         }, {
           title: '2',
           content: 'row_2',
-          key: '3'
+          key: '3',
         }, {
           title: '3',
           content: 'row_3',
-          key: '4'
+          key: '4',
         }, {
           title: '4',
           content: 'row_4',
-          key: '5'
-        }
+          key: '5',
+        },
       ],
       dragIndex: -1,
-      dragedIndex: -1
+      dragedIndex: -1,
     };
     this.columns = [
       {
         title: 'id',
         dataIndex: 'title',
-        key: 'title'
+        key: 'title',
       }, {
         title: 'content',
         dataIndex: 'content',
-        key: 'content'
+        key: 'content',
       }, {
         title: 'Operates',
         key: 'operate',
-        render: (text, record, index) => <span>
-            {this.state.dragIndex >= 0 && this.state.dragIndex !== this.state.dragedIndex && index === this.state.dragedIndex && <span className={`drag-target-line ${this.state.dragedIndex < this.state.dragIndex
-              ? 'drag-target-top'
-              : ''}`}></span> || ''}
-            <a className="drag-handle" draggable="false" onMouseDown={this.onMouseDown} href="#">Drag</a>
-          </span>
-      }
+        render: (text, record, index) =>
+          <span>
+            {this.state.dragIndex >= 0
+              && this.state.dragIndex !== this.state.dragedIndex
+              && index === this.state.dragedIndex
+              &&
+              <span className={`drag-target-line ${
+                        this.state.dragedIndex < this.state.dragIndex
+                        ? 'drag-target-top'
+                        : ''}`}
+              >
+              </span>
+              || ''
+            }
+            <a className="drag-handle" draggable="false"
+              onMouseDown={this.onMouseDown} href="#"
+            >Drag
+            </a>
+          </span>,
+      },
     ];
-  }
-
-  getTrNode(target) {
-    return closest(target, 'tr', this.refs.dragContainer.tableNode);
   }
 
   onMouseDown(e) {
@@ -98,7 +108,7 @@ class Demo extends React.Component {
       e.dataTransfer.setData('Text', '0');
       target.parentNode.ondragenter = this.onDragEnter;
       const dragIndex = target.rowIndex - 1;
-      this.setState({dragIndex, dragedIndex: dragIndex});
+      this.setState({ dragIndex, dragedIndex: dragIndex });
     }
   }
 
@@ -107,7 +117,7 @@ class Demo extends React.Component {
     this.setState({
       dragedIndex: target
         ? (target.rowIndex - 1)
-        : -1
+        : -1,
     });
   }
 
@@ -122,12 +132,17 @@ class Demo extends React.Component {
     }
   }
 
+  getTrNode(target) {
+    return closest(target, 'tr', this.refs.dragContainer.tableNode);
+  }
+
   changeRowIndex() {
     const result = {};
     const currentState = this.state;
     result.dragIndex = result.dragedIndex = -1;
-    if (currentState.dragIndex >= 0 && currentState.dragIndex !== currentState.dragedIndex) {
-      const {dragIndex, dragedIndex, data} = currentState;
+    if (currentState.dragIndex >= 0
+        && currentState.dragIndex !== currentState.dragedIndex) {
+      const { dragIndex, dragedIndex, data } = currentState;
       const item = data.splice(dragIndex, 1)[0];
       data.splice(dragedIndex, 0, item);
       result.data = data;
@@ -137,11 +152,11 @@ class Demo extends React.Component {
 
   render() {
     return (
-      <div style={{
-        margin: 20
-      }}>
+      <div style={{ margin: 20 }}>
         <h2>Table row with dragging</h2>
-        <Table className={this.state.dragIndex >= 0 && 'dragging-container' || ''} ref="dragContainer" columns={this.columns} data={this.state.data}/>
+        <Table className={ this.state.dragIndex >= 0 && 'dragging-container' || ''}
+          ref="dragContainer" columns={this.columns} data={this.state.data}
+        />
       </div>
     );
   }
