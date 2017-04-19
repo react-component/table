@@ -70,10 +70,10 @@ class Demo extends React.Component {
         title: 'Operates',
         key: 'operate',
         render: (text, record, index) => <span>
-            {this.state.dragIndex >= 0 && this.state.dragIndex != this.state.dragedIndex && index === this.state.dragedIndex && <span className={`drag-target-line ${this.state.dragedIndex < this.state.dragIndex
+            {this.state.dragIndex >= 0 && this.state.dragIndex !== this.state.dragedIndex && index === this.state.dragedIndex && <span className={`drag-target-line ${this.state.dragedIndex < this.state.dragIndex
               ? 'drag-target-top'
               : ''}`}></span> || ''}
-            <a className="drag-handle" draggable="false" onMouseDown={this.onMouseDown} href="javascript:;">Drag</a>
+            <a className="drag-handle" draggable="false" onMouseDown={this.onMouseDown} href="#">Drag</a>
           </span>
       }
     ];
@@ -126,8 +126,8 @@ class Demo extends React.Component {
     const result = {};
     const currentState = this.state;
     result.dragIndex = result.dragedIndex = -1;
-    if (currentState.dragIndex >= 0 && currentState.dragIndex != currentState.dragedIndex) {
-      let {dragIndex, dragedIndex, data} = currentState;
+    if (currentState.dragIndex >= 0 && currentState.dragIndex !== currentState.dragedIndex) {
+      const {dragIndex, dragedIndex, data} = currentState;
       const item = data.splice(dragIndex, 1)[0];
       data.splice(dragedIndex, 0, item);
       result.data = data;
