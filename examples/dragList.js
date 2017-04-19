@@ -105,8 +105,13 @@ class Demo extends React.Component {
   onDragStart(e) {
     const target = this.getTrNode(e.target);
     if (target) {
-      e.dataTransfer.setData('Text', '0');
+      e.dataTransfer.setData('Text', '');
+      e.dataTransfer.effectAllowed = 'move';
       target.parentNode.ondragenter = this.onDragEnter;
+      target.parentNode.ondragover = function (ev) {
+        ev.preventDefault();
+        return true;
+      };
       const dragIndex = target.rowIndex - 1;
       this.setState({ dragIndex, dragedIndex: dragIndex });
     }
@@ -128,6 +133,7 @@ class Demo extends React.Component {
       target.ondragstart = null;
       target.ondragend = null;
       target.parentNode.ondragenter = null;
+      target.parentNode.ondragover = null;
       this.changeRowIndex();
     }
   }
