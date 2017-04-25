@@ -225,7 +225,7 @@ export default class Table extends React.Component {
           rows.push([]);
         }
       }
-      const styleProp = { textAlign: column.align ? column.align : 'left' };
+      const styleProp = column.align ? { textAlign: column.align } : {};
       const cell = {
         key: column.key,
         className: column.className || '',
