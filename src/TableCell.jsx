@@ -30,7 +30,7 @@ export default class TableCell extends React.Component {
             index, expandIcon, column } = this.props;
     const { dataIndex, render, className = '', align } = column;
 
-    const styleProp = align ? { textAlign: align } : {};
+    const styleProp = align ? { textAlign: align } : null;
 
     // We should return undefined if no dataIndex is specified, but in order to
     // be compatible with object-path's behavior, we return the record object instead.
