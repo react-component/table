@@ -46,7 +46,7 @@
     "compile": "rc-tools run compile --babel-runtime",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
-    "pub": "rc-tools run pub",
+    "pub": "rc-tools run pub --babel-runtime",
     "lint": "rc-tools run lint",
     "lint:fix": "rc-tools run lint --fix",
     "test": "jest",
@@ -61,6 +61,7 @@
     }
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
     "prop-types": "^15.5.8",
