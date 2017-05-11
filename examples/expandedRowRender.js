@@ -1,8 +1,8 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Table = require('rc-table');
-require('rc-table/assets/index.less');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Table from 'rc-table';
+import 'rc-table/assets/index.less';
 
 const tableData = [
   { key: 0, a: '123' },

@@ -1,7 +1,7 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Table = require('rc-table');
-require('rc-table/assets/index.less');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Table from 'rc-table';
+import 'rc-table/assets/index.less';
 
 const columns = [
   { title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 },

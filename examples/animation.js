@@ -1,10 +1,10 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Table = require('rc-table');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Table from 'rc-table';
 import Animate from 'rc-animate';
-require('rc-table/assets/index.less');
-require('rc-table/assets/animation.less');
+import 'rc-table/assets/index.less';
+import 'rc-table/assets/animation.less';
 
 class Demo extends React.Component {
   constructor(props) {

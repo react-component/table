@@ -1,12 +1,12 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Table = require('rc-table');
-require('rc-table/assets/index.less');
-require('rc-dropdown/assets/index.css');
-require('rc-menu/assets/index.css');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Table from 'rc-table';
 import Menu, { Item, Divider } from 'rc-menu';
 import DropDown from 'rc-dropdown';
+import 'rc-table/assets/index.less';
+import 'rc-dropdown/assets/index.css';
+import 'rc-menu/assets/index.css';
 
 const data = [];
 for (let i = 0; i < 10; i++) {

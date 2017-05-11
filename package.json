@@ -12,9 +12,11 @@
   "files": [
     "assets/*.css",
     "dist",
+    "es",
     "lib"
   ],
   "main": "./lib/index",
+  "module": "./es/index",
   "entry": {
     "rc-table": [
       "./assets/animation.less",
@@ -41,22 +43,22 @@
   },
   "scripts": {
     "build": "rc-tools run build",
-    "compile": "rc-tools run compile",
+    "compile": "rc-tools run compile --babel-runtime",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
     "lint:fix": "rc-tools run lint --fix",
-    "karma": "rc-tools run karma",
-    "saucelabs": "rc-tools run saucelabs",
     "test": "jest",
-    "chrome-test": "rc-tools run chrome-test",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*"
-    ]
+    ],
+    "transform": {
+      "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
+    }
   },
   "dependencies": {
     "component-classes": "^1.2.6",
@@ -77,7 +79,7 @@
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~1.4.10",
     "rc-menu": "~4.13.0",
-    "rc-tools": "^5.9.2",
+    "rc-tools": "6.x",
     "react": "^15.2.1",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.2.1",
