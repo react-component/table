@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>no-data.js - example - rc-table@5.3.1</title>
+  <title>no-data.js - example - rc-table@5.3.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,17 +263,17 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.3.1</h1>
+      <h1>rc-table@5.3.2</h1>
 
       <p>table ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console,func-names,react/no-multi-comp */</span>
-<span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
-<span class="hljs-keyword">const</span> Table = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table'</span>);
-<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-table/assets/index.css'</span>);
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
 
 <span class="hljs-keyword">const</span> columns = [
   { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },

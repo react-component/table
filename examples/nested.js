@@ -1,64 +1,72 @@
-webpackJsonp([15],{
+webpackJsonp([11],{
 
-/***/ 0:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 169:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-	module.exports = __webpack_require__(318);
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_table__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rc_table__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less__);
 
+
+
+
+
+var columns = [{ title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 }, { title: 'Last Name', dataIndex: 'names.last', key: 'b', width: 100 }, { title: 'Age', dataIndex: 'age', key: 'c', width: 100 }];
+
+var data = [{
+  age: '23',
+  names: {
+    first: 'John',
+    last: 'Doe'
+  },
+  key: '1'
+}, {
+  age: '36',
+  names: {
+    first: 'Terry',
+    last: 'Garner'
+  },
+  key: '2'
+}, {
+  age: '52',
+  names: {
+    first: 'Thomas',
+    last: 'Goodwin'
+  },
+  key: '3'
+}];
+
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+  'div',
+  null,
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'h2',
+    null,
+    'Nested data table'
+  ),
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table___default.a, {
+    columns: columns,
+    data: data,
+    className: 'table'
+  })
+), document.getElementById('__react-content'));
 
 /***/ }),
 
-/***/ 318:
+/***/ 403:
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(41);
-	var Table = __webpack_require__(192);
-	__webpack_require__(217);
-	
-	var columns = [{ title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 }, { title: 'Last Name', dataIndex: 'names.last', key: 'b', width: 100 }, { title: 'Age', dataIndex: 'age', key: 'c', width: 100 }];
-	
-	var data = [{
-	  age: '23',
-	  names: {
-	    first: 'John',
-	    last: 'Doe'
-	  },
-	  key: '1'
-	}, {
-	  age: '36',
-	  names: {
-	    first: 'Terry',
-	    last: 'Garner'
-	  },
-	  key: '2'
-	}, {
-	  age: '52',
-	  names: {
-	    first: 'Thomas',
-	    last: 'Goodwin'
-	  },
-	  key: '3'
-	}];
-	
-	ReactDOM.render(React.createElement(
-	  'div',
-	  null,
-	  React.createElement(
-	    'h2',
-	    null,
-	    'Nested data table'
-	  ),
-	  React.createElement(Table, {
-	    columns: columns,
-	    data: data,
-	    className: 'table'
-	  })
-	), document.getElementById('__react-content'));
+module.exports = __webpack_require__(169);
+
 
 /***/ })
 
-});
+},[403]);
 //# sourceMappingURL=nested.js.map

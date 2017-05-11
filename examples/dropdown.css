@@ -65,7 +65,7 @@
   position: relative;
 }
 .rc-dropdown-menu > .rc-dropdown-menu-item-selected:after {
-  content: '\e613';
+  content: '\E613';
   font-family: 'anticon';
   font-weight: bold;
   position: absolute;
@@ -411,7 +411,7 @@
   color: #2baee9;
 }
 .rc-menu-horizontal:after {
-  content: "\20";
+  content: " ";
   display: block;
   height: 0;
   clear: both;
