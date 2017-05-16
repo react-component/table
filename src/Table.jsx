@@ -39,6 +39,7 @@ export default class Table extends React.Component {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
+    onRowHover: PropTypes.func,
   }
 
   static defaultProps = {
@@ -319,6 +320,9 @@ export default class Table extends React.Component {
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
+      } else {
+        onHoverProps.onHover = (isHover, hoverKey) => isHover && this.props.onRowHover ?
+          this.props.onRowHover(this.props.data.find(d => d.key === hoverKey)) : null;
       }
 
       const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
