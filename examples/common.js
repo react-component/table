@@ -13563,6 +13563,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Table__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Column__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ColumnGroup__ = __webpack_require__(181);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Column", function() { return __WEBPACK_IMPORTED_MODULE_1__Column__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ColumnGroup", function() { return __WEBPACK_IMPORTED_MODULE_2__ColumnGroup__["a"]; });
 
 
 
@@ -13571,6 +13573,7 @@ __WEBPACK_IMPORTED_MODULE_0__Table__["a" /* default */].Column = __WEBPACK_IMPOR
 __WEBPACK_IMPORTED_MODULE_0__Table__["a" /* default */].ColumnGroup = __WEBPACK_IMPORTED_MODULE_2__ColumnGroup__["a" /* default */];
 
 /* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_0__Table__["a" /* default */]);
+
 
 /***/ }),
 /* 190 */
