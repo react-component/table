@@ -1,6 +1,10 @@
 # History
 ----
 
+## 5.4.0 / 2017-05-23
+
+- Add `onRowMouseEnter`, `onRowMouseLeave`.
+
 ## 5.3.0 / 2017-04-06
 
 - `emptyText` support React.Node
