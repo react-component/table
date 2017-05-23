@@ -189,6 +189,18 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>handle rowDoubleClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
     </tr>
     <tr>
+      <td>onRowMouseEnter</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle onRowMouseEnter action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>onRowMouseLeave</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>handle onRowMouseLeave action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
       <td>showHeader</td>
       <td>Boolean</td>
       <td>true</td>

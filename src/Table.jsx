@@ -54,6 +54,8 @@ export default class Table extends React.Component {
     onExpandedRowsChange() {},
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowMouseEnter() {},
+    onRowMouseLeave() {},
     prefixCls: 'rc-table',
     bodyStyle: {},
     style: {},
@@ -290,17 +292,21 @@ export default class Table extends React.Component {
 
   getRowsByData(data, visible, indent, columns, fixed) {
     const props = this.props;
-    const childrenColumnName = props.childrenColumnName;
-    const expandedRowRender = props.expandedRowRender;
-    const expandRowByClick = props.expandRowByClick;
+    const {
+      childrenColumnName,
+      expandedRowRender,
+      expandRowByClick,
+      rowClassName,
+      rowRef,
+      expandedRowClassName,
+      onRowClick,
+      onRowDoubleClick,
+      onRowMouseEnter,
+      onRowMouseLeave,
+    } = props;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
-    const rowClassName = props.rowClassName;
-    const rowRef = props.rowRef;
-    const expandedRowClassName = props.expandedRowClassName;
     const needIndentSpaced = props.data.some(record => record[childrenColumnName]);
-    const onRowClick = props.onRowClick;
-    const onRowDoubleClick = props.onRowDoubleClick;
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
@@ -355,6 +361,8 @@ export default class Table extends React.Component {
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
+          onRowMouseEnter={onRowMouseEnter}
+          onRowMouseLeave={onRowMouseLeave}
           height={height}
           {...onHoverProps}
           key={key}

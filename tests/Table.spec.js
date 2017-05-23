@@ -400,4 +400,22 @@ describe('Table', () => {
       expect(Table.prototype.resetScrollX.calls.count()).toBe(0);
     });
   });
+
+  it('fires onRowMouseEnter', () => {
+    const handleRowMouseEnter = jest.fn();
+    const wrapper = mount(createTable({
+      onRowMouseEnter: handleRowMouseEnter,
+    }));
+    wrapper.find('.rc-table-row').first().simulate('mouseEnter');
+    expect(handleRowMouseEnter).toBeCalledWith(data[0], 0, expect.anything());
+  });
+
+  it('fires onRowMouseLeave', () => {
+    const handleRowMouseLeave = jest.fn();
+    const wrapper = mount(createTable({
+      onRowMouseLeave: handleRowMouseLeave,
+    }));
+    wrapper.find('.rc-table-row').first().simulate('mouseLeave');
+    expect(handleRowMouseLeave).toBeCalledWith(data[0], 0, expect.anything());
+  });
 });

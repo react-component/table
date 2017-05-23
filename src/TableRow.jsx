@@ -8,6 +8,8 @@ export default class TableRow extends React.Component {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowMouseEnter: PropTypes.func,
+    onRowMouseLeave: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
     expandIconColumnIndex: PropTypes.number,
@@ -88,14 +90,16 @@ export default class TableRow extends React.Component {
     onRowDoubleClick(record, index, event);
   }
 
-  onMouseEnter = () => {
-    const { onHover, hoverKey } = this.props;
+  onMouseEnter = (event) => {
+    const { record, index, onRowMouseEnter, onHover, hoverKey } = this.props;
     onHover(true, hoverKey);
+    onRowMouseEnter(record, index, event);
   }
 
-  onMouseLeave = () => {
-    const { onHover, hoverKey } = this.props;
+  onMouseLeave = (event) => {
+    const { record, index, onRowMouseLeave, onHover, hoverKey } = this.props;
     onHover(false, hoverKey);
+    onRowMouseLeave(record, index, event);
   }
 
   setHover() {
