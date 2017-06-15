@@ -12498,20 +12498,22 @@ var Table = function (_React$Component) {
     key: 'getRowsByData',
     value: function getRowsByData(data, visible, indent, columns, fixed) {
       var props = this.props;
-      var childrenColumnName = props.childrenColumnName;
-      var expandedRowRender = props.expandedRowRender;
-      var expandRowByClick = props.expandRowByClick;
+      var childrenColumnName = props.childrenColumnName,
+          expandedRowRender = props.expandedRowRender,
+          expandRowByClick = props.expandRowByClick,
+          rowClassName = props.rowClassName,
+          rowRef = props.rowRef,
+          expandedRowClassName = props.expandedRowClassName,
+          onRowClick = props.onRowClick,
+          onRowDoubleClick = props.onRowDoubleClick,
+          onRowMouseEnter = props.onRowMouseEnter,
+          onRowMouseLeave = props.onRowMouseLeave;
       var fixedColumnsBodyRowsHeight = this.state.fixedColumnsBodyRowsHeight;
 
       var rst = [];
-      var rowClassName = props.rowClassName;
-      var rowRef = props.rowRef;
-      var expandedRowClassName = props.expandedRowClassName;
       var needIndentSpaced = props.data.some(function (record) {
         return record[childrenColumnName];
       });
-      var onRowClick = props.onRowClick;
-      var onRowDoubleClick = props.onRowDoubleClick;
 
       var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
       var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
@@ -12563,6 +12565,8 @@ var Table = function (_React$Component) {
           expandIconColumnIndex: expandIconColumnIndex,
           onRowClick: onRowClick,
           onRowDoubleClick: onRowDoubleClick,
+          onRowMouseEnter: onRowMouseEnter,
+          onRowMouseLeave: onRowMouseLeave,
           height: height
         }, onHoverProps, {
           key: key,
@@ -12989,6 +12993,8 @@ Table.defaultProps = {
   onExpandedRowsChange: function onExpandedRowsChange() {},
   onRowClick: function onRowClick() {},
   onRowDoubleClick: function onRowDoubleClick() {},
+  onRowMouseEnter: function onRowMouseEnter() {},
+  onRowMouseLeave: function onRowMouseLeave() {},
 
   prefixCls: 'rc-table',
   bodyStyle: {},
@@ -13296,18 +13302,26 @@ var TableRow = function (_React$Component) {
           onRowDoubleClick = _this$props2.onRowDoubleClick;
 
       onRowDoubleClick(record, index, event);
-    }, _this.onMouseEnter = function () {
+    }, _this.onMouseEnter = function (event) {
       var _this$props3 = _this.props,
+          record = _this$props3.record,
+          index = _this$props3.index,
+          onRowMouseEnter = _this$props3.onRowMouseEnter,
           onHover = _this$props3.onHover,
           hoverKey = _this$props3.hoverKey;
 
       onHover(true, hoverKey);
-    }, _this.onMouseLeave = function () {
+      onRowMouseEnter(record, index, event);
+    }, _this.onMouseLeave = function (event) {
       var _this$props4 = _this.props,
+          record = _this$props4.record,
+          index = _this$props4.index,
+          onRowMouseLeave = _this$props4.onRowMouseLeave,
           onHover = _this$props4.onHover,
           hoverKey = _this$props4.hoverKey;
 
       onHover(false, hoverKey);
+      onRowMouseLeave(record, index, event);
     }, _temp), __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
   }
 
@@ -13480,6 +13494,8 @@ TableRow.propTypes = {
   onDestroy: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   onRowClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   onRowDoubleClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onRowMouseEnter: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onRowMouseLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   record: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   expandIconColumnIndex: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.number,
