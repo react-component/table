@@ -424,7 +424,7 @@ export default class Table extends React.Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {}, getBodyWrapper } = this.props;
+    const { prefixCls, scroll = {}, getBodyWrapper, showHeader } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -482,7 +482,7 @@ export default class Table extends React.Component {
 
     let headTable;
 
-    if (useFixedHeader) {
+    if (useFixedHeader && showHeader) {
       headTable = (
         <div
           key="headTable"
