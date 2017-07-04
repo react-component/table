@@ -689,9 +689,6 @@ export default class Table extends React.Component {
   handleBodyScroll = (e) => {
     // Prevent scrollTop setter trigger onScroll event
     // http://stackoverflow.com/q/1386696
-    if (e.target !== this.scrollTarget) {
-      return;
-    }
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
     if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
@@ -702,7 +699,7 @@ export default class Table extends React.Component {
       }
       this.setScrollPositionClassName(e.target);
     }
-    if (scroll.y) {
+    if (scroll.y && e.target !== headTable) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }
