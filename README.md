@@ -46,7 +46,7 @@ const columns = [{
 }, {
   title: 'Address', dataIndex: 'address', key:'address', width: 200,
 }, {
-  title: 'Apeartions', dataIndex: '', key:'opeartions', render: () => <a href="#">Delete</a>,
+  title: 'Apeartions', dataIndex: '', key:'operations', render: () => <a href="#">Delete</a>,
 }];
 
 const data = [
