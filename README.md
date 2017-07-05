@@ -123,6 +123,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>get row's className</td>
     </tr>
     <tr>
+      <td>rowStyle</td>
+      <td>Function(record, index, indent):object</td>
+      <td></td>
+      <td>get row's style</td>
+    </tr>
+    <tr>
       <td>rowRef</td>
       <td>Function(record, index, indent):string</td>
       <td></td>
@@ -163,6 +169,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Function(recode, index, indent):string</td>
       <td></td>
       <td>get expanded row's className</td>
+    </tr>
+    <tr>
+      <td>expandedRowStyle</td>
+      <td>Function(recode, index, indent):object</td>
+      <td></td>
+      <td>get expanded row's style</td>
     </tr>
     <tr>
       <td>data</td>
