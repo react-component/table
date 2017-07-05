@@ -328,7 +328,7 @@ export default class Table extends React.Component {
         expandedRowContent = expandedRowRender(record, i, indent);
       }
       const className = rowClassName(record, i, indent);
-      const style = rowStyle(record, i, indent)
+      const style = rowStyle(record, i, indent);
 
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
@@ -384,8 +384,10 @@ export default class Table extends React.Component {
       const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
+        const expRowClassName = expandedRowClassName(record, i, indent);
+        const expRowStyle = expandedRowStyle(record, i, indent);
         rst.push(this.getExpandedRow(
-          key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), expandedRowStyle(record, i, indent), fixed
+          key, expandedRowContent, subVisible, expRowClassName, expRowStyle, fixed
         ));
       }
       if (childrenColumn) {

@@ -35,9 +35,9 @@ ReactDOM.render(
     <Table
       columns={columns}
       indentSize={30}
-      rowStyle={(record, index, indent) => (index == 0 ? { backgroundColor: '#eee' } : null)}
+      rowStyle={(record, i) => i === 0 ? { backgroundColor: '#eee' } : null}
       expandedRowRender={record => <p>extra: {record.a}</p>}
-      expandedRowStyle={(record, index, indent) => (index == 0 ? { backgroundColor: '#f3f3f3' } : null)}
+      expandedRowStyle={(record, i) => i === 0 ? { backgroundColor: '#f3f3f3' } : null}
       data={data}
       className="table"
     />
