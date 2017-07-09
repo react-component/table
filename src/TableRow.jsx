@@ -40,6 +40,8 @@ export default class TableRow extends React.Component {
   static defaultProps = {
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowMouseEnter() {},
+    onRowMouseLeave() {},
     onDestroy() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
