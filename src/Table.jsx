@@ -497,7 +497,7 @@ export default class Table extends React.Component {
           className={`${prefixCls}-header`}
           ref={fixed ? null : 'headTable'}
           style={headStyle}
-          onScroll={this.handleBodyScroll}
+          onScroll={this.handleBodyScrollLeft}
         >
           {renderTable(true, false)}
         </div>
@@ -674,31 +674,45 @@ export default class Table extends React.Component {
     return 'x' in scroll;
   }
 
-  handleBodyScroll = (e) => {
+  handleBodyScrollLeft = (e) => {
+    const target = e.target;
+    const { scroll = {} } = this.props;
+    const { headTable, bodyTable } = this.refs;
+    if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
+      if (target === bodyTable && headTable) {
+        headTable.scrollLeft = target.scrollLeft;
+      } else if (target === headTable && bodyTable) {
+        bodyTable.scrollLeft = target.scrollLeft;
+      }
+      this.setScrollPositionClassName(target);
+    }
+  }
+
+  handleBodyScrollTop = (e) => {
+    const target = e.target;
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
-    if (e.target.scrollLeft !== this.lastScrollLeft && scroll.x) {
-      if (e.target === bodyTable && headTable) {
-        headTable.scrollLeft = e.target.scrollLeft;
-      } else if (e.target === headTable && bodyTable) {
-        bodyTable.scrollLeft = e.target.scrollLeft;
+    if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
+      const scrollTop = target.scrollTop;
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
-      this.setScrollPositionClassName(e.target);
-    }
-    if (e.target.scrollTop !== this.lastScrollTop && scroll.y && e.target !== headTable) {
-      if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
       }
-      if (fixedColumnsBodyRight && e.target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = e.target.scrollTop;
-      }
-      if (bodyTable && e.target !== bodyTable) {
-        bodyTable.scrollTop = e.target.scrollTop;
+      if (bodyTable && target !== bodyTable) {
+        bodyTable.scrollTop = scrollTop;
       }
     }
+  }
+
+  handleBodyScroll = (e) => {
+    const target = e.target;
+    this.handleBodyScrollLeft(e);
+    this.handleBodyScrollTop(e);
     // Remember last scrollLeft and scrollTop for scroll direction detecting.
-    this.lastScrollLeft = e.target.scrollLeft;
-    this.lastScrollTop = e.target.scrollTop;
+    this.lastScrollLeft = target.scrollLeft;
+    this.lastScrollTop = target.scrollTop;
   }
 
   handleRowHover = (isHover, key) => {
