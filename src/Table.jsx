@@ -686,6 +686,8 @@ export default class Table extends React.Component {
       }
       this.setScrollPositionClassName(target);
     }
+    // Remember last scrollLeft for scroll direction detecting.
+    this.lastScrollLeft = target.scrollLeft;
   }
 
   handleBodyScrollTop = (e) => {
@@ -704,15 +706,13 @@ export default class Table extends React.Component {
         bodyTable.scrollTop = scrollTop;
       }
     }
+    // Remember last scrollTop for scroll direction detecting.
+    this.lastScrollTop = target.scrollTop;
   }
 
   handleBodyScroll = (e) => {
-    const target = e.target;
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
-    // Remember last scrollLeft and scrollTop for scroll direction detecting.
-    this.lastScrollLeft = target.scrollLeft;
-    this.lastScrollTop = target.scrollTop;
   }
 
   handleRowHover = (isHover, key) => {
