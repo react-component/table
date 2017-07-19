@@ -497,8 +497,6 @@ export default class Table extends React.Component {
           className={`${prefixCls}-header`}
           ref={fixed ? null : 'headTable'}
           style={headStyle}
-          onMouseOver={this.detectScrollTarget}
-          onTouchStart={this.detectScrollTarget}
           onScroll={this.handleBodyScroll}
         >
           {renderTable(true, false)}
@@ -512,8 +510,6 @@ export default class Table extends React.Component {
         className={`${prefixCls}-body`}
         style={bodyStyle}
         ref="bodyTable"
-        onMouseOver={this.detectScrollTarget}
-        onTouchStart={this.detectScrollTarget}
         onScroll={this.handleBodyScroll}
       >
         {renderTable(!useFixedHeader)}
@@ -539,8 +535,6 @@ export default class Table extends React.Component {
             className={`${prefixCls}-body-inner`}
             style={innerBodyStyle}
             ref={refName}
-            onMouseOver={this.detectScrollTarget}
-            onTouchStart={this.detectScrollTarget}
             onScroll={this.handleBodyScroll}
           >
             {renderTable(!useFixedHeader)}
@@ -675,23 +669,15 @@ export default class Table extends React.Component {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   }
 
-  detectScrollTarget = (e) => {
-    if (this.scrollTarget !== e.currentTarget) {
-      this.scrollTarget = e.currentTarget;
-    }
-  }
-
   hasScrollX() {
     const { scroll = {} } = this.props;
     return 'x' in scroll;
   }
 
   handleBodyScroll = (e) => {
-    // Prevent scrollTop setter trigger onScroll event
-    // http://stackoverflow.com/q/1386696
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
-    if (scroll.x && e.target.scrollLeft !== this.lastScrollLeft) {
+    if (e.target.scrollLeft !== this.lastScrollLeft && scroll.x) {
       if (e.target === bodyTable && headTable) {
         headTable.scrollLeft = e.target.scrollLeft;
       } else if (e.target === headTable && bodyTable) {
@@ -699,7 +685,7 @@ export default class Table extends React.Component {
       }
       this.setScrollPositionClassName(e.target);
     }
-    if (scroll.y && e.target !== headTable) {
+    if (e.target.scrollTop !== this.lastScrollTop && scroll.y && e.target !== headTable) {
       if (fixedColumnsBodyLeft && e.target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = e.target.scrollTop;
       }
@@ -710,8 +696,9 @@ export default class Table extends React.Component {
         bodyTable.scrollTop = e.target.scrollTop;
       }
     }
-    // Remember last scrollLeft for scroll direction detecting.
+    // Remember last scrollLeft and scrollTop for scroll direction detecting.
     this.lastScrollLeft = e.target.scrollLeft;
+    this.lastScrollTop = e.target.scrollTop;
   }
 
   handleRowHover = (isHover, key) => {
