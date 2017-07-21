@@ -65,9 +65,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
@@ -589,9 +587,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
@@ -1201,9 +1197,7 @@ exports[`Table.expand expand row by click 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
