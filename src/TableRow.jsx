@@ -10,6 +10,7 @@ export default class TableRow extends React.Component {
     onRowDoubleClick: PropTypes.func,
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
+    onContextMenu: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
     expandIconColumnIndex: PropTypes.number,
@@ -42,6 +43,7 @@ export default class TableRow extends React.Component {
     onRowDoubleClick() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
+    onContextMenu() {},
     onDestroy() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
@@ -102,6 +104,11 @@ export default class TableRow extends React.Component {
     const { record, index, onRowMouseLeave, onHover, hoverKey } = this.props;
     onHover(false, hoverKey);
     onRowMouseLeave(record, index, event);
+  }
+
+  onContextMenu = (event) => {
+    const { record, index, onContextMenu } = this.props;
+    onContextMenu(record, index, event);
   }
 
   setHover() {
@@ -198,6 +205,7 @@ export default class TableRow extends React.Component {
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        onContextMenu={this.onContextMenu}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
         style={style}
       >
