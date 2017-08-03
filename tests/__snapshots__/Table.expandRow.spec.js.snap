@@ -67,9 +67,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
@@ -300,6 +298,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
+              onRowMouseEnter={[Function]}
+              onRowMouseLeave={[Function]}
               prefixCls="rc-table-expanded-row"
               rowKey="0-extra-row"
               store={
@@ -591,9 +591,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
@@ -978,6 +976,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
+              onRowMouseEnter={[Function]}
+              onRowMouseLeave={[Function]}
               prefixCls="rc-table-expanded-row"
               rowKey="1-extra-row"
               store={
@@ -1203,9 +1203,7 @@ exports[`Table.expand expand row by click 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
-        onMouseOver={[Function]}
         onScroll={[Function]}
-        onTouchStart={[Function]}
         style={Object {}}>
         <table
           className=""
@@ -1436,6 +1434,8 @@ exports[`Table.expand expand row by click 1`] = `
               onHover={[Function]}
               onRowClick={[Function]}
               onRowDoubleClick={[Function]}
+              onRowMouseEnter={[Function]}
+              onRowMouseLeave={[Function]}
               prefixCls="rc-table-expanded-row"
               rowKey="0-extra-row"
               store={
