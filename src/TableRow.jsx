@@ -8,9 +8,9 @@ export default class TableRow extends React.Component {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowContextMenu: PropTypes.func,
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
-    onContextMenu: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
     expandIconColumnIndex: PropTypes.number,
@@ -41,9 +41,9 @@ export default class TableRow extends React.Component {
   static defaultProps = {
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
-    onContextMenu() {},
     onDestroy() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
@@ -94,6 +94,11 @@ export default class TableRow extends React.Component {
     onRowDoubleClick(record, index, event);
   }
 
+  onContextMenu = (event) => {
+    const { record, index, onRowContextMenu } = this.props;
+    onRowContextMenu(record, index, event);
+  }
+
   onMouseEnter = (event) => {
     const { record, index, onRowMouseEnter, onHover, hoverKey } = this.props;
     onHover(true, hoverKey);
@@ -104,11 +109,6 @@ export default class TableRow extends React.Component {
     const { record, index, onRowMouseLeave, onHover, hoverKey } = this.props;
     onHover(false, hoverKey);
     onRowMouseLeave(record, index, event);
-  }
-
-  onContextMenu = (event) => {
-    const { record, index, onContextMenu } = this.props;
-    onContextMenu(record, index, event);
   }
 
   setHover() {

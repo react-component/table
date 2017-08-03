@@ -30,9 +30,9 @@ export default class Table extends React.Component {
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowContextMenu: PropTypes.func,
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
-    onContextMenu: PropTypes.func,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
     title: PropTypes.func,
@@ -57,9 +57,9 @@ export default class Table extends React.Component {
     onExpandedRowsChange() {},
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
-    onContextMenu() {},
     prefixCls: 'rc-table',
     bodyStyle: {},
     style: {},
@@ -305,9 +305,9 @@ export default class Table extends React.Component {
       expandedRowClassName,
       onRowClick,
       onRowDoubleClick,
+      onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
-      onContextMenu,
     } = props;
     const { fixedColumnsBodyRowsHeight } = this.state;
     let rst = [];
@@ -366,9 +366,9 @@ export default class Table extends React.Component {
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
+          onRowContextMenu={onRowContextMenu}
           onRowMouseEnter={onRowMouseEnter}
           onRowMouseLeave={onRowMouseLeave}
-          onContextMenu={onContextMenu}
           height={height}
           {...onHoverProps}
           key={key}
