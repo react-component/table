@@ -205,6 +205,16 @@ describe('Table', () => {
       expect(call[1]).toBe(0);
       expect(call[2].type).toBe('doubleclick');
     });
+
+    it('fires row contextmenu event', () => {
+      const onRowContextMenu = jest.fn();
+      const wrapper = mount(createTable({ onRowContextMenu }));
+      wrapper.find('tbody tr').first().simulate('contextMenu');
+      const call = onRowContextMenu.mock.calls[0];
+      expect(call[0]).toBe(data[0]);
+      expect(call[1]).toBe(0);
+      expect(call[2].type).toBe('contextmenu');
+    });
   });
 
   it('renders column correctly', () => {
