@@ -7,6 +7,7 @@ export default class TableHeader extends React.Component {
     prefixCls: PropTypes.string,
     rowStyle: PropTypes.object,
     rows: PropTypes.array,
+    headerAlign: PropTypes.string,
   }
 
   shouldComponentUpdate(nextProps) {
@@ -14,9 +15,9 @@ export default class TableHeader extends React.Component {
   }
 
   render() {
-    const { prefixCls, rowStyle, rows } = this.props;
+    const { prefixCls, rowStyle, rows, headerAlign } = this.props;
     return (
-      <thead className={`${prefixCls}-thead`}>
+      <thead className={`${prefixCls}-thead`} style={{ textAlign: headerAlign }}>
         {
           rows.map((row, index) => (
             <tr key={index} style={rowStyle}>
