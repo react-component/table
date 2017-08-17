@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { renderToJson } from 'enzyme-to-json';
-import Table from '..';
+import Table from '../src';
 
 describe('Table.fixedColumns', () => {
   // see:
