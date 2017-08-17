@@ -30,6 +30,9 @@ export default class Table extends React.Component {
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowContextMenu: PropTypes.func,
+    onRowMouseEnter: PropTypes.func,
+    onRowMouseLeave: PropTypes.func,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
     title: PropTypes.func,
@@ -54,6 +57,7 @@ export default class Table extends React.Component {
     onExpandedRowsChange() {},
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
     prefixCls: 'rc-table',
@@ -301,6 +305,7 @@ export default class Table extends React.Component {
       expandedRowClassName,
       onRowClick,
       onRowDoubleClick,
+      onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
     } = props;
@@ -361,6 +366,7 @@ export default class Table extends React.Component {
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
+          onRowContextMenu={onRowContextMenu}
           onRowMouseEnter={onRowMouseEnter}
           onRowMouseLeave={onRowMouseLeave}
           height={height}
