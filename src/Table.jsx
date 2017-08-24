@@ -4,6 +4,7 @@ import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import { measureScrollbar, debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
+import get from 'lodash.get';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import ColumnManager from './ColumnManager';
 import createStore from './createStore';
@@ -231,10 +232,15 @@ export default class Table extends React.Component {
           rows.push([]);
         }
       }
+
+      const children = column.headerRender
+        ? column.headerRender(get(column, ['title', 'props', 'children', 0], column.title))
+        : column.title;
+
       const cell = {
         key: column.key,
         className: column.className || '',
-        children: column.title,
+        children,
       };
       if (column.children) {
         this.getHeaderRows(column.children, currentRow + 1, rows);
