@@ -231,6 +231,21 @@ describe('Table', () => {
     expect(renderToJson(wrapper)).toMatchSnapshot();
   });
 
+  it('renders custom header correctly', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        className: 'name-class',
+        width: 100,
+        headerRender: (text) => <h1>{text}</h1>,
+      },
+    ];
+    const wrapper = render(createTable({ columns }));
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
+
   it('renders custom cell correctly', () => {
     const columns = [
       {
