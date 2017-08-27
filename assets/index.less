@@ -66,6 +66,13 @@
     border-bottom: 1px solid @table-border-color;
     text-align: center;
     position: relative;
+    &-fixed-columns {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: transparent;
+      pointer-events: none;
+    }
   }
 
   table {
@@ -82,6 +89,10 @@
 
   td {
     border-bottom: 1px solid @table-border-color;
+    &:empty:after {
+      content: '.'; // empty cell placeholder
+      visibility: hidden;
+    }
   }
 
   tr {
