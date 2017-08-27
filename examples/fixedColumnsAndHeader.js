@@ -19,7 +19,17 @@ const columns = [
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
-const data = [];
+const data = [
+  { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '1' },
+  { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '2' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '3' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '4' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '5' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '6' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '7' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '8' },
+  { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '9' },
+];
 
 ReactDOM.render(
   <div>
