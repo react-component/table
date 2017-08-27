@@ -13680,7 +13680,7 @@ var Table = function (_React$Component) {
     }
   }, {
     key: 'getRowsByData',
-    value: function getRowsByData(data, visible, indent, columns, fixed) {
+    value: function getRowsByData(originalData, visible, indent, columns, fixed) {
       var props = this.props;
       var childrenColumnName = props.childrenColumnName,
           expandedRowRender = props.expandedRowRender,
@@ -13702,7 +13702,10 @@ var Table = function (_React$Component) {
 
       var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
       var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
-
+      var data = originalData;
+      if (this.columnManager.isAnyColumnsFixed() && data.length === 0) {
+        data = [{ key: 'empty-placeholder-data' }];
+      }
       for (var i = 0; i < data.length; i++) {
         var record = data[i];
         var key = this.getRowKey(record, i);
@@ -13985,11 +13988,16 @@ var Table = function (_React$Component) {
           prefixCls = _props6.prefixCls,
           data = _props6.data;
 
-      return !data.length ? __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+      if (data.length) {
+        return null;
+      }
+      var fixed = this.columnManager.isAnyColumnsFixed();
+      var emptyClassName = prefixCls + '-placeholder' + (fixed ? ' ' + prefixCls + '-placeholder-fixed-columns' : '');
+      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
         'div',
-        { className: prefixCls + '-placeholder', key: 'emptyText' },
+        { className: emptyClassName, key: 'emptyText' },
         typeof emptyText === 'function' ? emptyText() : emptyText
-      ) : null;
+      );
     }
   }, {
     key: 'getHeaderRowStyle',

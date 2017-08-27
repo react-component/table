@@ -50,6 +50,13 @@
   text-align: center;
   position: relative;
 }
+.rc-table .rc-table-placeholder-fixed-columns {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+}
 .rc-table table {
   width: 100%;
   border-collapse: separate;
@@ -62,6 +69,10 @@
 }
 .rc-table td {
   border-bottom: 1px solid #e9e9e9;
+}
+.rc-table td:empty:after {
+  content: '.';
+  visibility: hidden;
 }
 .rc-table tr {
   transition: all .3s ease;
