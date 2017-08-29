@@ -8,6 +8,7 @@ export default class TableRow extends React.Component {
     onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowContextMenu: PropTypes.func,
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
     record: PropTypes.object,
@@ -41,6 +42,7 @@ export default class TableRow extends React.Component {
   static defaultProps = {
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
     onDestroy() {},
@@ -91,6 +93,11 @@ export default class TableRow extends React.Component {
   onRowDoubleClick = (event) => {
     const { record, index, onRowDoubleClick } = this.props;
     onRowDoubleClick(record, index, event);
+  }
+
+  onContextMenu = (event) => {
+    const { record, index, onRowContextMenu } = this.props;
+    onRowContextMenu(record, index, event);
   }
 
   onMouseEnter = (event) => {
@@ -199,6 +206,7 @@ export default class TableRow extends React.Component {
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        onContextMenu={this.onContextMenu}
         className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
         style={style}
       >

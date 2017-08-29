@@ -32,6 +32,9 @@ export default class Table extends React.Component {
     indentSize: PropTypes.number,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
+    onRowContextMenu: PropTypes.func,
+    onRowMouseEnter: PropTypes.func,
+    onRowMouseLeave: PropTypes.func,
     expandIconColumnIndex: PropTypes.number,
     showHeader: PropTypes.bool,
     title: PropTypes.func,
@@ -58,6 +61,7 @@ export default class Table extends React.Component {
     onExpandedRowsChange() {},
     onRowClick() {},
     onRowDoubleClick() {},
+    onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
     prefixCls: 'rc-table',
@@ -295,7 +299,7 @@ export default class Table extends React.Component {
     );
   }
 
-  getRowsByData(data, visible, indent, columns, fixed) {
+  getRowsByData(originalData, visible, indent, columns, fixed) {
     const props = this.props;
     const {
       childrenColumnName,
@@ -308,6 +312,7 @@ export default class Table extends React.Component {
       expandedRowStyle,
       onRowClick,
       onRowDoubleClick,
+      onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
     } = props;
@@ -317,7 +322,10 @@ export default class Table extends React.Component {
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
-
+    let data = originalData;
+    if (this.columnManager.isAnyColumnsFixed() && data.length === 0) {
+      data = [{ key: 'empty-placeholder-data' }];
+    }
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
@@ -370,6 +378,7 @@ export default class Table extends React.Component {
           expandIconColumnIndex={expandIconColumnIndex}
           onRowClick={onRowClick}
           onRowDoubleClick={onRowDoubleClick}
+          onRowContextMenu={onRowContextMenu}
           onRowMouseEnter={onRowMouseEnter}
           onRowMouseLeave={onRowMouseLeave}
           height={height}
@@ -576,11 +585,17 @@ export default class Table extends React.Component {
 
   getEmptyText() {
     const { emptyText, prefixCls, data } = this.props;
-    return !data.length ? (
-      <div className={`${prefixCls}-placeholder`} key="emptyText">
+    if (data.length) {
+      return null;
+    }
+    const fixed = this.columnManager.isAnyColumnsFixed();
+    const emptyClassName =
+     `${prefixCls}-placeholder${fixed ? ` ${prefixCls}-placeholder-fixed-columns` : ''}`;
+    return (
+      <div className={emptyClassName} key="emptyText">
         {(typeof emptyText === 'function') ? emptyText() : emptyText}
       </div>
-    ) : null;
+    );
   }
 
   getHeaderRowStyle(columns, rows) {

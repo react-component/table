@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { mount } from 'enzyme';
-import Table from '..';
+import Table from '../src';
 
 describe('Table with grouping columns', () => {
   it('group columns', () => {

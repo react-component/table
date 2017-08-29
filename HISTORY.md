@@ -1,6 +1,14 @@
 # History
 ----
 
+## 5.6.0 / 2017-08-27
+
+- Better empty data style for fixed-columns Table.
+
+## 5.5.0 / 2017-08-17
+
+- Add `onRowContextMenu`
+
 ## 5.4.0 / 2017-05-23
 
 - Add `onRowMouseEnter`, `onRowMouseLeave`.
