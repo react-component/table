@@ -200,7 +200,7 @@ export default class TableRow extends React.Component {
 
     // Avoid displaying empty row
     // Fix https://github.com/ant-design/ant-design/issues/7379
-    if (record.key === 'empty-placeholder-data') {
+    if (record && record.key === 'empty-placeholder-data') {
       style.color = 'transparent';
       style.background = 'transparent';
       style.MozUserSelect = 'none';
