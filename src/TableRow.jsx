@@ -198,6 +198,13 @@ export default class TableRow extends React.Component {
       style.display = 'none';
     }
 
+    // Avoid displaying empty row
+    // Fix https://github.com/ant-design/ant-design/issues/7379
+    if (record.key === 'empty-placeholder-data') {
+      style.visibility = 'hidden';
+      style.pointEvents = 'none';
+    }
+
     return (
       <tr
         ref={(node) => (this.trRef = node)}
