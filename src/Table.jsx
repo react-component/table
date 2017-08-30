@@ -420,7 +420,7 @@ export default class Table extends React.Component {
       leafColumns = this.columnManager.leafColumns();
     }
     cols = cols.concat(leafColumns.map(c => {
-      return <col key={c.key} style={{ width: c.width, minWidth: c.width }} />;
+      return <col key={c.key || c.dataIndex} style={{ width: c.width, minWidth: c.width }} />;
     }));
     return <colgroup>{cols}</colgroup>;
   }

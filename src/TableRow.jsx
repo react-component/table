@@ -187,7 +187,7 @@ export default class TableRow extends React.Component {
           indent={indent}
           index={index}
           column={columns[i]}
-          key={columns[i].key}
+          key={columns[i].key || columns[i].dataIndex}
           expandIcon={isColumnHaveExpandIcon ? expandIcon : null}
         />
       );
