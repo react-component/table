@@ -42,6 +42,8 @@ export default class Table extends React.Component {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
+    headerAlign: PropTypes.string,
+    bodyAlign: PropTypes.string,
   }
 
   static defaultProps = {
@@ -71,6 +73,8 @@ export default class Table extends React.Component {
     rowRef: () => null,
     getBodyWrapper: body => body,
     emptyText: () => 'No Data',
+    headerAlign: 'left',
+    bodyAlign: 'left',
   }
 
   constructor(props) {
@@ -198,7 +202,7 @@ export default class Table extends React.Component {
   }
 
   getHeader(columns, fixed) {
-    const { showHeader, expandIconAsCell, prefixCls } = this.props;
+    const { showHeader, headerAlign, expandIconAsCell, prefixCls } = this.props;
     const rows = this.getHeaderRows(columns);
 
     if (expandIconAsCell && fixed !== 'right') {
@@ -217,6 +221,7 @@ export default class Table extends React.Component {
         prefixCls={prefixCls}
         rows={rows}
         rowStyle={trStyle}
+        headerAlign={headerAlign}
       />
     ) : null;
   }
@@ -441,7 +446,7 @@ export default class Table extends React.Component {
 
   getTable(options = {}) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {}, getBodyWrapper, showHeader } = this.props;
+    const { prefixCls, scroll = {}, getBodyWrapper, showHeader, bodyAlign } = this.props;
     let { useFixedHeader } = this.props;
     const bodyStyle = { ...this.props.bodyStyle };
     const headStyle = {};
@@ -484,7 +489,7 @@ export default class Table extends React.Component {
         }
       }
       const tableBody = hasBody ? getBodyWrapper(
-        <tbody className={`${prefixCls}-tbody`}>
+        <tbody className={`${prefixCls}-tbody`} style={{ textAlign: bodyAlign }}>
           {this.getRows(columns, fixed)}
         </tbody>
       ) : null;

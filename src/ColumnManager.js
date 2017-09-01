@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class ColumnManager {
-  _cached = {}
+  _cached = {};
 
   constructor(columns, elements) {
     this.columns = columns || this.normalize(elements);
@@ -73,10 +73,11 @@ export default class ColumnManager {
         const setRowSpan = column => {
           const rowSpan = rows.length - currentRow;
           if (column &&
-            !column.children && // parent columns are supposed to be one row
+            !column.children &&
             rowSpan > 1 &&
             (!column.rowSpan || column.rowSpan < rowSpan)
           ) {
+            // parent columns are supposed to be one row
             column.rowSpan = rowSpan;
           }
         };

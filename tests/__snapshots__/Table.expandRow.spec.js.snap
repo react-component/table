@@ -1,5 +1,6 @@
 exports[`Table.expand controlled by expandedRowKeys 1`] = `
 <Table
+  bodyAlign="left"
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -43,6 +44,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
   }
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerAlign="left"
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -88,6 +90,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               } />
           </colgroup>
           <TableHeader
+            headerAlign="left"
             prefixCls="rc-table"
             rowStyle={null}
             rows={
@@ -107,7 +110,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               ]
             }>
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+              style={
+                Object {
+                  "textAlign": "left",
+                }
+              }>
               <tr
                 style={null}>
                 <th
@@ -122,7 +130,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+            style={
+              Object {
+                "textAlign": "left",
+              }
+            }>
             <TableRow
               childrenColumnName="children"
               className=""
@@ -529,6 +542,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
 
 exports[`Table.expand controlled by expandedRowKeys 2`] = `
 <Table
+  bodyAlign="left"
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -572,6 +586,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
   }
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerAlign="left"
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -617,6 +632,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               } />
           </colgroup>
           <TableHeader
+            headerAlign="left"
             prefixCls="rc-table"
             rowStyle={null}
             rows={
@@ -636,7 +652,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               ]
             }>
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+              style={
+                Object {
+                  "textAlign": "left",
+                }
+              }>
               <tr
                 style={null}>
                 <th
@@ -651,7 +672,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+            style={
+              Object {
+                "textAlign": "left",
+              }
+            }>
             <TableRow
               childrenColumnName="children"
               className=""
@@ -1070,7 +1096,8 @@ exports[`Table.expand expand all rows by default 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -1083,7 +1110,8 @@ exports[`Table.expand expand all rows by default 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -1151,6 +1179,7 @@ exports[`Table.expand expand all rows by default 1`] = `
 
 exports[`Table.expand expand row by click 1`] = `
 <Table
+  bodyAlign="left"
   bodyStyle={Object {}}
   childrenColumnName="children"
   columns={
@@ -1189,6 +1218,7 @@ exports[`Table.expand expand row by click 1`] = `
   expandedRowClassName={[Function]}
   expandedRowRender={[Function]}
   getBodyWrapper={[Function]}
+  headerAlign="left"
   indentSize={15}
   onExpand={[Function]}
   onExpandedRowsChange={[Function]}
@@ -1234,6 +1264,7 @@ exports[`Table.expand expand row by click 1`] = `
               } />
           </colgroup>
           <TableHeader
+            headerAlign="left"
             prefixCls="rc-table"
             rowStyle={null}
             rows={
@@ -1253,7 +1284,12 @@ exports[`Table.expand expand row by click 1`] = `
               ]
             }>
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+              style={
+                Object {
+                  "textAlign": "left",
+                }
+              }>
               <tr
                 style={null}>
                 <th
@@ -1268,7 +1304,12 @@ exports[`Table.expand expand row by click 1`] = `
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+            style={
+              Object {
+                "textAlign": "left",
+              }
+            }>
             <TableRow
               childrenColumnName="children"
               className=""
@@ -1687,7 +1728,8 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -1700,7 +1742,8 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -1769,7 +1812,8 @@ exports[`Table.expand renders expand icon as cell 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="rc-table-expand-icon-th"
@@ -1786,7 +1830,8 @@ exports[`Table.expand renders expand icon as cell 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -1840,7 +1885,8 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -1853,7 +1899,8 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -1907,7 +1954,8 @@ exports[`Table.expand renders expand row correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -1920,7 +1968,8 @@ exports[`Table.expand renders expand row correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -1974,7 +2023,8 @@ exports[`Table.expand renders expend row class correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -1987,7 +2037,8 @@ exports[`Table.expand renders expend row class correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -2054,7 +2105,8 @@ exports[`Table.expand renders nested data correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -2067,7 +2119,8 @@ exports[`Table.expand renders nested data correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -2138,7 +2191,8 @@ exports[`Table.expand renders tree row correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -2151,7 +2205,8 @@ exports[`Table.expand renders tree row correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td

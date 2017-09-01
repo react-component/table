@@ -12,7 +12,8 @@ exports[`Table dataIndex render text by path 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -25,7 +26,8 @@ exports[`Table dataIndex render text by path 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -75,7 +77,8 @@ exports[`Table renders colSpan correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class=""
@@ -85,7 +88,8 @@ exports[`Table renders colSpan correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -132,7 +136,8 @@ exports[`Table renders column correctly 1`] = `
             style="width:100px;min-width:100px;" />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="name-class">
@@ -141,7 +146,8 @@ exports[`Table renders column correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -182,7 +188,8 @@ exports[`Table renders correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="test-prefix-thead">
+          class="test-prefix-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -191,7 +198,8 @@ exports[`Table renders correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="test-prefix-tbody">
+          class="test-prefix-tbody"
+          style="text-align:left;">
           <tr
             class="test-prefix-row  test-prefix-row-level-0">
             <td
@@ -232,7 +240,8 @@ exports[`Table renders custom cell correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -241,7 +250,8 @@ exports[`Table renders custom cell correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -286,7 +296,8 @@ exports[`Table renders empty text correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -295,7 +306,8 @@ exports[`Table renders empty text correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody" />
+          class="rc-table-tbody"
+          style="text-align:left;" />
       </table>
     </div>
     <div
@@ -319,7 +331,8 @@ exports[`Table renders empty text correctly 2`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -328,7 +341,8 @@ exports[`Table renders empty text correctly 2`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody" />
+          class="rc-table-tbody"
+          style="text-align:left;" />
       </table>
     </div>
     <div
@@ -352,7 +366,8 @@ exports[`Table renders fixed header correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -370,7 +385,8 @@ exports[`Table renders fixed header correctly 1`] = `
           <col />
         </colgroup>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -411,7 +427,8 @@ exports[`Table renders footer correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -420,7 +437,8 @@ exports[`Table renders footer correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -454,6 +472,58 @@ exports[`Table renders footer correctly 1`] = `
 </div>
 `;
 
+exports[`Table renders headerAlign and bodyAlign correctly 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left">
+  <div
+    class="rc-table-content">
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+          style="text-align:center;">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+          style="text-align:right;">
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table renders rowSpan correctly 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left">
@@ -468,7 +538,8 @@ exports[`Table renders rowSpan correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -481,7 +552,8 @@ exports[`Table renders rowSpan correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -527,7 +599,8 @@ exports[`Table renders table body to the wrapper 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -583,7 +656,8 @@ exports[`Table renders title correctly 1`] = `
           <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+          style="text-align:left;">
           <tr>
             <th
               class="">
@@ -592,7 +666,8 @@ exports[`Table renders title correctly 1`] = `
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -633,7 +708,8 @@ exports[`Table renders without header 1`] = `
           <col />
         </colgroup>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+          style="text-align:left;">
           <tr
             class="rc-table-row  rc-table-row-level-0">
             <td
@@ -678,7 +754,8 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
             <col />
           </colgroup>
           <thead
-            class="rc-table-thead">
+            class="rc-table-thead"
+            style="text-align:left;">
             <tr>
               <th
                 class="">
@@ -687,7 +764,8 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
             </tr>
           </thead>
           <tbody
-            class="rc-table-tbody">
+            class="rc-table-tbody"
+            style="text-align:left;">
             <tr
               class="rc-table-row  rc-table-row-level-0">
               <td
@@ -733,7 +811,8 @@ exports[`Table scroll renders scroll.x is true 1`] = `
             <col />
           </colgroup>
           <thead
-            class="rc-table-thead">
+            class="rc-table-thead"
+            style="text-align:left;">
             <tr>
               <th
                 class="">
@@ -742,7 +821,8 @@ exports[`Table scroll renders scroll.x is true 1`] = `
             </tr>
           </thead>
           <tbody
-            class="rc-table-tbody">
+            class="rc-table-tbody"
+            style="text-align:left;">
             <tr
               class="rc-table-row  rc-table-row-level-0">
               <td
@@ -786,7 +866,8 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
             <col />
           </colgroup>
           <thead
-            class="rc-table-thead">
+            class="rc-table-thead"
+            style="text-align:left;">
             <tr>
               <th
                 class="">
@@ -805,7 +886,8 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
             <col />
           </colgroup>
           <tbody
-            class="rc-table-tbody">
+            class="rc-table-tbody"
+            style="text-align:left;">
             <tr
               class="rc-table-row  rc-table-row-level-0">
               <td

@@ -23,13 +23,6 @@ React table component.
 
 [![rc-table](https://nodei.co/npm/rc-table.png)](https://npmjs.org/package/rc-table)
 
-## Development
-
-```
-npm install
-npm start
-```
-
 ## Example
 
 http://react-component.github.io/table/examples/
@@ -231,6 +224,22 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Display text when data is empty</td>
     </tr>
     <tr>
+      <td>headerAlign</td>
+      <td>String</td>
+      <td>'left'</td>
+      <td>
+        how table head text align
+      </td>
+    </tr>
+    <tr>
+      <td>bodyAlign</td>
+      <td>String</td>
+      <td>'left'</td>
+      <td>
+        how table body text align
+      </td>
+    </tr>
+    <tr>
       <td>columns</td>
       <td>Object[]<Object></td>
       <td></td>
@@ -309,6 +318,13 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
   </tbody>
 </table>
+
+## Development
+
+```
+npm install
+npm start
+```
 
 ## License
 

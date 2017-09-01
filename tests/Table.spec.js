@@ -428,4 +428,9 @@ describe('Table', () => {
     wrapper.find('.rc-table-row').first().simulate('mouseLeave');
     expect(handleRowMouseLeave).toBeCalledWith(data[0], 0, expect.anything());
   });
+
+  it('renders headerAlign and bodyAlign correctly', () => {
+    const wrapper = render(createTable({ headerAlign: 'center', bodyAlign: 'right' }));
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
 });
