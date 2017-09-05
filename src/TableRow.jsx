@@ -212,7 +212,8 @@ export default class TableRow extends React.Component {
       emptyRowClassName = `${prefixCls}-empty-placeholder`;
     }
 
-    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`.trim()
+    const rowClassName =
+      `${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`.trim();
 
     return (
       <tr
