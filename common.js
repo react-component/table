@@ -14683,6 +14683,8 @@ var TableRow = function (_React$Component) {
         emptyRowClassName = prefixCls + '-empty-placeholder';
       }
 
+      var rowClassName = (prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent + ' ' + emptyRowClassName).trim();
+
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'tr',
         {
@@ -14694,7 +14696,7 @@ var TableRow = function (_React$Component) {
           onMouseEnter: this.onMouseEnter,
           onMouseLeave: this.onMouseLeave,
           onContextMenu: this.onContextMenu,
-          className: prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent + ' ' + emptyRowClassName,
+          className: rowClassName,
           style: style
         },
         cells
