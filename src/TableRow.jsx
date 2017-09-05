@@ -197,6 +197,7 @@ export default class TableRow extends React.Component {
     if (!visible) {
       style.display = 'none';
     }
+    let emptyRowClassName = '';
 
     // Avoid displaying empty row
     // Fix https://github.com/ant-design/ant-design/issues/7379
@@ -208,6 +209,7 @@ export default class TableRow extends React.Component {
       style.MsUserSelect = 'none';
       style.userSelect = 'none';
       style.pointerEvents = 'none';
+      emptyRowClassName = `${prefixCls}-empty-placeholder`;
     }
 
     return (
@@ -218,7 +220,7 @@ export default class TableRow extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        className={`${prefixCls} ${className} ${prefixCls}-level-${indent}`}
+        className={`${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`}
         style={style}
       >
         {cells}
