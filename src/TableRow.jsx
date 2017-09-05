@@ -212,6 +212,8 @@ export default class TableRow extends React.Component {
       emptyRowClassName = `${prefixCls}-empty-placeholder`;
     }
 
+    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`.trim()
+
     return (
       <tr
         ref={(node) => (this.trRef = node)}
@@ -220,7 +222,7 @@ export default class TableRow extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        className={`${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`}
+        className={rowClassName}
         style={style}
       >
         {cells}
