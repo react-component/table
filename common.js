@@ -13703,9 +13703,6 @@ var Table = function (_React$Component) {
       var expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
       var expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
       var data = originalData;
-      if (this.columnManager.isAnyColumnsFixed() && data.length === 0) {
-        data = [{ key: 'empty-placeholder-data' }];
-      }
       for (var i = 0; i < data.length; i++) {
         var record = data[i];
         var key = this.getRowKey(record, i);
@@ -13991,8 +13988,7 @@ var Table = function (_React$Component) {
       if (data.length) {
         return null;
       }
-      var fixed = this.columnManager.isAnyColumnsFixed();
-      var emptyClassName = prefixCls + '-placeholder' + (fixed ? ' ' + prefixCls + '-placeholder-fixed-columns' : '');
+      var emptyClassName = prefixCls + '-placeholder';
       return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
         'div',
         { className: emptyClassName, key: 'emptyText' },
@@ -14668,22 +14664,8 @@ var TableRow = function (_React$Component) {
       if (!visible) {
         style.display = 'none';
       }
-      var emptyRowClassName = '';
 
-      // Avoid displaying empty row
-      // Fix https://github.com/ant-design/ant-design/issues/7379
-      if (record && record.key === 'empty-placeholder-data') {
-        style.color = 'transparent';
-        style.background = 'transparent';
-        style.MozUserSelect = 'none';
-        style.WebkitUserSelect = 'none';
-        style.MsUserSelect = 'none';
-        style.userSelect = 'none';
-        style.pointerEvents = 'none';
-        emptyRowClassName = prefixCls + '-empty-placeholder';
-      }
-
-      var rowClassName = (prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent + ' ' + emptyRowClassName).trim();
+      var rowClassName = (prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent + '}').trim();
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'tr',
