@@ -14665,7 +14665,7 @@ var TableRow = function (_React$Component) {
         style.display = 'none';
       }
 
-      var rowClassName = (prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent + '}').trim();
+      var rowClassName = (prefixCls + ' ' + className + ' ' + prefixCls + '-level-' + indent).trim();
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'tr',
