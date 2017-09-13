@@ -197,23 +197,9 @@ export default class TableRow extends React.Component {
     if (!visible) {
       style.display = 'none';
     }
-    let emptyRowClassName = '';
-
-    // Avoid displaying empty row
-    // Fix https://github.com/ant-design/ant-design/issues/7379
-    if (record && record.key === 'empty-placeholder-data') {
-      style.color = 'transparent';
-      style.background = 'transparent';
-      style.MozUserSelect = 'none';
-      style.WebkitUserSelect = 'none';
-      style.MsUserSelect = 'none';
-      style.userSelect = 'none';
-      style.pointerEvents = 'none';
-      emptyRowClassName = `${prefixCls}-empty-placeholder`;
-    }
 
     const rowClassName =
-      `${prefixCls} ${className} ${prefixCls}-level-${indent} ${emptyRowClassName}`.trim();
+      `${prefixCls} ${className} ${prefixCls}-level-${indent}}`.trim();
 
     return (
       <tr

@@ -315,10 +315,7 @@ export default class Table extends React.Component {
 
     const expandIconAsCell = fixed !== 'right' ? props.expandIconAsCell : false;
     const expandIconColumnIndex = fixed !== 'right' ? props.expandIconColumnIndex : -1;
-    let data = originalData;
-    if (this.columnManager.isAnyColumnsFixed() && data.length === 0) {
-      data = [{ key: 'empty-placeholder-data' }];
-    }
+    const data = originalData;
     for (let i = 0; i < data.length; i++) {
       const record = data[i];
       const key = this.getRowKey(record, i);
@@ -577,9 +574,7 @@ export default class Table extends React.Component {
     if (data.length) {
       return null;
     }
-    const fixed = this.columnManager.isAnyColumnsFixed();
-    const emptyClassName =
-     `${prefixCls}-placeholder${fixed ? ` ${prefixCls}-placeholder-fixed-columns` : ''}`;
+    const emptyClassName = `${prefixCls}-placeholder`;
     return (
       <div className={emptyClassName} key="emptyText">
         {(typeof emptyText === 'function') ? emptyText() : emptyText}
