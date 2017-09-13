@@ -199,7 +199,7 @@ export default class TableRow extends React.Component {
     }
 
     const rowClassName =
-      `${prefixCls} ${className} ${prefixCls}-level-${indent}}`.trim();
+      `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
     return (
       <tr
