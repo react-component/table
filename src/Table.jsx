@@ -685,6 +685,10 @@ export default class Table extends React.Component {
   }
 
   handleBodyScrollLeft = (e) => {
+    // Fix https://github.com/ant-design/ant-design/issues/7635
+    if (e.currentTarget !== e.target) {
+      return;
+    }
     const target = e.target;
     const { scroll = {} } = this.props;
     const { headTable, bodyTable } = this.refs;
