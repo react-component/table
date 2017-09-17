@@ -13416,6 +13416,10 @@ var Table = function (_React$Component) {
     };
 
     _this.handleBodyScrollLeft = function (e) {
+      // Fix https://github.com/ant-design/ant-design/issues/7635
+      if (e.currentTarget !== e.target) {
+        return;
+      }
       var target = e.target;
       var _this$props$scroll = _this.props.scroll,
           scroll = _this$props$scroll === undefined ? {} : _this$props$scroll;
