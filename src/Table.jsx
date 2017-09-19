@@ -23,6 +23,7 @@ export default class Table extends React.Component {
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     rowClassName: PropTypes.func,
+    rowStyle: PropTypes.object,
     expandedRowClassName: PropTypes.func,
     childrenColumnName: PropTypes.string,
     onExpand: PropTypes.func,
@@ -52,6 +53,7 @@ export default class Table extends React.Component {
     defaultExpandedRowKeys: [],
     rowKey: 'key',
     rowClassName: () => '',
+    rowStyle: {},
     expandedRowClassName: () => '',
     onExpand() {},
     onExpandedRowsChange() {},
@@ -375,6 +377,7 @@ export default class Table extends React.Component {
           hoverKey={key}
           ref={rowRef(record, i, indent)}
           store={this.store}
+          rowStyle={this.props.rowStyle}
         />
       );
 

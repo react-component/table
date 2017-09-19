@@ -36,6 +36,7 @@ export default class TableRow extends React.Component {
     expandedRow: PropTypes.bool,
     fixed: PropTypes.bool,
     rowKey: PropTypes.string,
+    rowStyle: PropTypes.object
   }
 
   static defaultProps = {
@@ -48,6 +49,7 @@ export default class TableRow extends React.Component {
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
+    rowStyle: {}
   }
 
   state = {
@@ -193,7 +195,7 @@ export default class TableRow extends React.Component {
       );
     }
     const height = this.props.height || this.state.height;
-    const style = { height };
+    const style = Object.assign({}, this.props.rowStyle, { height });
     if (!visible) {
       style.display = 'none';
     }
