@@ -42,6 +42,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
     ]
   }
   expandedRowRender={[Function]}
+  expandedRowStyle={[Function]}
   getBodyWrapper={[Function]}
   indentSize={15}
   onExpand={[Function]}
@@ -55,6 +56,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
   rowClassName={[Function]}
   rowKey="key"
   rowRef={[Function]}
+  rowStyle={[Function]}
   scroll={Object {}}
   showHeader={true}
   style={Object {}}
@@ -571,6 +573,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
     ]
   }
   expandedRowRender={[Function]}
+  expandedRowStyle={[Function]}
   getBodyWrapper={[Function]}
   indentSize={15}
   onExpand={[Function]}
@@ -584,6 +587,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
   rowClassName={[Function]}
   rowKey="key"
   rowRef={[Function]}
+  rowStyle={[Function]}
   scroll={Object {}}
   showHeader={true}
   style={Object {}}
@@ -1188,6 +1192,7 @@ exports[`Table.expand expand row by click 1`] = `
   expandIconColumnIndex={0}
   expandedRowClassName={[Function]}
   expandedRowRender={[Function]}
+  expandedRowStyle={[Function]}
   getBodyWrapper={[Function]}
   indentSize={15}
   onExpand={[Function]}
@@ -1201,6 +1206,7 @@ exports[`Table.expand expand row by click 1`] = `
   rowClassName={[Function]}
   rowKey="key"
   rowRef={[Function]}
+  rowStyle={[Function]}
   scroll={Object {}}
   showHeader={true}
   style={Object {}}

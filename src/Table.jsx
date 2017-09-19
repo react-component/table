@@ -23,7 +23,9 @@ export default class Table extends React.Component {
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     rowClassName: PropTypes.func,
+    rowStyle: PropTypes.func,
     expandedRowClassName: PropTypes.func,
+    expandedRowStyle: PropTypes.func,
     childrenColumnName: PropTypes.string,
     onExpand: PropTypes.func,
     onExpandedRowsChange: PropTypes.func,
@@ -52,7 +54,9 @@ export default class Table extends React.Component {
     defaultExpandedRowKeys: [],
     rowKey: 'key',
     rowClassName: () => '',
+    rowStyle: () => {},
     expandedRowClassName: () => '',
+    expandedRowStyle: () => {},
     onExpand() {},
     onExpandedRowsChange() {},
     onRowClick() {},
@@ -252,7 +256,7 @@ export default class Table extends React.Component {
     return rows.filter(row => row.length > 0);
   }
 
-  getExpandedRow(key, content, visible, className, fixed) {
+  getExpandedRow(key, content, visible, className, style, fixed) {
     const { prefixCls, expandIconAsCell } = this.props;
     let colCount;
     if (fixed === 'left') {
@@ -282,6 +286,7 @@ export default class Table extends React.Component {
         columns={columns}
         visible={visible}
         className={className}
+        style={style}
         key={`${key}-extra-row`}
         rowKey={`${key}-extra-row`}
         prefixCls={`${prefixCls}-expanded-row`}
@@ -301,8 +306,10 @@ export default class Table extends React.Component {
       expandedRowRender,
       expandRowByClick,
       rowClassName,
+      rowStyle,
       rowRef,
       expandedRowClassName,
+      expandedRowStyle,
       onRowClick,
       onRowDoubleClick,
       onRowContextMenu,
@@ -326,6 +333,7 @@ export default class Table extends React.Component {
         expandedRowContent = expandedRowRender(record, i, indent);
       }
       const className = rowClassName(record, i, indent);
+      const style = rowStyle(record, i, indent);
 
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
@@ -351,6 +359,7 @@ export default class Table extends React.Component {
           indentSize={props.indentSize}
           needIndentSpaced={needIndentSpaced}
           className={className}
+          style={style}
           record={record}
           expandIconAsCell={expandIconAsCell}
           onDestroy={this.onRowDestroy}
@@ -381,8 +390,10 @@ export default class Table extends React.Component {
       const subVisible = visible && isRowExpanded;
 
       if (expandedRowContent && isRowExpanded) {
+        const expRowClassName = expandedRowClassName(record, i, indent);
+        const expRowStyle = expandedRowStyle(record, i, indent);
         rst.push(this.getExpandedRow(
-          key, expandedRowContent, subVisible, expandedRowClassName(record, i, indent), fixed
+          key, expandedRowContent, subVisible, expRowClassName, expRowStyle, fixed
         ));
       }
       if (childrenColumn) {

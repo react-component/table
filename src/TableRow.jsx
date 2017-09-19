@@ -28,6 +28,7 @@ export default class TableRow extends React.Component {
     onExpand: PropTypes.func,
     needIndentSpaced: PropTypes.bool,
     className: PropTypes.string,
+    style: PropTypes.object,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     expandIconAsCell: PropTypes.bool,
@@ -193,7 +194,7 @@ export default class TableRow extends React.Component {
       );
     }
     const height = this.props.height || this.state.height;
-    const style = { height };
+    const style = { ...this.props.style, height };
     if (!visible) {
       style.display = 'none';
     }
