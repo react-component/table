@@ -84,7 +84,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
           <tbody
             class="rc-table-tbody">
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -136,7 +137,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -188,7 +190,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -222,7 +225,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -256,7 +260,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -290,7 +295,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -324,7 +330,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -358,7 +365,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -392,7 +400,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class="" />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0">
+              class="rc-table-row  rc-table-row-level-0"
+              style="cursor:pointer;">
               <td
                 class="">
                 <span
@@ -459,7 +468,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             <tbody
               class="rc-table-tbody">
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -473,7 +483,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -487,7 +498,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -499,7 +511,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -511,7 +524,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -523,7 +537,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -535,7 +550,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -547,7 +563,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -559,7 +576,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   <span
@@ -599,51 +617,60 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             <tbody
               class="rc-table-tbody">
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   xxxxxxxx
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="">
                   edd12221
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0">
+                class="rc-table-row  rc-table-row-level-0"
+                style="cursor:pointer;">
                 <td
                   class="" />
               </tr>
