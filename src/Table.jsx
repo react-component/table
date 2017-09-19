@@ -22,7 +22,7 @@ export default class Table extends React.Component {
     bodyStyle: PropTypes.object,
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    rowClassName: PropTypes.func,
+    rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     expandedRowClassName: PropTypes.func,
     childrenColumnName: PropTypes.string,
     onExpand: PropTypes.func,
@@ -325,7 +325,9 @@ export default class Table extends React.Component {
       if (expandedRowRender && isRowExpanded) {
         expandedRowContent = expandedRowRender(record, i, indent);
       }
-      const className = rowClassName(record, i, indent);
+      const className = typeof rowClassName === 'string'
+          ? rowClassName
+          : rowClassName(record, i, indent);
 
       const onHoverProps = {};
       if (this.columnManager.isAnyColumnsFixed()) {
