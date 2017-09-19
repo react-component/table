@@ -118,7 +118,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>rowClassName</td>
-      <td>Function(record, index, indent):string</td>
+      <td>string or Function(record, index, indent):string</td>
       <td></td>
       <td>get row's className</td>
     </tr>
