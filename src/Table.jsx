@@ -99,12 +99,12 @@ export default class Table extends React.Component {
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     };
+    this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
   componentDidMount() {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
-      this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
       this.resizeEvent = addEventListener(
         window, 'resize', this.debouncedWindowResize
       );
@@ -127,6 +127,11 @@ export default class Table extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
+      if (!this.resizeEvent) {
+        this.resizeEvent = addEventListener(
+          window, 'resize', this.debouncedWindowResize
+        );
+      }
     }
     // when table changes to empty, reset scrollLeft
     if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {

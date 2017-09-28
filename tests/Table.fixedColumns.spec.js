@@ -177,4 +177,15 @@ describe('Table.fixedColumns', () => {
     expect(tableNode.className).toContain('rc-table-scroll-position-left');
     expect(tableNode.className).not.toContain('rc-table-scroll-position-right');
   });
+
+  it('update fixed column high after columns change', () => {
+    const wrapper = mount(
+      <Table
+        columns={[]}
+        data={[]}
+      />
+    );
+    wrapper.setProps({ columns, data });
+    expect(wrapper.instance().resizeEvent).not.toBeUndefined();
+  });
 });
