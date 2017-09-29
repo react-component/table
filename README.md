@@ -46,7 +46,7 @@ const columns = [{
 }, {
   title: 'Address', dataIndex: 'address', key:'address', width: 200,
 }, {
-  title: 'Apeartions', dataIndex: '', key:'operations', render: () => <a href="#">Delete</a>,
+  title: 'Operations', dataIndex: '', key:'operations', render: () => <a href="#">Delete</a>,
 }];
 
 const data = [
@@ -118,7 +118,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>rowClassName</td>
-      <td>Function(record, index, indent):string</td>
+      <td>string or Function(record, index, indent):string</td>
       <td></td>
       <td>get row's className</td>
     </tr>

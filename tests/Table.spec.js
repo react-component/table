@@ -428,4 +428,18 @@ describe('Table', () => {
     wrapper.find('.rc-table-row').first().simulate('mouseLeave');
     expect(handleRowMouseLeave).toBeCalledWith(data[0], 0, expect.anything());
   });
+
+  it('renders correctly RowClassName as string', () => {
+    const wrapper = render(createTable({
+      rowClassName: 'test-row-class-name-asStr',
+    }));
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('renders correctly RowClassName as function', () => {
+    const wrapper = render(createTable({
+      rowClassName: () => 'test-row-class-name-asFn',
+    }));
+    expect(renderToJson(wrapper)).toMatchSnapshot();
+  });
 });

@@ -219,6 +219,106 @@ exports[`Table renders correctly 1`] = `
 </div>
 `;
 
+exports[`Table renders correctly RowClassName as function 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left">
+  <div
+    class="rc-table-content">
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row test-row-class-name-asFn rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row test-row-class-name-asFn rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table renders correctly RowClassName as string 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left">
+  <div
+    class="rc-table-content">
+    <div
+      class="rc-table-body">
+      <table
+        class="">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead">
+          <tr>
+            <th
+              class="">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody">
+          <tr
+            class="rc-table-row test-row-class-name-asStr rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row test-row-class-name-asStr rc-table-row-level-0">
+            <td
+              class="">
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px;" />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table renders custom cell correctly 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left">
