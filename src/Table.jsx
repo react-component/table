@@ -449,7 +449,7 @@ export default class Table extends React.Component {
       bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
       // Fix weired webkit render bug
       // https://github.com/ant-design/ant-design/issues/7783
-      bodyStyle.webkitTransform = 'translate3d (0, 0, 0)';
+      bodyStyle.WebkitTransform = 'translate3d (0, 0, 0)';
     }
 
     const innerBodyStyle = {};
