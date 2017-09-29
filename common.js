@@ -13500,7 +13500,6 @@ var Table = function (_React$Component) {
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: []
     };
-    _this.debouncedWindowResize = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_10__utils__["a" /* debounce */])(_this.handleWindowResize, 150);
     return _this;
   }
 
@@ -13509,6 +13508,7 @@ var Table = function (_React$Component) {
     value: function componentDidMount() {
       if (this.columnManager.isAnyColumnsFixed()) {
         this.handleWindowResize();
+        this.debouncedWindowResize = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_10__utils__["a" /* debounce */])(this.handleWindowResize, 150);
         this.resizeEvent = __WEBPACK_IMPORTED_MODULE_12_rc_util_lib_Dom_addEventListener___default()(window, 'resize', this.debouncedWindowResize);
       }
     }
@@ -13531,9 +13531,6 @@ var Table = function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       if (this.columnManager.isAnyColumnsFixed()) {
         this.handleWindowResize();
-        if (!this.resizeEvent) {
-          this.resizeEvent = __WEBPACK_IMPORTED_MODULE_12_rc_util_lib_Dom_addEventListener___default()(window, 'resize', this.debouncedWindowResize);
-        }
       }
       // when table changes to empty, reset scrollLeft
       if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
@@ -13719,7 +13716,7 @@ var Table = function (_React$Component) {
         if (expandedRowRender && isRowExpanded) {
           expandedRowContent = expandedRowRender(record, i, indent);
         }
-        var className = typeof rowClassName === 'string' ? rowClassName : rowClassName(record, i, indent);
+        var className = rowClassName(record, i, indent);
 
         var onHoverProps = {};
         if (this.columnManager.isAnyColumnsFixed()) {
@@ -13852,7 +13849,7 @@ var Table = function (_React$Component) {
         bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
         // Fix weired webkit render bug
         // https://github.com/ant-design/ant-design/issues/7783
-        bodyStyle.webkitTransform = 'translate3d (0, 0, 0)';
+        bodyStyle.WebkitTransform = 'translate3d (0, 0, 0)';
       }
 
       var innerBodyStyle = {};
@@ -14153,7 +14150,7 @@ Table.propTypes = {
   bodyStyle: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object,
   style: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object,
   rowKey: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func]),
-  rowClassName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func]),
+  rowClassName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
   expandedRowClassName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
   childrenColumnName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string,
   onExpand: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
