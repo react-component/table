@@ -7,7 +7,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
       class="rc-table-scroll">
       <div
         class="rc-table-body"
-        style="overflow-x:auto;">
+        style="overflow-x:auto;-webkit-transform:translate3d (0, 0, 0);">
         <table
           class="rc-table-fixed"
           style="width:1200px;">
@@ -432,7 +432,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
     <div
       class="rc-table-fixed-left">
       <div
-        class="rc-table-body-outer">
+        class="rc-table-body-outer"
+        style="-webkit-transform:translate3d (0, 0, 0);">
         <div
           class="rc-table-body-inner">
           <table
@@ -578,7 +579,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
     <div
       class="rc-table-fixed-right">
       <div
-        class="rc-table-body-outer">
+        class="rc-table-body-outer"
+        style="-webkit-transform:translate3d (0, 0, 0);">
         <div
           class="rc-table-body-inner">
           <table

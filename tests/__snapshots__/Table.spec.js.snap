@@ -770,7 +770,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
       class="rc-table-scroll">
       <div
         class="rc-table-body"
-        style="overflow-x:auto;">
+        style="overflow-x:auto;-webkit-transform:translate3d (0, 0, 0);">
         <table
           class="rc-table-fixed"
           style="width:200px;">
@@ -825,7 +825,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
       class="rc-table-scroll">
       <div
         class="rc-table-body"
-        style="overflow-x:auto;">
+        style="overflow-x:auto;-webkit-transform:translate3d (0, 0, 0);">
         <table
           class="rc-table-fixed"
           style="table-layout:fixed;">
