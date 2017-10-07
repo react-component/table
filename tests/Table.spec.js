@@ -132,10 +132,10 @@ describe('Table', () => {
         />
       );
       const inst = wrapper.instance();
-      const headTable = wrapper.ref('headTable');
-      const bodyTable = wrapper.ref('bodyTable');
-      const fixedColumnsBodyLeft = wrapper.ref('fixedColumnsBodyLeft');
-      const fixedColumnsBodyRight = wrapper.ref('fixedColumnsBodyRight');
+      const headTable = wrapper.wrap(inst.headTable);
+      const bodyTable = wrapper.wrap(inst.bodyTable);
+      const fixedColumnsBodyLeft = wrapper.wrap(inst.fixedColumnsBodyLeft);
+      const fixedColumnsBodyRight = wrapper.wrap(inst.fixedColumnsBodyRight);
 
       expect(inst.lastScrollLeft).toBe(undefined);
 
