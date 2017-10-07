@@ -6,6 +6,7 @@ import BaseTable from './BaseTable';
 export default function BodyTable(props, { table }) {
   const { prefixCls, scroll } = table.props;
   const { columns, fixed, tableClassName, handleBodyScroll } = props;
+  const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
   const innerBodyStyle = {};
@@ -48,13 +49,12 @@ export default function BodyTable(props, { table }) {
   );
 
   if (fixed && columns.length) {
-    // Todo
-    // let refName;
-    // if (columns[0].fixed === 'left' || columns[0].fixed === true) {
-    //   refName = 'fixedColumnsBodyLeft';
-    // } else if (columns[0].fixed === 'right') {
-    //   refName = 'fixedColumnsBodyRight';
-    // }
+    let refName;
+    if (columns[0].fixed === 'left' || columns[0].fixed === true) {
+      refName = 'fixedColumnsBodyLeft';
+    } else if (columns[0].fixed === 'right') {
+      refName = 'fixedColumnsBodyRight';
+    }
     delete bodyStyle.overflowX;
     delete bodyStyle.overflowY;
     return (
@@ -66,6 +66,7 @@ export default function BodyTable(props, { table }) {
         <div
           className={`${prefixCls}-body-inner`}
           style={innerBodyStyle}
+          ref={saveRef(refName)}
           onScroll={handleBodyScroll}
         >
           {baseTable}
@@ -79,6 +80,7 @@ export default function BodyTable(props, { table }) {
       key="bodyTable"
       className={`${prefixCls}-body`}
       style={bodyStyle}
+      ref={saveRef('bodyTable')}
       onScroll={handleBodyScroll}
     >
       {baseTable}

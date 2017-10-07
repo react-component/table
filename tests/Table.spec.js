@@ -105,12 +105,12 @@ describe('Table', () => {
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
 
-    xit('renders scroll.y is a number', () => {
+    it('renders scroll.y is a number', () => {
       const wrapper = render(createTable({ scroll: { y: 200 } }));
       expect(renderToJson(wrapper)).toMatchSnapshot();
     });
 
-    xit('fire scroll event', () => {
+    it('fire scroll event', () => {
       const newColumns = [
         { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
         { title: 'title2', dataIndex: 'b', key: 'b' },

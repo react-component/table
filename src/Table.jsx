@@ -113,6 +113,7 @@ export default class Table extends React.Component {
         state: this.state,
         store: this.store,
         columnManager: this.columnManager,
+        saveRef: this.saveRef,
         getRowKey: this.getRowKey,
         isRowExpanded: this.isRowExpanded,
         onExpanded: this.onExpanded,
@@ -243,7 +244,7 @@ export default class Table extends React.Component {
   }
 
   setScrollPositionClassName() {
-    const node = this.refs.bodyTable;
+    const node = this.bodyTable;
     const scrollToLeft = node.scrollLeft === 0;
     const scrollToRight = node.scrollLeft + 1 >=
       node.children[0].getBoundingClientRect().width -
@@ -272,10 +273,10 @@ export default class Table extends React.Component {
       return;
     }
     const { prefixCls } = this.props;
-    const headRows = this.refs.headTable ?
-            this.refs.headTable.querySelectorAll('thead') :
-            this.refs.bodyTable.querySelectorAll('thead');
-    const bodyRows = this.refs.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
+    const headRows = this.headTable ?
+            this.headTable.querySelectorAll('thead') :
+            this.bodyTable.querySelectorAll('thead');
+    const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
     );
@@ -293,11 +294,11 @@ export default class Table extends React.Component {
   }
 
   resetScrollX() {
-    if (this.refs.headTable) {
-      this.refs.headTable.scrollLeft = 0;
+    if (this.headTable) {
+      this.headTable.scrollLeft = 0;
     }
-    if (this.refs.bodyTable) {
-      this.refs.bodyTable.scrollLeft = 0;
+    if (this.bodyTable) {
+      this.bodyTable.scrollLeft = 0;
     }
   }
 
@@ -322,7 +323,7 @@ export default class Table extends React.Component {
     }
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable } = this.refs;
+    const { headTable, bodyTable } = this;
     if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
       if (target === bodyTable && headTable) {
         headTable.scrollLeft = target.scrollLeft;
@@ -338,7 +339,7 @@ export default class Table extends React.Component {
   handleBodyScrollTop = (e) => {
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this.refs;
+    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
       const scrollTop = target.scrollTop;
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
@@ -358,6 +359,10 @@ export default class Table extends React.Component {
   handleBodyScroll = (e) => {
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
+  }
+
+  saveRef = (name) => (node) => {
+    this[name] = node;
   }
 
   renderLeftFixedTable() {
@@ -464,7 +469,7 @@ export default class Table extends React.Component {
       : content;
 
     return (
-      <div ref={node => (this.tableNode = node)} className={className} style={props.style}>
+      <div ref={this.saveRef('tableNode')} className={className} style={props.style}>
         {this.renderTitle()}
         <div className={`${prefixCls}-content`}>
           {scrollTable}

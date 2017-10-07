@@ -6,6 +6,7 @@ import BaseTable from './BaseTable';
 export default function HeadTable(props, { table }) {
   const { prefixCls, scroll, showHeader } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft } = props;
+  const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const headStyle = {};
 
@@ -26,6 +27,7 @@ export default function HeadTable(props, { table }) {
   return (
     <div
       key="headTable"
+      ref={fixed ? null : saveRef('headTable')}
       className={`${prefixCls}-header`}
       style={headStyle}
       onScroll={handleBodyScrollLeft}

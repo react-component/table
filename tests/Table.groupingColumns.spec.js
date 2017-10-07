@@ -73,7 +73,7 @@ describe('Table with grouping columns', () => {
     });
   });
 
-  xit('work with fixed columns', () => {
+  it('work with fixed columns', () => {
     const columns = [
       { title: '表头A', className: 'title-a', dataIndex: 'a', key: 'a', fixed: 'left' },
       { title: '表头B', className: 'title-b', children:
