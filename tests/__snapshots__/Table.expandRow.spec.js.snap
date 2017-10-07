@@ -184,6 +184,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -321,6 +322,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -424,6 +426,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -713,6 +716,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -869,6 +873,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -1006,6 +1011,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -1085,7 +1091,8 @@ exports[`Table.expand expand all rows by default 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1101,7 +1108,8 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            style="cursor:pointer;">
             <td
               class=""
               colspan="2">
@@ -1114,7 +1122,8 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1130,7 +1139,8 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            style="cursor:pointer;">
             <td
               class=""
               colspan="2">
@@ -1330,6 +1340,7 @@ exports[`Table.expand expand row by click 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -1467,6 +1478,7 @@ exports[`Table.expand expand row by click 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -1570,6 +1582,7 @@ exports[`Table.expand expand row by click 1`] = `
                 onMouseLeave={[Function]}
                 style={
                   Object {
+                    "cursor": "pointer",
                     "height": null,
                   }
                 }>
@@ -1702,7 +1715,8 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1718,7 +1732,8 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1734,7 +1749,8 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            style="cursor:pointer;">
             <td
               class=""
               colspan="2">
@@ -1788,7 +1804,8 @@ exports[`Table.expand renders expand icon as cell 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="rc-table-row-expand-icon-cell">
               <span
@@ -1804,7 +1821,8 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="rc-table-row-expand-icon-cell">
               <span
@@ -1855,7 +1873,8 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               Lucy
@@ -1871,7 +1890,8 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               Jack
@@ -1922,7 +1942,8 @@ exports[`Table.expand renders expand row correctly 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1938,7 +1959,8 @@ exports[`Table.expand renders expand row correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -1989,7 +2011,8 @@ exports[`Table.expand renders expend row class correctly 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -2005,7 +2028,8 @@ exports[`Table.expand renders expend row class correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row expand-row-test-class-name rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row expand-row-test-class-name rc-table-expanded-row-level-1"
+            style="cursor:pointer;">
             <td
               class=""
               colspan="2">
@@ -2018,7 +2042,8 @@ exports[`Table.expand renders expend row class correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -2069,7 +2094,8 @@ exports[`Table.expand renders nested data correctly 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -2086,7 +2112,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none;">
+            style="display:none;cursor:pointer;">
             <td
               class="">
               <span
@@ -2102,7 +2128,8 @@ exports[`Table.expand renders nested data correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -2153,7 +2180,8 @@ exports[`Table.expand renders tree row correctly 1`] = `
         <tbody
           class="rc-table-tbody">
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span
@@ -2170,7 +2198,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none;">
+            style="display:none;cursor:pointer;">
             <td
               class="">
               <span
@@ -2186,7 +2214,8 @@ exports[`Table.expand renders tree row correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+            style="cursor:pointer;">
             <td
               class="">
               <span

@@ -197,6 +197,9 @@ export default class TableRow extends React.Component {
     if (!visible) {
       style.display = 'none';
     }
+    if (this.onRowClick || this.onRowDoubleClick) {
+      style.cursor = 'pointer';
+    }
 
     const rowClassName =
       `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
