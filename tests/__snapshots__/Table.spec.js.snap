@@ -38,6 +38,7 @@ exports[`Table dataIndex render text by path 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -56,6 +57,7 @@ exports[`Table dataIndex render text by path 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -113,6 +115,7 @@ exports[`Table renders colSpan correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -127,6 +130,7 @@ exports[`Table renders colSpan correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -184,6 +188,7 @@ exports[`Table renders column correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class="name-class"
@@ -197,6 +202,7 @@ exports[`Table renders column correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class="name-class"
@@ -247,6 +253,7 @@ exports[`Table renders correctly 1`] = `
         >
           <tr
             class="test-prefix-row  test-prefix-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -260,6 +267,7 @@ exports[`Table renders correctly 1`] = `
           </tr>
           <tr
             class="test-prefix-row  test-prefix-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -310,6 +318,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
         >
           <tr
             class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -323,6 +332,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
           </tr>
           <tr
             class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -373,6 +383,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
         >
           <tr
             class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -386,6 +397,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
           </tr>
           <tr
             class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -436,6 +448,7 @@ exports[`Table renders custom cell correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -451,6 +464,7 @@ exports[`Table renders custom cell correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -596,6 +610,7 @@ exports[`Table renders fixed header correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -609,6 +624,7 @@ exports[`Table renders fixed header correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -659,6 +675,7 @@ exports[`Table renders footer correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -672,6 +689,7 @@ exports[`Table renders footer correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -735,6 +753,7 @@ exports[`Table renders rowSpan correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -754,6 +773,7 @@ exports[`Table renders rowSpan correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -804,6 +824,7 @@ exports[`Table renders table body to the wrapper 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -817,6 +838,7 @@ exports[`Table renders table body to the wrapper 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -874,6 +896,7 @@ exports[`Table renders title correctly 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -887,6 +910,7 @@ exports[`Table renders title correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -926,6 +950,7 @@ exports[`Table renders without header 1`] = `
         >
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -939,6 +964,7 @@ exports[`Table renders without header 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-0"
+            style="display:none"
           >
             <td
               class=""
@@ -994,6 +1020,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
           >
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -1007,6 +1034,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -1063,6 +1091,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
           >
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -1076,6 +1105,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -1142,6 +1172,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
           >
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -1155,6 +1186,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""

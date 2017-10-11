@@ -23,7 +23,7 @@ export default class ExpandIcon extends React.Component {
       return (
         <span
           className={`${prefixCls}-expand-icon ${prefixCls}-${expandClassName}`}
-          onClick={(e) => onExpand(!expanded, record, e)}
+          onClick={(e) => onExpand(record, e)}
         />
       );
     } else if (needIndentSpaced) {

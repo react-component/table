@@ -109,6 +109,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
           >
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -175,6 +176,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -241,6 +243,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -289,6 +292,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -337,6 +341,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -385,6 +390,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -433,6 +439,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -481,6 +488,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -529,6 +537,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             </tr>
             <tr
               class="rc-table-row  rc-table-row-level-0"
+              style="display:none"
             >
               <td
                 class=""
@@ -621,6 +630,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             >
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -639,6 +649,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -657,6 +668,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -673,6 +685,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -689,6 +702,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -705,6 +719,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -721,6 +736,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -737,6 +753,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -753,6 +770,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
@@ -806,70 +824,122 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             >
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
                 >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
                   xxxxxxxx
                 </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
                 >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
                   edd12221
                 </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
               <tr
                 class="rc-table-row  rc-table-row-level-0"
+                style="display:none"
               >
                 <td
                   class=""
-                />
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                </td>
               </tr>
             </tbody>
           </table>

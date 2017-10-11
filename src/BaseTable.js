@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
+import ExpandableRow from './ExpandableRow';
+import ExpandedRowVisible from './ExpandedRowVisible';
 
 export default class BaseTable extends React.Component {
   static propTypes = {
@@ -23,94 +25,35 @@ export default class BaseTable extends React.Component {
     });
   }
 
-  renderExpandedRow(key, content, visible, className) {
-    const { table } = this.context;
-    const { prefixCls, expandIconAsCell } = table.props;
-    const { store, columnManager } = table;
-    const { fixed } = this.props;
-    let colCount;
-    if (fixed === 'left') {
-      colCount = columnManager.leftLeafColumns().length;
-    } else if (fixed === 'right') {
-      colCount = columnManager.rightLeafColumns().length;
-    } else {
-      colCount = columnManager.leafColumns().length;
-    }
-    const columns = [{
-      key: 'extra-row',
-      render: () => ({
-        props: {
-          colSpan: colCount,
-        },
-        children: fixed !== 'right' ? content : '&nbsp;',
-      }),
-    }];
-    if (expandIconAsCell && fixed !== 'right') {
-      columns.unshift({
-        key: 'expand-icon-placeholder',
-        render: () => null,
-      });
-    }
-    return (
-      <TableRow
-        columns={columns}
-        visible={visible}
-        className={className}
-        key={`${key}-extra-row`}
-        rowKey={`${key}-extra-row`}
-        prefixCls={`${prefixCls}-expanded-row`}
-        indent={1}
-        expandable={false}
-        store={store}
-        expandedRow
-        fixed={!!fixed}
-      />
-    );
-  }
-
-  renderRows(renderData, visible, indent) {
+  renderRows = (renderData, indent, parentKey) => {
     const { table } = this.context;
     const { fixedColumnsBodyRowsHeight } = table.state;
     const {
       store,
       columnManager,
       getRowKey,
-      isRowExpanded,
       onExpanded,
-      onRowDestroy,
     } = table;
     const {
       prefixCls,
       data,
       childrenColumnName,
-      indentSize,
-      expandedRowRender,
-      expandRowByClick,
       rowClassName,
       rowRef,
-      expandedRowClassName,
       onRowClick,
       onRowDoubleClick,
       onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
     } = table.props;
-    const { columns, fixed } = this.props;
-    const needIndentSpaced = data.some(record => record[childrenColumnName]);
-    const expandIconAsCell = fixed !== 'right' ? table.props.expandIconAsCell : false;
-    const expandIconColumnIndex = fixed !== 'right' ? table.props.expandIconColumnIndex : -1;
+    const { columns, fixed, expander } = this.props;
 
-    let rst = [];
+    let rows = [];
 
     for (let i = 0; i < renderData.length; i++) {
       const record = renderData[i];
       const key = getRowKey(record, i);
       const childrenData = record[childrenColumnName];
-      const isExpanded = isRowExpanded(record, i);
-      let expandedRowContent;
-      if (expandedRowRender && isExpanded) {
-        expandedRowContent = expandedRowRender(record, i, indent);
-      }
       const className = typeof rowClassName === 'string'
         ? rowClassName
         : rowClassName(record, i, indent);
@@ -123,7 +66,6 @@ export default class BaseTable extends React.Component {
       const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
         fixedColumnsBodyRowsHeight[i] : null;
 
-
       let leafColumns;
       if (fixed === 'left') {
         leafColumns = columnManager.leftLeafColumns();
@@ -133,74 +75,67 @@ export default class BaseTable extends React.Component {
         leafColumns = columnManager.leafColumns();
       }
 
-      rst.push(
-        <TableRow
-          indent={indent}
-          indentSize={indentSize}
-          needIndentSpaced={needIndentSpaced}
-          className={className}
-          record={record}
-          expandIconAsCell={expandIconAsCell}
-          onDestroy={onRowDestroy}
+      const row = (
+        <ExpandableRow
+          {...expander.props}
           index={i}
-          visible={visible}
-          expandRowByClick={expandRowByClick}
-          onExpand={onExpanded}
-          expandable={childrenData || expandedRowRender}
-          expanded={isExpanded}
-          prefixCls={`${prefixCls}-row`}
-          childrenColumnName={childrenColumnName}
-          columns={leafColumns}
-          expandIconColumnIndex={expandIconColumnIndex}
-          onRowClick={onRowClick}
-          onRowDoubleClick={onRowDoubleClick}
-          onRowContextMenu={onRowContextMenu}
-          onRowMouseEnter={onRowMouseEnter}
-          onRowMouseLeave={onRowMouseLeave}
-          height={height}
-          {...onHoverProps}
-          key={key}
-          hoverKey={key}
-          ref={rowRef(record, i, indent)}
           store={store}
-        />
+          record={record}
+          key={key}
+          rowKey={key}
+          parentKey={key}
+          onRowClick={onRowClick}
+          needIndentSpaced={expander.needIndentSpaced}
+          onExpandedChange={expander.handleExpandChange}
+        >
+          {( expandableRow ) => (
+            <ExpandedRowVisible
+              store={store}
+              rowKey={key}
+              parentKey={key}
+            >
+              {(visible) => (
+                <TableRow
+                  indent={indent}
+                  className={className}
+                  record={record}
+                  index={i}
+                  prefixCls={`${prefixCls}-row`}
+                  childrenColumnName={childrenColumnName}
+                  columns={leafColumns}
+                  onRowDoubleClick={onRowDoubleClick}
+                  onRowContextMenu={onRowContextMenu}
+                  onRowMouseEnter={onRowMouseEnter}
+                  onRowMouseLeave={onRowMouseLeave}
+                  height={height}
+                  {...onHoverProps}
+                  hoverKey={key}
+                  rowKey={key}
+                  ref={rowRef(record, i, indent)}
+                  store={store}
+                  visible={visible}
+                  {...expandableRow}
+                />
+              )}
+            </ExpandedRowVisible>
+          )}
+        </ExpandableRow>
       );
 
-      const subVisible = visible && isExpanded;
+      rows.push(row);
 
-      if (expandedRowContent && isExpanded) {
-        rst.push(this.renderExpandedRow(
-          key,
-          expandedRowContent,
-          subVisible,
-          expandedRowClassName(record, i, indent),
-        ));
-      }
-      if (childrenData) {
-        rst = rst.concat(this.renderRows(
-          childrenData, subVisible, indent + 1, columns, fixed
-        ));
+      const expandedRows = expander.renderRows(this.renderRows, record, i, indent, fixed, key);
+
+      if (expandedRows) {
+        rows.push(...expandedRows);
       }
     }
-    return rst;
+    return rows;
   }
 
   render() {
-    const {
-      prefixCls,
-      scroll,
-      data,
-      getBodyWrapper,
-    } = this.context.table.props;
-
-    const {
-      tableClassName,
-      hasHead,
-      hasBody,
-      fixed,
-      columns,
-    } = this.props;
-
+    const { prefixCls, scroll, data, getBodyWrapper } = this.context.table.props;
+    const { tableClassName, hasHead, hasBody, fixed, columns } = this.props;
     const tableStyle = {};
 
     if (!fixed && scroll.x) {
@@ -218,7 +153,7 @@ export default class BaseTable extends React.Component {
         {hasHead && <TableHeader columns={columns} fixed={fixed} /> }
         {hasBody && getBodyWrapper(
           <tbody className={`${prefixCls}-tbody`}>
-            {this.renderRows(data, true, 0)}
+            {this.renderRows(data, 0)}
           </tbody>
         )}
       </table>

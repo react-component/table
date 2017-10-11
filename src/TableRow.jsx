@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableCell from './TableCell';
-import ExpandIcon from './ExpandIcon';
 
 export default class TableRow extends React.Component {
   static propTypes = {
-    onDestroy: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
@@ -13,29 +11,20 @@ export default class TableRow extends React.Component {
     onRowMouseLeave: PropTypes.func,
     record: PropTypes.object,
     prefixCls: PropTypes.string,
-    expandIconColumnIndex: PropTypes.number,
     onHover: PropTypes.func,
     columns: PropTypes.array,
     height: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
     ]),
-    visible: PropTypes.bool,
     index: PropTypes.number,
-    hoverKey: PropTypes.any,
-    expanded: PropTypes.bool,
-    expandable: PropTypes.any,
-    onExpand: PropTypes.func,
-    needIndentSpaced: PropTypes.bool,
+    rowKey: PropTypes.any,
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    expandIconAsCell: PropTypes.bool,
-    expandRowByClick: PropTypes.bool,
     store: PropTypes.object.isRequired,
     expandedRow: PropTypes.bool,
     fixed: PropTypes.bool,
-    rowKey: PropTypes.string,
   }
 
   static defaultProps = {
@@ -44,48 +33,38 @@ export default class TableRow extends React.Component {
     onRowContextMenu() {},
     onRowMouseEnter() {},
     onRowMouseLeave() {},
-    onDestroy() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
+    addExpandIconCell() {},
+    hasExpandIcon() {},
+    renderExpandIcon() {},
   }
 
-  state = {
-    hovered: false,
-    height: null,
+  constructor(props) {
+    super(props);
+
+    this.store = props.store;
+
+    this.state = {
+      hovered: false,
+    };
   }
 
   componentDidMount() {
-    const { store } = this.props;
-    this.pushHeight();
-    this.pullHeight();
-    this.unsubscribe = store.subscribe(() => {
+    this.unsubscribe = this.store.subscribe(() => {
       this.setHover();
-      this.pullHeight();
     });
   }
 
   componentWillUnmount() {
-    const { record, onDestroy, index } = this.props;
-    onDestroy(record, index);
     if (this.unsubscribe) {
       this.unsubscribe();
     }
   }
 
   onRowClick = (event) => {
-    const {
-      record,
-      index,
-      onRowClick,
-      expandable,
-      expandRowByClick,
-      expanded,
-      onExpand,
-    } = this.props;
-    if (expandable && expandRowByClick) {
-      onExpand(!expanded, record, event, index);
-    }
+    const { record, index, onRowClick } = this.props;
     onRowClick(record, index, event);
   }
 
@@ -100,51 +79,42 @@ export default class TableRow extends React.Component {
   }
 
   onMouseEnter = (event) => {
-    const { record, index, onRowMouseEnter, onHover, hoverKey } = this.props;
-    onHover(true, hoverKey);
+    const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
+    onHover(true, rowKey);
     onRowMouseEnter(record, index, event);
   }
 
   onMouseLeave = (event) => {
-    const { record, index, onRowMouseLeave, onHover, hoverKey } = this.props;
-    onHover(false, hoverKey);
+    const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
+    onHover(false, rowKey);
     onRowMouseLeave(record, index, event);
   }
 
   setHover() {
-    const { store, hoverKey } = this.props;
-    const { currentHoverKey } = store.getState();
-    if (currentHoverKey === hoverKey) {
+    const { rowKey } = this.props;
+    const { currentHoverKey } = this.store.getState();
+    if (currentHoverKey === rowKey) {
       this.setState({ hovered: true });
     } else if (this.state.hovered === true) {
       this.setState({ hovered: false });
     }
   }
 
-
-  pullHeight() {
-    const { store, expandedRow, fixed, rowKey } = this.props;
-    const { expandedRowsHeight } = store.getState();
-    if (expandedRow && fixed && expandedRowsHeight[rowKey]) {
-      this.setState({ height: expandedRowsHeight[rowKey] });
-    }
-  }
-
-  pushHeight() {
-    const { store, expandedRow, fixed, rowKey } = this.props;
-    if (expandedRow && !fixed) {
-      const { expandedRowsHeight } = store.getState();
-      const height = this.trRef.getBoundingClientRect().height;
-      expandedRowsHeight[rowKey] = height;
-      store.setState({ expandedRowsHeight });
-    }
-  }
-
   render() {
     const {
-      prefixCls, columns, record, visible, index,
-      expandIconColumnIndex, expandIconAsCell, expanded, expandRowByClick,
-      expandable, onExpand, needIndentSpaced, indent, indentSize,
+      prefixCls,
+      columns,
+      record,
+      index,
+      indent,
+      indentSize,
+      visible,
+      height,
+      saveRowRef,
+      hasExpandIcon,
+      addExpandIconCell,
+      renderExpandIcon,
+      renderExpandIconCell,
     } = this.props;
 
     let { className } = this.props;
@@ -155,30 +125,9 @@ export default class TableRow extends React.Component {
 
     const cells = [];
 
-    const expandIcon = (
-      <ExpandIcon
-        expandable={expandable}
-        prefixCls={prefixCls}
-        onExpand={onExpand}
-        needIndentSpaced={needIndentSpaced}
-        expanded={expanded}
-        record={record}
-      />
-    );
+    addExpandIconCell(cells);
 
     for (let i = 0; i < columns.length; i++) {
-      if (expandIconAsCell && i === 0) {
-        cells.push(
-          <td
-            className={`${prefixCls}-expand-icon-cell`}
-            key="rc-table-expand-icon-cell"
-          >
-            {expandIcon}
-          </td>
-        );
-      }
-      const isColumnHaveExpandIcon = (expandIconAsCell || expandRowByClick)
-        ? false : (i === expandIconColumnIndex);
       cells.push(
         <TableCell
           prefixCls={prefixCls}
@@ -188,12 +137,13 @@ export default class TableRow extends React.Component {
           index={index}
           column={columns[i]}
           key={columns[i].key || columns[i].dataIndex}
-          expandIcon={isColumnHaveExpandIcon ? expandIcon : null}
+          expandIcon={hasExpandIcon(i) && renderExpandIcon()}
         />
       );
     }
-    const height = this.props.height || this.state.height;
+
     const style = { height };
+
     if (!visible) {
       style.display = 'none';
     }
@@ -203,7 +153,7 @@ export default class TableRow extends React.Component {
 
     return (
       <tr
-        ref={(node) => (this.trRef = node)}
+        ref={saveRowRef}
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
