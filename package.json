@@ -54,6 +54,9 @@
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
+    "setupFiles": [
+      "./tests/setup.js"
+    ],
     "collectCoverageFrom": [
       "src/**/*"
     ],
@@ -66,26 +69,25 @@
     "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
     "prop-types": "^15.5.8",
-    "rc-util": "4.x",
+    "rc-util": "^4.0.4",
     "shallowequal": "^0.2.2",
     "warning": "^3.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.15",
-    "enzyme": "^2.7.0",
-    "enzyme-to-json": "^1.4.5",
-    "expect.js": "~0.3.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
+    "enzyme-to-json": "^3.1.2",
     "jest": "^18.1.0",
-    "jquery": "^1.11.2",
     "pre-commit": "1.x",
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~1.4.10",
     "rc-menu": "^5.0.11",
     "rc-tools": "6.x",
-    "react": "^15.2.1",
+    "react": "^16.0.0",
     "react-addons-test-utils": "^15.3.1",
-    "react-dom": "^15.2.1",
-    "react-test-renderer": "^15.5.4"
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0"
   },
   "pre-commit": [
     "lint"

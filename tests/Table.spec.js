@@ -70,8 +70,8 @@ describe('Table', () => {
 
   it('sets row refs', () => {
     const wrapper = mount(createTable({ rowRef: (record) => record.key }));
-    expect(wrapper.instance().refs.key0).toBe(wrapper.find('TableRow').at(0).node);
-    expect(wrapper.instance().refs.key1).toBe(wrapper.find('TableRow').at(1).node);
+    expect(wrapper.instance().refs.key0).toBe(wrapper.find('TableRow').at(0).instance());
+    expect(wrapper.instance().refs.key1).toBe(wrapper.find('TableRow').at(1).instance());
   });
 
   describe('rowKey', () => {
@@ -132,54 +132,53 @@ describe('Table', () => {
         />
       );
       const inst = wrapper.instance();
-      const headTable = wrapper.ref('headTable');
-      const bodyTable = wrapper.ref('bodyTable');
-      const fixedColumnsBodyLeft = wrapper.ref('fixedColumnsBodyLeft');
-      const fixedColumnsBodyRight = wrapper.ref('fixedColumnsBodyRight');
+      const headTable = wrapper.find('.rc-table-header').at(0);
+      const bodyTable = wrapper.find('.rc-table-body').at(0);
+      const fixedColumnsBodyLeft = wrapper.find('.rc-table-body-inner').at(0);
+      const fixedColumnsBodyRight = wrapper.find('.rc-table-body-inner').at(1);
 
       expect(inst.lastScrollLeft).toBe(undefined);
 
       // fire headTable scroll.
-      headTable.getNode().scrollTop = 0;
-      headTable.getNode().scrollLeft = 20;
+      headTable.getDOMNode().scrollTop = 0;
+      headTable.getDOMNode().scrollLeft = 20;
       headTable.simulate('mouseover');
       headTable.simulate('scroll');
-      expect(bodyTable.getNode().scrollLeft).toBe(20);
-      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(0);
-      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(0);
-
+      expect(bodyTable.getDOMNode().scrollLeft).toBe(20);
+      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(0);
+      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(0);
       expect(inst.lastScrollLeft).toBe(20);
 
       // fire bodyTable scroll.
-      bodyTable.getNode().scrollTop = 10;
-      bodyTable.getNode().scrollLeft = 40;
+      bodyTable.getDOMNode().scrollTop = 10;
+      bodyTable.getDOMNode().scrollLeft = 40;
       bodyTable.simulate('mouseover');
       bodyTable.simulate('scroll');
-      expect(headTable.getNode().scrollLeft).toBe(40);
-      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(10);
-      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(10);
+      expect(headTable.getDOMNode().scrollLeft).toBe(40);
+      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(10);
+      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(10);
 
       expect(inst.lastScrollLeft).toBe(40);
 
       // fire fixedColumnsBodyLeft scroll.
-      fixedColumnsBodyLeft.getNode().scrollTop = 30;
+      fixedColumnsBodyLeft.getDOMNode().scrollTop = 30;
       fixedColumnsBodyLeft.simulate('mouseover');
       fixedColumnsBodyLeft.simulate('scroll');
-      expect(headTable.getNode().scrollLeft).toBe(40);
-      expect(bodyTable.getNode().scrollLeft).toBe(40);
-      expect(bodyTable.getNode().scrollTop).toBe(30);
-      expect(fixedColumnsBodyRight.getNode().scrollTop).toBe(30);
+      expect(headTable.getDOMNode().scrollLeft).toBe(40);
+      expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
+      expect(bodyTable.getDOMNode().scrollTop).toBe(30);
+      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(30);
 
       expect(inst.lastScrollLeft).toBe(0);
 
       // fire fixedColumnsBodyRight scroll.
-      fixedColumnsBodyRight.getNode().scrollTop = 15;
+      fixedColumnsBodyRight.getDOMNode().scrollTop = 15;
       fixedColumnsBodyRight.simulate('mouseover');
       fixedColumnsBodyRight.simulate('scroll');
-      expect(headTable.getNode().scrollLeft).toBe(40);
-      expect(bodyTable.getNode().scrollLeft).toBe(40);
-      expect(bodyTable.getNode().scrollTop).toBe(15);
-      expect(fixedColumnsBodyLeft.getNode().scrollTop).toBe(15);
+      expect(headTable.getDOMNode().scrollLeft).toBe(40);
+      expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
+      expect(bodyTable.getDOMNode().scrollTop).toBe(15);
+      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(15);
 
       expect(inst.lastScrollLeft).toBe(0);
     });

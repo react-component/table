@@ -58,12 +58,14 @@ describe('Table.fixedColumns', () => {
         scroll={{ x: 1200 }}
       />
     );
-    const tables = wrapper.find('table');
+    let tables = wrapper.find('table');
     tables.at(0).find('tbody tr').at(0).simulate('mouseEnter');
+    tables = wrapper.find('table');
     expect(tables.at(0).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
     expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
     expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
     tables.at(0).find('tbody tr').at(0).simulate('mouseLeave');
+    tables = wrapper.find('table');
     expect(tables.at(0).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
     expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
     expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
@@ -134,7 +136,7 @@ describe('Table.fixedColumns', () => {
 
     // <Table /> is show.
     simulateTableShow();
-    wrapper.update();
+    wrapper.setProps({});
     fixedLeftRows.forEach(tr => {
       expect(tr.style.height).toBe(rowHeight);
     });

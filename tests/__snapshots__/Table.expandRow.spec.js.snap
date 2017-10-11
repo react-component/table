@@ -66,13 +66,16 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
+        key="bodyTable"
         onScroll={[Function]}
         style={Object {}}>
         <table
           className=""
+          key="table"
           style={Object {}}>
           <colgroup>
             <col
+              key="name"
               style={
                 Object {
                   "minWidth": undefined,
@@ -80,6 +83,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                 }
               } />
             <col
+              key="age"
               style={
                 Object {
                   "minWidth": undefined,
@@ -109,13 +113,16 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
             <thead
               className="rc-table-thead">
               <tr
+                key="0"
                 style={null}>
                 <th
-                  className="">
+                  className=""
+                  key="0">
                   Name
                 </th>
                 <th
-                  className="">
+                  className=""
+                  key="1">
                   Age
                 </th>
               </tr>
@@ -150,6 +157,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               indent={0}
               indentSize={15}
               index={0}
+              key="0"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -213,6 +221,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -263,6 +272,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -295,6 +305,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               expandedRow={true}
               fixed={false}
               indent={1}
+              key="0-extra-row"
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
@@ -341,7 +352,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       record={undefined} />
                   }
                   indent={1}
-                  prefixCls="rc-table-expanded-row">
+                  indentSize={undefined}
+                  index={undefined}
+                  key="extra-row"
+                  prefixCls="rc-table-expanded-row"
+                  record={undefined}>
                   <td
                     className=""
                     colSpan={2}
@@ -355,7 +370,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       } />
                     <ExpandIcon
                       expandable={false}
-                      prefixCls="rc-table-expanded-row" />
+                      expanded={undefined}
+                      needIndentSpaced={undefined}
+                      onExpand={undefined}
+                      prefixCls="rc-table-expanded-row"
+                      record={undefined} />
                     <p>
                       extra data
                     </p>
@@ -390,6 +409,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               indent={0}
               indentSize={15}
               index={1}
+              key="1"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -453,6 +473,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -503,6 +524,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -595,13 +617,16 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
+        key="bodyTable"
         onScroll={[Function]}
         style={Object {}}>
         <table
           className=""
+          key="table"
           style={Object {}}>
           <colgroup>
             <col
+              key="name"
               style={
                 Object {
                   "minWidth": undefined,
@@ -609,6 +634,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                 }
               } />
             <col
+              key="age"
               style={
                 Object {
                   "minWidth": undefined,
@@ -638,13 +664,16 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             <thead
               className="rc-table-thead">
               <tr
+                key="0"
                 style={null}>
                 <th
-                  className="">
+                  className=""
+                  key="0">
                   Name
                 </th>
                 <th
-                  className="">
+                  className=""
+                  key="1">
                   Age
                 </th>
               </tr>
@@ -679,6 +708,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               indent={0}
               indentSize={15}
               index={0}
+              key="0"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -742,6 +772,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -792,6 +823,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -835,6 +867,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               indent={0}
               indentSize={15}
               index={1}
+              key="1"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -898,6 +931,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -948,6 +982,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -980,6 +1015,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               expandedRow={true}
               fixed={false}
               indent={1}
+              key="1-extra-row"
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
@@ -1026,7 +1062,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       record={undefined} />
                   }
                   indent={1}
-                  prefixCls="rc-table-expanded-row">
+                  indentSize={undefined}
+                  index={undefined}
+                  key="extra-row"
+                  prefixCls="rc-table-expanded-row"
+                  record={undefined}>
                   <td
                     className=""
                     colSpan={2}
@@ -1040,7 +1080,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       } />
                     <ExpandIcon
                       expandable={false}
-                      prefixCls="rc-table-expanded-row" />
+                      expanded={undefined}
+                      needIndentSpaced={undefined}
+                      onExpand={undefined}
+                      prefixCls="rc-table-expanded-row"
+                      record={undefined} />
                     <p>
                       extra data
                     </p>
@@ -1066,8 +1110,12 @@ exports[`Table.expand expand all rows by default 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1090,9 +1138,13 @@ exports[`Table.expand expand all rows by default 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded" />
+                class="rc-table-row-expand-icon rc-table-row-expanded">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -1107,7 +1159,9 @@ exports[`Table.expand expand all rows by default 1`] = `
               colspan="2">
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx;" />
+                style="padding-left:NaNpx">
+                
+              </span>
               <p>
                 extra data
               </p>
@@ -1119,9 +1173,13 @@ exports[`Table.expand expand all rows by default 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded" />
+                class="rc-table-row-expand-icon rc-table-row-expanded">
+                
+              </span>
               Jack
             </td>
             <td
@@ -1136,7 +1194,9 @@ exports[`Table.expand expand all rows by default 1`] = `
               colspan="2">
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx;" />
+                style="padding-left:NaNpx">
+                
+              </span>
               <p>
                 extra data
               </p>
@@ -1212,13 +1272,16 @@ exports[`Table.expand expand row by click 1`] = `
       className="rc-table-content">
       <div
         className="rc-table-body"
+        key="bodyTable"
         onScroll={[Function]}
         style={Object {}}>
         <table
           className=""
+          key="table"
           style={Object {}}>
           <colgroup>
             <col
+              key="name"
               style={
                 Object {
                   "minWidth": undefined,
@@ -1226,6 +1289,7 @@ exports[`Table.expand expand row by click 1`] = `
                 }
               } />
             <col
+              key="age"
               style={
                 Object {
                   "minWidth": undefined,
@@ -1255,13 +1319,16 @@ exports[`Table.expand expand row by click 1`] = `
             <thead
               className="rc-table-thead">
               <tr
+                key="0"
                 style={null}>
                 <th
-                  className="">
+                  className=""
+                  key="0">
                   Name
                 </th>
                 <th
-                  className="">
+                  className=""
+                  key="1">
                   Age
                 </th>
               </tr>
@@ -1296,6 +1363,7 @@ exports[`Table.expand expand row by click 1`] = `
               indent={0}
               indentSize={15}
               index={0}
+              key="0"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -1359,6 +1427,7 @@ exports[`Table.expand expand row by click 1`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -1409,6 +1478,7 @@ exports[`Table.expand expand row by click 1`] = `
                   indent={0}
                   indentSize={15}
                   index={0}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -1441,6 +1511,7 @@ exports[`Table.expand expand row by click 1`] = `
               expandedRow={true}
               fixed={false}
               indent={1}
+              key="0-extra-row"
               onDestroy={[Function]}
               onHover={[Function]}
               onRowClick={[Function]}
@@ -1487,7 +1558,11 @@ exports[`Table.expand expand row by click 1`] = `
                       record={undefined} />
                   }
                   indent={1}
-                  prefixCls="rc-table-expanded-row">
+                  indentSize={undefined}
+                  index={undefined}
+                  key="extra-row"
+                  prefixCls="rc-table-expanded-row"
+                  record={undefined}>
                   <td
                     className=""
                     colSpan={2}
@@ -1501,7 +1576,11 @@ exports[`Table.expand expand row by click 1`] = `
                       } />
                     <ExpandIcon
                       expandable={false}
-                      prefixCls="rc-table-expanded-row" />
+                      expanded={undefined}
+                      needIndentSpaced={undefined}
+                      onExpand={undefined}
+                      prefixCls="rc-table-expanded-row"
+                      record={undefined} />
                     <p>
                       extra data
                     </p>
@@ -1536,6 +1615,7 @@ exports[`Table.expand expand row by click 1`] = `
               indent={0}
               indentSize={15}
               index={1}
+              key="1"
               needIndentSpaced={false}
               onDestroy={[Function]}
               onExpand={[Function]}
@@ -1599,6 +1679,7 @@ exports[`Table.expand expand row by click 1`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="name"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -1649,6 +1730,7 @@ exports[`Table.expand expand row by click 1`] = `
                   indent={0}
                   indentSize={15}
                   index={1}
+                  key="age"
                   prefixCls="rc-table-row"
                   record={
                     Object {
@@ -1683,8 +1765,12 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1707,9 +1793,13 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -1723,9 +1813,13 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded" />
+                class="rc-table-row-expand-icon rc-table-row-expanded">
+                
+              </span>
               Jack
             </td>
             <td
@@ -1740,7 +1834,9 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               colspan="2">
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx;" />
+                style="padding-left:NaNpx">
+                
+              </span>
               <p>
                 extra data
               </p>
@@ -1764,9 +1860,15 @@ exports[`Table.expand renders expand icon as cell 1`] = `
         class="">
         <colgroup>
           <col
-            class="rc-table-expand-icon-col" />
-          <col />
-          <col />
+            class="rc-table-expand-icon-col">
+            
+          </col>
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1774,7 +1876,9 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             <th
               class="rc-table-expand-icon-th"
               rowspan="1"
-              title="" />
+              title="">
+              
+            </th>
             <th
               class="">
               Name
@@ -1792,7 +1896,9 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             <td
               class="rc-table-row-expand-icon-cell">
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
             </td>
             <td
               class="">
@@ -1808,7 +1914,9 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             <td
               class="rc-table-row-expand-icon-cell">
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
             </td>
             <td
               class="">
@@ -1836,8 +1944,12 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1864,9 +1976,13 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               27
             </td>
           </tr>
@@ -1880,9 +1996,13 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               28
             </td>
           </tr>
@@ -1903,8 +2023,12 @@ exports[`Table.expand renders expand row correctly 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1927,9 +2051,13 @@ exports[`Table.expand renders expand row correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -1943,9 +2071,13 @@ exports[`Table.expand renders expand row correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Jack
             </td>
             <td
@@ -1970,8 +2102,12 @@ exports[`Table.expand renders expend row class correctly 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -1994,9 +2130,13 @@ exports[`Table.expand renders expend row class correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded" />
+                class="rc-table-row-expand-icon rc-table-row-expanded">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -2011,7 +2151,9 @@ exports[`Table.expand renders expend row class correctly 1`] = `
               colspan="2">
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx;" />
+                style="padding-left:NaNpx">
+                
+              </span>
               <p>
                 extra data
               </p>
@@ -2023,9 +2165,13 @@ exports[`Table.expand renders expend row class correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Jack
             </td>
             <td
@@ -2050,8 +2196,12 @@ exports[`Table.expand renders nested data correctly 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -2074,9 +2224,13 @@ exports[`Table.expand renders nested data correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -2086,14 +2240,18 @@ exports[`Table.expand renders nested data correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none;">
+            style="display:none">
             <td
               class="">
               <span
                 class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px;" />
+                style="padding-left:15px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced" />
+                class="rc-table-row-expand-icon rc-table-row-spaced">
+                
+              </span>
               Jim
             </td>
             <td
@@ -2107,9 +2265,13 @@ exports[`Table.expand renders nested data correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced" />
+                class="rc-table-row-expand-icon rc-table-row-spaced">
+                
+              </span>
               Jack
             </td>
             <td
@@ -2134,8 +2296,12 @@ exports[`Table.expand renders tree row correctly 1`] = `
       <table
         class="">
         <colgroup>
-          <col />
-          <col />
+          <col>
+            
+          </col>
+          <col>
+            
+          </col>
         </colgroup>
         <thead
           class="rc-table-thead">
@@ -2158,9 +2324,13 @@ exports[`Table.expand renders tree row correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed" />
+                class="rc-table-row-expand-icon rc-table-row-collapsed">
+                
+              </span>
               Lucy
             </td>
             <td
@@ -2170,14 +2340,18 @@ exports[`Table.expand renders tree row correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none;">
+            style="display:none">
             <td
               class="">
               <span
                 class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px;" />
+                style="padding-left:15px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced" />
+                class="rc-table-row-expand-icon rc-table-row-spaced">
+                
+              </span>
               Jim
             </td>
             <td
@@ -2191,9 +2365,13 @@ exports[`Table.expand renders tree row correctly 1`] = `
               class="">
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px;" />
+                style="padding-left:0px">
+                
+              </span>
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced" />
+                class="rc-table-row-expand-icon rc-table-row-spaced">
+                
+              </span>
               Jack
             </td>
             <td
