@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Table.expand controlled by expandedRowKeys 1`] = `
 <Table
   bodyStyle={Object {}}
@@ -58,21 +60,26 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
   scroll={Object {}}
   showHeader={true}
   style={Object {}}
-  useFixedHeader={false}>
+  useFixedHeader={false}
+>
   <div
     className="rc-table rc-table-scroll-position-left"
-    style={Object {}}>
+    style={Object {}}
+  >
     <div
-      className="rc-table-content">
+      className="rc-table-content"
+    >
       <div
         className="rc-table-body"
         key="bodyTable"
         onScroll={[Function]}
-        style={Object {}}>
+        style={Object {}}
+      >
         <table
           className=""
           key="table"
-          style={Object {}}>
+          style={Object {}}
+        >
           <colgroup>
             <col
               key="name"
@@ -81,7 +88,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
             <col
               key="age"
               style={
@@ -89,7 +97,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
           </colgroup>
           <TableHeader
             prefixCls="rc-table"
@@ -109,27 +118,33 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   },
                 ],
               ]
-            }>
+            }
+          >
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+            >
               <tr
                 key="0"
-                style={null}>
+                style={null}
+              >
                 <th
                   className=""
-                  key="0">
+                  key="0"
+                >
                   Name
                 </th>
                 <th
                   className=""
-                  key="1">
+                  key="1"
+                >
                   Age
                 </th>
               </tr>
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+          >
             <TableRow
               childrenColumnName="children"
               className=""
@@ -182,7 +197,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -194,7 +210,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -216,7 +233,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -229,17 +247,20 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={true}
@@ -252,10 +273,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-expanded"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Lucy
                   </td>
@@ -280,10 +303,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     27
                   </td>
                 </TableCell>
@@ -322,7 +347,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-expanded-row  rc-table-expanded-row-level-1"
                 onClick={[Function]}
@@ -334,7 +360,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -349,32 +376,37 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                   }
                   indent={1}
                   indentSize={undefined}
                   index={undefined}
                   key="extra-row"
                   prefixCls="rc-table-expanded-row"
-                  record={undefined}>
+                  record={undefined}
+                >
                   <td
                     className=""
                     colSpan={2}
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-expanded-row-indent indent-level-1"
                       style={
                         Object {
                           "paddingLeft": "NaNpx",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={false}
                       expanded={undefined}
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                     <p>
                       extra data
                     </p>
@@ -434,7 +466,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -446,7 +479,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -468,7 +502,8 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -481,17 +516,20 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={false}
@@ -504,10 +542,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-collapsed"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Jack
                   </td>
@@ -532,10 +572,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     28
                   </td>
                 </TableCell>
@@ -609,21 +651,26 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
   scroll={Object {}}
   showHeader={true}
   style={Object {}}
-  useFixedHeader={false}>
+  useFixedHeader={false}
+>
   <div
     className="rc-table rc-table-scroll-position-left"
-    style={Object {}}>
+    style={Object {}}
+  >
     <div
-      className="rc-table-content">
+      className="rc-table-content"
+    >
       <div
         className="rc-table-body"
         key="bodyTable"
         onScroll={[Function]}
-        style={Object {}}>
+        style={Object {}}
+      >
         <table
           className=""
           key="table"
-          style={Object {}}>
+          style={Object {}}
+        >
           <colgroup>
             <col
               key="name"
@@ -632,7 +679,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
             <col
               key="age"
               style={
@@ -640,7 +688,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
           </colgroup>
           <TableHeader
             prefixCls="rc-table"
@@ -660,27 +709,33 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   },
                 ],
               ]
-            }>
+            }
+          >
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+            >
               <tr
                 key="0"
-                style={null}>
+                style={null}
+              >
                 <th
                   className=""
-                  key="0">
+                  key="0"
+                >
                   Name
                 </th>
                 <th
                   className=""
-                  key="1">
+                  key="1"
+                >
                   Age
                 </th>
               </tr>
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+          >
             <TableRow
               childrenColumnName="children"
               className=""
@@ -733,7 +788,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -745,7 +801,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -767,7 +824,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -780,17 +838,20 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={false}
@@ -803,10 +864,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-collapsed"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Lucy
                   </td>
@@ -831,10 +894,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     27
                   </td>
                 </TableCell>
@@ -892,7 +957,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -904,7 +970,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -926,7 +993,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -939,17 +1007,20 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={true}
@@ -962,10 +1033,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-expanded"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Jack
                   </td>
@@ -990,10 +1063,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     28
                   </td>
                 </TableCell>
@@ -1032,7 +1107,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-expanded-row  rc-table-expanded-row-level-1"
                 onClick={[Function]}
@@ -1044,7 +1120,8 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -1059,32 +1136,37 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                   }
                   indent={1}
                   indentSize={undefined}
                   index={undefined}
                   key="extra-row"
                   prefixCls="rc-table-expanded-row"
-                  record={undefined}>
+                  record={undefined}
+                >
                   <td
                     className=""
                     colSpan={2}
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-expanded-row-indent indent-level-1"
                       style={
                         Object {
                           "paddingLeft": "NaNpx",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={false}
                       expanded={undefined}
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                     <p>
                       extra data
                     </p>
@@ -1102,101 +1184,109 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
 
 exports[`Table.expand expand all rows by default 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
             <td
               class=""
-              colspan="2">
+              colspan="2"
+            >
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx">
-                
-              </span>
+                style="padding-left:NaNpx"
+              />
               <p>
                 extra data
               </p>
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
             <td
               class=""
-              colspan="2">
+              colspan="2"
+            >
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx">
-                
-              </span>
+                style="padding-left:NaNpx"
+              />
               <p>
                 extra data
               </p>
@@ -1264,21 +1354,26 @@ exports[`Table.expand expand row by click 1`] = `
   scroll={Object {}}
   showHeader={true}
   style={Object {}}
-  useFixedHeader={false}>
+  useFixedHeader={false}
+>
   <div
     className="rc-table rc-table-scroll-position-left"
-    style={Object {}}>
+    style={Object {}}
+  >
     <div
-      className="rc-table-content">
+      className="rc-table-content"
+    >
       <div
         className="rc-table-body"
         key="bodyTable"
         onScroll={[Function]}
-        style={Object {}}>
+        style={Object {}}
+      >
         <table
           className=""
           key="table"
-          style={Object {}}>
+          style={Object {}}
+        >
           <colgroup>
             <col
               key="name"
@@ -1287,7 +1382,8 @@ exports[`Table.expand expand row by click 1`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
             <col
               key="age"
               style={
@@ -1295,7 +1391,8 @@ exports[`Table.expand expand row by click 1`] = `
                   "minWidth": undefined,
                   "width": undefined,
                 }
-              } />
+              }
+            />
           </colgroup>
           <TableHeader
             prefixCls="rc-table"
@@ -1315,27 +1412,33 @@ exports[`Table.expand expand row by click 1`] = `
                   },
                 ],
               ]
-            }>
+            }
+          >
             <thead
-              className="rc-table-thead">
+              className="rc-table-thead"
+            >
               <tr
                 key="0"
-                style={null}>
+                style={null}
+              >
                 <th
                   className=""
-                  key="0">
+                  key="0"
+                >
                   Name
                 </th>
                 <th
                   className=""
-                  key="1">
+                  key="1"
+                >
                   Age
                 </th>
               </tr>
             </thead>
           </TableHeader>
           <tbody
-            className="rc-table-tbody">
+            className="rc-table-tbody"
+          >
             <TableRow
               childrenColumnName="children"
               className=""
@@ -1388,7 +1491,8 @@ exports[`Table.expand expand row by click 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -1400,7 +1504,8 @@ exports[`Table.expand expand row by click 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -1422,7 +1527,8 @@ exports[`Table.expand expand row by click 1`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -1435,17 +1541,20 @@ exports[`Table.expand expand row by click 1`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={true}
@@ -1458,10 +1567,12 @@ exports[`Table.expand expand row by click 1`] = `
                           "key": 0,
                           "name": "Lucy",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-expanded"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Lucy
                   </td>
@@ -1486,10 +1597,12 @@ exports[`Table.expand expand row by click 1`] = `
                       "key": 0,
                       "name": "Lucy",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     27
                   </td>
                 </TableCell>
@@ -1528,7 +1641,8 @@ exports[`Table.expand expand row by click 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-expanded-row  rc-table-expanded-row-level-1"
                 onClick={[Function]}
@@ -1540,7 +1654,8 @@ exports[`Table.expand expand row by click 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -1555,32 +1670,37 @@ exports[`Table.expand expand row by click 1`] = `
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                   }
                   indent={1}
                   indentSize={undefined}
                   index={undefined}
                   key="extra-row"
                   prefixCls="rc-table-expanded-row"
-                  record={undefined}>
+                  record={undefined}
+                >
                   <td
                     className=""
                     colSpan={2}
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-expanded-row-indent indent-level-1"
                       style={
                         Object {
                           "paddingLeft": "NaNpx",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={false}
                       expanded={undefined}
                       needIndentSpaced={undefined}
                       onExpand={undefined}
                       prefixCls="rc-table-expanded-row"
-                      record={undefined} />
+                      record={undefined}
+                    />
                     <p>
                       extra data
                     </p>
@@ -1640,7 +1760,8 @@ exports[`Table.expand expand row by click 1`] = `
                   "subscribe": [Function],
                 }
               }
-              visible={true}>
+              visible={true}
+            >
               <tr
                 className="rc-table-row  rc-table-row-level-0"
                 onClick={[Function]}
@@ -1652,7 +1773,8 @@ exports[`Table.expand expand row by click 1`] = `
                   Object {
                     "height": null,
                   }
-                }>
+                }
+              >
                 <TableCell
                   column={
                     Object {
@@ -1674,7 +1796,8 @@ exports[`Table.expand expand row by click 1`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      } />
+                      }
+                    />
                   }
                   indent={0}
                   indentSize={15}
@@ -1687,17 +1810,20 @@ exports[`Table.expand expand row by click 1`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     <span
                       className="rc-table-row-indent indent-level-0"
                       style={
                         Object {
                           "paddingLeft": "0px",
                         }
-                      } />
+                      }
+                    />
                     <ExpandIcon
                       expandable={[Function]}
                       expanded={false}
@@ -1710,10 +1836,12 @@ exports[`Table.expand expand row by click 1`] = `
                           "key": 1,
                           "name": "Jack",
                         }
-                      }>
+                      }
+                    >
                       <span
                         className="rc-table-row-expand-icon rc-table-row-collapsed"
-                        onClick={[Function]} />
+                        onClick={[Function]}
+                      />
                     </ExpandIcon>
                     Jack
                   </td>
@@ -1738,10 +1866,12 @@ exports[`Table.expand expand row by click 1`] = `
                       "key": 1,
                       "name": "Jack",
                     }
-                  }>
+                  }
+                >
                   <td
                     className=""
-                    onClick={[Function]}>
+                    onClick={[Function]}
+                  >
                     28
                   </td>
                 </TableCell>
@@ -1757,86 +1887,93 @@ exports[`Table.expand expand row by click 1`] = `
 
 exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
             <td
               class=""
-              colspan="2">
+              colspan="2"
+            >
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx">
-                
-              </span>
+                style="padding-left:NaNpx"
+              />
               <p>
                 extra data
               </p>
@@ -1851,79 +1988,87 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
 
 exports[`Table.expand renders expand icon as cell 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
           <col
-            class="rc-table-expand-icon-col">
-            
-          </col>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+            class="rc-table-expand-icon-col"
+          />
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-expand-icon-th"
               rowspan="1"
-              title="">
-              
-            </th>
+              title=""
+            />
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="rc-table-row-expand-icon-cell">
+              class="rc-table-row-expand-icon-cell"
+            >
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
             </td>
             <td
-              class="">
+              class=""
+            >
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="rc-table-row-expand-icon-cell">
+              class="rc-table-row-expand-icon-cell"
+            >
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
             </td>
             <td
-              class="">
+              class=""
+            >
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
@@ -1936,73 +2081,79 @@ exports[`Table.expand renders expand icon as cell 1`] = `
 
 exports[`Table.expand renders expand icon to the specify column 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               27
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               28
             </td>
           </tr>
@@ -2015,73 +2166,79 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
 
 exports[`Table.expand renders expand row correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
@@ -2094,88 +2251,95 @@ exports[`Table.expand renders expand row correctly 1`] = `
 
 exports[`Table.expand renders expend row class correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-expanded">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row expand-row-test-class-name rc-table-expanded-row-level-1">
+            class="rc-table-expanded-row expand-row-test-class-name rc-table-expanded-row-level-1"
+          >
             <td
               class=""
-              colspan="2">
+              colspan="2"
+            >
               <span
                 class="rc-table-expanded-row-indent indent-level-1"
-                style="padding-left:NaNpx">
-                
-              </span>
+                style="padding-left:NaNpx"
+              />
               <p>
                 extra data
               </p>
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
@@ -2188,94 +2352,101 @@ exports[`Table.expand renders expend row class correctly 1`] = `
 
 exports[`Table.expand renders nested data correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none">
+            style="display:none"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px">
-                
-              </span>
+                style="padding-left:15px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
               Jim
             </td>
             <td
-              class="">
+              class=""
+            >
               2
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>
@@ -2288,94 +2459,101 @@ exports[`Table.expand renders nested data correctly 1`] = `
 
 exports[`Table.expand renders tree row correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left">
+  class="rc-table rc-table-scroll-position-left"
+>
   <div
-    class="rc-table-content">
+    class="rc-table-content"
+  >
     <div
-      class="rc-table-body">
+      class="rc-table-body"
+    >
       <table
-        class="">
+        class=""
+      >
         <colgroup>
-          <col>
-            
-          </col>
-          <col>
-            
-          </col>
+          <col />
+          <col />
         </colgroup>
         <thead
-          class="rc-table-thead">
+          class="rc-table-thead"
+        >
           <tr>
             <th
-              class="">
+              class=""
+            >
               Name
             </th>
             <th
-              class="">
+              class=""
+            >
               Age
             </th>
           </tr>
         </thead>
         <tbody
-          class="rc-table-tbody">
+          class="rc-table-tbody"
+        >
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
               Lucy
             </td>
             <td
-              class="">
+              class=""
+            >
               27
             </td>
           </tr>
           <tr
             class="rc-table-row  rc-table-row-level-1"
-            style="display:none">
+            style="display:none"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px">
-                
-              </span>
+                style="padding-left:15px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
               Jim
             </td>
             <td
-              class="">
+              class=""
+            >
               1
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0">
+            class="rc-table-row  rc-table-row-level-0"
+          >
             <td
-              class="">
+              class=""
+            >
               <span
                 class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px">
-                
-              </span>
+                style="padding-left:0px"
+              />
               <span
-                class="rc-table-row-expand-icon rc-table-row-spaced">
-                
-              </span>
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
               Jack
             </td>
             <td
-              class="">
+              class=""
+            >
               28
             </td>
           </tr>

@@ -70,15 +70,15 @@
     "lodash.get": "^4.4.2",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
-    "shallowequal": "^0.2.2",
+    "shallowequal": "^1.0.2",
     "warning": "^3.0.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
-    "jest": "^18.1.0",
+    "jest": "^21.2.0",
     "pre-commit": "1.x",
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~1.4.10",
