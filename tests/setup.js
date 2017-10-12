@@ -1,4 +1,4 @@
-global.requestAnimationFrame = global.requestAnimationFrame || function (cb) {
+global.requestAnimationFrame = global.requestAnimationFrame || function (cb) { // eslint-disable-line
   return setTimeout(cb, 0);
 };
 
