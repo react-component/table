@@ -621,8 +621,8 @@ export default class Table extends React.Component {
     }
   }
 
-  setScrollPositionClassName(target) {
-    const node = target || this.refs.bodyTable;
+  setScrollPositionClassName() {
+    const node = this.refs.bodyTable;
     const scrollToLeft = node.scrollLeft === 0;
     const scrollToRight = node.scrollLeft + 1 >=
       node.children[0].getBoundingClientRect().width -
@@ -708,7 +708,7 @@ export default class Table extends React.Component {
       } else if (target === headTable && bodyTable) {
         bodyTable.scrollLeft = target.scrollLeft;
       }
-      this.setScrollPositionClassName(target);
+      this.setScrollPositionClassName();
     }
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = target.scrollLeft;
