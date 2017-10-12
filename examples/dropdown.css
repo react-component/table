@@ -293,6 +293,13 @@
             transform: scaleY(0);
   }
 }
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('https://cdn.bootcss.com/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?v=4.2.0');
+  src: url('https://cdn.bootcss.com/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('https://cdn.bootcss.com/font-awesome/4.2.0/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('https://cdn.bootcss.com/font-awesome/4.2.0/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('https://cdn.bootcss.com/font-awesome/4.2.0/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 .rc-menu {
   outline: none;
   margin-bottom: 0;
@@ -311,7 +318,6 @@
   overflow: hidden;
 }
 .rc-menu-collapse-active {
-  -webkit-transition: height 0.3s ease-out;
   transition: height 0.3s ease-out;
 }
 .rc-menu-item-group-list {
@@ -425,6 +431,34 @@
 .rc-menu-vertical > .rc-menu-submenu > .rc-menu-submenu-title,
 .rc-menu-inline > .rc-menu-submenu > .rc-menu-submenu-title {
   padding: 12px 8px 12px 24px;
+}
+.rc-menu-vertical .rc-menu-submenu-arrow,
+.rc-menu-inline .rc-menu-submenu-arrow {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  vertical-align: baseline;
+  text-align: center;
+  text-transform: none;
+  text-rendering: auto;
+  position: absolute;
+  right: 16px;
+  line-height: 1.5em;
+}
+.rc-menu-vertical .rc-menu-submenu-arrow:before,
+.rc-menu-inline .rc-menu-submenu-arrow:before {
+  content: "\F0DA";
+}
+.rc-menu-inline .rc-menu-submenu-arrow {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.rc-menu-inline .rc-menu-submenu-open > .rc-menu-submenu-title .rc-menu-submenu-arrow {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }
 .rc-menu-vertical.rc-menu-sub {
   padding: 0;
