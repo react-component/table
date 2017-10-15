@@ -18,5 +18,6 @@ export default class Column extends Component {
     ]),
     render: PropTypes.func,
     onCellClick: PropTypes.func,
+    onHeaderClick: PropTypes.func,
   }
 }

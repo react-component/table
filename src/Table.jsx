@@ -250,6 +250,9 @@ export default class Table extends React.Component {
       if ('rowSpan' in column) {
         cell.rowSpan = column.rowSpan;
       }
+      if (typeof column.onHeaderClick === 'function') {
+        cell.onClick = column.onHeaderClick;
+      }
       if (cell.colSpan !== 0) {
         rows[currentRow].push(cell);
       }
