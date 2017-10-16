@@ -236,9 +236,11 @@ export default class Table extends React.Component {
           rows.push([]);
         }
       }
+      const styleProp = column.align ? { textAlign: column.align } : null;
       const cell = {
         key: column.key,
         className: column.className || '',
+        style: styleProp,
         children: column.title,
       };
       if (column.children) {
