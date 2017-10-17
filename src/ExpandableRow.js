@@ -1,40 +1,10 @@
 import React from 'react';
+import { connect } from 'mini-store';
 import ExpandIcon from './ExpandIcon';
 
-export default class ExpandableRow extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.store = props.store;
-
-    const { expandedRowKeys } = this.store.getState();
-
-    this.state = {
-      expanded: !!~expandedRowKeys.indexOf(props.rowKey),
-    };
-  }
-
-  componentDidMount() {
-    this.unsubscribe = this.store.subscribe(() => {
-      this.toggleExpand();
-    });
-  }
-
+class ExpandableRow extends React.Component {
   componentWillUnmount() {
     this.handleDestroy();
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-  }
-
-  toggleExpand() {
-    const { rowKey, parentKey } = this.props;
-    const { expandedRowKeys } = this.store.getState();
-    if (~expandedRowKeys.indexOf(rowKey)) {
-      this.setState({ expanded: true });
-    } else if (this.state.expanded === true) {
-      this.setState({ expanded: false });
-    }
   }
 
   addExpandIconCell = (cells) => {
@@ -49,12 +19,13 @@ export default class ExpandableRow extends React.Component {
   }
 
   handleExpandChange = (record, index, event) => {
+    const { onExpandedChange, expanded } = this.props;
     if (this.expandable) {
-      this.props.onExpandedChange(!this.state.expanded, record, event, index);
+      onExpandedChange(!expanded, record, event, index);
     }
   }
 
-  handleDestroy = () => {
+  handleDestroy() {
     const { onExpandedChange, index, record } = this.props;
     if (this.expandable) {
       onExpandedChange(false, record, null, index);
@@ -70,7 +41,7 @@ export default class ExpandableRow extends React.Component {
   }
 
   renderExpandIcon = () => {
-    const { prefixCls, record, needIndentSpaced, onExpandedChange } = this.props;
+    const { prefixCls, expanded, record, needIndentSpaced, onExpandedChange } = this.props;
 
     return (
       <ExpandIcon
@@ -78,7 +49,7 @@ export default class ExpandableRow extends React.Component {
         prefixCls={prefixCls}
         onExpand={this.handleExpandChange}
         needIndentSpaced={needIndentSpaced}
-        expanded={this.state.expanded}
+        expanded={expanded}
         record={record}
       />
     );
@@ -98,13 +69,13 @@ export default class ExpandableRow extends React.Component {
   }
 
   render() {
-    const { expanded } = this.state;
     const {
       childrenColumnName,
       expandedRowRender,
       expandRowByClick,
       indentSize,
       record,
+      expanded,
     } = this.props;
 
     const expandIconAsCell = this.fixed !== 'right' ? this.props.expandIconAsCell : false;
@@ -125,3 +96,8 @@ export default class ExpandableRow extends React.Component {
     return this.props.children(expandableRowProps);
   }
 }
+
+export default connect(({ expandedRowKeys }, { rowKey }) => ({
+  expanded: !!~expandedRowKeys.indexOf(rowKey),
+}))(ExpandableRow);
+

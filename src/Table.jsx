@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
+import { Provider, create } from 'mini-store';
 import ColumnManager from './ColumnManager';
-import createStore from './createStore';
 import classes from 'component-classes';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
@@ -64,7 +64,7 @@ export default class Table extends React.Component {
 
     this.columnManager = new ColumnManager(props.columns, props.children);
 
-    this.store = createStore({
+    this.store = create({
       currentHoverKey: null,
     });
 
@@ -83,7 +83,6 @@ export default class Table extends React.Component {
       table: {
         props: this.props,
         state: this.state,
-        store: this.store,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
         getRowKey: this.getRowKey,
@@ -388,32 +387,33 @@ export default class Table extends React.Component {
     }
 
     return (
-      <ExpandableTable
-        {...props}
-        store={this.store}
-        columnManager={this.columnManager}
-        getRowKey={this.getRowKey}
-      >
-        {(expander) => {
-          this.expander = expander;
-          return (
-            <div ref={this.saveRef('tableNode')} className={className} style={props.style}>
-              {this.renderTitle()}
-              <div className={`${prefixCls}-content`}>
-                {this.renderMainTable()}
-                {this.columnManager.isAnyColumnsLeftFixed() &&
-                <div className={`${prefixCls}-fixed-left`}>
-                  {this.renderLeftFixedTable()}
-                </div>}
-                {this.columnManager.isAnyColumnsRightFixed() &&
-                <div className={`${prefixCls}-fixed-right`}>
-                  {this.renderRightFixedTable()}
-                </div>}
+      <Provider store={this.store}>
+        <ExpandableTable
+          {...props}
+          columnManager={this.columnManager}
+          getRowKey={this.getRowKey}
+        >
+          {(expander) => {
+            this.expander = expander;
+            return (
+              <div ref={this.saveRef('tableNode')} className={className} style={props.style}>
+                {this.renderTitle()}
+                <div className={`${prefixCls}-content`}>
+                  {this.renderMainTable()}
+                  {this.columnManager.isAnyColumnsLeftFixed() &&
+                  <div className={`${prefixCls}-fixed-left`}>
+                    {this.renderLeftFixedTable()}
+                  </div>}
+                  {this.columnManager.isAnyColumnsRightFixed() &&
+                  <div className={`${prefixCls}-fixed-right`}>
+                    {this.renderRightFixedTable()}
+                  </div>}
+                </div>
               </div>
-            </div>
-          );
-        }}
-      </ExpandableTable>
+            );
+          }}
+        </ExpandableTable>
+      </Provider>
     );
   }
 }

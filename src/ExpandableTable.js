@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createStore from './createStore';
+import { connect } from 'mini-store';
 import TableRow from './TableRow';
 import ExpandedRowHeigh from './ExpandedRowHeigh';
-import ExpandedRowVisible from './ExpandedRowVisible';
 
-export default class ExpandableTable extends React.Component {
+class ExpandableTable extends React.Component {
   static propTypes = {
     expandIconAsCell: PropTypes.bool,
     expandedRowKeys: PropTypes.array,
@@ -82,7 +81,6 @@ export default class ExpandableTable extends React.Component {
     }
 
     const info = this.findExpandedRow(record);
-
     const expandedRows = this.getExpandedRows().concat();
 
     if (typeof info !== 'undefined' && !expanded) {
@@ -151,34 +149,23 @@ export default class ExpandableTable extends React.Component {
 
     return (
       <ExpandedRowHeigh
-        store={this.store}
         key={rowKey}
         rowKey={rowKey}
         fixed={!!fixed}
       >
         {({ height, saveRowRef }) => (
-          <ExpandedRowVisible
-            store={this.store}
+          <TableRow
+            columns={columns}
+            className={className}
             rowKey={rowKey}
-            parentKey={rowKey}
-          >
-            {visible => (
-              <TableRow
-                columns={columns}
-                className={className}
-                rowKey={rowKey}
-                parentKey={parentKey}
-                prefixCls={`${prefixCls}-expanded-row`}
-                indent={1}
-                expandable={false}
-                store={this.store}
-                fixed={!!fixed}
-                height={height}
-                visible={visible}
-                saveRowRef={saveRowRef}
-              />
-            )}
-          </ExpandedRowVisible>
+            parentKey={parentKey}
+            prefixCls={`${prefixCls}-expanded-row`}
+            indent={1}
+            expandable={false}
+            fixed={!!fixed}
+            height={height}
+            saveRowRef={saveRowRef}
+          />
         )}
       </ExpandedRowHeigh>
     );
@@ -225,3 +212,5 @@ export default class ExpandableTable extends React.Component {
     });
   }
 }
+
+export default connect()(ExpandableTable);

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
-import ExpandedRowVisible from './ExpandedRowVisible';
 
-export default class BaseTable extends React.Component {
+class BaseTable extends React.Component {
   static propTypes = {
     fixed: PropTypes.string,
     columns: PropTypes.array.isRequired,
@@ -20,7 +20,7 @@ export default class BaseTable extends React.Component {
   }
 
   handleRowHover = (isHover, key) => {
-    this.context.table.store.setState({
+    this.props.store.setState({
       currentHoverKey: isHover ? key : null,
     });
   }
@@ -29,7 +29,6 @@ export default class BaseTable extends React.Component {
     const { table } = this.context;
     const { fixedColumnsBodyRowsHeight } = table.state;
     const {
-      store,
       columnManager,
       getRowKey,
       onExpanded,
@@ -79,7 +78,6 @@ export default class BaseTable extends React.Component {
         <ExpandableRow
           {...expander.props}
           index={i}
-          store={store}
           record={record}
           key={key}
           rowKey={key}
@@ -89,35 +87,25 @@ export default class BaseTable extends React.Component {
           onExpandedChange={expander.handleExpandChange}
         >
           {( expandableRow ) => (
-            <ExpandedRowVisible
-              store={store}
+            <TableRow
+              indent={indent}
+              className={className}
+              record={record}
+              index={i}
+              prefixCls={`${prefixCls}-row`}
+              childrenColumnName={childrenColumnName}
+              columns={leafColumns}
+              onRowDoubleClick={onRowDoubleClick}
+              onRowContextMenu={onRowContextMenu}
+              onRowMouseEnter={onRowMouseEnter}
+              onRowMouseLeave={onRowMouseLeave}
+              height={height}
+              {...onHoverProps}
+              hoverKey={key}
               rowKey={key}
-              parentKey={key}
-            >
-              {(visible) => (
-                <TableRow
-                  indent={indent}
-                  className={className}
-                  record={record}
-                  index={i}
-                  prefixCls={`${prefixCls}-row`}
-                  childrenColumnName={childrenColumnName}
-                  columns={leafColumns}
-                  onRowDoubleClick={onRowDoubleClick}
-                  onRowContextMenu={onRowContextMenu}
-                  onRowMouseEnter={onRowMouseEnter}
-                  onRowMouseLeave={onRowMouseLeave}
-                  height={height}
-                  {...onHoverProps}
-                  hoverKey={key}
-                  rowKey={key}
-                  ref={rowRef(record, i, indent)}
-                  store={store}
-                  visible={visible}
-                  {...expandableRow}
-                />
-              )}
-            </ExpandedRowVisible>
+              ref={rowRef(record, i, indent)}
+              {...expandableRow}
+            />
           )}
         </ExpandableRow>
       );
@@ -160,3 +148,5 @@ export default class BaseTable extends React.Component {
     );
   }
 }
+
+export default connect()(BaseTable);

@@ -1,45 +1,18 @@
 import React from 'react';
+import { connect } from 'mini-store';
 
-export default class ExpandableRowHeigh extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.store = props.store;
-
-    this.state = {
-      height: props.height,
-    }
-  }
-
+class ExpandedRowHeigh extends React.Component {
   componentDidMount() {
-    this.pushHeight();
-    this.pullHeight();
-    this.unsubscribe = this.store.subscribe(() => {
-      this.pullHeight();
-    });
+    this.setHeight();
   }
 
-  componentWillUnmount() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-  }
-
-  pullHeight() {
-    const { fixed, rowKey } = this.props;
-    const { expandedRowsHeight } = this.store.getState();
-    if (fixed && expandedRowsHeight[rowKey]) {
-      this.setState({ height: expandedRowsHeight[rowKey] });
-    }
-  }
-
-  pushHeight() {
-    const { fixed, rowKey } = this.props;
+  setHeight() {
+    const { store, fixed, rowKey } = this.props;
     if (!fixed) {
-      const { expandedRowsHeight } = this.store.getState();
+      const { expandedRowsHeight } = store.getState();
       const height = this.rowRef.getBoundingClientRect().height;
       expandedRowsHeight[rowKey] = height;
-      this.store.setState({ expandedRowsHeight });
+      store.setState({ expandedRowsHeight });
     }
   }
 
@@ -48,9 +21,17 @@ export default class ExpandableRowHeigh extends React.Component {
   }
 
   render() {
-    return this.props.children({
-      heigh: this.state.height,
+    const { children, height } = this.props;
+    return children({
+      heigh: height,
       saveRowRef: this.saveRowRef,
     });
   }
 }
+
+export default connect(({ expandedRowsHeight }, { fixed, height, rowKey }) => {
+  if (fixed && expandedRowsHeight[rowKey]) {
+    return { height: expandedRowsHeight[rowKey] }
+  }
+  return { height };
+})(ExpandedRowHeigh)

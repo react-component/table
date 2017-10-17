@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
 import TableCell from './TableCell';
 
-export default class TableRow extends React.Component {
+class TableRow extends React.Component {
   static propTypes = {
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
@@ -22,7 +23,6 @@ export default class TableRow extends React.Component {
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    store: PropTypes.object.isRequired,
     expandedRow: PropTypes.bool,
     fixed: PropTypes.bool,
   }
@@ -39,28 +39,6 @@ export default class TableRow extends React.Component {
     addExpandIconCell() {},
     hasExpandIcon() {},
     renderExpandIcon() {},
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.store = props.store;
-
-    this.state = {
-      hovered: false,
-    };
-  }
-
-  componentDidMount() {
-    this.unsubscribe = this.store.subscribe(() => {
-      this.setHover();
-    });
-  }
-
-  componentWillUnmount() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
   }
 
   onRowClick = (event) => {
@@ -90,16 +68,6 @@ export default class TableRow extends React.Component {
     onRowMouseLeave(record, index, event);
   }
 
-  setHover() {
-    const { rowKey } = this.props;
-    const { currentHoverKey } = this.store.getState();
-    if (currentHoverKey === rowKey) {
-      this.setState({ hovered: true });
-    } else if (this.state.hovered === true) {
-      this.setState({ hovered: false });
-    }
-  }
-
   render() {
     const {
       prefixCls,
@@ -110,6 +78,7 @@ export default class TableRow extends React.Component {
       indentSize,
       visible,
       height,
+      hovered,
       saveRowRef,
       hasExpandIcon,
       addExpandIconCell,
@@ -119,7 +88,7 @@ export default class TableRow extends React.Component {
 
     let { className } = this.props;
 
-    if (this.state.hovered) {
+    if (hovered) {
       className += ` ${prefixCls}-hover`;
     }
 
@@ -167,3 +136,8 @@ export default class TableRow extends React.Component {
     );
   }
 }
+
+export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, parentKey }) => ({
+  hovered: currentHoverKey === rowKey,
+  visible: parentKey ? !!~expandedRowKeys.indexOf(parentKey) : true,
+}))(TableRow);
