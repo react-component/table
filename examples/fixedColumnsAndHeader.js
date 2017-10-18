@@ -34,6 +34,6 @@ const data = [
 ReactDOM.render(
   <div>
     <h2>Fixed columns and header</h2>
-    <Table columns={columns} scroll={{ x: true, y: 300 }} data={data} style={{ width: 800 }} />
+    <Table columns={columns} scroll={{ x: 1500, y: 300 }} data={data} style={{ width: 800 }} />
   </div>
 , document.getElementById('__react-content'));

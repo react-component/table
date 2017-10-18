@@ -321,6 +321,7 @@ export default class Table extends React.Component {
         fixed={fixed}
         tableClassName={tableClassName}
         handleBodyScrollLeft={this.handleBodyScrollLeft}
+        expander={this.expander}
       />
     );
 
