@@ -8,14 +8,14 @@ class ExpandableRow extends React.Component {
   }
 
   addExpandIconCell = (cells) => {
-    if (this.props.expandIconAsCell) {
+    if (this.expandIconAsCell) {
       cells.push(this.renderExpandIconCell());
     }
   }
 
   hasExpandIcon = (columnIndex) => {
-    const { expandIconAsCell, expandRowByClick, expandIconColumnIndex } = this.props;
-    return !expandIconAsCell && !expandRowByClick && columnIndex === expandIconColumnIndex;
+    const { expandRowByClick } = this.props;
+    return !this.expandIconAsCell && !expandRowByClick && columnIndex === this.expandIconColumnIndex;
   }
 
   handleExpandChange = (record, index, event) => {
@@ -72,17 +72,14 @@ class ExpandableRow extends React.Component {
     const {
       childrenColumnName,
       expandedRowRender,
-      expandRowByClick,
       indentSize,
       record,
-      expanded,
     } = this.props;
 
-    const expandIconAsCell = this.fixed !== 'right' ? this.props.expandIconAsCell : false;
-    const expandIconColumnIndex = this.fixed !== 'right' ? this.props.expandIconColumnIndex : -1;
+    this.expandIconAsCell = this.fixed !== 'right' ? this.props.expandIconAsCell : false;
+    this.expandIconColumnIndex = this.fixed !== 'right' ? this.props.expandIconColumnIndex : -1;
     const childrenData = record[childrenColumnName];
-    // this.expanded = this.expander.isRowExpanded(this.record, this.index);
-    this.expandable = childrenData || expandedRowRender;
+    this.expandable = !!(childrenData || expandedRowRender);
 
     const expandableRowProps = {
       indentSize,

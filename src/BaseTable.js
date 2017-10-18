@@ -74,10 +74,13 @@ class BaseTable extends React.Component {
         leafColumns = columnManager.leafColumns();
       }
 
+      const rowPrefixCls = `${prefixCls}-row`;
+
       const row = (
         <ExpandableRow
           {...expander.props}
           index={i}
+          prefixCls={rowPrefixCls}
           record={record}
           key={key}
           rowKey={key}
@@ -92,7 +95,7 @@ class BaseTable extends React.Component {
               className={className}
               record={record}
               index={i}
-              prefixCls={`${prefixCls}-row`}
+              prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}
               onRowDoubleClick={onRowDoubleClick}

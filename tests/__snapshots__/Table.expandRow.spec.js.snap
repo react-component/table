@@ -898,7 +898,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={0}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 27,
@@ -1024,7 +1024,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={0}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 27,
@@ -1164,11 +1164,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -1204,11 +1204,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -1218,7 +1218,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-expanded"
+                                          className="rc-table-row-expand-icon rc-table-row-expanded"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -1480,7 +1480,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={1}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 28,
@@ -1606,7 +1606,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={1}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 28,
@@ -1746,11 +1746,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -1786,11 +1786,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -1800,7 +1800,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-collapsed"
+                                          className="rc-table-row-expand-icon rc-table-row-collapsed"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -2753,7 +2753,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={0}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 27,
@@ -2879,7 +2879,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={0}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 27,
@@ -3019,11 +3019,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -3059,11 +3059,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -3073,7 +3073,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-collapsed"
+                                          className="rc-table-row-expand-icon rc-table-row-collapsed"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -3217,7 +3217,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={1}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 28,
@@ -3343,7 +3343,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={1}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 28,
@@ -3483,11 +3483,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -3523,11 +3523,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -3537,7 +3537,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-expanded"
+                                          className="rc-table-row-expand-icon rc-table-row-expanded"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -3757,7 +3757,7 @@ exports[`Table.expand expand all rows by default 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-expanded"
+                class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
             </td>
@@ -3790,7 +3790,7 @@ exports[`Table.expand expand all rows by default 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-expanded"
+                class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Jack
             </td>
@@ -4688,7 +4688,7 @@ exports[`Table.expand expand row by click 1`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={0}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 27,
@@ -4809,7 +4809,7 @@ exports[`Table.expand expand row by click 1`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={0}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 27,
@@ -4949,11 +4949,11 @@ exports[`Table.expand expand row by click 1`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -4989,11 +4989,11 @@ exports[`Table.expand expand row by click 1`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={true}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 27,
@@ -5003,7 +5003,7 @@ exports[`Table.expand expand row by click 1`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-expanded"
+                                          className="rc-table-row-expand-icon rc-table-row-expanded"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -5142,7 +5142,7 @@ exports[`Table.expand expand row by click 1`] = `
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
                           parentKey={1}
-                          prefixCls="rc-table"
+                          prefixCls="rc-table-row"
                           record={
                             Object {
                               "age": 28,
@@ -5263,7 +5263,7 @@ exports[`Table.expand expand row by click 1`] = `
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
                             parentKey={1}
-                            prefixCls="rc-table"
+                            prefixCls="rc-table-row"
                             record={
                               Object {
                                 "age": 28,
@@ -5403,11 +5403,11 @@ exports[`Table.expand expand row by click 1`] = `
                                     }
                                     expandIcon={
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -5443,11 +5443,11 @@ exports[`Table.expand expand row by click 1`] = `
                                         }
                                       />
                                       <ExpandIcon
-                                        expandable={[Function]}
+                                        expandable={true}
                                         expanded={false}
                                         needIndentSpaced={false}
                                         onExpand={[Function]}
-                                        prefixCls="rc-table"
+                                        prefixCls="rc-table-row"
                                         record={
                                           Object {
                                             "age": 28,
@@ -5457,7 +5457,7 @@ exports[`Table.expand expand row by click 1`] = `
                                         }
                                       >
                                         <span
-                                          className="rc-table-expand-icon rc-table-collapsed"
+                                          className="rc-table-row-expand-icon rc-table-row-collapsed"
                                           onClick={[Function]}
                                         />
                                       </ExpandIcon>
@@ -5559,7 +5559,7 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
             </td>
@@ -5580,7 +5580,7 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-expanded"
+                class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Jack
             </td>
@@ -5657,10 +5657,10 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
-              class="rc-table-expand-icon-cell"
+              class="rc-table-row-expand-icon-cell"
             >
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
             </td>
             <td
@@ -5678,10 +5678,10 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
-              class="rc-table-expand-icon-cell"
+              class="rc-table-row-expand-icon-cell"
             >
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
             </td>
             <td
@@ -5754,7 +5754,7 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               27
             </td>
@@ -5775,7 +5775,7 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               28
             </td>
@@ -5834,7 +5834,7 @@ exports[`Table.expand renders expand row correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
             </td>
@@ -5855,7 +5855,7 @@ exports[`Table.expand renders expand row correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Jack
             </td>
@@ -5919,7 +5919,7 @@ exports[`Table.expand renders expend row class correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-expanded"
+                class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
             </td>
@@ -5952,7 +5952,7 @@ exports[`Table.expand renders expend row class correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Jack
             </td>
@@ -6016,7 +6016,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
             </td>
@@ -6037,7 +6037,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
                 style="padding-left:15px"
               />
               <span
-                class="rc-table-expand-icon rc-table-spaced"
+                class="rc-table-row-expand-icon rc-table-row-spaced"
               />
               Jim
             </td>
@@ -6058,7 +6058,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-spaced"
+                class="rc-table-row-expand-icon rc-table-row-spaced"
               />
               Jack
             </td>
@@ -6122,7 +6122,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
             </td>
@@ -6143,7 +6143,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
                 style="padding-left:15px"
               />
               <span
-                class="rc-table-expand-icon rc-table-spaced"
+                class="rc-table-row-expand-icon rc-table-row-spaced"
               />
               Jim
             </td>
@@ -6164,7 +6164,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
                 style="padding-left:0px"
               />
               <span
-                class="rc-table-expand-icon rc-table-spaced"
+                class="rc-table-row-expand-icon rc-table-row-spaced"
               />
               Jack
             </td>
