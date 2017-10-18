@@ -24,7 +24,6 @@ class TableRow extends React.Component {
     indent: PropTypes.number,
     indentSize: PropTypes.number,
     expandedRow: PropTypes.bool,
-    fixed: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -36,9 +35,9 @@ class TableRow extends React.Component {
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
-    addExpandIconCell() {},
     hasExpandIcon() {},
     renderExpandIcon() {},
+    renderExpandIconCell() {},
   }
 
   constructor(props) {
@@ -99,7 +98,7 @@ class TableRow extends React.Component {
       hasExpandIcon,
       addExpandIconCell,
       renderExpandIcon,
-      renderExpandIconCell,
+      renderExpandIconCell
     } = this.props;
 
     let { className } = this.props;
@@ -110,7 +109,7 @@ class TableRow extends React.Component {
 
     const cells = [];
 
-    addExpandIconCell(cells);
+    renderExpandIconCell(cells);
 
     for (let i = 0; i < columns.length; i++) {
       cells.push(

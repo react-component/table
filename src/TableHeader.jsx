@@ -45,8 +45,8 @@ function getHeaderRowStyle(columns, rows, fixedColumnsHeadRowsHeight) {
 
 export default function TableHeader(props, { table }) {
   const { fixedColumnsHeadRowsHeight } = table.state;
-  const { prefixCls, showHeader, expandIconAsCell } = table.props;
-  const { columns, fixed } = props;
+  const { prefixCls, showHeader } = table.props;
+  const { expander, columns, fixed } = props;
 
   if (!showHeader) {
     return null;
@@ -54,14 +54,7 @@ export default function TableHeader(props, { table }) {
 
   const rows = getHeaderRows(columns);
 
-  if (expandIconAsCell && fixed !== 'right') {
-    rows[0].unshift({
-      key: 'rc-table-expandIconAsCell',
-      className: `${prefixCls}-expand-icon-th`,
-      title: '',
-      rowSpan: rows.length,
-    });
-  }
+  expander.renderExpandIndentCell(rows, fixed);
 
   const trStyle = fixed ? getHeaderRowStyle(columns, rows, fixedColumnsHeadRowsHeight) : null;
 

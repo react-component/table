@@ -119,6 +119,20 @@ class ExpandableTable extends React.Component {
     return typeof this.findExpandedRow(record, index) !== 'undefined';
   }
 
+  renderExpandIndentCell = (rows, fixed) => {
+    const { prefixCls, expandIconAsCell } = this.props;
+    if (!expandIconAsCell || fixed == 'right') {
+      return;
+    }
+
+    rows[0].unshift({
+      key: 'rc-table-expandIconAsCell',
+      className: `${prefixCls}-expand-icon-th`,
+      title: '',
+      rowSpan: rows.length,
+    });
+  }
+
   renderExpandedRow(parentKey, content, className, fixed) {
     const { prefixCls, expandIconAsCell } = this.props;
     let colCount;
@@ -151,7 +165,7 @@ class ExpandableTable extends React.Component {
       <ExpandedRowHeigh
         key={rowKey}
         rowKey={rowKey}
-        fixed={!!fixed}
+        fixed={fixed}
       >
         {({ height, saveRowRef }) => (
           <TableRow
@@ -161,7 +175,6 @@ class ExpandableTable extends React.Component {
             parentKey={parentKey}
             prefixCls={`${prefixCls}-expanded-row`}
             indent={1}
-            fixed={!!fixed}
             height={height}
             saveRowRef={saveRowRef}
           />
@@ -203,9 +216,10 @@ class ExpandableTable extends React.Component {
 
     return children({
       props: this.props,
-      renderRows: this.renderRows,
       needIndentSpaced,
+      renderRows: this.renderRows,
       handleExpandChange: this.handleExpandChange,
+      renderExpandIndentCell: this.renderExpandIndentCell,
     });
   }
 }

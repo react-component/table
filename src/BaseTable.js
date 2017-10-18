@@ -79,6 +79,7 @@ class BaseTable extends React.Component {
       const row = (
         <ExpandableRow
           {...expander.props}
+          fixed={fixed}
           index={i}
           prefixCls={rowPrefixCls}
           record={record}
@@ -126,7 +127,7 @@ class BaseTable extends React.Component {
 
   render() {
     const { prefixCls, scroll, data, getBodyWrapper } = this.context.table.props;
-    const { tableClassName, hasHead, hasBody, fixed, columns } = this.props;
+    const { expander, tableClassName, hasHead, hasBody, fixed, columns } = this.props;
     const tableStyle = {};
 
     if (!fixed && scroll.x) {
@@ -141,7 +142,7 @@ class BaseTable extends React.Component {
     return (
       <table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
-        {hasHead && <TableHeader columns={columns} fixed={fixed} /> }
+        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
         {hasBody && getBodyWrapper(
           <tbody className={`${prefixCls}-tbody`}>
             {this.renderRows(data, 0)}
