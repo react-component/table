@@ -1286,7 +1286,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -1308,7 +1307,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -1868,7 +1866,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -1890,7 +1887,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -3219,7 +3215,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -3241,7 +3236,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -3265,7 +3259,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                     "subscribe": [Function],
                                   }
                                 }
-                                visible={true}
+                                visible={false}
                               >
                                 <tr
                                   className="rc-table-expanded-row  rc-table-expanded-row-level-1"
@@ -3276,6 +3270,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
+                                      "display": "none",
                                       "height": undefined,
                                     }
                                   }
@@ -3801,7 +3796,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -3823,7 +3817,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -5267,7 +5260,6 @@ exports[`Table.expand expand row by click 1`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -5289,7 +5281,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -5839,7 +5830,6 @@ exports[`Table.expand expand row by click 1`] = `
                                   },
                                 ]
                               }
-                              expandable={false}
                               fixed={false}
                               height={undefined}
                               indent={1}
@@ -5861,7 +5851,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                expandable={false}
                                 fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
@@ -5959,18 +5948,6 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               class=""
             >
               27
-            </td>
-          </tr>
-          <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
-          >
-            <td
-              class=""
-              colspan="2"
-            >
-              <p>
-                extra data
-              </p>
             </td>
           </tr>
           <tr
@@ -6079,21 +6056,6 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
-          >
-            <td
-              class=""
-            />
-            <td
-              class=""
-              colspan="2"
-            >
-              <p>
-                extra data
-              </p>
-            </td>
-          </tr>
-          <tr
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
@@ -6179,18 +6141,6 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
-          >
-            <td
-              class=""
-              colspan="2"
-            >
-              <p>
-                extra data
-              </p>
-            </td>
-          </tr>
-          <tr
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
@@ -6273,18 +6223,6 @@ exports[`Table.expand renders expand row correctly 1`] = `
               class=""
             >
               27
-            </td>
-          </tr>
-          <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
-          >
-            <td
-              class=""
-              colspan="2"
-            >
-              <p>
-                extra data
-              </p>
             </td>
           </tr>
           <tr

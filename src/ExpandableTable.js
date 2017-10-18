@@ -161,7 +161,6 @@ class ExpandableTable extends React.Component {
             parentKey={parentKey}
             prefixCls={`${prefixCls}-expanded-row`}
             indent={1}
-            expandable={false}
             fixed={!!fixed}
             height={height}
             saveRowRef={saveRowRef}

@@ -81,7 +81,6 @@ class TableRow extends React.Component {
   }
 
   render() {
-
     if (!this.shouldRender) {
       return null;
     }
@@ -154,7 +153,9 @@ class TableRow extends React.Component {
   }
 }
 
-export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, parentKey }) => ({
-  hovered: currentHoverKey === rowKey,
-  visible: parentKey ? !!~expandedRowKeys.indexOf(parentKey) : true,
-}))(TableRow);
+export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, parentKey }) => {
+  return ({
+    hovered: currentHoverKey === rowKey,
+    visible: typeof parentKey !== 'undefined' ? !!~expandedRowKeys.indexOf(parentKey) : true,
+  })
+})(TableRow);
