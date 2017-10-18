@@ -41,6 +41,18 @@ class TableRow extends React.Component {
     renderExpandIcon() {},
   }
 
+  constructor(props) {
+    super(props);
+
+    this.shouldRender = props.visible;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.visible || (!this.props.visible && nextProps.visible)) {
+      this.shouldRender = true;
+    }
+  }
+
   onRowClick = (event) => {
     const { record, index, onRowClick } = this.props;
     onRowClick(record, index, event);
@@ -69,6 +81,11 @@ class TableRow extends React.Component {
   }
 
   render() {
+
+    if (!this.shouldRender) {
+      return null;
+    }
+
     const {
       prefixCls,
       columns,

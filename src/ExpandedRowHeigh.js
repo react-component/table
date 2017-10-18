@@ -2,18 +2,19 @@ import React from 'react';
 import { connect } from 'mini-store';
 
 class ExpandedRowHeigh extends React.Component {
-  componentDidMount() {
-    this.setHeight();
+  componentDidUpdate() {
+    if (!this.props.fixed && this.rowRef && !this.set) {
+      this.setHeight();
+    }
   }
 
   setHeight() {
-    const { store, fixed, rowKey } = this.props;
-    if (!fixed) {
-      const { expandedRowsHeight } = store.getState();
-      const height = this.rowRef.getBoundingClientRect().height;
-      expandedRowsHeight[rowKey] = height;
-      store.setState({ expandedRowsHeight });
-    }
+    const { store, rowKey } = this.props;
+    const { expandedRowsHeight } = store.getState();
+    const height = this.rowRef.getBoundingClientRect().height;
+    expandedRowsHeight[rowKey] = height;
+    store.setState({ expandedRowsHeight });
+    this.set = true;
   }
 
   saveRowRef = (node) => {

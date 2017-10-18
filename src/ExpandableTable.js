@@ -174,11 +174,9 @@ class ExpandableTable extends React.Component {
   renderRows = (renderRows, record, index, indent, fixed, parentKey) => {
     const { expandedRowClassName, columns, expandedRowRender, childrenColumnName } = this.props;
     const childrenData = record[childrenColumnName];
-    const expanded = this.isRowExpanded(record, index);
-    const expandedRowContent = (expandedRowRender && expanded) ?
-      expandedRowRender(record, index, indent)  : null;
+    const expandedRowContent = expandedRowRender && expandedRowRender(record, index, indent);
 
-    if (expandedRowContent && expanded) {
+    if (expandedRowContent) {
       return [
         this.renderExpandedRow(
           parentKey,

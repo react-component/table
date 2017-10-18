@@ -1841,6 +1841,84 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             </Subscribe(TableRow)>
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
+                        <Subscribe(ExpandedRowHeigh)
+                          fixed={false}
+                          key="1-extra-row"
+                          rowKey="1-extra-row"
+                        >
+                          <ExpandedRowHeigh
+                            fixed={false}
+                            height={undefined}
+                            rowKey="1-extra-row"
+                            store={
+                              Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              }
+                            }
+                          >
+                            <Subscribe(TableRow)
+                              className=""
+                              columns={
+                                Array [
+                                  Object {
+                                    "key": "extra-row",
+                                    "render": [Function],
+                                  },
+                                ]
+                              }
+                              expandable={false}
+                              fixed={false}
+                              height={undefined}
+                              indent={1}
+                              parentKey={1}
+                              prefixCls="rc-table-expanded-row"
+                              rowKey="1-extra-row"
+                              saveRowRef={[Function]}
+                            >
+                              <TableRow
+                                addExpandIconCell={[Function]}
+                                className=""
+                                columns={
+                                  Array [
+                                    Object {
+                                      "key": "extra-row",
+                                      "render": [Function],
+                                    },
+                                  ]
+                                }
+                                expandIconColumnIndex={0}
+                                expandRowByClick={false}
+                                expandable={false}
+                                fixed={false}
+                                hasExpandIcon={[Function]}
+                                height={undefined}
+                                hovered={false}
+                                indent={1}
+                                onHover={[Function]}
+                                onRowClick={[Function]}
+                                onRowContextMenu={[Function]}
+                                onRowDoubleClick={[Function]}
+                                onRowMouseEnter={[Function]}
+                                onRowMouseLeave={[Function]}
+                                parentKey={1}
+                                prefixCls="rc-table-expanded-row"
+                                renderExpandIcon={[Function]}
+                                rowKey="1-extra-row"
+                                saveRowRef={[Function]}
+                                store={
+                                  Object {
+                                    "getState": [Function],
+                                    "setState": [Function],
+                                    "subscribe": [Function],
+                                  }
+                                }
+                                visible={false}
+                              />
+                            </Subscribe(TableRow)>
+                          </ExpandedRowHeigh>
+                        </Subscribe(ExpandedRowHeigh)>
                       </tbody>
                     </table>
                   </BaseTable>
@@ -3114,6 +3192,124 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             </Subscribe(TableRow)>
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
+                        <Subscribe(ExpandedRowHeigh)
+                          fixed={false}
+                          key="0-extra-row"
+                          rowKey="0-extra-row"
+                        >
+                          <ExpandedRowHeigh
+                            fixed={false}
+                            height={undefined}
+                            rowKey="0-extra-row"
+                            store={
+                              Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              }
+                            }
+                          >
+                            <Subscribe(TableRow)
+                              className=""
+                              columns={
+                                Array [
+                                  Object {
+                                    "key": "extra-row",
+                                    "render": [Function],
+                                  },
+                                ]
+                              }
+                              expandable={false}
+                              fixed={false}
+                              height={undefined}
+                              indent={1}
+                              parentKey={0}
+                              prefixCls="rc-table-expanded-row"
+                              rowKey="0-extra-row"
+                              saveRowRef={[Function]}
+                            >
+                              <TableRow
+                                addExpandIconCell={[Function]}
+                                className=""
+                                columns={
+                                  Array [
+                                    Object {
+                                      "key": "extra-row",
+                                      "render": [Function],
+                                    },
+                                  ]
+                                }
+                                expandIconColumnIndex={0}
+                                expandRowByClick={false}
+                                expandable={false}
+                                fixed={false}
+                                hasExpandIcon={[Function]}
+                                height={undefined}
+                                hovered={false}
+                                indent={1}
+                                onHover={[Function]}
+                                onRowClick={[Function]}
+                                onRowContextMenu={[Function]}
+                                onRowDoubleClick={[Function]}
+                                onRowMouseEnter={[Function]}
+                                onRowMouseLeave={[Function]}
+                                parentKey={0}
+                                prefixCls="rc-table-expanded-row"
+                                renderExpandIcon={[Function]}
+                                rowKey="0-extra-row"
+                                saveRowRef={[Function]}
+                                store={
+                                  Object {
+                                    "getState": [Function],
+                                    "setState": [Function],
+                                    "subscribe": [Function],
+                                  }
+                                }
+                                visible={true}
+                              >
+                                <tr
+                                  className="rc-table-expanded-row  rc-table-expanded-row-level-1"
+                                  onClick={[Function]}
+                                  onContextMenu={[Function]}
+                                  onDoubleClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  style={
+                                    Object {
+                                      "height": undefined,
+                                    }
+                                  }
+                                >
+                                  <TableCell
+                                    column={
+                                      Object {
+                                        "key": "extra-row",
+                                        "render": [Function],
+                                      }
+                                    }
+                                    expandIcon={undefined}
+                                    indent={1}
+                                    indentSize={undefined}
+                                    index={undefined}
+                                    key="extra-row"
+                                    prefixCls="rc-table-expanded-row"
+                                    record={undefined}
+                                  >
+                                    <td
+                                      className=""
+                                      colSpan={2}
+                                      onClick={[Function]}
+                                    >
+                                      <p>
+                                        extra data
+                                      </p>
+                                    </td>
+                                  </TableCell>
+                                </tr>
+                              </TableRow>
+                            </Subscribe(TableRow)>
+                          </ExpandedRowHeigh>
+                        </Subscribe(ExpandedRowHeigh)>
                         <Subscribe(ExpandableRow)
                           bodyStyle={Object {}}
                           childrenColumnName="children"
@@ -5044,6 +5240,124 @@ exports[`Table.expand expand row by click 1`] = `
                             </Subscribe(TableRow)>
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
+                        <Subscribe(ExpandedRowHeigh)
+                          fixed={false}
+                          key="0-extra-row"
+                          rowKey="0-extra-row"
+                        >
+                          <ExpandedRowHeigh
+                            fixed={false}
+                            height={undefined}
+                            rowKey="0-extra-row"
+                            store={
+                              Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              }
+                            }
+                          >
+                            <Subscribe(TableRow)
+                              className=""
+                              columns={
+                                Array [
+                                  Object {
+                                    "key": "extra-row",
+                                    "render": [Function],
+                                  },
+                                ]
+                              }
+                              expandable={false}
+                              fixed={false}
+                              height={undefined}
+                              indent={1}
+                              parentKey={0}
+                              prefixCls="rc-table-expanded-row"
+                              rowKey="0-extra-row"
+                              saveRowRef={[Function]}
+                            >
+                              <TableRow
+                                addExpandIconCell={[Function]}
+                                className=""
+                                columns={
+                                  Array [
+                                    Object {
+                                      "key": "extra-row",
+                                      "render": [Function],
+                                    },
+                                  ]
+                                }
+                                expandIconColumnIndex={0}
+                                expandRowByClick={false}
+                                expandable={false}
+                                fixed={false}
+                                hasExpandIcon={[Function]}
+                                height={undefined}
+                                hovered={false}
+                                indent={1}
+                                onHover={[Function]}
+                                onRowClick={[Function]}
+                                onRowContextMenu={[Function]}
+                                onRowDoubleClick={[Function]}
+                                onRowMouseEnter={[Function]}
+                                onRowMouseLeave={[Function]}
+                                parentKey={0}
+                                prefixCls="rc-table-expanded-row"
+                                renderExpandIcon={[Function]}
+                                rowKey="0-extra-row"
+                                saveRowRef={[Function]}
+                                store={
+                                  Object {
+                                    "getState": [Function],
+                                    "setState": [Function],
+                                    "subscribe": [Function],
+                                  }
+                                }
+                                visible={true}
+                              >
+                                <tr
+                                  className="rc-table-expanded-row  rc-table-expanded-row-level-1"
+                                  onClick={[Function]}
+                                  onContextMenu={[Function]}
+                                  onDoubleClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  style={
+                                    Object {
+                                      "height": undefined,
+                                    }
+                                  }
+                                >
+                                  <TableCell
+                                    column={
+                                      Object {
+                                        "key": "extra-row",
+                                        "render": [Function],
+                                      }
+                                    }
+                                    expandIcon={undefined}
+                                    indent={1}
+                                    indentSize={undefined}
+                                    index={undefined}
+                                    key="extra-row"
+                                    prefixCls="rc-table-expanded-row"
+                                    record={undefined}
+                                  >
+                                    <td
+                                      className=""
+                                      colSpan={2}
+                                      onClick={[Function]}
+                                    >
+                                      <p>
+                                        extra data
+                                      </p>
+                                    </td>
+                                  </TableCell>
+                                </tr>
+                              </TableRow>
+                            </Subscribe(TableRow)>
+                          </ExpandedRowHeigh>
+                        </Subscribe(ExpandedRowHeigh)>
                         <Subscribe(ExpandableRow)
                           bodyStyle={Object {}}
                           childrenColumnName="children"
@@ -5498,6 +5812,84 @@ exports[`Table.expand expand row by click 1`] = `
                             </Subscribe(TableRow)>
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
+                        <Subscribe(ExpandedRowHeigh)
+                          fixed={false}
+                          key="1-extra-row"
+                          rowKey="1-extra-row"
+                        >
+                          <ExpandedRowHeigh
+                            fixed={false}
+                            height={undefined}
+                            rowKey="1-extra-row"
+                            store={
+                              Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              }
+                            }
+                          >
+                            <Subscribe(TableRow)
+                              className=""
+                              columns={
+                                Array [
+                                  Object {
+                                    "key": "extra-row",
+                                    "render": [Function],
+                                  },
+                                ]
+                              }
+                              expandable={false}
+                              fixed={false}
+                              height={undefined}
+                              indent={1}
+                              parentKey={1}
+                              prefixCls="rc-table-expanded-row"
+                              rowKey="1-extra-row"
+                              saveRowRef={[Function]}
+                            >
+                              <TableRow
+                                addExpandIconCell={[Function]}
+                                className=""
+                                columns={
+                                  Array [
+                                    Object {
+                                      "key": "extra-row",
+                                      "render": [Function],
+                                    },
+                                  ]
+                                }
+                                expandIconColumnIndex={0}
+                                expandRowByClick={false}
+                                expandable={false}
+                                fixed={false}
+                                hasExpandIcon={[Function]}
+                                height={undefined}
+                                hovered={false}
+                                indent={1}
+                                onHover={[Function]}
+                                onRowClick={[Function]}
+                                onRowContextMenu={[Function]}
+                                onRowDoubleClick={[Function]}
+                                onRowMouseEnter={[Function]}
+                                onRowMouseLeave={[Function]}
+                                parentKey={1}
+                                prefixCls="rc-table-expanded-row"
+                                renderExpandIcon={[Function]}
+                                rowKey="1-extra-row"
+                                saveRowRef={[Function]}
+                                store={
+                                  Object {
+                                    "getState": [Function],
+                                    "setState": [Function],
+                                    "subscribe": [Function],
+                                  }
+                                }
+                                visible={false}
+                              />
+                            </Subscribe(TableRow)>
+                          </ExpandedRowHeigh>
+                        </Subscribe(ExpandedRowHeigh)>
                       </tbody>
                     </table>
                   </BaseTable>
@@ -5567,6 +5959,18 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               class=""
             >
               27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+              colspan="2"
+            >
+              <p>
+                extra data
+              </p>
             </td>
           </tr>
           <tr
@@ -5675,6 +6079,21 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             </td>
           </tr>
           <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+            />
+            <td
+              class=""
+              colspan="2"
+            >
+              <p>
+                extra data
+              </p>
+            </td>
+          </tr>
+          <tr
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
@@ -5760,6 +6179,18 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
             </td>
           </tr>
           <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+              colspan="2"
+            >
+              <p>
+                extra data
+              </p>
+            </td>
+          </tr>
+          <tr
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
@@ -5842,6 +6273,18 @@ exports[`Table.expand renders expand row correctly 1`] = `
               class=""
             >
               27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+              colspan="2"
+            >
+              <p>
+                extra data
+              </p>
             </td>
           </tr>
           <tr
