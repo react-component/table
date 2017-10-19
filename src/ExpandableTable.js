@@ -133,7 +133,7 @@ class ExpandableTable extends React.Component {
     });
   }
 
-  renderExpandedRow(parentKey, content, className, fixed) {
+  renderExpandedRow(content, className, ancestorKeys, fixed) {
     const { prefixCls, expandIconAsCell } = this.props;
     let colCount;
     if (fixed === 'left') {
@@ -159,7 +159,7 @@ class ExpandableTable extends React.Component {
       });
     }
 
-    const rowKey = `${parentKey}-extra-row`;
+    const rowKey = `${ancestorKeys[0]}-extra-row`;
 
     return (
       <ExpandedRowHeigh
@@ -172,7 +172,7 @@ class ExpandableTable extends React.Component {
             columns={columns}
             className={className}
             rowKey={rowKey}
-            parentKey={parentKey}
+            ancestorKeys={ancestorKeys}
             prefixCls={`${prefixCls}-expanded-row`}
             indent={1}
             height={height}
@@ -183,17 +183,18 @@ class ExpandableTable extends React.Component {
     );
   }
 
-  renderRows = (renderRows, record, index, indent, fixed, parentKey) => {
+  renderRows = (renderRows, record, index, indent, fixed, parentKey, ancestorKeys) => {
     const { expandedRowClassName, columns, expandedRowRender, childrenColumnName } = this.props;
     const childrenData = record[childrenColumnName];
     const expandedRowContent = expandedRowRender && expandedRowRender(record, index, indent);
+    const nextAncestorKeys = [...ancestorKeys, parentKey];
 
     if (expandedRowContent) {
       return [
         this.renderExpandedRow(
-          parentKey,
           expandedRowContent,
           expandedRowClassName(record, index, indent),
+          nextAncestorKeys,
           fixed,
         )
       ];
@@ -203,9 +204,7 @@ class ExpandableTable extends React.Component {
       return renderRows(
         childrenData,
         indent + 1,
-        columns,
-        fixed,
-        parentKey,
+        nextAncestorKeys,
       );
     }
   }

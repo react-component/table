@@ -25,7 +25,7 @@ class BaseTable extends React.Component {
     });
   }
 
-  renderRows = (renderData, indent, parentKey) => {
+  renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
     const { fixedColumnsBodyRowsHeight } = table.state;
     const {
@@ -85,7 +85,6 @@ class BaseTable extends React.Component {
           record={record}
           key={key}
           rowKey={key}
-          parentKey={key}
           onRowClick={onRowClick}
           needIndentSpaced={expander.needIndentSpaced}
           onExpandedChange={expander.handleExpandChange}
@@ -107,6 +106,7 @@ class BaseTable extends React.Component {
               {...onHoverProps}
               hoverKey={key}
               rowKey={key}
+              ancestorKeys={ancestorKeys}
               ref={rowRef(record, i, indent)}
               {...expandableRow}
             />
@@ -116,7 +116,15 @@ class BaseTable extends React.Component {
 
       rows.push(row);
 
-      const expandedRows = expander.renderRows(this.renderRows, record, i, indent, fixed, key);
+      const expandedRows = expander.renderRows(
+        this.renderRows,
+        record,
+        i,
+        indent,
+        fixed,
+        key,
+        ancestorKeys
+      );
 
       if (expandedRows) {
         rows.push(...expandedRows);

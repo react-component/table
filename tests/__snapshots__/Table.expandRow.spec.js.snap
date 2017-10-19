@@ -296,6 +296,119 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                   },
                 ]
               }
+              expander={
+                Object {
+                  "handleExpandChange": [Function],
+                  "needIndentSpaced": false,
+                  "props": Object {
+                    "bodyStyle": Object {},
+                    "children": [Function],
+                    "childrenColumnName": "children",
+                    "columnManager": ColumnManager {
+                      "_cached": Object {
+                        "groupedColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                        "isAnyColumnsFixed": false,
+                        "isAnyColumnsLeftFixed": false,
+                        "isAnyColumnsRightFixed": false,
+                        "leafColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                      },
+                      "columns": Array [
+                        Object {
+                          "dataIndex": "name",
+                          "key": "name",
+                          "title": "Name",
+                        },
+                        Object {
+                          "dataIndex": "age",
+                          "key": "age",
+                          "title": "Age",
+                        },
+                      ],
+                    },
+                    "columns": Array [
+                      Object {
+                        "dataIndex": "name",
+                        "key": "name",
+                        "title": "Name",
+                      },
+                      Object {
+                        "dataIndex": "age",
+                        "key": "age",
+                        "title": "Age",
+                      },
+                    ],
+                    "data": Array [
+                      Object {
+                        "age": 27,
+                        "key": 0,
+                        "name": "Lucy",
+                      },
+                      Object {
+                        "age": 28,
+                        "key": 1,
+                        "name": "Jack",
+                      },
+                    ],
+                    "defaultExpandAllRows": false,
+                    "defaultExpandedRowKeys": Array [],
+                    "emptyText": [Function],
+                    "expandIconAsCell": false,
+                    "expandIconColumnIndex": 0,
+                    "expandedRowClassName": [Function],
+                    "expandedRowKeys": Array [
+                      0,
+                    ],
+                    "expandedRowRender": [Function],
+                    "getBodyWrapper": [Function],
+                    "getRowKey": [Function],
+                    "indentSize": 15,
+                    "onExpand": [Function],
+                    "onExpandedRowsChange": [Function],
+                    "onRowClick": [Function],
+                    "onRowContextMenu": [Function],
+                    "onRowDoubleClick": [Function],
+                    "onRowMouseEnter": [Function],
+                    "onRowMouseLeave": [Function],
+                    "prefixCls": "rc-table",
+                    "rowClassName": [Function],
+                    "rowKey": "key",
+                    "rowRef": [Function],
+                    "scroll": Object {},
+                    "showHeader": true,
+                    "store": Object {
+                      "getState": [Function],
+                      "setState": [Function],
+                      "subscribe": [Function],
+                    },
+                    "style": Object {},
+                    "useFixedHeader": false,
+                  },
+                  "renderExpandIndentCell": [Function],
+                  "renderRows": [Function],
+                }
+              }
               fixed={undefined}
               handleBodyScrollLeft={[Function]}
               key="head"
@@ -425,6 +538,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                     "style": Object {},
                     "useFixedHeader": false,
                   },
+                  "renderExpandIndentCell": [Function],
                   "renderRows": [Function],
                 }
               }
@@ -563,6 +677,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                         "style": Object {},
                         "useFixedHeader": false,
                       },
+                      "renderExpandIndentCell": [Function],
                       "renderRows": [Function],
                     }
                   }
@@ -695,6 +810,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           "style": Object {},
                           "useFixedHeader": false,
                         },
+                        "renderExpandIndentCell": [Function],
                         "renderRows": [Function],
                       }
                     }
@@ -767,6 +883,119 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                               "title": "Age",
                             },
                           ]
+                        }
+                        expander={
+                          Object {
+                            "handleExpandChange": [Function],
+                            "needIndentSpaced": false,
+                            "props": Object {
+                              "bodyStyle": Object {},
+                              "children": [Function],
+                              "childrenColumnName": "children",
+                              "columnManager": ColumnManager {
+                                "_cached": Object {
+                                  "groupedColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                  "isAnyColumnsFixed": false,
+                                  "isAnyColumnsLeftFixed": false,
+                                  "isAnyColumnsRightFixed": false,
+                                  "leafColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                },
+                                "columns": Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ],
+                              },
+                              "columns": Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ],
+                              "data": Array [
+                                Object {
+                                  "age": 27,
+                                  "key": 0,
+                                  "name": "Lucy",
+                                },
+                                Object {
+                                  "age": 28,
+                                  "key": 1,
+                                  "name": "Jack",
+                                },
+                              ],
+                              "defaultExpandAllRows": false,
+                              "defaultExpandedRowKeys": Array [],
+                              "emptyText": [Function],
+                              "expandIconAsCell": false,
+                              "expandIconColumnIndex": 0,
+                              "expandedRowClassName": [Function],
+                              "expandedRowKeys": Array [
+                                0,
+                              ],
+                              "expandedRowRender": [Function],
+                              "getBodyWrapper": [Function],
+                              "getRowKey": [Function],
+                              "indentSize": 15,
+                              "onExpand": [Function],
+                              "onExpandedRowsChange": [Function],
+                              "onRowClick": [Function],
+                              "onRowContextMenu": [Function],
+                              "onRowDoubleClick": [Function],
+                              "onRowMouseEnter": [Function],
+                              "onRowMouseLeave": [Function],
+                              "prefixCls": "rc-table",
+                              "rowClassName": [Function],
+                              "rowKey": "key",
+                              "rowRef": [Function],
+                              "scroll": Object {},
+                              "showHeader": true,
+                              "store": Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              },
+                              "style": Object {},
+                              "useFixedHeader": false,
+                            },
+                            "renderExpandIndentCell": [Function],
+                            "renderRows": [Function],
+                          }
                         }
                         fixed={undefined}
                       >
@@ -883,6 +1112,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             ]
                           }
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -897,7 +1127,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={0}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -1010,6 +1239,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                               ]
                             }
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -1023,7 +1253,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={0}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -1048,7 +1277,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -1089,7 +1318,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                               rowKey={0}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -1260,12 +1489,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="0-extra-row"
                           rowKey="0-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="0-extra-row"
                             store={
@@ -1277,6 +1506,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  0,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -1286,16 +1520,18 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={0}
                               prefixCls="rc-table-expanded-row"
                               rowKey="0-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    0,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -1307,7 +1543,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -1318,9 +1553,9 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={0}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="0-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -1463,6 +1698,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             ]
                           }
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -1477,7 +1713,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={1}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -1590,6 +1825,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                               ]
                             }
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -1603,7 +1839,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={1}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -1628,7 +1863,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -1669,7 +1904,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                               rowKey={1}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -1840,12 +2075,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="1-extra-row"
                           rowKey="1-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="1-extra-row"
                             store={
@@ -1857,6 +2092,11 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  1,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -1866,16 +2106,18 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={1}
                               prefixCls="rc-table-expanded-row"
                               rowKey="1-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    1,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -1887,7 +2129,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -1898,9 +2139,9 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={1}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="1-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -2225,6 +2466,119 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                   },
                 ]
               }
+              expander={
+                Object {
+                  "handleExpandChange": [Function],
+                  "needIndentSpaced": false,
+                  "props": Object {
+                    "bodyStyle": Object {},
+                    "children": [Function],
+                    "childrenColumnName": "children",
+                    "columnManager": ColumnManager {
+                      "_cached": Object {
+                        "groupedColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                        "isAnyColumnsFixed": false,
+                        "isAnyColumnsLeftFixed": false,
+                        "isAnyColumnsRightFixed": false,
+                        "leafColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                      },
+                      "columns": Array [
+                        Object {
+                          "dataIndex": "name",
+                          "key": "name",
+                          "title": "Name",
+                        },
+                        Object {
+                          "dataIndex": "age",
+                          "key": "age",
+                          "title": "Age",
+                        },
+                      ],
+                    },
+                    "columns": Array [
+                      Object {
+                        "dataIndex": "name",
+                        "key": "name",
+                        "title": "Name",
+                      },
+                      Object {
+                        "dataIndex": "age",
+                        "key": "age",
+                        "title": "Age",
+                      },
+                    ],
+                    "data": Array [
+                      Object {
+                        "age": 27,
+                        "key": 0,
+                        "name": "Lucy",
+                      },
+                      Object {
+                        "age": 28,
+                        "key": 1,
+                        "name": "Jack",
+                      },
+                    ],
+                    "defaultExpandAllRows": false,
+                    "defaultExpandedRowKeys": Array [],
+                    "emptyText": [Function],
+                    "expandIconAsCell": false,
+                    "expandIconColumnIndex": 0,
+                    "expandedRowClassName": [Function],
+                    "expandedRowKeys": Array [
+                      1,
+                    ],
+                    "expandedRowRender": [Function],
+                    "getBodyWrapper": [Function],
+                    "getRowKey": [Function],
+                    "indentSize": 15,
+                    "onExpand": [Function],
+                    "onExpandedRowsChange": [Function],
+                    "onRowClick": [Function],
+                    "onRowContextMenu": [Function],
+                    "onRowDoubleClick": [Function],
+                    "onRowMouseEnter": [Function],
+                    "onRowMouseLeave": [Function],
+                    "prefixCls": "rc-table",
+                    "rowClassName": [Function],
+                    "rowKey": "key",
+                    "rowRef": [Function],
+                    "scroll": Object {},
+                    "showHeader": true,
+                    "store": Object {
+                      "getState": [Function],
+                      "setState": [Function],
+                      "subscribe": [Function],
+                    },
+                    "style": Object {},
+                    "useFixedHeader": false,
+                  },
+                  "renderExpandIndentCell": [Function],
+                  "renderRows": [Function],
+                }
+              }
               fixed={undefined}
               handleBodyScrollLeft={[Function]}
               key="head"
@@ -2354,6 +2708,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                     "style": Object {},
                     "useFixedHeader": false,
                   },
+                  "renderExpandIndentCell": [Function],
                   "renderRows": [Function],
                 }
               }
@@ -2492,6 +2847,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                         "style": Object {},
                         "useFixedHeader": false,
                       },
+                      "renderExpandIndentCell": [Function],
                       "renderRows": [Function],
                     }
                   }
@@ -2624,6 +2980,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           "style": Object {},
                           "useFixedHeader": false,
                         },
+                        "renderExpandIndentCell": [Function],
                         "renderRows": [Function],
                       }
                     }
@@ -2696,6 +3053,119 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                               "title": "Age",
                             },
                           ]
+                        }
+                        expander={
+                          Object {
+                            "handleExpandChange": [Function],
+                            "needIndentSpaced": false,
+                            "props": Object {
+                              "bodyStyle": Object {},
+                              "children": [Function],
+                              "childrenColumnName": "children",
+                              "columnManager": ColumnManager {
+                                "_cached": Object {
+                                  "groupedColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                  "isAnyColumnsFixed": false,
+                                  "isAnyColumnsLeftFixed": false,
+                                  "isAnyColumnsRightFixed": false,
+                                  "leafColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                },
+                                "columns": Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ],
+                              },
+                              "columns": Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ],
+                              "data": Array [
+                                Object {
+                                  "age": 27,
+                                  "key": 0,
+                                  "name": "Lucy",
+                                },
+                                Object {
+                                  "age": 28,
+                                  "key": 1,
+                                  "name": "Jack",
+                                },
+                              ],
+                              "defaultExpandAllRows": false,
+                              "defaultExpandedRowKeys": Array [],
+                              "emptyText": [Function],
+                              "expandIconAsCell": false,
+                              "expandIconColumnIndex": 0,
+                              "expandedRowClassName": [Function],
+                              "expandedRowKeys": Array [
+                                1,
+                              ],
+                              "expandedRowRender": [Function],
+                              "getBodyWrapper": [Function],
+                              "getRowKey": [Function],
+                              "indentSize": 15,
+                              "onExpand": [Function],
+                              "onExpandedRowsChange": [Function],
+                              "onRowClick": [Function],
+                              "onRowContextMenu": [Function],
+                              "onRowDoubleClick": [Function],
+                              "onRowMouseEnter": [Function],
+                              "onRowMouseLeave": [Function],
+                              "prefixCls": "rc-table",
+                              "rowClassName": [Function],
+                              "rowKey": "key",
+                              "rowRef": [Function],
+                              "scroll": Object {},
+                              "showHeader": true,
+                              "store": Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              },
+                              "style": Object {},
+                              "useFixedHeader": false,
+                            },
+                            "renderExpandIndentCell": [Function],
+                            "renderRows": [Function],
+                          }
                         }
                         fixed={undefined}
                       >
@@ -2812,6 +3282,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             ]
                           }
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -2826,7 +3297,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={0}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -2939,6 +3409,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                               ]
                             }
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -2952,7 +3423,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={0}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -2977,7 +3447,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -3018,7 +3488,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                               rowKey={0}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -3189,12 +3659,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="0-extra-row"
                           rowKey="0-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="0-extra-row"
                             store={
@@ -3206,6 +3676,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  0,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -3215,16 +3690,18 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={0}
                               prefixCls="rc-table-expanded-row"
                               rowKey="0-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    0,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -3236,7 +3713,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -3247,9 +3723,9 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={0}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="0-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -3393,6 +3869,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             ]
                           }
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -3407,7 +3884,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={1}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -3520,6 +3996,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                               ]
                             }
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -3533,7 +4010,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={1}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -3558,7 +4034,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -3599,7 +4075,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                               rowKey={1}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -3770,12 +4246,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="1-extra-row"
                           rowKey="1-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="1-extra-row"
                             store={
@@ -3787,6 +4263,11 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  1,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -3796,16 +4277,18 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={1}
                               prefixCls="rc-table-expanded-row"
                               rowKey="1-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    1,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -3817,7 +4300,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -3828,9 +4310,9 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={1}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="1-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -4289,6 +4771,116 @@ exports[`Table.expand expand row by click 1`] = `
                   },
                 ]
               }
+              expander={
+                Object {
+                  "handleExpandChange": [Function],
+                  "needIndentSpaced": false,
+                  "props": Object {
+                    "bodyStyle": Object {},
+                    "children": [Function],
+                    "childrenColumnName": "children",
+                    "columnManager": ColumnManager {
+                      "_cached": Object {
+                        "groupedColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                        "isAnyColumnsFixed": false,
+                        "isAnyColumnsLeftFixed": false,
+                        "isAnyColumnsRightFixed": false,
+                        "leafColumns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Name",
+                          },
+                          Object {
+                            "dataIndex": "age",
+                            "key": "age",
+                            "title": "Age",
+                          },
+                        ],
+                      },
+                      "columns": Array [
+                        Object {
+                          "dataIndex": "name",
+                          "key": "name",
+                          "title": "Name",
+                        },
+                        Object {
+                          "dataIndex": "age",
+                          "key": "age",
+                          "title": "Age",
+                        },
+                      ],
+                    },
+                    "columns": Array [
+                      Object {
+                        "dataIndex": "name",
+                        "key": "name",
+                        "title": "Name",
+                      },
+                      Object {
+                        "dataIndex": "age",
+                        "key": "age",
+                        "title": "Age",
+                      },
+                    ],
+                    "data": Array [
+                      Object {
+                        "age": 27,
+                        "key": 0,
+                        "name": "Lucy",
+                      },
+                      Object {
+                        "age": 28,
+                        "key": 1,
+                        "name": "Jack",
+                      },
+                    ],
+                    "defaultExpandAllRows": false,
+                    "defaultExpandedRowKeys": Array [],
+                    "emptyText": [Function],
+                    "expandIconAsCell": false,
+                    "expandIconColumnIndex": 0,
+                    "expandedRowClassName": [Function],
+                    "expandedRowRender": [Function],
+                    "getBodyWrapper": [Function],
+                    "getRowKey": [Function],
+                    "indentSize": 15,
+                    "onExpand": [Function],
+                    "onExpandedRowsChange": [Function],
+                    "onRowClick": [Function],
+                    "onRowContextMenu": [Function],
+                    "onRowDoubleClick": [Function],
+                    "onRowMouseEnter": [Function],
+                    "onRowMouseLeave": [Function],
+                    "prefixCls": "rc-table",
+                    "rowClassName": [Function],
+                    "rowKey": "key",
+                    "rowRef": [Function],
+                    "scroll": Object {},
+                    "showHeader": true,
+                    "store": Object {
+                      "getState": [Function],
+                      "setState": [Function],
+                      "subscribe": [Function],
+                    },
+                    "style": Object {},
+                    "useFixedHeader": false,
+                  },
+                  "renderExpandIndentCell": [Function],
+                  "renderRows": [Function],
+                }
+              }
               fixed={undefined}
               handleBodyScrollLeft={[Function]}
               key="head"
@@ -4415,6 +5007,7 @@ exports[`Table.expand expand row by click 1`] = `
                     "style": Object {},
                     "useFixedHeader": false,
                   },
+                  "renderExpandIndentCell": [Function],
                   "renderRows": [Function],
                 }
               }
@@ -4550,6 +5143,7 @@ exports[`Table.expand expand row by click 1`] = `
                         "style": Object {},
                         "useFixedHeader": false,
                       },
+                      "renderExpandIndentCell": [Function],
                       "renderRows": [Function],
                     }
                   }
@@ -4679,6 +5273,7 @@ exports[`Table.expand expand row by click 1`] = `
                           "style": Object {},
                           "useFixedHeader": false,
                         },
+                        "renderExpandIndentCell": [Function],
                         "renderRows": [Function],
                       }
                     }
@@ -4751,6 +5346,116 @@ exports[`Table.expand expand row by click 1`] = `
                               "title": "Age",
                             },
                           ]
+                        }
+                        expander={
+                          Object {
+                            "handleExpandChange": [Function],
+                            "needIndentSpaced": false,
+                            "props": Object {
+                              "bodyStyle": Object {},
+                              "children": [Function],
+                              "childrenColumnName": "children",
+                              "columnManager": ColumnManager {
+                                "_cached": Object {
+                                  "groupedColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                  "isAnyColumnsFixed": false,
+                                  "isAnyColumnsLeftFixed": false,
+                                  "isAnyColumnsRightFixed": false,
+                                  "leafColumns": Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ],
+                                },
+                                "columns": Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ],
+                              },
+                              "columns": Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ],
+                              "data": Array [
+                                Object {
+                                  "age": 27,
+                                  "key": 0,
+                                  "name": "Lucy",
+                                },
+                                Object {
+                                  "age": 28,
+                                  "key": 1,
+                                  "name": "Jack",
+                                },
+                              ],
+                              "defaultExpandAllRows": false,
+                              "defaultExpandedRowKeys": Array [],
+                              "emptyText": [Function],
+                              "expandIconAsCell": false,
+                              "expandIconColumnIndex": 0,
+                              "expandedRowClassName": [Function],
+                              "expandedRowRender": [Function],
+                              "getBodyWrapper": [Function],
+                              "getRowKey": [Function],
+                              "indentSize": 15,
+                              "onExpand": [Function],
+                              "onExpandedRowsChange": [Function],
+                              "onRowClick": [Function],
+                              "onRowContextMenu": [Function],
+                              "onRowDoubleClick": [Function],
+                              "onRowMouseEnter": [Function],
+                              "onRowMouseLeave": [Function],
+                              "prefixCls": "rc-table",
+                              "rowClassName": [Function],
+                              "rowKey": "key",
+                              "rowRef": [Function],
+                              "scroll": Object {},
+                              "showHeader": true,
+                              "store": Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              },
+                              "style": Object {},
+                              "useFixedHeader": false,
+                            },
+                            "renderExpandIndentCell": [Function],
+                            "renderRows": [Function],
+                          }
                         }
                         fixed={undefined}
                       >
@@ -4862,6 +5567,7 @@ exports[`Table.expand expand row by click 1`] = `
                           expandIconColumnIndex={0}
                           expandedRowClassName={[Function]}
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -4876,7 +5582,6 @@ exports[`Table.expand expand row by click 1`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={0}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -4984,6 +5689,7 @@ exports[`Table.expand expand row by click 1`] = `
                             expanded={true}
                             expandedRowClassName={[Function]}
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -4997,7 +5703,6 @@ exports[`Table.expand expand row by click 1`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={0}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -5022,7 +5727,7 @@ exports[`Table.expand expand row by click 1`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -5063,7 +5768,7 @@ exports[`Table.expand expand row by click 1`] = `
                               rowKey={0}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -5234,12 +5939,12 @@ exports[`Table.expand expand row by click 1`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="0-extra-row"
                           rowKey="0-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="0-extra-row"
                             store={
@@ -5251,6 +5956,11 @@ exports[`Table.expand expand row by click 1`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  0,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -5260,16 +5970,18 @@ exports[`Table.expand expand row by click 1`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={0}
                               prefixCls="rc-table-expanded-row"
                               rowKey="0-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    0,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -5281,7 +5993,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -5292,9 +6003,9 @@ exports[`Table.expand expand row by click 1`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={0}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="0-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -5432,6 +6143,7 @@ exports[`Table.expand expand row by click 1`] = `
                           expandIconColumnIndex={0}
                           expandedRowClassName={[Function]}
                           expandedRowRender={[Function]}
+                          fixed={undefined}
                           getBodyWrapper={[Function]}
                           getRowKey={[Function]}
                           indentSize={15}
@@ -5446,7 +6158,6 @@ exports[`Table.expand expand row by click 1`] = `
                           onRowDoubleClick={[Function]}
                           onRowMouseEnter={[Function]}
                           onRowMouseLeave={[Function]}
-                          parentKey={1}
                           prefixCls="rc-table-row"
                           record={
                             Object {
@@ -5554,6 +6265,7 @@ exports[`Table.expand expand row by click 1`] = `
                             expanded={false}
                             expandedRowClassName={[Function]}
                             expandedRowRender={[Function]}
+                            fixed={undefined}
                             getBodyWrapper={[Function]}
                             getRowKey={[Function]}
                             indentSize={15}
@@ -5567,7 +6279,6 @@ exports[`Table.expand expand row by click 1`] = `
                             onRowDoubleClick={[Function]}
                             onRowMouseEnter={[Function]}
                             onRowMouseLeave={[Function]}
-                            parentKey={1}
                             prefixCls="rc-table-row"
                             record={
                               Object {
@@ -5592,7 +6303,7 @@ exports[`Table.expand expand row by click 1`] = `
                             useFixedHeader={false}
                           >
                             <Subscribe(TableRow)
-                              addExpandIconCell={[Function]}
+                              ancestorKeys={Array []}
                               childrenColumnName={undefined}
                               className=""
                               columns={
@@ -5633,7 +6344,7 @@ exports[`Table.expand expand row by click 1`] = `
                               rowKey={1}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={Array []}
                                 childrenColumnName={undefined}
                                 className=""
                                 columns={
@@ -5804,12 +6515,12 @@ exports[`Table.expand expand row by click 1`] = `
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
                         <Subscribe(ExpandedRowHeigh)
-                          fixed={false}
+                          fixed={undefined}
                           key="1-extra-row"
                           rowKey="1-extra-row"
                         >
                           <ExpandedRowHeigh
-                            fixed={false}
+                            fixed={undefined}
                             height={undefined}
                             rowKey="1-extra-row"
                             store={
@@ -5821,6 +6532,11 @@ exports[`Table.expand expand row by click 1`] = `
                             }
                           >
                             <Subscribe(TableRow)
+                              ancestorKeys={
+                                Array [
+                                  1,
+                                ]
+                              }
                               className=""
                               columns={
                                 Array [
@@ -5830,16 +6546,18 @@ exports[`Table.expand expand row by click 1`] = `
                                   },
                                 ]
                               }
-                              fixed={false}
                               height={undefined}
                               indent={1}
-                              parentKey={1}
                               prefixCls="rc-table-expanded-row"
                               rowKey="1-extra-row"
                               saveRowRef={[Function]}
                             >
                               <TableRow
-                                addExpandIconCell={[Function]}
+                                ancestorKeys={
+                                  Array [
+                                    1,
+                                  ]
+                                }
                                 className=""
                                 columns={
                                   Array [
@@ -5851,7 +6569,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
-                                fixed={false}
                                 hasExpandIcon={[Function]}
                                 height={undefined}
                                 hovered={false}
@@ -5862,9 +6579,9 @@ exports[`Table.expand expand row by click 1`] = `
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                parentKey={1}
                                 prefixCls="rc-table-expanded-row"
                                 renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey="1-extra-row"
                                 saveRowRef={[Function]}
                                 store={
@@ -6408,27 +7125,6 @@ exports[`Table.expand renders nested data correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jim
-            </td>
-            <td
-              class=""
-            >
-              2
-            </td>
-          </tr>
-          <tr
             class="rc-table-row  rc-table-row-level-0"
           >
             <td
@@ -6511,27 +7207,6 @@ exports[`Table.expand renders tree row correctly 1`] = `
               class=""
             >
               27
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row  rc-table-row-level-1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-1"
-                style="padding-left:15px"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jim
-            </td>
-            <td
-              class=""
-            >
-              1
             </td>
           </tr>
           <tr

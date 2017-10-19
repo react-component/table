@@ -152,9 +152,9 @@ class TableRow extends React.Component {
   }
 }
 
-export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, parentKey }) => {
+export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, ancestorKeys }) => {
   return ({
     hovered: currentHoverKey === rowKey,
-    visible: typeof parentKey !== 'undefined' ? !!~expandedRowKeys.indexOf(parentKey) : true,
+    visible: ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k)),
   })
 })(TableRow);
