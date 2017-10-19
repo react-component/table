@@ -29,11 +29,12 @@ const data = [
   },
 ];
 
-const MyTable = React.createClass({
-  handleClick(record, e) {
+class Demo extends React.Component {
+  handleClick = (record, e) => {
     e.preventDefault();
     console.log(record.a);
-  },
+  }
+
   render() {
     const columns = [
       { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
@@ -56,7 +57,7 @@ const MyTable = React.createClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
-ReactDOM.render(<MyTable />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
