@@ -80,7 +80,6 @@ export default class Table extends React.Component {
     return {
       table: {
         props: this.props,
-        state: this.state,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
         getRowKey: this.getRowKey,
