@@ -33,6 +33,7 @@ export default class Table extends React.Component {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
+    ...ExpandableTable.PropTypes,
   }
 
   static childContextTypes = {
@@ -71,7 +72,6 @@ export default class Table extends React.Component {
     this.setScrollPosition('left');
 
     this.state = {
-      currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     };
