@@ -296,17 +296,29 @@ export default class Table extends React.Component {
   }
 
   renderLeftFixedTable() {
-    return this.renderTable({
-      columns: this.columnManager.leftColumns(),
-      fixed: 'left',
-    });
+    const { prefixCls } = this.props;
+
+    return (
+      <div className={`${prefixCls}-fixed-left`}>
+        {this.renderTable({
+          columns: this.columnManager.leftColumns(),
+            fixed: 'left',
+        })}
+      </div>
+    );
   }
 
   renderRightFixedTable() {
-    return this.renderTable({
-      columns: this.columnManager.rightColumns(),
-      fixed: 'right',
-    });
+    const { prefixCls } = this.props;
+
+    return (
+      <div className={`${prefixCls}-fixed-right`}>
+        {this.renderTable({
+          columns: this.columnManager.rightColumns(),
+            fixed: 'right',
+        })}
+      </div>
+    );
   }
 
   renderTable(options) {
@@ -386,6 +398,8 @@ export default class Table extends React.Component {
     } else {
       className += ` ${prefixCls}-scroll-position-${this.scrollPosition}`;
     }
+    const hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
+    const hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
 
     return (
       <Provider store={this.store}>
@@ -397,18 +411,16 @@ export default class Table extends React.Component {
           {(expander) => {
             this.expander = expander;
             return (
-              <div ref={this.saveRef('tableNode')} className={className} style={props.style}>
+              <div
+                ref={this.saveRef('tableNode')}
+                className={className}
+                style={props.style}
+              >
                 {this.renderTitle()}
                 <div className={`${prefixCls}-content`}>
                   {this.renderMainTable()}
-                  {this.columnManager.isAnyColumnsLeftFixed() &&
-                  <div className={`${prefixCls}-fixed-left`}>
-                    {this.renderLeftFixedTable()}
-                  </div>}
-                  {this.columnManager.isAnyColumnsRightFixed() &&
-                  <div className={`${prefixCls}-fixed-right`}>
-                    {this.renderRightFixedTable()}
-                  </div>}
+                  {hasLeftFixed && this.renderLeftFixedTable()}
+                  {hasRightFixed && this.renderRightFixedTable()}
                 </div>
               </div>
             );
