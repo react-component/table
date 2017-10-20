@@ -99,7 +99,6 @@ class BaseTable extends React.Component {
               onRowMouseEnter={onRowMouseEnter}
               onRowMouseLeave={onRowMouseLeave}
               {...onHoverProps}
-              hoverKey={key}
               rowKey={key}
               ancestorKeys={ancestorKeys}
               ref={rowRef(record, i, indent)}
