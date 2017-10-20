@@ -1002,23 +1002,131 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                         <thead
                           className="rc-table-thead"
                         >
-                          <tr
+                          <Subscribe(TableHeaderRow)
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ]
+                            }
+                            fixed={undefined}
                             key="0"
-                            style={null}
+                            row={
+                              Array [
+                                Object {
+                                  "children": "Name",
+                                  "className": "",
+                                  "key": "name",
+                                },
+                                Object {
+                                  "children": "Age",
+                                  "className": "",
+                                  "key": "age",
+                                },
+                              ]
+                            }
+                            rows={
+                              Array [
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ],
+                              ]
+                            }
                           >
-                            <th
-                              className=""
-                              key="0"
+                            <TableHeaderRow
+                              columns={
+                                Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ]
+                              }
+                              fixed={undefined}
+                              height={null}
+                              row={
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ]
+                              }
+                              rows={
+                                Array [
+                                  Array [
+                                    Object {
+                                      "children": "Name",
+                                      "className": "",
+                                      "key": "name",
+                                    },
+                                    Object {
+                                      "children": "Age",
+                                      "className": "",
+                                      "key": "age",
+                                    },
+                                  ],
+                                ]
+                              }
+                              store={
+                                Object {
+                                  "getState": [Function],
+                                  "setState": [Function],
+                                  "subscribe": [Function],
+                                }
+                              }
                             >
-                              Name
-                            </th>
-                            <th
-                              className=""
-                              key="1"
-                            >
-                              Age
-                            </th>
-                          </tr>
+                              <tr
+                                style={
+                                  Object {
+                                    "height": null,
+                                  }
+                                }
+                              >
+                                <th
+                                  className=""
+                                  key="0"
+                                >
+                                  Name
+                                </th>
+                                <th
+                                  className=""
+                                  key="1"
+                                >
+                                  Age
+                                </th>
+                              </tr>
+                            </TableHeaderRow>
+                          </Subscribe(TableHeaderRow)>
                         </thead>
                       </TableHeader>
                       <tbody
@@ -1295,7 +1403,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={0}
                               indent={0}
                               indentSize={15}
@@ -1338,7 +1445,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={0}
                                 hovered={false}
                                 indent={0}
@@ -1379,7 +1485,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -1495,7 +1601,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="0-extra-row"
                             store={
                               Object {
@@ -1881,7 +1987,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={1}
                               indent={0}
                               indentSize={15}
@@ -1924,7 +2029,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={1}
                                 hovered={false}
                                 indent={0}
@@ -1965,7 +2069,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -2081,7 +2185,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="1-extra-row"
                             store={
                               Object {
@@ -3172,23 +3276,131 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                         <thead
                           className="rc-table-thead"
                         >
-                          <tr
+                          <Subscribe(TableHeaderRow)
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ]
+                            }
+                            fixed={undefined}
                             key="0"
-                            style={null}
+                            row={
+                              Array [
+                                Object {
+                                  "children": "Name",
+                                  "className": "",
+                                  "key": "name",
+                                },
+                                Object {
+                                  "children": "Age",
+                                  "className": "",
+                                  "key": "age",
+                                },
+                              ]
+                            }
+                            rows={
+                              Array [
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ],
+                              ]
+                            }
                           >
-                            <th
-                              className=""
-                              key="0"
+                            <TableHeaderRow
+                              columns={
+                                Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ]
+                              }
+                              fixed={undefined}
+                              height={null}
+                              row={
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ]
+                              }
+                              rows={
+                                Array [
+                                  Array [
+                                    Object {
+                                      "children": "Name",
+                                      "className": "",
+                                      "key": "name",
+                                    },
+                                    Object {
+                                      "children": "Age",
+                                      "className": "",
+                                      "key": "age",
+                                    },
+                                  ],
+                                ]
+                              }
+                              store={
+                                Object {
+                                  "getState": [Function],
+                                  "setState": [Function],
+                                  "subscribe": [Function],
+                                }
+                              }
                             >
-                              Name
-                            </th>
-                            <th
-                              className=""
-                              key="1"
-                            >
-                              Age
-                            </th>
-                          </tr>
+                              <tr
+                                style={
+                                  Object {
+                                    "height": null,
+                                  }
+                                }
+                              >
+                                <th
+                                  className=""
+                                  key="0"
+                                >
+                                  Name
+                                </th>
+                                <th
+                                  className=""
+                                  key="1"
+                                >
+                                  Age
+                                </th>
+                              </tr>
+                            </TableHeaderRow>
+                          </Subscribe(TableHeaderRow)>
                         </thead>
                       </TableHeader>
                       <tbody
@@ -3465,7 +3677,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={0}
                               indent={0}
                               indentSize={15}
@@ -3508,7 +3719,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={0}
                                 hovered={false}
                                 indent={0}
@@ -3549,7 +3759,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -3665,7 +3875,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="0-extra-row"
                             store={
                               Object {
@@ -4052,7 +4262,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={1}
                               indent={0}
                               indentSize={15}
@@ -4095,7 +4304,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={1}
                                 hovered={false}
                                 indent={0}
@@ -4136,7 +4344,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -4252,7 +4460,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="1-extra-row"
                             store={
                               Object {
@@ -5462,23 +5670,131 @@ exports[`Table.expand expand row by click 1`] = `
                         <thead
                           className="rc-table-thead"
                         >
-                          <tr
+                          <Subscribe(TableHeaderRow)
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Name",
+                                },
+                                Object {
+                                  "dataIndex": "age",
+                                  "key": "age",
+                                  "title": "Age",
+                                },
+                              ]
+                            }
+                            fixed={undefined}
                             key="0"
-                            style={null}
+                            row={
+                              Array [
+                                Object {
+                                  "children": "Name",
+                                  "className": "",
+                                  "key": "name",
+                                },
+                                Object {
+                                  "children": "Age",
+                                  "className": "",
+                                  "key": "age",
+                                },
+                              ]
+                            }
+                            rows={
+                              Array [
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ],
+                              ]
+                            }
                           >
-                            <th
-                              className=""
-                              key="0"
+                            <TableHeaderRow
+                              columns={
+                                Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ]
+                              }
+                              fixed={undefined}
+                              height={null}
+                              row={
+                                Array [
+                                  Object {
+                                    "children": "Name",
+                                    "className": "",
+                                    "key": "name",
+                                  },
+                                  Object {
+                                    "children": "Age",
+                                    "className": "",
+                                    "key": "age",
+                                  },
+                                ]
+                              }
+                              rows={
+                                Array [
+                                  Array [
+                                    Object {
+                                      "children": "Name",
+                                      "className": "",
+                                      "key": "name",
+                                    },
+                                    Object {
+                                      "children": "Age",
+                                      "className": "",
+                                      "key": "age",
+                                    },
+                                  ],
+                                ]
+                              }
+                              store={
+                                Object {
+                                  "getState": [Function],
+                                  "setState": [Function],
+                                  "subscribe": [Function],
+                                }
+                              }
                             >
-                              Name
-                            </th>
-                            <th
-                              className=""
-                              key="1"
-                            >
-                              Age
-                            </th>
-                          </tr>
+                              <tr
+                                style={
+                                  Object {
+                                    "height": null,
+                                  }
+                                }
+                              >
+                                <th
+                                  className=""
+                                  key="0"
+                                >
+                                  Name
+                                </th>
+                                <th
+                                  className=""
+                                  key="1"
+                                >
+                                  Age
+                                </th>
+                              </tr>
+                            </TableHeaderRow>
+                          </Subscribe(TableHeaderRow)>
                         </thead>
                       </TableHeader>
                       <tbody
@@ -5745,7 +6061,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={0}
                               indent={0}
                               indentSize={15}
@@ -5788,7 +6103,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={0}
                                 hovered={false}
                                 indent={0}
@@ -5829,7 +6143,7 @@ exports[`Table.expand expand row by click 1`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -5945,7 +6259,7 @@ exports[`Table.expand expand row by click 1`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="0-extra-row"
                             store={
                               Object {
@@ -6321,7 +6635,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 ]
                               }
                               hasExpandIcon={[Function]}
-                              height={null}
                               hoverKey={1}
                               indent={0}
                               indentSize={15}
@@ -6364,7 +6677,6 @@ exports[`Table.expand expand row by click 1`] = `
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
                                 hasExpandIcon={[Function]}
-                                height={null}
                                 hoverKey={1}
                                 hovered={false}
                                 indent={0}
@@ -6405,7 +6717,7 @@ exports[`Table.expand expand row by click 1`] = `
                                   onMouseLeave={[Function]}
                                   style={
                                     Object {
-                                      "height": null,
+                                      "height": undefined,
                                     }
                                   }
                                 >
@@ -6521,7 +6833,7 @@ exports[`Table.expand expand row by click 1`] = `
                         >
                           <ExpandedRowHeigh
                             fixed={undefined}
-                            height={undefined}
+                            height={null}
                             rowKey="1-extra-row"
                             store={
                               Object {

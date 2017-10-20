@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TableHeaderRow from './TableHeaderRow';
 
 function getHeaderRows(columns, currentRow = 0, rows) {
   rows = rows || [];
@@ -32,19 +33,7 @@ function getHeaderRows(columns, currentRow = 0, rows) {
   return rows.filter(row => row.length > 0);
 }
 
-function getHeaderRowStyle(columns, rows, fixedColumnsHeadRowsHeight) {
-  const headerHeight = fixedColumnsHeadRowsHeight[0];
-  if (headerHeight && columns) {
-    if (headerHeight === 'auto') {
-      return { height: 'auto' };
-    }
-    return { height: headerHeight / rows.length };
-  }
-  return null;
-}
-
 export default function TableHeader(props, { table }) {
-  const { fixedColumnsHeadRowsHeight } = table.state;
   const { prefixCls, showHeader } = table.props;
   const { expander, columns, fixed } = props;
 
@@ -56,15 +45,17 @@ export default function TableHeader(props, { table }) {
 
   expander.renderExpandIndentCell(rows, fixed);
 
-  const trStyle = fixed ? getHeaderRowStyle(columns, rows, fixedColumnsHeadRowsHeight) : null;
-
   return (
     <thead className={`${prefixCls}-thead`}>
       {
         rows.map((row, index) => (
-          <tr key={index} style={trStyle}>
-            {row.map((cellProps, i) => <th {...cellProps} key={i} />)}
-          </tr>
+          <TableHeaderRow
+            key={index}
+            fixed={fixed}
+            columns={columns}
+            rows={rows}
+            row={row}
+          />
         ))
       }
     </thead>

@@ -67,14 +67,12 @@ export default class Table extends React.Component {
 
     this.store = create({
       currentHoverKey: null,
+      fixedColumnsHeadRowsHeight: [],
+      fixedColumnsBodyRowsHeight: [],
     });
 
     this.setScrollPosition('left');
 
-    this.state = {
-      fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: [],
-    };
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
@@ -204,11 +202,13 @@ export default class Table extends React.Component {
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, row => row.getBoundingClientRect().height || 'auto'
     );
-    if (shallowequal(this.state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(this.state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+    const state = this.store.getState();
+    if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
+        shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
-    this.setState({
+
+    this.store.setState({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
     });

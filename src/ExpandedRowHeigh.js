@@ -24,15 +24,34 @@ class ExpandedRowHeigh extends React.Component {
   render() {
     const { children, height } = this.props;
     return children({
-      heigh: height,
+      height,
       saveRowRef: this.saveRowRef,
     });
   }
 }
 
-export default connect(({ expandedRowsHeight }, { fixed, height, rowKey }) => {
-  if (fixed && expandedRowsHeight[rowKey]) {
-    return { height: expandedRowsHeight[rowKey] }
+function getRowHeight(state, props) {
+  const { expandedRowsHeight, fixedColumnsBodyRowsHeight } = state;
+  const { fixed, index, rowKey } = props;
+
+  if (!fixed) {
+    return null;
   }
-  return { height };
+
+
+  if (expandedRowsHeight[rowKey]) {
+    return expandedRowsHeight[rowKey];
+  }
+
+  if (fixedColumnsBodyRowsHeight[index]) {
+    return fixedColumnsBodyRowsHeight[index];
+  }
+
+  return null;
+}
+
+export default connect((state, props) => {
+  return {
+    height: getRowHeight(state, props),
+  };
 })(ExpandedRowHeigh)

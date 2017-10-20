@@ -5,6 +5,7 @@ import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
+import ExpandedRowHeigh from './ExpandedRowHeigh';
 
 class BaseTable extends React.Component {
   static propTypes = {
@@ -27,7 +28,6 @@ class BaseTable extends React.Component {
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
-    const { fixedColumnsBodyRowsHeight } = table.state;
     const {
       columnManager,
       getRowKey,
@@ -62,9 +62,6 @@ class BaseTable extends React.Component {
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      const height = (fixed && fixedColumnsBodyRowsHeight[i]) ?
-        fixedColumnsBodyRowsHeight[i] : null;
-
       let leafColumns;
       if (fixed === 'left') {
         leafColumns = columnManager.leftLeafColumns();
@@ -90,26 +87,35 @@ class BaseTable extends React.Component {
           onExpandedChange={expander.handleExpandChange}
         >
           {( expandableRow ) => (
-            <TableRow
-              indent={indent}
-              className={className}
-              record={record}
-              index={i}
-              prefixCls={rowPrefixCls}
-              childrenColumnName={childrenColumnName}
-              columns={leafColumns}
-              onRowDoubleClick={onRowDoubleClick}
-              onRowContextMenu={onRowContextMenu}
-              onRowMouseEnter={onRowMouseEnter}
-              onRowMouseLeave={onRowMouseLeave}
-              height={height}
-              {...onHoverProps}
-              hoverKey={key}
+            <ExpandedRowHeigh
               rowKey={key}
-              ancestorKeys={ancestorKeys}
-              ref={rowRef(record, i, indent)}
-              {...expandableRow}
-            />
+              fixed={fixed}
+              index={i}
+            >
+              {({ height }) => (
+                <TableRow
+                  fixed={fixed}
+                  indent={indent}
+                  className={className}
+                  record={record}
+                  index={i}
+                  prefixCls={rowPrefixCls}
+                  childrenColumnName={childrenColumnName}
+                  columns={leafColumns}
+                  onRowDoubleClick={onRowDoubleClick}
+                  onRowContextMenu={onRowContextMenu}
+                  onRowMouseEnter={onRowMouseEnter}
+                  onRowMouseLeave={onRowMouseLeave}
+                  {...onHoverProps}
+                  hoverKey={key}
+                  rowKey={key}
+                  ancestorKeys={ancestorKeys}
+                  ref={rowRef(record, i, indent)}
+                  height={height}
+                  {...expandableRow}
+                />
+              )}
+            </ExpandedRowHeigh>
           )}
         </ExpandableRow>
       );
