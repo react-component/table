@@ -139,10 +139,6 @@ export default class Table extends React.Component {
     return key === undefined ? index : key;
   }
 
-  getRows = (columns, fixed) => {
-    return this.getRowsByData(this.props.data, true, 0, columns, fixed);
-  }
-
   setScrollPosition(position) {
     this.scrollPosition = position;
     if (this.tableNode) {
