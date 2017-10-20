@@ -30,7 +30,6 @@ class BaseTable extends React.Component {
     const { table } = this.context;
     const {
       columnManager,
-      getRowKey,
       onExpanded,
     } = table;
     const {
@@ -45,7 +44,7 @@ class BaseTable extends React.Component {
       onRowMouseEnter,
       onRowMouseLeave,
     } = table.props;
-    const { columns, fixed, expander } = this.props;
+    const { getRowKey, columns, fixed, expander } = this.props;
 
     let rows = [];
 

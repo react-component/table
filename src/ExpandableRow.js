@@ -12,24 +12,24 @@ class ExpandableRow extends React.Component {
     return !this.expandIconAsCell && !expandRowByClick && columnIndex === this.expandIconColumnIndex;
   }
 
-  handleExpandChange = (record, index, event) => {
-    const { onExpandedChange, expanded } = this.props;
+  handleExpandChange = (record, event) => {
+    const { onExpandedChange, expanded, rowKey } = this.props;
     if (this.expandable) {
-      onExpandedChange(!expanded, record, event, index);
+      onExpandedChange(!expanded, record, event, rowKey);
     }
   }
 
   handleDestroy() {
-    const { onExpandedChange, index, record } = this.props;
+    const { onExpandedChange, rowKey, record } = this.props;
     if (this.expandable) {
-      onExpandedChange(false, record, null, index);
+      onExpandedChange(false, record, null, rowKey);
     }
   }
 
   handleRowClick = (record, index, event) => {
     const { expandRowByClick, onRowClick } = this.props;
     if (expandRowByClick) {
-      this.handleExpandChange(record, index, event);
+      this.handleExpandChange(record, event);
     }
     onRowClick(record, index, event);
   }

@@ -146,7 +146,7 @@ describe('Table.expand', () => {
     expect(onExpandedRowsChange).toBeCalledWith([1]);
   });
 
-  it('expand row by click', () => {
+  fit('expand row by click', () => {
     const wrapper = mount(createTable({ expandedRowRender }));
     wrapper.find('ExpandIcon').first().simulate('click');
     expect(mountToJson(wrapper)).toMatchSnapshot();

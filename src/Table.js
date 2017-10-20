@@ -82,7 +82,6 @@ export default class Table extends React.Component {
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
-        getRowKey: this.getRowKey,
       },
     };
   }
@@ -342,6 +341,7 @@ export default class Table extends React.Component {
         columns={columns}
         fixed={fixed}
         tableClassName={tableClassName}
+        getRowKey={this.getRowKey}
         handleBodyScroll={this.handleBodyScroll}
         expander={this.expander}
       />

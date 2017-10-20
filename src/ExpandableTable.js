@@ -72,51 +72,32 @@ class ExpandableTable extends React.Component {
     }
   }
 
-  handleExpandChange = (expanded, record, event, index) => {
-    const { expandRowByClick, getRowKey, onExpand } = this.props;
-
+  handleExpandChange = (expanded, record, event, rowKey) => {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
 
-    const info = this.findExpandedRow(record);
-    const expandedRows = this.getExpandedRows().concat();
+    const { onExpandedRowsChange, onExpand } = this.props;
+    const { expandedRowKeys } = this.store.getState();
 
-    if (typeof info !== 'undefined' && !expanded) {
-      // row was unmounted
-      const rowKey = this.props.getRowKey(record, index);
-      let expandedRowIndex = expandedRows.indexOf(rowKey);
-      if (expandedRowIndex !== -1) {
-        expandedRows.splice(expandedRowIndex, 1);
-      }
-      this.updateExpandedRows(expandedRows);
-    } else if (!info && expanded) {
+    if (expanded) {
+      // row was expaned
+      expandedRowKeys.push(rowKey);
+    } else {
       // row was collapse
-      expandedRows.push(getRowKey(record, index));
-      this.updateExpandedRows(expandedRows);
+      let expandedRowIndex = expandedRowKeys.indexOf(rowKey);
+      if (expandedRowIndex !== -1) {
+        expandedRowKeys.splice(expandedRowIndex, 1);
+      }
     }
-    onExpand(expanded, record);
-  }
 
-  updateExpandedRows(expandedRowKeys) {
     if (!this.props.expandedRowKeys) {
       this.store.setState({ expandedRowKeys });
     }
-    this.props.onExpandedRowsChange(expandedRowKeys);
-  }
 
-  findExpandedRow(record, index) {
-    const rows = this.getExpandedRows().filter(i => i === this.props.getRowKey(record, index));
-    return rows[0];
-  }
-
-  getExpandedRows() {
-    return this.store.getState().expandedRowKeys;
-  }
-
-  isRowExpanded(record, index) {
-    return typeof this.findExpandedRow(record, index) !== 'undefined';
+    onExpandedRowsChange(expandedRowKeys);
+    onExpand(expanded, record);
   }
 
   renderExpandIndentCell = (rows, fixed) => {
