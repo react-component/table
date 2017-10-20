@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableRow from './TableRow';
-import ExpandedRowHeigh from './ExpandedRowHeigh';
 
 class ExpandableTable extends React.Component {
   static propTypes = {
@@ -143,24 +142,15 @@ class ExpandableTable extends React.Component {
     const rowKey = `${ancestorKeys[0]}-extra-row`;
 
     return (
-      <ExpandedRowHeigh
+      <TableRow
         key={rowKey}
+        columns={columns}
+        className={className}
         rowKey={rowKey}
-        fixed={fixed}
-      >
-        {({ height, saveRowRef }) => (
-          <TableRow
-            columns={columns}
-            className={className}
-            rowKey={rowKey}
-            ancestorKeys={ancestorKeys}
-            prefixCls={`${prefixCls}-expanded-row`}
-            indent={1}
-            height={height}
-            saveRowRef={saveRowRef}
-          />
-        )}
-      </ExpandedRowHeigh>
+        ancestorKeys={ancestorKeys}
+        prefixCls={`${prefixCls}-expanded-row`}
+        indent={1}
+      />
     );
   }
 

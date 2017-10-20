@@ -5,7 +5,6 @@ import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
-import ExpandedRowHeigh from './ExpandedRowHeigh';
 
 class BaseTable extends React.Component {
   static propTypes = {
@@ -86,35 +85,26 @@ class BaseTable extends React.Component {
           onExpandedChange={expander.handleExpandChange}
         >
           {( expandableRow ) => (
-            <ExpandedRowHeigh
-              rowKey={key}
+            <TableRow
               fixed={fixed}
+              indent={indent}
+              className={className}
+              record={record}
               index={i}
-            >
-              {({ height }) => (
-                <TableRow
-                  fixed={fixed}
-                  indent={indent}
-                  className={className}
-                  record={record}
-                  index={i}
-                  prefixCls={rowPrefixCls}
-                  childrenColumnName={childrenColumnName}
-                  columns={leafColumns}
-                  onRowDoubleClick={onRowDoubleClick}
-                  onRowContextMenu={onRowContextMenu}
-                  onRowMouseEnter={onRowMouseEnter}
-                  onRowMouseLeave={onRowMouseLeave}
-                  {...onHoverProps}
-                  hoverKey={key}
-                  rowKey={key}
-                  ancestorKeys={ancestorKeys}
-                  ref={rowRef(record, i, indent)}
-                  height={height}
-                  {...expandableRow}
-                />
-              )}
-            </ExpandedRowHeigh>
+              prefixCls={rowPrefixCls}
+              childrenColumnName={childrenColumnName}
+              columns={leafColumns}
+              onRowDoubleClick={onRowDoubleClick}
+              onRowContextMenu={onRowContextMenu}
+              onRowMouseEnter={onRowMouseEnter}
+              onRowMouseLeave={onRowMouseLeave}
+              {...onHoverProps}
+              hoverKey={key}
+              rowKey={key}
+              ancestorKeys={ancestorKeys}
+              ref={rowRef(record, i, indent)}
+              {...expandableRow}
+            />
           )}
         </ExpandableRow>
       );

@@ -52,6 +52,23 @@ class TableRow extends React.Component {
     }
   }
 
+  setHeight() {
+    const { store, rowKey } = this.props;
+    const { expandedRowsHeight } = store.getState();
+    const height = this.rowRef.getBoundingClientRect().height;
+    expandedRowsHeight[rowKey] = height;
+    store.setState({ expandedRowsHeight });
+  }
+
+  saveRowRef = (node) => {
+    this.rowRef = node;
+    if (node) {
+      if (!this.props.fixed) {
+        this.setHeight();
+      }
+    }
+  }
+
   onRowClick = (event) => {
     const { record, index, onRowClick } = this.props;
     onRowClick(record, index, event);
@@ -94,7 +111,6 @@ class TableRow extends React.Component {
       visible,
       height,
       hovered,
-      saveRowRef,
       hasExpandIcon,
       addExpandIconCell,
       renderExpandIcon,
@@ -137,7 +153,7 @@ class TableRow extends React.Component {
 
     return (
       <tr
-        ref={saveRowRef}
+        ref={this.saveRowRef}
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
@@ -152,9 +168,34 @@ class TableRow extends React.Component {
   }
 }
 
-export default connect(({ currentHoverKey, expandedRowKeys }, { rowKey, ancestorKeys }) => {
+function getRowHeight(state, props) {
+  const { expandedRowsHeight, fixedColumnsBodyRowsHeight } = state;
+  const { fixed, index, rowKey } = props;
+
+  if (!fixed) {
+    return null;
+  }
+
+
+  if (expandedRowsHeight[rowKey]) {
+    return expandedRowsHeight[rowKey];
+  }
+
+  if (fixedColumnsBodyRowsHeight[index]) {
+    return fixedColumnsBodyRowsHeight[index];
+  }
+
+  return null;
+}
+
+export default connect((state, props) => {
+  const { currentHoverKey, expandedRowKeys } = state;
+  const { rowKey, ancestorKeys } = props;
+  const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
+
   return ({
+    visible,
     hovered: currentHoverKey === rowKey,
-    visible: ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k)),
+    height: getRowHeight(state, props),
   })
 })(TableRow);
