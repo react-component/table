@@ -18,12 +18,12 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-class Test extends React.Component {
-  filters = []
-
+class Demo extends React.Component {
   state = {
     visible: false,
   }
+
+  filters = []
 
   handleVisibleChange = (visible) => {
     this.setState({ visible });
@@ -105,7 +105,7 @@ class Test extends React.Component {
 ReactDOM.render(
   <div>
     <h2>use dropdown</h2>
-    <Test />
+    <Demo />
   </div>,
   document.getElementById('__react-content')
 );

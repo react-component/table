@@ -11,10 +11,16 @@ class ExpandableTable extends React.Component {
     defaultExpandAllRows: PropTypes.bool,
     defaultExpandedRowKeys: PropTypes.array,
     expandIconColumnIndex: PropTypes.number,
+    expandedRowRender: PropTypes.func,
     childrenColumnName: PropTypes.string,
     indentSize: PropTypes.number,
     onExpand: PropTypes.func,
     onExpandedRowsChange: PropTypes.func,
+    columnManager: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
+    prefixCls: PropTypes.string.isRequired,
+    data: PropTypes.array,
+    children: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -85,7 +91,7 @@ class ExpandableTable extends React.Component {
       expandedRowKeys.push(rowKey);
     } else {
       // row was collapse
-      let expandedRowIndex = expandedRowKeys.indexOf(rowKey);
+      const expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
         expandedRowKeys.splice(expandedRowIndex, 1);
       }
@@ -101,7 +107,7 @@ class ExpandableTable extends React.Component {
 
   renderExpandIndentCell = (rows, fixed) => {
     const { prefixCls, expandIconAsCell } = this.props;
-    if (!expandIconAsCell || fixed == 'right') {
+    if (!expandIconAsCell || fixed === 'right') {
       return;
     }
 
@@ -155,7 +161,7 @@ class ExpandableTable extends React.Component {
   }
 
   renderRows = (renderRows, record, index, indent, fixed, parentKey, ancestorKeys) => {
-    const { expandedRowClassName, columns, expandedRowRender, childrenColumnName } = this.props;
+    const { expandedRowClassName, expandedRowRender, childrenColumnName } = this.props;
     const childrenData = record[childrenColumnName];
     const expandedRowContent = expandedRowRender && expandedRowRender(record, index, indent);
     const nextAncestorKeys = [...ancestorKeys, parentKey];
@@ -167,7 +173,7 @@ class ExpandableTable extends React.Component {
           expandedRowClassName(record, index, indent),
           nextAncestorKeys,
           fixed,
-        )
+        ),
       ];
     }
 

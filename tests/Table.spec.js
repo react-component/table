@@ -77,20 +77,20 @@ describe('Table', () => {
   describe('rowKey', () => {
     it('uses record.key', () => {
       const wrapper = mount(createTable());
-      expect(wrapper.find('TableRow').at(0).prop('hoverKey')).toBe('key0');
-      expect(wrapper.find('TableRow').at(1).prop('hoverKey')).toBe('key1');
+      expect(wrapper.find('TableRow').at(0).prop('rowKey')).toBe('key0');
+      expect(wrapper.find('TableRow').at(1).prop('rowKey')).toBe('key1');
     });
 
     it('sets by rowKey', () => {
       const wrapper = mount(createTable({ rowKey: 'name' }));
-      expect(wrapper.find('TableRow').at(0).prop('hoverKey')).toBe('Lucy');
-      expect(wrapper.find('TableRow').at(1).prop('hoverKey')).toBe('Jack');
+      expect(wrapper.find('TableRow').at(0).prop('rowKey')).toBe('Lucy');
+      expect(wrapper.find('TableRow').at(1).prop('rowKey')).toBe('Jack');
     });
 
     it('sets by rowKey function', () => {
       const wrapper = mount(createTable({ rowKey: (record) => `${record.key}1` }));
-      expect(wrapper.find('TableRow').at(0).prop('hoverKey')).toBe('key01');
-      expect(wrapper.find('TableRow').at(1).prop('hoverKey')).toBe('key11');
+      expect(wrapper.find('TableRow').at(0).prop('rowKey')).toBe('key01');
+      expect(wrapper.find('TableRow').at(1).prop('rowKey')).toBe('key11');
     });
   });
 

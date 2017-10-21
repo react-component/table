@@ -10,14 +10,7 @@ const tableData = [
   { key: 2, a: '1333', c: 'eee', d: 2 },
 ];
 
-class App extends React.Component {
-  columns = [
-    { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
-    { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
-    { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
-    { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
-  ]
-
+class Demo extends React.Component {
   state = {
     data: tableData,
     expandedRowKeys: [],
@@ -46,6 +39,13 @@ class App extends React.Component {
       expandRowByClick: e.target.checked,
     });
   }
+
+  columns = [
+    { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
+    { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
+    { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
+    { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
+  ]
 
   toggleButton() {
     if (this.state.expandedRowKeys.length) {
@@ -108,7 +108,7 @@ class App extends React.Component {
 ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
-    <App />
+    <Demo />
   </div>,
   document.getElementById('__react-content')
 );

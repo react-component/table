@@ -1,6 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
@@ -11,7 +12,11 @@ const CheckBox = ({ id }) => (
   </label>
 );
 
-class MyTable extends React.Component {
+class Demo extends React.Component {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -59,7 +64,7 @@ const data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 
 ReactDOM.render(
   <div>
     <h2>specify key</h2>
-    <MyTable data={data} />
+    <Demo data={data} />
   </div>,
   document.getElementById('__react-content')
 );

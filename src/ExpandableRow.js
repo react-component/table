@@ -1,15 +1,42 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ExpandIcon from './ExpandIcon';
 
 class ExpandableRow extends React.Component {
+  static propTypes = {
+    prefixCls: PropTypes.string.isRequired,
+    rowKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
+    fixed: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+    ]),
+    record: PropTypes.object.isRequired,
+    indentSize: PropTypes.number,
+    needIndentSpaced: PropTypes.bool.isRequired,
+    expandRowByClick: PropTypes.bool,
+    expanded: PropTypes.bool.isRequired,
+    expandIconAsCell: PropTypes.bool,
+    expandIconColumnIndex: PropTypes.number,
+    childrenColumnName: PropTypes.string,
+    expandedRowRender: PropTypes.func,
+    onExpandedChange: PropTypes.func.isRequired,
+    onRowClick: PropTypes.func,
+    children: PropTypes.func.isRequired,
+  }
+
   componentWillUnmount() {
     this.handleDestroy();
   }
 
   hasExpandIcon = (columnIndex) => {
     const { expandRowByClick } = this.props;
-    return !this.expandIconAsCell && !expandRowByClick && columnIndex === this.expandIconColumnIndex;
+    return !this.expandIconAsCell &&
+      !expandRowByClick &&
+      columnIndex === this.expandIconColumnIndex;
   }
 
   handleExpandChange = (record, event) => {
@@ -35,7 +62,7 @@ class ExpandableRow extends React.Component {
   }
 
   renderExpandIcon = () => {
-    const { prefixCls, expanded, record, needIndentSpaced, onExpandedChange } = this.props;
+    const { prefixCls, expanded, record, needIndentSpaced } = this.props;
 
     return (
       <ExpandIcon
@@ -85,7 +112,7 @@ class ExpandableRow extends React.Component {
       hasExpandIcon: this.hasExpandIcon,
       renderExpandIcon: this.renderExpandIcon,
       renderExpandIconCell: this.renderExpandIconCell,
-    }
+    };
 
     return this.props.children(expandableRowProps);
   }
@@ -94,4 +121,3 @@ class ExpandableRow extends React.Component {
 export default connect(({ expandedRowKeys }, { rowKey }) => ({
   expanded: !!~expandedRowKeys.indexOf(rowKey),
 }))(ExpandableRow);
-

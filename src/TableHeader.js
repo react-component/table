@@ -65,6 +65,7 @@ export default function TableHeader(props, { table }) {
 TableHeader.propTypes = {
   fixed: PropTypes.string,
   columns: PropTypes.array.isRequired,
+  expander: PropTypes.object.isRequired,
 };
 
 TableHeader.contextTypes = {

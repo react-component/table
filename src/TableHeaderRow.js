@@ -13,7 +13,7 @@ function TableHeaderRow({ row, height }) {
 
 function getRowHeight(state, props) {
   const { fixedColumnsHeadRowsHeight } = state;
-  const { fixed, columns, rows } = props;
+  const { columns, rows } = props;
   const headerHeight = fixedColumnsHeadRowsHeight[0];
 
   if (headerHeight && columns) {
@@ -28,5 +28,5 @@ function getRowHeight(state, props) {
 export default connect((state, props) => {
   return {
     height: getRowHeight(state, props),
-  }
+  };
 })(TableHeaderRow);

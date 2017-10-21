@@ -278,7 +278,7 @@ export default class Table extends React.Component {
 
     const table = [
       this.renderTable({
-        columns: this.columnManager.groupedColumns()
+        columns: this.columnManager.groupedColumns(),
       }),
       this.renderEmptyText(),
       this.renderFooter(),
@@ -286,7 +286,7 @@ export default class Table extends React.Component {
 
     return scrollable ? (
       <div className={`${prefixCls}-scroll`}>{table}</div>
-    ): table;
+    ) : table;
   }
 
   renderLeftFixedTable() {
@@ -296,7 +296,7 @@ export default class Table extends React.Component {
       <div className={`${prefixCls}-fixed-left`}>
         {this.renderTable({
           columns: this.columnManager.leftColumns(),
-            fixed: 'left',
+          fixed: 'left',
         })}
       </div>
     );
@@ -309,7 +309,7 @@ export default class Table extends React.Component {
       <div className={`${prefixCls}-fixed-right`}>
         {this.renderTable({
           columns: this.columnManager.rightColumns(),
-            fixed: 'right',
+          fixed: 'right',
         })}
       </div>
     );

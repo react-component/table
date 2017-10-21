@@ -45,10 +45,14 @@ export default function HeadTable(props, { table }) {
 }
 
 HeadTable.propTypes = {
-  fixed: PropTypes.string,
+  fixed: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
   handleBodyScrollLeft: PropTypes.func.isRequired,
+  expander: PropTypes.object.isRequired,
 };
 
 HeadTable.contextTypes = {

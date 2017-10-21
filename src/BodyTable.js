@@ -91,10 +91,15 @@ export default function BodyTable(props, { table }) {
 }
 
 BodyTable.propTypes = {
-  fixed: PropTypes.string,
+  fixed: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,
+  getRowKey: PropTypes.func.isRequired,
+  expander: PropTypes.object.isRequired,
 };
 
 BodyTable.contextTypes = {

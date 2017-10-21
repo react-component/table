@@ -8,11 +8,17 @@ import ExpandableRow from './ExpandableRow';
 
 class BaseTable extends React.Component {
   static propTypes = {
-    fixed: PropTypes.string,
+    fixed: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+    ]),
     columns: PropTypes.array.isRequired,
     tableClassName: PropTypes.string.isRequired,
     hasHead: PropTypes.bool.isRequired,
     hasBody: PropTypes.bool.isRequired,
+    store: PropTypes.object.isRequired,
+    expander: PropTypes.object.isRequired,
+    getRowKey: PropTypes.func,
   }
 
   static contextTypes = {
@@ -27,13 +33,9 @@ class BaseTable extends React.Component {
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
-    const {
-      columnManager,
-      onExpanded,
-    } = table;
+    const { columnManager } = table;
     const {
       prefixCls,
-      data,
       childrenColumnName,
       rowClassName,
       rowRef,
@@ -43,14 +45,13 @@ class BaseTable extends React.Component {
       onRowMouseEnter,
       onRowMouseLeave,
     } = table.props;
-    const { getRowKey, columns, fixed, expander } = this.props;
+    const { getRowKey, fixed, expander } = this.props;
 
-    let rows = [];
+    const rows = [];
 
     for (let i = 0; i < renderData.length; i++) {
       const record = renderData[i];
       const key = getRowKey(record, i);
-      const childrenData = record[childrenColumnName];
       const className = typeof rowClassName === 'string'
         ? rowClassName
         : rowClassName(record, i, indent);
@@ -84,7 +85,7 @@ class BaseTable extends React.Component {
           needIndentSpaced={expander.needIndentSpaced}
           onExpandedChange={expander.handleExpandChange}
         >
-          {( expandableRow ) => (
+          {(expandableRow) => ( // eslint-disable-line
             <TableRow
               fixed={fixed}
               indent={indent}

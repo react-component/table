@@ -19,11 +19,23 @@ class TableRow extends React.Component {
       PropTypes.number,
     ]),
     index: PropTypes.number,
-    rowKey: PropTypes.any,
+    rowKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    expandedRow: PropTypes.bool,
+    hasExpandIcon: PropTypes.func.isRequired,
+    hovered: PropTypes.bool.isRequired,
+    visible: PropTypes.bool.isRequired,
+    store: PropTypes.object.isRequired,
+    fixed: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+    ]),
+    renderExpandIcon: PropTypes.func,
+    renderExpandIconCell: PropTypes.func,
   }
 
   static defaultProps = {
@@ -49,23 +61,6 @@ class TableRow extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.visible || (!this.props.visible && nextProps.visible)) {
       this.shouldRender = true;
-    }
-  }
-
-  setHeight() {
-    const { store, rowKey } = this.props;
-    const { expandedRowsHeight } = store.getState();
-    const height = this.rowRef.getBoundingClientRect().height;
-    expandedRowsHeight[rowKey] = height;
-    store.setState({ expandedRowsHeight });
-  }
-
-  saveRowRef = (node) => {
-    this.rowRef = node;
-    if (node) {
-      if (!this.props.fixed) {
-        this.setHeight();
-      }
     }
   }
 
@@ -96,6 +91,23 @@ class TableRow extends React.Component {
     onRowMouseLeave(record, index, event);
   }
 
+  setHeight() {
+    const { store, rowKey } = this.props;
+    const { expandedRowsHeight } = store.getState();
+    const height = this.rowRef.getBoundingClientRect().height;
+    expandedRowsHeight[rowKey] = height;
+    store.setState({ expandedRowsHeight });
+  }
+
+  saveRowRef = (node) => {
+    this.rowRef = node;
+    if (node) {
+      if (!this.props.fixed) {
+        this.setHeight();
+      }
+    }
+  }
+
   render() {
     if (!this.shouldRender) {
       return null;
@@ -112,9 +124,8 @@ class TableRow extends React.Component {
       height,
       hovered,
       hasExpandIcon,
-      addExpandIconCell,
       renderExpandIcon,
-      renderExpandIconCell
+      renderExpandIconCell,
     } = this.props;
 
     let { className } = this.props;
@@ -197,5 +208,5 @@ export default connect((state, props) => {
     visible,
     hovered: currentHoverKey === rowKey,
     height: getRowHeight(state, props),
-  })
+  });
 })(TableRow);

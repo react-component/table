@@ -6163,310 +6163,90 @@ exports[`Table.expand expand row by click 1`] = `
                             style={Object {}}
                             useFixedHeader={false}
                           >
-                            <Subscribe(ExpandedRowHeigh)
-                              fixed={undefined}
-                              index={0}
-                              rowKey={0}
-                            >
-                              <ExpandedRowHeigh
-                                fixed={undefined}
-                                height={null}
-                                index={0}
-                                rowKey={0}
-                                store={
-                                  Object {
-                                    "getState": [Function],
-                                    "setState": [Function],
-                                    "subscribe": [Function],
-                                  }
-                                }
-                              >
-                                <Subscribe(TableRow)
-                                  ancestorKeys={Array []}
-                                  childrenColumnName={undefined}
-                                  className=""
-                                  columns={
-                                    Array [
-                                      Object {
-                                        "dataIndex": "name",
-                                        "key": "name",
-                                        "title": "Name",
-                                      },
-                                      Object {
-                                        "dataIndex": "age",
-                                        "key": "age",
-                                        "title": "Age",
-                                      },
-                                    ]
-                                  }
-                                  fixed={undefined}
-                                  hasExpandIcon={[Function]}
-                                  height={null}
-                                  hoverKey={0}
-                                  indent={0}
-                                  indentSize={15}
-                                  index={0}
-                                  onRowClick={[Function]}
-                                  onRowContextMenu={[Function]}
-                                  onRowDoubleClick={[Function]}
-                                  onRowMouseEnter={[Function]}
-                                  onRowMouseLeave={[Function]}
-                                  prefixCls="rc-table-row"
-                                  record={
-                                    Object {
-                                      "age": 27,
-                                      "key": 0,
-                                      "name": "Lucy",
-                                    }
-                                  }
-                                  renderExpandIcon={[Function]}
-                                  renderExpandIconCell={[Function]}
-                                  rowKey={0}
-                                >
-                                  <TableRow
-                                    ancestorKeys={Array []}
-                                    childrenColumnName={undefined}
-                                    className=""
-                                    columns={
-                                      Array [
-                                        Object {
-                                          "dataIndex": "name",
-                                          "key": "name",
-                                          "title": "Name",
-                                        },
-                                        Object {
-                                          "dataIndex": "age",
-                                          "key": "age",
-                                          "title": "Age",
-                                        },
-                                      ]
-                                    }
-                                    expandIconColumnIndex={0}
-                                    expandRowByClick={false}
-                                    fixed={undefined}
-                                    hasExpandIcon={[Function]}
-                                    height={null}
-                                    hoverKey={0}
-                                    hovered={false}
-                                    indent={0}
-                                    indentSize={15}
-                                    index={0}
-                                    onHover={[Function]}
-                                    onRowClick={[Function]}
-                                    onRowContextMenu={[Function]}
-                                    onRowDoubleClick={[Function]}
-                                    onRowMouseEnter={[Function]}
-                                    onRowMouseLeave={[Function]}
-                                    prefixCls="rc-table-row"
-                                    record={
-                                      Object {
-                                        "age": 27,
-                                        "key": 0,
-                                        "name": "Lucy",
-                                      }
-                                    }
-                                    renderExpandIcon={[Function]}
-                                    renderExpandIconCell={[Function]}
-                                    rowKey={0}
-                                    store={
-                                      Object {
-                                        "getState": [Function],
-                                        "setState": [Function],
-                                        "subscribe": [Function],
-                                      }
-                                    }
-                                    visible={true}
-                                  >
-                                    <tr
-                                      className="rc-table-row  rc-table-row-level-0"
-                                      onClick={[Function]}
-                                      onContextMenu={[Function]}
-                                      onDoubleClick={[Function]}
-                                      onMouseEnter={[Function]}
-                                      onMouseLeave={[Function]}
-                                      style={
-                                        Object {
-                                          "height": null,
-                                        }
-                                      }
-                                    >
-                                      <TableCell
-                                        column={
-                                          Object {
-                                            "dataIndex": "name",
-                                            "key": "name",
-                                            "title": "Name",
-                                          }
-                                        }
-                                        expandIcon={
-                                          <ExpandIcon
-                                            expandable={true}
-                                            expanded={true}
-                                            needIndentSpaced={false}
-                                            onExpand={[Function]}
-                                            prefixCls="rc-table-row"
-                                            record={
-                                              Object {
-                                                "age": 27,
-                                                "key": 0,
-                                                "name": "Lucy",
-                                              }
-                                            }
-                                          />
-                                        }
-                                        indent={0}
-                                        indentSize={15}
-                                        index={0}
-                                        key="name"
-                                        prefixCls="rc-table-row"
-                                        record={
-                                          Object {
-                                            "age": 27,
-                                            "key": 0,
-                                            "name": "Lucy",
-                                          }
-                                        }
-                                      >
-                                        <td
-                                          className=""
-                                          onClick={[Function]}
-                                        >
-                                          <span
-                                            className="rc-table-row-indent indent-level-0"
-                                            style={
-                                              Object {
-                                                "paddingLeft": "0px",
-                                              }
-                                            }
-                                          />
-                                          <ExpandIcon
-                                            expandable={true}
-                                            expanded={true}
-                                            needIndentSpaced={false}
-                                            onExpand={[Function]}
-                                            prefixCls="rc-table-row"
-                                            record={
-                                              Object {
-                                                "age": 27,
-                                                "key": 0,
-                                                "name": "Lucy",
-                                              }
-                                            }
-                                          >
-                                            <span
-                                              className="rc-table-row-expand-icon rc-table-row-expanded"
-                                              onClick={[Function]}
-                                            />
-                                          </ExpandIcon>
-                                          Lucy
-                                        </td>
-                                      </TableCell>
-                                      <TableCell
-                                        column={
-                                          Object {
-                                            "dataIndex": "age",
-                                            "key": "age",
-                                            "title": "Age",
-                                          }
-                                        }
-                                        expandIcon={false}
-                                        indent={0}
-                                        indentSize={15}
-                                        index={0}
-                                        key="age"
-                                        prefixCls="rc-table-row"
-                                        record={
-                                          Object {
-                                            "age": 27,
-                                            "key": 0,
-                                            "name": "Lucy",
-                                          }
-                                        }
-                                      >
-                                        <td
-                                          className=""
-                                          onClick={[Function]}
-                                        >
-                                          27
-                                        </td>
-                                      </TableCell>
-                                    </tr>
-                                  </TableRow>
-                                </Subscribe(TableRow)>
-                              </ExpandedRowHeigh>
-                            </Subscribe(ExpandedRowHeigh)>
-                          </ExpandableRow>
-                        </Subscribe(ExpandableRow)>
-                        <Subscribe(ExpandedRowHeigh)
-                          fixed={undefined}
-                          key="0-extra-row"
-                          rowKey="0-extra-row"
-                        >
-                          <ExpandedRowHeigh
-                            fixed={undefined}
-                            height={null}
-                            rowKey="0-extra-row"
-                            store={
-                              Object {
-                                "getState": [Function],
-                                "setState": [Function],
-                                "subscribe": [Function],
-                              }
-                            }
-                          >
                             <Subscribe(TableRow)
-                              ancestorKeys={
-                                Array [
-                                  0,
-                                ]
-                              }
+                              ancestorKeys={Array []}
+                              childrenColumnName={undefined}
                               className=""
                               columns={
                                 Array [
                                   Object {
-                                    "key": "extra-row",
-                                    "render": [Function],
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
                                   },
                                 ]
                               }
-                              height={null}
-                              indent={1}
-                              prefixCls="rc-table-expanded-row"
-                              rowKey="0-extra-row"
-                              saveRowRef={[Function]}
+                              fixed={undefined}
+                              hasExpandIcon={[Function]}
+                              indent={0}
+                              indentSize={15}
+                              index={0}
+                              onRowClick={[Function]}
+                              onRowContextMenu={[Function]}
+                              onRowDoubleClick={[Function]}
+                              onRowMouseEnter={[Function]}
+                              onRowMouseLeave={[Function]}
+                              prefixCls="rc-table-row"
+                              record={
+                                Object {
+                                  "age": 27,
+                                  "key": 0,
+                                  "name": "Lucy",
+                                }
+                              }
+                              renderExpandIcon={[Function]}
+                              renderExpandIconCell={[Function]}
+                              rowKey={0}
                             >
                               <TableRow
-                                ancestorKeys={
-                                  Array [
-                                    0,
-                                  ]
-                                }
+                                ancestorKeys={Array []}
+                                childrenColumnName={undefined}
                                 className=""
                                 columns={
                                   Array [
                                     Object {
-                                      "key": "extra-row",
-                                      "render": [Function],
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
                                     },
                                   ]
                                 }
                                 expandIconColumnIndex={0}
                                 expandRowByClick={false}
+                                fixed={undefined}
                                 hasExpandIcon={[Function]}
                                 height={null}
                                 hovered={false}
-                                indent={1}
+                                indent={0}
+                                indentSize={15}
+                                index={0}
                                 onHover={[Function]}
                                 onRowClick={[Function]}
                                 onRowContextMenu={[Function]}
                                 onRowDoubleClick={[Function]}
                                 onRowMouseEnter={[Function]}
                                 onRowMouseLeave={[Function]}
-                                prefixCls="rc-table-expanded-row"
+                                prefixCls="rc-table-row"
+                                record={
+                                  Object {
+                                    "age": 27,
+                                    "key": 0,
+                                    "name": "Lucy",
+                                  }
+                                }
                                 renderExpandIcon={[Function]}
                                 renderExpandIconCell={[Function]}
-                                rowKey="0-extra-row"
-                                saveRowRef={[Function]}
+                                rowKey={0}
                                 store={
                                   Object {
                                     "getState": [Function],
@@ -6477,7 +6257,7 @@ exports[`Table.expand expand row by click 1`] = `
                                 visible={true}
                               >
                                 <tr
-                                  className="rc-table-expanded-row  rc-table-expanded-row-level-1"
+                                  className="rc-table-row  rc-table-row-level-0"
                                   onClick={[Function]}
                                   onContextMenu={[Function]}
                                   onDoubleClick={[Function]}
@@ -6492,33 +6272,209 @@ exports[`Table.expand expand row by click 1`] = `
                                   <TableCell
                                     column={
                                       Object {
-                                        "key": "extra-row",
-                                        "render": [Function],
+                                        "dataIndex": "name",
+                                        "key": "name",
+                                        "title": "Name",
                                       }
                                     }
-                                    expandIcon={undefined}
-                                    indent={1}
-                                    indentSize={undefined}
-                                    index={undefined}
-                                    key="extra-row"
-                                    prefixCls="rc-table-expanded-row"
-                                    record={undefined}
+                                    expandIcon={
+                                      <ExpandIcon
+                                        expandable={true}
+                                        expanded={true}
+                                        needIndentSpaced={false}
+                                        onExpand={[Function]}
+                                        prefixCls="rc-table-row"
+                                        record={
+                                          Object {
+                                            "age": 27,
+                                            "key": 0,
+                                            "name": "Lucy",
+                                          }
+                                        }
+                                      />
+                                    }
+                                    indent={0}
+                                    indentSize={15}
+                                    index={0}
+                                    key="name"
+                                    prefixCls="rc-table-row"
+                                    record={
+                                      Object {
+                                        "age": 27,
+                                        "key": 0,
+                                        "name": "Lucy",
+                                      }
+                                    }
                                   >
                                     <td
                                       className=""
-                                      colSpan={2}
                                       onClick={[Function]}
                                     >
-                                      <p>
-                                        extra data
-                                      </p>
+                                      <span
+                                        className="rc-table-row-indent indent-level-0"
+                                        style={
+                                          Object {
+                                            "paddingLeft": "0px",
+                                          }
+                                        }
+                                      />
+                                      <ExpandIcon
+                                        expandable={true}
+                                        expanded={true}
+                                        needIndentSpaced={false}
+                                        onExpand={[Function]}
+                                        prefixCls="rc-table-row"
+                                        record={
+                                          Object {
+                                            "age": 27,
+                                            "key": 0,
+                                            "name": "Lucy",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="rc-table-row-expand-icon rc-table-row-expanded"
+                                          onClick={[Function]}
+                                        />
+                                      </ExpandIcon>
+                                      Lucy
+                                    </td>
+                                  </TableCell>
+                                  <TableCell
+                                    column={
+                                      Object {
+                                        "dataIndex": "age",
+                                        "key": "age",
+                                        "title": "Age",
+                                      }
+                                    }
+                                    expandIcon={false}
+                                    indent={0}
+                                    indentSize={15}
+                                    index={0}
+                                    key="age"
+                                    prefixCls="rc-table-row"
+                                    record={
+                                      Object {
+                                        "age": 27,
+                                        "key": 0,
+                                        "name": "Lucy",
+                                      }
+                                    }
+                                  >
+                                    <td
+                                      className=""
+                                      onClick={[Function]}
+                                    >
+                                      27
                                     </td>
                                   </TableCell>
                                 </tr>
                               </TableRow>
                             </Subscribe(TableRow)>
-                          </ExpandedRowHeigh>
-                        </Subscribe(ExpandedRowHeigh)>
+                          </ExpandableRow>
+                        </Subscribe(ExpandableRow)>
+                        <Subscribe(TableRow)
+                          ancestorKeys={
+                            Array [
+                              0,
+                            ]
+                          }
+                          className=""
+                          columns={
+                            Array [
+                              Object {
+                                "key": "extra-row",
+                                "render": [Function],
+                              },
+                            ]
+                          }
+                          indent={1}
+                          key="0-extra-row"
+                          prefixCls="rc-table-expanded-row"
+                          rowKey="0-extra-row"
+                        >
+                          <TableRow
+                            ancestorKeys={
+                              Array [
+                                0,
+                              ]
+                            }
+                            className=""
+                            columns={
+                              Array [
+                                Object {
+                                  "key": "extra-row",
+                                  "render": [Function],
+                                },
+                              ]
+                            }
+                            expandIconColumnIndex={0}
+                            expandRowByClick={false}
+                            hasExpandIcon={[Function]}
+                            height={null}
+                            hovered={false}
+                            indent={1}
+                            onHover={[Function]}
+                            onRowClick={[Function]}
+                            onRowContextMenu={[Function]}
+                            onRowDoubleClick={[Function]}
+                            onRowMouseEnter={[Function]}
+                            onRowMouseLeave={[Function]}
+                            prefixCls="rc-table-expanded-row"
+                            renderExpandIcon={[Function]}
+                            renderExpandIconCell={[Function]}
+                            rowKey="0-extra-row"
+                            store={
+                              Object {
+                                "getState": [Function],
+                                "setState": [Function],
+                                "subscribe": [Function],
+                              }
+                            }
+                            visible={true}
+                          >
+                            <tr
+                              className="rc-table-expanded-row  rc-table-expanded-row-level-1"
+                              onClick={[Function]}
+                              onContextMenu={[Function]}
+                              onDoubleClick={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              style={
+                                Object {
+                                  "height": null,
+                                }
+                              }
+                            >
+                              <TableCell
+                                column={
+                                  Object {
+                                    "key": "extra-row",
+                                    "render": [Function],
+                                  }
+                                }
+                                expandIcon={undefined}
+                                indent={1}
+                                indentSize={undefined}
+                                index={undefined}
+                                key="extra-row"
+                                prefixCls="rc-table-expanded-row"
+                                record={undefined}
+                              >
+                                <td
+                                  className=""
+                                  colSpan={2}
+                                  onClick={[Function]}
+                                >
+                                  <p>
+                                    extra data
+                                  </p>
+                                </td>
+                              </TableCell>
+                            </tr>
+                          </TableRow>
+                        </Subscribe(TableRow)>
                         <Subscribe(ExpandableRow)
                           bodyStyle={Object {}}
                           childrenColumnName="children"
@@ -6769,15 +6725,89 @@ exports[`Table.expand expand row by click 1`] = `
                             style={Object {}}
                             useFixedHeader={false}
                           >
-                            <Subscribe(ExpandedRowHeigh)
+                            <Subscribe(TableRow)
+                              ancestorKeys={Array []}
+                              childrenColumnName={undefined}
+                              className=""
+                              columns={
+                                Array [
+                                  Object {
+                                    "dataIndex": "name",
+                                    "key": "name",
+                                    "title": "Name",
+                                  },
+                                  Object {
+                                    "dataIndex": "age",
+                                    "key": "age",
+                                    "title": "Age",
+                                  },
+                                ]
+                              }
                               fixed={undefined}
+                              hasExpandIcon={[Function]}
+                              indent={0}
+                              indentSize={15}
                               index={1}
+                              onRowClick={[Function]}
+                              onRowContextMenu={[Function]}
+                              onRowDoubleClick={[Function]}
+                              onRowMouseEnter={[Function]}
+                              onRowMouseLeave={[Function]}
+                              prefixCls="rc-table-row"
+                              record={
+                                Object {
+                                  "age": 28,
+                                  "key": 1,
+                                  "name": "Jack",
+                                }
+                              }
+                              renderExpandIcon={[Function]}
+                              renderExpandIconCell={[Function]}
                               rowKey={1}
                             >
-                              <ExpandedRowHeigh
+                              <TableRow
+                                ancestorKeys={Array []}
+                                childrenColumnName={undefined}
+                                className=""
+                                columns={
+                                  Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "key": "name",
+                                      "title": "Name",
+                                    },
+                                    Object {
+                                      "dataIndex": "age",
+                                      "key": "age",
+                                      "title": "Age",
+                                    },
+                                  ]
+                                }
+                                expandIconColumnIndex={0}
+                                expandRowByClick={false}
                                 fixed={undefined}
+                                hasExpandIcon={[Function]}
                                 height={null}
+                                hovered={false}
+                                indent={0}
+                                indentSize={15}
                                 index={1}
+                                onHover={[Function]}
+                                onRowClick={[Function]}
+                                onRowContextMenu={[Function]}
+                                onRowDoubleClick={[Function]}
+                                onRowMouseEnter={[Function]}
+                                onRowMouseLeave={[Function]}
+                                prefixCls="rc-table-row"
+                                record={
+                                  Object {
+                                    "age": 28,
+                                    "key": 1,
+                                    "name": "Jack",
+                                  }
+                                }
+                                renderExpandIcon={[Function]}
+                                renderExpandIconCell={[Function]}
                                 rowKey={1}
                                 store={
                                   Object {
@@ -6786,83 +6816,49 @@ exports[`Table.expand expand row by click 1`] = `
                                     "subscribe": [Function],
                                   }
                                 }
+                                visible={true}
                               >
-                                <Subscribe(TableRow)
-                                  ancestorKeys={Array []}
-                                  childrenColumnName={undefined}
-                                  className=""
-                                  columns={
-                                    Array [
+                                <tr
+                                  className="rc-table-row  rc-table-row-level-0"
+                                  onClick={[Function]}
+                                  onContextMenu={[Function]}
+                                  onDoubleClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  style={
+                                    Object {
+                                      "height": null,
+                                    }
+                                  }
+                                >
+                                  <TableCell
+                                    column={
                                       Object {
                                         "dataIndex": "name",
                                         "key": "name",
                                         "title": "Name",
-                                      },
-                                      Object {
-                                        "dataIndex": "age",
-                                        "key": "age",
-                                        "title": "Age",
-                                      },
-                                    ]
-                                  }
-                                  fixed={undefined}
-                                  hasExpandIcon={[Function]}
-                                  height={null}
-                                  hoverKey={1}
-                                  indent={0}
-                                  indentSize={15}
-                                  index={1}
-                                  onRowClick={[Function]}
-                                  onRowContextMenu={[Function]}
-                                  onRowDoubleClick={[Function]}
-                                  onRowMouseEnter={[Function]}
-                                  onRowMouseLeave={[Function]}
-                                  prefixCls="rc-table-row"
-                                  record={
-                                    Object {
-                                      "age": 28,
-                                      "key": 1,
-                                      "name": "Jack",
+                                      }
                                     }
-                                  }
-                                  renderExpandIcon={[Function]}
-                                  renderExpandIconCell={[Function]}
-                                  rowKey={1}
-                                >
-                                  <TableRow
-                                    ancestorKeys={Array []}
-                                    childrenColumnName={undefined}
-                                    className=""
-                                    columns={
-                                      Array [
-                                        Object {
-                                          "dataIndex": "name",
-                                          "key": "name",
-                                          "title": "Name",
-                                        },
-                                        Object {
-                                          "dataIndex": "age",
-                                          "key": "age",
-                                          "title": "Age",
-                                        },
-                                      ]
+                                    expandIcon={
+                                      <ExpandIcon
+                                        expandable={true}
+                                        expanded={false}
+                                        needIndentSpaced={false}
+                                        onExpand={[Function]}
+                                        prefixCls="rc-table-row"
+                                        record={
+                                          Object {
+                                            "age": 28,
+                                            "key": 1,
+                                            "name": "Jack",
+                                          }
+                                        }
+                                      />
                                     }
-                                    expandIconColumnIndex={0}
-                                    expandRowByClick={false}
-                                    fixed={undefined}
-                                    hasExpandIcon={[Function]}
-                                    height={null}
-                                    hoverKey={1}
-                                    hovered={false}
                                     indent={0}
                                     indentSize={15}
                                     index={1}
-                                    onHover={[Function]}
-                                    onRowClick={[Function]}
-                                    onRowContextMenu={[Function]}
-                                    onRowDoubleClick={[Function]}
-                                    onRowMouseEnter={[Function]}
-                                    onRowMouseLeave={[Function]}
+                                    key="name"
                                     prefixCls="rc-table-row"
                                     record={
                                       Object {
@@ -6871,146 +6867,125 @@ exports[`Table.expand expand row by click 1`] = `
                                         "name": "Jack",
                                       }
                                     }
-                                    renderExpandIcon={[Function]}
-                                    renderExpandIconCell={[Function]}
-                                    rowKey={1}
-                                    store={
+                                  >
+                                    <td
+                                      className=""
+                                      onClick={[Function]}
+                                    >
+                                      <span
+                                        className="rc-table-row-indent indent-level-0"
+                                        style={
+                                          Object {
+                                            "paddingLeft": "0px",
+                                          }
+                                        }
+                                      />
+                                      <ExpandIcon
+                                        expandable={true}
+                                        expanded={false}
+                                        needIndentSpaced={false}
+                                        onExpand={[Function]}
+                                        prefixCls="rc-table-row"
+                                        record={
+                                          Object {
+                                            "age": 28,
+                                            "key": 1,
+                                            "name": "Jack",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="rc-table-row-expand-icon rc-table-row-collapsed"
+                                          onClick={[Function]}
+                                        />
+                                      </ExpandIcon>
+                                      Jack
+                                    </td>
+                                  </TableCell>
+                                  <TableCell
+                                    column={
                                       Object {
-                                        "getState": [Function],
-                                        "setState": [Function],
-                                        "subscribe": [Function],
+                                        "dataIndex": "age",
+                                        "key": "age",
+                                        "title": "Age",
                                       }
                                     }
-                                    visible={true}
-                                  >
-                                    <tr
-                                      className="rc-table-row  rc-table-row-level-0"
-                                      onClick={[Function]}
-                                      onContextMenu={[Function]}
-                                      onDoubleClick={[Function]}
-                                      onMouseEnter={[Function]}
-                                      onMouseLeave={[Function]}
-                                      style={
-                                        Object {
-                                          "height": null,
-                                        }
+                                    expandIcon={false}
+                                    indent={0}
+                                    indentSize={15}
+                                    index={1}
+                                    key="age"
+                                    prefixCls="rc-table-row"
+                                    record={
+                                      Object {
+                                        "age": 28,
+                                        "key": 1,
+                                        "name": "Jack",
                                       }
+                                    }
+                                  >
+                                    <td
+                                      className=""
+                                      onClick={[Function]}
                                     >
-                                      <TableCell
-                                        column={
-                                          Object {
-                                            "dataIndex": "name",
-                                            "key": "name",
-                                            "title": "Name",
-                                          }
-                                        }
-                                        expandIcon={
-                                          <ExpandIcon
-                                            expandable={true}
-                                            expanded={false}
-                                            needIndentSpaced={false}
-                                            onExpand={[Function]}
-                                            prefixCls="rc-table-row"
-                                            record={
-                                              Object {
-                                                "age": 28,
-                                                "key": 1,
-                                                "name": "Jack",
-                                              }
-                                            }
-                                          />
-                                        }
-                                        indent={0}
-                                        indentSize={15}
-                                        index={1}
-                                        key="name"
-                                        prefixCls="rc-table-row"
-                                        record={
-                                          Object {
-                                            "age": 28,
-                                            "key": 1,
-                                            "name": "Jack",
-                                          }
-                                        }
-                                      >
-                                        <td
-                                          className=""
-                                          onClick={[Function]}
-                                        >
-                                          <span
-                                            className="rc-table-row-indent indent-level-0"
-                                            style={
-                                              Object {
-                                                "paddingLeft": "0px",
-                                              }
-                                            }
-                                          />
-                                          <ExpandIcon
-                                            expandable={true}
-                                            expanded={false}
-                                            needIndentSpaced={false}
-                                            onExpand={[Function]}
-                                            prefixCls="rc-table-row"
-                                            record={
-                                              Object {
-                                                "age": 28,
-                                                "key": 1,
-                                                "name": "Jack",
-                                              }
-                                            }
-                                          >
-                                            <span
-                                              className="rc-table-row-expand-icon rc-table-row-collapsed"
-                                              onClick={[Function]}
-                                            />
-                                          </ExpandIcon>
-                                          Jack
-                                        </td>
-                                      </TableCell>
-                                      <TableCell
-                                        column={
-                                          Object {
-                                            "dataIndex": "age",
-                                            "key": "age",
-                                            "title": "Age",
-                                          }
-                                        }
-                                        expandIcon={false}
-                                        indent={0}
-                                        indentSize={15}
-                                        index={1}
-                                        key="age"
-                                        prefixCls="rc-table-row"
-                                        record={
-                                          Object {
-                                            "age": 28,
-                                            "key": 1,
-                                            "name": "Jack",
-                                          }
-                                        }
-                                      >
-                                        <td
-                                          className=""
-                                          onClick={[Function]}
-                                        >
-                                          28
-                                        </td>
-                                      </TableCell>
-                                    </tr>
-                                  </TableRow>
-                                </Subscribe(TableRow)>
-                              </ExpandedRowHeigh>
-                            </Subscribe(ExpandedRowHeigh)>
+                                      28
+                                    </td>
+                                  </TableCell>
+                                </tr>
+                              </TableRow>
+                            </Subscribe(TableRow)>
                           </ExpandableRow>
                         </Subscribe(ExpandableRow)>
-                        <Subscribe(ExpandedRowHeigh)
-                          fixed={undefined}
+                        <Subscribe(TableRow)
+                          ancestorKeys={
+                            Array [
+                              1,
+                            ]
+                          }
+                          className=""
+                          columns={
+                            Array [
+                              Object {
+                                "key": "extra-row",
+                                "render": [Function],
+                              },
+                            ]
+                          }
+                          indent={1}
                           key="1-extra-row"
+                          prefixCls="rc-table-expanded-row"
                           rowKey="1-extra-row"
                         >
-                          <ExpandedRowHeigh
-                            fixed={undefined}
+                          <TableRow
+                            ancestorKeys={
+                              Array [
+                                1,
+                              ]
+                            }
+                            className=""
+                            columns={
+                              Array [
+                                Object {
+                                  "key": "extra-row",
+                                  "render": [Function],
+                                },
+                              ]
+                            }
+                            expandIconColumnIndex={0}
+                            expandRowByClick={false}
+                            hasExpandIcon={[Function]}
                             height={null}
+                            hovered={false}
+                            indent={1}
+                            onHover={[Function]}
+                            onRowClick={[Function]}
+                            onRowContextMenu={[Function]}
+                            onRowDoubleClick={[Function]}
+                            onRowMouseEnter={[Function]}
+                            onRowMouseLeave={[Function]}
+                            prefixCls="rc-table-expanded-row"
+                            renderExpandIcon={[Function]}
+                            renderExpandIconCell={[Function]}
                             rowKey="1-extra-row"
                             store={
                               Object {
@@ -7019,72 +6994,9 @@ exports[`Table.expand expand row by click 1`] = `
                                 "subscribe": [Function],
                               }
                             }
-                          >
-                            <Subscribe(TableRow)
-                              ancestorKeys={
-                                Array [
-                                  1,
-                                ]
-                              }
-                              className=""
-                              columns={
-                                Array [
-                                  Object {
-                                    "key": "extra-row",
-                                    "render": [Function],
-                                  },
-                                ]
-                              }
-                              height={null}
-                              indent={1}
-                              prefixCls="rc-table-expanded-row"
-                              rowKey="1-extra-row"
-                              saveRowRef={[Function]}
-                            >
-                              <TableRow
-                                ancestorKeys={
-                                  Array [
-                                    1,
-                                  ]
-                                }
-                                className=""
-                                columns={
-                                  Array [
-                                    Object {
-                                      "key": "extra-row",
-                                      "render": [Function],
-                                    },
-                                  ]
-                                }
-                                expandIconColumnIndex={0}
-                                expandRowByClick={false}
-                                hasExpandIcon={[Function]}
-                                height={null}
-                                hovered={false}
-                                indent={1}
-                                onHover={[Function]}
-                                onRowClick={[Function]}
-                                onRowContextMenu={[Function]}
-                                onRowDoubleClick={[Function]}
-                                onRowMouseEnter={[Function]}
-                                onRowMouseLeave={[Function]}
-                                prefixCls="rc-table-expanded-row"
-                                renderExpandIcon={[Function]}
-                                renderExpandIconCell={[Function]}
-                                rowKey="1-extra-row"
-                                saveRowRef={[Function]}
-                                store={
-                                  Object {
-                                    "getState": [Function],
-                                    "setState": [Function],
-                                    "subscribe": [Function],
-                                  }
-                                }
-                                visible={false}
-                              />
-                            </Subscribe(TableRow)>
-                          </ExpandedRowHeigh>
-                        </Subscribe(ExpandedRowHeigh)>
+                            visible={false}
+                          />
+                        </Subscribe(TableRow)>
                       </tbody>
                     </table>
                   </BaseTable>
