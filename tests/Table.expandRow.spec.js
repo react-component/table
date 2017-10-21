@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { render, mount } from 'enzyme';
-import { renderToJson, mountToJson } from 'enzyme-to-json';
 import Table from '../src';
 
 describe('Table.expand', () => {
@@ -24,7 +23,7 @@ describe('Table.expand', () => {
 
   it('renders expand row correctly', () => {
     const wrapper = render(createTable({ expandedRowRender }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders tree row correctly', () => {
@@ -35,7 +34,7 @@ describe('Table.expand', () => {
       { key: 1, name: 'Jack', age: 28 },
     ];
     const wrapper = render(createTable({ data: localData }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders expand icon as cell', () => {
@@ -43,7 +42,7 @@ describe('Table.expand', () => {
       expandedRowRender,
       expandIconAsCell: true,
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders expand icon to the specify column', () => {
@@ -51,7 +50,7 @@ describe('Table.expand', () => {
       expandedRowRender,
       expandIconColumnIndex: 1,
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders nested data correctly', () => {
@@ -71,7 +70,7 @@ describe('Table.expand', () => {
       },
     ];
     const wrapper = render(createTable({ data: localData }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('expand all rows by default', () => {
@@ -79,7 +78,7 @@ describe('Table.expand', () => {
       expandedRowRender,
       defaultExpandAllRows: true,
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('expand rows by defaultExpandedRowKeys', () => {
@@ -87,7 +86,7 @@ describe('Table.expand', () => {
       expandedRowRender,
       defaultExpandedRowKeys: [1],
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('controlled by expandedRowKeys', () => {
@@ -95,9 +94,9 @@ describe('Table.expand', () => {
       expandedRowRender,
       expandedRowKeys: [0],
     }));
-    expect(mountToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
     wrapper.setProps({ expandedRowKeys: [1] });
-    expect(mountToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('renders expend row class correctly', () => {
@@ -107,7 +106,7 @@ describe('Table.expand', () => {
       expandedRowKeys: [0],
       expandedRowClassName,
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
     expect(expandedRowClassName).toBeCalledWith(data[0], 0, 0);
   });
 
@@ -149,6 +148,6 @@ describe('Table.expand', () => {
   fit('expand row by click', () => {
     const wrapper = mount(createTable({ expandedRowRender }));
     wrapper.find('ExpandIcon').first().simulate('click');
-    expect(mountToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 });

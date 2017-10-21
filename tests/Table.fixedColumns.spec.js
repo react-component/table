@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { render, mount } from 'enzyme';
-import { renderToJson } from 'enzyme-to-json';
 import Table from '../src';
 
 describe('Table.fixedColumns', () => {
@@ -47,7 +46,7 @@ describe('Table.fixedColumns', () => {
         scroll={{ x: 1200 }}
       />
     );
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('toggles hover class when user hovering', () => {

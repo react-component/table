@@ -1,7 +1,6 @@
 /* eslint-disable no-undef, no-console */
 import React from 'react';
 import { render, mount } from 'enzyme';
-import { renderToJson } from 'enzyme-to-json';
 import Table from '../src';
 
 describe('Table', () => {
@@ -28,34 +27,34 @@ describe('Table', () => {
       prefixCls: 'test-prefix',
       className: 'test-class-name',
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders empty text correctly', () => {
     const wrapper1 = render(createTable({ data: [], emptyText: 'No data' }));
     const wrapper2 = render(createTable({ data: [], emptyText: () => 'No data' }));
-    expect(renderToJson(wrapper1)).toMatchSnapshot();
-    expect(renderToJson(wrapper2)).toMatchSnapshot();
+    expect(wrapper1).toMatchSnapshot();
+    expect(wrapper2).toMatchSnapshot();
   });
 
   it('renders without header', () => {
     const wrapper = render(createTable({ showHeader: false }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders fixed header correctly', () => {
     const wrapper = render(createTable({ useFixedHeader: true }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders title correctly', () => {
     const wrapper = render(createTable({ title: () => <p>title</p> }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders footer correctly', () => {
     const wrapper = render(createTable({ footer: () => <p>footer</p> }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders table body to the wrapper', () => {
@@ -65,7 +64,7 @@ describe('Table', () => {
       </tbody>
     );
     const wrapper = render(createTable({ getBodyWrapper }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   xit('sets row refs', () => {
@@ -97,17 +96,17 @@ describe('Table', () => {
   describe('scroll', () => {
     it('renders scroll.x is true', () => {
       const wrapper = render(createTable({ scroll: { x: true } }));
-      expect(renderToJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('renders scroll.x is a number', () => {
       const wrapper = render(createTable({ scroll: { x: 200 } }));
-      expect(renderToJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('renders scroll.y is a number', () => {
       const wrapper = render(createTable({ scroll: { y: 200 } }));
-      expect(renderToJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('fire scroll event', () => {
@@ -227,7 +226,7 @@ describe('Table', () => {
       },
     ];
     const wrapper = render(createTable({ columns }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders custom cell correctly', () => {
@@ -240,7 +239,7 @@ describe('Table', () => {
       },
     ];
     const wrapper = render(createTable({ columns }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('fires cell click event', () => {
@@ -286,7 +285,7 @@ describe('Table', () => {
         { key: 'key1', name: { first: 'Terry', last: 'Garner' } },
       ];
       const wrapper = render(createTable({ columns, data: localData }));
-      expect(renderToJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
@@ -339,7 +338,7 @@ describe('Table', () => {
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
     const wrapper = render(createTable({ columns, data: localData }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders rowSpan correctly', () => {
@@ -372,7 +371,7 @@ describe('Table', () => {
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
     const wrapper = render(createTable({ columns, data: localData }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('shows error if no rowKey specify', () => {
@@ -432,13 +431,13 @@ describe('Table', () => {
     const wrapper = render(createTable({
       rowClassName: 'test-row-class-name-asStr',
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders correctly RowClassName as function', () => {
     const wrapper = render(createTable({
       rowClassName: () => 'test-row-class-name-asFn',
     }));
-    expect(renderToJson(wrapper)).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 });

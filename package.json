@@ -62,7 +62,10 @@
     ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
-    }
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "dependencies": {
     "babel-runtime": "6.x",
@@ -86,7 +89,6 @@
     "rc-menu": "^5.0.11",
     "rc-tools": "7.x",
     "react": "^16.0.0",
-    "react-addons-test-utils": "^15.3.1",
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0"
   },
