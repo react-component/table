@@ -187,7 +187,6 @@ function getRowHeight(state, props) {
     return null;
   }
 
-
   if (expandedRowsHeight[rowKey]) {
     return expandedRowsHeight[rowKey];
   }

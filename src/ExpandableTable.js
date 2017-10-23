@@ -156,6 +156,7 @@ class ExpandableTable extends React.Component {
         ancestorKeys={ancestorKeys}
         prefixCls={`${prefixCls}-expanded-row`}
         indent={1}
+        fixed={fixed}
       />
     );
   }
