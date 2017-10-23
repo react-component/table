@@ -71,7 +71,7 @@
     "babel-runtime": "6.x",
     "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
-    "mini-store": "^1.0.0",
+    "mini-store": "^1.0.2",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
     "shallowequal": "^1.0.2",
