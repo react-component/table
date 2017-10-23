@@ -1,5 +1,312 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Table custom components renders correctly 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+        name="my-table"
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+          name="my-header-wrapper"
+        >
+          <tr
+            name="my-header-row"
+          >
+            <th
+              class=""
+              name="my-header-cell"
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+          name="my-body-wrapper"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            name="my-body-row"
+          >
+            <td
+              class=""
+              name="my-body-cell"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            name="my-body-row"
+          >
+            <td
+              class=""
+              name="my-body-cell"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table custom components renders fixed column and header correctly 1`] = `
+<div
+  class="rc-table rc-table-fixed-header rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-scroll"
+    >
+      <div
+        class="rc-table-header"
+      >
+        <table
+          class=""
+        >
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead"
+            name="my-header-wrapper"
+          >
+            <tr
+              name="my-header-row"
+            >
+              <th
+                class=""
+                name="my-header-cell"
+              >
+                Name
+              </th>
+              <th
+                class=""
+                name="my-header-cell"
+              >
+                Age
+              </th>
+              <th
+                class=""
+                name="my-header-cell"
+              >
+                Gender
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div
+        class="rc-table-body"
+        style="max-height:100px;overflow-y:scroll"
+      >
+        <table
+          class=""
+          name="my-table"
+        >
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <tbody
+            class="rc-table-tbody"
+            name="my-body-wrapper"
+          >
+            <tr
+              class="rc-table-row  rc-table-row-level-0"
+              name="my-body-row"
+            >
+              <td
+                class=""
+                name="my-body-cell"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                  style="padding-left:0px"
+                />
+                Lucy
+              </td>
+              <td
+                class=""
+                name="my-body-cell"
+              >
+                27
+              </td>
+              <td
+                class=""
+                name="my-body-cell"
+              >
+                F
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="rc-table-fixed-left"
+    >
+      <div
+        class="rc-table-header"
+      >
+        <table
+          class="rc-table-fixed"
+        >
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead"
+            name="my-header-wrapper"
+          >
+            <tr
+              name="my-header-row"
+            >
+              <th
+                class=""
+                name="my-header-cell"
+              >
+                Name
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div
+        class="rc-table-body-outer"
+        style="-webkit-transform:translate3d (0, 0, 0)"
+      >
+        <div
+          class="rc-table-body-inner"
+          style="max-height:100px;overflow-y:scroll"
+        >
+          <table
+            class="rc-table-fixed"
+            name="my-table"
+          >
+            <colgroup>
+              <col />
+            </colgroup>
+            <tbody
+              class="rc-table-tbody"
+              name="my-body-wrapper"
+            >
+              <tr
+                class="rc-table-row  rc-table-row-level-0"
+                name="my-body-row"
+              >
+                <td
+                  class=""
+                  name="my-body-cell"
+                >
+                  <span
+                    class="rc-table-row-indent indent-level-0"
+                    style="padding-left:0px"
+                  />
+                  Lucy
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div
+      class="rc-table-fixed-right"
+    >
+      <div
+        class="rc-table-header"
+      >
+        <table
+          class="rc-table-fixed"
+        >
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead
+            class="rc-table-thead"
+            name="my-header-wrapper"
+          >
+            <tr
+              name="my-header-row"
+            >
+              <th
+                class=""
+                name="my-header-cell"
+              >
+                Gender
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div
+        class="rc-table-body-outer"
+        style="-webkit-transform:translate3d (0, 0, 0)"
+      >
+        <div
+          class="rc-table-body-inner"
+          style="max-height:100px;overflow-y:scroll"
+        >
+          <table
+            class="rc-table-fixed"
+            name="my-table"
+          >
+            <colgroup>
+              <col />
+            </colgroup>
+            <tbody
+              class="rc-table-tbody"
+              name="my-body-wrapper"
+            >
+              <tr
+                class="rc-table-row  rc-table-row-level-0"
+                name="my-body-row"
+              >
+                <td
+                  class=""
+                  name="my-body-cell"
+                >
+                  F
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table dataIndex render text by path 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left"

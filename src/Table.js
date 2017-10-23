@@ -33,6 +33,19 @@ export default class Table extends React.Component {
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
+    components: PropTypes.shape({
+      table: PropTypes.any,
+      header: PropTypes.shape({
+        wrapper: PropTypes.any,
+        row: PropTypes.any,
+        cell: PropTypes.any,
+      }),
+      body: PropTypes.shape({
+        wrapper: PropTypes.any,
+        row: PropTypes.any,
+        cell: PropTypes.any,
+      }),
+    }),
     ...ExpandableTable.PropTypes,
   }
 
@@ -58,6 +71,7 @@ export default class Table extends React.Component {
     rowRef: () => null,
     getBodyWrapper: body => body,
     emptyText: () => 'No Data',
+    components: {},
   }
 
   constructor(props) {

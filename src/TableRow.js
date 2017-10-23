@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableCell from './TableCell';
@@ -36,6 +37,7 @@ class TableRow extends React.Component {
     ]),
     renderExpandIcon: PropTypes.func,
     renderExpandIconCell: PropTypes.func,
+    components: PropTypes.any,
   }
 
   static defaultProps = {
@@ -61,9 +63,21 @@ class TableRow extends React.Component {
     this.style = {};
   }
 
+  componentDidMount() {
+    if (this.shouldRender) {
+      this.saveRowRef();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.visible || (!this.props.visible && nextProps.visible)) {
       this.shouldRender = true;
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.shouldRender && !this.rowRef) {
+      this.saveRowRef();
     }
   }
 
@@ -102,6 +116,7 @@ class TableRow extends React.Component {
     store.setState({ expandedRowsHeight });
   }
 
+<<<<<<< HEAD
   getStyle() {
     const { height, visible } = this.props;
 
@@ -116,12 +131,11 @@ class TableRow extends React.Component {
     return this.style;
   }
 
-  saveRowRef = (node) => {
-    this.rowRef = node;
-    if (node) {
-      if (!this.props.fixed) {
-        this.setHeight();
-      }
+  saveRowRef() {
+    this.rowRef = ReactDOM.findDOMNode(this);
+
+    if (!this.props.fixed) {
+      this.setHeight();
     }
   }
 
@@ -138,10 +152,19 @@ class TableRow extends React.Component {
       indent,
       indentSize,
       hovered,
+      components,
       hasExpandIcon,
       renderExpandIcon,
       renderExpandIconCell,
     } = this.props;
+
+    let BodyRow = 'tr';
+    let BodyCell = 'td';
+
+    if (components && components.body) {
+      BodyRow = components.body.row || BodyRow;
+      BodyCell = components.body.cell || BodyCell;
+    }
 
     let { className } = this.props;
 
@@ -164,6 +187,7 @@ class TableRow extends React.Component {
           column={columns[i]}
           key={columns[i].key || columns[i].dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
+          component={BodyCell}
         />
       );
     }
@@ -172,8 +196,7 @@ class TableRow extends React.Component {
       `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
     return (
-      <tr
-        ref={this.saveRowRef}
+      <BodyRow
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
@@ -183,7 +206,7 @@ class TableRow extends React.Component {
         style={this.getStyle()}
       >
         {cells}
-      </tr>
+      </BodyRow>
     );
   }
 }

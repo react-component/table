@@ -11,6 +11,7 @@ export default class TableCell extends React.Component {
     indentSize: PropTypes.number,
     column: PropTypes.object,
     expandIcon: PropTypes.node,
+    component: PropTypes.any,
   }
 
   isInvalidRenderCellText(text) {
@@ -26,8 +27,16 @@ export default class TableCell extends React.Component {
   }
 
   render() {
-    const { record, indentSize, prefixCls, indent,
-            index, expandIcon, column } = this.props;
+    const {
+      record,
+      indentSize,
+      prefixCls,
+      indent,
+      index,
+      expandIcon,
+      column,
+      component: BodyCell,
+    } = this.props;
     const { dataIndex, render, className = '' } = column;
 
     // We should return undefined if no dataIndex is specified, but in order to
@@ -70,7 +79,7 @@ export default class TableCell extends React.Component {
       return null;
     }
     return (
-      <td
+      <BodyCell
         className={className}
         {...tdProps}
         onClick={this.handleClick}
@@ -78,7 +87,7 @@ export default class TableCell extends React.Component {
         {indentText}
         {expandIcon}
         {text}
-      </td>
+      </BodyCell>
     );
   }
 }

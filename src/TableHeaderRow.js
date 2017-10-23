@@ -1,13 +1,21 @@
 import React from 'react';
 import { connect } from 'mini-store';
 
-function TableHeaderRow({ row, height }) {
+function TableHeaderRow({ row, height, components }) {
   const style = { height };
 
+  let HeaderRow = 'tr';
+  let HeaderCell = 'th';
+
+  if (components.header) {
+    HeaderRow = components.header.row || HeaderRow;
+    HeaderCell = components.header.cell || HeaderCell;
+  }
+
   return (
-    <tr style={style}>
-      {row.map((cell, i) => <th {...cell} key={i} />)}
-    </tr>
+    <HeaderRow style={style}>
+      {row.map((cell, i) => <HeaderCell {...cell} key={i} />)}
+    </HeaderRow>
   );
 }
 
