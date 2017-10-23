@@ -21,15 +21,15 @@ const columns = [
 ];
 
 const data = [
-  { a: '123', b: 'xxxxxxxx', d: 3, key: '1' },
-  { a: 'cdd', b: 'edd12221', d: 3, key: '2' },
-  { a: '133', c: 'edd12221', d: 2, key: '3' },
-  { a: '133', c: 'edd12221', d: 2, key: '4' },
-  { a: '133', c: 'edd12221', d: 2, key: '5' },
-  { a: '133', c: 'edd12221', d: 2, key: '6' },
-  { a: '133', c: 'edd12221', d: 2, key: '7' },
-  { a: '133', c: 'edd12221', d: 2, key: '8' },
-  { a: '133', c: 'edd12221', d: 2, key: '9' },
+  { a: '123', b: 'xxxxxxxx', d: 3, key: '1', title: 'hello' },
+  { a: 'cdd', b: 'edd12221', d: 3, key: '2', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '3', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '4', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '5', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '6', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '7', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '8', title: 'hello' },
+  { a: '133', c: 'edd12221', d: 2, key: '9', title: 'hello' },
 ];
 
 ReactDOM.render(

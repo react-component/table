@@ -10,43 +10,42 @@ const tableData = [
   { key: 2, a: '1333', c: 'eee', d: 2 },
 ];
 
-const App = React.createClass({
-  getInitialState() {
-    this.columns = [
-      { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
-      { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
-      { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
-    ];
-    return {
-      data: tableData,
-      expandedRowKeys: [],
-      expandIconAsCell: true,
-      expandRowByClick: false,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    data: tableData,
+    expandedRowKeys: [],
+    expandIconAsCell: true,
+    expandRowByClick: false,
+  }
 
-  onExpand(expanded, record) {
+  onExpand = (expanded, record) => {
     console.log('onExpand', expanded, record);
-  },
+  }
 
-  onExpandedRowsChange(rows) {
+  onExpandedRowsChange = (rows) => {
     this.setState({
       expandedRowKeys: rows,
     });
-  },
+  }
 
-  onExpandIconAsCellChange(e) {
+  onExpandIconAsCellChange = (e) => {
     this.setState({
       expandIconAsCell: e.target.checked,
     });
-  },
+  }
 
-  onExpandRowByClickChange(e) {
+  onExpandRowByClickChange = (e) => {
     this.setState({
       expandRowByClick: e.target.checked,
     });
-  },
+  }
+
+  columns = [
+    { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
+    { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
+    { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
+    { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
+  ]
 
   toggleButton() {
     if (this.state.expandedRowKeys.length) {
@@ -55,22 +54,22 @@ const App = React.createClass({
     }
     const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
     return <button onClick={openAll}>Expand All</button>;
-  },
+  }
 
   remove(index) {
     const data = this.state.data;
     data.splice(index, 1);
     this.setState({ data });
-  },
+  }
 
   expandedRowRender(record) {
-    console.log(record);
+    // console.log(record);
     return <p>extra: {record.a}</p>;
-  },
+  }
 
   renderAction(o, row, index) {
     return <a href="#" onClick={() => this.remove(index)}>Delete</a>;
-  },
+  }
 
   render() {
     const { expandIconAsCell, expandRowByClick, expandedRowKeys, data } = this.state;
@@ -103,13 +102,13 @@ const App = React.createClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>
     <h2>expandedRowRender</h2>
-    <App />
+    <Demo />
   </div>,
   document.getElementById('__react-content')
 );

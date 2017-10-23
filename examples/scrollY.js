@@ -14,18 +14,16 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-const Test = React.createClass({
-  getInitialState() {
-    return {
-      showBody: true,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    showBody: true,
+  }
 
-  toggleBody() {
+  toggleBody = () => {
     this.setState({
       showBody: !this.state.showBody,
     });
-  },
+  }
 
   render() {
     const columns = [
@@ -52,13 +50,13 @@ const Test = React.createClass({
         }}
       />
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>
     <h2>scroll body table</h2>
-    <Test/>
+    <Demo />
   </div>,
   document.getElementById('__react-content')
 );

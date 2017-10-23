@@ -62,12 +62,16 @@
     ],
     "transform": {
       "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
-    }
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "dependencies": {
     "babel-runtime": "6.x",
     "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
+    "mini-store": "^1.0.2",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
     "shallowequal": "^1.0.2",
@@ -78,14 +82,13 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
-    "jest": "^21.2.0",
+    "jest": "^21.2.1",
     "pre-commit": "1.x",
     "rc-animate": "^2.3.0",
-    "rc-dropdown": "~1.4.10",
+    "rc-dropdown": "~2.0.1",
     "rc-menu": "^5.0.11",
     "rc-tools": "7.x",
     "react": "^16.0.0",
-    "react-addons-test-utils": "^15.3.1",
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0"
   },
