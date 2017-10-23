@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>subTable.js - example - rc-table@5.6.13</title>
+  <title>subTable.js - example - meck-rc-table@5.7.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,13 +257,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="../common.css" />
+  
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.6.13</h1>
+      <h1>meck-rc-table@5.7.3</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -273,7 +273,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.less'</span>;
 
 <span class="hljs-keyword">const</span> data = [
   {
@@ -300,11 +300,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   },
 ];
 
-<span class="hljs-keyword">const</span> MyTable = React.createClass({
-  handleClick(record, e) {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  handleClick = (record, e) =&gt; {
     e.preventDefault();
     <span class="hljs-built_in">console</span>.log(record.a);
-  },
+  }
+
   render() {
     <span class="hljs-keyword">const</span> columns = [
       { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
@@ -327,10 +328,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         /&gt;
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">MyTable</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
   </div>
   <a href="http://github.com/react-component/table">

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>expandedRowRender.js - example - rc-table@5.6.13</title>
+  <title>expandedRowRender.js - example - meck-rc-table@5.7.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,13 +257,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="../common.css" />
+  
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.6.13</h1>
+      <h1>meck-rc-table@5.7.3</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -273,7 +273,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.less'</span>;
 
 <span class="hljs-keyword">const</span> tableData = [
   { key: <span class="hljs-number">0</span>, a: <span class="hljs-string">'123'</span> },
@@ -281,43 +281,42 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   { key: <span class="hljs-number">2</span>, a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span> },
 ];
 
-<span class="hljs-keyword">const</span> App = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">this</span>.columns = [
-      { title: <span class="hljs-string">'title 1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
-      { title: <span class="hljs-string">'title 2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
-      { title: <span class="hljs-string">'title 3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
-      { title: <span class="hljs-string">'Operation'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: <span class="hljs-keyword">this</span>.renderAction },
-    ];
-    <span class="hljs-keyword">return</span> {
-      data: tableData,
-      expandedRowKeys: [],
-      expandIconAsCell: <span class="hljs-literal">true</span>,
-      expandRowByClick: <span class="hljs-literal">false</span>,
-    };
-  },
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    data: tableData,
+    expandedRowKeys: [],
+    expandIconAsCell: <span class="hljs-literal">true</span>,
+    expandRowByClick: <span class="hljs-literal">false</span>,
+  }
 
-  onExpand(expanded, record) {
+  onExpand = (expanded, record) =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onExpand'</span>, expanded, record);
-  },
+  }
 
-  onExpandedRowsChange(rows) {
+  onExpandedRowsChange = (rows) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       expandedRowKeys: rows,
     });
-  },
+  }
 
-  onExpandIconAsCellChange(e) {
+  onExpandIconAsCellChange = (e) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       expandIconAsCell: e.target.checked,
     });
-  },
+  }
 
-  onExpandRowByClickChange(e) {
+  onExpandRowByClickChange = (e) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       expandRowByClick: e.target.checked,
     });
-  },
+  }
+
+  columns = [
+    { title: <span class="hljs-string">'title 1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
+    { title: <span class="hljs-string">'title 2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
+    { title: <span class="hljs-string">'title 3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
+    { title: <span class="hljs-string">'Operation'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: <span class="hljs-keyword">this</span>.renderAction },
+  ]
 
   toggleButton() {
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.expandedRowKeys.length) {
@@ -326,22 +325,22 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     }
     <span class="hljs-keyword">const</span> openAll = () =&gt; <span class="hljs-keyword">this</span>.setState({ expandedRowKeys: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>] });
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{openAll}</span>&gt;</span>Expand All<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>;</span>
-  },
+  }
 
   remove(index) {
     <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">this</span>.state.data;
     data.splice(index, <span class="hljs-number">1</span>);
     <span class="hljs-keyword">this</span>.setState({ data });
-  },
+  }
 
   expandedRowRender(record) {
-    <span class="hljs-built_in">console</span>.log(record);
+    <span class="hljs-comment">// console.log(record);</span>
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>extra: {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>;</span>
-  },
+  }
 
   renderAction(o, row, index) {
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> this.remove(index)}&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
-  },
+  }
 
   render() {
     <span class="hljs-keyword">const</span> { expandIconAsCell, expandRowByClick, expandedRowKeys, data } = <span class="hljs-keyword">this</span>.state;
@@ -374,13 +373,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>expandedRowRender<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">App</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );

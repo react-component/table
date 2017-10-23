@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>dropdown.js - example - rc-table@5.6.13</title>
+  <title>dropdown.js - example - meck-rc-table@5.7.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,13 +257,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="../common.css" /><link rel="stylesheet" href="dropdown.css" />
+  <link rel="stylesheet" href="dropdown.css" />
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@5.6.13</h1>
+      <h1>meck-rc-table@5.7.3</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -275,7 +275,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
 <span class="hljs-keyword">import</span> Menu, { Item, Divider } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-menu'</span>;
 <span class="hljs-keyword">import</span> DropDown <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-dropdown'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.less'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-dropdown/assets/index.css'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-menu/assets/index.css'</span>;
 
@@ -289,35 +289,34 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   });
 }
 
-<span class="hljs-keyword">const</span> Test = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">this</span>.filters = [];
-    <span class="hljs-keyword">return</span> {
-      visible: <span class="hljs-literal">false</span>,
-    };
-  },
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    visible: <span class="hljs-literal">false</span>,
+  }
 
-  handleVisibleChange(visible) {
+  filters = []
+
+  handleVisibleChange = (visible) =&gt; {
     <span class="hljs-keyword">this</span>.setState({ visible });
-  },
+  }
 
-  handleSelect(selected) {
+  handleSelect = (selected) =&gt; {
     <span class="hljs-keyword">this</span>.filters.push(selected);
-  },
+  }
 
-  handleDeselect(key) {
+  handleDeselect = (key) =&gt; {
     <span class="hljs-keyword">const</span> index = <span class="hljs-keyword">this</span>.filters.indexOf(key);
     <span class="hljs-keyword">if</span> (index !== -<span class="hljs-number">1</span>) {
       <span class="hljs-keyword">this</span>.filters.splice(index, <span class="hljs-number">1</span>);
     }
-  },
+  }
 
-  confirmFilter() {
+  confirmFilter = () =&gt; {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.filters.join(<span class="hljs-string">','</span>));
     <span class="hljs-keyword">this</span>.setState({
       visible: <span class="hljs-literal">false</span>,
     });
-  },
+  }
 
   render() {
     <span class="hljs-keyword">const</span> menu = (
@@ -371,13 +370,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{record</span> =&gt;</span> record.key}
       /&gt;
     )</span>;
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>use dropdown<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Test</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );

@@ -1,19 +1,25 @@
-webpackJsonp([2],{
+webpackJsonp([16],{
 
-/***/ 169:
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(211);
+
+
+/***/ }),
+
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_table__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_table_assets_bordered_less__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_table_assets_bordered_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_table_assets_bordered_less__);
+throw new Error("Cannot find module \"rc-table\"");
+throw new Error("Cannot find module \"rc-table/assets/index.less\"");
+throw new Error("Cannot find module \"rc-table/assets/bordered.less\"");
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 
 
@@ -97,25 +103,10 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
     null,
     'grouping columns'
   ),
-  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], { columns: columns, data: data, className: 'bordered' })
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table___default.a, { columns: columns, data: data, className: 'bordered' })
 ), document.getElementById('__react-content'));
-
-/***/ }),
-
-/***/ 256:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 396:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(169);
-
 
 /***/ })
 
-},[396]);
+},[210]);
 //# sourceMappingURL=grouping-columns.js.map
