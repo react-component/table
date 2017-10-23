@@ -4,19 +4,22 @@ import { render, mount } from 'enzyme';
 import Table from '../src';
 
 describe('Table.expand', () => {
-  const columns = [
+  const expandedRowRender = () => <p>extra data</p>;
+
+  const sampleColumns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Age', dataIndex: 'age', key: 'age' },
   ];
-  const data = [
+
+  const sampleData = [
     { key: 0, name: 'Lucy', age: 27 },
     { key: 1, name: 'Jack', age: 28 },
   ];
-  const expandedRowRender = () => <p>extra data</p>;
+
   const createTable = (props) => (
     <Table
-      columns={columns}
-      data={data}
+      columns={sampleColumns}
+      data={sampleData}
       {...props}
     />
   );
@@ -27,13 +30,27 @@ describe('Table.expand', () => {
   });
 
   it('renders tree row correctly', () => {
-    const localData = [
+    const data = [
       { key: 0, name: 'Lucy', age: 27, children: [
         { key: 2, name: 'Jim', age: 1 },
       ] },
       { key: 1, name: 'Jack', age: 28 },
     ];
-    const wrapper = render(createTable({ data: localData }));
+    const wrapper = render(createTable({ data }));
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('renders fixed column correctly', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name', fixed: true },
+      { title: 'Age', dataIndex: 'age', key: 'age' },
+      { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
+    ];
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      { key: 1, name: 'Jack', age: 28, gender: 'M' },
+    ];
+    const wrapper = render(createTable({ columns, data, expandedRowRender }));
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -107,7 +124,7 @@ describe('Table.expand', () => {
       expandedRowClassName,
     }));
     expect(wrapper).toMatchSnapshot();
-    expect(expandedRowClassName).toBeCalledWith(data[0], 0, 0);
+    expect(expandedRowClassName).toBeCalledWith(sampleData[0], 0, 0);
   });
 
   it('fires expand change event', () => {
@@ -117,9 +134,9 @@ describe('Table.expand', () => {
       onExpand,
     }));
     wrapper.find('ExpandIcon').first().simulate('click');
-    expect(onExpand).toBeCalledWith(true, data[0]);
+    expect(onExpand).toBeCalledWith(true, sampleData[0]);
     wrapper.find('ExpandIcon').first().simulate('click');
-    expect(onExpand).toBeCalledWith(false, data[0]);
+    expect(onExpand).toBeCalledWith(false, sampleData[0]);
   });
 
   it('fires onExpandedRowsChange event', () => {
@@ -145,7 +162,7 @@ describe('Table.expand', () => {
     expect(onExpandedRowsChange).toBeCalledWith([1]);
   });
 
-  fit('expand row by click', () => {
+  it('expand row by click', () => {
     const wrapper = mount(createTable({ expandedRowRender }));
     wrapper.find('ExpandIcon').first().simulate('click');
     expect(wrapper.render()).toMatchSnapshot();
