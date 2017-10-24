@@ -441,6 +441,16 @@ describe('Table', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('onRow', () => {
+    const onRow = (record, index) => ({
+      id: `row-${record.key}`,
+      index,
+    });
+    const wrapper = render(createTable({ onRow }));
+
+    expect(wrapper.find('tbody tr')).toMatchSnapshot();
+  });
+
   describe('custom components', () => {
     const MyTable = (props) => <table name="my-table" {...props} />;
     const HeaderWrapper = (props) => <thead name="my-header-wrapper" {...props} />;

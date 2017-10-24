@@ -3,14 +3,8 @@ import { connect } from 'mini-store';
 
 function TableHeaderRow({ row, height, components }) {
   const style = { height };
-
-  let HeaderRow = 'tr';
-  let HeaderCell = 'th';
-
-  if (components.header) {
-    HeaderRow = components.header.row || HeaderRow;
-    HeaderCell = components.header.cell || HeaderCell;
-  }
+  const HeaderRow = components.header.row;
+  const HeaderCell = components.header.cell;
 
   return (
     <HeaderRow style={style}>

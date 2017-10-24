@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
@@ -23,31 +24,21 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '3' },
 ];
 
-const MyTable = props => <table name="my-table" {...props} />;
-const HeaderWrapper = props => <thead name="my-header-wrapper" {...props} />;
-const HeaderRow = props => <tr name="my-header-row" {...props} />;
-const HeaderCell = props => <th name="my-header-cell" {...props} />;
-const BodyWrapper = props => <tbody name="my-body-wrapper" {...props} />;
-const BodyRow = props => <tr name="my-body-row" {...props} />;
-const BodyCell = props => <td name="my-body-cell" {...props} />;
+const BodyRow = styled.tr`
+	&:hover {
+		background: palevioletred !important;
+	}
+`;
 
 const components = {
-  table: MyTable,
-  header: {
-    wrapper: HeaderWrapper,
-    row: HeaderRow,
-    cell: HeaderCell,
-  },
   body: {
-    wrapper: BodyWrapper,
     row: BodyRow,
-    cell: BodyCell,
   },
 };
 
 ReactDOM.render(
   <div>
-    <h2>Custom Component</h2>
+    <h2>Integrate with styled-components</h2>
     <Table columns={columns} data={data} components={components} />
   </div>,
   document.getElementById('__react-content')

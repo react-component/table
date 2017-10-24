@@ -6,6 +6,7 @@ import TableCell from './TableCell';
 
 class TableRow extends React.Component {
   static propTypes = {
+    onRow: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
@@ -41,6 +42,7 @@ class TableRow extends React.Component {
   }
 
   static defaultProps = {
+    onRow() {},
     onRowClick() {},
     onRowDoubleClick() {},
     onRowContextMenu() {},
@@ -116,7 +118,6 @@ class TableRow extends React.Component {
     store.setState({ expandedRowsHeight });
   }
 
-<<<<<<< HEAD
   getStyle() {
     const { height, visible } = this.props;
 
@@ -149,6 +150,7 @@ class TableRow extends React.Component {
       columns,
       record,
       index,
+      onRow,
       indent,
       indentSize,
       hovered,
@@ -158,13 +160,8 @@ class TableRow extends React.Component {
       renderExpandIconCell,
     } = this.props;
 
-    let BodyRow = 'tr';
-    let BodyCell = 'td';
-
-    if (components && components.body) {
-      BodyRow = components.body.row || BodyRow;
-      BodyCell = components.body.cell || BodyCell;
-    }
+    const BodyRow = components.body.row;
+    const BodyCell = components.body.cell;
 
     let { className } = this.props;
 
@@ -204,6 +201,7 @@ class TableRow extends React.Component {
         onContextMenu={this.onContextMenu}
         className={rowClassName}
         style={this.getStyle()}
+        {...onRow(record, index)}
       >
         {cells}
       </BodyRow>

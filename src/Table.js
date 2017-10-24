@@ -4,6 +4,7 @@ import { debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { Provider, create } from 'mini-store';
+import merge from 'lodash.merge';
 import ColumnManager from './ColumnManager';
 import classes from 'component-classes';
 import HeadTable from './HeadTable';
@@ -20,6 +21,7 @@ export default class Table extends React.Component {
     style: PropTypes.object,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    onRow: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
@@ -51,6 +53,7 @@ export default class Table extends React.Component {
 
   static childContextTypes = {
     table: PropTypes.any,
+    components: PropTypes.any,
   }
 
   static defaultProps = {
@@ -58,6 +61,7 @@ export default class Table extends React.Component {
     useFixedHeader: false,
     rowKey: 'key',
     rowClassName: () => '',
+    onRow() {},
     onRowClick() {},
     onRowDoubleClick() {},
     onRowContextMenu() {},
@@ -71,7 +75,6 @@ export default class Table extends React.Component {
     rowRef: () => null,
     getBodyWrapper: body => body,
     emptyText: () => 'No Data',
-    components: {},
   }
 
   constructor(props) {
@@ -96,6 +99,19 @@ export default class Table extends React.Component {
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
+        components: merge({
+          table: 'table',
+          header: {
+            wrapper: 'thead',
+            row: 'tr',
+            cell: 'th',
+          },
+          body: {
+            wrapper: 'tbody',
+            row: 'tr',
+            cell: 'td',
+          },
+        }, this.props.components),
       },
     };
   }

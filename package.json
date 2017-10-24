@@ -71,6 +71,7 @@
     "babel-runtime": "6.x",
     "component-classes": "^1.2.6",
     "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.0",
     "mini-store": "^1.0.2",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
@@ -82,6 +83,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
+    "immutability-helper": "^2.4.0",
     "jest": "^21.2.1",
     "pre-commit": "1.x",
     "rc-animate": "^2.3.0",
@@ -89,8 +91,12 @@
     "rc-menu": "^5.0.11",
     "rc-tools": "7.x",
     "react": "^16.0.0",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0"
+    "react-test-renderer": "^16.0.0",
+    "react-virtualized": "^9.12.0",
+    "styled-components": "^2.2.1"
   },
   "pre-commit": [
     "lint"

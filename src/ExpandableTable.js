@@ -146,6 +146,12 @@ class ExpandableTable extends React.Component {
     }
 
     const rowKey = `${ancestorKeys[0]}-extra-row`;
+    const components = {
+      body: {
+        row: 'tr',
+        cell: 'td',
+      },
+    };
 
     return (
       <TableRow
@@ -157,6 +163,7 @@ class ExpandableTable extends React.Component {
         prefixCls={`${prefixCls}-expanded-row`}
         indent={1}
         fixed={fixed}
+        components={components}
       />
     );
   }

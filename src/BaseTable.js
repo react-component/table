@@ -33,7 +33,7 @@ class BaseTable extends React.Component {
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
-    const { columnManager } = table;
+    const { columnManager, components } = table;
     const {
       prefixCls,
       childrenColumnName,
@@ -44,7 +44,7 @@ class BaseTable extends React.Component {
       onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
-      components,
+      onRow,
     } = table.props;
     const { getRowKey, fixed, expander } = this.props;
 
@@ -96,6 +96,7 @@ class BaseTable extends React.Component {
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}
+              onRow={onRow}
               onRowDoubleClick={onRowDoubleClick}
               onRowContextMenu={onRowContextMenu}
               onRowMouseEnter={onRowMouseEnter}
@@ -131,7 +132,9 @@ class BaseTable extends React.Component {
   }
 
   render() {
-    const { prefixCls, scroll, data, getBodyWrapper, components } = this.context.table.props;
+    const { table } = this.context;
+    const { components } = table;
+    const { prefixCls, scroll, data, getBodyWrapper } = table.props;
     const { expander, tableClassName, hasHead, hasBody, fixed, columns } = this.props;
     const tableStyle = {};
 
@@ -144,9 +147,8 @@ class BaseTable extends React.Component {
       }
     }
 
-    const Table = hasBody ? (components.table || 'table') : 'table';
-    const BodyWrapper = components.body && components.body.wrapper || 'tbody';
-
+    const Table = hasBody ? components.table : 'table';
+    const BodyWrapper = components.body.wrapper;
 
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
