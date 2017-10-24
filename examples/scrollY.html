@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>scrollY.js - example - meck-rc-table@5.7.3</title>
+  <title>scrollY.js - example - rc-table@5.7.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,13 +257,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  
+  <link rel="stylesheet" href="../common.css" />
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>meck-rc-table@5.7.3</h1>
+      <h1>rc-table@5.7.3</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -273,7 +273,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.less'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
 
 <span class="hljs-keyword">const</span> data = [];
 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
@@ -285,16 +285,18 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   });
 }
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  state = {
-    showBody: <span class="hljs-literal">true</span>,
-  }
+<span class="hljs-keyword">const</span> Test = React.createClass({
+  getInitialState() {
+    <span class="hljs-keyword">return</span> {
+      showBody: <span class="hljs-literal">true</span>,
+    };
+  },
 
-  toggleBody = () =&gt; {
+  toggleBody() {
     <span class="hljs-keyword">this</span>.setState({
       showBody: !<span class="hljs-keyword">this</span>.state.showBody,
     });
-  }
+  },
 
   render() {
     <span class="hljs-keyword">const</span> columns = [
@@ -321,13 +323,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         }}
       /&gt;
     )</span>;
-  }
-}
+  },
+});
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>scroll body table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Test</span>/&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );
