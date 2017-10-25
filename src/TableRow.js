@@ -56,6 +56,9 @@ class TableRow extends React.Component {
     super(props);
 
     this.shouldRender = props.visible;
+
+    // avoid creating new object which may fail the sCU.
+    this.style = {};
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,6 +102,20 @@ class TableRow extends React.Component {
     store.setState({ expandedRowsHeight });
   }
 
+  getStyle() {
+    const { height, visible } = this.props;
+
+    if (height && height !== this.style.height) {
+      this.style = { ...this.style, height };
+    }
+
+    if (!visible && !this.style.display) {
+      this.style = { ...this.style, display: 'none' };
+    }
+
+    return this.style;
+  }
+
   saveRowRef = (node) => {
     this.rowRef = node;
     if (node) {
@@ -120,8 +137,6 @@ class TableRow extends React.Component {
       index,
       indent,
       indentSize,
-      visible,
-      height,
       hovered,
       hasExpandIcon,
       renderExpandIcon,
@@ -153,12 +168,6 @@ class TableRow extends React.Component {
       );
     }
 
-    const style = { height };
-
-    if (!visible) {
-      style.display = 'none';
-    }
-
     const rowClassName =
       `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
@@ -171,7 +180,7 @@ class TableRow extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         className={rowClassName}
-        style={style}
+        style={this.getStyle()}
       >
         {cells}
       </tr>
