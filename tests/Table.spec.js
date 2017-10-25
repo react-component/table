@@ -441,7 +441,7 @@ describe('Table', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('onRow', () => {
+  it('renders onRow correctly', () => {
     const onRow = (record, index) => ({
       id: `row-${record.key}`,
       index,
@@ -449,6 +449,43 @@ describe('Table', () => {
     const wrapper = render(createTable({ onRow }));
 
     expect(wrapper.find('tbody tr')).toMatchSnapshot();
+  });
+
+  it('renders column.onCell correctly', () => {
+    const onCell = (record) => ({
+      id: `cell-${record.name}`,
+    });
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name', onCell },
+    ];
+    const wrapper = render(createTable({ columns }));
+
+    expect(wrapper.find('tbody td')).toMatchSnapshot();
+  });
+
+  it('renders onHeaderRow correctly', () => {
+    const onHeaderRow = jest.fn((columns, index) => ({
+      id: `header-row-${index}`,
+    }));
+    const wrapper = render(createTable({ onHeaderRow }));
+
+    expect(wrapper.find('thead tr')).toMatchSnapshot();
+    expect(onHeaderRow).toBeCalledWith(
+      [{ title: 'Name', dataIndex: 'name', key: 'name' }],
+      0,
+    );
+  });
+
+  it('renders column.onHeaderCell', () => {
+    const onHeaderCell = (column) => ({
+      id: `header-cell-${column.key}`,
+    });
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell },
+    ];
+    const wrapper = render(createTable({ columns }));
+
+    expect(wrapper.find('thead th')).toMatchSnapshot();
   });
 
   describe('custom components', () => {

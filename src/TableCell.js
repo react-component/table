@@ -63,6 +63,10 @@ export default class TableCell extends React.Component {
       }
     }
 
+    if (column.onCell) {
+      tdProps = { ...tdProps, ...column.onCell(record) };
+    }
+
     // Fix https://github.com/ant-design/ant-design/issues/1202
     if (this.isInvalidRenderCellText(text)) {
       text = null;
@@ -81,8 +85,8 @@ export default class TableCell extends React.Component {
     return (
       <BodyCell
         className={className}
-        {...tdProps}
         onClick={this.handleClick}
+        {...tdProps}
       >
         {indentText}
         {expandIcon}

@@ -60,9 +60,6 @@ class TableRow extends React.Component {
     super(props);
 
     this.shouldRender = props.visible;
-
-    // avoid creating new object which may fail the sCU.
-    this.style = {};
   }
 
   componentDidMount() {
@@ -154,6 +151,8 @@ class TableRow extends React.Component {
       indent,
       indentSize,
       hovered,
+      height,
+      visible,
       components,
       hasExpandIcon,
       renderExpandIcon,
@@ -192,6 +191,16 @@ class TableRow extends React.Component {
     const rowClassName =
       `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
+    const rowProps = onRow(record, index);
+    const customStyle = rowProps ? rowProps.style : {};
+    let style = { height };
+
+    if (!visible) {
+      style.display = 'none';
+    }
+
+    style = { ...style, ...customStyle };
+
     return (
       <BodyRow
         onClick={this.onRowClick}
@@ -200,8 +209,8 @@ class TableRow extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         className={rowClassName}
-        style={this.getStyle()}
-        {...onRow(record, index)}
+        {...rowProps}
+        style={style}
       >
         {cells}
       </BodyRow>
