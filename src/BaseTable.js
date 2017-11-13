@@ -114,8 +114,9 @@ class BaseTable extends React.Component {
 
       rows.push(row);
 
-      const expandedRows = expander.renderRows(
+      expander.renderRows(
         this.renderRows,
+        rows,
         record,
         i,
         indent,
@@ -123,10 +124,6 @@ class BaseTable extends React.Component {
         key,
         ancestorKeys
       );
-
-      if (expandedRows) {
-        rows.push(...expandedRows);
-      }
     }
     return rows;
   }

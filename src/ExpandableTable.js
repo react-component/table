@@ -121,8 +121,8 @@ class ExpandableTable extends React.Component {
     rows[0].unshift({ ...iconColumn, column: iconColumn });
   }
 
-  renderExpandedRow(content, className, ancestorKeys, fixed) {
-    const { prefixCls, expandIconAsCell } = this.props;
+  renderExpandedRow(content, className, ancestorKeys, indent, fixed) {
+    const { prefixCls, expandIconAsCell, indentSize } = this.props;
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -146,8 +146,8 @@ class ExpandableTable extends React.Component {
         render: () => null,
       });
     }
-
-    const rowKey = `${ancestorKeys[0]}-extra-row`;
+    const parentKey = ancestorKeys[ancestorKeys.length - 1];
+    const rowKey = `${parentKey}-extra-row`;
     const components = {
       body: {
         row: 'tr',
@@ -163,35 +163,39 @@ class ExpandableTable extends React.Component {
         rowKey={rowKey}
         ancestorKeys={ancestorKeys}
         prefixCls={`${prefixCls}-expanded-row`}
-        indent={1}
+        indentSize={indentSize}
+        indent={indent}
         fixed={fixed}
         components={components}
       />
     );
   }
 
-  renderRows = (renderRows, record, index, indent, fixed, parentKey, ancestorKeys) => {
+  renderRows = (renderRows, rows, record, index, indent, fixed, parentKey, ancestorKeys) => {
     const { expandedRowClassName, expandedRowRender, childrenColumnName } = this.props;
     const childrenData = record[childrenColumnName];
     const expandedRowContent = expandedRowRender && expandedRowRender(record, index, indent);
     const nextAncestorKeys = [...ancestorKeys, parentKey];
 
     if (expandedRowContent) {
-      return [
+      rows.push(
         this.renderExpandedRow(
           expandedRowContent,
           expandedRowClassName(record, index, indent),
           nextAncestorKeys,
+          indent,
           fixed,
         ),
-      ];
+      );
     }
 
     if (childrenData) {
-      return renderRows(
-        childrenData,
-        indent + 1,
-        nextAncestorKeys,
+      rows.push(
+        ...renderRows(
+          childrenData,
+          indent + 1,
+          nextAncestorKeys,
+        )
       );
     }
   }
