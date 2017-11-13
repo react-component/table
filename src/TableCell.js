@@ -49,14 +49,14 @@ export default class TableCell extends React.Component {
     } else {
       text = get(record, dataIndex);
     }
-    let tdProps;
+    let tdProps = {};
     let colSpan;
     let rowSpan;
 
     if (render) {
       text = render(text, record, index);
       if (this.isInvalidRenderCellText(text)) {
-        tdProps = text.props || {};
+        tdProps = text.props || tdProps;
         colSpan = tdProps.colSpan;
         rowSpan = tdProps.rowSpan;
         text = text.children;
@@ -82,6 +82,11 @@ export default class TableCell extends React.Component {
     if (rowSpan === 0 || colSpan === 0) {
       return null;
     }
+
+    if (column.align) {
+      tdProps.style = { textAlign: column.align };
+    }
+
     return (
       <BodyCell
         className={className}

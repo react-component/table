@@ -536,4 +536,13 @@ describe('Table', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  it('align column', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
+    ];
+    const wrapper = render(createTable({ columns }));
+    expect(wrapper).toMatchSnapshot();
+  });
 });

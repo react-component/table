@@ -1,5 +1,83 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Table align column 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+            <th
+              class=""
+              style="text-align:center"
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+            <td
+              class=""
+              style="text-align:center"
+            />
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
+            </td>
+            <td
+              class=""
+              style="text-align:center"
+            />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table custom components renders correctly 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left"
