@@ -1,21 +1,21 @@
-webpackJsonp([19],{
+webpackJsonp([21],{
 
-/***/ 205:
+/***/ 280:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(206);
+module.exports = __webpack_require__(281);
 
 
 /***/ }),
 
-/***/ 206:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_table__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table_assets_index_less__ = __webpack_require__(4);
@@ -35,7 +35,7 @@ var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: '
     );
   } }, { title: 'title7', dataIndex: 'b', key: 'g' }, { title: 'title8', dataIndex: 'b', key: 'h' }, { title: 'title9', dataIndex: 'b', key: 'i' }, { title: 'title10', dataIndex: 'b', key: 'j' }, { title: 'title11', dataIndex: 'b', key: 'k' }, { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' }];
 
-var data = [{ a: '123', b: 'xxxxxxxx', d: 3, key: '1' }, { a: 'cdd', b: 'edd12221', d: 3, key: '2' }, { a: '133', c: 'edd12221', d: 2, key: '3' }, { a: '133', c: 'edd12221', d: 2, key: '4' }, { a: '133', c: 'edd12221', d: 2, key: '5' }, { a: '133', c: 'edd12221', d: 2, key: '6' }, { a: '133', c: 'edd12221', d: 2, key: '7' }, { a: '133', c: 'edd12221', d: 2, key: '8' }, { a: '133', c: 'edd12221', d: 2, key: '9' }];
+var data = [{ a: '123', b: 'xxxxxxxx', d: 3, key: '1', title: 'hello' }, { a: 'cdd', b: 'edd12221', d: 3, key: '2', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '3', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '4', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '5', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '6', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '7', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '8', title: 'hello' }, { a: '133', c: 'edd12221', d: 2, key: '9', title: 'hello' }];
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
   'div',
@@ -58,5 +58,5 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[205]);
+},[280]);
 //# sourceMappingURL=fixedColumns-auto-height.js.map

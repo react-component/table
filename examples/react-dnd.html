@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>no-data.js - example - rc-table@6.0.0</title>
+  <title>react-dnd.js - example - rc-table@6.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -269,29 +269,190 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console,func-names,react/no-multi-comp */</span>
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-unused-expressions,new-cap */</span>
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> { injectGlobal } <span class="hljs-keyword">from</span> <span class="hljs-string">'styled-components'</span>;
+<span class="hljs-keyword">import</span> update <span class="hljs-keyword">from</span> <span class="hljs-string">'immutability-helper'</span>;
+<span class="hljs-keyword">import</span> { DragDropContext, DragSource, DropTarget } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dnd'</span>;
+<span class="hljs-keyword">import</span> HTML5Backend <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dnd-html5-backend'</span>;
 <span class="hljs-keyword">import</span> Table <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-table'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
+
+injectGlobal<span class="hljs-string">`
+  tr.drop-over-downward td {
+    border-bottom: 2px dashed red;
+  }
+
+  tr.drop-over-upward td {
+    border-top: 2px dashed red;
+  }
+`</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragDirection</span>(<span class="hljs-params">
+  dragIndex,
+  hoverIndex,
+  initialClientOffset,
+  clientOffset,
+  sourceClientOffset,
+</span>) </span>{
+  <span class="hljs-keyword">const</span> hoverMiddleY = (initialClientOffset.y - sourceClientOffset.y) / <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">const</span> hoverClientY = clientOffset.y - sourceClientOffset.y;
+  <span class="hljs-keyword">if</span> (dragIndex &lt; hoverIndex &amp;&amp; hoverClientY &gt; hoverMiddleY) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'downward'</span>;
+  }
+  <span class="hljs-keyword">if</span> (dragIndex &gt; hoverIndex &amp;&amp; hoverClientY &lt; hoverMiddleY) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'upward'</span>;
+  }
+}
+
+<span class="hljs-keyword">let</span> BodyRow = (props) =&gt; {
+  <span class="hljs-keyword">const</span> {
+    isOver,
+    connectDragSource,
+    connectDropTarget,
+    moveRow,
+    dragRow,
+    clientOffset,
+    sourceClientOffset,
+    initialClientOffset,
+    ...restProps,
+  } = props;
+  <span class="hljs-keyword">const</span> style = { cursor: <span class="hljs-string">'move'</span> };
+
+  <span class="hljs-keyword">let</span> className = restProps.className;
+  <span class="hljs-keyword">if</span> (isOver &amp;&amp; initialClientOffset) {
+    <span class="hljs-keyword">const</span> direction = dragDirection(
+      dragRow.index,
+      restProps.index,
+      initialClientOffset,
+      clientOffset,
+      sourceClientOffset
+    );
+    <span class="hljs-keyword">if</span> (direction === <span class="hljs-string">'downward'</span>) {
+      className += <span class="hljs-string">' drop-over-downward'</span>;
+    }
+    <span class="hljs-keyword">if</span> (direction === <span class="hljs-string">'upward'</span>) {
+      className += <span class="hljs-string">' drop-over-upward'</span>;
+    }
+  }
+
+  <span class="hljs-keyword">return</span> connectDragSource(
+    connectDropTarget(
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">tr</span>
+        {<span class="hljs-attribute">...restProps</span>}
+        <span class="hljs-attribute">className</span>=<span class="hljs-value">{className}</span>
+        <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>
+      /&gt;</span>
+    )</span>
+  );
+};
+
+<span class="hljs-keyword">const</span> rowSource = {
+  beginDrag(props) {
+    <span class="hljs-keyword">return</span> {
+      index: props.index,
+    };
+  },
+};
+
+<span class="hljs-keyword">const</span> rowTarget = {
+  drop(props, monitor) {
+    <span class="hljs-keyword">const</span> dragIndex = monitor.getItem().index;
+    <span class="hljs-keyword">const</span> hoverIndex = props.index;
+
+    <span class="hljs-comment">// Don't replace items with themselves</span>
+    <span class="hljs-keyword">if</span> (dragIndex === hoverIndex) {
+      <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// Time to actually perform the action</span>
+    props.moveRow(dragIndex, hoverIndex);
+
+    <span class="hljs-comment">// Note: we're mutating the monitor item here!</span>
+    <span class="hljs-comment">// Generally it's better to avoid mutations,</span>
+    <span class="hljs-comment">// but it's good here for the sake of performance</span>
+    <span class="hljs-comment">// to avoid expensive index searches.</span>
+    monitor.getItem().index = hoverIndex;
+  },
+};
+
+BodyRow = DropTarget(<span class="hljs-string">'row'</span>, rowTarget, (connect, monitor) =&gt; ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  sourceClientOffset: monitor.getSourceClientOffset(),
+}))(
+  DragSource(<span class="hljs-string">'row'</span>, rowSource, (connect, monitor) =&gt; ({
+    connectDragSource: connect.dragSource(),
+    dragRow: monitor.getItem(),
+    clientOffset: monitor.getClientOffset(),
+    initialClientOffset: monitor.getInitialClientOffset(),
+  }))(BodyRow)
+);
 
 <span class="hljs-keyword">const</span> columns = [
   { title: <span class="hljs-string">'title1'</span>, dataIndex: <span class="hljs-string">'a'</span>, key: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">100</span> },
   { id: <span class="hljs-string">'123'</span>, title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
   { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
   {
-    title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'d'</span>, render() {
+    title: <span class="hljs-string">'Operations'</span>,
+    dataIndex: <span class="hljs-string">''</span>,
+    key: <span class="hljs-string">'d'</span>,
+    render() {
       <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
     },
   },
 ];
 
-<span class="hljs-keyword">const</span> data = [];
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    data: [
+      { a: <span class="hljs-string">'123'</span>, key: <span class="hljs-string">'1'</span> },
+      { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span> },
+      { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
+    ],
+  }
+
+  components = {
+    body: {
+      row: BodyRow,
+    },
+  }
+
+  moveRow = (dragIndex, hoverIndex) =&gt; {
+    <span class="hljs-keyword">const</span> { data } = <span class="hljs-keyword">this</span>.state;
+    <span class="hljs-keyword">const</span> dragRow = data[dragIndex];
+
+    <span class="hljs-keyword">this</span>.setState(
+      update(<span class="hljs-keyword">this</span>.state, {
+        data: {
+          $splice: [[dragIndex, <span class="hljs-number">1</span>], [hoverIndex, <span class="hljs-number">0</span>, dragRow]],
+        },
+      }),
+    );
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
+        <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
+        <span class="hljs-attribute">data</span>=<span class="hljs-value">{this.state.data}</span>
+        <span class="hljs-attribute">components</span>=<span class="hljs-value">{this.components}</span>
+        <span class="hljs-attribute">onRow</span>=<span class="hljs-value">{(record,</span> <span class="hljs-attribute">index</span>) =&gt;</span> ({
+          index,
+          moveRow: this.moveRow,
+        })}
+      /&gt;
+    )</span>;
+  }
+}
+
+Demo = DragDropContext(HTML5Backend)(Demo);
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>simple table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Integrate with react-dnd<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content')
 );
@@ -305,7 +466,7 @@ ReactDOM.render(
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="../common.js?nowrap"></script>
-  <script src="no-data.js?nowrap"></script>
+  <script src="react-dnd.js?nowrap"></script>
 </body>
 
 </html>
