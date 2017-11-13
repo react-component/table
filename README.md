@@ -249,7 +249,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Object</td>
       <td></td>
       <td>
-        Override table elements, see #171 for more details
+        Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details
       </td>
     </tr>
   </tbody>
