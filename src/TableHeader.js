@@ -16,6 +16,7 @@ function getHeaderRows(columns, currentRow = 0, rows) {
       key: column.key,
       className: column.className || '',
       children: column.title,
+      column,
     };
     if (column.children) {
       getHeaderRows(column.children, currentRow + 1, rows);
@@ -34,7 +35,8 @@ function getHeaderRows(columns, currentRow = 0, rows) {
 }
 
 export default function TableHeader(props, { table }) {
-  const { prefixCls, showHeader } = table.props;
+  const { components } = table;
+  const { prefixCls, showHeader, onHeaderRow } = table.props;
   const { expander, columns, fixed } = props;
 
   if (!showHeader) {
@@ -45,20 +47,25 @@ export default function TableHeader(props, { table }) {
 
   expander.renderExpandIndentCell(rows, fixed);
 
+  const HeaderWrapper = components.header.wrapper;
+
   return (
-    <thead className={`${prefixCls}-thead`}>
+    <HeaderWrapper className={`${prefixCls}-thead`}>
       {
         rows.map((row, index) => (
           <TableHeaderRow
             key={index}
+            index={index}
             fixed={fixed}
             columns={columns}
             rows={rows}
             row={row}
+            components={components}
+            onHeaderRow={onHeaderRow}
           />
         ))
       }
-    </thead>
+    </HeaderWrapper>
   );
 }
 
@@ -66,6 +73,7 @@ TableHeader.propTypes = {
   fixed: PropTypes.string,
   columns: PropTypes.array.isRequired,
   expander: PropTypes.object.isRequired,
+  onHeaderRow: PropTypes.func,
 };
 
 TableHeader.contextTypes = {

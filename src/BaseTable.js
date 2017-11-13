@@ -33,7 +33,7 @@ class BaseTable extends React.Component {
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
-    const { columnManager } = table;
+    const { columnManager, components } = table;
     const {
       prefixCls,
       childrenColumnName,
@@ -44,6 +44,7 @@ class BaseTable extends React.Component {
       onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
+      onRow,
     } = table.props;
     const { getRowKey, fixed, expander } = this.props;
 
@@ -95,6 +96,7 @@ class BaseTable extends React.Component {
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}
+              onRow={onRow}
               onRowDoubleClick={onRowDoubleClick}
               onRowContextMenu={onRowContextMenu}
               onRowMouseEnter={onRowMouseEnter}
@@ -103,6 +105,7 @@ class BaseTable extends React.Component {
               rowKey={key}
               ancestorKeys={ancestorKeys}
               ref={rowRef(record, i, indent)}
+              components={components}
               {...expandableRow}
             />
           )}
@@ -129,7 +132,9 @@ class BaseTable extends React.Component {
   }
 
   render() {
-    const { prefixCls, scroll, data, getBodyWrapper } = this.context.table.props;
+    const { table } = this.context;
+    const { components } = table;
+    const { prefixCls, scroll, data, getBodyWrapper } = table.props;
     const { expander, tableClassName, hasHead, hasBody, fixed, columns } = this.props;
     const tableStyle = {};
 
@@ -142,16 +147,19 @@ class BaseTable extends React.Component {
       }
     }
 
+    const Table = hasBody ? components.table : 'table';
+    const BodyWrapper = components.body.wrapper;
+
     return (
-      <table className={tableClassName} style={tableStyle} key="table">
+      <Table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
         {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
         {hasBody && getBodyWrapper(
-          <tbody className={`${prefixCls}-tbody`}>
+          <BodyWrapper className={`${prefixCls}-tbody`}>
             {this.renderRows(data, 0)}
-          </tbody>
+          </BodyWrapper>
         )}
-      </table>
+      </Table>
     );
   }
 }

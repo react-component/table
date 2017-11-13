@@ -440,4 +440,100 @@ describe('Table', () => {
     }));
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('renders onRow correctly', () => {
+    const onRow = (record, index) => ({
+      id: `row-${record.key}`,
+      index,
+    });
+    const wrapper = render(createTable({ onRow }));
+
+    expect(wrapper.find('tbody tr')).toMatchSnapshot();
+  });
+
+  it('renders column.onCell correctly', () => {
+    const onCell = (record) => ({
+      id: `cell-${record.name}`,
+    });
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name', onCell },
+    ];
+    const wrapper = render(createTable({ columns }));
+
+    expect(wrapper.find('tbody td')).toMatchSnapshot();
+  });
+
+  it('renders onHeaderRow correctly', () => {
+    const onHeaderRow = jest.fn((columns, index) => ({
+      id: `header-row-${index}`,
+    }));
+    const wrapper = render(createTable({ onHeaderRow }));
+
+    expect(wrapper.find('thead tr')).toMatchSnapshot();
+    expect(onHeaderRow).toBeCalledWith(
+      [{ title: 'Name', dataIndex: 'name', key: 'name' }],
+      0,
+    );
+  });
+
+  it('renders column.onHeaderCell', () => {
+    const onHeaderCell = (column) => ({
+      id: `header-cell-${column.key}`,
+    });
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell },
+    ];
+    const wrapper = render(createTable({ columns }));
+
+    expect(wrapper.find('thead th')).toMatchSnapshot();
+  });
+
+  describe('custom components', () => {
+    const MyTable = (props) => <table name="my-table" {...props} />;
+    const HeaderWrapper = (props) => <thead name="my-header-wrapper" {...props} />;
+    const HeaderRow = (props) => <tr name="my-header-row" {...props} />;
+    const HeaderCell = (props) => <th name="my-header-cell" {...props} />;
+    const BodyWrapper = (props) => <tbody name="my-body-wrapper" {...props} />;
+    const BodyRow = (props) => <tr name="my-body-row" {...props} />;
+    const BodyCell = (props) => <td name="my-body-cell" {...props} />;
+
+    const components = {
+      table: MyTable,
+      header: {
+        wrapper: HeaderWrapper,
+        row: HeaderRow,
+        cell: HeaderCell,
+      },
+      body: {
+        wrapper: BodyWrapper,
+        row: BodyRow,
+        cell: BodyCell,
+      },
+    };
+
+    it('renders correctly', () => {
+      const wrapper = render(createTable({ components }));
+
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('renders fixed column and header correctly', () => {
+      const columns = [
+        { title: 'Name', dataIndex: 'name', key: 'name', fixed: 'left' },
+        { title: 'Age', dataIndex: 'age', key: 'age' },
+        { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
+      ];
+      const sampleData = [
+        { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      ];
+      const wrapper = render(createTable({
+        columns,
+        data: sampleData,
+        components,
+        scroll: { y: 100 },
+      }));
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

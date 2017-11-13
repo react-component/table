@@ -1,10 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableCell from './TableCell';
 
 class TableRow extends React.Component {
   static propTypes = {
+    onRow: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
@@ -36,9 +38,11 @@ class TableRow extends React.Component {
     ]),
     renderExpandIcon: PropTypes.func,
     renderExpandIconCell: PropTypes.func,
+    components: PropTypes.any,
   }
 
   static defaultProps = {
+    onRow() {},
     onRowClick() {},
     onRowDoubleClick() {},
     onRowContextMenu() {},
@@ -56,14 +60,23 @@ class TableRow extends React.Component {
     super(props);
 
     this.shouldRender = props.visible;
+  }
 
-    // avoid creating new object which may fail the sCU.
-    this.style = {};
+  componentDidMount() {
+    if (this.shouldRender) {
+      this.saveRowRef();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.visible || (!this.props.visible && nextProps.visible)) {
       this.shouldRender = true;
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.shouldRender && !this.rowRef) {
+      this.saveRowRef();
     }
   }
 
@@ -116,12 +129,11 @@ class TableRow extends React.Component {
     return this.style;
   }
 
-  saveRowRef = (node) => {
-    this.rowRef = node;
-    if (node) {
-      if (!this.props.fixed) {
-        this.setHeight();
-      }
+  saveRowRef() {
+    this.rowRef = ReactDOM.findDOMNode(this);
+
+    if (!this.props.fixed) {
+      this.setHeight();
     }
   }
 
@@ -135,13 +147,20 @@ class TableRow extends React.Component {
       columns,
       record,
       index,
+      onRow,
       indent,
       indentSize,
       hovered,
+      height,
+      visible,
+      components,
       hasExpandIcon,
       renderExpandIcon,
       renderExpandIconCell,
     } = this.props;
+
+    const BodyRow = components.body.row;
+    const BodyCell = components.body.cell;
 
     let { className } = this.props;
 
@@ -164,6 +183,7 @@ class TableRow extends React.Component {
           column={columns[i]}
           key={columns[i].key || columns[i].dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
+          component={BodyCell}
         />
       );
     }
@@ -171,19 +191,29 @@ class TableRow extends React.Component {
     const rowClassName =
       `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
+    const rowProps = onRow(record, index);
+    const customStyle = rowProps ? rowProps.style : {};
+    let style = { height };
+
+    if (!visible) {
+      style.display = 'none';
+    }
+
+    style = { ...style, ...customStyle };
+
     return (
-      <tr
-        ref={this.saveRowRef}
+      <BodyRow
         onClick={this.onRowClick}
         onDoubleClick={this.onRowDoubleClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
         className={rowClassName}
-        style={this.getStyle()}
+        {...rowProps}
+        style={style}
       >
         {cells}
-      </tr>
+      </BodyRow>
     );
   }
 }
