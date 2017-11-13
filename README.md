@@ -244,6 +244,29 @@ React.render(<Table columns={columns} data={data} />, mountNode);
         The columns config of table, see table below
       </td>
     </tr>
+    <tr>
+      <td>components</td>
+      <td>Object</td>
+      <td></td>
+      <td>
+        Override table examples, you can override following elements:
+        ```javascirpt
+        const components = {
+          table: MyTable,
+          header: {
+            wrapper: HeaderWrapper,
+            row: HeaderRow,
+            cell: HeaderCell,
+          },
+          body: {
+            wrapper: BodyWrapper,
+            row: BodyRow,
+            cell: BodyCell,
+          },
+        };
+        ```
+      </td>
+    </tr>
   </tbody>
 </table>
 

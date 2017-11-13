@@ -1,6 +1,13 @@
 # History
 ----
 
+## 6.0.0 / 2017-11-14
+
+- Refactor.
+- Allow override default examples.
+- Add Table[onRow] and column[onCell].
+- Add column[align].
+
 ## 5.6.0 / 2017-08-27
 
 - Better empty data style for fixed-columns Table.
