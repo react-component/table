@@ -176,6 +176,7 @@ class ExpandableTable extends React.Component {
     const childrenData = record[childrenColumnName];
     const expandedRowContent = expandedRowRender && expandedRowRender(record, index, indent);
     const nextAncestorKeys = [...ancestorKeys, parentKey];
+    const nextIndent = indent + 1;
 
     if (expandedRowContent) {
       rows.push(
@@ -183,7 +184,7 @@ class ExpandableTable extends React.Component {
           expandedRowContent,
           expandedRowClassName(record, index, indent),
           nextAncestorKeys,
-          indent,
+          nextIndent,
           fixed,
         ),
       );
@@ -193,7 +194,7 @@ class ExpandableTable extends React.Component {
       rows.push(
         ...renderRows(
           childrenData,
-          indent + 1,
+          nextIndent,
           nextAncestorKeys,
         )
       );
