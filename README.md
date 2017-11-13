@@ -249,22 +249,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Object</td>
       <td></td>
       <td>
-        Override table examples, you can override following elements:
-        ```javascirpt
-        const components = {
-          table: MyTable,
-          header: {
-            wrapper: HeaderWrapper,
-            row: HeaderRow,
-            cell: HeaderCell,
-          },
-          body: {
-            wrapper: BodyWrapper,
-            row: BodyRow,
-            cell: BodyCell,
-          },
-        };
-        ```
+        Override table elements, see #171 for more details
       </td>
     </tr>
   </tbody>
