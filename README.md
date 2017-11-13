@@ -177,28 +177,34 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>indentSize for every level of data.i.children, better using with column.width specified</td>
     </tr>
     <tr>
-      <td>onRowClick</td>
+      <td>onRowClick[deprecated]</td>
       <td>Function(record, index)</td>
       <td></td>
       <td>handle rowClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
     </tr>
     <tr>
-      <td>onRowDoubleClick</td>
+      <td>onRowDoubleClick[deprecated]</td>
       <td>Function(record, index)</td>
       <td></td>
       <td>handle rowDoubleClick action, index means the index of current row among fatherElement[childrenColumnName]</td>
     </tr>
     <tr>
-      <td>onRowMouseEnter</td>
+      <td>onRowMouseEnter[deprecated]</td>
       <td>Function(record, index)</td>
       <td></td>
       <td>handle onRowMouseEnter action, index means the index of current row among fatherElement[childrenColumnName]</td>
     </tr>
     <tr>
-      <td>onRowMouseLeave</td>
+      <td>onRowMouseLeave[deprecated]</td>
       <td>Function(record, index)</td>
       <td></td>
       <td>handle onRowMouseLeave action, index means the index of current row among fatherElement[childrenColumnName]</td>
+    </tr>
+    <tr>
+      <td>onRow</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>Set custom props per each row.</td>
     </tr>
     <tr>
       <td>showHeader</td>
@@ -219,7 +225,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>table footer render function</td>
     </tr>
     <tr>
-      <td>getBodyWrapper</td>
+      <td>getBodyWrapper[deprecated]</td>
       <td>Function(body)</td>
       <td></td>
       <td>get wrapper of tbody, [demo](http://react-component.github.io/table/examples/animation.html)</td>
@@ -296,13 +302,25 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>this column will be fixed when table scroll horizontally: true or 'left' or 'right'</td>
     </tr>
     <tr>
+      <td>align</td>
+      <td>String</td>
+      <td></td>
+      <td>specify how content is aligned</td>
+    </tr>
+    <tr>
+      <td>onCell</td>
+      <td>Function(record)</td>
+      <td></td>
+      <td>Set custom props per each cell.</td>
+    </tr>
+    <tr>
       <td>render</td>
       <td>Function(value, row, index)</td>
       <td></td>
       <td>The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan</td>
     </tr>
     <tr>
-      <td>onCellClick</td>
+      <td>onCellClick[deprecated]</td>
       <td>Function(row, event)</td>
       <td></td>
       <td>Called when column's cell is clicked</td>
