@@ -11,6 +11,13 @@ import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
 import ExpandableTable from './ExpandableTable';
 
+function deprecate(name, props) {
+  warningOnce(
+    props[name] === undefined,
+    `${name} is deprecated, please use onRow instead.`,
+  );
+}
+
 export default class Table extends React.Component {
   static propTypes = {
     data: PropTypes.array,
@@ -64,11 +71,6 @@ export default class Table extends React.Component {
     rowClassName: () => '',
     onRow() {},
     onHeaderRow() {},
-    onRowClick() {},
-    onRowDoubleClick() {},
-    onRowContextMenu() {},
-    onRowMouseEnter() {},
-    onRowMouseLeave() {},
     prefixCls: 'rc-table',
     bodyStyle: {},
     style: {},
@@ -81,6 +83,12 @@ export default class Table extends React.Component {
 
   constructor(props) {
     super(props);
+
+    deprecate('onRowClick', props);
+    deprecate('onRowDoubleClick', props);
+    deprecate('onRowContextMenu', props);
+    deprecate('onRowMouseEnter', props);
+    deprecate('onRowMouseLeave', props);
 
     this.columnManager = new ColumnManager(props.columns, props.children);
 

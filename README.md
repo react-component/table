@@ -207,6 +207,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Set custom props per each row.</td>
     </tr>
     <tr>
+      <td>onHeaderRow</td>
+      <td>Function(record, index)</td>
+      <td></td>
+      <td>Set custom props per each header row.</td>
+    </tr>
+    <tr>
       <td>showHeader</td>
       <td>Boolean</td>
       <td>true</td>
@@ -320,6 +326,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>Function(record)</td>
       <td></td>
       <td>Set custom props per each cell.</td>
+    </tr>
+    <tr>
+      <td>onHeaderCell</td>
+      <td>Function(record)</td>
+      <td></td>
+      <td>Set custom props per each header cell.</td>
     </tr>
     <tr>
       <td>render</td>

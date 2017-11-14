@@ -58,7 +58,9 @@ class ExpandableRow extends React.Component {
     if (expandRowByClick) {
       this.handleExpandChange(record, event);
     }
-    onRowClick(record, index, event);
+    if (onRowClick) {
+      onRowClick(record, index, event);
+    }
   }
 
   renderExpandIcon = () => {

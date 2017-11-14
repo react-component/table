@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableCell from './TableCell';
+import { warningOnce } from './utils';
 
 class TableRow extends React.Component {
   static propTypes = {
@@ -43,11 +44,6 @@ class TableRow extends React.Component {
 
   static defaultProps = {
     onRow() {},
-    onRowClick() {},
-    onRowDoubleClick() {},
-    onRowContextMenu() {},
-    onRowMouseEnter() {},
-    onRowMouseLeave() {},
     expandIconColumnIndex: 0,
     expandRowByClick: false,
     onHover() {},
@@ -82,29 +78,39 @@ class TableRow extends React.Component {
 
   onRowClick = (event) => {
     const { record, index, onRowClick } = this.props;
-    onRowClick(record, index, event);
+    if (onRowClick) {
+      onRowClick(record, index, event);
+    }
   }
 
   onRowDoubleClick = (event) => {
     const { record, index, onRowDoubleClick } = this.props;
-    onRowDoubleClick(record, index, event);
+    if (onRowDoubleClick) {
+      onRowDoubleClick(record, index, event);
+    }
   }
 
   onContextMenu = (event) => {
     const { record, index, onRowContextMenu } = this.props;
-    onRowContextMenu(record, index, event);
+    if (onRowContextMenu) {
+      onRowContextMenu(record, index, event);
+    }
   }
 
   onMouseEnter = (event) => {
     const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
     onHover(true, rowKey);
-    onRowMouseEnter(record, index, event);
+    if (onRowMouseEnter) {
+      onRowMouseEnter(record, index, event);
+    }
   }
 
   onMouseLeave = (event) => {
     const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
     onHover(false, rowKey);
-    onRowMouseLeave(record, index, event);
+    if (onRowMouseLeave) {
+      onRowMouseLeave(record, index, event);
+    }
   }
 
   setHeight() {
@@ -173,6 +179,13 @@ class TableRow extends React.Component {
     renderExpandIconCell(cells);
 
     for (let i = 0; i < columns.length; i++) {
+      const column = columns[i];
+
+      warningOnce(
+        column.onCellClick === undefined,
+        'column[onCellClick] is deprecated, please use column[onCell] instead.',
+      );
+
       cells.push(
         <TableCell
           prefixCls={prefixCls}
@@ -180,8 +193,8 @@ class TableRow extends React.Component {
           indentSize={indentSize}
           indent={indent}
           index={index}
-          column={columns[i]}
-          key={columns[i].key || columns[i].dataIndex}
+          column={column}
+          key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
           component={BodyCell}
         />
