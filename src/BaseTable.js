@@ -147,15 +147,23 @@ class BaseTable extends React.Component {
     const Table = hasBody ? components.table : 'table';
     const BodyWrapper = components.body.wrapper;
 
+    let body;
+    if (hasBody) {
+      body = (
+        <BodyWrapper className={`${prefixCls}-tbody`}>
+          {this.renderRows(data, 0)}
+        </BodyWrapper>
+      );
+      if (getBodyWrapper) {
+        body = getBodyWrapper(body);
+      }
+    }
+
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
         {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
-        {hasBody && getBodyWrapper(
-          <BodyWrapper className={`${prefixCls}-tbody`}>
-            {this.renderRows(data, 0)}
-          </BodyWrapper>
-        )}
+        {body}
       </Table>
     );
   }

@@ -58,6 +58,7 @@ describe('Table', () => {
   });
 
   it('renders table body to the wrapper', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const getBodyWrapper = (body) => (
       <tbody className="custom-wapper">
         {body.props.children}
@@ -65,6 +66,10 @@ describe('Table', () => {
     );
     const wrapper = render(createTable({ getBodyWrapper }));
     expect(wrapper).toMatchSnapshot();
+    expect(spy.mock.calls[0][0]).toMatch(
+      'Warning: getBodyWrapper is deprecated, please use custom components instead.',
+    );
+    spy.mockRestore();
   });
 
   xit('sets row refs', () => {
