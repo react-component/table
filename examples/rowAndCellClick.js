@@ -56,8 +56,12 @@ var columns = [{
       ' (Trigger Cell Click)'
     );
   },
-  onCellClick: function onCellClick(record, e) {
-    console.log('Click cell', record, e.target);
+  onCell: function onCell(record) {
+    return {
+      onClick: function onClick(e) {
+        console.log('Click cell', record, e.target);
+      }
+    };
   }
 }, {
   title: 'Address',
@@ -120,8 +124,12 @@ var data = [{
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], {
   columns: columns,
   data: data,
-  onRowClick: onRowClick,
-  onRowDoubleClick: onRowDoubleClick
+  onRow: function onRow(record, index) {
+    return {
+      onClick: onRowClick.bind(null, record, index),
+      onDoubleClick: onRowDoubleClick.bind(null, record, index)
+    };
+  }
 }), document.getElementById('__react-content'));
 
 /***/ })

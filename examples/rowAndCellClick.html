@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowAndCellClick.js - example - rc-table@6.0.0</title>
+  <title>rowAndCellClick.js - example - rc-table@6.1.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.0.0</h1>
+      <h1>rc-table@6.1.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -300,9 +300,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   render: (text) =&gt; (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
   )</span>,
-  onCellClick: (record, e) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Click cell'</span>, record, e.target);
-  },
+  onCell: (record) =&gt; ({
+    onClick(e) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Click cell'</span>, record, e.target);
+    },
+  }),
 }, {
   title: <span class="hljs-string">'Address'</span>,
   dataIndex: <span class="hljs-string">'address'</span>,
@@ -365,9 +367,11 @@ ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
     <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
     <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-    <span class="hljs-attribute">onRowClick</span>=<span class="hljs-value">{onRowClick}</span>
-    <span class="hljs-attribute">onRowDoubleClick</span>=<span class="hljs-value">{onRowDoubleClick}</span>
-  /&gt;</span>,
+    <span class="hljs-attribute">onRow</span>=<span class="hljs-value">{(record,</span> <span class="hljs-attribute">index</span>) =&gt;</span> ({
+      onClick: onRowClick.bind(null, record, index),
+      onDoubleClick: onRowDoubleClick.bind(null, record, index),
+    })}
+  /&gt;,
   document.getElementById('__react-content')
 );
 </span></code></pre></div>
