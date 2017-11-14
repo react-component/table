@@ -29,9 +29,11 @@ const columns = [{
   render: (text) => (
     <span>{text} (Trigger Cell Click)</span>
   ),
-  onCellClick: (record, e) => {
-    console.log('Click cell', record, e.target);
-  },
+  onCell: (record) => ({
+    onClick(e) {
+      console.log('Click cell', record, e.target);
+    },
+  }),
 }, {
   title: 'Address',
   dataIndex: 'address',
@@ -94,8 +96,10 @@ ReactDOM.render(
   <Table
     columns={columns}
     data={data}
-    onRowClick={onRowClick}
-    onRowDoubleClick={onRowDoubleClick}
+    onRow={(record, index) => ({
+      onClick: onRowClick.bind(null, record, index),
+      onDoubleClick: onRowDoubleClick.bind(null, record, index),
+    })}
   />,
   document.getElementById('__react-content')
 );
