@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
+import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 
@@ -162,8 +163,9 @@ class BaseTable extends React.Component {
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
-        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
+        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
         {body}
+        <TableFooter columns={columns} />
       </Table>
     );
   }
