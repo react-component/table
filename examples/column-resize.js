@@ -74,7 +74,7 @@ class Demo extends React.Component {
 
     return (
       <div>
-        <h2>simple table</h2>
+        <h2>Integrate with react-resizable</h2>
         <Table components={this.components} columns={columns} data={this.data} />
       </div>
     );
