@@ -401,7 +401,7 @@ var Demo = function (_React$Component) {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h2',
         null,
-        'simple table'
+        'Integrate with react-resizable'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_table__["a" /* default */], { components: this.components, columns: columns, data: this.data })
     );
