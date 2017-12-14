@@ -70,6 +70,10 @@ class TableRow extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return !!(this.props.visible || nextProps.visible);
+  }
+
   componentDidUpdate() {
     if (this.shouldRender && !this.rowRef) {
       this.saveRowRef();
