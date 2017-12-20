@@ -72,6 +72,12 @@ describe('Table', () => {
     spy.mockRestore();
   });
 
+  it('renders with id correctly', () => {
+    const testId = 'test-identifier';
+    const wrapper = mount(createTable({ id: testId }));
+    expect(wrapper.find(`div#${testId}`)).toHaveLength(1);
+  });
+
   xit('sets row refs', () => {
     const wrapper = mount(createTable({ rowRef: (record) => record.key }));
     expect(wrapper.instance().refs.key0).toBe(wrapper.find('TableRow').at(0).instance());
