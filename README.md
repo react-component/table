@@ -84,6 +84,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>additional className</td>
     </tr>
     <tr>
+      <td>id</td>
+      <td>String</td>
+      <td></td>
+      <td>identifier of the container div</td>
+    </tr>
+    <tr>
       <td>useFixedHeader</td>
       <td>Boolean</td>
       <td>false</td>
