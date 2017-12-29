@@ -30,6 +30,7 @@ export default class Table extends React.Component {
     onRowMouseLeave: PropTypes.func,
     showHeader: PropTypes.bool,
     title: PropTypes.func,
+    id: PropTypes.string,
     footer: PropTypes.func,
     emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     scroll: PropTypes.object,
@@ -454,6 +455,7 @@ export default class Table extends React.Component {
                 ref={this.saveRef('tableNode')}
                 className={className}
                 style={props.style}
+                id={props.id}
               >
                 {this.renderTitle()}
                 <div className={`${prefixCls}-content`}>
