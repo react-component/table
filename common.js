@@ -870,7 +870,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(13);
-var createDesc = __webpack_require__(43);
+var createDesc = __webpack_require__(44);
 module.exports = __webpack_require__(14) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -905,7 +905,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(71)('wks');
-var uid = __webpack_require__(45);
+var uid = __webpack_require__(46);
 var Symbol = __webpack_require__(11).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -1128,90 +1128,13 @@ module.exports = warning;
 
 /***/ }),
 /* 36 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */
-/***/ (function(module, exports) {
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(112);
-var enumBugKeys = __webpack_require__(72);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["b"] = measureScrollbar;
 /* harmony export (immutable) */ __webpack_exports__["a"] = debounce;
-/* harmony export (immutable) */ __webpack_exports__["c"] = warningOnce;
+/* harmony export (immutable) */ __webpack_exports__["d"] = warningOnce;
+/* harmony export (immutable) */ __webpack_exports__["c"] = remove;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 
@@ -1285,6 +1208,91 @@ function warningOnce(condition, format, args) {
     warned[format] = !condition;
   }
 }
+
+function remove(array, item) {
+  var index = array.indexOf(item);
+  var front = array.slice(0, index);
+  var last = array.slice(index + 1, array.length);
+  return front.concat(last);
+}
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */
+/***/ (function(module, exports) {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(112);
+var enumBugKeys = __webpack_require__(72);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports) {
+
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
 
 /***/ }),
 /* 48 */
@@ -1527,7 +1535,7 @@ module.exports = Object.create || function create(O, Properties) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(71)('keys');
-var uid = __webpack_require__(45);
+var uid = __webpack_require__(46);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -2168,8 +2176,8 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(46);
-var createDesc = __webpack_require__(43);
+var pIE = __webpack_require__(47);
+var createDesc = __webpack_require__(44);
 var toIObject = __webpack_require__(26);
 var toPrimitive = __webpack_require__(67);
 var has = __webpack_require__(20);
@@ -2831,7 +2839,7 @@ BaseTable.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_mini_store__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_mini_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_mini_store__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__TableCell__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils__ = __webpack_require__(36);
 
 
 
@@ -3015,7 +3023,7 @@ var TableRow = function (_React$Component) {
     for (var i = 0; i < columns.length; i++) {
       var column = columns[i];
 
-      Object(__WEBPACK_IMPORTED_MODULE_9__utils__["c" /* warningOnce */])(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
+      Object(__WEBPACK_IMPORTED_MODULE_9__utils__["d" /* warningOnce */])(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
 
       cells.push(__WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__TableCell__["a" /* default */], {
         prefixCls: prefixCls,
@@ -3252,7 +3260,7 @@ module.exports = function (it) {
 "use strict";
 
 var create = __webpack_require__(69);
-var descriptor = __webpack_require__(43);
+var descriptor = __webpack_require__(44);
 var setToStringTag = __webpack_require__(73);
 var IteratorPrototype = {};
 
@@ -3271,7 +3279,7 @@ module.exports = function (Constructor, NAME, next) {
 
 var dP = __webpack_require__(13);
 var anObject = __webpack_require__(32);
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(45);
 
 module.exports = __webpack_require__(14) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -3480,7 +3488,7 @@ var META = __webpack_require__(183).KEY;
 var $fails = __webpack_require__(33);
 var shared = __webpack_require__(71);
 var setToStringTag = __webpack_require__(73);
-var uid = __webpack_require__(45);
+var uid = __webpack_require__(46);
 var wks = __webpack_require__(27);
 var wksExt = __webpack_require__(74);
 var wksDefine = __webpack_require__(75);
@@ -3490,12 +3498,12 @@ var anObject = __webpack_require__(32);
 var isObject = __webpack_require__(25);
 var toIObject = __webpack_require__(26);
 var toPrimitive = __webpack_require__(67);
-var createDesc = __webpack_require__(43);
+var createDesc = __webpack_require__(44);
 var _create = __webpack_require__(69);
 var gOPNExt = __webpack_require__(186);
 var $GOPD = __webpack_require__(117);
 var $DP = __webpack_require__(13);
-var $keys = __webpack_require__(44);
+var $keys = __webpack_require__(45);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -3619,7 +3627,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(116).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(46).f = $propertyIsEnumerable;
+  __webpack_require__(47).f = $propertyIsEnumerable;
   __webpack_require__(76).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(66)) {
@@ -3709,7 +3717,7 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(45)('meta');
+var META = __webpack_require__(46)('meta');
 var isObject = __webpack_require__(25);
 var has = __webpack_require__(20);
 var setDesc = __webpack_require__(13).f;
@@ -3769,9 +3777,9 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(45);
 var gOPS = __webpack_require__(76);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(47);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -3952,9 +3960,9 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(200) });
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(45);
 var gOPS = __webpack_require__(76);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(47);
 var toObject = __webpack_require__(115);
 var IObject = __webpack_require__(113);
 var $assign = Object.assign;
@@ -21246,7 +21254,7 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_shallowequal__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_shallowequal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_shallowequal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_Dom_addEventListener__ = __webpack_require__(124);
@@ -21288,7 +21296,7 @@ var Table = function (_React$Component) {
     _this.getRowKey = function (record, index) {
       var rowKey = _this.props.rowKey;
       var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-      Object(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* warningOnce */])(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
+      Object(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* warningOnce */])(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
       return key === undefined ? index : key;
     };
 
@@ -21385,10 +21393,10 @@ var Table = function (_React$Component) {
     };
 
     ['onRowClick', 'onRowDoubleClick', 'onRowContextMenu', 'onRowMouseEnter', 'onRowMouseLeave'].forEach(function (name) {
-      Object(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* warningOnce */])(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
+      Object(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* warningOnce */])(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
     });
 
-    Object(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* warningOnce */])(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
+    Object(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* warningOnce */])(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
 
     _this.columnManager = new __WEBPACK_IMPORTED_MODULE_11__ColumnManager__["a" /* default */](props.columns, props.children);
 
@@ -21664,7 +21672,8 @@ var Table = function (_React$Component) {
             {
               ref: _this2.saveRef('tableNode'),
               className: className,
-              style: props.style
+              style: props.style,
+              id: props.id
             },
             _this2.renderTitle(),
             __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -21701,6 +21710,7 @@ Table.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___de
   onRowMouseLeave: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   showHeader: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
   title: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  id: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   footer: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   emptyText: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func]),
   scroll: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
@@ -25222,7 +25232,7 @@ function stubFalse() {
 
 module.exports = merge;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36), __webpack_require__(49)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37), __webpack_require__(49)(module)))
 
 /***/ }),
 /* 221 */
@@ -25432,7 +25442,7 @@ var ColumnManager = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BaseTable__ = __webpack_require__(128);
 
 
@@ -26815,7 +26825,7 @@ function get(object, path, defaultValue) {
 
 module.exports = get;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
 
 /***/ }),
 /* 228 */
@@ -27068,7 +27078,7 @@ ExpandIcon.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BaseTable__ = __webpack_require__(128);
 
 
@@ -27205,6 +27215,8 @@ BodyTable.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_mini_store__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_mini_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_mini_store__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TableRow__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils__ = __webpack_require__(36);
+
 
 
 
@@ -27391,12 +27403,12 @@ var _initialiseProps = function _initialiseProps() {
 
     if (expanded) {
       // row was expaned
-      expandedRowKeys.push(rowKey);
+      expandedRowKeys = [].concat(expandedRowKeys, [rowKey]);
     } else {
       // row was collapse
       var expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys.splice(expandedRowIndex, 1);
+        expandedRowKeys = Object(__WEBPACK_IMPORTED_MODULE_8__utils__["c" /* remove */])(expandedRowKeys, rowKey);
       }
     }
 
