@@ -69,3 +69,10 @@ export function warningOnce(condition, format, args) {
     warned[format] = !condition;
   }
 }
+
+export function remove(array, item) {
+  const index = array.indexOf(item);
+  const front = array.slice(0, index);
+  const last = array.slice(index + 1, array.length);
+  return front.concat(last);
+}

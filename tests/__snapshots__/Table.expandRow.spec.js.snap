@@ -363,7 +363,7 @@ exports[`Table.expand expand row by click 1`] = `
                 style="padding-left: 0px;"
               />
               <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed"
+                class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
             </td>
@@ -375,7 +375,6 @@ exports[`Table.expand expand row by click 1`] = `
           </tr>
           <tr
             class="rc-table-expanded-row  rc-table-expanded-row-level-1"
-            style="display: none;"
           >
             <td
               class=""

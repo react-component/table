@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableRow from './TableRow';
+import { remove } from './utils';
 
 class ExpandableTable extends React.Component {
   static propTypes = {
@@ -84,16 +85,16 @@ class ExpandableTable extends React.Component {
     }
 
     const { onExpandedRowsChange, onExpand } = this.props;
-    const { expandedRowKeys } = this.store.getState();
+    let { expandedRowKeys } = this.store.getState();
 
     if (expanded) {
       // row was expaned
-      expandedRowKeys.push(rowKey);
+      expandedRowKeys = [...expandedRowKeys, rowKey];
     } else {
       // row was collapse
       const expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys.splice(expandedRowIndex, 1);
+        expandedRowKeys = remove(expandedRowKeys, rowKey);
       }
     }
 
