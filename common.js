@@ -2979,7 +2979,7 @@ var TableRow = function (_React$Component) {
   TableRow.prototype.saveRowRef = function saveRowRef() {
     this.rowRef = __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.findDOMNode(this);
 
-    if (!this.props.fixed) {
+    if (!this.props.fixed && this.props.expandedRow) {
       this.setHeight();
     }
   };
@@ -3093,7 +3093,8 @@ TableRow.propTypes = {
   fixed: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool]),
   renderExpandIcon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   renderExpandIconCell: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  components: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any
+  components: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any,
+  expandedRow: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool
 };
 TableRow.defaultProps = {
   onRow: function onRow() {},
@@ -27327,7 +27328,8 @@ var ExpandableTable = function (_React$Component) {
       indentSize: indentSize,
       indent: indent,
       fixed: fixed,
-      components: components
+      components: components,
+      expandedRow: true
     });
   };
 
