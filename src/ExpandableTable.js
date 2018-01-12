@@ -168,6 +168,7 @@ class ExpandableTable extends React.Component {
         indent={indent}
         fixed={fixed}
         components={components}
+        expandedRow
       />
     );
   }

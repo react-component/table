@@ -40,6 +40,7 @@ class TableRow extends React.Component {
     renderExpandIcon: PropTypes.func,
     renderExpandIconCell: PropTypes.func,
     components: PropTypes.any,
+    expandedRow: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -142,7 +143,7 @@ class TableRow extends React.Component {
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
 
-    if (!this.props.fixed) {
+    if (!this.props.fixed && this.props.expandedRow) {
       this.setHeight();
     }
   }
