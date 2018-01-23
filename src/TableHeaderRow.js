@@ -16,7 +16,13 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
         if (column.align) {
           cellProps.style = { textAlign: column.align };
         }
-        return <HeaderCell {...cellProps} {...customProps} key={i} />;
+        return (
+          <HeaderCell
+            {...cellProps}
+            {...customProps}
+            key={column.key || column.dataIndex || i}
+          />
+        );
       })}
     </HeaderRow>
   );
