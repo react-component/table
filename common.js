@@ -25720,7 +25720,9 @@ function TableHeaderRow(_ref) {
       if (column.align) {
         cellProps.style = { textAlign: column.align };
       }
-      return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(HeaderCell, __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, cellProps, customProps, { key: i }));
+      return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(HeaderCell, __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, cellProps, customProps, {
+        key: column.key || column.dataIndex || i
+      }));
     })
   );
 }
