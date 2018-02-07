@@ -25730,9 +25730,14 @@ function TableHeaderRow(_ref) {
 function getRowHeight(state, props) {
   var fixedColumnsHeadRowsHeight = state.fixedColumnsHeadRowsHeight;
   var columns = props.columns,
-      rows = props.rows;
+      rows = props.rows,
+      fixed = props.fixed;
 
   var headerHeight = fixedColumnsHeadRowsHeight[0];
+
+  if (!fixed) {
+    return null;
+  }
 
   if (headerHeight && columns) {
     if (headerHeight === 'auto') {
@@ -27429,7 +27434,7 @@ var _initialiseProps = function _initialiseProps() {
         prefixCls = _props4.prefixCls,
         expandIconAsCell = _props4.expandIconAsCell;
 
-    if (!expandIconAsCell || fixed === 'right') {
+    if (!expandIconAsCell || fixed === 'right' || !rows.length) {
       return;
     }
 
