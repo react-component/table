@@ -108,7 +108,7 @@ class ExpandableTable extends React.Component {
 
   renderExpandIndentCell = (rows, fixed) => {
     const { prefixCls, expandIconAsCell } = this.props;
-    if (!expandIconAsCell || fixed === 'right') {
+    if (!expandIconAsCell || fixed === 'right' || !rows.length) {
       return;
     }
 
