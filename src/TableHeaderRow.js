@@ -30,8 +30,12 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
 
 function getRowHeight(state, props) {
   const { fixedColumnsHeadRowsHeight } = state;
-  const { columns, rows } = props;
+  const { columns, rows, fixed } = props;
   const headerHeight = fixedColumnsHeadRowsHeight[0];
+
+  if (!fixed) {
+    return null;
+  }
 
   if (headerHeight && columns) {
     if (headerHeight === 'auto') {
