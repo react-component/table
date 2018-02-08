@@ -41,6 +41,8 @@ class TableRow extends React.Component {
     renderExpandIconCell: PropTypes.func,
     components: PropTypes.any,
     expandedRow: PropTypes.bool,
+    isAnyColumnsFixed: PropTypes.bool,
+    ancestorKeys: PropTypes.array.isRequired,
   }
 
   static defaultProps = {
@@ -118,12 +120,23 @@ class TableRow extends React.Component {
     }
   }
 
-  setHeight() {
+  setExpanedRowHeight() {
     const { store, rowKey } = this.props;
-    const { expandedRowsHeight } = store.getState();
+    let { expandedRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
-    expandedRowsHeight[rowKey] = height;
+    expandedRowsHeight = {
+      ...expandedRowsHeight,
+      [rowKey]: height,
+    };
     store.setState({ expandedRowsHeight });
+  }
+
+  setRowHeight() {
+    const { store, index } = this.props;
+    const fixedColumnsBodyRowsHeight = store.getState().fixedColumnsBodyRowsHeight.slice();
+    const height = this.rowRef.getBoundingClientRect().height;
+    fixedColumnsBodyRowsHeight[index] = height;
+    store.setState({ fixedColumnsBodyRowsHeight });
   }
 
   getStyle() {
@@ -143,8 +156,18 @@ class TableRow extends React.Component {
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
 
-    if (!this.props.fixed && this.props.expandedRow) {
-      this.setHeight();
+    const { isAnyColumnsFixed, fixed, expandedRow, ancestorKeys } = this.props;
+
+    if (!isAnyColumnsFixed) {
+      return;
+    }
+
+    if (!fixed && expandedRow) {
+      this.setExpanedRowHeight();
+    }
+
+    if (!fixed && ancestorKeys.length >= 0) {
+      this.setRowHeight();
     }
   }
 

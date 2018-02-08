@@ -318,12 +318,13 @@ export default class Table extends React.Component {
 
   renderMainTable() {
     const { scroll, prefixCls } = this.props;
-    const scrollable =
-      this.columnManager.isAnyColumnsFixed() || scroll.x || scroll.y;
+    const isAnyColumnsFixed = this.columnManager.isAnyColumnsFixed();
+    const scrollable = isAnyColumnsFixed || scroll.x || scroll.y;
 
     const table = [
       this.renderTable({
         columns: this.columnManager.groupedColumns(),
+        isAnyColumnsFixed,
       }),
       this.renderEmptyText(),
       this.renderFooter(),
@@ -361,7 +362,7 @@ export default class Table extends React.Component {
   }
 
   renderTable(options) {
-    const { columns, fixed } = options;
+    const { columns, fixed, isAnyColumnsFixed } = options;
     const { prefixCls, scroll = {} } = this.props;
     const tableClassName = (scroll.x || fixed) ? `${prefixCls}-fixed` : '';
 
@@ -385,6 +386,7 @@ export default class Table extends React.Component {
         getRowKey={this.getRowKey}
         handleBodyScroll={this.handleBodyScroll}
         expander={this.expander}
+        isAnyColumnsFixed={isAnyColumnsFixed}
       />
     );
 

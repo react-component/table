@@ -5,7 +5,15 @@ import BaseTable from './BaseTable';
 
 export default function BodyTable(props, { table }) {
   const { prefixCls, scroll } = table.props;
-  const { columns, fixed, tableClassName, getRowKey, handleBodyScroll, expander } = props;
+  const {
+    columns,
+    fixed,
+    tableClassName,
+    getRowKey,
+    handleBodyScroll,
+    expander,
+    isAnyColumnsFixed,
+  } = props;
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
@@ -47,6 +55,7 @@ export default function BodyTable(props, { table }) {
       columns={columns}
       expander={expander}
       getRowKey={getRowKey}
+      isAnyColumnsFixed={isAnyColumnsFixed}
     />
   );
 
@@ -100,6 +109,7 @@ BodyTable.propTypes = {
   handleBodyScroll: PropTypes.func.isRequired,
   getRowKey: PropTypes.func.isRequired,
   expander: PropTypes.object.isRequired,
+  isAnyColumnsFixed: PropTypes.bool,
 };
 
 BodyTable.contextTypes = {
