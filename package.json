@@ -70,8 +70,7 @@
   "dependencies": {
     "babel-runtime": "6.x",
     "component-classes": "^1.2.6",
-    "lodash.get": "^4.4.2",
-    "lodash.merge": "^4.6.0",
+    "lodash": "^4.17.5",
     "mini-store": "^1.0.2",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",

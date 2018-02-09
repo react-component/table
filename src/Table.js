@@ -4,7 +4,7 @@ import { debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { Provider, create } from 'mini-store';
-import merge from 'lodash.merge';
+import merge from 'lodash/merge';
 import ColumnManager from './ColumnManager';
 import classes from 'component-classes';
 import HeadTable from './HeadTable';
