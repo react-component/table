@@ -37,7 +37,7 @@ ReactDOM.render(
     <Table
       useFixedHeader
       style={{ width: 800 }}
-      scroll={{ x: true, y: 300 }}
+      scroll={{ x: 1500, y: 300 }}
       columns={columns}
       data={data}
     />
