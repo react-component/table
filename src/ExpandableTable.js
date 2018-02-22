@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'mini-store';
-import TableRow from './TableRow';
-import { remove } from './utils';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "mini-store";
+import TableRow from "./TableRow";
+import { remove } from "./utils";
 
 class ExpandableTable extends React.Component {
   static propTypes = {
@@ -21,20 +21,20 @@ class ExpandableTable extends React.Component {
     store: PropTypes.object.isRequired,
     prefixCls: PropTypes.string.isRequired,
     data: PropTypes.array,
-    children: PropTypes.func.isRequired,
-  }
+    children: PropTypes.func.isRequired
+  };
 
   static defaultProps = {
     expandIconAsCell: false,
-    expandedRowClassName: () => '',
+    expandedRowClassName: () => "",
     expandIconColumnIndex: 0,
     defaultExpandAllRows: false,
     defaultExpandedRowKeys: [],
-    childrenColumnName: 'children',
+    childrenColumnName: "children",
     indentSize: 15,
     onExpand() {},
-    onExpandedRowsChange() {},
-  }
+    onExpandedRowsChange() {}
+  };
 
   constructor(props) {
     super(props);
@@ -45,7 +45,7 @@ class ExpandableTable extends React.Component {
       defaultExpandAllRows,
       expandedRowKeys,
       defaultExpandedRowKeys,
-      getRowKey,
+      getRowKey
     } = props;
 
     let finnalExpandedRowKeys = [];
@@ -66,14 +66,14 @@ class ExpandableTable extends React.Component {
 
     this.store.setState({
       expandedRowsHeight: {},
-      expandedRowKeys: finnalExpandedRowKeys,
+      expandedRowKeys: finnalExpandedRowKeys
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if ('expandedRowKeys' in nextProps) {
+    if ("expandedRowKeys" in nextProps) {
       this.store.setState({
-        expandedRowKeys: nextProps.expandedRowKeys,
+        expandedRowKeys: nextProps.expandedRowKeys
       });
     }
   }
@@ -104,56 +104,58 @@ class ExpandableTable extends React.Component {
 
     onExpandedRowsChange(expandedRowKeys);
     onExpand(expanded, record);
-  }
+  };
 
   renderExpandIndentCell = (rows, fixed) => {
     const { prefixCls, expandIconAsCell } = this.props;
-    if (!expandIconAsCell || fixed === 'right') {
+    if (!expandIconAsCell || fixed === "right") {
       return;
     }
 
     const iconColumn = {
-      key: 'rc-table-expand-icon-cell',
+      key: "rc-table-expand-icon-cell",
       className: `${prefixCls}-expand-icon-th`,
-      title: '',
-      rowSpan: rows.length,
+      title: "",
+      rowSpan: rows.length
     };
 
     rows[0].unshift({ ...iconColumn, column: iconColumn });
-  }
+  };
 
   renderExpandedRow(record, index, render, className, ancestorKeys, indent, fixed) {
     const { prefixCls, expandIconAsCell, indentSize } = this.props;
     let colCount;
-    if (fixed === 'left') {
+    if (fixed === "left") {
       colCount = this.columnManager.leftLeafColumns().length;
-    } else if (fixed === 'right') {
+    } else if (fixed === "right") {
       colCount = this.columnManager.rightLeafColumns().length;
     } else {
       colCount = this.columnManager.leafColumns().length;
     }
-    const columns = [{
-      key: 'extra-row',
-      render: () => ({
-        props: {
-          colSpan: colCount,
-        },
-        children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
-      }),
-    }];
-    if (expandIconAsCell && fixed !== 'right') {
+    const columns = [
+      {
+        key: "extra-row",
+        render: () => ({
+          props: {
+            colSpan: colCount
+          },
+          children: fixed !== "right" ? render(record, index, indent) : "&nbsp;"
+        })
+      }
+    ];
+    if (expandIconAsCell && fixed !== "right") {
       columns.unshift({
-        key: 'expand-icon-placeholder',
-        render: () => null,
+        key: "expand-icon-placeholder",
+        render: () => null
       });
     }
     const parentKey = ancestorKeys[ancestorKeys.length - 1];
     const rowKey = `${parentKey}-extra-row`;
     const components = {
       body: {
-        row: 'tr',
-        cell: 'td',
-      },
+        row: "tr",
+        cell: "td"
+      }
     };
 
     return (
@@ -188,21 +190,15 @@ class ExpandableTable extends React.Component {
           expandedRowClassName(record, index, indent),
           nextAncestorKeys,
           nextIndent,
-          fixed,
-        ),
+          fixed
+        )
       );
     }
 
     if (childrenData) {
-      rows.push(
-        ...renderRows(
-          childrenData,
-          nextIndent,
-          nextAncestorKeys,
-        )
-      );
+      rows.push(...renderRows(childrenData, nextIndent, nextAncestorKeys));
     }
-  }
+  };
 
   render() {
     const { data, childrenColumnName, children } = this.props;
@@ -213,7 +209,7 @@ class ExpandableTable extends React.Component {
       needIndentSpaced,
       renderRows: this.renderRows,
       handleExpandChange: this.handleExpandChange,
-      renderExpandIndentCell: this.renderExpandIndentCell,
+      renderExpandIndentCell: this.renderExpandIndentCell
     });
   }
 }

@@ -3,40 +3,45 @@ import PropTypes from "prop-types";
 import { measureScrollbar } from "./utils";
 import BaseTable from "./BaseTable";
 
-export default function HeadTable(props, { table }) {
-  const { prefixCls, scroll, showHeader } = table.props;
-  const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
+export default function FootTable(props, { table }) {
+  const { prefixCls, scroll, showFooter } = table.props;
+  const {
+    columns,
+    fixed,
+    tableClassName,
+    handleBodyScrollLeft,
+    expander
+  } = props;
   const { saveRef } = table;
-  let { useFixedHeader } = table.props;
-  const headStyle = {};
+  let { useFixedFooter } = table.props;
+  const footStyle = {};
 
   if (scroll.y) {
-    useFixedHeader = true;
+    useFixedFooter = true;
     // Add negative margin bottom for scroll bar overflow bug
     const scrollbarWidth = measureScrollbar();
     if (scrollbarWidth > 0 && !fixed) {
-      headStyle.marginBottom = `-${scrollbarWidth}px`;
-      headStyle.paddingBottom = "0px";
+      footStyle.paddingBottom = `${scrollbarWidth}px`;
     }
   }
 
-  if (!useFixedHeader || !showHeader) {
+  if (!useFixedFooter || !showFooter) {
     return null;
   }
 
   return (
     <div
-      key="headTable"
-      ref={fixed ? null : saveRef("headTable")}
-      className={`${prefixCls}-header`}
-      style={headStyle}
+      key="footTable"
+      ref={fixed ? null : saveRef("footTable")}
+      className={`${prefixCls}-footer`}
+      style={footStyle}
       onScroll={handleBodyScrollLeft}
     >
       <BaseTable
         tableClassName={tableClassName}
-        hasHead
+        hasHead={false}
         hasBody={false}
-        hasFoot={false}
+        hasFoot
         fixed={fixed}
         columns={columns}
         expander={expander}
@@ -45,7 +50,7 @@ export default function HeadTable(props, { table }) {
   );
 }
 
-HeadTable.propTypes = {
+FootTable.propTypes = {
   fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
@@ -53,6 +58,6 @@ HeadTable.propTypes = {
   expander: PropTypes.object.isRequired
 };
 
-HeadTable.contextTypes = {
+FootTable.contextTypes = {
   table: PropTypes.any
 };

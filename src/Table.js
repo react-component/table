@@ -1,20 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { debounce, warningOnce } from './utils';
-import shallowequal from 'shallowequal';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import { Provider, create } from 'mini-store';
-import merge from 'lodash.merge';
-import ColumnManager from './ColumnManager';
-import classes from 'component-classes';
-import HeadTable from './HeadTable';
-import BodyTable from './BodyTable';
-import ExpandableTable from './ExpandableTable';
+import React from "react";
+import PropTypes from "prop-types";
+import { debounce, warningOnce } from "./utils";
+import shallowequal from "shallowequal";
+import addEventListener from "rc-util/lib/Dom/addEventListener";
+import { Provider, create } from "mini-store";
+import merge from "lodash.merge";
+import ColumnManager from "./ColumnManager";
+import classes from "component-classes";
+import HeadTable from "./HeadTable";
+import BodyTable from "./BodyTable";
+import FootTable from "./FootTable";
+import ExpandableTable from "./ExpandableTable";
 
 export default class Table extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     useFixedHeader: PropTypes.bool,
+    useFixedFooter: PropTypes.bool,
     columns: PropTypes.array,
     prefixCls: PropTypes.string,
     bodyStyle: PropTypes.object,
@@ -23,12 +25,14 @@ export default class Table extends React.Component {
     rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     onRow: PropTypes.func,
     onHeaderRow: PropTypes.func,
+    onFooterRow: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowDoubleClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
     showHeader: PropTypes.bool,
+    showFooter: PropTypes.bool,
     title: PropTypes.func,
     id: PropTypes.string,
     footer: PropTypes.func,
@@ -42,57 +46,56 @@ export default class Table extends React.Component {
       header: PropTypes.shape({
         wrapper: PropTypes.any,
         row: PropTypes.any,
-        cell: PropTypes.any,
+        cell: PropTypes.any
       }),
       body: PropTypes.shape({
         wrapper: PropTypes.any,
         row: PropTypes.any,
-        cell: PropTypes.any,
+        cell: PropTypes.any
       }),
+      footer: PropTypes.shape({
+        wrapper: PropTypes.any,
+        row: PropTypes.any,
+        cell: PropTypes.any
+      })
     }),
-    ...ExpandableTable.PropTypes,
-  }
+    ...ExpandableTable.PropTypes
+  };
 
   static childContextTypes = {
     table: PropTypes.any,
-    components: PropTypes.any,
-  }
+    components: PropTypes.any
+  };
 
   static defaultProps = {
     data: [],
     useFixedHeader: false,
-    rowKey: 'key',
-    rowClassName: () => '',
+    useFixedFooter: false,
+    rowKey: "key",
+    rowClassName: () => "",
     onRow() {},
     onHeaderRow() {},
-    prefixCls: 'rc-table',
+    onFooterRow() {},
+    prefixCls: "rc-table",
     bodyStyle: {},
     style: {},
     showHeader: true,
+    showFooter: true,
     scroll: {},
     rowRef: () => null,
-    emptyText: () => 'No Data',
-  }
+    emptyText: () => "No Data"
+  };
 
   constructor(props) {
     super(props);
 
-    [
-      'onRowClick',
-      'onRowDoubleClick',
-      'onRowContextMenu',
-      'onRowMouseEnter',
-      'onRowMouseLeave',
-    ].forEach(name => {
-      warningOnce(
-        props[name] === undefined,
-        `${name} is deprecated, please use onRow instead.`,
-      );
+    ["onRowClick", "onRowDoubleClick", "onRowContextMenu", "onRowMouseEnter", "onRowMouseLeave"].forEach(name => {
+      warningOnce(props[name] === undefined, `${name} is deprecated, please use onRow instead.`);
     });
 
     warningOnce(
       props.getBodyWrapper === undefined,
-      'getBodyWrapper is deprecated, please use custom components instead.',
+      "getBodyWrapper is deprecated, please use custom components instead."
     );
 
     this.columnManager = new ColumnManager(props.columns, props.children);
@@ -101,9 +104,10 @@ export default class Table extends React.Component {
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
+      fixedColumnsFootRowsHeight: []
     });
 
-    this.setScrollPosition('left');
+    this.setScrollPosition("left");
 
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
@@ -114,29 +118,35 @@ export default class Table extends React.Component {
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
-        components: merge({
-          table: 'table',
-          header: {
-            wrapper: 'thead',
-            row: 'tr',
-            cell: 'th',
+        components: merge(
+          {
+            table: "table",
+            header: {
+              wrapper: "thead",
+              row: "tr",
+              cell: "th"
+            },
+            body: {
+              wrapper: "tbody",
+              row: "tr",
+              cell: "td"
+            },
+            footer: {
+              wrapper: "tfoot",
+              row: "tr",
+              cell: "th"
+            }
           },
-          body: {
-            wrapper: 'tbody',
-            row: 'tr',
-            cell: 'td',
-          },
-        }, this.props.components),
-      },
+          this.props.components
+        )
+      }
     };
   }
 
   componentDidMount() {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
-      this.resizeEvent = addEventListener(
-        window, 'resize', this.debouncedWindowResize
-      );
+      this.resizeEvent = addEventListener(window, "resize", this.debouncedWindowResize);
     }
   }
 
@@ -152,9 +162,7 @@ export default class Table extends React.Component {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
       if (!this.resizeEvent) {
-        this.resizeEvent = addEventListener(
-          window, 'resize', this.debouncedWindowResize
-        );
+        this.resizeEvent = addEventListener(window, "resize", this.debouncedWindowResize);
       }
     }
     // when table changes to empty, reset scrollLeft
@@ -174,21 +182,19 @@ export default class Table extends React.Component {
 
   getRowKey = (record, index) => {
     const rowKey = this.props.rowKey;
-    const key = (typeof rowKey === 'function') ?
-      rowKey(record, index) : record[rowKey];
+    const key = typeof rowKey === "function" ? rowKey(record, index) : record[rowKey];
     warningOnce(
       key !== undefined,
-      'Each record in table should have a unique `key` prop,' +
-      'or set `rowKey` to an unique primary key.'
+      "Each record in table should have a unique `key` prop," + "or set `rowKey` to an unique primary key."
     );
     return key === undefined ? index : key;
-  }
+  };
 
   setScrollPosition(position) {
     this.scrollPosition = position;
     if (this.tableNode) {
       const { prefixCls } = this.props;
-      if (position === 'both') {
+      if (position === "both") {
         classes(this.tableNode)
           .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
           .add(`${prefixCls}-scroll-position-left`)
@@ -204,24 +210,23 @@ export default class Table extends React.Component {
   setScrollPositionClassName() {
     const node = this.bodyTable;
     const scrollToLeft = node.scrollLeft === 0;
-    const scrollToRight = node.scrollLeft + 1 >=
-      node.children[0].getBoundingClientRect().width -
-      node.getBoundingClientRect().width;
+    const scrollToRight =
+      node.scrollLeft + 1 >= node.children[0].getBoundingClientRect().width - node.getBoundingClientRect().width;
     if (scrollToLeft && scrollToRight) {
-      this.setScrollPosition('both');
+      this.setScrollPosition("both");
     } else if (scrollToLeft) {
-      this.setScrollPosition('left');
+      this.setScrollPosition("left");
     } else if (scrollToRight) {
-      this.setScrollPosition('right');
-    } else if (this.scrollPosition !== 'middle') {
-      this.setScrollPosition('middle');
+      this.setScrollPosition("right");
+    } else if (this.scrollPosition !== "middle") {
+      this.setScrollPosition("middle");
     }
   }
 
   handleWindowResize = () => {
     this.syncFixedTableRowHeight();
     this.setScrollPositionClassName();
-  }
+  };
 
   syncFixedTableRowHeight = () => {
     const tableRect = this.tableNode.getBoundingClientRect();
@@ -231,27 +236,31 @@ export default class Table extends React.Component {
       return;
     }
     const { prefixCls } = this.props;
-    const headRows = this.headTable ?
-            this.headTable.querySelectorAll('thead') :
-            this.bodyTable.querySelectorAll('thead');
+    const headRows = this.headTable
+      ? this.headTable.querySelectorAll("thead")
+      : this.bodyTable.querySelectorAll("thead");
+    const footRows = this.footTable
+      ? this.footTable.querySelectorAll("tfoot")
+      : this.bodyTable.querySelectorAll("tfoot");
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
-    const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row => row.getBoundingClientRect().height || 'auto'
-    );
-    const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, row => row.getBoundingClientRect().height || 'auto'
-    );
+    const fixedColumnsHeadRowsHeight = [].map.call(headRows, row => row.getBoundingClientRect().height || "auto");
+    const fixedColumnsBodyRowsHeight = [].map.call(bodyRows, row => row.getBoundingClientRect().height || "auto");
+    const fixedColumnsFootRowsHeight = [].map.call(footRows, row => row.getBoundingClientRect().height || "auto");
     const state = this.store.getState();
-    if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+    if (
+      shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
+      shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
+      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+    ) {
       return;
     }
 
     this.store.setState({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
+      fixedColumnsFootRowsHeight
     });
-  }
+  };
 
   resetScrollX() {
     if (this.headTable) {
@@ -260,38 +269,58 @@ export default class Table extends React.Component {
     if (this.bodyTable) {
       this.bodyTable.scrollLeft = 0;
     }
+    if (this.footTable) {
+      this.footTable.scrollLeft = 0;
+    }
   }
 
   hasScrollX() {
     const { scroll = {} } = this.props;
-    return 'x' in scroll;
+    return "x" in scroll;
   }
 
-  handleBodyScrollLeft = (e) => {
+  handleBodyScrollLeft = e => {
     // Fix https://github.com/ant-design/ant-design/issues/7635
     if (e.currentTarget !== e.target) {
       return;
     }
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable } = this;
+    const { headTable, bodyTable, footTable } = this;
     if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
-      if (target === bodyTable && headTable) {
-        headTable.scrollLeft = target.scrollLeft;
-      } else if (target === headTable && bodyTable) {
-        bodyTable.scrollLeft = target.scrollLeft;
+      if (target === bodyTable) {
+        if (headTable) {
+          headTable.scrollLeft = target.scrollLeft;
+        }
+        if (footTable) {
+          footTable.scrollLeft = target.scrollLeft;
+        }
+      } else if (target === headTable) {
+        if (bodyTable) {
+          bodyTable.scrollLeft = target.scrollLeft;
+        }
+        if (footTable) {
+          footTable.scrollLeft = target.scrollLeft;
+        }
+      } else if (target === footTable && bodyTable) {
+        if (bodyTable) {
+          bodyTable.scrollLeft = target.scrollLeft;
+        }
+        if (headTable) {
+          headTable.scrollLeft = target.scrollLeft;
+        }
       }
       this.setScrollPositionClassName();
     }
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = target.scrollLeft;
-  }
+  };
 
-  handleBodyScrollTop = (e) => {
+  handleBodyScrollTop = e => {
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
-    if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
+    const { headTable, bodyTable, footTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+    if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable && target !== footTable) {
       const scrollTop = target.scrollTop;
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
@@ -305,33 +334,30 @@ export default class Table extends React.Component {
     }
     // Remember last scrollTop for scroll direction detecting.
     this.lastScrollTop = target.scrollTop;
-  }
+  };
 
-  handleBodyScroll = (e) => {
+  handleBodyScroll = e => {
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
-  }
+  };
 
-  saveRef = (name) => (node) => {
+  saveRef = name => node => {
     this[name] = node;
-  }
+  };
 
   renderMainTable() {
     const { scroll, prefixCls } = this.props;
-    const scrollable =
-      this.columnManager.isAnyColumnsFixed() || scroll.x || scroll.y;
+    const scrollable = this.columnManager.isAnyColumnsFixed() || scroll.x || scroll.y;
 
     const table = [
       this.renderTable({
-        columns: this.columnManager.groupedColumns(),
+        columns: this.columnManager.groupedColumns()
       }),
       this.renderEmptyText(),
-      this.renderFooter(),
+      this.renderFooter()
     ];
 
-    return scrollable ? (
-      <div className={`${prefixCls}-scroll`}>{table}</div>
-    ) : table;
+    return scrollable ? <div className={`${prefixCls}-scroll`}>{table}</div> : table;
   }
 
   renderLeftFixedTable() {
@@ -341,7 +367,7 @@ export default class Table extends React.Component {
       <div className={`${prefixCls}-fixed-left`}>
         {this.renderTable({
           columns: this.columnManager.leftColumns(),
-          fixed: 'left',
+          fixed: "left"
         })}
       </div>
     );
@@ -354,7 +380,7 @@ export default class Table extends React.Component {
       <div className={`${prefixCls}-fixed-right`}>
         {this.renderTable({
           columns: this.columnManager.rightColumns(),
-          fixed: 'right',
+          fixed: "right"
         })}
       </div>
     );
@@ -362,8 +388,8 @@ export default class Table extends React.Component {
 
   renderTable(options) {
     const { columns, fixed } = options;
-    const { prefixCls, scroll = {} } = this.props;
-    const tableClassName = (scroll.x || fixed) ? `${prefixCls}-fixed` : '';
+    const { prefixCls, scroll = {}, data } = this.props;
+    const tableClassName = scroll.x || fixed ? `${prefixCls}-fixed` : "";
 
     const headTable = (
       <HeadTable
@@ -388,7 +414,23 @@ export default class Table extends React.Component {
       />
     );
 
-    return [headTable, bodyTable];
+    const result = [headTable, bodyTable];
+
+    if (data.length) {
+      const footTable = (
+        <FootTable
+          key="foot"
+          columns={columns}
+          fixed={fixed}
+          tableClassName={tableClassName}
+          handleBodyScrollLeft={this.handleBodyScrollLeft}
+          expander={this.expander}
+        />
+      );
+      result.push(footTable);
+    }
+
+    return result;
   }
 
   renderTitle() {
@@ -417,7 +459,7 @@ export default class Table extends React.Component {
     const emptyClassName = `${prefixCls}-placeholder`;
     return (
       <div className={emptyClassName} key="emptyText">
-        {(typeof emptyText === 'function') ? emptyText() : emptyText}
+        {typeof emptyText === "function" ? emptyText() : emptyText}
       </div>
     );
   }
@@ -433,7 +475,10 @@ export default class Table extends React.Component {
     if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
       className += ` ${prefixCls}-fixed-header`;
     }
-    if (this.scrollPosition === 'both') {
+    if (props.useFixedFooter || (props.scroll && props.scroll.y)) {
+      className += ` ${prefixCls}-fixed-footer`;
+    }
+    if (this.scrollPosition === "both") {
       className += ` ${prefixCls}-scroll-position-left ${prefixCls}-scroll-position-right`;
     } else {
       className += ` ${prefixCls}-scroll-position-${this.scrollPosition}`;
@@ -443,20 +488,11 @@ export default class Table extends React.Component {
 
     return (
       <Provider store={this.store}>
-        <ExpandableTable
-          {...props}
-          columnManager={this.columnManager}
-          getRowKey={this.getRowKey}
-        >
-          {(expander) => {
+        <ExpandableTable {...props} columnManager={this.columnManager} getRowKey={this.getRowKey}>
+          {expander => {
             this.expander = expander;
             return (
-              <div
-                ref={this.saveRef('tableNode')}
-                className={className}
-                style={props.style}
-                id={props.id}
-              >
+              <div ref={this.saveRef("tableNode")} className={className} style={props.style} id={props.id}>
                 {this.renderTitle()}
                 <div className={`${prefixCls}-content`}>
                   {this.renderMainTable()}
