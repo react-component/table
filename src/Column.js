@@ -6,6 +6,7 @@ export default class Column extends Component {
     className: PropTypes.string,
     colSpan: PropTypes.number,
     title: PropTypes.node,
+    summary: PropTypes.node,
     dataIndex: PropTypes.string,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     fixed: PropTypes.oneOf([true, "left", "right"]),

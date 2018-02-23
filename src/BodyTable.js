@@ -4,7 +4,7 @@ import { measureScrollbar } from "./utils";
 import BaseTable from "./BaseTable";
 
 export default function BodyTable(props, { table }) {
-  const { prefixCls, scroll } = table.props;
+  const { prefixCls, scroll, showFooter } = table.props;
   const { columns, fixed, tableClassName, getRowKey, handleBodyScroll, expander } = props;
   const { saveRef } = table;
   let { useFixedHeader, useFixedFooter } = table.props;
@@ -12,18 +12,20 @@ export default function BodyTable(props, { table }) {
   const innerBodyStyle = {};
 
   if (scroll.x || fixed) {
-    bodyStyle.overflowX = bodyStyle.overflowX || "auto";
+    bodyStyle.overflowX = bodyStyle.overflowX || "scroll";
     // Fix weired webkit render bug
     // https://github.com/ant-design/ant-design/issues/7783
     bodyStyle.WebkitTransform = "translate3d (0, 0, 0)";
   }
 
   if (scroll.y) {
+    const scrollbarWidth = measureScrollbar();
     // maxHeight will make fixed-Table scrolling not working
     // so we only set maxHeight to body-Table here
     if (fixed) {
       innerBodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
       innerBodyStyle.overflowY = bodyStyle.overflowY || "scroll";
+      if (scrollbarWidth > 0 && !showFooter) innerBodyStyle.marginBottom = `-${scrollbarWidth}px`;
     } else {
       bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
     }
@@ -31,9 +33,7 @@ export default function BodyTable(props, { table }) {
     useFixedHeader = true;
     useFixedFooter = true;
 
-    // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar();
-    if (scrollbarWidth > 0 && fixed) {
+    if (scrollbarWidth > 0 && showFooter) {
       bodyStyle.marginBottom = `-${scrollbarWidth}px`;
       bodyStyle.paddingBottom = "0px";
     }

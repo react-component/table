@@ -18,8 +18,9 @@
 
   .@{tablePrefixCls}-scroll {
     overflow: auto;
+
     table {
-      width: auto;
+      //width: auto;
       min-width: 100%;
     }
   }
@@ -30,6 +31,7 @@
   }
 
   .@{tablePrefixCls}-footer {
+    position: relative;
     overflow: hidden;
     background: @table-foot-background-color;
   }
@@ -40,6 +42,7 @@
   }
 
   &-fixed-footer &-body {
+    overflow: scroll;
     background: #fff;
     position: relative;
   }
@@ -61,23 +64,13 @@
   }
 
   &-fixed-footer &-scroll &-footer {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: scroll;
     box-sizing: border-box;
   }
 
-  .@{tablePrefixCls}-title {
-    padding: @vertical-padding @horizontal-padding;
-    border-top: 1px solid @table-border-color;
-  }
-
   .@{tablePrefixCls}-content {
     position: relative;
-  }
-
-  .@{tablePrefixCls}-footer {
-    padding: @vertical-padding @horizontal-padding;
-    border-top: 1px solid @table-border-color;
   }
 
   .@{tablePrefixCls}-placeholder {

@@ -33,9 +33,7 @@ export default class Table extends React.Component {
     onRowMouseLeave: PropTypes.func,
     showHeader: PropTypes.bool,
     showFooter: PropTypes.bool,
-    title: PropTypes.func,
     id: PropTypes.string,
-    footer: PropTypes.func,
     emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
@@ -80,7 +78,7 @@ export default class Table extends React.Component {
     bodyStyle: {},
     style: {},
     showHeader: true,
-    showFooter: true,
+    showFooter: false,
     scroll: {},
     rowRef: () => null,
     emptyText: () => "No Data"
@@ -353,8 +351,7 @@ export default class Table extends React.Component {
       this.renderTable({
         columns: this.columnManager.groupedColumns()
       }),
-      this.renderEmptyText(),
-      this.renderFooter()
+      this.renderEmptyText()
     ];
 
     return scrollable ? <div className={`${prefixCls}-scroll`}>{table}</div> : table;
@@ -433,24 +430,6 @@ export default class Table extends React.Component {
     return result;
   }
 
-  renderTitle() {
-    const { title, prefixCls } = this.props;
-    return title ? (
-      <div className={`${prefixCls}-title`} key="title">
-        {title(this.props.data)}
-      </div>
-    ) : null;
-  }
-
-  renderFooter() {
-    const { footer, prefixCls } = this.props;
-    return footer ? (
-      <div className={`${prefixCls}-footer`} key="footer">
-        {footer(this.props.data)}
-      </div>
-    ) : null;
-  }
-
   renderEmptyText() {
     const { emptyText, prefixCls, data } = this.props;
     if (data.length) {
@@ -493,7 +472,6 @@ export default class Table extends React.Component {
             this.expander = expander;
             return (
               <div ref={this.saveRef("tableNode")} className={className} style={props.style} id={props.id}>
-                {this.renderTitle()}
                 <div className={`${prefixCls}-content`}>
                   {this.renderMainTable()}
                   {hasLeftFixed && this.renderLeftFixedTable()}

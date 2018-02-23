@@ -15,7 +15,7 @@ function getFooterRows(columns, currentRow = 0, rows) {
     const cell = {
       key: column.key,
       className: column.className || "",
-      children: column.title,
+      children: column.summary,
       column
     };
     if (column.children) {

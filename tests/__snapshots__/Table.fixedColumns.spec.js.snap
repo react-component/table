@@ -12,7 +12,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
     >
       <div
         class="rc-table-body"
-        style="overflow-x:auto;-webkit-transform:translate3d (0, 0, 0)"
+        style="overflow-x:scroll;-webkit-transform:translate3d (0, 0, 0)"
       >
         <table
           class="rc-table-fixed"

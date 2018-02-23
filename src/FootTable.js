@@ -5,24 +5,13 @@ import BaseTable from "./BaseTable";
 
 export default function FootTable(props, { table }) {
   const { prefixCls, scroll, showFooter } = table.props;
-  const {
-    columns,
-    fixed,
-    tableClassName,
-    handleBodyScrollLeft,
-    expander
-  } = props;
+  const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
   const { saveRef } = table;
   let { useFixedFooter } = table.props;
   const footStyle = {};
 
   if (scroll.y) {
     useFixedFooter = true;
-    // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar();
-    if (scrollbarWidth > 0 && !fixed) {
-      footStyle.paddingBottom = `${scrollbarWidth}px`;
-    }
   }
 
   if (!useFixedFooter || !showFooter) {
