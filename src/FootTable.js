@@ -3,40 +3,40 @@ import PropTypes from 'prop-types';
 import { measureScrollbar } from './utils';
 import BaseTable from './BaseTable';
 
-export default function HeadTable(props, { table }) {
-  const { prefixCls, scroll, showHeader } = table.props;
+export default function FootTable(props, { table }) {
+  const { prefixCls, scroll } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
-  const headStyle = {};
+  const footStyle = {};
 
   if (scroll.y) {
     useFixedHeader = true;
     // Add negative margin bottom for scroll bar overflow bug
     const scrollbarWidth = measureScrollbar();
     if (scrollbarWidth > 0 && !fixed) {
-      headStyle.marginBottom = `-${scrollbarWidth}px`;
-      headStyle.paddingBottom = '0px';
+      footStyle.marginBottom = `-${scrollbarWidth}px`;
+      footStyle.paddingBottom = '0px';
     }
   }
 
-  if (!useFixedHeader || !showHeader) {
+  if (!useFixedHeader) {
     return null;
   }
 
   return (
     <div
-      key="headTable"
-      ref={fixed ? null : saveRef('headTable')}
-      className={`${prefixCls}-header`}
-      style={headStyle}
+      key="footTable"
+      ref={fixed ? null : saveRef('footTable')}
+      className={`${prefixCls}-footer`}
+      style={footStyle}
       onScroll={handleBodyScrollLeft}
     >
       <BaseTable
         tableClassName={tableClassName}
-        hasHead
+        hasHead={false}
         hasBody={false}
-        hasFoot={false}
+        hasFoot
         fixed={fixed}
         columns={columns}
         expander={expander}
@@ -45,7 +45,7 @@ export default function HeadTable(props, { table }) {
   );
 }
 
-HeadTable.propTypes = {
+FootTable.propTypes = {
   fixed: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
@@ -56,6 +56,6 @@ HeadTable.propTypes = {
   expander: PropTypes.object.isRequired,
 };
 
-HeadTable.contextTypes = {
+FootTable.contextTypes = {
   table: PropTypes.any,
 };
