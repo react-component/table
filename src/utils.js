@@ -11,7 +11,7 @@ const scrollbarMeasure = {
   overflow: 'scroll',
 };
 
-export function measureScrollbar(type = 'width') {
+export function measureScrollbar(direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
@@ -26,9 +26,9 @@ export function measureScrollbar(type = 'width') {
   }
   document.body.appendChild(scrollDiv);
   let size = 0;
-  if (type === 'width') {
+  if (direction === 'vertical') {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if (type === 'height') {
+  } else if (direction === 'horizontal') {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
   }
 
