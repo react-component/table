@@ -26,12 +26,10 @@ export function measureScrollbar(type = 'width') {
   }
   document.body.appendChild(scrollDiv);
   let size = 0;
-  if (Object.is(type, 'width')) {
+  if (type === 'width') {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if (Object.is(type, 'height')) {
+  } else if (type === 'height') {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
-  } else {
-    warning('参数请传width,height或者不传');
   }
 
   document.body.removeChild(scrollDiv);
