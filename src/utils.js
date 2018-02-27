@@ -1,6 +1,6 @@
 import warning from 'warning';
 
-let scrollbarWidth;
+let scrollbarSize;
 
 // Measure scrollbar width for padding body during modal show/hide
 const scrollbarMeasure = {
@@ -11,12 +11,12 @@ const scrollbarMeasure = {
   overflow: 'scroll',
 };
 
-export function measureScrollbar() {
+export function measureScrollbar(direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  if (scrollbarWidth) {
-    return scrollbarWidth;
+  if (scrollbarSize) {
+    return scrollbarSize;
   }
   const scrollDiv = document.createElement('div');
   for (const scrollProp in scrollbarMeasure) {
@@ -25,10 +25,16 @@ export function measureScrollbar() {
     }
   }
   document.body.appendChild(scrollDiv);
-  const width = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  let size = 0;
+  if (direction === 'vertical') {
+    size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  } else if (direction === 'horizontal') {
+    size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
+  }
+
   document.body.removeChild(scrollDiv);
-  scrollbarWidth = width;
-  return scrollbarWidth;
+  scrollbarSize = size;
+  return scrollbarSize;
 }
 
 export function debounce(func, wait, immediate) {
