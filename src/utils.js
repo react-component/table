@@ -28,7 +28,7 @@ export function measureScrollbar(type = 'width') {
   let size = 0
   if (Object.is(type, 'width')) {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if(Object.is(type, 'height')) {
+  } else if (Object.is(type, 'height')) {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
   } else {
     warning('参数请传width,height或者不传')
