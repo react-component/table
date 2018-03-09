@@ -78,7 +78,7 @@ class ExpandableTable extends React.Component {
     }
   }
 
-  handleExpandChange = (expanded, record, event, rowKey) => {
+  handleExpandChange = (expanded, record, event, rowKey, destroy = false) => {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -103,7 +103,9 @@ class ExpandableTable extends React.Component {
     }
 
     onExpandedRowsChange(expandedRowKeys);
-    onExpand(expanded, record);
+    if (!destroy) {
+      onExpand(expanded, record);
+    }
   }
 
   renderExpandIndentCell = (rows, fixed) => {

@@ -49,7 +49,7 @@ class ExpandableRow extends React.Component {
   handleDestroy() {
     const { onExpandedChange, rowKey, record } = this.props;
     if (this.expandable) {
-      onExpandedChange(false, record, null, rowKey);
+      onExpandedChange(false, record, null, rowKey, true);
     }
   }
 
