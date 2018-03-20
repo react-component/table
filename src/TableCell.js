@@ -12,6 +12,7 @@ export default class TableCell extends React.Component {
     column: PropTypes.object,
     expandIcon: PropTypes.node,
     component: PropTypes.any,
+    shouldIndent: PropTypes.bool,
   }
 
   isInvalidRenderCellText(text) {
@@ -34,6 +35,7 @@ export default class TableCell extends React.Component {
       indent,
       index,
       expandIcon,
+      shouldIndent,
       column,
       component: BodyCell,
     } = this.props;
@@ -72,7 +74,7 @@ export default class TableCell extends React.Component {
       text = null;
     }
 
-    const indentText = expandIcon ? (
+    const indentText = (shouldIndent && indent > 0) ? (
       <span
         style={{ paddingLeft: `${indentSize * indent}px` }}
         className={`${prefixCls}-indent indent-level-${indent}`}

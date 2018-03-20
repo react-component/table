@@ -43,10 +43,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
@@ -75,10 +71,6 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
@@ -140,10 +132,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
@@ -173,10 +161,6 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
@@ -250,10 +234,6 @@ exports[`Table.expand expand all rows by default 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
@@ -282,10 +262,6 @@ exports[`Table.expand expand all rows by default 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
@@ -359,10 +335,6 @@ exports[`Table.expand expand row by click 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
@@ -391,10 +363,6 @@ exports[`Table.expand expand row by click 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left: 0px;"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
@@ -456,10 +424,6 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
@@ -476,10 +440,6 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
@@ -501,6 +461,99 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
               <p>
                 extra data
               </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table.expand indent cell when set expandIconAsCell for tree data 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-expand-icon-th"
+              rowspan="1"
+              title=""
+            />
+            <th
+              class=""
+            >
+              Name
+            </th>
+            <th
+              class=""
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class="rc-table-row-expand-icon-cell"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class=""
+            >
+              Lucy
+            </td>
+            <td
+              class=""
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class="rc-table-row-expand-icon-cell"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+            </td>
+            <td
+              class=""
+            >
+              Jack
+            </td>
+            <td
+              class=""
+            >
+              28
             </td>
           </tr>
         </tbody>
@@ -651,10 +704,6 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               27
@@ -671,10 +720,6 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
@@ -731,10 +776,6 @@ exports[`Table.expand renders expand row correctly 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
@@ -751,10 +792,6 @@ exports[`Table.expand renders expand row correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
@@ -816,10 +853,6 @@ exports[`Table.expand renders expend row class correctly 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
               Lucy
@@ -848,10 +881,6 @@ exports[`Table.expand renders expend row class correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
@@ -922,10 +951,6 @@ exports[`Table.expand renders fixed column correctly 1`] = `
                 class=""
               >
                 <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                <span
                   class="rc-table-row-expand-icon rc-table-row-collapsed"
                 />
                 Lucy
@@ -947,10 +972,6 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 <span
                   class="rc-table-row-expand-icon rc-table-row-collapsed"
                 />
@@ -1008,10 +1029,6 @@ exports[`Table.expand renders fixed column correctly 1`] = `
                   class=""
                 >
                   <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
-                  <span
                     class="rc-table-row-expand-icon rc-table-row-collapsed"
                   />
                   Lucy
@@ -1023,10 +1040,6 @@ exports[`Table.expand renders fixed column correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   <span
                     class="rc-table-row-expand-icon rc-table-row-collapsed"
                   />
@@ -1138,10 +1151,6 @@ exports[`Table.expand renders nested data correctly 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
@@ -1158,10 +1167,6 @@ exports[`Table.expand renders nested data correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-spaced"
               />
@@ -1223,10 +1228,6 @@ exports[`Table.expand renders tree row correctly 1`] = `
               class=""
             >
               <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
               />
               Lucy
@@ -1243,10 +1244,6 @@ exports[`Table.expand renders tree row correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <span
                 class="rc-table-row-expand-icon rc-table-row-spaced"
               />

@@ -170,4 +170,19 @@ describe('Table.expand', () => {
     wrapper.find('ExpandIcon').first().simulate('click');
     expect(wrapper.render()).toMatchSnapshot();
   });
+
+  it('indent cell when set expandIconAsCell for tree data', () => {
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, children: [
+        { key: 2, name: 'Jim', age: 1 },
+      ] },
+      { key: 1, name: 'Jack', age: 28 },
+    ];
+
+    const wrapper = render(createTable({
+      data,
+      expandIconAsCell: true,
+    }));
+    expect(wrapper).toMatchSnapshot();
+  });
 });

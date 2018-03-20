@@ -113,10 +113,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 123
               </td>
               <td
@@ -179,10 +175,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 cdd
               </td>
               <td
@@ -245,10 +237,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -293,10 +281,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -341,10 +325,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -389,10 +369,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -437,10 +413,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -485,10 +457,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -533,10 +501,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 133
               </td>
               <td
@@ -625,10 +589,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   123
                 </td>
                 <td
@@ -643,10 +603,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   cdd
                 </td>
                 <td
@@ -661,10 +617,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -677,10 +629,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -693,10 +641,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -709,10 +653,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -725,10 +665,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -741,10 +677,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td
@@ -757,10 +689,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 <td
                   class=""
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   133
                 </td>
                 <td

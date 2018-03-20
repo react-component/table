@@ -43,10 +43,6 @@ exports[`Table align column 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
             <td
@@ -60,10 +56,6 @@ exports[`Table align column 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
             <td
@@ -122,10 +114,6 @@ exports[`Table custom components renders correctly 1`] = `
               class=""
               name="my-body-cell"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -137,10 +125,6 @@ exports[`Table custom components renders correctly 1`] = `
               class=""
               name="my-body-cell"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -226,10 +210,6 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 class=""
                 name="my-body-cell"
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Lucy
               </td>
               <td
@@ -305,10 +285,6 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                   class=""
                   name="my-body-cell"
                 >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
                   Lucy
                 </td>
               </tr>
@@ -427,10 +403,6 @@ exports[`Table dataIndex render text by path 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               John
             </td>
             <td
@@ -445,10 +417,6 @@ exports[`Table dataIndex render text by path 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Terry
             </td>
             <td
@@ -503,10 +471,6 @@ exports[`Table renders colSpan correctly 1`] = `
               class=""
               colspan="2"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               John
             </td>
           </tr>
@@ -516,10 +480,6 @@ exports[`Table renders colSpan correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Terry
             </td>
             <td
@@ -573,10 +533,6 @@ exports[`Table renders column correctly 1`] = `
             <td
               class="name-class"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -586,10 +542,6 @@ exports[`Table renders column correctly 1`] = `
             <td
               class="name-class"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -606,20 +558,12 @@ Array [
     class=""
     id="cell-Lucy"
   >
-    <span
-      class="rc-table-row-indent indent-level-0"
-      style="padding-left:0px"
-    />
     Lucy
   </td>,
   <td
     class=""
     id="cell-Jack"
   >
-    <span
-      class="rc-table-row-indent indent-level-0"
-      style="padding-left:0px"
-    />
     Jack
   </td>,
 ]
@@ -670,10 +614,6 @@ exports[`Table renders correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="test-prefix-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -683,10 +623,6 @@ exports[`Table renders correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="test-prefix-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -733,10 +669,6 @@ exports[`Table renders correctly RowClassName as function 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -746,10 +678,6 @@ exports[`Table renders correctly RowClassName as function 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -796,10 +724,6 @@ exports[`Table renders correctly RowClassName as string 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -809,10 +733,6 @@ exports[`Table renders correctly RowClassName as string 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -859,10 +779,6 @@ exports[`Table renders custom cell correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <p>
                 Lucy
               </p>
@@ -874,10 +790,6 @@ exports[`Table renders custom cell correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               <p>
                 Jack
               </p>
@@ -1019,10 +931,6 @@ exports[`Table renders fixed header correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -1032,10 +940,6 @@ exports[`Table renders fixed header correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -1082,10 +986,6 @@ exports[`Table renders footer correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -1095,10 +995,6 @@ exports[`Table renders footer correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -1138,10 +1034,6 @@ Array [
     <td
       class=""
     >
-      <span
-        class="rc-table-row-indent indent-level-0"
-        style="padding-left:0px"
-      />
       Lucy
     </td>
   </tr>,
@@ -1153,10 +1045,6 @@ Array [
     <td
       class=""
     >
-      <span
-        class="rc-table-row-indent indent-level-0"
-        style="padding-left:0px"
-      />
       Jack
     </td>
   </tr>,
@@ -1205,10 +1093,6 @@ exports[`Table renders rowSpan correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               John
             </td>
             <td
@@ -1224,10 +1108,6 @@ exports[`Table renders rowSpan correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Terry
             </td>
           </tr>
@@ -1274,10 +1154,6 @@ exports[`Table renders table body to the wrapper 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -1287,10 +1163,6 @@ exports[`Table renders table body to the wrapper 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -1344,10 +1216,6 @@ exports[`Table renders title correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -1357,10 +1225,6 @@ exports[`Table renders title correctly 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -1396,10 +1260,6 @@ exports[`Table renders without header 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Lucy
             </td>
           </tr>
@@ -1409,10 +1269,6 @@ exports[`Table renders without header 1`] = `
             <td
               class=""
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
               Jack
             </td>
           </tr>
@@ -1464,10 +1320,6 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Lucy
               </td>
             </tr>
@@ -1477,10 +1329,6 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Jack
               </td>
             </tr>
@@ -1533,10 +1381,6 @@ exports[`Table scroll renders scroll.x is true 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Lucy
               </td>
             </tr>
@@ -1546,10 +1390,6 @@ exports[`Table scroll renders scroll.x is true 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Jack
               </td>
             </tr>
@@ -1612,10 +1452,6 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Lucy
               </td>
             </tr>
@@ -1625,10 +1461,6 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
               <td
                 class=""
               >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
                 Jack
               </td>
             </tr>

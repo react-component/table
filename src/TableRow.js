@@ -189,6 +189,7 @@ class TableRow extends React.Component {
       visible,
       components,
       hasExpandIcon,
+      expandedRow,
       renderExpandIcon,
       renderExpandIconCell,
     } = this.props;
@@ -214,6 +215,14 @@ class TableRow extends React.Component {
         'column[onCellClick] is deprecated, please use column[onCell] instead.',
       );
 
+      let shouldIndent = false;
+
+      if (hasExpandIcon(i)) {
+        shouldIndent = true;
+      } else if (i === 0 && !expandedRow) {
+        shouldIndent = true;
+      }
+
       cells.push(
         <TableCell
           prefixCls={prefixCls}
@@ -223,6 +232,7 @@ class TableRow extends React.Component {
           index={index}
           column={column}
           key={column.key || column.dataIndex}
+          shouldIndent={shouldIndent}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
           component={BodyCell}
         />
