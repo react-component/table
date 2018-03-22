@@ -271,6 +271,9 @@ export default class Table extends React.Component {
     if (this.bodyTable) {
       this.bodyTable.scrollLeft = 0;
     }
+    if (this.footTable) {
+      this.footTable.scrollLeft = 0;
+    }
   }
 
   hasScrollX() {
@@ -285,12 +288,17 @@ export default class Table extends React.Component {
     }
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable } = this;
+    const { headTable, bodyTable, footTable } = this;
     if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
-      if (target === bodyTable && headTable) {
-        headTable.scrollLeft = target.scrollLeft;
-      } else if (target === headTable && bodyTable) {
-        bodyTable.scrollLeft = target.scrollLeft;
+      if (target === bodyTable) {
+        if (headTable) headTable.scrollLeft = target.scrollLeft;
+        if (footTable) footTable.scrollLeft = target.scrollLeft;
+      } else if (target === headTable) {
+        if (bodyTable) bodyTable.scrollLeft = target.scrollLeft;
+        if (footTable) footTable.scrollLeft = target.scrollLeft;
+      } else if (target === footTable) {
+        if (bodyTable) bodyTable.scrollLeft = target.scrollLeft;
+        if (headTable) headTable.scrollLeft = target.scrollLeft;
       }
       this.setScrollPositionClassName();
     }
