@@ -9,6 +9,7 @@ import ColumnManager from './ColumnManager';
 import classes from 'component-classes';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
+import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
 
 export default class Table extends React.Component {
@@ -400,7 +401,18 @@ export default class Table extends React.Component {
       />
     );
 
-    return [headTable, bodyTable];
+    const footTable = (
+      <FootTable
+        key="foot"
+        columns={columns}
+        fixed={fixed}
+        tableClassName={tableClassName}
+        handleBodyScrollLeft={this.handleBodyScrollLeft}
+        expander={this.expander}
+      />
+    )
+
+    return [headTable, bodyTable, footTable];
   }
 
   renderTitle() {
