@@ -49,6 +49,11 @@ export default class Table extends React.Component {
         row: PropTypes.any,
         cell: PropTypes.any,
       }),
+      footer: PropTypes.shape({
+        wrapper: PropTypes.any,
+        row: PropTypes.any,
+        cell: PropTypes.any,
+      }),
     }),
     ...ExpandableTable.PropTypes,
   }
@@ -123,6 +128,11 @@ export default class Table extends React.Component {
           },
           body: {
             wrapper: 'tbody',
+            row: 'tr',
+            cell: 'td',
+          },
+          footer: {
+            wrapper: 'tfoot',
             row: 'tr',
             cell: 'td',
           },
