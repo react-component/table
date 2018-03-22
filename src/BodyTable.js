@@ -51,6 +51,7 @@ export default function BodyTable(props, { table }) {
       tableClassName={tableClassName}
       hasHead={!useFixedHeader}
       hasBody
+      hasFoot={!useFixedHeader}
       fixed={fixed}
       columns={columns}
       expander={expander}

@@ -36,6 +36,7 @@ export default function HeadTable(props, { table }) {
         tableClassName={tableClassName}
         hasHead
         hasBody={false}
+        hasFoot={false}
         fixed={fixed}
         columns={columns}
         expander={expander}

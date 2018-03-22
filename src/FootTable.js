@@ -28,7 +28,7 @@ export default function FootTable(props, { table }) {
     <div
       key="footTable"
       ref={fixed ? null : saveRef('footTable')}
-      className={`${prefixCls}-footer`}
+      className={`${prefixCls}-in-table-footer`}
       style={footStyle}
       onScroll={handleBodyScrollLeft}
     >
