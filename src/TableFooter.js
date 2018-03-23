@@ -46,7 +46,7 @@ export default function TableFooter(props, { table }) {
           <FooterCell
             key={col.key || col.dataIndex}
           >
-            {col.footer === undefined ? null : getColumnFooter(col)(data)}
+            {col.footer ? getColumnFooter(col)(data) : null}
           </FooterCell>
         )}
       </FooterRow>
