@@ -418,7 +418,7 @@ export default class Table extends React.Component {
         handleBodyScrollLeft={this.handleBodyScrollLeft}
         expander={this.expander}
       />
-    )
+    );
 
     return [headTable, bodyTable, footTable];
   }
