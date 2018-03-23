@@ -168,7 +168,7 @@ class BaseTable extends React.Component {
         <ColGroup columns={columns} fixed={fixed} />
         {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
         {body}
-        {hasFoot && <TableFooter columns={columns} fixed={fixed} /> }
+        {hasFoot && <TableFooter onHover={this.handleRowHover} columns={columns} fixed={fixed} /> }
       </Table>
     );
   }
