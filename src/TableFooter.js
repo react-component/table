@@ -15,10 +15,6 @@ export default function TableFooter(props, { table }) {
   const { prefixCls, data, expandIconAsCell } = table.props;
   const { fixed, onHover } = props;
 
-  if (!columnManager.leafColumns().some(col => col.footer)) {
-    return null;
-  }
-
   let leafColumns;
   if (fixed === 'left') {
     leafColumns = columnManager.leftLeafColumns();

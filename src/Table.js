@@ -409,7 +409,7 @@ export default class Table extends React.Component {
       />
     );
 
-    const footTable = (
+    const footTable = this.columnManager.hasFooter() ? (
       <FootTable
         key="foot"
         columns={columns}
@@ -418,7 +418,7 @@ export default class Table extends React.Component {
         handleBodyScrollLeft={this.handleBodyScrollLeft}
         expander={this.expander}
       />
-    );
+    ) : null;
 
     return [headTable, bodyTable, footTable];
   }
