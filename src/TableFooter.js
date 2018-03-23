@@ -2,10 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
+function getColumnFooter(col) {
+  if (typeof col.footer === 'function') return col.footer
+  return () => col.footer
+}
+
 export default function TableFooter(props, { table }) {
   const { columnManager, components, } = table;
   const { prefixCls, data, expandIconAsCell } = table.props;
   const { columns, fixed } = props;
+
+  if (!columnManager.leafColumns().some(col => col.footer)) {
+    return null;
+  }
 
   const expandIconCol = {
     key: 'expand-icon-placeholder',
@@ -27,10 +36,6 @@ export default function TableFooter(props, { table }) {
     }
   }
 
-  if (!columnManager.leafColumns().some(col => col.footer)) {
-    return null;
-  }
-
   const FooterWrapper = components.footer.wrapper;
   const FooterRow = components.footer.row;
   const FooterCell = components.footer.cell;
@@ -39,7 +44,7 @@ export default function TableFooter(props, { table }) {
     <FooterWrapper className={`${prefixCls}-tfoot`} key="footer">
       <FooterRow>
         {leafColumns.map(col =>
-          <FooterCell key={col.key || col.dataIndex}>{col.footer ? col.footer(data.map(item => item[col.dataIndex]), data) : null}</FooterCell>
+          <FooterCell key={col.key || col.dataIndex}>{col.footer === undefined ? null : getColumnFooter(col)(data)}</FooterCell>
         )}
       </FooterRow>
     </FooterWrapper>
