@@ -19,18 +19,18 @@ class TableFooterRow extends React.Component {
     hovered: PropTypes.bool,
   }
 
-  static defaultProps = {
-    onHover() {},
-  }
-
   handleMouseEnter = () => {
     const { onHover } = this.props;
-    onHover(true, FOOTER_ROW_KEY);
+    if (onHover) {
+      onHover(true, FOOTER_ROW_KEY);
+    }
   }
 
   handleMouseLeave = () => {
     const { onHover } = this.props;
-    onHover(false, FOOTER_ROW_KEY);
+    if (onHover) {
+      onHover(false, FOOTER_ROW_KEY);
+    }
   }
 
   render() {
