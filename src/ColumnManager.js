@@ -31,7 +31,7 @@ export default class ColumnManager {
 
   hasFooter() {
     return this._cache('hasFooter', () => {
-      return this.columns.some(column => column.footer);
+      return this.leafColumns().some(column => column.footer);
     });
   }
 
