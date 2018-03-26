@@ -17,6 +17,10 @@ class TableFooterRow extends React.Component {
     prefixCls: PropTypes.string,
     onHover: PropTypes.func,
     hovered: PropTypes.bool,
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
   }
 
   handleMouseEnter = () => {
@@ -34,7 +38,7 @@ class TableFooterRow extends React.Component {
   }
 
   render() {
-    const{ columns, data, components, prefixCls, hovered } = this.props;
+    const{ columns, data, components, prefixCls, hovered, height } = this.props;
     const FooterRow = components.footer.row;
     const FooterCell = components.footer.cell;
 
@@ -48,6 +52,7 @@ class TableFooterRow extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         className={className}
+        style={{ height }}
       >
         {columns.map(col =>
           <FooterCell
@@ -61,6 +66,13 @@ class TableFooterRow extends React.Component {
   }
 }
 
-export default connect(state => ({
+function getRowHeight(state, props) {
+  const { fixedColumnsFootRowsHeight } = state;
+  const { fixed } = props;
+  return fixed ? fixedColumnsFootRowsHeight[0] : null;
+}
+
+export default connect((state, props) => ({
   hovered: state.currentHoverKey === FOOTER_ROW_KEY,
+  height: getRowHeight(state, props),
 }))(TableFooterRow);

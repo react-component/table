@@ -38,6 +38,7 @@ export default function TableFooter(props, { table }) {
         prefixCls={prefixCls}
         columns={leafColumns}
         components={components}
+        fixed={fixed}
         data={data}
         onHover={columnManager.isAnyColumnsFixed() ? onHover : null}
       />

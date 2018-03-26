@@ -106,6 +106,7 @@ export default class Table extends React.Component {
     this.store = create({
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
+      fixedColumnsFootRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     });
 
@@ -245,21 +246,29 @@ export default class Table extends React.Component {
     const headRows = this.headTable ?
             this.headTable.querySelectorAll('thead') :
             this.bodyTable.querySelectorAll('thead');
+    const footRows = this.footTable ?
+            this.footTable.querySelectorAll('tfoot') :
+            this.bodyTable.querySelectorAll('tfoot');
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
+    );
+    const fixedColumnsFootRowsHeight = [].map.call(
+      footRows, row => row.getBoundingClientRect().height || 'auto'
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, row => row.getBoundingClientRect().height || 'auto'
     );
     const state = this.store.getState();
     if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
+        shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
         shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
 
     this.store.setState({
       fixedColumnsHeadRowsHeight,
+      fixedColumnsFootRowsHeight,
       fixedColumnsBodyRowsHeight,
     });
   }
