@@ -6,21 +6,21 @@ import BaseTable from './BaseTable';
 export default function FootTable(props, { table }) {
   const { prefixCls, scroll } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
-  const { saveRef } = table;
+  const { saveRef, columnManager } = table;
   let { useFixedHeader } = table.props;
   const footStyle = {};
 
   if (scroll.y) {
     useFixedHeader = true;
     // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar();
+    const scrollbarWidth = measureScrollbar('horizontal');
     if (scrollbarWidth > 0 && !fixed) {
       footStyle.marginBottom = `-${scrollbarWidth}px`;
       footStyle.paddingBottom = '0px';
     }
   }
 
-  if (!useFixedHeader) {
+  if (!useFixedHeader || !columnManager.hasFooter()) {
     return null;
   }
 
