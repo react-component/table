@@ -149,10 +149,13 @@ describe('Table', () => {
         { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
         { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
       ];
+      const onScroll = jest.fn();
+
       const wrapper = mount(
         <Table
           columns={newColumns}
           data={newData}
+          onScroll={onScroll}
           scroll={{
             x: 200,
             y: 200,
@@ -185,7 +188,7 @@ describe('Table', () => {
       expect(headTable.getDOMNode().scrollLeft).toBe(40);
       expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(10);
       expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(10);
-
+      expect(onScroll.mock.calls[0][0].type).toBe('scroll');
       expect(inst.lastScrollLeft).toBe(40);
 
       // fire fixedColumnsBodyLeft scroll.

@@ -35,6 +35,7 @@ export default class Table extends React.Component {
     footer: PropTypes.func,
     emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     scroll: PropTypes.object,
+    onScroll: PropTypes.func,
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
     children: PropTypes.node,
@@ -76,6 +77,7 @@ export default class Table extends React.Component {
     style: {},
     showHeader: true,
     scroll: {},
+    onScroll() {},
     rowRef: () => null,
     emptyText: () => 'No Data',
   }
@@ -336,8 +338,10 @@ export default class Table extends React.Component {
   }
 
   handleBodyScroll = (e) => {
+    const onScroll = this.props.onScroll;
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
+    onScroll(e);
   }
 
   saveRef = (name) => (node) => {
