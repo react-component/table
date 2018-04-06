@@ -344,24 +344,25 @@ export default class Table extends React.Component {
     const { scroll = {} } = this.props;
     if (navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
       event.preventDefault();
-      let wd = event.deltaY;
+      const wd = event.deltaY;
       const target = event.target;
-      const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
       let scrollTop = 0;
 
-      if (this.lastScrollTop)
+      if (this.lastScrollTop) {
         scrollTop = this.lastScrollTop + wd;
-      else
+      } else {
         scrollTop = wd;
+      }
 
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
       if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop
+        fixedColumnsBodyRight.scrollTop = scrollTop;
       }
       if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop
+        bodyTable.scrollTop = scrollTop;
       }
     }
   }

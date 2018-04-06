@@ -112,6 +112,7 @@ BodyTable.propTypes = {
   ]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
+  handleWheel: PropTypes.func.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,
   getRowKey: PropTypes.func.isRequired,
   expander: PropTypes.object.isRequired,

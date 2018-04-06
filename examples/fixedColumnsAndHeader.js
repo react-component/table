@@ -22,7 +22,7 @@ const columns = [
 const data = [];
 
 for (let index = 0; index < 200; index++) {
-  data.push({ a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: index })
+  data.push({ a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: index });
 }
 
 ReactDOM.render(
