@@ -69,8 +69,8 @@ export default class Table extends React.Component {
     useFixedHeader: false,
     rowKey: 'key',
     rowClassName: () => '',
-    onRow() {},
-    onHeaderRow() {},
+    onRow() { },
+    onHeaderRow() { },
     prefixCls: 'rc-table',
     bodyStyle: {},
     style: {},
@@ -244,11 +244,11 @@ export default class Table extends React.Component {
     }
     const { prefixCls } = this.props;
     const headRows = this.headTable ?
-            this.headTable.querySelectorAll('thead') :
-            this.bodyTable.querySelectorAll('thead');
+      this.headTable.querySelectorAll('thead') :
+      this.bodyTable.querySelectorAll('thead');
     const footRows = this.footTable ?
-            this.footTable.querySelectorAll('tfoot') :
-            this.bodyTable.querySelectorAll('tfoot');
+      this.footTable.querySelectorAll('tfoot') :
+      this.bodyTable.querySelectorAll('tfoot');
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
@@ -261,8 +261,8 @@ export default class Table extends React.Component {
     );
     const state = this.store.getState();
     if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
-        shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+      shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
+      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
 
@@ -340,6 +340,33 @@ export default class Table extends React.Component {
     this.handleBodyScrollTop(e);
   }
 
+  handleWheel = (event) => {
+    const { scroll = {} } = this.props;
+    if (navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
+      event.preventDefault();
+      const wd = event.deltaY;
+      const target = event.target;
+      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+      let scrollTop = 0;
+
+      if (this.lastScrollTop) {
+        scrollTop = this.lastScrollTop + wd;
+      } else {
+        scrollTop = wd;
+      }
+
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
+      }
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
+      }
+      if (bodyTable && target !== bodyTable) {
+        bodyTable.scrollTop = scrollTop;
+      }
+    }
+  }
+
   saveRef = (name) => (node) => {
     this[name] = node;
   }
@@ -412,6 +439,7 @@ export default class Table extends React.Component {
         fixed={fixed}
         tableClassName={tableClassName}
         getRowKey={this.getRowKey}
+        handleWheel={this.handleWheel}
         handleBodyScroll={this.handleBodyScroll}
         expander={this.expander}
         isAnyColumnsFixed={isAnyColumnsFixed}

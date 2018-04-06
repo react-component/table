@@ -10,6 +10,7 @@ export default function BodyTable(props, { table }) {
     fixed,
     tableClassName,
     getRowKey,
+    handleWheel,
     handleBodyScroll,
     expander,
     isAnyColumnsFixed,
@@ -81,6 +82,7 @@ export default function BodyTable(props, { table }) {
           className={`${prefixCls}-body-inner`}
           style={innerBodyStyle}
           ref={saveRef(refName)}
+          onWheel={handleWheel}
           onScroll={handleBodyScroll}
         >
           {baseTable}
@@ -95,6 +97,7 @@ export default function BodyTable(props, { table }) {
       className={`${prefixCls}-body`}
       style={bodyStyle}
       ref={saveRef('bodyTable')}
+      onWheel={handleWheel}
       onScroll={handleBodyScroll}
     >
       {baseTable}
@@ -109,6 +112,7 @@ BodyTable.propTypes = {
   ]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
+  handleWheel: PropTypes.func.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,
   getRowKey: PropTypes.func.isRequired,
   expander: PropTypes.object.isRequired,
