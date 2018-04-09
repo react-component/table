@@ -17,43 +17,32 @@ class TableRow extends React.Component {
     prefixCls: PropTypes.string,
     onHover: PropTypes.func,
     columns: PropTypes.array,
-    height: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     index: PropTypes.number,
-    rowKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    hasExpandIcon: PropTypes.func.isRequired,
+    hasExpandIcon: PropTypes.func,
     hovered: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired,
     store: PropTypes.object.isRequired,
-    fixed: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]),
+    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     renderExpandIcon: PropTypes.func,
     renderExpandIconCell: PropTypes.func,
     components: PropTypes.any,
     expandedRow: PropTypes.bool,
     isAnyColumnsFixed: PropTypes.bool,
     ancestorKeys: PropTypes.array.isRequired,
-  }
+  };
 
   static defaultProps = {
     onRow() {},
-    expandIconColumnIndex: 0,
-    expandRowByClick: false,
     onHover() {},
     hasExpandIcon() {},
     renderExpandIcon() {},
     renderExpandIconCell() {},
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -83,42 +72,42 @@ class TableRow extends React.Component {
     }
   }
 
-  onRowClick = (event) => {
+  onRowClick = event => {
     const { record, index, onRowClick } = this.props;
     if (onRowClick) {
       onRowClick(record, index, event);
     }
-  }
+  };
 
-  onRowDoubleClick = (event) => {
+  onRowDoubleClick = event => {
     const { record, index, onRowDoubleClick } = this.props;
     if (onRowDoubleClick) {
       onRowDoubleClick(record, index, event);
     }
-  }
+  };
 
-  onContextMenu = (event) => {
+  onContextMenu = event => {
     const { record, index, onRowContextMenu } = this.props;
     if (onRowContextMenu) {
       onRowContextMenu(record, index, event);
     }
-  }
+  };
 
-  onMouseEnter = (event) => {
+  onMouseEnter = event => {
     const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
     onHover(true, rowKey);
     if (onRowMouseEnter) {
       onRowMouseEnter(record, index, event);
     }
-  }
+  };
 
-  onMouseLeave = (event) => {
+  onMouseLeave = event => {
     const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
     onHover(false, rowKey);
     if (onRowMouseLeave) {
       onRowMouseLeave(record, index, event);
     }
-  }
+  };
 
   setExpanedRowHeight() {
     const { store, rowKey } = this.props;
@@ -225,12 +214,11 @@ class TableRow extends React.Component {
           key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
           component={BodyCell}
-        />
+        />,
       );
     }
 
-    const rowClassName =
-      `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
+    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
 
     const rowProps = onRow(record, index);
     const customStyle = rowProps ? rowProps.style : {};
@@ -283,9 +271,9 @@ export default connect((state, props) => {
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
 
-  return ({
+  return {
     visible,
     hovered: currentHoverKey === rowKey,
     height: getRowHeight(state, props),
-  });
+  };
 })(TableRow);

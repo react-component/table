@@ -51,20 +51,18 @@ export default function TableHeader(props, { table }) {
 
   return (
     <HeaderWrapper className={`${prefixCls}-thead`}>
-      {
-        rows.map((row, index) => (
-          <TableHeaderRow
-            key={index}
-            index={index}
-            fixed={fixed}
-            columns={columns}
-            rows={rows}
-            row={row}
-            components={components}
-            onHeaderRow={onHeaderRow}
-          />
-        ))
-      }
+      {rows.map((row, index) => (
+        <TableHeaderRow
+          key={index}
+          index={index}
+          fixed={fixed}
+          columns={columns}
+          rows={rows}
+          row={row}
+          components={components}
+          onHeaderRow={onHeaderRow}
+        />
+      ))}
     </HeaderWrapper>
   );
 }

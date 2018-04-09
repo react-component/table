@@ -7,7 +7,7 @@ import 'rc-table/assets/index.less';
 import { Resizable } from 'react-resizable';
 import 'react-resizable/css/styles.css';
 
-const ResizeableTitle = (props) => {
+const ResizeableTitle = props => {
   const { onResize, width, ...restProps } = props;
 
   if (!width) {
@@ -33,24 +33,27 @@ class Demo extends React.Component {
       { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       {
-        title: 'Operations', dataIndex: '', key: 'd', render() {
+        title: 'Operations',
+        dataIndex: '',
+        key: 'd',
+        render() {
           return <a href="#">Operations</a>;
         },
       },
     ],
-  }
+  };
 
   components = {
     header: {
       cell: ResizeableTitle,
     },
-  }
+  };
 
   data = [
     { a: '123', key: '1' },
     { a: 'cdd', b: 'edd', key: '2' },
     { a: '1333', c: 'eee', d: 2, key: '3' },
-  ]
+  ];
 
   handleResize = index => (e, { size }) => {
     this.setState(({ columns }) => {
@@ -61,12 +64,12 @@ class Demo extends React.Component {
       };
       return { columns: nextColumns };
     });
-  }
+  };
 
   render() {
     const columns = this.state.columns.map((col, index) => ({
       ...col,
-      onHeaderCell: (column) => ({
+      onHeaderCell: column => ({
         width: column.width,
         onResize: this.handleResize(index),
       }),

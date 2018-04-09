@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class ColumnManager {
-  _cached = {}
+  _cached = {};
 
   constructor(columns, elements) {
     this.columns = columns || this.normalize(elements);
@@ -15,52 +15,40 @@ export default class ColumnManager {
 
   isAnyColumnsLeftFixed() {
     return this._cache('isAnyColumnsLeftFixed', () => {
-      return this.columns.some(
-        column => column.fixed === 'left' || column.fixed === true
-      );
+      return this.columns.some(column => column.fixed === 'left' || column.fixed === true);
     });
   }
 
   isAnyColumnsRightFixed() {
     return this._cache('isAnyColumnsRightFixed', () => {
-      return this.columns.some(
-        column => column.fixed === 'right'
-      );
+      return this.columns.some(column => column.fixed === 'right');
     });
   }
 
   leftColumns() {
     return this._cache('leftColumns', () => {
       return this.groupedColumns().filter(
-        column => column.fixed === 'left' || column.fixed === true
+        column => column.fixed === 'left' || column.fixed === true,
       );
     });
   }
 
   rightColumns() {
     return this._cache('rightColumns', () => {
-      return this.groupedColumns().filter(
-        column => column.fixed === 'right'
-      );
+      return this.groupedColumns().filter(column => column.fixed === 'right');
     });
   }
 
   leafColumns() {
-    return this._cache('leafColumns', () =>
-      this._leafColumns(this.columns)
-    );
+    return this._cache('leafColumns', () => this._leafColumns(this.columns));
   }
 
   leftLeafColumns() {
-    return this._cache('leftLeafColumns', () =>
-      this._leafColumns(this.leftColumns())
-    );
+    return this._cache('leftLeafColumns', () => this._leafColumns(this.leftColumns()));
   }
 
   rightLeafColumns() {
-    return this._cache('rightLeafColumns', () =>
-      this._leafColumns(this.rightColumns())
-    );
+    return this._cache('rightLeafColumns', () => this._leafColumns(this.rightColumns()));
   }
 
   // add appropriate rowspan and colspan to column
@@ -72,7 +60,8 @@ export default class ColumnManager {
         const grouped = [];
         const setRowSpan = column => {
           const rowSpan = rows.length - currentRow;
-          if (column &&
+          if (
+            column &&
             !column.children && // parent columns are supposed to be one row
             rowSpan > 1 &&
             (!column.rowSpan || column.rowSpan < rowSpan)
@@ -86,7 +75,7 @@ export default class ColumnManager {
           parentColumn.colSpan = parentColumn.colSpan || 0;
           if (newColumn.children && newColumn.children.length > 0) {
             newColumn.children = _groupColumns(newColumn.children, currentRow + 1, newColumn, rows);
-            parentColumn.colSpan = parentColumn.colSpan + newColumn.colSpan;
+            parentColumn.colSpan += newColumn.colSpan;
           } else {
             parentColumn.colSpan++;
           }

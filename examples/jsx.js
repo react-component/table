@@ -17,33 +17,12 @@ ReactDOM.render(
     <h2>JSX table</h2>
     <Table data={data}>
       <ColumnGroup title="Bazinga">
-        <Column
-          title="title1"
-          dataIndex="a"
-          key="a"
-          width={100}
-        />
-        <Column
-          id="123"
-          title="title2"
-          dataIndex="b"
-          key="b"
-          width={100}
-        />
+        <Column title="title1" dataIndex="a" key="a" width={100} />
+        <Column id="123" title="title2" dataIndex="b" key="b" width={100} />
       </ColumnGroup>
-      <Column
-        title="title3"
-        dataIndex="c"
-        key="c"
-        width={200}
-      />
-      <Column
-        title="Operations"
-        dataIndex=""
-        key="d"
-        render={() => <a href="#">Operations</a>}
-      />
+      <Column title="title3" dataIndex="c" key="c" width={200} />
+      <Column title="Operations" dataIndex="" key="d" render={() => <a href="#">Operations</a>} />
     </Table>
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

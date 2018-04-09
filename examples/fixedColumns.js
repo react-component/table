@@ -11,7 +11,17 @@ const columns = [
   { title: 'title4', dataIndex: 'b', key: 'd' },
   { title: 'title5', dataIndex: 'b', key: 'e' },
   { title: 'title6', dataIndex: 'b', key: 'f' },
-  { title: <div>title7<br /><br /><br />Hello world!</div>, dataIndex: 'b', key: 'g' },
+  {
+    title: (
+      <div>
+        title7<br />
+        <br />
+        <br />Hello world!
+      </div>
+    ),
+    dataIndex: 'b',
+    key: 'g',
+  },
   { title: 'title8', dataIndex: 'b', key: 'h' },
   { title: 'title9', dataIndex: 'b', key: 'i' },
   { title: 'title10', dataIndex: 'b', key: 'j' },
@@ -41,5 +51,6 @@ ReactDOM.render(
       scroll={{ x: 1200 }}
       data={data}
     />
-  </div>
-, document.getElementById('__react-content'));
+  </div>,
+  document.getElementById('__react-content'),
+);

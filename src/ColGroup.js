@@ -8,12 +8,7 @@ export default function ColGroup(props, { table }) {
   let cols = [];
 
   if (expandIconAsCell && fixed !== 'right') {
-    cols.push(
-      <col
-        className={`${prefixCls}-expand-icon-col`}
-        key="rc-table-expand-icon-col"
-      />
-    );
+    cols.push(<col className={`${prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col" />);
   }
 
   let leafColumns;
@@ -27,20 +22,11 @@ export default function ColGroup(props, { table }) {
   }
   cols = cols.concat(
     leafColumns.map(c => {
-      return (
-        <col
-          key={c.key || c.dataIndex}
-          style={{ width: c.width, minWidth: c.width }}
-        />
-      );
-    })
+      return <col key={c.key || c.dataIndex} style={{ width: c.width, minWidth: c.width }} />;
+    }),
   );
 
-  return (
-    <colgroup>
-      {cols}
-    </colgroup>
-  );
+  return <colgroup>{cols}</colgroup>;
 }
 
 ColGroup.propTypes = {
