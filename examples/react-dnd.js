@@ -33,6 +33,7 @@ function dragDirection(
   if (dragIndex > hoverIndex && hoverClientY < hoverMiddleY) {
     return 'upward';
   }
+  return null;
 }
 
 let BodyRow = props => {

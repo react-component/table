@@ -22,6 +22,7 @@ class ExpandableTable extends React.Component {
     prefixCls: PropTypes.string.isRequired,
     data: PropTypes.array,
     children: PropTypes.func.isRequired,
+    getRowKey: PropTypes.func.isRequired,
   };
 
   static defaultProps = {

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { debounce, warningOnce } from './utils';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
-import ColumnManager from './ColumnManager';
 import classes from 'component-classes';
+import { debounce, warningOnce } from './utils';
+import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
 import ExpandableTable from './ExpandableTable';

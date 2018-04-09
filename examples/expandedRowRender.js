@@ -62,11 +62,6 @@ class Demo extends React.Component {
     this.setState({ data });
   }
 
-  expandedRowRender(record) {
-    // console.log(record);
-    return <p>extra: {record.a}</p>;
-  }
-
   renderAction(o, row, index) {
     return (
       <a href="#" onClick={() => this.remove(index)}>
@@ -98,7 +93,7 @@ class Demo extends React.Component {
           columns={this.columns}
           expandIconAsCell={expandIconAsCell}
           expandRowByClick={expandRowByClick}
-          expandedRowRender={this.expandedRowRender}
+          expandedRowRender={(record) => <p>extra: {record.a}</p>}
           expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
           onExpand={this.onExpand}

@@ -12,6 +12,10 @@ const CheckBox = ({ id }) => (
   </label>
 );
 
+CheckBox.propTypes = {
+  id: PropTypes.string,
+};
+
 class Demo extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
@@ -37,10 +41,6 @@ class Demo extends React.Component {
     this.remove(index);
   };
 
-  checkbox(a) {
-    return <CheckBox id={a} />;
-  }
-
   renderAction = (o, row, index) => {
     return (
       <a href="#" onClick={this.handleClick(index)}>
@@ -52,7 +52,7 @@ class Demo extends React.Component {
   render() {
     const state = this.state;
     const columns = [
-      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: (a) => <CheckBox id={a} /> },
       { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction },

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 
 function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
@@ -22,6 +23,14 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
       })}
     </HeaderRow>
   );
+}
+
+TableHeaderRow.propTypes = {
+  row: PropTypes.array,
+  index: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  components: PropTypes.any,
+  onHeaderRow: PropTypes.func,
 }
 
 function getRowHeight(state, props) {

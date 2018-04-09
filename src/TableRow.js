@@ -23,7 +23,7 @@ class TableRow extends React.Component {
     className: PropTypes.string,
     indent: PropTypes.number,
     indentSize: PropTypes.number,
-    hasExpandIcon: PropTypes.func.isRequired,
+    hasExpandIcon: PropTypes.func,
     hovered: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired,
     store: PropTypes.object.isRequired,
@@ -38,8 +38,6 @@ class TableRow extends React.Component {
 
   static defaultProps = {
     onRow() {},
-    expandIconColumnIndex: 0,
-    expandRowByClick: false,
     onHover() {},
     hasExpandIcon() {},
     renderExpandIcon() {},
