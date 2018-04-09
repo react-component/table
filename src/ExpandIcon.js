@@ -10,7 +10,7 @@ export default class ExpandIcon extends React.Component {
     expanded: PropTypes.bool,
     needIndentSpaced: PropTypes.bool,
     onExpand: PropTypes.func,
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);
@@ -23,7 +23,7 @@ export default class ExpandIcon extends React.Component {
       return (
         <span
           className={`${prefixCls}-expand-icon ${prefixCls}-${expandClassName}`}
-          onClick={(e) => onExpand(record, e)}
+          onClick={e => onExpand(record, e)}
         />
       );
     } else if (needIndentSpaced) {

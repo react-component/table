@@ -6,14 +6,8 @@ import ExpandIcon from './ExpandIcon';
 class ExpandableRow extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string.isRequired,
-    rowKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-    fixed: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]),
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     record: PropTypes.object.isRequired,
     indentSize: PropTypes.number,
     needIndentSpaced: PropTypes.bool.isRequired,
@@ -26,25 +20,25 @@ class ExpandableRow extends React.Component {
     onExpandedChange: PropTypes.func.isRequired,
     onRowClick: PropTypes.func,
     children: PropTypes.func.isRequired,
-  }
+  };
 
   componentWillUnmount() {
     this.handleDestroy();
   }
 
-  hasExpandIcon = (columnIndex) => {
+  hasExpandIcon = columnIndex => {
     const { expandRowByClick } = this.props;
-    return !this.expandIconAsCell &&
-      !expandRowByClick &&
-      columnIndex === this.expandIconColumnIndex;
-  }
+    return (
+      !this.expandIconAsCell && !expandRowByClick && columnIndex === this.expandIconColumnIndex
+    );
+  };
 
   handleExpandChange = (record, event) => {
     const { onExpandedChange, expanded, rowKey } = this.props;
     if (this.expandable) {
       onExpandedChange(!expanded, record, event, rowKey);
     }
-  }
+  };
 
   handleDestroy() {
     const { onExpandedChange, rowKey, record } = this.props;
@@ -61,7 +55,7 @@ class ExpandableRow extends React.Component {
     if (onRowClick) {
       onRowClick(record, index, event);
     }
-  }
+  };
 
   renderExpandIcon = () => {
     const { prefixCls, expanded, record, needIndentSpaced } = this.props;
@@ -76,32 +70,23 @@ class ExpandableRow extends React.Component {
         record={record}
       />
     );
-  }
+  };
 
-  renderExpandIconCell = (cells) => {
+  renderExpandIconCell = cells => {
     if (!this.expandIconAsCell) {
       return;
     }
     const { prefixCls } = this.props;
 
     cells.push(
-      <td
-        className={`${prefixCls}-expand-icon-cell`}
-        key="rc-table-expand-icon-cell"
-      >
+      <td className={`${prefixCls}-expand-icon-cell`} key="rc-table-expand-icon-cell">
         {this.renderExpandIcon()}
-      </td>
+      </td>,
     );
-  }
+  };
 
   render() {
-    const {
-      childrenColumnName,
-      expandedRowRender,
-      indentSize,
-      record,
-      fixed,
-    } = this.props;
+    const { childrenColumnName, expandedRowRender, indentSize, record, fixed } = this.props;
 
     this.expandIconAsCell = fixed !== 'right' ? this.props.expandIconAsCell : false;
     this.expandIconColumnIndex = fixed !== 'right' ? this.props.expandIconColumnIndex : -1;

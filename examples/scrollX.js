@@ -30,5 +30,6 @@ ReactDOM.render(
   <div>
     <h2>Scroll X</h2>
     <Table style={{ width: 800 }} scroll={{ x: true }} columns={columns} data={data} />
-  </div>
-, document.getElementById('__react-content'));
+  </div>,
+  document.getElementById('__react-content'),
+);

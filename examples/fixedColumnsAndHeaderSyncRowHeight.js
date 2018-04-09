@@ -35,5 +35,6 @@ ReactDOM.render(
   <div>
     <h2>Fixed columns and header, resize window for test</h2>
     <Table columns={columns} scroll={{ x: '150%', y: 300 }} data={data} />
-  </div>
-, document.getElementById('__react-content'));
+  </div>,
+  document.getElementById('__react-content'),
+);

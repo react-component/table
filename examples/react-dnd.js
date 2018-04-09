@@ -35,7 +35,7 @@ function dragDirection(
   }
 }
 
-let BodyRow = (props) => {
+let BodyRow = props => {
   const {
     isOver,
     connectDragSource,
@@ -45,7 +45,7 @@ let BodyRow = (props) => {
     clientOffset,
     sourceClientOffset,
     initialClientOffset,
-    ...restProps,
+    ...restProps
   } = props;
   const style = { cursor: 'move' };
 
@@ -56,7 +56,7 @@ let BodyRow = (props) => {
       restProps.index,
       initialClientOffset,
       clientOffset,
-      sourceClientOffset
+      sourceClientOffset,
     );
     if (direction === 'downward') {
       className += ' drop-over-downward';
@@ -67,13 +67,7 @@ let BodyRow = (props) => {
   }
 
   return connectDragSource(
-    connectDropTarget(
-      <tr
-        {...restProps}
-        className={className}
-        style={style}
-      />
-    )
+    connectDropTarget(<tr {...restProps} className={className} style={style} />),
   );
 };
 
@@ -116,7 +110,7 @@ BodyRow = DropTarget('row', rowTarget, (connect, monitor) => ({
     dragRow: monitor.getItem(),
     clientOffset: monitor.getClientOffset(),
     initialClientOffset: monitor.getInitialClientOffset(),
-  }))(BodyRow)
+  }))(BodyRow),
 );
 
 const columns = [
@@ -140,13 +134,13 @@ class Demo extends React.Component {
       { a: 'cdd', b: 'edd', key: '2' },
       { a: '1333', c: 'eee', d: 2, key: '3' },
     ],
-  }
+  };
 
   components = {
     body: {
       row: BodyRow,
     },
-  }
+  };
 
   moveRow = (dragIndex, hoverIndex) => {
     const { data } = this.state;
@@ -159,7 +153,7 @@ class Demo extends React.Component {
         },
       }),
     );
-  }
+  };
 
   render() {
     return (
@@ -183,5 +177,5 @@ ReactDOM.render(
     <h2>Integrate with react-dnd</h2>
     <Demo />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

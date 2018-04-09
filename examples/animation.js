@@ -6,8 +6,7 @@ import Animate from 'rc-animate';
 import 'rc-table/assets/index.less';
 import 'rc-table/assets/animation.less';
 
-const AnimateBody = (props) =>
-  <Animate transitionName="move" component="tbody" {...props} />;
+const AnimateBody = props => <Animate transitionName="move" component="tbody" {...props} />;
 
 class Demo extends React.Component {
   constructor(props) {
@@ -17,8 +16,14 @@ class Demo extends React.Component {
       { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       {
-        title: 'Operations', dataIndex: '', key: 'd', render: (text, record) =>
-        <a onClick={e => this.onDelete(record.key, e)} href="#">Delete</a>,
+        title: 'Operations',
+        dataIndex: '',
+        key: 'd',
+        render: (text, record) => (
+          <a onClick={e => this.onDelete(record.key, e)} href="#">
+            Delete
+          </a>
+        ),
       },
     ];
     this.state = {
@@ -64,7 +69,4 @@ class Demo extends React.Component {
     );
   }
 }
-ReactDOM.render(
-  <Demo />,
-  document.getElementById('__react-content')
-);
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));

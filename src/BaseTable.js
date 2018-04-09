@@ -8,10 +8,7 @@ import ExpandableRow from './ExpandableRow';
 
 class BaseTable extends React.Component {
   static propTypes = {
-    fixed: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]),
+    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     columns: PropTypes.array.isRequired,
     tableClassName: PropTypes.string.isRequired,
     hasHead: PropTypes.bool.isRequired,
@@ -20,17 +17,17 @@ class BaseTable extends React.Component {
     expander: PropTypes.object.isRequired,
     getRowKey: PropTypes.func,
     isAnyColumnsFixed: PropTypes.bool,
-  }
+  };
 
   static contextTypes = {
     table: PropTypes.any,
-  }
+  };
 
   handleRowHover = (isHover, key) => {
     this.props.store.setState({
       currentHoverKey: isHover ? key : null,
     });
-  }
+  };
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
@@ -54,9 +51,8 @@ class BaseTable extends React.Component {
     for (let i = 0; i < renderData.length; i++) {
       const record = renderData[i];
       const key = getRowKey(record, i);
-      const className = typeof rowClassName === 'string'
-        ? rowClassName
-        : rowClassName(record, i, indent);
+      const className =
+        typeof rowClassName === 'string' ? rowClassName : rowClassName(record, i, indent);
 
       const onHoverProps = {};
       if (columnManager.isAnyColumnsFixed()) {
@@ -87,7 +83,9 @@ class BaseTable extends React.Component {
           needIndentSpaced={expander.needIndentSpaced}
           onExpandedChange={expander.handleExpandChange}
         >
-          {(expandableRow) => ( // eslint-disable-line
+          {(
+            expandableRow, // eslint-disable-line
+          ) => (
             <TableRow
               fixed={fixed}
               indent={indent}
@@ -116,19 +114,10 @@ class BaseTable extends React.Component {
 
       rows.push(row);
 
-      expander.renderRows(
-        this.renderRows,
-        rows,
-        record,
-        i,
-        indent,
-        fixed,
-        key,
-        ancestorKeys
-      );
+      expander.renderRows(this.renderRows, rows, record, i, indent, fixed, key, ancestorKeys);
     }
     return rows;
-  }
+  };
 
   render() {
     const { table } = this.context;
@@ -151,11 +140,7 @@ class BaseTable extends React.Component {
 
     let body;
     if (hasBody) {
-      body = (
-        <BodyWrapper className={`${prefixCls}-tbody`}>
-          {this.renderRows(data, 0)}
-        </BodyWrapper>
-      );
+      body = <BodyWrapper className={`${prefixCls}-tbody`}>{this.renderRows(data, 0)}</BodyWrapper>;
       if (getBodyWrapper) {
         body = getBodyWrapper(body);
       }
@@ -164,7 +149,7 @@ class BaseTable extends React.Component {
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
-        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
+        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
         {body}
       </Table>
     );

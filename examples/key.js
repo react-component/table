@@ -15,7 +15,7 @@ const CheckBox = ({ id }) => (
 class Demo extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -33,17 +33,21 @@ class Demo extends React.Component {
     });
   }
 
-  handleClick = (index) => () => {
+  handleClick = index => () => {
     this.remove(index);
-  }
+  };
 
   checkbox(a) {
     return <CheckBox id={a} />;
   }
 
   renderAction = (o, row, index) => {
-    return <a href="#" onClick={this.handleClick(index)}>Delete</a>;
-  }
+    return (
+      <a href="#" onClick={this.handleClick(index)}>
+        Delete
+      </a>
+    );
+  };
 
   render() {
     const state = this.state;
@@ -66,5 +70,5 @@ ReactDOM.render(
     <h2>specify key</h2>
     <Demo data={data} />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

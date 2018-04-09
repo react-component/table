@@ -5,19 +5,34 @@ import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
 const columns = [
-  { title: 'title1', dataIndex: 'a',
-    className: 'a',
-    key: 'a', width: 100 },
-  { id: '123', title: 'title2', dataIndex: 'b',
-    className: 'b',
-    key: 'b', width: 100 },
-  { title: 'title3', dataIndex: 'c',
-    className: 'c',
-    key: 'c', width: 200 },
   {
-    title: 'Operations', dataIndex: '',
+    title: 'title1',
+    dataIndex: 'a',
+    className: 'a',
+    key: 'a',
+    width: 100,
+  },
+  {
+    id: '123',
+    title: 'title2',
+    dataIndex: 'b',
+    className: 'b',
+    key: 'b',
+    width: 100,
+  },
+  {
+    title: 'title3',
+    dataIndex: 'c',
+    className: 'c',
+    key: 'c',
+    width: 200,
+  },
+  {
+    title: 'Operations',
+    dataIndex: '',
     className: 'd',
-    key: 'd', render() {
+    key: 'd',
+    render() {
       return <a href="#">Operations</a>;
     },
   },
@@ -41,5 +56,5 @@ ReactDOM.render(
       className="table"
     />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

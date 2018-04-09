@@ -19,14 +19,20 @@ describe('Table with grouping columns', () => {
     const columns = [
       { title: '表头A', className: 'title-a', dataIndex: 'a', key: 'a' },
       { title: '表头B', className: 'title-b', dataIndex: 'b', key: 'b' },
-      { title: '表头C', className: 'title-c', children:
-        [
+      {
+        title: '表头C',
+        className: 'title-c',
+        children: [
           { title: '表头D', className: 'title-d', dataIndex: 'c', key: 'c' },
-          { title: '表头E', className: 'title-e', children:
-            [
+          {
+            title: '表头E',
+            className: 'title-e',
+            children: [
               { title: '表头F', className: 'title-f', dataIndex: 'd', key: 'd' },
-              { title: '表头G', className: 'title-g', children:
-                [
+              {
+                title: '表头G',
+                className: 'title-g',
+                children: [
                   { title: '表头H', className: 'title-h', dataIndex: 'e', key: 'e' },
                   { title: '表头I', className: 'title-i', dataIndex: 'f', key: 'f' },
                 ],
@@ -35,8 +41,10 @@ describe('Table with grouping columns', () => {
           },
         ],
       },
-      { title: '表头J', className: 'title-j', children:
-        [
+      {
+        title: '表头J',
+        className: 'title-j',
+        children: [
           { title: '表头K', className: 'title-k', dataIndex: 'g', key: 'g' },
           { title: '表头L', className: 'title-l', dataIndex: 'h', key: 'h' },
         ],
@@ -76,8 +84,10 @@ describe('Table with grouping columns', () => {
   it('work with fixed columns', () => {
     const columns = [
       { title: '表头A', className: 'title-a', dataIndex: 'a', key: 'a', fixed: 'left' },
-      { title: '表头B', className: 'title-b', children:
-        [
+      {
+        title: '表头B',
+        className: 'title-b',
+        children: [
           { title: '表头C', className: 'title-c', dataIndex: 'b', key: 'b' },
           { title: '表头D', className: 'title-d', dataIndex: 'c', key: 'c' },
         ],
@@ -91,9 +101,7 @@ describe('Table with grouping columns', () => {
       { key: '3', a: 'a3', b: 'b3', c: 'c3', d: 'd3' },
     ];
 
-    const wrapper = mount(
-      <Table columns={columns} data={data} />
-    );
+    const wrapper = mount(<Table columns={columns} data={data} />);
 
     const fixedRows = wrapper.find('.rc-table-fixed-left thead tr');
     const titleA = wrapper.find('.rc-table-fixed-left th.title-a');
@@ -143,9 +151,7 @@ describe('Table with grouping columns', () => {
       },
     ];
 
-    const wrapper = mount(
-      <Table columns={columns} data={[]} />,
-    );
+    const wrapper = mount(<Table columns={columns} data={[]} />);
     const titleB = wrapper.find('.title-b');
     expect(titleB.prop('rowSpan')).toBe(2);
   });

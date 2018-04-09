@@ -69,11 +69,7 @@ export default function BodyTable(props, { table }) {
     delete bodyStyle.overflowX;
     delete bodyStyle.overflowY;
     return (
-      <div
-        key="bodyTable"
-        className={`${prefixCls}-body-outer`}
-        style={{ ...bodyStyle }}
-      >
+      <div key="bodyTable" className={`${prefixCls}-body-outer`} style={{ ...bodyStyle }}>
         <div
           className={`${prefixCls}-body-inner`}
           style={innerBodyStyle}
@@ -100,10 +96,7 @@ export default function BodyTable(props, { table }) {
 }
 
 BodyTable.propTypes = {
-  fixed: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
+  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   columns: PropTypes.array.isRequired,
   tableClassName: PropTypes.string.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,

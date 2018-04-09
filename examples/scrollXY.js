@@ -41,5 +41,6 @@ ReactDOM.render(
       columns={columns}
       data={data}
     />
-  </div>
-, document.getElementById('__react-content'));
+  </div>,
+  document.getElementById('__react-content'),
+);

@@ -21,31 +21,31 @@ for (let i = 0; i < 10; i++) {
 class Demo extends React.Component {
   state = {
     visible: false,
-  }
+  };
 
-  filters = []
+  filters = [];
 
-  handleVisibleChange = (visible) => {
+  handleVisibleChange = visible => {
     this.setState({ visible });
-  }
+  };
 
-  handleSelect = (selected) => {
+  handleSelect = selected => {
     this.filters.push(selected);
-  }
+  };
 
-  handleDeselect = (key) => {
+  handleDeselect = key => {
     const index = this.filters.indexOf(key);
     if (index !== -1) {
       this.filters.splice(index, 1);
     }
-  }
+  };
 
   confirmFilter = () => {
     console.log(this.filters.join(','));
     this.setState({
       visible: false,
     });
-  }
+  };
 
   render() {
     const menu = (
@@ -67,7 +67,9 @@ class Demo extends React.Component {
               pointerEvents: 'visible',
             }}
             onClick={this.confirmFilter}
-          >确定</button>
+          >
+            确定
+          </button>
         </Item>
       </Menu>
     );
@@ -86,19 +88,16 @@ class Demo extends React.Component {
               <a href="#">filter</a>
             </DropDown>
           </div>
-        ), key: 'a', dataIndex: 'a', width: 100,
+        ),
+        key: 'a',
+        dataIndex: 'a',
+        width: 100,
       },
       { title: 'title2', key: 'b', dataIndex: 'b', width: 100 },
       { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
     ];
 
-    return (
-      <Table
-        columns={columns}
-        data={data}
-        rowKey={record => record.key}
-      />
-    );
+    return <Table columns={columns} data={data} rowKey={record => record.key} />;
   }
 }
 
@@ -107,5 +106,5 @@ ReactDOM.render(
     <h2>use dropdown</h2>
     <Demo />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

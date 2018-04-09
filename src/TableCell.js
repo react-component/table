@@ -12,19 +12,22 @@ export default class TableCell extends React.Component {
     column: PropTypes.object,
     expandIcon: PropTypes.node,
     component: PropTypes.any,
-  }
+  };
 
   isInvalidRenderCellText(text) {
-    return text && !React.isValidElement(text) &&
-      Object.prototype.toString.call(text) === '[object Object]';
+    return (
+      text &&
+      !React.isValidElement(text) &&
+      Object.prototype.toString.call(text) === '[object Object]'
+    );
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     const { record, column: { onCellClick } } = this.props;
     if (onCellClick) {
       onCellClick(record, e);
     }
-  }
+  };
 
   render() {
     const {
@@ -88,11 +91,7 @@ export default class TableCell extends React.Component {
     }
 
     return (
-      <BodyCell
-        className={className}
-        onClick={this.handleClick}
-        {...tdProps}
-      >
+      <BodyCell className={className} onClick={this.handleClick} {...tdProps}>
         {indentText}
         {expandIcon}
         {text}

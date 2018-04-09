@@ -17,13 +17,13 @@ for (let i = 0; i < 10; i++) {
 class Demo extends React.Component {
   state = {
     showBody: true,
-  }
+  };
 
   toggleBody = () => {
     this.setState({
       showBody: !this.state.showBody,
     });
-  }
+  };
 
   render() {
     const columns = [
@@ -31,7 +31,11 @@ class Demo extends React.Component {
       { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
       { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
       {
-        title: <a onClick={this.toggleBody} href="#">{this.state.showBody ? '隐藏' : '显示'}体</a>,
+        title: (
+          <a onClick={this.toggleBody} href="#">
+            {this.state.showBody ? '隐藏' : '显示'}体
+          </a>
+        ),
         key: 'x',
         width: 200,
         render() {
@@ -58,5 +62,5 @@ ReactDOM.render(
     <h2>scroll body table</h2>
     <Demo />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

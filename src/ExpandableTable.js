@@ -22,7 +22,7 @@ class ExpandableTable extends React.Component {
     prefixCls: PropTypes.string.isRequired,
     data: PropTypes.array,
     children: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     expandIconAsCell: false,
@@ -34,7 +34,7 @@ class ExpandableTable extends React.Component {
     indentSize: 15,
     onExpand() {},
     onExpandedRowsChange() {},
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -106,7 +106,7 @@ class ExpandableTable extends React.Component {
     if (!destroy) {
       onExpand(expanded, record);
     }
-  }
+  };
 
   renderExpandIndentCell = (rows, fixed) => {
     const { prefixCls, expandIconAsCell } = this.props;
@@ -122,7 +122,7 @@ class ExpandableTable extends React.Component {
     };
 
     rows[0].unshift({ ...iconColumn, column: iconColumn });
-  }
+  };
 
   renderExpandedRow(record, index, render, className, ancestorKeys, indent, fixed) {
     const { prefixCls, expandIconAsCell, indentSize } = this.props;
@@ -134,15 +134,17 @@ class ExpandableTable extends React.Component {
     } else {
       colCount = this.columnManager.leafColumns().length;
     }
-    const columns = [{
-      key: 'extra-row',
-      render: () => ({
-        props: {
-          colSpan: colCount,
-        },
-        children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
-      }),
-    }];
+    const columns = [
+      {
+        key: 'extra-row',
+        render: () => ({
+          props: {
+            colSpan: colCount,
+          },
+          children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
+        }),
+      },
+    ];
     if (expandIconAsCell && fixed !== 'right') {
       columns.unshift({
         key: 'expand-icon-placeholder',
@@ -196,15 +198,9 @@ class ExpandableTable extends React.Component {
     }
 
     if (childrenData) {
-      rows.push(
-        ...renderRows(
-          childrenData,
-          nextIndent,
-          nextAncestorKeys,
-        )
-      );
+      rows.push(...renderRows(childrenData, nextIndent, nextAncestorKeys));
     }
-  }
+  };
 
   render() {
     const { data, childrenColumnName, children } = this.props;

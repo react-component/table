@@ -39,45 +39,71 @@ describe('Table.fixedColumns', () => {
   ];
 
   it('renders correctly', () => {
-    const wrapper = render(
-      <Table
-        columns={columns}
-        data={data}
-        scroll={{ x: 1200 }}
-      />
-    );
+    const wrapper = render(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('toggles hover class when user hovering', () => {
-    const wrapper = mount(
-      <Table
-        columns={columns}
-        data={data}
-        scroll={{ x: 1200 }}
-      />
-    );
+    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
     let tables = wrapper.find('table');
-    tables.at(0).find('tbody tr').at(0).simulate('mouseEnter');
+    tables
+      .at(0)
+      .find('tbody tr')
+      .at(0)
+      .simulate('mouseEnter');
     tables = wrapper.find('table');
-    expect(tables.at(0).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    tables.at(0).find('tbody tr').at(0).simulate('mouseLeave');
+    expect(
+      tables
+        .at(0)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(true);
+    expect(
+      tables
+        .at(1)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(true);
+    expect(
+      tables
+        .at(2)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(true);
+    tables
+      .at(0)
+      .find('tbody tr')
+      .at(0)
+      .simulate('mouseLeave');
     tables = wrapper.find('table');
-    expect(tables.at(0).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
-    expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
-    expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
+    expect(
+      tables
+        .at(0)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(false);
+    expect(
+      tables
+        .at(1)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(false);
+    expect(
+      tables
+        .at(2)
+        .find('tbody tr')
+        .at(0)
+        .is('.rc-table-row-hover'),
+    ).toBe(false);
   });
 
   it('calculate fixedColumns row height', () => {
-    const wrapper = mount(
-      <Table
-        columns={columns}
-        data={data}
-        scroll={{ x: 1200 }}
-      />
-    );
+    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
     const tableNode = wrapper.instance().tableNode;
     const rows = tableNode.querySelectorAll('tr');
     const theads = tableNode.querySelectorAll('thead');
@@ -108,7 +134,7 @@ describe('Table.fixedColumns', () => {
       const height = parseInt(rowHeight, 10);
       let i = 0;
       rows.forEach(row => {
-        i = (rows.length / 3 === i ? 0 : (i + 1));
+        i = rows.length / 3 === i ? 0 : i + 1;
         mockClientRect(row, {
           top: i * height,
           left: 0,
@@ -156,12 +182,7 @@ describe('Table.fixedColumns', () => {
 
   it('has correct scroll classNames when table resize', () => {
     const wrapper = mount(
-      <Table
-        columns={columns}
-        data={data}
-        scroll={{ x: true }}
-        style={{ width: 2000 }}
-      />
+      <Table columns={columns} data={data} scroll={{ x: true }} style={{ width: 2000 }} />,
     );
     const tableNode = wrapper.instance().tableNode;
     const tableBodyContainer = tableNode.querySelectorAll('.rc-table-scroll > .rc-table-body')[0];
@@ -180,12 +201,7 @@ describe('Table.fixedColumns', () => {
   });
 
   it('update fixed column high after columns change', () => {
-    const wrapper = mount(
-      <Table
-        columns={[]}
-        data={[]}
-      />
-    );
+    const wrapper = mount(<Table columns={[]} data={[]} />);
     wrapper.setProps({ columns, data });
     expect(wrapper.instance().resizeEvent).not.toBeUndefined();
   });

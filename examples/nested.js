@@ -9,37 +9,37 @@ const columns = [
   { title: 'Age', dataIndex: 'age', key: 'c', width: 100 },
 ];
 
-const data = [{
-  age: '23',
-  names: {
-    first: 'John',
-    last: 'Doe',
+const data = [
+  {
+    age: '23',
+    names: {
+      first: 'John',
+      last: 'Doe',
+    },
+    key: '1',
   },
-  key: '1',
-}, {
-  age: '36',
-  names: {
-    first: 'Terry',
-    last: 'Garner',
+  {
+    age: '36',
+    names: {
+      first: 'Terry',
+      last: 'Garner',
+    },
+    key: '2',
   },
-  key: '2',
-}, {
-  age: '52',
-  names: {
-    first: 'Thomas',
-    last: 'Goodwin',
+  {
+    age: '52',
+    names: {
+      first: 'Thomas',
+      last: 'Goodwin',
+    },
+    key: '3',
   },
-  key: '3',
-}];
+];
 
 ReactDOM.render(
   <div>
     <h2>Nested data table</h2>
-    <Table
-      columns={columns}
-      data={data}
-      className="table"
-    />
+    <Table columns={columns} data={data} className="table" />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

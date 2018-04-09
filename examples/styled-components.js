@@ -25,9 +25,9 @@ const data = [
 ];
 
 const BodyRow = styled.tr`
-	&:hover {
-		background: palevioletred !important;
-	}
+  &:hover {
+    background: palevioletred !important;
+  }
 `;
 
 const components = {
@@ -41,5 +41,5 @@ ReactDOM.render(
     <h2>Integrate with styled-components</h2>
     <Table columns={columns} data={data} components={components} />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );

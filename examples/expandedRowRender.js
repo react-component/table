@@ -16,36 +16,36 @@ class Demo extends React.Component {
     expandedRowKeys: [],
     expandIconAsCell: true,
     expandRowByClick: false,
-  }
+  };
 
   onExpand = (expanded, record) => {
     console.log('onExpand', expanded, record);
-  }
+  };
 
-  onExpandedRowsChange = (rows) => {
+  onExpandedRowsChange = rows => {
     this.setState({
       expandedRowKeys: rows,
     });
-  }
+  };
 
-  onExpandIconAsCellChange = (e) => {
+  onExpandIconAsCellChange = e => {
     this.setState({
       expandIconAsCell: e.target.checked,
     });
-  }
+  };
 
-  onExpandRowByClickChange = (e) => {
+  onExpandRowByClickChange = e => {
     this.setState({
       expandRowByClick: e.target.checked,
     });
-  }
+  };
 
   columns = [
     { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
     { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
     { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
     { title: 'Operation', dataIndex: '', key: 'x', render: this.renderAction },
-  ]
+  ];
 
   toggleButton() {
     if (this.state.expandedRowKeys.length) {
@@ -68,7 +68,11 @@ class Demo extends React.Component {
   }
 
   renderAction(o, row, index) {
-    return <a href="#" onClick={() => this.remove(index)}>Delete</a>;
+    return (
+      <a href="#" onClick={() => this.remove(index)}>
+        Delete
+      </a>
+    );
   }
 
   render() {
@@ -110,5 +114,5 @@ ReactDOM.render(
     <h2>expandedRowRender</h2>
     <Demo />
   </div>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
