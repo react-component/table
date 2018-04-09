@@ -50,11 +50,11 @@ class TableRow extends React.Component {
       return {
         shouldRender: true,
         visible: nextProps.visible,
-      }
+      };
     }
     return {
       visible: nextProps.visible,
-    }
+    };
   }
 
   constructor(props) {

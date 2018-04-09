@@ -31,7 +31,7 @@ TableHeaderRow.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   components: PropTypes.any,
   onHeaderRow: PropTypes.func,
-}
+};
 
 function getRowHeight(state, props) {
   const { fixedColumnsHeadRowsHeight } = state;

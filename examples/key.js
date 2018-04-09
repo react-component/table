@@ -52,7 +52,7 @@ class Demo extends React.Component {
   render() {
     const state = this.state;
     const columns = [
-      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: (a) => <CheckBox id={a} /> },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: a => <CheckBox id={a} /> },
       { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction },

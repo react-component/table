@@ -93,7 +93,7 @@ class Demo extends React.Component {
           columns={this.columns}
           expandIconAsCell={expandIconAsCell}
           expandRowByClick={expandRowByClick}
-          expandedRowRender={(record) => <p>extra: {record.a}</p>}
+          expandedRowRender={record => <p>extra: {record.a}</p>}
           expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
           onExpand={this.onExpand}

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-
 function isInvalidRenderCellText(text) {
   return (
     text &&
@@ -10,7 +9,6 @@ function isInvalidRenderCellText(text) {
     Object.prototype.toString.call(text) === '[object Object]'
   );
 }
-
 
 export default class TableCell extends React.Component {
   static propTypes = {
