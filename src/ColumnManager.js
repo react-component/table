@@ -29,12 +29,6 @@ export default class ColumnManager {
     });
   }
 
-  hasFooter() {
-    return this._cache('hasFooter', () => {
-      return this.leafColumns().some(column => column.footer);
-    });
-  }
-
   leftColumns() {
     return this._cache('leftColumns', () => {
       return this.groupedColumns().filter(

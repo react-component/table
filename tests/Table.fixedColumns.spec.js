@@ -26,13 +26,6 @@ describe('Table.fixedColumns', () => {
     { title: 'title11', dataIndex: 'b', key: 'k' },
     { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
   ];
-
-  const columnsWithFooter = [...columns];
-  columnsWithFooter[0] = {
-    ...columnsWithFooter[0],
-    footer: 'A Footer',
-  };
-
   const data = [
     { a: '123', b: 'xxxxxxxx', d: 3, key: '1' },
     { a: 'cdd', b: 'edd12221', d: 3, key: '2' },
@@ -51,28 +44,6 @@ describe('Table.fixedColumns', () => {
         columns={columns}
         data={data}
         scroll={{ x: 1200 }}
-      />
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders column footer correctly', () => {
-    const wrapper = render(
-      <Table
-        columns={columnsWithFooter}
-        data={data}
-      />
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders column footer with expand icon cell correctly', () => {
-    const wrapper = render(
-      <Table
-        columns={columnsWithFooter}
-        data={data}
-        expandIconAsCell
-        expandedRowRender={() => <div>expanded row</div>}
       />
     );
     expect(wrapper).toMatchSnapshot();
@@ -97,26 +68,6 @@ describe('Table.fixedColumns', () => {
     expect(tables.at(0).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
     expect(tables.at(1).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
     expect(tables.at(2).find('tbody tr').at(0).is('.rc-table-row-hover')).toBe(false);
-  });
-
-  it('sync column footer hover state', () => {
-    const wrapper = mount(
-      <Table
-        columns={columnsWithFooter}
-        data={data}
-      />
-    );
-    let tables = wrapper.find('table');
-    tables.at(0).find('tfoot tr').at(0).simulate('mouseEnter');
-    tables = wrapper.find('table');
-    expect(tables.at(0).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    expect(tables.at(1).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    expect(tables.at(2).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(true);
-    tables.at(0).find('tfoot tr').at(0).simulate('mouseLeave');
-    tables = wrapper.find('table');
-    expect(tables.at(0).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(false);
-    expect(tables.at(1).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(false);
-    expect(tables.at(2).find('tfoot tr').at(0).is('.rc-table-row-hover')).toBe(false);
   });
 
   it('calculate fixedColumns row height', () => {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
-import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 
@@ -17,7 +16,6 @@ class BaseTable extends React.Component {
     tableClassName: PropTypes.string.isRequired,
     hasHead: PropTypes.bool.isRequired,
     hasBody: PropTypes.bool.isRequired,
-    hasFoot: PropTypes.bool.isRequired,
     store: PropTypes.object.isRequired,
     expander: PropTypes.object.isRequired,
     getRowKey: PropTypes.func,
@@ -136,7 +134,7 @@ class BaseTable extends React.Component {
     const { table } = this.context;
     const { components } = table;
     const { prefixCls, scroll, data, getBodyWrapper } = table.props;
-    const { expander, tableClassName, hasHead, hasBody, hasFoot, fixed, columns } = this.props;
+    const { expander, tableClassName, hasHead, hasBody, fixed, columns } = this.props;
     const tableStyle = {};
 
     if (!fixed && scroll.x) {
@@ -168,7 +166,6 @@ class BaseTable extends React.Component {
         <ColGroup columns={columns} fixed={fixed} />
         {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
         {body}
-        {hasFoot && <TableFooter onHover={this.handleRowHover} columns={columns} fixed={fixed} /> }
       </Table>
     );
   }

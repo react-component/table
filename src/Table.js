@@ -9,7 +9,6 @@ import ColumnManager from './ColumnManager';
 import classes from 'component-classes';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
-import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
 
 export default class Table extends React.Component {
@@ -46,11 +45,6 @@ export default class Table extends React.Component {
         cell: PropTypes.any,
       }),
       body: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-      footer: PropTypes.shape({
         wrapper: PropTypes.any,
         row: PropTypes.any,
         cell: PropTypes.any,
@@ -106,7 +100,6 @@ export default class Table extends React.Component {
     this.store = create({
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsFootRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     });
 
@@ -130,11 +123,6 @@ export default class Table extends React.Component {
           },
           body: {
             wrapper: 'tbody',
-            row: 'tr',
-            cell: 'td',
-          },
-          footer: {
-            wrapper: 'tfoot',
             row: 'tr',
             cell: 'td',
           },
@@ -246,29 +234,21 @@ export default class Table extends React.Component {
     const headRows = this.headTable ?
             this.headTable.querySelectorAll('thead') :
             this.bodyTable.querySelectorAll('thead');
-    const footRows = this.footTable ?
-            this.footTable.querySelectorAll('tfoot') :
-            this.bodyTable.querySelectorAll('tfoot');
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
-    );
-    const fixedColumnsFootRowsHeight = [].map.call(
-      footRows, row => row.getBoundingClientRect().height || 'auto'
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
       bodyRows, row => row.getBoundingClientRect().height || 'auto'
     );
     const state = this.store.getState();
     if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
         shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
 
     this.store.setState({
       fixedColumnsHeadRowsHeight,
-      fixedColumnsFootRowsHeight,
       fixedColumnsBodyRowsHeight,
     });
   }
@@ -279,9 +259,6 @@ export default class Table extends React.Component {
     }
     if (this.bodyTable) {
       this.bodyTable.scrollLeft = 0;
-    }
-    if (this.footTable) {
-      this.footTable.scrollLeft = 0;
     }
   }
 
@@ -297,17 +274,12 @@ export default class Table extends React.Component {
     }
     const target = e.target;
     const { scroll = {} } = this.props;
-    const { headTable, bodyTable, footTable } = this;
+    const { headTable, bodyTable } = this;
     if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
-      if (target === bodyTable) {
-        if (headTable) headTable.scrollLeft = target.scrollLeft;
-        if (footTable) footTable.scrollLeft = target.scrollLeft;
-      } else if (target === headTable) {
-        if (bodyTable) bodyTable.scrollLeft = target.scrollLeft;
-        if (footTable) footTable.scrollLeft = target.scrollLeft;
-      } else if (target === footTable) {
-        if (bodyTable) bodyTable.scrollLeft = target.scrollLeft;
-        if (headTable) headTable.scrollLeft = target.scrollLeft;
+      if (target === bodyTable && headTable) {
+        headTable.scrollLeft = target.scrollLeft;
+      } else if (target === headTable && bodyTable) {
+        bodyTable.scrollLeft = target.scrollLeft;
       }
       this.setScrollPositionClassName();
     }
@@ -418,18 +390,7 @@ export default class Table extends React.Component {
       />
     );
 
-    const footTable = (
-      <FootTable
-        key="foot"
-        columns={columns}
-        fixed={fixed}
-        tableClassName={tableClassName}
-        handleBodyScrollLeft={this.handleBodyScrollLeft}
-        expander={this.expander}
-      />
-    );
-
-    return [headTable, bodyTable, footTable];
+    return [headTable, bodyTable];
   }
 
   renderTitle() {

@@ -351,12 +351,6 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td></td>
       <td>Called when column's cell is clicked</td>
     </tr>
-    <tr>
-      <td>footer</td>
-      <td>ReactNode/(data) => ReactNode</td>
-      <td></td>
-      <td>footer of this column</td>
-    </tr>
   </tbody>
 </table>
 

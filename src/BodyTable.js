@@ -14,7 +14,7 @@ export default function BodyTable(props, { table }) {
     expander,
     isAnyColumnsFixed,
   } = props;
-  const { saveRef, columnManager } = table;
+  const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
   const innerBodyStyle = {};
@@ -46,14 +46,11 @@ export default function BodyTable(props, { table }) {
     }
   }
 
-  const hasFoot = !useFixedHeader && columnManager.hasFooter();
-
   const baseTable = (
     <BaseTable
       tableClassName={tableClassName}
       hasHead={!useFixedHeader}
       hasBody
-      hasFoot={hasFoot}
       fixed={fixed}
       columns={columns}
       expander={expander}

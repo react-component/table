@@ -57,15 +57,6 @@ describe('Table', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('render fixed header with column footer correctly', () => {
-    const columnsWithFooter = [
-      { title: 'Name', dataIndex: 'name', key: 'name', footer: 'name footer' },
-      { title: 'Age', dataIndex: 'age', key: 'age' },
-    ];
-    const wrapper = render(createTable({ useFixedHeader: true, columns: columnsWithFooter }));
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('renders table body to the wrapper', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const getBodyWrapper = (body) => (
@@ -85,15 +76,6 @@ describe('Table', () => {
     const testId = 'test-identifier';
     const wrapper = mount(createTable({ id: testId }));
     expect(wrapper.find(`div#${testId}`)).toHaveLength(1);
-  });
-
-  it('renders column footer correctly', () => {
-    const columns = [
-      { title: 'Name', dataIndex: 'name', key: 'name', footer: 'Name Footer' },
-      { title: 'Age', dataIndex: 'age', key: 'age' },
-    ];
-    const wrapper = render(createTable({ columns }));
-    expect(wrapper).toMatchSnapshot();
   });
 
   xit('sets row refs', () => {
