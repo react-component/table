@@ -298,6 +298,10 @@ class Table extends React.Component {
 
   handleBodyScrollTop = e => {
     const target = e.target;
+    // Fix https://github.com/ant-design/ant-design/issues/9033
+    if (e.currentTarget !== target) {
+      return;
+    }
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
