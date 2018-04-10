@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>grouping-columns.js - example - rc-table@6.1.7</title>
+  <title>grouping-columns.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -339,35 +339,37 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   },
 ];
 
-
-<span class="hljs-keyword">const</span> data = [{
-  key: <span class="hljs-string">'1'</span>,
-  name: <span class="hljs-string">'胡彦斌'</span>,
-  age: <span class="hljs-number">32</span>,
-  street: <span class="hljs-string">'拱墅区和睦街道'</span>,
-  building: <span class="hljs-number">1</span>,
-  number: <span class="hljs-number">2033</span>,
-  companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
-  companyName: <span class="hljs-string">'湖底有限公司'</span>,
-  gender: <span class="hljs-string">'男'</span>,
-}, {
-  key: <span class="hljs-string">'2'</span>,
-  name: <span class="hljs-string">'胡彦祖'</span>,
-  age: <span class="hljs-number">42</span>,
-  street: <span class="hljs-string">'拱墅区和睦街道'</span>,
-  building: <span class="hljs-number">3</span>,
-  number: <span class="hljs-number">2035</span>,
-  companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
-  companyName: <span class="hljs-string">'湖底有限公司'</span>,
-  gender: <span class="hljs-string">'男'</span>,
-}];
+<span class="hljs-keyword">const</span> data = [
+  {
+    key: <span class="hljs-string">'1'</span>,
+    name: <span class="hljs-string">'胡彦斌'</span>,
+    age: <span class="hljs-number">32</span>,
+    street: <span class="hljs-string">'拱墅区和睦街道'</span>,
+    building: <span class="hljs-number">1</span>,
+    number: <span class="hljs-number">2033</span>,
+    companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
+    companyName: <span class="hljs-string">'湖底有限公司'</span>,
+    gender: <span class="hljs-string">'男'</span>,
+  },
+  {
+    key: <span class="hljs-string">'2'</span>,
+    name: <span class="hljs-string">'胡彦祖'</span>,
+    age: <span class="hljs-number">42</span>,
+    street: <span class="hljs-string">'拱墅区和睦街道'</span>,
+    building: <span class="hljs-number">3</span>,
+    number: <span class="hljs-number">2035</span>,
+    companyAddress: <span class="hljs-string">'西湖区湖底公园'</span>,
+    companyName: <span class="hljs-string">'湖底有限公司'</span>,
+    gender: <span class="hljs-string">'男'</span>,
+  },
+];
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>grouping columns<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"bordered"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>

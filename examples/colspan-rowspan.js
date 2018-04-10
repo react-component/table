@@ -1,14 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 317:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(318);
+module.exports = __webpack_require__(317);
 
 
 /***/ }),
 
-/***/ 318:
+/***/ 317:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26,7 +26,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key: 'a', render: function render(o, row, index) {
+var columns = [{
+  title: '手机号',
+  dataIndex: 'a',
+  colSpan: 2,
+  width: 100,
+  key: 'a',
+  render: function render(o, row, index) {
     var obj = {
       children: o,
       props: {}
@@ -49,7 +55,13 @@ var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key
     }
     return obj;
   }
-}, { title: '电话', dataIndex: 'b', colSpan: 0, width: 100, key: 'b', render: function render(o, row, index) {
+}, {
+  title: '电话',
+  dataIndex: 'b',
+  colSpan: 0,
+  width: 100,
+  key: 'b',
+  render: function render(o, row, index) {
     var obj = {
       children: o,
       props: {}
@@ -60,7 +72,12 @@ var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key
     }
     return obj;
   }
-}, { title: 'Name', dataIndex: 'c', width: 100, key: 'c', render: function render(o, row, index) {
+}, {
+  title: 'Name',
+  dataIndex: 'c',
+  width: 100,
+  key: 'c',
+  render: function render(o, row, index) {
     var obj = {
       children: o,
       props: {}
@@ -71,7 +88,12 @@ var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key
     }
     return obj;
   }
-}, { title: 'Address', dataIndex: 'd', width: 200, key: 'd', render: function render(o, row, index) {
+}, {
+  title: 'Address',
+  dataIndex: 'd',
+  width: 200,
+  key: 'd',
+  render: function render(o, row, index) {
     var obj = {
       children: o,
       props: {}
@@ -85,7 +107,12 @@ var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key
 
     return obj;
   }
-}, { title: 'Gender', dataIndex: 'e', width: 200, key: 'e', render: function render(o, row, index) {
+}, {
+  title: 'Gender',
+  dataIndex: 'e',
+  width: 200,
+  key: 'e',
+  render: function render(o, row, index) {
     var obj = {
       children: o,
       props: {}
@@ -96,7 +123,9 @@ var columns = [{ title: '手机号', dataIndex: 'a', colSpan: 2, width: 100, key
     return obj;
   }
 }, {
-  title: 'Operations', dataIndex: '', key: 'f',
+  title: 'Operations',
+  dataIndex: '',
+  key: 'f',
   render: function render(o, row, index) {
     if (index === 5) {
       return {
@@ -123,14 +152,10 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
     null,
     'colSpan & rowSpan'
   ),
-  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], {
-    columns: columns,
-    data: data,
-    className: 'table'
-  })
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], { columns: columns, data: data, className: 'table' })
 ), document.getElementById('__react-content'));
 
 /***/ })
 
-},[317]);
+},[316]);
 //# sourceMappingURL=colspan-rowspan.js.map

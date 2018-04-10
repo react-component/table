@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>colspan-rowspan.js - example - rc-table@6.1.7</title>
+  <title>colspan-rowspan.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -276,73 +276,107 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> <span class="hljs-string">'rc-table/assets/index.css'</span>;
 
 <span class="hljs-keyword">const</span> columns = [
-  { title: <span class="hljs-string">'手机号'</span>, dataIndex: <span class="hljs-string">'a'</span>, colSpan: <span class="hljs-number">2</span>, width: <span class="hljs-number">100</span>, key: <span class="hljs-string">'a'</span>, render(o, row, index) {
-    <span class="hljs-keyword">const</span> obj = {
-      children: o,
-      props: {},
-    };
-    <span class="hljs-comment">// 设置第一行为链接</span>
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) {
-      obj.children = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>{o}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
-    }
-    <span class="hljs-comment">// 第5行合并两列</span>
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">4</span>) {
-      obj.props.colSpan = <span class="hljs-number">2</span>;
-    }
-
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
-      obj.props.colSpan = <span class="hljs-number">6</span>;
-    }
-    <span class="hljs-keyword">return</span> obj;
-  } },
-  { title: <span class="hljs-string">'电话'</span>, dataIndex: <span class="hljs-string">'b'</span>, colSpan: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, key: <span class="hljs-string">'b'</span>, render(o, row, index) {
-    <span class="hljs-keyword">const</span> obj = {
-      children: o,
-      props: {},
-    };
-    <span class="hljs-comment">// 列合并掉的表格设置colSpan=0，不会去渲染</span>
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">4</span> || index === <span class="hljs-number">5</span>) {
-      obj.props.colSpan = <span class="hljs-number">0</span>;
-    }
-    <span class="hljs-keyword">return</span> obj;
-  } },
-  { title: <span class="hljs-string">'Name'</span>, dataIndex: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">100</span>, key: <span class="hljs-string">'c'</span>, render(o, row, index) {
-    <span class="hljs-keyword">const</span> obj = {
-      children: o,
-      props: {},
-    };
-
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
-      obj.props.colSpan = <span class="hljs-number">0</span>;
-    }
-    <span class="hljs-keyword">return</span> obj;
-  } },
-  { title: <span class="hljs-string">'Address'</span>, dataIndex: <span class="hljs-string">'d'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'d'</span>, render(o, row, index) {
-    <span class="hljs-keyword">const</span> obj = {
-      children: o,
-      props: {},
-    };
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) {
-      obj.props.rowSpan = <span class="hljs-number">2</span>;
-    }
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">1</span> || index === <span class="hljs-number">5</span>) {
-      obj.props.rowSpan = <span class="hljs-number">0</span>;
-    }
-
-    <span class="hljs-keyword">return</span> obj;
-  } },
-  { title: <span class="hljs-string">'Gender'</span>, dataIndex: <span class="hljs-string">'e'</span>, width: <span class="hljs-number">200</span>, key: <span class="hljs-string">'e'</span>, render(o, row, index) {
-    <span class="hljs-keyword">const</span> obj = {
-      children: o,
-      props: {},
-    };
-    <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
-      obj.props.colSpan = <span class="hljs-number">0</span>;
-    }
-    <span class="hljs-keyword">return</span> obj;
-  } },
   {
-    title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'f'</span>,
+    title: <span class="hljs-string">'手机号'</span>,
+    dataIndex: <span class="hljs-string">'a'</span>,
+    colSpan: <span class="hljs-number">2</span>,
+    width: <span class="hljs-number">100</span>,
+    key: <span class="hljs-string">'a'</span>,
+    render(o, row, index) {
+      <span class="hljs-keyword">const</span> obj = {
+        children: o,
+        props: {},
+      };
+      <span class="hljs-comment">// 设置第一行为链接</span>
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) {
+        obj.children = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>{o}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+      }
+      <span class="hljs-comment">// 第5行合并两列</span>
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">4</span>) {
+        obj.props.colSpan = <span class="hljs-number">2</span>;
+      }
+
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
+        obj.props.colSpan = <span class="hljs-number">6</span>;
+      }
+      <span class="hljs-keyword">return</span> obj;
+    },
+  },
+  {
+    title: <span class="hljs-string">'电话'</span>,
+    dataIndex: <span class="hljs-string">'b'</span>,
+    colSpan: <span class="hljs-number">0</span>,
+    width: <span class="hljs-number">100</span>,
+    key: <span class="hljs-string">'b'</span>,
+    render(o, row, index) {
+      <span class="hljs-keyword">const</span> obj = {
+        children: o,
+        props: {},
+      };
+      <span class="hljs-comment">// 列合并掉的表格设置colSpan=0，不会去渲染</span>
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">4</span> || index === <span class="hljs-number">5</span>) {
+        obj.props.colSpan = <span class="hljs-number">0</span>;
+      }
+      <span class="hljs-keyword">return</span> obj;
+    },
+  },
+  {
+    title: <span class="hljs-string">'Name'</span>,
+    dataIndex: <span class="hljs-string">'c'</span>,
+    width: <span class="hljs-number">100</span>,
+    key: <span class="hljs-string">'c'</span>,
+    render(o, row, index) {
+      <span class="hljs-keyword">const</span> obj = {
+        children: o,
+        props: {},
+      };
+
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
+        obj.props.colSpan = <span class="hljs-number">0</span>;
+      }
+      <span class="hljs-keyword">return</span> obj;
+    },
+  },
+  {
+    title: <span class="hljs-string">'Address'</span>,
+    dataIndex: <span class="hljs-string">'d'</span>,
+    width: <span class="hljs-number">200</span>,
+    key: <span class="hljs-string">'d'</span>,
+    render(o, row, index) {
+      <span class="hljs-keyword">const</span> obj = {
+        children: o,
+        props: {},
+      };
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">0</span>) {
+        obj.props.rowSpan = <span class="hljs-number">2</span>;
+      }
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">1</span> || index === <span class="hljs-number">5</span>) {
+        obj.props.rowSpan = <span class="hljs-number">0</span>;
+      }
+
+      <span class="hljs-keyword">return</span> obj;
+    },
+  },
+  {
+    title: <span class="hljs-string">'Gender'</span>,
+    dataIndex: <span class="hljs-string">'e'</span>,
+    width: <span class="hljs-number">200</span>,
+    key: <span class="hljs-string">'e'</span>,
+    render(o, row, index) {
+      <span class="hljs-keyword">const</span> obj = {
+        children: o,
+        props: {},
+      };
+      <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
+        obj.props.colSpan = <span class="hljs-number">0</span>;
+      }
+      <span class="hljs-keyword">return</span> obj;
+    },
+  },
+  {
+    title: <span class="hljs-string">'Operations'</span>,
+    dataIndex: <span class="hljs-string">''</span>,
+    key: <span class="hljs-string">'f'</span>,
     render(o, row, index) {
       <span class="hljs-keyword">if</span> (index === <span class="hljs-number">5</span>) {
         <span class="hljs-keyword">return</span> {
@@ -368,13 +402,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>colSpan &amp; rowSpan<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-      <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-      <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-      <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>
-    /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>

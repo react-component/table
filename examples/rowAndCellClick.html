@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowAndCellClick.js - example - rc-table@6.1.7</title>
+  <title>rowAndCellClick.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -287,84 +287,100 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Double click nth(<span class="hljs-subst">${index}</span>) row of parent, record.name: <span class="hljs-subst">${record.name}</span>`</span>);
 };
 
-<span class="hljs-keyword">const</span> columns = [{
-  title: <span class="hljs-string">'Name'</span>,
-  dataIndex: <span class="hljs-string">'name'</span>,
-  key: <span class="hljs-string">'name'</span>,
-  width: <span class="hljs-number">400</span>,
-}, {
-  title: <span class="hljs-string">'Age'</span>,
-  dataIndex: <span class="hljs-string">'age'</span>,
-  key: <span class="hljs-string">'age'</span>,
-  width: <span class="hljs-number">100</span>,
-  render: (text) =&gt; (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  )</span>,
-  onCell: (record) =&gt; ({
-    onClick(e) {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Click cell'</span>, record, e.target);
-    },
-  }),
-}, {
-  title: <span class="hljs-string">'Address'</span>,
-  dataIndex: <span class="hljs-string">'address'</span>,
-  key: <span class="hljs-string">'address'</span>,
-  width: <span class="hljs-number">200</span>,
-}];
+<span class="hljs-keyword">const</span> columns = [
+  {
+    title: <span class="hljs-string">'Name'</span>,
+    dataIndex: <span class="hljs-string">'name'</span>,
+    key: <span class="hljs-string">'name'</span>,
+    width: <span class="hljs-number">400</span>,
+  },
+  {
+    title: <span class="hljs-string">'Age'</span>,
+    dataIndex: <span class="hljs-string">'age'</span>,
+    key: <span class="hljs-string">'age'</span>,
+    width: <span class="hljs-number">100</span>,
+    render: text =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
+    onCell: record =&gt; ({
+      onClick(e) {
+        console.log('Click cell', record, e.target);
+      },
+    }),
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
+    width: 200,
+  },
+];
 
-<span class="hljs-keyword">const</span> data = [{
-  key: <span class="hljs-number">1</span>,
-  name: <span class="hljs-string">'a'</span>,
-  age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am a'</span>,
-  children: [{
-    key: <span class="hljs-number">11</span>,
-    name: <span class="hljs-string">'aa'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am aa'</span>,
-  }, {
-    key: <span class="hljs-number">12</span>,
-    name: <span class="hljs-string">'ab'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ab'</span>,
-    children: [{
-      key: <span class="hljs-number">121</span>,
-      name: <span class="hljs-string">'aba'</span>,
-      age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aba'</span>,
-    }],
-  }, {
-    key: <span class="hljs-number">13</span>,
-    name: <span class="hljs-string">'ac'</span>,
-    age: <span class="hljs-number">33</span>,
-    address: <span class="hljs-string">'I am ac'</span>,
-    children: [{
-      key: <span class="hljs-number">131</span>,
-      name: <span class="hljs-string">'aca'</span>,
-      age: <span class="hljs-number">33</span>,
-      address: <span class="hljs-string">'I am aca'</span>,
-      children: [{
-        key: <span class="hljs-number">1311</span>,
-        name: <span class="hljs-string">'acaa'</span>,
-        age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acaa'</span>,
-      }, {
-        key: <span class="hljs-number">1312</span>,
-        name: <span class="hljs-string">'acab'</span>,
-        age: <span class="hljs-number">33</span>,
-        address: <span class="hljs-string">'I am acab'</span>,
-      }],
-    }],
-  }],
-}, {
-  key: <span class="hljs-number">2</span>,
-  name: <span class="hljs-string">'b'</span>,
-  age: <span class="hljs-number">32</span>,
-  address: <span class="hljs-string">'I am b'</span>,
-}];
+const data = [
+  {
+    key: 1,
+    name: 'a',
+    age: 32,
+    address: 'I am a',
+    children: [
+      {
+        key: 11,
+        name: 'aa',
+        age: 33,
+        address: 'I am aa',
+      },
+      {
+        key: 12,
+        name: 'ab',
+        age: 33,
+        address: 'I am ab',
+        children: [
+          {
+            key: 121,
+            name: 'aba',
+            age: 33,
+            address: 'I am aba',
+          },
+        ],
+      },
+      {
+        key: 13,
+        name: 'ac',
+        age: 33,
+        address: 'I am ac',
+        children: [
+          {
+            key: 131,
+            name: 'aca',
+            age: 33,
+            address: 'I am aca',
+            children: [
+              {
+                key: 1311,
+                name: 'acaa',
+                age: 33,
+                address: 'I am acaa',
+              },
+              {
+                key: 1312,
+                name: 'acab',
+                age: 33,
+                address: 'I am acab',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 2,
+    name: 'b',
+    age: 32,
+    address: 'I am b',
+  },
+];
 
 ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
     <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
     <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
     <span class="hljs-attribute">onRow</span>=<span class="hljs-value">{(record,</span> <span class="hljs-attribute">index</span>) =&gt;</span> ({
@@ -372,7 +388,7 @@ ReactDOM.render(
       onDoubleClick: onRowDoubleClick.bind(null, record, index),
     })}
   /&gt;,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>fixedColumnsWhenResize.js - example - rc-table@6.1.7</title>
+  <title>fixedColumnsWhenResize.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -282,28 +282,38 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   { title: <span class="hljs-string">'title4'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'d'</span> },
   { title: <span class="hljs-string">'title5'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'e'</span> },
   { title: <span class="hljs-string">'title6'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'f'</span> },
-  { title: <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>title7<span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>Hello world!<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>, dataIndex: 'b', key: 'g' },
-  { title: 'title8', dataIndex: 'b', key: 'h' },
-  { title: 'title9', dataIndex: 'b', key: 'i' },
-  { title: 'title10', dataIndex: 'b', key: 'j' },
-  { title: 'title11', dataIndex: 'b', key: 'k' },
-  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+  {
+    title: (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        title7<span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>Hello world!
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>,
+    dataIndex: <span class="hljs-string">'b'</span>,
+    key: <span class="hljs-string">'g'</span>,
+  },
+  { title: <span class="hljs-string">'title8'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'h'</span> },
+  { title: <span class="hljs-string">'title9'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'i'</span> },
+  { title: <span class="hljs-string">'title10'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'j'</span> },
+  { title: <span class="hljs-string">'title11'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'k'</span> },
+  { title: <span class="hljs-string">'title12'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'l'</span>, width: <span class="hljs-number">100</span>, fixed: <span class="hljs-string">'right'</span> },
 ];
 
-const data = [
-  { a: '123', b: 'xxxxxxxx', d: 3, key: '1' },
-  { a: 'cdd', b: 'edd12221', d: 3, key: '2' },
-  { a: '133', c: 'edd12221', d: 2, key: '3' },
-  { a: '133', c: 'edd12221', d: 2, key: '4' },
-  { a: '133', c: 'edd12221', d: 2, key: '5' },
-  { a: '133', c: 'edd12221', d: 2, key: '6' },
-  { a: '133', c: 'edd12221', d: 2, key: '7' },
-  { a: '133', c: 'edd12221', d: 2, key: '8' },
-  { a: '133', c: 'edd12221', d: 2, key: '9' },
+<span class="hljs-keyword">const</span> data = [
+  { a: <span class="hljs-string">'123'</span>, b: <span class="hljs-string">'xxxxxxxx'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'1'</span> },
+  { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">3</span>, key: <span class="hljs-string">'2'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'4'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'5'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'6'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'7'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'8'</span> },
+  { a: <span class="hljs-string">'133'</span>, c: <span class="hljs-string">'edd12221'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'9'</span> },
 ];
 
 ReactDOM.render(
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>See fixed columns when you resize window<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
       <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
@@ -312,8 +322,9 @@ ReactDOM.render(
       scroll={{ x: 800 }}
       data={data}
     /&gt;
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-, document.getElementById('__react-content'));
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+  document.getElementById('__react-content'),
+);
 </span></code></pre></div>
   </div>
   <a href="http://github.com/react-component/table">

@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 383:
+/***/ 382:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(384);
+module.exports = __webpack_require__(383);
 
 
 /***/ }),
 
-/***/ 384:
+/***/ 383:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48,6 +48,10 @@ var CheckBox = function CheckBox(_ref) {
   );
 };
 
+CheckBox.propTypes = {
+  id: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
+};
+
 var Demo = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
 
@@ -84,13 +88,11 @@ var Demo = function (_React$Component) {
     });
   };
 
-  Demo.prototype.checkbox = function checkbox(a) {
-    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(CheckBox, { id: a });
-  };
-
   Demo.prototype.render = function render() {
     var state = this.state;
-    var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: this.checkbox }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction }];
+    var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: function render(a) {
+        return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(CheckBox, { id: a });
+      } }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, { title: 'Operations', dataIndex: '', key: 'x', render: this.renderAction }];
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_table__["a" /* default */], { columns: columns, data: state.data, className: 'table', rowKey: function rowKey(record) {
         return record.a;
       } });
@@ -119,5 +121,5 @@ __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[383]);
+},[382]);
 //# sourceMappingURL=key.js.map

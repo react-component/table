@@ -1,14 +1,14 @@
 webpackJsonp([23],{
 
-/***/ 364:
+/***/ 363:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(365);
+module.exports = __webpack_require__(364);
 
 
 /***/ }),
 
-/***/ 365:
+/***/ 364:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100,16 +100,6 @@ var Demo = function (_React$Component) {
     this.setState({ data: data });
   };
 
-  Demo.prototype.expandedRowRender = function expandedRowRender(record) {
-    // console.log(record);
-    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-      'p',
-      null,
-      'extra: ',
-      record.a
-    );
-  };
-
   Demo.prototype.renderAction = function renderAction(o, row, index) {
     var _this3 = this;
 
@@ -151,7 +141,14 @@ var Demo = function (_React$Component) {
         columns: this.columns,
         expandIconAsCell: expandIconAsCell,
         expandRowByClick: expandRowByClick,
-        expandedRowRender: this.expandedRowRender,
+        expandedRowRender: function expandedRowRender(record) {
+          return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+            'p',
+            null,
+            'extra: ',
+            record.a
+          );
+        },
         expandedRowKeys: expandedRowKeys,
         onExpandedRowsChange: this.onExpandedRowsChange,
         onExpand: this.onExpand,
@@ -176,5 +173,5 @@ __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[364]);
+},[363]);
 //# sourceMappingURL=expandedRowRender.js.map

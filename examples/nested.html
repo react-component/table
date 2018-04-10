@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>nested.js - example - rc-table@6.1.7</title>
+  <title>nested.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -280,39 +280,39 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   { title: <span class="hljs-string">'Age'</span>, dataIndex: <span class="hljs-string">'age'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">100</span> },
 ];
 
-<span class="hljs-keyword">const</span> data = [{
-  age: <span class="hljs-string">'23'</span>,
-  names: {
-    first: <span class="hljs-string">'John'</span>,
-    last: <span class="hljs-string">'Doe'</span>,
+<span class="hljs-keyword">const</span> data = [
+  {
+    age: <span class="hljs-string">'23'</span>,
+    names: {
+      first: <span class="hljs-string">'John'</span>,
+      last: <span class="hljs-string">'Doe'</span>,
+    },
+    key: <span class="hljs-string">'1'</span>,
   },
-  key: <span class="hljs-string">'1'</span>,
-}, {
-  age: <span class="hljs-string">'36'</span>,
-  names: {
-    first: <span class="hljs-string">'Terry'</span>,
-    last: <span class="hljs-string">'Garner'</span>,
+  {
+    age: <span class="hljs-string">'36'</span>,
+    names: {
+      first: <span class="hljs-string">'Terry'</span>,
+      last: <span class="hljs-string">'Garner'</span>,
+    },
+    key: <span class="hljs-string">'2'</span>,
   },
-  key: <span class="hljs-string">'2'</span>,
-}, {
-  age: <span class="hljs-string">'52'</span>,
-  names: {
-    first: <span class="hljs-string">'Thomas'</span>,
-    last: <span class="hljs-string">'Goodwin'</span>,
+  {
+    age: <span class="hljs-string">'52'</span>,
+    names: {
+      first: <span class="hljs-string">'Thomas'</span>,
+      last: <span class="hljs-string">'Goodwin'</span>,
+    },
+    key: <span class="hljs-string">'3'</span>,
   },
-  key: <span class="hljs-string">'3'</span>,
-}];
+];
 
 ReactDOM.render(
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Nested data table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-      <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-      <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-      <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span>
-    /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"table"</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>

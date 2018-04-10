@@ -1,14 +1,14 @@
 webpackJsonp([16],{
 
-/***/ 381:
+/***/ 380:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(382);
+module.exports = __webpack_require__(381);
 
 
 /***/ }),
 
-/***/ 382:
+/***/ 381:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46,42 +46,21 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       ColumnGroup,
       { title: 'Bazinga' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, {
-        title: 'title1',
-        dataIndex: 'a',
-        key: 'a',
-        width: 100
-      }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, {
-        id: '123',
-        title: 'title2',
-        dataIndex: 'b',
-        key: 'b',
-        width: 100
-      })
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, { title: 'title1', dataIndex: 'a', key: 'a', width: 100 }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 })
     ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, {
-      title: 'title3',
-      dataIndex: 'c',
-      key: 'c',
-      width: 200
-    }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, {
-      title: 'Operations',
-      dataIndex: '',
-      key: 'd',
-      render: function render() {
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Column, { title: 'Operations', dataIndex: '', key: 'd', render: function render() {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'a',
           { href: '#' },
           'Operations'
         );
-      }
-    })
+      } })
   )
 ), document.getElementById('__react-content'));
 
 /***/ })
 
-},[381]);
+},[380]);
 //# sourceMappingURL=jsx.js.map

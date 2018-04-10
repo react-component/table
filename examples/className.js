@@ -1,14 +1,14 @@
 webpackJsonp([25],{
 
-/***/ 315:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(316);
+module.exports = __webpack_require__(315);
 
 
 /***/ }),
 
-/***/ 316:
+/***/ 315:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26,16 +26,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var columns = [{ title: 'title1', dataIndex: 'a',
+var columns = [{
+  title: 'title1',
+  dataIndex: 'a',
   className: 'a',
-  key: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b',
+  key: 'a',
+  width: 100
+}, {
+  id: '123',
+  title: 'title2',
+  dataIndex: 'b',
   className: 'b',
-  key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c',
+  key: 'b',
+  width: 100
+}, {
+  title: 'title3',
+  dataIndex: 'c',
   className: 'c',
-  key: 'c', width: 200 }, {
-  title: 'Operations', dataIndex: '',
+  key: 'c',
+  width: 200
+}, {
+  title: 'Operations',
+  dataIndex: '',
   className: 'd',
-  key: 'd', render: function render() {
+  key: 'd',
+  render: function render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'a',
       { href: '#' },
@@ -77,5 +92,5 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[315]);
+},[314]);
 //# sourceMappingURL=className.js.map

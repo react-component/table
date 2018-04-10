@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>react-dnd.js - example - rc-table@6.1.7</title>
+  <title>react-dnd.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -304,9 +304,10 @@ injectGlobal<span class="hljs-string">`
   <span class="hljs-keyword">if</span> (dragIndex &gt; hoverIndex &amp;&amp; hoverClientY &lt; hoverMiddleY) {
     <span class="hljs-keyword">return</span> <span class="hljs-string">'upward'</span>;
   }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
 }
 
-<span class="hljs-keyword">let</span> BodyRow = (props) =&gt; {
+<span class="hljs-keyword">let</span> BodyRow = props =&gt; {
   <span class="hljs-keyword">const</span> {
     isOver,
     connectDragSource,
@@ -316,7 +317,7 @@ injectGlobal<span class="hljs-string">`
     clientOffset,
     sourceClientOffset,
     initialClientOffset,
-    ...restProps,
+    ...restProps
   } = props;
   <span class="hljs-keyword">const</span> style = { cursor: <span class="hljs-string">'move'</span> };
 
@@ -327,7 +328,7 @@ injectGlobal<span class="hljs-string">`
       restProps.index,
       initialClientOffset,
       clientOffset,
-      sourceClientOffset
+      sourceClientOffset,
     );
     <span class="hljs-keyword">if</span> (direction === <span class="hljs-string">'downward'</span>) {
       className += <span class="hljs-string">' drop-over-downward'</span>;
@@ -338,13 +339,7 @@ injectGlobal<span class="hljs-string">`
   }
 
   <span class="hljs-keyword">return</span> connectDragSource(
-    connectDropTarget(
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">tr</span>
-        {<span class="hljs-attribute">...restProps</span>}
-        <span class="hljs-attribute">className</span>=<span class="hljs-value">{className}</span>
-        <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>
-      /&gt;</span>
-    )</span>
+    connectDropTarget(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">tr</span> {<span class="hljs-attribute">...restProps</span>} <span class="hljs-attribute">className</span>=<span class="hljs-value">{className}</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span> /&gt;</span>)</span>,
   );
 };
 
@@ -387,7 +382,7 @@ BodyRow = DropTarget(<span class="hljs-string">'row'</span>, rowTarget, (connect
     dragRow: monitor.getItem(),
     clientOffset: monitor.getClientOffset(),
     initialClientOffset: monitor.getInitialClientOffset(),
-  }))(BodyRow)
+  }))(BodyRow),
 );
 
 <span class="hljs-keyword">const</span> columns = [
@@ -411,13 +406,13 @@ BodyRow = DropTarget(<span class="hljs-string">'row'</span>, rowTarget, (connect
       { a: <span class="hljs-string">'cdd'</span>, b: <span class="hljs-string">'edd'</span>, key: <span class="hljs-string">'2'</span> },
       { a: <span class="hljs-string">'1333'</span>, c: <span class="hljs-string">'eee'</span>, d: <span class="hljs-number">2</span>, key: <span class="hljs-string">'3'</span> },
     ],
-  }
+  };
 
   components = {
     body: {
       row: BodyRow,
     },
-  }
+  };
 
   moveRow = (dragIndex, hoverIndex) =&gt; {
     <span class="hljs-keyword">const</span> { data } = <span class="hljs-keyword">this</span>.state;
@@ -430,7 +425,7 @@ BodyRow = DropTarget(<span class="hljs-string">'row'</span>, rowTarget, (connect
         },
       }),
     );
-  }
+  };
 
   render() {
     <span class="hljs-keyword">return</span> (
@@ -454,7 +449,7 @@ ReactDOM.render(
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Integrate with react-dnd<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>

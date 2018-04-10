@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>subTable.js - example - rc-table@6.1.7</title>
+  <title>subTable.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -304,7 +304,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   handleClick = (record, e) =&gt; {
     e.preventDefault();
     <span class="hljs-built_in">console</span>.log(record.a);
-  }
+  };
 
   render() {
     <span class="hljs-keyword">const</span> columns = [
@@ -312,20 +312,22 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       { title: <span class="hljs-string">'title2'</span>, dataIndex: <span class="hljs-string">'b'</span>, key: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">100</span> },
       { title: <span class="hljs-string">'title3'</span>, dataIndex: <span class="hljs-string">'c'</span>, key: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">200</span> },
       {
-        title: <span class="hljs-string">'Operations'</span>, dataIndex: <span class="hljs-string">''</span>, key: <span class="hljs-string">'x'</span>, render: (text, record) =&gt; {
-          <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> this.handleClick(record, e)}&gt;click {record.a}<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>;</span>
+        title: <span class="hljs-string">'Operations'</span>,
+        dataIndex: <span class="hljs-string">''</span>,
+        key: <span class="hljs-string">'x'</span>,
+        render: (text, record) =&gt; {
+          <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{e</span> =&gt;</span> this.handleClick(record, e)}&gt;
+              click {record.a}
+            <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+          )</span>;
         },
       },
     ];
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>sub table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Table</span>
-          <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span>
-          <span class="hljs-attribute">expandIconAsCell</span>
-          <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>
-          <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{record</span> =&gt;</span> record.a}
-        /&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">columns</span>=<span class="hljs-value">{columns}</span> <span class="hljs-attribute">expandIconAsCell</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span> <span class="hljs-attribute">rowKey</span>=<span class="hljs-value">{record</span> =&gt;</span> record.a} /&gt;
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
   }

@@ -1,14 +1,14 @@
 webpackJsonp([7],{
 
-/***/ 465:
+/***/ 464:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(466);
+module.exports = __webpack_require__(465);
 
 
 /***/ }),
 
-/***/ 466:
+/***/ 465:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75,7 +75,10 @@ var Demo = function (_React$Component) {
     var _this2 = this;
 
     var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
-      title: 'Operations', dataIndex: '', key: 'x', render: function render(text, record) {
+      title: 'Operations',
+      dataIndex: '',
+      key: 'x',
+      render: function render(text, record) {
         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
           'a',
           { href: '#', onClick: function onClick(e) {
@@ -94,14 +97,9 @@ var Demo = function (_React$Component) {
         null,
         'sub table'
       ),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_rc_table__["a" /* default */], {
-        columns: columns,
-        expandIconAsCell: true,
-        data: data,
-        rowKey: function rowKey(record) {
+      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_rc_table__["a" /* default */], { columns: columns, expandIconAsCell: true, data: data, rowKey: function rowKey(record) {
           return record.a;
-        }
-      })
+        } })
     );
   };
 
@@ -112,5 +110,5 @@ __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[465]);
+},[464]);
 //# sourceMappingURL=subTable.js.map

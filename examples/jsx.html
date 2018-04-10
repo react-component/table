@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>jsx.js - example - rc-table@6.1.7</title>
+  <title>jsx.js - example - rc-table@6.1.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.1.7</h1>
+      <h1>rc-table@6.1.8</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -288,35 +288,14 @@ ReactDOM.render(
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>JSX table<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Table</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{data}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">ColumnGroup</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Bazinga"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
-          <span class="hljs-attribute">title</span>=<span class="hljs-value">"title1"</span>
-          <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"a"</span>
-          <span class="hljs-attribute">key</span>=<span class="hljs-value">"a"</span>
-          <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span>
-        /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
-          <span class="hljs-attribute">id</span>=<span class="hljs-value">"123"</span>
-          <span class="hljs-attribute">title</span>=<span class="hljs-value">"title2"</span>
-          <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"b"</span>
-          <span class="hljs-attribute">key</span>=<span class="hljs-value">"b"</span>
-          <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span>
-        /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"title1"</span> <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"a"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"a"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Column</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"123"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"title2"</span> <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"b"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"b"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{100}</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">ColumnGroup</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
-        <span class="hljs-attribute">title</span>=<span class="hljs-value">"title3"</span>
-        <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"c"</span>
-        <span class="hljs-attribute">key</span>=<span class="hljs-value">"c"</span>
-        <span class="hljs-attribute">width</span>=<span class="hljs-value">{200}</span>
-      /&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span>
-        <span class="hljs-attribute">title</span>=<span class="hljs-value">"Operations"</span>
-        <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">""</span>
-        <span class="hljs-attribute">key</span>=<span class="hljs-value">"d"</span>
-        <span class="hljs-attribute">render</span>=<span class="hljs-value">{()</span> =&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>}
-      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"title3"</span> <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">"c"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"c"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{200}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Column</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Operations"</span> <span class="hljs-attribute">dataIndex</span>=<span class="hljs-value">""</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"d"</span> <span class="hljs-attribute">render</span>=<span class="hljs-value">{()</span> =&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Operations<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>} /&gt;
     <span class="hljs-tag">&lt;/<span class="hljs-title">Table</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
+  document.getElementById('__react-content'),
 );
 </span></code></pre></div>
   </div>
