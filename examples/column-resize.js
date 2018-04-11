@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 149:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18,9 +18,9 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDraggable = __webpack_require__(321);
+var _reactDraggable = __webpack_require__(319);
 
-var _cloneElement = __webpack_require__(322);
+var _cloneElement = __webpack_require__(320);
 
 var _cloneElement2 = _interopRequireDefault(_cloneElement);
 
@@ -272,46 +272,41 @@ exports.default = Resizable;
 
 /***/ }),
 
-/***/ 318:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(319);
+module.exports = __webpack_require__(317);
 
 
 /***/ }),
 
-/***/ 319:
+/***/ 317:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_table__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_table_assets_index_less__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rc_table_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_resizable__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_resizable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react_resizable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_resizable_css_styles_css__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_resizable_css_styles_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_resizable_css_styles_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_table__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_table_assets_index_less__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_table_assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_resizable__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_resizable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_resizable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_resizable_css_styles_css__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_resizable_css_styles_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_resizable_css_styles_css__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 
@@ -325,43 +320,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var ResizeableTitle = function ResizeableTitle(props) {
   var onResize = props.onResize,
       width = props.width,
-      restProps = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties___default()(props, ['onResize', 'width']);
+      restProps = _objectWithoutProperties(props, ['onResize', 'width']);
 
   if (!width) {
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('th', restProps);
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('th', restProps);
   }
 
-  return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-    __WEBPACK_IMPORTED_MODULE_10_react_resizable__["Resizable"],
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_5_react_resizable__["Resizable"],
     { width: width, height: 0, onResize: onResize },
-    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('th', restProps)
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('th', restProps)
   );
 };
 
 ResizeableTitle.propTypes = {
-  onResize: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func.isRequired,
-  width: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number
+  onResize: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
+  width: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.number
 };
 
 var Demo = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
+  _inherits(Demo, _React$Component);
 
   function Demo() {
     var _temp, _this, _ret;
 
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Demo);
+    _classCallCheck(this, Demo);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
       columns: [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
         title: 'Operations',
         dataIndex: '',
         key: 'd',
         render: function render() {
-          return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'a',
             { href: '#' },
             'Operations'
@@ -380,20 +375,20 @@ var Demo = function (_React$Component) {
           var columns = _ref2.columns;
 
           var nextColumns = [].concat(columns);
-          nextColumns[index] = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, nextColumns[index], {
+          nextColumns[index] = _extends({}, nextColumns[index], {
             width: size.width
           });
           return { columns: nextColumns };
         });
       };
-    }, _temp), __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   Demo.prototype.render = function render() {
     var _this2 = this;
 
     var columns = this.state.columns.map(function (col, index) {
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, col, {
+      return _extends({}, col, {
         onHeaderCell: function onHeaderCell(column) {
           return {
             width: column.width,
@@ -403,26 +398,26 @@ var Demo = function (_React$Component) {
       });
     });
 
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
-      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h2',
         null,
         'Integrate with react-resizable'
       ),
-      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_rc_table__["a" /* default */], { components: this.components, columns: columns, data: this.data })
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_rc_table__["a" /* default */], { components: this.components, columns: columns, data: this.data })
     );
   };
 
   return Demo;
-}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-__WEBPACK_IMPORTED_MODULE_6_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }),
 
-/***/ 320:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -431,13 +426,13 @@ module.exports = function() {
   throw new Error("Don't instantiate Resizable directly! Use require('react-resizable').Resizable");
 };
 
-module.exports.Resizable = __webpack_require__(149).default;
-module.exports.ResizableBox = __webpack_require__(323).default;
+module.exports.Resizable = __webpack_require__(184).default;
+module.exports.ResizableBox = __webpack_require__(321).default;
 
 
 /***/ }),
 
-/***/ 321:
+/***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -3189,7 +3184,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 322:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3216,7 +3211,7 @@ module.exports = function cloneElement(element, props) {
 
 /***/ }),
 
-/***/ 323:
+/***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3234,7 +3229,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Resizable = __webpack_require__(149);
+var _Resizable = __webpack_require__(184);
 
 var _Resizable2 = _interopRequireDefault(_Resizable);
 
@@ -3341,12 +3336,12 @@ exports.default = ResizableBox;
 
 /***/ }),
 
-/***/ 324:
+/***/ 322:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[318]);
+},[316]);
 //# sourceMappingURL=column-resize.js.map
