@@ -23932,6 +23932,38 @@ var Table = function (_React$Component) {
       _this.handleBodyScrollTop(e);
     };
 
+    _this.handleWheel = function (event) {
+      var _this$props$scroll3 = _this.props.scroll,
+          scroll = _this$props$scroll3 === undefined ? {} : _this$props$scroll3;
+
+      if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
+        event.preventDefault();
+        var wd = event.deltaY;
+        var target = event.target;
+        var bodyTable = _this.bodyTable,
+            fixedColumnsBodyLeft = _this.fixedColumnsBodyLeft,
+            fixedColumnsBodyRight = _this.fixedColumnsBodyRight;
+
+        var scrollTop = 0;
+
+        if (_this.lastScrollTop) {
+          scrollTop = _this.lastScrollTop + wd;
+        } else {
+          scrollTop = wd;
+        }
+
+        if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+          fixedColumnsBodyLeft.scrollTop = scrollTop;
+        }
+        if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+          fixedColumnsBodyRight.scrollTop = scrollTop;
+        }
+        if (bodyTable && target !== bodyTable) {
+          bodyTable.scrollTop = scrollTop;
+        }
+      }
+    };
+
     _this.saveRef = function (name) {
       return function (node) {
         _this[name] = node;
@@ -24128,6 +24160,7 @@ var Table = function (_React$Component) {
       fixed: fixed,
       tableClassName: tableClassName,
       getRowKey: this.getRowKey,
+      handleWheel: this.handleWheel,
       handleBodyScroll: this.handleBodyScroll,
       expander: this.expander,
       isAnyColumnsFixed: isAnyColumnsFixed
@@ -28729,6 +28762,7 @@ function BodyTable(props, _ref) {
       tableClassName = props.tableClassName,
       getRowKey = props.getRowKey,
       handleBodyScroll = props.handleBodyScroll,
+      handleWheel = props.handleWheel,
       expander = props.expander,
       isAnyColumnsFixed = props.isAnyColumnsFixed;
   var saveRef = table.saveRef;
@@ -28793,6 +28827,7 @@ function BodyTable(props, _ref) {
           className: prefixCls + '-body-inner',
           style: innerBodyStyle,
           ref: saveRef(refName),
+          onWheel: handleWheel,
           onScroll: handleBodyScroll
         },
         baseTable
@@ -28807,6 +28842,7 @@ function BodyTable(props, _ref) {
       className: prefixCls + '-body',
       style: bodyStyle,
       ref: saveRef('bodyTable'),
+      onWheel: handleWheel,
       onScroll: handleBodyScroll
     },
     baseTable
@@ -28817,6 +28853,7 @@ BodyTable.propTypes = {
   fixed: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.bool]),
   columns: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.array.isRequired,
   tableClassName: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired,
+  handleWheel: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
   handleBodyScroll: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
   getRowKey: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
   expander: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.object.isRequired,
