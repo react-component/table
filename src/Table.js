@@ -325,6 +325,33 @@ class Table extends React.Component {
     this.handleBodyScrollTop(e);
   };
 
+  handleWheel = event => {
+    const { scroll = {} } = this.props;
+    if (navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
+      event.preventDefault();
+      const wd = event.deltaY;
+      const target = event.target;
+      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+      let scrollTop = 0;
+
+      if (this.lastScrollTop) {
+        scrollTop = this.lastScrollTop + wd;
+      } else {
+        scrollTop = wd;
+      }
+
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
+      }
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
+      }
+      if (bodyTable && target !== bodyTable) {
+        bodyTable.scrollTop = scrollTop;
+      }
+    }
+  };
+
   saveRef = name => node => {
     this[name] = node;
   };
@@ -395,6 +422,7 @@ class Table extends React.Component {
         fixed={fixed}
         tableClassName={tableClassName}
         getRowKey={this.getRowKey}
+        handleWheel={this.handleWheel}
         handleBodyScroll={this.handleBodyScroll}
         expander={this.expander}
         isAnyColumnsFixed={isAnyColumnsFixed}
