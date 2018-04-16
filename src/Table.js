@@ -327,7 +327,7 @@ class Table extends React.Component {
 
   handleWheel = event => {
     const { scroll = {} } = this.props;
-    if (navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
+    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
       event.preventDefault();
       const wd = event.deltaY;
       const target = event.target;
