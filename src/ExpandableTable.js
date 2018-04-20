@@ -8,12 +8,13 @@ import { remove } from './utils';
 class ExpandableTable extends React.Component {
   static propTypes = {
     expandIconAsCell: PropTypes.bool,
+    nonSpanningExpandedRow: PropTypes.bool,
     expandedRowKeys: PropTypes.array,
     expandedRowClassName: PropTypes.func,
     defaultExpandAllRows: PropTypes.bool,
     defaultExpandedRowKeys: PropTypes.array,
     expandIconColumnIndex: PropTypes.number,
-    expandedRowRender: PropTypes.func,
+    expandedRowRender: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.func)]),
     childrenColumnName: PropTypes.string,
     indentSize: PropTypes.number,
     onExpand: PropTypes.func,
@@ -28,6 +29,7 @@ class ExpandableTable extends React.Component {
 
   static defaultProps = {
     expandIconAsCell: false,
+    nonSpanningExpandedRow: false,
     expandedRowClassName: () => '',
     expandIconColumnIndex: 0,
     defaultExpandAllRows: false,
@@ -127,26 +129,34 @@ class ExpandableTable extends React.Component {
   };
 
   renderExpandedRow(record, index, render, className, ancestorKeys, indent, fixed) {
-    const { prefixCls, expandIconAsCell, indentSize } = this.props;
+    const { prefixCls, expandIconAsCell, nonSpanningExpandedRow, indentSize } = this.props;
     let colCount;
-    if (fixed === 'left') {
-      colCount = this.columnManager.leftLeafColumns().length;
-    } else if (fixed === 'right') {
-      colCount = this.columnManager.rightLeafColumns().length;
+    let columns;
+    if (nonSpanningExpandedRow && Array.isArray(render)) {
+      columns = render.map((columnRenderer, columnIndex) => ({
+        key: `extra-row-column-${columnIndex}`,
+        render: () => columnRenderer(record, index, indent),
+      }));
     } else {
-      colCount = this.columnManager.leafColumns().length;
+      if (fixed === 'left') {
+        colCount = this.columnManager.leftLeafColumns().length;
+      } else if (fixed === 'right') {
+        colCount = this.columnManager.rightLeafColumns().length;
+      } else {
+        colCount = this.columnManager.leafColumns().length;
+      }
+      columns = [
+        {
+          key: 'extra-row',
+          render: () => ({
+            props: {
+              colSpan: colCount,
+            },
+            children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
+          }),
+        },
+      ];
     }
-    const columns = [
-      {
-        key: 'extra-row',
-        render: () => ({
-          props: {
-            colSpan: colCount,
-          },
-          children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
-        }),
-      },
-    ];
     if (expandIconAsCell && fixed !== 'right') {
       columns.unshift({
         key: 'expand-icon-placeholder',

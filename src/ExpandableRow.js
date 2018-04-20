@@ -16,7 +16,7 @@ class ExpandableRow extends React.Component {
     expandIconAsCell: PropTypes.bool,
     expandIconColumnIndex: PropTypes.number,
     childrenColumnName: PropTypes.string,
-    expandedRowRender: PropTypes.func,
+    expandedRowRender: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.func)]),
     onExpandedChange: PropTypes.func.isRequired,
     onRowClick: PropTypes.func,
     children: PropTypes.func.isRequired,

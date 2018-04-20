@@ -58,6 +58,33 @@ describe('Table.expand', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should render a non spanning row correctly', () => {
+    const nonSpanningExpandedRowRender = [
+      data => <div>{`This is ${data.name}`}</div>,
+      data => <div>{`${data.name} is ${data.age} years old`}</div>,
+    ];
+    const wrapper = render(
+      createTable({
+        expandedRowRender: nonSpanningExpandedRowRender,
+        nonSpanningExpandedRow: true,
+        expandedRowKeys: [0],
+      }),
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render a spanning column if only passed one render function', () => {
+    const nonSpanningExpandedRowRender = () => <div>first non spanning row</div>;
+    const wrapper = render(
+      createTable({
+        expandedRowRender: nonSpanningExpandedRowRender,
+        nonSpanningExpandedRow: true,
+        expandedRowKeys: [0],
+      }),
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('renders expand icon to the specify column', () => {
     const wrapper = render(
       createTable({
