@@ -1329,14 +1329,14 @@ exports[`Table.expand should render a non spanning row correctly 1`] = `
               class=""
             >
               <div>
-                first non spanning row
+                This is Lucy
               </div>
             </td>
             <td
               class=""
             >
               <div>
-                second non spanning row
+                Lucy is 27 years old
               </div>
             </td>
           </tr>

@@ -135,7 +135,7 @@ class ExpandableTable extends React.Component {
     if (nonSpanningExpandedRow && Array.isArray(render)) {
       columns = render.map((columnRenderer, columnIndex) => ({
         key: `extra-row-column-${columnIndex}`,
-        render: columnRenderer,
+        render: () => columnRenderer(record, index, indent),
       }));
     } else {
       if (fixed === 'left') {

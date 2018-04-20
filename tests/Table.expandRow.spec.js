@@ -60,8 +60,8 @@ describe('Table.expand', () => {
 
   it('should render a non spanning row correctly', () => {
     const nonSpanningExpandedRowRender = [
-      () => <div>first non spanning row</div>,
-      () => <div>second non spanning row</div>,
+      data => <div>{`This is ${data.name}`}</div>,
+      data => <div>{`${data.name} is ${data.age} years old`}</div>,
     ];
     const wrapper = render(
       createTable({
