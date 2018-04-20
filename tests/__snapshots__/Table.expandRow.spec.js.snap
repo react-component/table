@@ -1264,3 +1264,203 @@ exports[`Table.expand renders tree row correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`Table.expand should render a non spanning row correctly 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+            <th
+              class=""
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+              Lucy
+            </td>
+            <td
+              class=""
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+            >
+              <div>
+                first non spanning row
+              </div>
+            </td>
+            <td
+              class=""
+            >
+              <div>
+                second non spanning row
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+              Jack
+            </td>
+            <td
+              class=""
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table.expand should render a spanning column if only passed one render function 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+            <th
+              class=""
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+              Lucy
+            </td>
+            <td
+              class=""
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+          >
+            <td
+              class=""
+              colspan="2"
+            >
+              <div>
+                first non spanning row
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+              Jack
+            </td>
+            <td
+              class=""
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
