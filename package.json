@@ -29,7 +29,7 @@
   "bugs": {
     "url": "http://github.com/react-component/table/issues"
   },
-  "licenses": "MIT",
+  "license": "MIT",
   "config": {
     "port": 8000,
     "entry": {
