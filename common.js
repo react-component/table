@@ -28169,7 +28169,7 @@ var TableCell = function (_React$Component) {
     }
 
     if (column.align) {
-      tdProps.style = { textAlign: column.align };
+      tdProps.style = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, tdProps.style, { textAlign: column.align });
     }
 
     return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
