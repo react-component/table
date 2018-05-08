@@ -15,7 +15,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
         const { column, ...cellProps } = cell;
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
         if (column.align) {
-          cellProps.style = { textAlign: column.align };
+          customProps.style = { ...customProps.style, textAlign: column.align };
         }
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />

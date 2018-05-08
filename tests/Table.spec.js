@@ -550,6 +550,7 @@ describe('Table', () => {
         key: 'age',
         align: 'center',
         onCell: () => ({ style: { color: 'red' } }),
+        onHeaderCell: () => ({ style: { color: 'red' } }),
       },
     ];
     const wrapper = render(createTable({ columns }));

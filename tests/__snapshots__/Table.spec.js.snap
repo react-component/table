@@ -106,7 +106,7 @@ exports[`Table align column should not override cell style 1`] = `
             </th>
             <th
               class=""
-              style="text-align:center"
+              style="color:red;text-align:center"
             >
               Age
             </th>
