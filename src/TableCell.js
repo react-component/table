@@ -23,7 +23,10 @@ export default class TableCell extends React.Component {
   };
 
   handleClick = e => {
-    const { record, column: { onCellClick } } = this.props;
+    const {
+      record,
+      column: { onCellClick },
+    } = this.props;
     if (onCellClick) {
       onCellClick(record, e);
     }
@@ -87,7 +90,7 @@ export default class TableCell extends React.Component {
     }
 
     if (column.align) {
-      tdProps.style = { textAlign: column.align };
+      tdProps.style = { ...tdProps.style, textAlign: column.align };
     }
 
     return (

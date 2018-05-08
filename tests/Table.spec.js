@@ -541,6 +541,21 @@ describe('Table', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('align column should not override cell style', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+        align: 'center',
+        onCell: () => ({ style: { color: 'red' } }),
+      },
+    ];
+    const wrapper = render(createTable({ columns }));
+    expect(wrapper).toMatchSnapshot();
+  });
+
   describe('row events', () => {
     let spy;
     beforeAll(() => {
