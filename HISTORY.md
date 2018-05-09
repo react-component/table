@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.2.0 / 2019-05-09
+
+- Add `expanded` as the fourth parameter to `expandedRowRender`.
+
 ## 6.0.0 / 2017-11-14
 
 - Refactor.
