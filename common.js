@@ -28947,11 +28947,21 @@ var ExpandableTable = function (_React$Component) {
   };
 
   ExpandableTable.prototype.renderExpandedRow = function renderExpandedRow(record, index, _render, className, ancestorKeys, indent, fixed) {
+    var _this2 = this;
+
     var _props = this.props,
         prefixCls = _props.prefixCls,
         expandIconAsCell = _props.expandIconAsCell,
         indentSize = _props.indentSize;
 
+    var parentKey = ancestorKeys[ancestorKeys.length - 1];
+    var rowKey = parentKey + '-extra-row';
+    var components = {
+      body: {
+        row: 'tr',
+        cell: 'td'
+      }
+    };
     var colCount = void 0;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -28963,11 +28973,15 @@ var ExpandableTable = function (_React$Component) {
     var columns = [{
       key: 'extra-row',
       render: function render() {
+        var _store$getState = _this2.store.getState(),
+            expandedRowKeys = _store$getState.expandedRowKeys;
+
+        var expanded = !!~expandedRowKeys.indexOf(parentKey);
         return {
           props: {
             colSpan: colCount
           },
-          children: fixed !== 'right' ? _render(record, index, indent) : '&nbsp;'
+          children: fixed !== 'right' ? _render(record, index, indent, expanded) : '&nbsp;'
         };
       }
     }];
@@ -28979,14 +28993,6 @@ var ExpandableTable = function (_React$Component) {
         }
       });
     }
-    var parentKey = ancestorKeys[ancestorKeys.length - 1];
-    var rowKey = parentKey + '-extra-row';
-    var components = {
-      body: {
-        row: 'tr',
-        cell: 'td'
-      }
-    };
 
     return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__TableRow__["a" /* default */], {
       key: rowKey,
@@ -29059,7 +29065,7 @@ ExpandableTable.defaultProps = {
 };
 
 var _initialiseProps = function _initialiseProps() {
-  var _this2 = this;
+  var _this3 = this;
 
   this.handleExpandChange = function (expanded, record, event, rowKey) {
     var destroy = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
@@ -29069,12 +29075,12 @@ var _initialiseProps = function _initialiseProps() {
       event.stopPropagation();
     }
 
-    var _props3 = _this2.props,
+    var _props3 = _this3.props,
         onExpandedRowsChange = _props3.onExpandedRowsChange,
         onExpand = _props3.onExpand;
 
-    var _store$getState = _this2.store.getState(),
-        expandedRowKeys = _store$getState.expandedRowKeys;
+    var _store$getState2 = _this3.store.getState(),
+        expandedRowKeys = _store$getState2.expandedRowKeys;
 
     if (expanded) {
       // row was expaned
@@ -29087,8 +29093,8 @@ var _initialiseProps = function _initialiseProps() {
       }
     }
 
-    if (!_this2.props.expandedRowKeys) {
-      _this2.store.setState({ expandedRowKeys: expandedRowKeys });
+    if (!_this3.props.expandedRowKeys) {
+      _this3.store.setState({ expandedRowKeys: expandedRowKeys });
     }
 
     onExpandedRowsChange(expandedRowKeys);
@@ -29098,7 +29104,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.renderExpandIndentCell = function (rows, fixed) {
-    var _props4 = _this2.props,
+    var _props4 = _this3.props,
         prefixCls = _props4.prefixCls,
         expandIconAsCell = _props4.expandIconAsCell;
 
@@ -29117,7 +29123,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.renderRows = function (renderRows, rows, record, index, indent, fixed, parentKey, ancestorKeys) {
-    var _props5 = _this2.props,
+    var _props5 = _this3.props,
         expandedRowClassName = _props5.expandedRowClassName,
         expandedRowRender = _props5.expandedRowRender,
         childrenColumnName = _props5.childrenColumnName;
@@ -29127,7 +29133,7 @@ var _initialiseProps = function _initialiseProps() {
     var nextIndent = indent + 1;
 
     if (expandedRowRender) {
-      rows.push(_this2.renderExpandedRow(record, index, expandedRowRender, expandedRowClassName(record, index, indent), nextAncestorKeys, nextIndent, fixed));
+      rows.push(_this3.renderExpandedRow(record, index, expandedRowRender, expandedRowClassName(record, index, indent), nextAncestorKeys, nextIndent, fixed));
     }
 
     if (childrenData) {
