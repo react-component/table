@@ -128,6 +128,14 @@ class ExpandableTable extends React.Component {
 
   renderExpandedRow(record, index, render, className, ancestorKeys, indent, fixed) {
     const { prefixCls, expandIconAsCell, indentSize } = this.props;
+    const parentKey = ancestorKeys[ancestorKeys.length - 1];
+    const rowKey = `${parentKey}-extra-row`;
+    const components = {
+      body: {
+        row: 'tr',
+        cell: 'td',
+      },
+    };
     let colCount;
     if (fixed === 'left') {
       colCount = this.columnManager.leftLeafColumns().length;
@@ -139,12 +147,16 @@ class ExpandableTable extends React.Component {
     const columns = [
       {
         key: 'extra-row',
-        render: () => ({
-          props: {
-            colSpan: colCount,
-          },
-          children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
-        }),
+        render: () => {
+          const { expandedRowKeys } = this.store.getState();
+          const expanded = !!~expandedRowKeys.indexOf(parentKey);
+          return {
+            props: {
+              colSpan: colCount,
+            },
+            children: fixed !== 'right' ? render(record, index, indent, expanded) : '&nbsp;',
+          };
+        },
       },
     ];
     if (expandIconAsCell && fixed !== 'right') {
@@ -153,14 +165,6 @@ class ExpandableTable extends React.Component {
         render: () => null,
       });
     }
-    const parentKey = ancestorKeys[ancestorKeys.length - 1];
-    const rowKey = `${parentKey}-extra-row`;
-    const components = {
-      body: {
-        row: 'tr',
-        cell: 'td',
-      },
-    };
 
     return (
       <TableRow

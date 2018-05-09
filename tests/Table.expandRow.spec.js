@@ -20,6 +20,19 @@ describe('Table.expand', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('pass proper paramters to expandedRowRender', () => {
+    const rowRender = jest.fn(() => <div>expanded row</div>);
+    const wrapper = mount(
+      createTable({
+        expandedRowRender: rowRender,
+      }),
+    );
+    wrapper.setProps({ expandedRowKeys: [0] });
+    expect(rowRender).toHaveBeenLastCalledWith(sampleData[0], 0, 1, true);
+    wrapper.setProps({ expandedRowKeys: [] });
+    expect(rowRender).toHaveBeenLastCalledWith(sampleData[0], 0, 1, false);
+  });
+
   it('renders tree row correctly', () => {
     const data = [
       {

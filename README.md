@@ -171,6 +171,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>get expanded row's className</td>
     </tr>
     <tr>
+      <td>expandedRowRender</td>
+      <td>Function(recode, index, indent, expanded):ReactNode</td>
+      <td></td>
+      <td>Content render to expanded row</td>
+    </tr>
+    <tr>
       <td>data</td>
       <td>Object[]</td>
       <td></td>
