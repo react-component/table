@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
+import classNames from 'classnames';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
@@ -22,6 +23,19 @@ class BaseTable extends React.Component {
   static contextTypes = {
     table: PropTypes.any,
   };
+
+  getColumns(cols) {
+    const { columns = [], fixed } = this.props;
+    const { table } = this.context;
+    const { prefixCls } = table.props;
+    return (cols || columns).map(column => ({
+      ...column,
+      className:
+        !!column.fixed && !fixed
+          ? classNames(`${prefixCls}-fixed-columns-in-body`, column.className)
+          : column.className,
+    }));
+  }
 
   handleRowHover = (isHover, key) => {
     this.props.store.setState({
@@ -65,7 +79,7 @@ class BaseTable extends React.Component {
       } else if (fixed === 'right') {
         leafColumns = columnManager.rightLeafColumns();
       } else {
-        leafColumns = columnManager.leafColumns();
+        leafColumns = this.getColumns(columnManager.leafColumns());
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
@@ -123,7 +137,7 @@ class BaseTable extends React.Component {
     const { table } = this.context;
     const { components } = table;
     const { prefixCls, scroll, data, getBodyWrapper } = table.props;
-    const { expander, tableClassName, hasHead, hasBody, fixed, columns } = this.props;
+    const { expander, tableClassName, hasHead, hasBody, fixed } = this.props;
     const tableStyle = {};
 
     if (!fixed && scroll.x) {
@@ -145,6 +159,8 @@ class BaseTable extends React.Component {
         body = getBodyWrapper(body);
       }
     }
+
+    const columns = this.getColumns();
 
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
