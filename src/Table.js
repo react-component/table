@@ -75,21 +75,6 @@ class Table extends React.Component {
     emptyText: () => 'No Data',
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.columns && nextProps.columns !== prevState.columns) {
-      return {
-        columns: nextProps.columns,
-        children: null,
-      };
-    } else if (nextProps.children !== prevState.children) {
-      return {
-        columns: null,
-        children: nextProps.children,
-      };
-    }
-    return null;
-  }
-
   constructor(props) {
     super(props);
 
@@ -147,6 +132,21 @@ class Table extends React.Component {
         ),
       },
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.columns && nextProps.columns !== prevState.columns) {
+      return {
+        columns: nextProps.columns,
+        children: null,
+      };
+    } else if (nextProps.children !== prevState.children) {
+      return {
+        columns: null,
+        children: nextProps.children,
+      };
+    }
+    return null;
   }
 
   componentDidMount() {

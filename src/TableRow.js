@@ -45,6 +45,14 @@ class TableRow extends React.Component {
     renderExpandIconCell() {},
   };
 
+  constructor(props) {
+    super(props);
+
+    this.shouldRender = props.visible;
+
+    this.state = {};
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.visible || (!prevState.visible && nextProps.visible)) {
       return {
@@ -55,14 +63,6 @@ class TableRow extends React.Component {
     return {
       visible: nextProps.visible,
     };
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.shouldRender = props.visible;
-
-    this.state = {};
   }
 
   componentDidMount() {
