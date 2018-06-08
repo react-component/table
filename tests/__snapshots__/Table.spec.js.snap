@@ -258,7 +258,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-header-row"
             >
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-header-cell"
               >
                 Name
@@ -270,7 +270,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 Age
               </th>
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-header-cell"
               >
                 Gender
@@ -301,7 +301,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-body-row"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-body-cell"
               >
                 <span
@@ -317,7 +317,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 27
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-body-cell"
               >
                 F
