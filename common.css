@@ -32,6 +32,10 @@
   overflow-y: scroll;
   box-sizing: border-box;
 }
+.rc-table-fixed-columns-in-body {
+  visibility: hidden;
+  pointer-events: none;
+}
 .rc-table .rc-table-title {
   padding: 16px 8px;
   border-top: 1px solid #e9e9e9;

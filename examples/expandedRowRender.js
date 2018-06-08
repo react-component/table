@@ -1,14 +1,14 @@
 webpackJsonp([23],{
 
-/***/ 363:
+/***/ 366:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(364);
+module.exports = __webpack_require__(367);
 
 
 /***/ }),
 
-/***/ 364:
+/***/ 367:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -141,13 +141,13 @@ var Demo = function (_React$Component) {
         columns: this.columns,
         expandIconAsCell: expandIconAsCell,
         expandRowByClick: expandRowByClick,
-        expandedRowRender: function expandedRowRender(record) {
-          return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+        expandedRowRender: function expandedRowRender(record, index, indent, expanded) {
+          return expanded ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             'p',
             null,
             'extra: ',
             record.a
-          );
+          ) : null;
         },
         expandedRowKeys: expandedRowKeys,
         onExpandedRowsChange: this.onExpandedRowsChange,
@@ -173,5 +173,5 @@ __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[363]);
+},[366]);
 //# sourceMappingURL=expandedRowRender.js.map
