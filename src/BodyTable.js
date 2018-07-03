@@ -36,7 +36,7 @@ export default function BodyTable(props, { table }) {
     } else {
       bodyStyle.maxHeight = bodyStyle.maxHeight || scroll.y;
     }
-    bodyStyle.overflowY = bodyStyle.overflowY || 'auto';
+    bodyStyle.overflowY = bodyStyle.overflowY || 'scroll';
     useFixedHeader = true;
 
     // Add negative margin bottom for scroll bar overflow bug
