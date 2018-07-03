@@ -141,13 +141,13 @@ var Demo = function (_React$Component) {
         columns: this.columns,
         expandIconAsCell: expandIconAsCell,
         expandRowByClick: expandRowByClick,
-        expandedRowRender: function expandedRowRender(record, index, indent, expanded) {
-          return expanded ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+        expandedRowRender: function expandedRowRender(record) {
+          return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             'p',
             null,
             'extra: ',
             record.a
-          ) : null;
+          );
         },
         expandedRowKeys: expandedRowKeys,
         onExpandedRowsChange: this.onExpandedRowsChange,
