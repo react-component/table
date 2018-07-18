@@ -117,7 +117,8 @@ module.exports = invariant;
 /* 59 */,
 /* 60 */,
 /* 61 */,
-/* 62 */
+/* 62 */,
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = function(originalModule) {
@@ -147,7 +148,7 @@ module.exports = function(originalModule) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -343,7 +344,7 @@ function endDrag() {
 }
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -390,7 +391,7 @@ function removeTarget(targetId) {
 }
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -415,7 +416,6 @@ function checkDecoratorArguments(functionName, signature) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 66 */,
 /* 67 */,
 /* 68 */,
 /* 69 */,
@@ -2210,7 +2210,7 @@ var styled = _styled(StyledComponent, constructWithOptions);
 
 /* harmony default export */ __webpack_exports__["a"] = (styled);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9), __webpack_require__(62)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9), __webpack_require__(63)(module)))
 
 /***/ }),
 /* 103 */
@@ -2597,9 +2597,7 @@ module.exports = function isObject(val) {
 						length = ++caret
 
 						while (caret < eof) {
-							code = body.charCodeAt(caret)
-
-							switch (code) {
+							switch (code = body.charCodeAt(caret)) {
 								case OPENBRACES: {
 									counter++
 									break
@@ -2607,6 +2605,34 @@ module.exports = function isObject(val) {
 								case CLOSEBRACES: {
 									counter--
 									break
+								}
+								case FOWARDSLASH: {
+									switch (second = body.charCodeAt(caret + 1)) {
+										// /*, //
+										case STAR:
+										case FOWARDSLASH: {
+											caret = delimited(second, caret, eol, body)
+										}
+									}
+									break
+								}
+								// given "[" === 91 & "]" === 93 hence forth 91 + 1 + 1 === 93
+								case OPENBRACKET: {
+									code++
+								}
+								// given "(" === 40 & ")" === 41 hence forth 40 + 1 === 41
+								case OPENPARENTHESES: {
+									code++
+								}
+								// quote tail delimiter is identical to the head delimiter hence noop,
+								// fallthrough clauses have been shited to the correct tail delimiter
+								case DOUBLEQUOTE:
+								case SINGLEQUOTE: {
+									while (caret++ < eol) {
+										if (body.charCodeAt(caret) === code) {
+											break
+										}
+									}
 								}
 							}
 
@@ -3017,7 +3043,7 @@ module.exports = function isObject(val) {
 								}
 								// end block comment context
 								case STAR: {
-									if (code === FOWARDSLASH && tail === STAR) {
+									if (code === FOWARDSLASH && tail === STAR && length + 2 !== caret) {
 										// /*<!> ... */, !
 										if (body.charCodeAt(length+2) === 33) {
 											out += body.substring(length, caret+1)
@@ -3758,6 +3784,57 @@ module.exports = function isObject(val) {
 	}
 
 	/**
+	 * @param {number} code
+	 * @param {number} index
+	 * @param {number} length
+	 * @param {string} body
+	 * @return {number}
+	 */
+	function delimited (code, index, length, body) {
+		for (var i = index + 1; i < length; ++i) {
+			switch (body.charCodeAt(i)) {
+				// /*
+				case FOWARDSLASH: {
+					if (code === STAR) {
+						if (body.charCodeAt(i - 1) === STAR &&  index + 2 !== i) {
+							return i + 1
+						}
+					}
+					break
+				}
+				// //
+				case NEWLINE: {
+					if (code === FOWARDSLASH) {
+						return i + 1
+					}
+				}
+			}
+		}
+
+		return i
+	}
+
+	/**
+	 * @param {number} type
+	 * @param {number} index
+	 * @param {number} length
+	 * @param {number} find
+	 * @param {string} body
+	 * @return {number}
+	 */
+	function match (type, index, length, body) {
+		for (var i = index + 1; i < length; ++i) {
+			switch (body.charCodeAt(i)) {
+				case type: {
+					return i
+				}
+			}
+		}
+
+		return i
+	}
+
+	/**
 	 * Minify
 	 *
 	 * @param {(string|*)} output
@@ -3982,7 +4059,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(84),
+var MapCache = __webpack_require__(85),
     setCacheAdd = __webpack_require__(402),
     setCacheHas = __webpack_require__(403);
 
@@ -4234,7 +4311,7 @@ var _hoistNonReactStatics = __webpack_require__(50);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _checkDecoratorArguments = __webpack_require__(65);
+var _checkDecoratorArguments = __webpack_require__(66);
 
 var _checkDecoratorArguments2 = _interopRequireDefault(_checkDecoratorArguments);
 
@@ -4340,7 +4417,7 @@ exports.default = dragOffset;
 exports.getSourceClientOffset = getSourceClientOffset;
 exports.getDifferenceFromInitialOffset = getDifferenceFromInitialOffset;
 
-var _dragDrop = __webpack_require__(63);
+var _dragDrop = __webpack_require__(64);
 
 var initialState = {
 	initialSourceClientOffset: null,
@@ -4480,8 +4557,8 @@ module.exports = without;
 var SetCache = __webpack_require__(107),
     arrayIncludes = __webpack_require__(108),
     arrayIncludesWith = __webpack_require__(109),
-    arrayMap = __webpack_require__(58),
-    baseUnary = __webpack_require__(89),
+    arrayMap = __webpack_require__(59),
+    baseUnary = __webpack_require__(90),
     cacheHas = __webpack_require__(110);
 
 /** Used as the size to enable large array optimizations. */
@@ -4567,9 +4644,9 @@ var _intersection = __webpack_require__(416);
 
 var _intersection2 = _interopRequireDefault(_intersection);
 
-var _dragDrop = __webpack_require__(63);
+var _dragDrop = __webpack_require__(64);
 
-var _registry = __webpack_require__(64);
+var _registry = __webpack_require__(65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5477,7 +5554,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_taggedTemplateLiteralLoose__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_taggedTemplateLiteralLoose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_taggedTemplateLiteralLoose__);
@@ -6078,7 +6155,7 @@ var _reducers = __webpack_require__(400);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _dragDrop = __webpack_require__(63);
+var _dragDrop = __webpack_require__(64);
 
 var dragDropActions = _interopRequireWildcard(_dragDrop);
 
@@ -6469,7 +6546,7 @@ if (typeof self !== 'undefined') {
 var result = Object(__WEBPACK_IMPORTED_MODULE_0__ponyfill_js__["a" /* default */])(root);
 /* harmony default export */ __webpack_exports__["default"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(83), __webpack_require__(62)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(84), __webpack_require__(63)(module)))
 
 /***/ }),
 /* 399 */
@@ -6562,9 +6639,9 @@ var _without = __webpack_require__(161);
 
 var _without2 = _interopRequireDefault(_without);
 
-var _dragDrop = __webpack_require__(63);
+var _dragDrop = __webpack_require__(64);
 
-var _registry = __webpack_require__(64);
+var _registry = __webpack_require__(65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6788,7 +6865,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = refCount;
 
-var _registry = __webpack_require__(64);
+var _registry = __webpack_require__(65);
 
 function refCount() {
 	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -6944,7 +7021,7 @@ module.exports = arrayPush;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(54),
-    isArguments = __webpack_require__(87),
+    isArguments = __webpack_require__(88),
     isArray = __webpack_require__(11);
 
 /** Built-in value references. */
@@ -7007,7 +7084,7 @@ module.exports = Set;
 /* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(58),
+var arrayMap = __webpack_require__(59),
     baseIntersection = __webpack_require__(417),
     baseRest = __webpack_require__(32),
     castArrayLikeObject = __webpack_require__(418);
@@ -7046,8 +7123,8 @@ module.exports = intersection;
 var SetCache = __webpack_require__(107),
     arrayIncludes = __webpack_require__(108),
     arrayIncludesWith = __webpack_require__(109),
-    arrayMap = __webpack_require__(58),
-    baseUnary = __webpack_require__(89),
+    arrayMap = __webpack_require__(59),
+    baseUnary = __webpack_require__(90),
     cacheHas = __webpack_require__(110);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -7420,7 +7497,7 @@ var _asap = __webpack_require__(422);
 
 var _asap2 = _interopRequireDefault(_asap);
 
-var _registry = __webpack_require__(64);
+var _registry = __webpack_require__(65);
 
 var _getNextUniqueId = __webpack_require__(424);
 
@@ -7924,7 +8001,7 @@ rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
 // back into ASAP proper.
 // https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(83)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(84)))
 
 /***/ }),
 /* 424 */
@@ -8255,7 +8332,7 @@ var _shallowEqualScalar = __webpack_require__(168);
 
 var _shallowEqualScalar2 = _interopRequireDefault(_shallowEqualScalar);
 
-var _checkDecoratorArguments = __webpack_require__(65);
+var _checkDecoratorArguments = __webpack_require__(66);
 
 var _checkDecoratorArguments2 = _interopRequireDefault(_checkDecoratorArguments);
 
@@ -8392,7 +8469,7 @@ var _isPlainObject = __webpack_require__(17);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _checkDecoratorArguments = __webpack_require__(65);
+var _checkDecoratorArguments = __webpack_require__(66);
 
 var _checkDecoratorArguments2 = _interopRequireDefault(_checkDecoratorArguments);
 
@@ -9134,7 +9211,7 @@ var _isPlainObject = __webpack_require__(17);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _checkDecoratorArguments = __webpack_require__(65);
+var _checkDecoratorArguments = __webpack_require__(66);
 
 var _checkDecoratorArguments2 = _interopRequireDefault(_checkDecoratorArguments);
 
@@ -10235,7 +10312,7 @@ exports.default = HTML5Backend;
 var baseRest = __webpack_require__(32),
     eq = __webpack_require__(38),
     isIterateeCall = __webpack_require__(144),
-    keysIn = __webpack_require__(90);
+    keysIn = __webpack_require__(91);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
