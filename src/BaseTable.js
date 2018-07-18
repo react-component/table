@@ -43,7 +43,7 @@ class BaseTable extends React.Component {
     });
   };
 
-  renderRows = (renderData, indent, ancestorKeys = []) => {
+  renderRows = (renderData, indent, rows = [], ancestorKeys = []) => {
     const { table } = this.context;
     const { columnManager, components } = table;
     const {
@@ -59,8 +59,6 @@ class BaseTable extends React.Component {
       onRow,
     } = table.props;
     const { getRowKey, fixed, expander, isAnyColumnsFixed } = this.props;
-
-    const rows = [];
 
     for (let i = 0; i < renderData.length; i++) {
       const record = renderData[i];
@@ -83,12 +81,13 @@ class BaseTable extends React.Component {
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
+      const rowIndex = rows.length;
 
       const row = (
         <ExpandableRow
           {...expander.props}
           fixed={fixed}
-          index={i}
+          index={rowIndex}
           prefixCls={rowPrefixCls}
           record={record}
           key={key}
@@ -105,7 +104,7 @@ class BaseTable extends React.Component {
               indent={indent}
               className={className}
               record={record}
-              index={i}
+              index={rowIndex}
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}

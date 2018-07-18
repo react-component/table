@@ -204,7 +204,7 @@ class ExpandableTable extends React.Component {
     }
 
     if (childrenData) {
-      rows.push(...renderRows(childrenData, nextIndent, nextAncestorKeys));
+      renderRows(childrenData, nextIndent, rows, nextAncestorKeys);
     }
   };
 

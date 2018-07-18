@@ -2,6 +2,7 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import Table from '../src';
+import TableRow from '../src/TableRow';
 
 describe('Table.expand', () => {
   const expandedRowRender = () => <p>extra data</p>;
@@ -204,5 +205,48 @@ describe('Table.expand', () => {
       .first()
       .simulate('click');
     expect(wrapper.render()).toMatchSnapshot();
+  });
+
+  it('renders row index of tree data correctly', () => {
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        children: [
+          {
+            key: 2,
+            name: 'Jim',
+            age: 1,
+            children: [
+              {
+                key: 3,
+                name: 'Green',
+                age: 3,
+              },
+            ],
+          },
+        ],
+      },
+      { key: 1, name: 'Jack', age: 28 },
+    ];
+    const rows = [];
+    const onRow = (record, index) => {
+      rows.push([record.key, index]);
+      return {};
+    };
+    const wrapper = mount(
+      createTable({
+        data,
+        onRow,
+        defaultExpandAllRows: true,
+      }),
+    );
+    expect(wrapper.find(TableRow).map(row => [row.props().rowKey, row.props().index])).toEqual([
+      [0, 0],
+      [2, 1],
+      [3, 2],
+      [1, 3],
+    ]);
   });
 });
