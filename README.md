@@ -335,7 +335,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>onCell</td>
-      <td>Function(record)</td>
+      <td>Function(record, index)</td>
       <td></td>
       <td>Set custom props per each cell.</td>
     </tr>
