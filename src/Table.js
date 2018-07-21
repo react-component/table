@@ -249,17 +249,17 @@ class Table extends React.Component {
       row => row.getBoundingClientRect().height || 'auto',
     );
     const state = this.store.getState();
-    if (
-      shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+    if (!shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight)) {
+      this.store.setState({
+        fixedColumnsHeadRowsHeight,
+      });
+    } else if (
+      !shallowequal(state.fixedColumnsBodyRowsHeight.filter(n => n), fixedColumnsBodyRowsHeight)
     ) {
-      return;
+      this.store.setState({
+        fixedColumnsBodyRowsHeight,
+      });
     }
-
-    this.store.setState({
-      fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
-    });
   };
 
   resetScrollX() {
