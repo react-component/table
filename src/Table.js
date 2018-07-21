@@ -249,16 +249,21 @@ class Table extends React.Component {
       row => row.getBoundingClientRect().height || 'auto',
     );
     const state = this.store.getState();
+    const fixedColumnsBodyRowsHeightEqual = shallowequal(
+      state.fixedColumnsBodyRowsHeight.filter(n => n),
+      fixedColumnsBodyRowsHeight,
+    );
     if (
       shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+      fixedColumnsBodyRowsHeightEqual
     ) {
       return;
     }
-
     this.store.setState({
       fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
+      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeightEqual
+        ? state.fixedColumnsBodyRowsHeight
+        : fixedColumnsBodyRowsHeight,
     });
   };
 
