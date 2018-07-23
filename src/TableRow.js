@@ -130,11 +130,15 @@ class TableRow extends React.Component {
   }
 
   setRowHeight() {
-    const { store, index } = this.props;
-    const fixedColumnsBodyRowsHeight = store.getState().fixedColumnsBodyRowsHeight.slice();
+    const { store, rowKey } = this.props;
+    const { fixedColumnsBodyRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
-    fixedColumnsBodyRowsHeight[index] = height;
-    store.setState({ fixedColumnsBodyRowsHeight });
+    store.setState({
+      fixedColumnsBodyRowsHeight: {
+        ...fixedColumnsBodyRowsHeight,
+        [rowKey]: height,
+      },
+    });
   }
 
   getStyle() {
@@ -178,6 +182,7 @@ class TableRow extends React.Component {
       prefixCls,
       columns,
       record,
+      rowKey,
       index,
       onRow,
       indent,
@@ -249,6 +254,7 @@ class TableRow extends React.Component {
         className={rowClassName}
         {...rowProps}
         style={style}
+        data-row-key={rowKey}
       >
         {cells}
       </BodyRow>
@@ -258,7 +264,7 @@ class TableRow extends React.Component {
 
 function getRowHeight(state, props) {
   const { expandedRowsHeight, fixedColumnsBodyRowsHeight } = state;
-  const { fixed, index, rowKey } = props;
+  const { fixed, rowKey } = props;
 
   if (!fixed) {
     return null;
@@ -268,8 +274,8 @@ function getRowHeight(state, props) {
     return expandedRowsHeight[rowKey];
   }
 
-  if (fixedColumnsBodyRowsHeight[index]) {
-    return fixedColumnsBodyRowsHeight[index];
+  if (fixedColumnsBodyRowsHeight[rowKey]) {
+    return fixedColumnsBodyRowsHeight[rowKey];
   }
 
   return null;

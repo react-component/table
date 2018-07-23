@@ -98,7 +98,7 @@ class Table extends React.Component {
     this.store = create({
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: [],
+      fixedColumnsBodyRowsHeight: {},
     });
 
     this.setScrollPosition('left');
@@ -244,9 +244,15 @@ class Table extends React.Component {
       headRows,
       row => row.getBoundingClientRect().height || 'auto',
     );
-    const fixedColumnsBodyRowsHeight = [].map.call(
+    const fixedColumnsBodyRowsHeight = [].reduce.call(
       bodyRows,
-      row => row.getBoundingClientRect().height || 'auto',
+      (acc, row) => {
+        const rowKey = row.getAttribute('data-row-key');
+        const height = row.getBoundingClientRect().height || 'auto';
+        acc[rowKey] = height;
+        return acc;
+      },
+      {},
     );
     const state = this.store.getState();
     if (
