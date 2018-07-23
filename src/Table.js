@@ -255,16 +255,21 @@ class Table extends React.Component {
       {},
     );
     const state = this.store.getState();
+    const fixedColumnsBodyRowsHeightEqual = shallowequal(
+      state.fixedColumnsBodyRowsHeight.filter(n => n),
+      fixedColumnsBodyRowsHeight,
+    );
     if (
       shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
+      fixedColumnsBodyRowsHeightEqual
     ) {
       return;
     }
-
     this.store.setState({
       fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
+      fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeightEqual
+        ? state.fixedColumnsBodyRowsHeight
+        : fixedColumnsBodyRowsHeight,
     });
   };
 
