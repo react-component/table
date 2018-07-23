@@ -4197,14 +4197,19 @@ var TableRow = function (_React$Component) {
   };
 
   TableRow.prototype.setRowHeight = function setRowHeight() {
+    var _extends3;
+
     var _props2 = this.props,
         store = _props2.store,
-        index = _props2.index;
+        rowKey = _props2.rowKey;
 
-    var fixedColumnsBodyRowsHeight = store.getState().fixedColumnsBodyRowsHeight.slice();
+    var _store$getState2 = store.getState(),
+        fixedColumnsBodyRowsHeight = _store$getState2.fixedColumnsBodyRowsHeight;
+
     var height = this.rowRef.getBoundingClientRect().height;
-    fixedColumnsBodyRowsHeight[index] = height;
-    store.setState({ fixedColumnsBodyRowsHeight: fixedColumnsBodyRowsHeight });
+    store.setState({
+      fixedColumnsBodyRowsHeight: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, fixedColumnsBodyRowsHeight, (_extends3 = {}, _extends3[rowKey] = height, _extends3))
+    });
   };
 
   TableRow.prototype.getStyle = function getStyle() {
@@ -4256,6 +4261,7 @@ var TableRow = function (_React$Component) {
         prefixCls = _props5.prefixCls,
         columns = _props5.columns,
         record = _props5.record,
+        rowKey = _props5.rowKey,
         index = _props5.index,
         onRow = _props5.onRow,
         indent = _props5.indent,
@@ -4323,7 +4329,8 @@ var TableRow = function (_React$Component) {
         onContextMenu: this.onContextMenu,
         className: rowClassName
       }, rowProps, {
-        style: style
+        style: style,
+        'data-row-key': rowKey
       }),
       cells
     );
@@ -4374,7 +4381,6 @@ function getRowHeight(state, props) {
   var expandedRowsHeight = state.expandedRowsHeight,
       fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
   var fixed = props.fixed,
-      index = props.index,
       rowKey = props.rowKey;
 
 
@@ -4386,8 +4392,8 @@ function getRowHeight(state, props) {
     return expandedRowsHeight[rowKey];
   }
 
-  if (fixedColumnsBodyRowsHeight[index]) {
-    return fixedColumnsBodyRowsHeight[index];
+  if (fixedColumnsBodyRowsHeight[rowKey]) {
+    return fixedColumnsBodyRowsHeight[rowKey];
   }
 
   return null;
@@ -24837,9 +24843,12 @@ var Table = function (_React$Component) {
       var fixedColumnsHeadRowsHeight = [].map.call(headRows, function (row) {
         return row.getBoundingClientRect().height || 'auto';
       });
-      var fixedColumnsBodyRowsHeight = [].map.call(bodyRows, function (row) {
-        return row.getBoundingClientRect().height || 'auto';
-      });
+      var fixedColumnsBodyRowsHeight = [].reduce.call(bodyRows, function (acc, row) {
+        var rowKey = row.getAttribute('data-row-key');
+        var height = row.getBoundingClientRect().height || 'auto';
+        acc[rowKey] = height;
+        return acc;
+      }, {});
       var state = _this.store.getState();
       if (__WEBPACK_IMPORTED_MODULE_6_shallowequal___default()(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && __WEBPACK_IMPORTED_MODULE_6_shallowequal___default()(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
         return;
@@ -24957,7 +24966,7 @@ var Table = function (_React$Component) {
     _this.store = Object(__WEBPACK_IMPORTED_MODULE_8_mini_store__["create"])({
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: []
+      fixedColumnsBodyRowsHeight: {}
     });
 
     _this.setScrollPosition('left');
