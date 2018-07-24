@@ -244,17 +244,18 @@ class Table extends React.Component {
       headRows,
       row => row.getBoundingClientRect().height || 'auto',
     );
+    const state = this.store.getState();
     const fixedColumnsBodyRowsHeight = [].reduce.call(
       bodyRows,
       (acc, row) => {
         const rowKey = row.getAttribute('data-row-key');
-        const height = row.getBoundingClientRect().height || 'auto';
+        const height =
+          row.getBoundingClientRect().height || state.fixedColumnsBodyRowsHeight[rowKey] || 'auto';
         acc[rowKey] = height;
         return acc;
       },
       {},
     );
-    const state = this.store.getState();
     if (
       shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
