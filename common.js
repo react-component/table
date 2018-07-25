@@ -4117,7 +4117,9 @@ var BaseTable = function (_React$Component) {
         }
 
         var rowPrefixCls = prefixCls + '-row';
-        var rowIndex = rows.length;
+        var rowIndex = rows.filter(function (row) {
+          return !row.props.expandedRow;
+        }).length;
 
         var row = __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_12__ExpandableRow__["a" /* default */],
