@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.3.0 / 2018-08-02
+
+- Fixed header will read cell width from body.
+
 ## 6.2.0 / 2018-05-09
 
 - Add `expanded` as the fourth parameter to `expandedRowRender`.
