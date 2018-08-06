@@ -4,7 +4,7 @@ import { connect } from 'mini-store';
 
 function ColGroup(props, { table }) {
   const { prefixCls, expandIconAsCell } = table.props;
-  const { fixed, firstRowCellsWidth } = props;
+  const { fixed, headTable, firstRowCellsWidth } = props;
 
   let cols = [];
 
@@ -22,9 +22,10 @@ function ColGroup(props, { table }) {
     leafColumns = table.columnManager.leafColumns();
   }
   cols = cols.concat(
-    leafColumns.map((c, index) => {
-      const width = c.width || firstRowCellsWidth[index + cols.length];
-      return <col key={c.key || c.dataIndex} style={{ width, minWidth: width }} />;
+    leafColumns.map(c => {
+      const columnKey = c.key || c.dataIndex;
+      const width = headTable || fixed ? firstRowCellsWidth[columnKey] || c.width : c.width;
+      return <col key={columnKey} style={{ width, minWidth: width }} />;
     }),
   );
 
@@ -33,7 +34,8 @@ function ColGroup(props, { table }) {
 
 ColGroup.propTypes = {
   fixed: PropTypes.string,
-  firstRowCellsWidth: PropTypes.array,
+  firstRowCellsWidth: PropTypes.object,
+  headTable: PropTypes.bool,
 };
 
 ColGroup.contextTypes = {

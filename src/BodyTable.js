@@ -57,6 +57,7 @@ export default function BodyTable(props, { table }) {
       expander={expander}
       getRowKey={getRowKey}
       isAnyColumnsFixed={isAnyColumnsFixed}
+      useFixedHeader={useFixedHeader}
     />
   );
 

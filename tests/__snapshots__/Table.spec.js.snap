@@ -23,11 +23,13 @@ exports[`Table align column 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
               style="text-align:center"
             >
               Age
@@ -103,11 +105,13 @@ exports[`Table align column should not override cell style 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
               style="color:red;text-align:center"
             >
               Age
@@ -186,6 +190,7 @@ exports[`Table custom components renders correctly 1`] = `
           >
             <th
               class=""
+              data-column-key="name"
               name="my-header-cell"
             >
               Name
@@ -265,18 +270,21 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             >
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="name"
                 name="my-header-cell"
               >
                 Name
               </th>
               <th
                 class=""
+                data-column-key="age"
                 name="my-header-cell"
               >
                 Age
               </th>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="gender"
                 name="my-header-cell"
               >
                 Gender
@@ -298,6 +306,51 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             <col />
             <col />
           </colgroup>
+          <thead
+            class="rc-table-thead"
+            name="my-header-wrapper"
+          >
+            <tr
+              name="my-header-row"
+            >
+              <th
+                class="rc-table-fixed-columns-in-body"
+                data-column-key="name"
+                name="my-header-cell"
+                style="padding-top:0;padding-bottom:0;border:none"
+              >
+                <div
+                  style="height:0;opacity:0"
+                >
+                  Name
+                </div>
+              </th>
+              <th
+                class=""
+                data-column-key="age"
+                name="my-header-cell"
+                style="padding-top:0;padding-bottom:0;border:none"
+              >
+                <div
+                  style="height:0;opacity:0"
+                >
+                  Age
+                </div>
+              </th>
+              <th
+                class="rc-table-fixed-columns-in-body"
+                data-column-key="gender"
+                name="my-header-cell"
+                style="padding-top:0;padding-bottom:0;border:none"
+              >
+                <div
+                  style="height:0;opacity:0"
+                >
+                  Gender
+                </div>
+              </th>
+            </tr>
+          </thead>
           <tbody
             class="rc-table-tbody"
             name="my-body-wrapper"
@@ -355,6 +408,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             >
               <th
                 class=""
+                data-column-key="name"
                 name="my-header-cell"
               >
                 Name
@@ -378,6 +432,27 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             <colgroup>
               <col />
             </colgroup>
+            <thead
+              class="rc-table-thead"
+              name="my-header-wrapper"
+            >
+              <tr
+                name="my-header-row"
+              >
+                <th
+                  class=""
+                  data-column-key="name"
+                  name="my-header-cell"
+                  style="padding-top:0;padding-bottom:0;border:none"
+                >
+                  <div
+                    style="height:0;opacity:0"
+                  >
+                    Name
+                  </div>
+                </th>
+              </tr>
+            </thead>
             <tbody
               class="rc-table-tbody"
               name="my-body-wrapper"
@@ -424,6 +499,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             >
               <th
                 class=""
+                data-column-key="gender"
                 name="my-header-cell"
               >
                 Gender
@@ -447,6 +523,27 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             <colgroup>
               <col />
             </colgroup>
+            <thead
+              class="rc-table-thead"
+              name="my-header-wrapper"
+            >
+              <tr
+                name="my-header-row"
+              >
+                <th
+                  class=""
+                  data-column-key="gender"
+                  name="my-header-cell"
+                  style="padding-top:0;padding-bottom:0;border:none"
+                >
+                  <div
+                    style="height:0;opacity:0"
+                  >
+                    Gender
+                  </div>
+                </th>
+              </tr>
+            </thead>
             <tbody
               class="rc-table-tbody"
               name="my-body-wrapper"
@@ -495,11 +592,13 @@ exports[`Table dataIndex render text by path 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="a"
             >
               First Name
             </th>
             <th
               class=""
+              data-column-key="b"
             >
               Last Name
             </th>
@@ -577,6 +676,7 @@ exports[`Table renders colSpan correctly 1`] = `
             <th
               class=""
               colspan="2"
+              data-column-key="firstName"
             >
               Name
             </th>
@@ -650,6 +750,7 @@ exports[`Table renders column correctly 1`] = `
           <tr>
             <th
               class="name-class"
+              data-column-key="name"
             >
               Name
             </th>
@@ -721,6 +822,7 @@ Array [
 exports[`Table renders column.onHeaderCell 1`] = `
 <th
   class=""
+  data-column-key="name"
   id="header-cell-name"
 >
   Name
@@ -749,6 +851,7 @@ exports[`Table renders correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -814,6 +917,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -879,6 +983,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -944,6 +1049,7 @@ exports[`Table renders custom cell correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1013,6 +1119,7 @@ exports[`Table renders empty text correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1054,6 +1161,7 @@ exports[`Table renders empty text correctly 2`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1095,6 +1203,7 @@ exports[`Table renders fixed header correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1111,6 +1220,23 @@ exports[`Table renders fixed header correctly 1`] = `
         <colgroup>
           <col />
         </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+              data-column-key="name"
+              style="padding-top:0;padding-bottom:0;border:none"
+            >
+              <div
+                style="height:0;opacity:0"
+              >
+                Name
+              </div>
+            </th>
+          </tr>
+        </thead>
         <tbody
           class="rc-table-tbody"
         >
@@ -1171,6 +1297,7 @@ exports[`Table renders footer correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1227,6 +1354,7 @@ exports[`Table renders onHeaderRow correctly 1`] = `
 >
   <th
     class=""
+    data-column-key="name"
   >
     Name
   </th>
@@ -1293,11 +1421,13 @@ exports[`Table renders rowSpan correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="firstName"
             >
               First Name
             </th>
             <th
               class=""
+              data-column-key="lastName"
             >
               Last Name
             </th>
@@ -1369,6 +1499,7 @@ exports[`Table renders table body to the wrapper 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1441,6 +1572,7 @@ exports[`Table renders title correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
@@ -1565,6 +1697,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
             <tr>
               <th
                 class=""
+                data-column-key="name"
               >
                 Name
               </th>
@@ -1636,6 +1769,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
             <tr>
               <th
                 class=""
+                data-column-key="name"
               >
                 Name
               </th>
@@ -1705,6 +1839,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
             <tr>
               <th
                 class=""
+                data-column-key="name"
               >
                 Name
               </th>
@@ -1722,6 +1857,23 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
           <colgroup>
             <col />
           </colgroup>
+          <thead
+            class="rc-table-thead"
+          >
+            <tr>
+              <th
+                class=""
+                data-column-key="name"
+                style="padding-top:0;padding-bottom:0;border:none"
+              >
+                <div
+                  style="height:0;opacity:0"
+                >
+                  Name
+                </div>
+              </th>
+            </tr>
+          </thead>
           <tbody
             class="rc-table-tbody"
           >

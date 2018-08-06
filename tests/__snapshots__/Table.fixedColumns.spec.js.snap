@@ -44,61 +44,73 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             <tr>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="a"
               >
                 title1
               </th>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="b"
               >
                 title2
               </th>
               <th
                 class=""
+                data-column-key="c"
               >
                 title3
               </th>
               <th
                 class=""
+                data-column-key="d"
               >
                 title4
               </th>
               <th
                 class=""
+                data-column-key="e"
               >
                 title5
               </th>
               <th
                 class=""
+                data-column-key="f"
               >
                 title6
               </th>
               <th
                 class=""
+                data-column-key="g"
               >
                 title7
               </th>
               <th
                 class=""
+                data-column-key="h"
               >
                 title8
               </th>
               <th
                 class=""
+                data-column-key="i"
               >
                 title9
               </th>
               <th
                 class=""
+                data-column-key="j"
               >
                 title10
               </th>
               <th
                 class=""
+                data-column-key="k"
               >
                 title11
               </th>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="l"
               >
                 title12
               </th>
@@ -615,11 +627,13 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <tr>
                 <th
                   class=""
+                  data-column-key="a"
                 >
                   title1
                 </th>
                 <th
                   class=""
+                  data-column-key="b"
                 >
                   title2
                 </th>
@@ -814,6 +828,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               <tr>
                 <th
                   class=""
+                  data-column-key="l"
                 >
                   title12
                 </th>
