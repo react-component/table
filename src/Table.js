@@ -6,7 +6,7 @@ import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
 import classes from 'component-classes';
 import { polyfill } from 'react-lifecycles-compat';
-import { debounce, warningOnce } from './utils';
+import { debounce, warningOnce, getDataOrAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
@@ -408,8 +408,9 @@ class Table extends React.Component {
 
   renderTable(options) {
     const { columns, fixed, isAnyColumnsFixed } = options;
-    const { prefixCls, scroll = {} } = this.props;
+    const { prefixCls, scroll = {}, ...otherProps } = this.props;
     const tableClassName = scroll.x || fixed ? `${prefixCls}-fixed` : '';
+    const dataOrAriaProps = getDataOrAriaProps(otherProps);
 
     const headTable = (
       <HeadTable
@@ -433,6 +434,7 @@ class Table extends React.Component {
         handleBodyScroll={this.handleBodyScroll}
         expander={this.expander}
         isAnyColumnsFixed={isAnyColumnsFixed}
+        {...dataOrAriaProps}
       />
     );
 

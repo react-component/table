@@ -6,6 +6,7 @@ import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
+import { getDataOrAriaProps } from './utils';
 
 class BaseTable extends React.Component {
   static propTypes = {
@@ -136,8 +137,9 @@ class BaseTable extends React.Component {
     const { table } = this.context;
     const { components } = table;
     const { prefixCls, scroll, data, getBodyWrapper } = table.props;
-    const { expander, tableClassName, hasHead, hasBody, fixed } = this.props;
+    const { expander, tableClassName, hasHead, hasBody, fixed, ...otherProps } = this.props;
     const tableStyle = {};
+    const dataOrAriaProps = getDataOrAriaProps(otherProps);
 
     if (!fixed && scroll.x) {
       // not set width, then use content fixed width
@@ -162,7 +164,7 @@ class BaseTable extends React.Component {
     const columns = this.getColumns();
 
     return (
-      <Table className={tableClassName} style={tableStyle} key="table">
+      <Table className={tableClassName} style={tableStyle} key="table" {...dataOrAriaProps}>
         <ColGroup columns={columns} fixed={fixed} />
         {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
         {body}

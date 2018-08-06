@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { measureScrollbar } from './utils';
+import { measureScrollbar, getDataOrAriaProps } from './utils';
 import BaseTable from './BaseTable';
 
 export default function BodyTable(props, { table }) {
@@ -14,6 +14,7 @@ export default function BodyTable(props, { table }) {
     handleWheel,
     expander,
     isAnyColumnsFixed,
+    ...otherProps
   } = props;
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
@@ -47,6 +48,8 @@ export default function BodyTable(props, { table }) {
     }
   }
 
+  const dataOrAriaProps = getDataOrAriaProps(otherProps);
+
   const baseTable = (
     <BaseTable
       tableClassName={tableClassName}
@@ -57,6 +60,7 @@ export default function BodyTable(props, { table }) {
       expander={expander}
       getRowKey={getRowKey}
       isAnyColumnsFixed={isAnyColumnsFixed}
+      {...dataOrAriaProps}
     />
   );
 

@@ -65,6 +65,34 @@ describe('Table', () => {
     expect(wrapper.find(`div#${testId}`)).toHaveLength(1);
   });
 
+  it('renders with data attributes correctly', () => {
+    const testId = 'test-id';
+    const otherId = '12345';
+    const wrapper = mount(
+      createTable({
+        'data-test': testId,
+        'data-id': otherId,
+      }),
+    );
+    const table = wrapper.find('table').getDOMNode();
+    expect(table.getAttribute('data-test')).toBe(testId);
+    expect(table.getAttribute('data-id')).toBe(otherId);
+  });
+
+  it('renders with aria attributes correctly', () => {
+    const label = 'some-label';
+    const labelledby = 'label-id';
+    const wrapper = mount(
+      createTable({
+        'aria-label': label,
+        'aria-labelledby': labelledby,
+      }),
+    );
+    const table = wrapper.find('table').getDOMNode();
+    expect(table.getAttribute('aria-label')).toBe(label);
+    expect(table.getAttribute('aria-labelledby')).toBe(labelledby);
+  });
+
   xit('sets row refs', () => {
     const wrapper = mount(createTable({ rowRef: record => record.key }));
     expect(wrapper.instance().refs.key0).toBe(

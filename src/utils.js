@@ -79,3 +79,12 @@ export function remove(array, item) {
   const last = array.slice(index + 1, array.length);
   return front.concat(last);
 }
+
+export function getDataOrAriaProps(props) {
+  return Object.keys(props).reduce((prev, key) => {
+    if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
+      prev[key] = props[key];
+    }
+    return prev;
+  }, {});
+}
