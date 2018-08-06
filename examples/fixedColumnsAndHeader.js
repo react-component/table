@@ -5,24 +5,18 @@ import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
 const columns = [
-  { title: 'title1', dataIndex: 'a', key: 'a', fixed: 'left' },
-  { title: 'title2', dataIndex: 'b', key: 'b', fixed: 'left' },
-  {
-    title: 'titleA',
-    key: 'cd',
-    children: [
-      { title: 'title3', dataIndex: 'c', key: 'c' },
-      { title: 'title4', dataIndex: 'c', key: 'd' },
-    ],
-  },
-  { title: 'title5', dataIndex: 'c', key: 'e' },
-  { title: 'title6', dataIndex: 'c', key: 'f' },
-  { title: 'title7', dataIndex: 'c', key: 'g' },
-  { title: 'title8', dataIndex: 'c', key: 'h' },
-  { title: 'title9', dataIndex: 'b', key: 'i' },
-  { title: 'title10', dataIndex: 'b', key: 'j' },
-  { title: 'title11', dataIndex: 'b', key: 'k' },
-  { title: 'title12', dataIndex: 'b', key: 'l', fixed: 'right' },
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+  { title: 'title3', dataIndex: 'c', key: 'c', width: 150 },
+  { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
+  { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+  { title: 'title6', dataIndex: 'c', key: 'f', width: 150 },
+  { title: 'title7', dataIndex: 'c', key: 'g', width: 150 },
+  { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
+  { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
+  { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
+  { title: 'title11', dataIndex: 'b', key: 'k', width: 150 },
+  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
 const data = [

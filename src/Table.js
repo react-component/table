@@ -99,7 +99,6 @@ class Table extends React.Component {
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
-      firstRowCellsWidth: [],
     });
 
     this.setScrollPosition('left');
@@ -151,23 +150,19 @@ class Table extends React.Component {
   }
 
   componentDidMount() {
-    this.handleWindowResize();
-    this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-
-    if (this.props.scroll.y) {
-      this.syncFixedHeaderWidth();
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.handleWindowResize();
+      this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
     }
-  }
-
-  getSnapshotBeforeUpdate() {
-    if (this.props.scroll.y) {
-      this.syncFixedHeaderWidth();
-    }
-    return null;
   }
 
   componentDidUpdate(prevProps) {
-    this.handleWindowResize(false);
+    if (this.columnManager.isAnyColumnsFixed()) {
+      this.handleWindowResize();
+      if (!this.resizeEvent) {
+        this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
+      }
+    }
     // when table changes to empty, reset scrollLeft
     if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
       this.resetScrollX();
@@ -228,14 +223,9 @@ class Table extends React.Component {
     }
   }
 
-  handleWindowResize = (syncHeaderWidth = true) => {
-    if (this.columnManager.isAnyColumnsFixed()) {
-      this.syncFixedTableRowHeight();
-      this.setScrollPositionClassName();
-    }
-    if (this.props.scroll.y && syncHeaderWidth) {
-      this.syncFixedHeaderWidth();
-    }
+  handleWindowResize = () => {
+    this.syncFixedTableRowHeight();
+    this.setScrollPositionClassName();
   };
 
   syncFixedTableRowHeight = () => {
@@ -266,7 +256,6 @@ class Table extends React.Component {
       },
       {},
     );
-
     if (
       shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
@@ -279,22 +268,6 @@ class Table extends React.Component {
       fixedColumnsBodyRowsHeight,
     });
   };
-
-  syncFixedHeaderWidth() {
-    const { prefixCls } = this.props;
-    const firstRowCells = this.bodyTable.querySelectorAll(`.${prefixCls}-row:first-child td`) || [];
-    const state = this.store.getState();
-    const firstRowCellsWidth = [].map.call(
-      firstRowCells,
-      cell => cell.getBoundingClientRect().width,
-    );
-    if (shallowequal(state.firstRowCellsWidth, firstRowCellsWidth)) {
-      return;
-    }
-    this.store.setState({
-      firstRowCellsWidth,
-    });
-  }
 
   resetScrollX() {
     if (this.headTable) {
