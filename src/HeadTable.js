@@ -39,6 +39,8 @@ export default function HeadTable(props, { table }) {
         fixed={fixed}
         columns={columns}
         expander={expander}
+        headTable
+        useFixedHeader={useFixedHeader}
       />
     </div>
   );

@@ -23,11 +23,13 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -123,11 +125,13 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -237,11 +241,13 @@ exports[`Table.expand expand all rows by default 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -350,11 +356,13 @@ exports[`Table.expand expand row by click 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -450,11 +458,13 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -553,16 +563,19 @@ exports[`Table.expand renders expand icon as cell 1`] = `
           <tr>
             <th
               class="rc-table-expand-icon-th"
+              data-column-key="rc-table-expand-icon-cell"
               rowspan="1"
               title=""
             />
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -645,11 +658,13 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -732,11 +747,13 @@ exports[`Table.expand renders expand row correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -819,11 +836,13 @@ exports[`Table.expand renders expend row class correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -923,16 +942,19 @@ exports[`Table.expand renders fixed column correctly 1`] = `
             <tr>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="name"
               >
                 Name
               </th>
               <th
                 class=""
+                data-column-key="age"
               >
                 Age
               </th>
               <th
                 class="rc-table-fixed-columns-in-body"
+                data-column-key="gender"
               >
                 Gender
               </th>
@@ -1021,6 +1043,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               <tr>
                 <th
                   class=""
+                  data-column-key="name"
                 >
                   Name
                 </th>
@@ -1090,6 +1113,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               <tr>
                 <th
                   class=""
+                  data-column-key="gender"
                 >
                   Gender
                 </th>
@@ -1150,11 +1174,13 @@ exports[`Table.expand renders nested data correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>
@@ -1237,11 +1263,13 @@ exports[`Table.expand renders tree row correctly 1`] = `
           <tr>
             <th
               class=""
+              data-column-key="name"
             >
               Name
             </th>
             <th
               class=""
+              data-column-key="age"
             >
               Age
             </th>

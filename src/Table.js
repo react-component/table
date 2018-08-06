@@ -99,7 +99,7 @@ class Table extends React.Component {
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
-      firstRowCellsWidth: [],
+      firstRowCellsWidth: {},
     });
 
     this.setScrollPosition('left');
@@ -153,21 +153,10 @@ class Table extends React.Component {
   componentDidMount() {
     this.handleWindowResize();
     this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-
-    if (this.props.scroll.y) {
-      this.syncFixedHeaderWidth();
-    }
-  }
-
-  getSnapshotBeforeUpdate() {
-    if (this.props.scroll.y) {
-      this.syncFixedHeaderWidth();
-    }
-    return null;
   }
 
   componentDidUpdate(prevProps) {
-    this.handleWindowResize(false);
+    this.handleWindowResize();
     // when table changes to empty, reset scrollLeft
     if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
       this.resetScrollX();
@@ -228,12 +217,12 @@ class Table extends React.Component {
     }
   }
 
-  handleWindowResize = (syncHeaderWidth = true) => {
+  handleWindowResize = () => {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.syncFixedTableRowHeight();
       this.setScrollPositionClassName();
     }
-    if (this.props.scroll.y && syncHeaderWidth) {
+    if (this.props.scroll.y || this.props.scroll.x) {
       this.syncFixedHeaderWidth();
     }
   };
@@ -281,12 +270,17 @@ class Table extends React.Component {
   };
 
   syncFixedHeaderWidth() {
-    const { prefixCls } = this.props;
-    const firstRowCells = this.bodyTable.querySelectorAll(`.${prefixCls}-row:first-child td`) || [];
+    const firstRowCells = this.bodyTable.querySelectorAll('thead th') || [];
     const state = this.store.getState();
-    const firstRowCellsWidth = [].map.call(
+    const firstRowCellsWidth = [].reduce.call(
       firstRowCells,
-      cell => cell.getBoundingClientRect().width,
+      (acc, cell) => {
+        const columnKey = cell.getAttribute('data-column-key');
+        const width = cell.getBoundingClientRect().width;
+        acc[columnKey] = width;
+        return acc;
+      },
+      {},
     );
     if (shallowequal(state.firstRowCellsWidth, firstRowCellsWidth)) {
       return;
