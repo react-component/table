@@ -65,6 +65,16 @@ describe('Table', () => {
     expect(wrapper.find(`div#${testId}`)).toHaveLength(1);
   });
 
+  it('renders data- attributes', () => {
+    const wrapper = render(createTable({ 'data-test': 'names-table' }));
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('renders aria- attributes', () => {
+    const wrapper = render(createTable({ 'aria-label': 'names-table-aria' }));
+    expect(wrapper).toMatchSnapshot();
+  });
+
   xit('sets row refs', () => {
     const wrapper = mount(createTable({ rowRef: record => record.key }));
     expect(wrapper.instance().refs.key0).toBe(
