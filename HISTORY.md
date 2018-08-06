@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.3.1 / 2018-08-02
+
+- Revert [112346](https://github.com/react-component/table/commit/112346ca75e8057771cf70fc8fde4bf5f63ce2e8) since too many edge cases.
+
 ## 6.3.0 / 2018-08-02
 
 - Fixed header will read cell width from body.
