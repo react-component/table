@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'mini-store';
 import PropTypes from 'prop-types';
 import { measureScrollbar } from './utils';
 import BaseTable from './BaseTable';
 
-export default function BodyTable(props, { table }) {
+function BodyTable(props, { table }) {
   const { prefixCls, scroll } = table.props;
   const {
     columns,
@@ -13,12 +14,20 @@ export default function BodyTable(props, { table }) {
     handleBodyScroll,
     handleWheel,
     expander,
+    rowWidth,
     isAnyColumnsFixed,
   } = props;
   const { saveRef } = table;
-  let { useFixedHeader } = table.props;
+  let { useFixedHeader, virtualized } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
   const innerBodyStyle = {};
+    if(virtualized){
+        bodyStyle.width= rowWidth;
+        bodyStyle.height= virtualized.bodyHeight;
+        bodyStyle.position= 'relative';
+        bodyStyle.overflowY= 'scroll';
+        bodyStyle.overflowX= 'hidden';
+      }
 
   if (scroll.x || fixed) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'scroll';
@@ -97,6 +106,8 @@ export default function BodyTable(props, { table }) {
     </div>
   );
 }
+
+export default connect(({rowWidth}) => ({rowWidth}))(BodyTable);
 
 BodyTable.propTypes = {
   fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

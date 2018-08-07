@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'mini-store';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
@@ -10,7 +11,7 @@ function isInvalidRenderCellText(text) {
   );
 }
 
-export default class TableCell extends React.Component {
+class TableCell extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     prefixCls: PropTypes.string,
@@ -42,6 +43,9 @@ export default class TableCell extends React.Component {
       expandIcon,
       column,
       component: BodyCell,
+      virtualized,
+      columnIndex,
+      columnWidths
     } = this.props;
     const { dataIndex, render, className = '' } = column;
 
@@ -92,6 +96,9 @@ export default class TableCell extends React.Component {
     if (column.align) {
       tdProps.style = { ...tdProps.style, textAlign: column.align };
     }
+    if(virtualized && columnWidths && columnWidths[columnIndex]){
+      tdProps.style={...tdProps.style, width: columnWidths[columnIndex]}
+    }
 
     return (
       <BodyCell className={className} onClick={this.handleClick} {...tdProps}>
@@ -102,3 +109,10 @@ export default class TableCell extends React.Component {
     );
   }
 }
+export default connect((state, props) => {
+  const { virtualized, columnWidths } = state;
+  return {
+    virtualized,
+    columnWidths
+  };
+})(TableCell);

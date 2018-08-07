@@ -75,6 +75,26 @@ class Table extends React.Component {
     emptyText: () => 'No Data',
   };
 
+  setScrollingStatus = (scrolling) => {
+    this.store.setState({
+       scrolling,
+    })
+  }
+
+  calculateColumnWidths = () => {
+    const { columns } = this.props;
+    const idealRowWidth = columns.reduce((accu, { width }) => accu + (width || 40), 0);
+    const valid = idealRowWidth >= this.bodyTable.offsetWidth;
+    // make sure row width is larger than bodyTable
+    const columnWidths = columns.map(
+      ({ width = 40 }) => (valid ? width : this.bodyTable.offsetWidth / columns.length),
+    );
+    this.store.setState({
+      rowWidth: valid ? idealRowWidth : this.bodyTable.offsetWidth,
+      columnWidths,
+    });
+  };
+
   constructor(props) {
     super(props);
 
@@ -94,23 +114,97 @@ class Table extends React.Component {
     );
 
     this.columnManager = new ColumnManager(props.columns, props.children);
+    const { virtualized, data } = props;
 
-    this.store = create({
+    const initialialStoreState = {
+      scrolling: false,
+      virtualized,
+      firstRowIndex: 0,
+      renderedNumber: 0,
+      averageRowHeight: 40,
+      lastRowIndex: data.length - 1,
+      initialialTop: 0,
+      rowHeight: {},
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
-    });
+    };
+    if (virtualized) {
+      const { renderNumber, redundantNumber } = virtualized;
+      let lastRowIndex = renderNumber + redundantNumber;
+      if (!virtualized || isNaN(lastRowIndex) || lastRowIndex >= data.length) {
+        lastRowIndex = data.length - 1;
+      }
+      initialialStoreState.lastRowIndex = lastRowIndex;
+    }
+
+    this.store = create(initialialStoreState);
 
     this.setScrollPosition('left');
 
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
+    this.debouncedSetScrollingStatus = debounce(this.setScrollingStatus, 100);
+    this.debouncedSetScrollingStatusImmediate = debounce(this.setScrollingStatus, 150, true);
   }
 
   state = {};
 
+  getVirtualizedRelatedRowStyles = renderData => {
+    const { data, virtualized } = this.props;
+    const {
+      rowWidth,
+      firstRowIndex,
+      lastRowIndex,
+      initialialTop,
+      averageRowHeight,
+      rowHeight,
+    } = this.store.getState();
+    let top = initialialTop;
+    const position = virtualized ? 'absolute' : null;
+    let i = firstRowIndex;
+    const realLastRowIndex =
+      lastRowIndex < renderData.length ? lastRowIndex : renderData.length - 1;
+    const styles = []
+    while (i <= realLastRowIndex) {
+      const ret = {
+        position,
+        top,
+        width: rowWidth,
+      };
+      const offset = rowHeight[this.getRowKey(data[i], i)];
+      top += offset || averageRowHeight;
+      styles[i] = ret;
+      i += 1;
+    }
+    styles[i]={
+        position,
+        top,
+        width: rowWidth,
+      };
+    return styles;
+  };
+
+  saveRowHeight = (id, height) => {
+    const { averageRowHeight,renderedNumber, rowHeight } = this.store.getState();
+    if(rowHeight[id]){
+      this.store.setState({
+        averageRowHeight: (renderedNumber * averageRowHeight-rowHeight[id]+height)/renderedNumber,
+        rowHeight: { ...rowHeight, [id]: height },
+      });
+    }else{
+    this.store.setState({
+      averageRowHeight: (renderedNumber * averageRowHeight+height)/(renderedNumber+1),
+      renderedNumber: renderedNumber+1,
+      rowHeight: { ...rowHeight, [id]: height },
+    });
+    }
+  };
+
   getChildContext() {
     return {
       table: {
+        getVirtualizedRelatedRowStyles: this.getVirtualizedRelatedRowStyles,
+        saveRowHeight: this.saveRowHeight,
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
@@ -166,6 +260,12 @@ class Table extends React.Component {
     // when table changes to empty, reset scrollLeft
     if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
       this.resetScrollX();
+    }
+    if (this.props.virtualized && !shallowequal(this.props.columns, prevProps.columns)) {
+      this.calculateColumnWidths();
+    }
+    if (this.props.virtualized && this.props.data.length !== prevProps.data.length) {
+      this.handleDataChange(prevProps);
     }
   }
 
@@ -326,10 +426,75 @@ class Table extends React.Component {
     // Remember last scrollTop for scroll direction detecting.
     this.lastScrollTop = target.scrollTop;
   };
+  handleDataChange = prevProps => {
+    const {
+      virtualized: { redundantNumber, renderNumber },
+      data,
+    } = this.props;
+    const { data: prevData } = prevProps;
+    const { firstRowIndex, lastRowIndex } = this.store.getState();
+    if (prevData.length > data.length && lastRowIndex >= data.length) {
+      this.store.setState({
+        lastRowIndex: data.length - 1,
+      });
+    } else if (
+      prevData.length < data.length &&
+      lastRowIndex - firstRowIndex + 1 <= renderNumber + redundantNumber * 2
+    ) {
+      const tmp = firstRowIndex + redundantNumber * 2 - 1;
+      this.store.setState({
+        lastRowIndex: tmp >= data.length ? data.length - 1 : tmp,
+      });
+    }
+  };
+  handleVerticalScroll = ({ target: { scrollTop } }) => {
+    const { initialialTop:oldInitialTop, scrolling, rowHeight } = this.store.getState();
+    const { virtualized, data } = this.props;
+    const { loadMoreThreshold, loadMore, renderNumber, redundantNumber } = virtualized;
+    let offset = scrollTop;
+    let firstRowIndex = 0;
+    while (offset > 0 && firstRowIndex < data.length) {
+      offset = offset - rowHeight[this.getRowKey(data[firstRowIndex])];
+      firstRowIndex += 1;
+    }
+    let initialialTop = scrollTop - offset;
+    let i = 0;
+    while (i < redundantNumber && firstRowIndex >= 0) {
+      initialialTop -= rowHeight[this.getRowKey(data[firstRowIndex])];
+      firstRowIndex -= 1;
+      i += 1;
+    }
+    let lastRowIndex = firstRowIndex + renderNumber + redundantNumber;
+    if (firstRowIndex < 0) {
+      firstRowIndex = 0;
+    }
+    if (lastRowIndex >= data.length) {
+      lastRowIndex = data.length - 1;
+    }
+    if (initialialTop < 0) {
+      initialialTop = 0;
+    }
+    this.store.setState({
+      firstRowIndex,
+      lastRowIndex,
+      initialialTop,
+    });
+    if(loadMore && initialialTop>oldInitialTop && lastRowIndex+loadMoreThreshold >= data.length){
+      loadMore()
+    }
+    if(scrolling){
+      this.debouncedSetScrollingStatus(false)
+    } else if(Math.abs(oldInitialTop-initialialTop) > 500) {
+      this.debouncedSetScrollingStatusImmediate(true)
+    }
+  };
 
   handleBodyScroll = e => {
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
+    if (this.props.virtualized) {
+      this.handleVerticalScroll(e);
+    }
   };
 
   handleWheel = event => {

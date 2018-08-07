@@ -118,12 +118,13 @@ export default class ColumnManager {
     this._cached = {};
   }
 
+  data={}
   _cache(name, fn) {
-    if (name in this._cached) {
-      return this._cached[name];
+    if (name in this.data) {
+      return this.data[name];
     }
-    this._cached[name] = fn();
-    return this._cached[name];
+    this.data[name] = fn();
+    return this.data[name];
   }
 
   _leafColumns(columns) {
