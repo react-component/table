@@ -97,6 +97,10 @@ class BaseTable extends React.Component {
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
+      let rowIndex = rows.filter(row => !row.props.expandedRow).length;
+      if(virtualized){
+        rowIndex+=firstRowIndex;
+      }
 
       const row = (
         <ExpandableRow
@@ -120,7 +124,7 @@ class BaseTable extends React.Component {
               indent={indent}
               className={className}
               record={record}
-              index={virtualized ? rowIndex + firstRowIndex : rowIndex}
+              index={rowIndex}
               placeholder={virtualized && virtualized.placeholder}
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
