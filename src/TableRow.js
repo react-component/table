@@ -78,6 +78,7 @@ class TableRow extends React.Component {
   }
 
   shouldComponentUpdate({
+    expandedRowKeys,
     scrolling,
     prefixCls,
     columns,
@@ -101,6 +102,7 @@ class TableRow extends React.Component {
     const shouldNotUpdate =
       scrolling === this.props.scrolling &&
       prefixCls === this.props.prefixCls &&
+      isEqual(expandedRowKeys, this.props.expandedRowKeys) &&
       isEqual(columns, this.props.columns) &&
       shallowequal(record, this.props.record) &&
       rowKey === this.props.rowKey &&
@@ -360,11 +362,12 @@ function getRowHeight(state, props) {
 polyfill(TableRow);
 
 export default connect((state, props) => {
-  const { scrolling, virtualized, currentHoverKey, expandedRowKeys } = state;
+  const { expandedRowKey, scrolling, virtualized, currentHoverKey, expandedRowKeys } = state;
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
 
   return {
+    expandedRowKeys,
     scrolling,
     virtualized,
     visible,

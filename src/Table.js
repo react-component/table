@@ -262,9 +262,11 @@ class Table extends React.Component {
       this.resetScrollX();
     }
     if (this.props.virtualized && !shallowequal(this.props.columns, prevProps.columns)) {
+      this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
       this.calculateColumnWidths();
     }
-    if (this.props.virtualized && this.props.data.length !== prevProps.data.length) {
+    if (this.props.data.length !== prevProps.data.length) {
+      this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
       this.handleDataChange(prevProps);
     }
   }
@@ -428,11 +430,13 @@ class Table extends React.Component {
   };
   handleDataChange = prevProps => {
     const {
-      virtualized: { redundantNumber, renderNumber },
+      virtualized,
       data,
     } = this.props;
     const { data: prevData } = prevProps;
     const { firstRowIndex, lastRowIndex } = this.store.getState();
+    if(virtualized){
+    const  { redundantNumber, renderNumber } = virtualized;
     if (prevData.length > data.length && lastRowIndex >= data.length) {
       this.store.setState({
         lastRowIndex: data.length - 1,
@@ -444,6 +448,12 @@ class Table extends React.Component {
       const tmp = firstRowIndex + redundantNumber * 2 - 1;
       this.store.setState({
         lastRowIndex: tmp >= data.length ? data.length - 1 : tmp,
+      });
+    }}
+    else{
+      this.store.setState({
+        firstRowIndex: 0,
+        lastRowIndex: data.length-1
       });
     }
   };
