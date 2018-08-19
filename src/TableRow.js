@@ -122,20 +122,8 @@ class TableRow extends React.Component {
     return !shouldNotUpdate;
   }
 
-  updateRowHeight = () => {
-    const { rowKey } = this.props;
-    const { height } = this.state;
-    const newHeight = this.rowRef && this.rowRef.offsetHeight;
-    if (height != newHeight) {
-      this.context.table.saveRowHeight(rowKey, newHeight);
-      this.setState({
-        height: newHeight,
-      });
-    }
-  };
-
-  componentDidUpdate({scrolling}) {
-    if ((this.state.shouldRender && !this.rowRef) || (scrolling!==this.props.scrolling)) {
+  componentDidUpdate({ scrolling }) {
+    if ((this.state.shouldRender && !this.rowRef) || scrolling !== this.props.scrolling) {
       this.saveRowRef();
     }
     if (this.props.virtualized) {
@@ -217,6 +205,18 @@ class TableRow extends React.Component {
     return this.style;
   }
 
+  updateRowHeight = () => {
+    const { rowKey } = this.props;
+    const { height } = this.state;
+    const newHeight = this.rowRef && this.rowRef.offsetHeight;
+    if (height !== newHeight) {
+      this.context.table.saveRowHeight(rowKey, newHeight);
+      this.setState({
+        height: newHeight,
+      });
+    }
+  };
+
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
 
@@ -253,7 +253,6 @@ class TableRow extends React.Component {
       hovered,
       height,
       virtualizedRelatedStyle,
-      virtualized,
       scrolling,
       visible,
       components,
@@ -268,16 +267,15 @@ class TableRow extends React.Component {
       style.display = 'none';
     }
 
+    const rowProps = onRow(record, index);
+    const customStyle = rowProps ? rowProps.style : {};
     style = { ...virtualizedRelatedStyle, ...style, ...customStyle };
 
-    if(scrolling && placeholder){
-      return(
-        <tr
-        style={style}
-        data-row-key={rowKey}
-      >
-        {this.props.placeholder(record, index)}
-      </tr>
+    if (scrolling && placeholder) {
+      return (
+        <tr style={style} data-row-key={rowKey}>
+          {this.props.placeholder(record, index)}
+        </tr>
       );
     }
 
@@ -319,8 +317,6 @@ class TableRow extends React.Component {
     }
 
     const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
-    const rowProps = onRow(record, index);
-    const customStyle = rowProps ? rowProps.style : {};
 
     return (
       <BodyRow
@@ -362,7 +358,7 @@ function getRowHeight(state, props) {
 polyfill(TableRow);
 
 export default connect((state, props) => {
-  const { expandedRowKey, scrolling, virtualized, currentHoverKey, expandedRowKeys } = state;
+  const { scrolling, virtualized, currentHoverKey, expandedRowKeys } = state;
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
 

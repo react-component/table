@@ -18,16 +18,17 @@ function BodyTable(props, { table }) {
     isAnyColumnsFixed,
   } = props;
   const { saveRef } = table;
-  let { useFixedHeader, virtualized } = table.props;
+  let { useFixedHeader } = table.props;
+  const { virtualized } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
   const innerBodyStyle = {};
-    if(virtualized){
-        bodyStyle.width= rowWidth;
-        bodyStyle.height= virtualized.bodyHeight;
-        bodyStyle.position= 'relative';
-        bodyStyle.overflowY= 'scroll';
-        bodyStyle.overflowX= 'hidden';
-      }
+  if (virtualized) {
+    bodyStyle.width = rowWidth;
+    bodyStyle.height = virtualized.bodyHeight;
+    bodyStyle.position = 'relative';
+    bodyStyle.overflowY = 'scroll';
+    bodyStyle.overflowX = 'hidden';
+  }
 
   if (scroll.x || fixed) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'scroll';
@@ -107,17 +108,19 @@ function BodyTable(props, { table }) {
   );
 }
 
-export default connect(({rowWidth}) => ({rowWidth}))(BodyTable);
+export default connect(({ rowWidth }) => ({ rowWidth }))(BodyTable);
 
 BodyTable.propTypes = {
   fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  columns: PropTypes.array.isRequired,
+  rowWidth: PropTypes.array,
   tableClassName: PropTypes.string.isRequired,
   handleWheel: PropTypes.func.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,
   getRowKey: PropTypes.func.isRequired,
   expander: PropTypes.object.isRequired,
   isAnyColumnsFixed: PropTypes.bool,
+  columns: PropTypes.array.isRequired,
+  virtualized: PropTypes.object,
 };
 
 BodyTable.contextTypes = {

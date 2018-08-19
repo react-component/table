@@ -45,7 +45,7 @@ class TableCell extends React.Component {
       component: BodyCell,
       virtualized,
       columnIndex,
-      columnWidths
+      columnWidths,
     } = this.props;
     const { dataIndex, render, className = '' } = column;
 
@@ -96,8 +96,8 @@ class TableCell extends React.Component {
     if (column.align) {
       tdProps.style = { ...tdProps.style, textAlign: column.align };
     }
-    if(virtualized && columnWidths && columnWidths[columnIndex]){
-      tdProps.style={...tdProps.style, width: columnWidths[columnIndex]}
+    if (virtualized && columnWidths && columnWidths[columnIndex]) {
+      tdProps.style = { ...tdProps.style, width: columnWidths[columnIndex] };
     }
 
     return (
@@ -109,10 +109,10 @@ class TableCell extends React.Component {
     );
   }
 }
-export default connect((state, props) => {
+export default connect(state => {
   const { virtualized, columnWidths } = state;
   return {
     virtualized,
-    columnWidths
+    columnWidths,
   };
 })(TableCell);

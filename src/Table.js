@@ -75,26 +75,6 @@ class Table extends React.Component {
     emptyText: () => 'No Data',
   };
 
-  setScrollingStatus = (scrolling) => {
-    this.store.setState({
-       scrolling,
-    })
-  }
-
-  calculateColumnWidths = () => {
-    const { columns } = this.props;
-    const idealRowWidth = columns.reduce((accu, { width }) => accu + (width || 40), 0);
-    const valid = idealRowWidth >= this.bodyTable.offsetWidth;
-    // make sure row width is larger than bodyTable
-    const columnWidths = columns.map(
-      ({ width = 40 }) => (valid ? width : this.bodyTable.offsetWidth / columns.length),
-    );
-    this.store.setState({
-      rowWidth: valid ? idealRowWidth : this.bodyTable.offsetWidth,
-      columnWidths,
-    });
-  };
-
   constructor(props) {
     super(props);
 
@@ -132,7 +112,7 @@ class Table extends React.Component {
     if (virtualized) {
       const { renderNumber, redundantNumber } = virtualized;
       let lastRowIndex = renderNumber + redundantNumber;
-      if (!virtualized || isNaN(lastRowIndex) || lastRowIndex >= data.length) {
+      if (!virtualized || Number.isNaN(lastRowIndex) || lastRowIndex >= data.length) {
         lastRowIndex = data.length - 1;
       }
       initialialStoreState.lastRowIndex = lastRowIndex;
@@ -148,57 +128,6 @@ class Table extends React.Component {
   }
 
   state = {};
-
-  getVirtualizedRelatedRowStyles = renderData => {
-    const { data, virtualized } = this.props;
-    const {
-      rowWidth,
-      firstRowIndex,
-      lastRowIndex,
-      initialialTop,
-      averageRowHeight,
-      rowHeight,
-    } = this.store.getState();
-    let top = initialialTop;
-    const position = virtualized ? 'absolute' : null;
-    let i = firstRowIndex;
-    const realLastRowIndex =
-      lastRowIndex < renderData.length ? lastRowIndex : renderData.length - 1;
-    const styles = []
-    while (i <= realLastRowIndex) {
-      const ret = {
-        position,
-        top,
-        width: rowWidth,
-      };
-      const offset = rowHeight[this.getRowKey(data[i], i)];
-      top += offset || averageRowHeight;
-      styles[i] = ret;
-      i += 1;
-    }
-    styles[i]={
-        position,
-        top,
-        width: rowWidth,
-      };
-    return styles;
-  };
-
-  saveRowHeight = (id, height) => {
-    const { averageRowHeight,renderedNumber, rowHeight } = this.store.getState();
-    if(rowHeight[id]){
-      this.store.setState({
-        averageRowHeight: (renderedNumber * averageRowHeight-rowHeight[id]+height)/renderedNumber,
-        rowHeight: { ...rowHeight, [id]: height },
-      });
-    }else{
-    this.store.setState({
-      averageRowHeight: (renderedNumber * averageRowHeight+height)/(renderedNumber+1),
-      renderedNumber: renderedNumber+1,
-      rowHeight: { ...rowHeight, [id]: height },
-    });
-    }
-  };
 
   getChildContext() {
     return {
@@ -325,6 +254,78 @@ class Table extends React.Component {
     }
   }
 
+  getVirtualizedRelatedRowStyles = renderData => {
+    const { data, virtualized } = this.props;
+    const {
+      rowWidth,
+      firstRowIndex,
+      lastRowIndex,
+      initialialTop,
+      averageRowHeight,
+      rowHeight,
+    } = this.store.getState();
+    let top = initialialTop;
+    const position = virtualized ? 'absolute' : null;
+    let i = firstRowIndex;
+    const realLastRowIndex =
+      lastRowIndex < renderData.length ? lastRowIndex : renderData.length - 1;
+    const styles = [];
+    while (i <= realLastRowIndex) {
+      const ret = {
+        position,
+        top,
+        width: rowWidth,
+      };
+      const offset = rowHeight[this.getRowKey(data[i], i)];
+      top += offset || averageRowHeight;
+      styles[i] = ret;
+      i += 1;
+    }
+    styles[i] = {
+      position,
+      top,
+      width: rowWidth,
+    };
+    return styles;
+  };
+
+  setScrollingStatus = scrolling => {
+    this.store.setState({
+      scrolling,
+    });
+  };
+
+  calculateColumnWidths = () => {
+    const { columns } = this.props;
+    const idealRowWidth = columns.reduce((accu, { width }) => accu + (width || 40), 0);
+    const valid = idealRowWidth >= this.bodyTable.offsetWidth;
+    // make sure row width is larger than bodyTable
+    const columnWidths = columns.map(
+      ({ width = 40 }) => (valid ? width : this.bodyTable.offsetWidth / columns.length),
+    );
+    this.store.setState({
+      rowWidth: valid ? idealRowWidth : this.bodyTable.offsetWidth,
+      columnWidths,
+    });
+  };
+
+  saveRowHeight = (id, height) => {
+    const { averageRowHeight, renderedNumber, rowHeight } = this.store.getState();
+    if (rowHeight[id]) {
+      this.store.setState({
+        averageRowHeight:
+          (renderedNumber * averageRowHeight - rowHeight[id] + height) / renderedNumber,
+        rowHeight: { ...rowHeight, [id]: height },
+      });
+    } else {
+      this.store.setState({
+        averageRowHeight: (renderedNumber * averageRowHeight + height) / (renderedNumber + 1),
+        renderedNumber: renderedNumber + 1,
+        rowHeight: { ...rowHeight, [id]: height },
+      });
+    }
+  };
+
   handleWindowResize = () => {
     this.syncFixedTableRowHeight();
     this.setScrollPositionClassName();
@@ -429,42 +430,39 @@ class Table extends React.Component {
     this.lastScrollTop = target.scrollTop;
   };
   handleDataChange = prevProps => {
-    const {
-      virtualized,
-      data,
-    } = this.props;
+    const { virtualized, data } = this.props;
     const { data: prevData } = prevProps;
     const { firstRowIndex, lastRowIndex } = this.store.getState();
-    if(virtualized){
-    const  { redundantNumber, renderNumber } = virtualized;
-    if (prevData.length > data.length && lastRowIndex >= data.length) {
-      this.store.setState({
-        lastRowIndex: data.length - 1,
-      });
-    } else if (
-      prevData.length < data.length &&
-      lastRowIndex - firstRowIndex + 1 <= renderNumber + redundantNumber * 2
-    ) {
-      const tmp = firstRowIndex + redundantNumber * 2 - 1;
-      this.store.setState({
-        lastRowIndex: tmp >= data.length ? data.length - 1 : tmp,
-      });
-    }}
-    else{
+    if (virtualized) {
+      const { redundantNumber, renderNumber } = virtualized;
+      if (prevData.length > data.length && lastRowIndex >= data.length) {
+        this.store.setState({
+          lastRowIndex: data.length - 1,
+        });
+      } else if (
+        prevData.length < data.length &&
+        lastRowIndex - firstRowIndex + 1 <= renderNumber + redundantNumber * 2
+      ) {
+        const tmp = firstRowIndex + redundantNumber * 2 - 1;
+        this.store.setState({
+          lastRowIndex: tmp >= data.length ? data.length - 1 : tmp,
+        });
+      }
+    } else {
       this.store.setState({
         firstRowIndex: 0,
-        lastRowIndex: data.length-1
+        lastRowIndex: data.length - 1,
       });
     }
   };
   handleVerticalScroll = ({ target: { scrollTop } }) => {
-    const { initialialTop:oldInitialTop, scrolling, rowHeight } = this.store.getState();
+    const { initialialTop: oldInitialTop, scrolling, rowHeight } = this.store.getState();
     const { virtualized, data } = this.props;
     const { loadMoreThreshold, loadMore, renderNumber, redundantNumber } = virtualized;
     let offset = scrollTop;
     let firstRowIndex = 0;
     while (offset > 0 && firstRowIndex < data.length) {
-      offset = offset - rowHeight[this.getRowKey(data[firstRowIndex])];
+      offset -= rowHeight[this.getRowKey(data[firstRowIndex])];
       firstRowIndex += 1;
     }
     let initialialTop = scrollTop - offset;
@@ -489,13 +487,17 @@ class Table extends React.Component {
       lastRowIndex,
       initialialTop,
     });
-    if(loadMore && initialialTop>oldInitialTop && lastRowIndex+loadMoreThreshold >= data.length){
-      loadMore()
+    if (
+      loadMore &&
+      initialialTop > oldInitialTop &&
+      lastRowIndex + loadMoreThreshold >= data.length
+    ) {
+      loadMore();
     }
-    if(scrolling){
-      this.debouncedSetScrollingStatus(false)
-    } else if(Math.abs(oldInitialTop-initialialTop) > 500) {
-      this.debouncedSetScrollingStatusImmediate(true)
+    if (scrolling) {
+      this.debouncedSetScrollingStatus(false);
+    } else if (Math.abs(oldInitialTop - initialialTop) > 500) {
+      this.debouncedSetScrollingStatusImmediate(true);
     }
   };
 
