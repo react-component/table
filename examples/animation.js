@@ -261,7 +261,7 @@ AnimateChild.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Event__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_component_classes__);
 
 
@@ -560,7 +560,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_table__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_table_assets_index_less__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_rc_table_assets_index_less__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_table_assets_animation_less__ = __webpack_require__(331);
@@ -706,7 +706,7 @@ var util = {
 
 /***/ }),
 
-/***/ 61:
+/***/ 62:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
