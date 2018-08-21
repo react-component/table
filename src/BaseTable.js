@@ -81,7 +81,7 @@ class BaseTable extends React.Component {
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
-      const rowIndex = rows.filter(row => !row.props.expandedRow).length;
+      const rowIndex = rows.length;
 
       const row = (
         <ExpandableRow
