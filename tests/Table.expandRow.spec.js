@@ -249,14 +249,4 @@ describe('Table.expand', () => {
       [1, 3],
     ]);
   });
-
-  it('does not count expanded row to index', () => {
-    const wrapper = mount(createTable({ expandedRowRender }));
-    expect(wrapper.find(TableRow).map(row => row.props().index)).toEqual([
-      0,
-      undefined,
-      1,
-      undefined,
-    ]);
-  });
 });
