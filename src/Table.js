@@ -177,6 +177,9 @@ class Table extends React.Component {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
     }
+    if (this.props.virtualized) {
+      this.calculateColumnWidths();
+    }
   }
 
   componentDidUpdate(prevProps) {
