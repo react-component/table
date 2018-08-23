@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 
-function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
+function TableHeaderRow({ row, index, height, components, onHeaderRow }, { table }) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
@@ -10,7 +10,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
   const style = { height, ...customStyle };
 
   return (
-    <HeaderRow {...rowProps} style={style}>
+    <HeaderRow ref={table.saveRef('tableHeader')} {...rowProps} style={style}>
       {row.map((cell, i) => {
         const { column, ...cellProps } = cell;
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
@@ -24,6 +24,10 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
     </HeaderRow>
   );
 }
+
+TableHeaderRow.contextTypes = {
+  table: PropTypes.any,
+};
 
 TableHeaderRow.propTypes = {
   row: PropTypes.array,

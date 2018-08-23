@@ -112,7 +112,7 @@ export default connect(({ rowWidth }) => ({ rowWidth }))(BodyTable);
 
 BodyTable.propTypes = {
   fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  rowWidth: PropTypes.array,
+  rowWidth: PropTypes.number,
   tableClassName: PropTypes.string.isRequired,
   handleWheel: PropTypes.func.isRequired,
   handleBodyScroll: PropTypes.func.isRequired,

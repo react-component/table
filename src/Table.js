@@ -258,7 +258,7 @@ class Table extends React.Component {
   }
 
   getVirtualizedRelatedRowStyles = renderData => {
-    const { data, virtualized } = this.props;
+    const { useFixedHeader, data, virtualized } = this.props;
     const {
       rowWidth,
       firstRowIndex,
@@ -267,7 +267,8 @@ class Table extends React.Component {
       averageRowHeight,
       rowHeight,
     } = this.store.getState();
-    let top = initialialTop;
+    let top =
+      initialialTop + (!useFixedHeader && this.tableHeader ? this.tableHeader.offsetHeight : 0);
     const position = virtualized ? 'absolute' : null;
     let i = firstRowIndex;
     const realLastRowIndex =
