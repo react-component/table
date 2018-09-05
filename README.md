@@ -103,7 +103,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
     </tr>
     <tr>
       <td>expandIcon</td>
-      <td>Boolean or Function(expanded:Boolean):ReactElement</td>
+      <td>Boolean or Function(expanded:Boolean, record):String|ReactElement</td>
       <td>true</td>
       <td>whether show expandIcon when expandIconAsCell is false, can be a function to render a custom icon</td>
     </tr>

@@ -29,7 +29,7 @@ export default class ExpandIcon extends React.Component {
     } = this.props;
     if (expandable) {
       if (typeof expandIcon === 'function') {
-        return <span onClick={e => onExpand(record, e)}>{expandIcon(expanded)}</span>;
+        return <span onClick={e => onExpand(record, e)}>{expandIcon(expanded, record)}</span>;
       }
       const expandClassName = expanded ? 'expanded' : 'collapsed';
       return (
