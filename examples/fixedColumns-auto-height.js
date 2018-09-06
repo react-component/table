@@ -56,7 +56,12 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
     },
     expandIconAsCell: true,
     scroll: { x: 1200 },
-    data: data
+    data: data,
+    onRow: function onRow(record, index) {
+      return {
+        className: 'customize-class-' + index
+      };
+    }
   })
 ), document.getElementById('__react-content'));
 
