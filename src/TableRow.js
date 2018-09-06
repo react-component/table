@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
+import classNames from 'classnames';
 import TableCell from './TableCell';
 import { warningOnce } from './utils';
 
@@ -232,10 +233,8 @@ class TableRow extends React.Component {
       );
     }
 
-    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
-
-    const rowProps = onRow(record, index);
-    const customStyle = rowProps ? rowProps.style : {};
+    const { className: customClassName, style: customStyle, ...rowProps } =
+      onRow(record, index) || {};
     let style = { height };
 
     if (!visible) {
@@ -244,6 +243,13 @@ class TableRow extends React.Component {
 
     style = { ...style, ...customStyle };
 
+    const rowClassName = classNames(
+      prefixCls,
+      className,
+      `${prefixCls}-level-${indent}`,
+      customClassName,
+    );
+
     return (
       <BodyRow
         onClick={this.onRowClick}
@@ -251,8 +257,8 @@ class TableRow extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        className={rowClassName}
         {...rowProps}
+        className={rowClassName}
         style={style}
         data-row-key={rowKey}
       >
