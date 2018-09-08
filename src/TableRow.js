@@ -1,4 +1,6 @@
 import React from 'react';
+import { isEqual } from 'lodash';
+import shallowequal from 'shallowequal';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
@@ -38,6 +40,10 @@ class TableRow extends React.Component {
     ancestorKeys: PropTypes.array.isRequired,
   };
 
+  static contextTypes = {
+    table: PropTypes.any,
+  };
+
   static defaultProps = {
     onRow() {},
     onHover() {},
@@ -51,7 +57,7 @@ class TableRow extends React.Component {
 
     this.shouldRender = props.visible;
 
-    this.state = {};
+    this.state = { height: 0 };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -72,13 +78,57 @@ class TableRow extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !!(this.props.visible || nextProps.visible);
+  shouldComponentUpdate({
+    expandedRowKeys,
+    scrolling,
+    prefixCls,
+    columns,
+    record,
+    rowKey,
+    index,
+    onRow,
+    indent,
+    indentSize,
+    hovered,
+    height,
+    virtualizedRelatedStyle,
+    visible,
+    components: {
+      body: { row, cell },
+    },
+    hasExpandIcon,
+    renderExpandIcon,
+    renderExpandIconCell,
+  }) {
+    const shouldNotUpdate =
+      scrolling === this.props.scrolling &&
+      prefixCls === this.props.prefixCls &&
+      isEqual(expandedRowKeys, this.props.expandedRowKeys) &&
+      isEqual(columns, this.props.columns) &&
+      shallowequal(record, this.props.record) &&
+      rowKey === this.props.rowKey &&
+      index === this.props.index &&
+      indent === this.props.indent &&
+      indentSize === this.props.indentSize &&
+      hovered === this.props.hovered &&
+      height === this.props.height &&
+      visible === this.props.visible &&
+      hasExpandIcon === this.props.hasExpandIcon &&
+      renderExpandIcon === this.props.renderExpandIcon &&
+      renderExpandIconCell === this.props.renderExpandIconCell &&
+      shallowequal(row, this.props.components.body.row) &&
+      shallowequal(cell, this.props.components.body.cell) &&
+      shallowequal(virtualizedRelatedStyle, this.props.virtualizedRelatedStyle) &&
+      shallowequal(onRow, this.props.onRow);
+    return !shouldNotUpdate;
   }
 
-  componentDidUpdate() {
-    if (this.state.shouldRender && !this.rowRef) {
+  componentDidUpdate({ scrolling }) {
+    if ((this.state.shouldRender && !this.rowRef) || scrolling !== this.props.scrolling) {
       this.saveRowRef();
+    }
+    if (this.props.virtualized) {
+      this.updateRowHeight();
     }
   }
 
@@ -156,6 +206,18 @@ class TableRow extends React.Component {
     return this.style;
   }
 
+  updateRowHeight = () => {
+    const { rowKey } = this.props;
+    const { height } = this.state;
+    const newHeight = this.rowRef && this.rowRef.offsetHeight;
+    if (height !== newHeight) {
+      this.context.table.saveRowHeight(rowKey, newHeight);
+      this.setState({
+        height: newHeight,
+      });
+    }
+  };
+
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
 
@@ -186,16 +248,37 @@ class TableRow extends React.Component {
       rowKey,
       index,
       onRow,
+      placeholder,
       indent,
       indentSize,
       hovered,
       height,
+      virtualizedRelatedStyle,
+      scrolling,
       visible,
       components,
       hasExpandIcon,
       renderExpandIcon,
       renderExpandIconCell,
     } = this.props;
+
+    const { className: customClassName, style: customStyle, ...rowProps } =
+      onRow(record, index) || {};
+    let style = { height };
+
+    if (!visible) {
+      style.display = 'none';
+    }
+
+    style = { ...virtualizedRelatedStyle, ...style, ...customStyle };
+
+    if (scrolling && placeholder) {
+      return (
+        <tr style={style} data-row-key={rowKey}>
+          {this.props.placeholder(record, index)}
+        </tr>
+      );
+    }
 
     const BodyRow = components.body.row;
     const BodyCell = components.body.cell;
@@ -220,6 +303,7 @@ class TableRow extends React.Component {
 
       cells.push(
         <TableCell
+          columnIndex={i}
           prefixCls={prefixCls}
           record={record}
           indentSize={indentSize}
@@ -232,16 +316,6 @@ class TableRow extends React.Component {
         />,
       );
     }
-
-    const { className: customClassName, style: customStyle, ...rowProps } =
-      onRow(record, index) || {};
-    let style = { height };
-
-    if (!visible) {
-      style.display = 'none';
-    }
-
-    style = { ...style, ...customStyle };
 
     const rowClassName = classNames(
       prefixCls,
@@ -290,11 +364,14 @@ function getRowHeight(state, props) {
 polyfill(TableRow);
 
 export default connect((state, props) => {
-  const { currentHoverKey, expandedRowKeys } = state;
+  const { scrolling, virtualized, currentHoverKey, expandedRowKeys } = state;
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
 
   return {
+    expandedRowKeys,
+    scrolling,
+    virtualized,
     visible,
     hovered: currentHoverKey === rowKey,
     height: getRowHeight(state, props),

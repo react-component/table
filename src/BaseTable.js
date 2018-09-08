@@ -45,7 +45,7 @@ class BaseTable extends React.Component {
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
-    const { columnManager, components } = table;
+    const { getVirtualizedRelatedRowStyles, columnManager, components } = table;
     const {
       prefixCls,
       childrenColumnName,
@@ -56,13 +56,27 @@ class BaseTable extends React.Component {
       onRowContextMenu,
       onRowMouseEnter,
       onRowMouseLeave,
+      virtualized,
       onRow,
     } = table.props;
-    const { getRowKey, fixed, expander, isAnyColumnsFixed } = this.props;
+    const {
+      firstRowIndex,
+      lastRowIndex,
+      getRowKey,
+      fixed,
+      expander,
+      isAnyColumnsFixed,
+    } = this.props;
+    let virualizedRelatedStyles = [];
+    if (virtualized) {
+      virualizedRelatedStyles = getVirtualizedRelatedRowStyles(renderData);
+    }
+    const realLastRowIndex =
+      lastRowIndex < renderData.length ? lastRowIndex : renderData.length - 1;
 
     const rows = [];
 
-    for (let i = 0; i < renderData.length; i++) {
+    for (let i = firstRowIndex; i <= realLastRowIndex; i++) {
       const record = renderData[i];
       const key = getRowKey(record, i);
       const className =
@@ -101,11 +115,13 @@ class BaseTable extends React.Component {
             expandableRow, // eslint-disable-line
           ) => (
             <TableRow
+              virtualizedRelatedStyle={virtualized ? virualizedRelatedStyles[i] : null}
               fixed={fixed}
               indent={indent}
               className={className}
               record={record}
               index={i}
+              placeholder={virtualized && virtualized.placeholder}
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}
@@ -129,6 +145,13 @@ class BaseTable extends React.Component {
       rows.push(row);
 
       expander.renderRows(this.renderRows, rows, record, i, indent, fixed, key, ancestorKeys);
+    }
+    if (virtualized && virtualized.loadingMore && realLastRowIndex === renderData.length - 1) {
+      rows.push(
+        <tr key="####***&&NoRepetition" style={virualizedRelatedStyles[renderData.length]}>
+          {virtualized.loadingIndicator}
+        </tr>,
+      );
     }
     return rows;
   };
@@ -172,4 +195,10 @@ class BaseTable extends React.Component {
   }
 }
 
-export default connect()(BaseTable);
+export default connect(({ scrolling, initialialTop, lastRowIndex, firstRowIndex, rowHeight }) => ({
+  initialialTop,
+  scrolling,
+  lastRowIndex,
+  firstRowIndex,
+  rowHeight,
+}))(BaseTable);
