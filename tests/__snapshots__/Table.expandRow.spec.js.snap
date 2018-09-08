@@ -37,7 +37,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -59,7 +59,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="0-extra-row"
           >
             <td
@@ -72,7 +72,7 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -137,7 +137,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -159,7 +159,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="0-extra-row"
             style="display: none;"
           >
@@ -173,7 +173,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -195,7 +195,7 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="1-extra-row"
           >
             <td
@@ -251,7 +251,7 @@ exports[`Table.expand expand all rows by default 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -273,7 +273,7 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="0-extra-row"
           >
             <td
@@ -286,7 +286,7 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -308,7 +308,7 @@ exports[`Table.expand expand all rows by default 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="1-extra-row"
           >
             <td
@@ -364,7 +364,7 @@ exports[`Table.expand expand row by click 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -386,7 +386,7 @@ exports[`Table.expand expand row by click 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="0-extra-row"
           >
             <td
@@ -399,7 +399,7 @@ exports[`Table.expand expand row by click 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -464,7 +464,7 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -486,7 +486,7 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -508,7 +508,7 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-expanded-row  rc-table-expanded-row-level-1"
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
             data-row-key="1-extra-row"
           >
             <td
@@ -572,7 +572,7 @@ exports[`Table.expand renders expand icon as cell 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -594,7 +594,7 @@ exports[`Table.expand renders expand icon as cell 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -659,7 +659,7 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -681,7 +681,7 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -746,7 +746,7 @@ exports[`Table.expand renders expand row correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -768,7 +768,7 @@ exports[`Table.expand renders expand row correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -833,7 +833,7 @@ exports[`Table.expand renders expend row class correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -868,7 +868,7 @@ exports[`Table.expand renders expend row class correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -942,7 +942,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
             class="rc-table-tbody"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
               data-row-key="0"
             >
               <td
@@ -969,7 +969,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
               data-row-key="1"
             >
               <td
@@ -1030,7 +1030,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               class="rc-table-tbody"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
                 data-row-key="0"
               >
                 <td
@@ -1047,7 +1047,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
                 data-row-key="1"
               >
                 <td
@@ -1099,7 +1099,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
               class="rc-table-tbody"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
                 data-row-key="0"
               >
                 <td
@@ -1109,7 +1109,7 @@ exports[`Table.expand renders fixed column correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
                 data-row-key="1"
               >
                 <td
@@ -1164,7 +1164,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -1186,7 +1186,7 @@ exports[`Table.expand renders nested data correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td
@@ -1251,7 +1251,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
             <td
@@ -1273,7 +1273,7 @@ exports[`Table.expand renders tree row correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
             <td

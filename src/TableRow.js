@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
+import classNames from 'classnames';
 import TableCell from './TableCell';
 import { warningOnce } from './utils';
 
@@ -261,14 +262,14 @@ class TableRow extends React.Component {
       renderExpandIconCell,
     } = this.props;
 
+    const { className: customClassName, style: customStyle, ...rowProps } =
+      onRow(record, index) || {};
     let style = { height };
 
     if (!visible) {
       style.display = 'none';
     }
 
-    const rowProps = onRow(record, index);
-    const customStyle = rowProps ? rowProps.style : {};
     style = { ...virtualizedRelatedStyle, ...style, ...customStyle };
 
     if (scrolling && placeholder) {
@@ -316,7 +317,12 @@ class TableRow extends React.Component {
       );
     }
 
-    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
+    const rowClassName = classNames(
+      prefixCls,
+      className,
+      `${prefixCls}-level-${indent}`,
+      customClassName,
+    );
 
     return (
       <BodyRow
@@ -325,8 +331,8 @@ class TableRow extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        className={rowClassName}
         {...rowProps}
+        className={rowClassName}
         style={style}
         data-row-key={rowKey}
       >
