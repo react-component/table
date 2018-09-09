@@ -154,6 +154,14 @@ class Table extends React.Component {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
     }
+
+    // https://github.com/ant-design/ant-design/issues/11635
+    if (this.headTable) {
+      this.headTable.scrollLeft = 0;
+    }
+    if (this.bodyTable) {
+      this.bodyTable.scrollLeft = 0;
+    }
   }
 
   componentDidUpdate(prevProps) {
