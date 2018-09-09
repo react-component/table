@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 159:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -442,7 +442,7 @@ module.exports = function() {
   throw new Error("Don't instantiate Resizable directly! Use require('react-resizable').Resizable");
 };
 
-module.exports.Resizable = __webpack_require__(159).default;
+module.exports.Resizable = __webpack_require__(160).default;
 module.exports.ResizableBox = __webpack_require__(343).default;
 
 
@@ -3245,7 +3245,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Resizable = __webpack_require__(159);
+var _Resizable = __webpack_require__(160);
 
 var _Resizable2 = _interopRequireDefault(_Resizable);
 
