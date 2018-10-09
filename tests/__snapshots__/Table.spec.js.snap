@@ -27,7 +27,7 @@ exports[`Table align column 1`] = `
               Name
             </th>
             <th
-              class=""
+              class="rc-table-align-center"
               style="text-align:center"
             >
               Age
@@ -107,7 +107,7 @@ exports[`Table align column should not override cell style 1`] = `
               Name
             </th>
             <th
-              class=""
+              class="rc-table-align-center"
               style="color:red;text-align:center"
             >
               Age

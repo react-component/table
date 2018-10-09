@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
+import classNames from 'classnames';
 
-function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
+function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls }) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
@@ -16,6 +17,9 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
         if (column.align) {
           customProps.style = { ...customProps.style, textAlign: column.align };
+          customProps.className = classNames(customProps.className, {
+            [`${prefixCls}-align-${column.align}`]: !!column.align,
+          });
         }
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />

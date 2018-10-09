@@ -53,6 +53,7 @@ export default function TableHeader(props, { table }) {
     <HeaderWrapper className={`${prefixCls}-thead`}>
       {rows.map((row, index) => (
         <TableHeaderRow
+          prefixCls={prefixCls}
           key={index}
           index={index}
           fixed={fixed}
