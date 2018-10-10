@@ -30872,7 +30872,7 @@ function TableHeaderRow(_ref) {
       var customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
       if (column.align) {
         customProps.style = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, customProps.style, { textAlign: column.align });
-        customProps.className = __WEBPACK_IMPORTED_MODULE_6_classnames___default()(customProps.className, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()({}, prefixCls + '-align-' + column.align, !!column.align));
+        customProps.className = __WEBPACK_IMPORTED_MODULE_6_classnames___default()(customProps.className, column.className, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()({}, prefixCls + '-align-' + column.align, !!column.align));
       }
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(HeaderCell, __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, cellProps, customProps, { key: column.key || column.dataIndex || i }));
     })
