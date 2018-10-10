@@ -17,7 +17,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
         if (column.align) {
           customProps.style = { ...customProps.style, textAlign: column.align };
-          customProps.className = classNames(customProps.className, {
+          customProps.className = classNames(customProps.className, column.className, {
             [`${prefixCls}-align-${column.align}`]: !!column.align,
           });
         }
