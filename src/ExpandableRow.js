@@ -86,7 +86,14 @@ class ExpandableRow extends React.Component {
   };
 
   render() {
-    const { childrenColumnName, expandedRowRender, indentSize, record, fixed } = this.props;
+    const {
+      childrenColumnName,
+      expandedRowRender,
+      indentSize,
+      record,
+      fixed,
+      expanded,
+    } = this.props;
 
     this.expandIconAsCell = fixed !== 'right' ? this.props.expandIconAsCell : false;
     this.expandIconColumnIndex = fixed !== 'right' ? this.props.expandIconColumnIndex : -1;
@@ -95,6 +102,7 @@ class ExpandableRow extends React.Component {
 
     const expandableRowProps = {
       indentSize,
+      expanded, // not used in TableRow, but it's required to re-render TableRow when `expanded` changes
       onRowClick: this.handleRowClick,
       hasExpandIcon: this.hasExpandIcon,
       renderExpandIcon: this.renderExpandIcon,

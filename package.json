@@ -72,7 +72,7 @@
     "classnames": "^2.2.5",
     "component-classes": "^1.2.6",
     "lodash": "^4.17.5",
-    "mini-store": "^1.0.2",
+    "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
     "react-lifecycles-compat": "^3.0.2",
