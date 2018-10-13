@@ -12,6 +12,7 @@ class ExpandableTable extends React.Component {
     expandedRowClassName: PropTypes.func,
     defaultExpandAllRows: PropTypes.bool,
     defaultExpandedRowKeys: PropTypes.array,
+    expandIcon: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     expandIconColumnIndex: PropTypes.number,
     expandedRowRender: PropTypes.func,
     childrenColumnName: PropTypes.string,
@@ -27,6 +28,7 @@ class ExpandableTable extends React.Component {
   };
 
   static defaultProps = {
+    expandIcon: true,
     expandIconAsCell: false,
     expandedRowClassName: () => '',
     expandIconColumnIndex: 0,
@@ -49,7 +51,6 @@ class ExpandableTable extends React.Component {
       defaultExpandedRowKeys,
       getRowKey,
     } = props;
-
     let finnalExpandedRowKeys = [];
     let rows = [...data];
 

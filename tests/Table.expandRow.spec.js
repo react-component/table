@@ -81,6 +81,24 @@ describe('Table.expand', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('renders custom expand icon', () => {
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandedRowRender,
+        expandIcon: expanded => (expanded ? '-' : '+'),
+        onExpand,
+      }),
+    );
+    const icon = wrapper.find('ExpandIcon').first();
+    expect(icon.text()).toEqual('+');
+    icon.simulate('click');
+    expect(onExpand).toBeCalledWith(true, sampleData[0]);
+    expect(icon.text()).toEqual('-');
+    icon.simulate('click');
+    expect(onExpand).toBeCalledWith(false, sampleData[0]);
+  });
+
   it('renders nested data correctly', () => {
     const localData = [
       {

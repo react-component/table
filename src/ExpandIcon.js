@@ -10,6 +10,7 @@ export default class ExpandIcon extends React.Component {
     expanded: PropTypes.bool,
     needIndentSpaced: PropTypes.bool,
     onExpand: PropTypes.func,
+    expandIcon: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   };
 
   shouldComponentUpdate(nextProps) {
@@ -17,8 +18,19 @@ export default class ExpandIcon extends React.Component {
   }
 
   render() {
-    const { expandable, prefixCls, onExpand, needIndentSpaced, expanded, record } = this.props;
+    const {
+      expandable,
+      prefixCls,
+      onExpand,
+      needIndentSpaced,
+      expanded,
+      record,
+      expandIcon,
+    } = this.props;
     if (expandable) {
+      if (typeof expandIcon === 'function') {
+        return <span onClick={e => onExpand(record, e)}>{expandIcon(expanded, record)}</span>;
+      }
       const expandClassName = expanded ? 'expanded' : 'collapsed';
       return (
         <span

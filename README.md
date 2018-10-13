@@ -102,6 +102,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>whether table can be scroll in x/y direction, `x` or `y` can be a number that indicated the width and height of table body</td>
     </tr>
     <tr>
+      <td>expandIcon</td>
+      <td>Boolean or Function(expanded:Boolean, record):String|ReactElement</td>
+      <td>true</td>
+      <td>whether show expandIcon when expandIconAsCell is false, can be a function to render a custom icon</td>
+    </tr>
+    <tr>
       <td>expandIconAsCell</td>
       <td>Boolean</td>
       <td>false</td>
