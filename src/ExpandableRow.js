@@ -17,6 +17,7 @@ class ExpandableRow extends React.Component {
     expandIconColumnIndex: PropTypes.number,
     childrenColumnName: PropTypes.string,
     expandedRowRender: PropTypes.func,
+    expandIconRender: PropTypes.func,
     onExpandedChange: PropTypes.func.isRequired,
     onRowClick: PropTypes.func,
     children: PropTypes.func.isRequired,
@@ -58,7 +59,18 @@ class ExpandableRow extends React.Component {
   };
 
   renderExpandIcon = () => {
-    const { prefixCls, expanded, record, needIndentSpaced } = this.props;
+    const { prefixCls, expanded, record, needIndentSpaced, expandIconRender } = this.props;
+
+    if (expandIconRender) {
+      return expandIconRender({
+        prefixCls,
+        expanded,
+        record,
+        needIndentSpaced,
+        expandable: this.expandable,
+        onExpand: this.handleExpandChange,
+      });
+    }
 
     return (
       <ExpandIcon
