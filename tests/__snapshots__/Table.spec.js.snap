@@ -553,6 +553,72 @@ exports[`Table dataIndex render text by path 1`] = `
 </div>
 `;
 
+exports[`Table renders aria- attributes 1`] = `
+<div
+  aria-label="names-table-aria"
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table renders colSpan correctly 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left"
@@ -982,6 +1048,72 @@ exports[`Table renders custom cell correctly 1`] = `
               <p>
                 Jack
               </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table renders data- attributes 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+  data-test="names-table"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row  rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
             </td>
           </tr>
         </tbody>

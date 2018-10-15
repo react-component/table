@@ -6,7 +6,7 @@ import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
 import classes from 'component-classes';
 import { polyfill } from 'react-lifecycles-compat';
-import { debounce, warningOnce } from './utils';
+import { debounce, warningOnce, getDataAndAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
@@ -502,6 +502,7 @@ class Table extends React.Component {
     }
     const hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
     const hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
+    const dataAndAriaProps = getDataAndAriaProps(props);
 
     return (
       <Provider store={this.store}>
@@ -514,6 +515,7 @@ class Table extends React.Component {
                 className={className}
                 style={props.style}
                 id={props.id}
+                {...dataAndAriaProps}
               >
                 {this.renderTitle()}
                 <div className={`${prefixCls}-content`}>
