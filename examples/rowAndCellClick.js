@@ -1,14 +1,14 @@
 webpackJsonp([12],{
 
-/***/ 555:
+/***/ 557:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(556);
+module.exports = __webpack_require__(558);
 
 
 /***/ }),
 
-/***/ 556:
+/***/ 558:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56,10 +56,10 @@ var columns = [{
       ' (Trigger Cell Click)'
     );
   },
-  onCell: function onCell(record) {
+  onCell: function onCell(record, index) {
     return {
       onClick: function onClick(e) {
-        console.log('Click cell', record, e.target);
+        console.log('Click cell', ' row ' + index, record, e.target);
       }
     };
   }
@@ -134,5 +134,5 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[555]);
+},[557]);
 //# sourceMappingURL=rowAndCellClick.js.map

@@ -1,14 +1,14 @@
 webpackJsonp([21],{
 
-/***/ 470:
+/***/ 472:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(471);
+module.exports = __webpack_require__(473);
 
 
 /***/ }),
 
-/***/ 471:
+/***/ 473:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63,5 +63,5 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[470]);
+},[472]);
 //# sourceMappingURL=fixedColumns.js.map

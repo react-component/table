@@ -34,7 +34,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		27: 0
+/******/ 		28: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -1654,10 +1654,11 @@ function polyfill(Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = measureScrollbar;
+/* harmony export (immutable) */ __webpack_exports__["c"] = measureScrollbar;
 /* harmony export (immutable) */ __webpack_exports__["a"] = debounce;
-/* harmony export (immutable) */ __webpack_exports__["d"] = warningOnce;
-/* harmony export (immutable) */ __webpack_exports__["c"] = remove;
+/* harmony export (immutable) */ __webpack_exports__["e"] = warningOnce;
+/* harmony export (immutable) */ __webpack_exports__["d"] = remove;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getDataAndAriaProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(388);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 
@@ -1746,6 +1747,19 @@ function remove(array, item) {
   var front = array.slice(0, index);
   var last = array.slice(index + 1, array.length);
   return front.concat(last);
+}
+
+/**
+ * Returns only data- and aria- key/value pairs
+ * @param {object} props
+ */
+function getDataAndAriaProps(props) {
+  return Object.keys(props).reduce(function (memo, key) {
+    if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
+      memo[key] = props[key];
+    }
+    return memo;
+  }, {});
 }
 
 /***/ }),
@@ -5049,7 +5063,7 @@ var TableRow = function (_React$Component) {
       for (var i = 0; i < columns.length; i++) {
         var column = columns[i];
 
-        Object(__WEBPACK_IMPORTED_MODULE_14__utils__["d" /* warningOnce */])(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
+        Object(__WEBPACK_IMPORTED_MODULE_14__utils__["e" /* warningOnce */])(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
 
         cells.push(__WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__TableCell__["a" /* default */], {
           prefixCls: prefixCls,
@@ -27454,7 +27468,7 @@ var Table = function (_React$Component) {
     _this.getRowKey = function (record, index) {
       var rowKey = _this.props.rowKey;
       var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-      Object(__WEBPACK_IMPORTED_MODULE_13__utils__["d" /* warningOnce */])(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
+      Object(__WEBPACK_IMPORTED_MODULE_13__utils__["e" /* warningOnce */])(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
       return key === undefined ? index : key;
     };
 
@@ -27590,10 +27604,10 @@ var Table = function (_React$Component) {
     };
 
     ['onRowClick', 'onRowDoubleClick', 'onRowContextMenu', 'onRowMouseEnter', 'onRowMouseLeave'].forEach(function (name) {
-      Object(__WEBPACK_IMPORTED_MODULE_13__utils__["d" /* warningOnce */])(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
+      Object(__WEBPACK_IMPORTED_MODULE_13__utils__["e" /* warningOnce */])(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
     });
 
-    Object(__WEBPACK_IMPORTED_MODULE_13__utils__["d" /* warningOnce */])(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
+    Object(__WEBPACK_IMPORTED_MODULE_13__utils__["e" /* warningOnce */])(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
 
     _this.columnManager = new __WEBPACK_IMPORTED_MODULE_14__ColumnManager__["a" /* default */](props.columns, props.children);
 
@@ -27880,6 +27894,7 @@ var Table = function (_React$Component) {
       }
       var hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
       var hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
+      var dataAndAriaProps = Object(__WEBPACK_IMPORTED_MODULE_13__utils__["b" /* getDataAndAriaProps */])(props);
 
       return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_9_mini_store__["Provider"],
@@ -27891,12 +27906,12 @@ var Table = function (_React$Component) {
             _this2.expander = expander;
             return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
               'div',
-              {
+              __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({
                 ref: _this2.saveRef('tableNode'),
                 className: className,
                 style: props.style,
                 id: props.id
-              },
+              }, dataAndAriaProps),
               _this2.renderTitle(),
               __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                 'div',
@@ -34878,7 +34893,7 @@ function HeadTable(props, _ref) {
   if (scroll.y) {
     useFixedHeader = true;
     // Add negative margin bottom for scroll bar overflow bug
-    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* measureScrollbar */])('horizontal');
+    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* measureScrollbar */])('horizontal');
     if (scrollbarWidth > 0 && !fixed) {
       headStyle.marginBottom = '-' + scrollbarWidth + 'px';
       headStyle.paddingBottom = '0px';
@@ -35277,7 +35292,7 @@ var TableCell = function (_React$Component) {
       }
 
       if (column.onCell) {
-        tdProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, tdProps, column.onCell(record));
+        tdProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, tdProps, column.onCell(record, index));
       }
 
       // Fix https://github.com/ant-design/ant-design/issues/1202
@@ -35695,8 +35710,20 @@ var ExpandableRow = function (_React$Component) {
           prefixCls = _this$props3.prefixCls,
           expanded = _this$props3.expanded,
           record = _this$props3.record,
-          needIndentSpaced = _this$props3.needIndentSpaced;
+          needIndentSpaced = _this$props3.needIndentSpaced,
+          expandIcon = _this$props3.expandIcon;
 
+
+      if (expandIcon) {
+        return expandIcon({
+          prefixCls: prefixCls,
+          expanded: expanded,
+          record: record,
+          needIndentSpaced: needIndentSpaced,
+          expandable: _this.expandable,
+          onExpand: _this.handleExpandChange
+        });
+      }
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__ExpandIcon__["a" /* default */], {
         expandable: _this.expandable,
@@ -35784,6 +35811,7 @@ ExpandableRow.propTypes = {
   expandIconColumnIndex: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.number,
   childrenColumnName: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
   expandedRowRender: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  expandIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   onExpandedChange: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func.isRequired,
   onRowClick: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   children: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func.isRequired
@@ -35937,7 +35965,7 @@ function BodyTable(props, _ref) {
     useFixedHeader = true;
 
     // Add negative margin bottom for scroll bar overflow bug
-    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* measureScrollbar */])();
+    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* measureScrollbar */])();
     if (scrollbarWidth > 0 && fixed) {
       bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
       bodyStyle.paddingBottom = '0px';
@@ -36196,6 +36224,7 @@ ExpandableTable.propTypes = {
   defaultExpandedRowKeys: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.array,
   expandIconColumnIndex: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number,
   expandedRowRender: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
+  expandIcon: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
   childrenColumnName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string,
   indentSize: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number,
   onExpand: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.func,
@@ -36246,7 +36275,7 @@ var _initialiseProps = function _initialiseProps() {
       // row was collapse
       var expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* remove */])(expandedRowKeys, rowKey);
+        expandedRowKeys = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["d" /* remove */])(expandedRowKeys, rowKey);
       }
     }
 

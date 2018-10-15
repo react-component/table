@@ -1,14 +1,14 @@
-webpackJsonp([9],{
+webpackJsonp([24],{
 
-/***/ 563:
+/***/ 466:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(564);
+module.exports = __webpack_require__(467);
 
 
 /***/ }),
 
-/***/ 564:
+/***/ 467:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32,19 +32,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-/* eslint-disable no-console,func-names,react/no-multi-comp */
+/* eslint-disable no-console,react/prop-types,react/no-danger */
 
 
 
 
 
-var data = [];
-for (var i = 0; i < 10; i++) {
-  data.push({
-    key: i,
-    a: 'a' + i,
-    b: 'b' + i,
-    c: 'c' + i
+var data = [{ key: 0, a: '123' }, { key: 1, a: 'cdd', b: 'edd' }, { key: 2, a: '1333', c: 'eee', d: 2 }];
+
+var columns = [{ title: 'title 1', dataIndex: 'a', key: 'a', width: 100 }, { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 }];
+
+function CustomExpandIcon(props) {
+  var text = void 0;
+  if (props.expanded) {
+    text = '&#8679; collapse';
+  } else {
+    text = '&#8681; expand';
+  }
+  return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('a', {
+    className: 'expand-row-icon',
+    onClick: function onClick(e) {
+      return props.onExpand(props.record, e);
+    },
+    dangerouslySetInnerHTML: { __html: text },
+    style: { color: 'blue', cursor: 'pointer' }
   });
 }
 
@@ -62,46 +73,33 @@ var Demo = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      showBody: true
-    }, _this.toggleBody = function () {
-      _this.setState({
-        showBody: !_this.state.showBody
-      });
+    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.onExpand = function (expanded, record) {
+      console.log('onExpand', expanded, record);
     }, _temp), __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
   }
 
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Demo, [{
     key: 'render',
     value: function render() {
-      var columns = [{ title: 'title1', key: 'a', dataIndex: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', key: 'c', dataIndex: 'c', width: 200 }, {
-        title: __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-          'a',
-          { onClick: this.toggleBody, href: '#' },
-          this.state.showBody ? '隐藏' : '显示',
-          '\u4F53'
-        ),
-        key: 'x',
-        width: 200,
-        render: function render() {
-          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-            'a',
-            { href: '#' },
-            'Operations'
-          );
-        }
-      }];
-      return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_table__["a" /* default */], {
-        columns: columns,
-        data: data,
-        scroll: { y: 300 },
-        rowKey: function rowKey(record) {
-          return record.key;
-        },
-        bodyStyle: {
-          display: this.state.showBody ? '' : 'none'
-        }
-      });
+      return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_table__["a" /* default */], {
+          columns: columns,
+          expandedRowRender: function expandedRowRender(record) {
+            return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+              'p',
+              null,
+              'extra: ',
+              record.a
+            );
+          },
+          onExpand: this.onExpand,
+          expandIcon: CustomExpandIcon,
+          expandIconAsCell: true,
+          data: data
+        })
+      );
     }
   }]);
 
@@ -114,12 +112,12 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
   __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
     'h2',
     null,
-    'scroll body table'
+    'expandIcon'
   ),
   __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(Demo, null)
 ), document.getElementById('__react-content'));
 
 /***/ })
 
-},[563]);
-//# sourceMappingURL=scrollY.js.map
+},[466]);
+//# sourceMappingURL=expandIcon.js.map

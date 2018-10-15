@@ -1,14 +1,14 @@
 webpackJsonp([6],{
 
-/***/ 569:
+/***/ 571:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(570);
+module.exports = __webpack_require__(572);
 
 
 /***/ }),
 
-/***/ 570:
+/***/ 572:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75,5 +75,5 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[569]);
+},[571]);
 //# sourceMappingURL=title-and-footer.js.map

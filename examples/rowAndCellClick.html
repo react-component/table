@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>rowAndCellClick.js - example - rc-table@6.3.7</title>
+  <title>rowAndCellClick.js - example - rc-table@6.4.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-table@6.3.7</h1>
+      <h1>rc-table@6.4.0</h1>
 
       <p>table ui component for react</p>
     </div>
@@ -300,9 +300,9 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     key: <span class="hljs-string">'age'</span>,
     width: <span class="hljs-number">100</span>,
     render: text =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{text} (Trigger Cell Click)<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
-    onCell: record =&gt; ({
+    onCell: (record, index) =&gt; ({
       onClick(e) {
-        console.log('Click cell', record, e.target);
+        console.log('Click cell', ` row ${index}`, record, e.target);
       },
     }),
   },
