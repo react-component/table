@@ -81,6 +81,27 @@ describe('Table.expand', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  /* eslint-disable react/prop-types */
+  it('renders a custom icon', () => {
+    function CustomExpandIcon(props) {
+      return (
+        <a className="expand-row-icon" onClick={e => props.onExpand(props.record, e)}>
+          <i className="some-class" />
+        </a>
+      );
+    }
+    const wrapper = render(
+      createTable({
+        expandedRowRender,
+        expandIcon: ({ onExpand, record }) => (
+          <CustomExpandIcon onExpand={onExpand} record={record} />
+        ),
+      }),
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+  /* eslint-enable react/prop-types */
+
   it('renders nested data correctly', () => {
     const localData = [
       {
