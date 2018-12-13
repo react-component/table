@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
+import shallowEqual from 'shallowequal';
 import TableRow from './TableRow';
 import { remove } from './utils';
 
@@ -73,12 +74,22 @@ class ExpandableTable extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.handleUpdated();
+  }
+
   componentDidUpdate() {
     if ('expandedRowKeys' in this.props) {
       this.store.setState({
         expandedRowKeys: this.props.expandedRowKeys,
       });
     }
+    this.handleUpdated();
+  }
+
+  handleUpdated() {
+    // We should record latest expanded rows to avoid multiple rows remove cause `onExpandedRowsChange` trigger many times
+    this.latestExpandedRows = null;
   }
 
   handleExpandChange = (expanded, record, event, rowKey, destroy = false) => {
@@ -91,7 +102,7 @@ class ExpandableTable extends React.Component {
     let { expandedRowKeys } = this.store.getState();
 
     if (expanded) {
-      // row was expaned
+      // row was expanded
       expandedRowKeys = [...expandedRowKeys, rowKey];
     } else {
       // row was collapse
@@ -105,7 +116,11 @@ class ExpandableTable extends React.Component {
       this.store.setState({ expandedRowKeys });
     }
 
-    onExpandedRowsChange(expandedRowKeys);
+    // De-dup of repeat call
+    if (!this.latestExpandedRows || !shallowEqual(this.latestExpandedRows, expandedRowKeys)) {
+      this.latestExpandedRows = expandedRowKeys;
+      onExpandedRowsChange(expandedRowKeys);
+    }
     if (!destroy) {
       onExpand(expanded, record);
     }

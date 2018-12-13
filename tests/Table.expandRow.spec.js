@@ -226,4 +226,14 @@ describe('Table.expand', () => {
       .simulate('click');
     expect(wrapper.render()).toMatchSnapshot();
   });
+
+  // https://github.com/ant-design/ant-design/issues/12208
+  it('avoid onExpandedRowsChange repeat trigger when rows removed', () => {
+    const onExpandedRowsChange = jest.fn();
+    const wrapper = mount(createTable({ expandedRowRender, onExpandedRowsChange }));
+    expect(onExpandedRowsChange).not.toBeCalled();
+    wrapper.setProps({ data: [{ key: 93, name: 'Bamboo', age: 14 }] });
+    expect(onExpandedRowsChange).toBeCalledWith([]);
+    expect(onExpandedRowsChange.mock.calls.length).toEqual(1);
+  });
 });
