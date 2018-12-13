@@ -1,14 +1,21 @@
-webpackJsonp([9],{
+webpackJsonp([6],{
 
-/***/ 482:
+/***/ 46:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 486:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(483);
+module.exports = __webpack_require__(487);
 
 
 /***/ }),
 
-/***/ 483:
+/***/ 487:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28,6 +35,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_table__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_table_assets_index_less__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_table_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_table_assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_table_assets_animation_less__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_table_assets_animation_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_table_assets_animation_less__);
 
 
 
@@ -38,22 +47,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var data = [{
-  a: 'a1'
+
+var columns = [{
+  title: "Name",
+  dataIndex: "name",
+  width: 150
 }, {
-  a: 'a2',
-  b: 'b2',
-  children: [{
-    a: 'a2-1',
-    b: 'b2-1'
-  }, {
-    a: 'a2-2',
-    b: 'b2-2'
-  }]
+  title: "Age",
+  dataIndex: "age",
+  width: 150
 }, {
-  a: 'a3',
-  c: 'c3',
-  d: 'd3'
+  title: "Address ( ------------------------- for clarity)",
+  dataIndex: "address"
 }];
 
 var Demo = function (_React$Component) {
@@ -70,43 +75,37 @@ var Demo = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (record, e) {
-      e.preventDefault();
-      console.log(record.a);
+    return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = { data: [] }, _this.onclick = function () {
+      var data = [];
+      for (var i = 0; i < 5; i++) {
+        data.push({
+          key: i,
+          name: 'Edward King ' + i,
+          age: 32,
+          address: 'London, Park Lane no. ' + i
+        });
+      }
+      _this.setState({ data: data });
+      console.log('click!!!');
     }, _temp), __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
   }
 
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Demo, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
-        title: 'Operations',
-        dataIndex: '',
-        key: 'x',
-        render: function render(text, record) {
-          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-            'a',
-            { href: '#', onClick: function onClick(e) {
-                return _this2.handleClick(record, e);
-              } },
-            'click ',
-            record.a
-          );
-        }
-      }];
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'div',
         null,
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_table__["a" /* default */], {
+          columns: columns,
+          data: this.state.data,
+          scroll: { y: 240, x: "150%" }
+        }),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-          'h2',
-          null,
-          'sub table'
-        ),
-        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_table__["a" /* default */], { columns: columns, expandIconAsCell: true, data: data, rowKey: function rowKey(record) {
-            return record.a;
-          } })
+          'button',
+          { onClick: this.onclick },
+          'query'
+        )
       );
     }
   }]);
@@ -118,5 +117,5 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[482]);
-//# sourceMappingURL=subTable.js.map
+},[486]);
+//# sourceMappingURL=~debug.js.map
