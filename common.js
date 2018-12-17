@@ -1389,15 +1389,15 @@ module.exports = isArrayLikeObject;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 
 
-var scrollbarSize = void 0;
+var scrollbarVerticalSize = void 0;
+var scrollbarHorizontalSize = void 0;
 
 // Measure scrollbar width for padding body during modal show/hide
 var scrollbarMeasure = {
   position: 'absolute',
   top: '-9999px',
   width: '50px',
-  height: '50px',
-  overflow: 'scroll'
+  height: '50px'
 };
 
 function measureScrollbar() {
@@ -1406,24 +1406,34 @@ function measureScrollbar() {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
-  if (scrollbarSize) {
-    return scrollbarSize;
+  var isVertical = direction === 'vertical';
+  if (isVertical && scrollbarVerticalSize) {
+    return scrollbarVerticalSize;
+  } else if (!isVertical && scrollbarHorizontalSize) {
+    return scrollbarHorizontalSize;
   }
   var scrollDiv = document.createElement('div');
   Object.keys(scrollbarMeasure).forEach(function (scrollProp) {
     scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
   });
+  // Append related overflow style
+  if (isVertical) {
+    scrollDiv.style.overflowY = 'scroll';
+  } else {
+    scrollDiv.style.overflowX = 'scroll';
+  }
   document.body.appendChild(scrollDiv);
   var size = 0;
-  if (direction === 'vertical') {
+  if (isVertical) {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if (direction === 'horizontal') {
+    scrollbarVerticalSize = size;
+  } else if (!isVertical) {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
+    scrollbarHorizontalSize = size;
   }
 
   document.body.removeChild(scrollDiv);
-  scrollbarSize = size;
-  return scrollbarSize;
+  return size;
 }
 
 function debounce(func, wait, immediate) {
