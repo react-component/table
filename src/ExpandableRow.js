@@ -8,7 +8,7 @@ class ExpandableRow extends React.Component {
     prefixCls: PropTypes.string.isRequired,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    record: PropTypes.object.isRequired,
+    record: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     indentSize: PropTypes.number,
     needIndentSpaced: PropTypes.bool.isRequired,
     expandRowByClick: PropTypes.bool,
