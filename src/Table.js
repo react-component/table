@@ -74,7 +74,7 @@ class Table extends React.Component {
     scroll: {},
     rowRef: () => null,
     emptyText: () => 'No Data',
-    cellEmptyText: '-',
+    cellEmptyText: '',
   };
 
   constructor(props) {

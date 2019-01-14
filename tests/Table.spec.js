@@ -296,7 +296,7 @@ describe('Table', () => {
           },
         ];
         mount(createTable({ columns }));
-        expect(cellRender).toBeCalledWith(data[0], data[0], 0);
+        expect(cellRender).toBeCalledWith(null, data[1], 1);
       });
     });
 

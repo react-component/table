@@ -5,7 +5,7 @@ import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
 const columns = [
-  { title: 'title1', dataIndex: 'a', key: 'a' },
+  { title: 'title1', dataIndex: null, key: 'a' },
   { id: '123', title: 'title2', dataIndex: 'b', key: 'b' },
   { title: 'title3', dataIndex: 'c', key: 'c' },
   {
