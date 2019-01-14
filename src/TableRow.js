@@ -36,6 +36,7 @@ class TableRow extends React.Component {
     expandedRow: PropTypes.bool,
     isAnyColumnsFixed: PropTypes.bool,
     ancestorKeys: PropTypes.array.isRequired,
+    cellEmptyText: PropTypes.node,
   };
 
   static defaultProps = {
@@ -195,6 +196,7 @@ class TableRow extends React.Component {
       hasExpandIcon,
       renderExpandIcon,
       renderExpandIconCell,
+      cellEmptyText,
     } = this.props;
 
     const BodyRow = components.body.row;
@@ -229,6 +231,7 @@ class TableRow extends React.Component {
           key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
           component={BodyCell}
+          cellEmptyText={cellEmptyText}
         />,
       );
     }
@@ -290,12 +293,12 @@ function getRowHeight(state, props) {
 polyfill(TableRow);
 
 export default connect((state, props) => {
-  const { currentHoverKey, expandedRowKeys } = state;
+  const { currentHoverKey, expandedRowKeys, cellEmptyText } = state;
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
-
   return {
     visible,
+    cellEmptyText,
     hovered: currentHoverKey === rowKey,
     height: getRowHeight(state, props),
   };

@@ -34,6 +34,7 @@ class Table extends React.Component {
     id: PropTypes.string,
     footer: PropTypes.func,
     emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    cellEmptyText: PropTypes.node,
     scroll: PropTypes.object,
     rowRef: PropTypes.func,
     getBodyWrapper: PropTypes.func,
@@ -73,11 +74,11 @@ class Table extends React.Component {
     scroll: {},
     rowRef: () => null,
     emptyText: () => 'No Data',
+    cellEmptyText: '-',
   };
 
   constructor(props) {
     super(props);
-
     [
       'onRowClick',
       'onRowDoubleClick',
@@ -96,6 +97,7 @@ class Table extends React.Component {
     this.columnManager = new ColumnManager(props.columns, props.children);
 
     this.store = create({
+      cellEmptyText: props.cellEmptyText,
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
