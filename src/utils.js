@@ -36,7 +36,7 @@ export function measureScrollbar(direction = 'vertical') {
   if (isVertical) {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
     scrollbarVerticalSize = size;
-  } else if (!isVertical) {
+  } else {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
     scrollbarHorizontalSize = size;
   }
