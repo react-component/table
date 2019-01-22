@@ -10,7 +10,7 @@ function isInvalidRenderCellText(text) {
   );
 }
 
-export default class TableCell extends React.Component {
+export default class TableCell extends React.PureComponent {
   static propTypes = {
     record: PropTypes.object,
     prefixCls: PropTypes.string,
