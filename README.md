@@ -1,4 +1,3 @@
-#修改了下源码,优化数据大的时候表格渲染速度
 # rc-table
 
 React table component.
