@@ -16,6 +16,7 @@ class TableRow extends React.Component {
     onRowMouseEnter: PropTypes.func,
     onRowMouseLeave: PropTypes.func,
     record: PropTypes.object,
+    renderData: PropTypes.array,
     prefixCls: PropTypes.string,
     onHover: PropTypes.func,
     columns: PropTypes.array,
@@ -183,6 +184,7 @@ class TableRow extends React.Component {
       prefixCls,
       columns,
       record,
+      renderData,
       rowKey,
       index,
       onRow,
@@ -222,6 +224,7 @@ class TableRow extends React.Component {
         <TableCell
           prefixCls={prefixCls}
           record={record}
+          renderData={renderData}
           indentSize={indentSize}
           indent={indent}
           index={index}

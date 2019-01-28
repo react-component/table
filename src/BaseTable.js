@@ -105,6 +105,7 @@ class BaseTable extends React.Component {
               indent={indent}
               className={className}
               record={record}
+              renderData={renderData}
               index={i}
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}

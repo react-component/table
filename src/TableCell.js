@@ -13,6 +13,7 @@ function isInvalidRenderCellText(text) {
 export default class TableCell extends React.Component {
   static propTypes = {
     record: PropTypes.object,
+    renderData: PropTypes.array,
     prefixCls: PropTypes.string,
     index: PropTypes.number,
     indent: PropTypes.number,
@@ -35,6 +36,7 @@ export default class TableCell extends React.Component {
   render() {
     const {
       record,
+      renderData,
       indentSize,
       prefixCls,
       indent,
@@ -60,7 +62,7 @@ export default class TableCell extends React.Component {
     let rowSpan;
 
     if (render) {
-      text = render(text, record, index);
+      text = render(text, record, index, renderData);
       if (isInvalidRenderCellText(text)) {
         tdProps = text.props || tdProps;
         colSpan = tdProps.colSpan;
