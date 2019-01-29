@@ -51,7 +51,6 @@
     "lint": "rc-tools run lint",
     "test": "jest",
     "coverage": "jest --coverage",
-    "pre-commit": "rc-tools run pre-commit",
     "lint-staged": "lint-staged"
   },
   "jest": {
