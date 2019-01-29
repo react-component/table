@@ -1,19 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.measureScrollbar = measureScrollbar;
-exports.debounce = debounce;
-exports.warningOnce = warningOnce;
-exports.remove = remove;
-exports.getDataAndAriaProps = getDataAndAriaProps;
-
-var _warning = require('warning');
-
-var _warning2 = _interopRequireDefault(_warning);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import warning from 'warning';
 
 var scrollbarVerticalSize = void 0;
 var scrollbarHorizontalSize = void 0;
@@ -26,7 +11,7 @@ var scrollbarMeasure = {
   height: '50px'
 };
 
-function measureScrollbar() {
+export function measureScrollbar() {
   var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'vertical';
 
   if (typeof document === 'undefined' || typeof window === 'undefined') {
@@ -62,7 +47,7 @@ function measureScrollbar() {
   return size;
 }
 
-function debounce(func, wait, immediate) {
+export function debounce(func, wait, immediate) {
   var timeout = void 0;
   function debounceFunc() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -97,14 +82,14 @@ function debounce(func, wait, immediate) {
 }
 
 var warned = {};
-function warningOnce(condition, format, args) {
+export function warningOnce(condition, format, args) {
   if (!warned[format]) {
-    (0, _warning2['default'])(condition, format, args);
+    warning(condition, format, args);
     warned[format] = !condition;
   }
 }
 
-function remove(array, item) {
+export function remove(array, item) {
   var index = array.indexOf(item);
   var front = array.slice(0, index);
   var last = array.slice(index + 1, array.length);
@@ -115,7 +100,7 @@ function remove(array, item) {
  * Returns only data- and aria- key/value pairs
  * @param {object} props
  */
-function getDataAndAriaProps(props) {
+export function getDataAndAriaProps(props) {
   return Object.keys(props).reduce(function (memo, key) {
     if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
       memo[key] = props[key];

@@ -1,32 +1,10 @@
-'use strict';
+import _extends from 'babel-runtime/helpers/extends';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { measureScrollbar } from './utils';
+import BaseTable from './BaseTable';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-exports['default'] = BodyTable;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _utils = require('./utils');
-
-var _BaseTable = require('./BaseTable');
-
-var _BaseTable2 = _interopRequireDefault(_BaseTable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function BodyTable(props, _ref) {
+export default function BodyTable(props, _ref) {
   var table = _ref.table;
   var _table$props = table.props,
       prefixCls = _table$props.prefixCls,
@@ -42,7 +20,7 @@ function BodyTable(props, _ref) {
   var saveRef = table.saveRef;
   var useFixedHeader = table.props.useFixedHeader;
 
-  var bodyStyle = (0, _extends3['default'])({}, table.props.bodyStyle);
+  var bodyStyle = _extends({}, table.props.bodyStyle);
   var innerBodyStyle = {};
 
   if (scroll.x || fixed) {
@@ -65,14 +43,14 @@ function BodyTable(props, _ref) {
     useFixedHeader = true;
 
     // Add negative margin bottom for scroll bar overflow bug
-    var scrollbarWidth = (0, _utils.measureScrollbar)();
+    var scrollbarWidth = measureScrollbar();
     if (scrollbarWidth > 0 && fixed) {
       bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
       bodyStyle.paddingBottom = '0px';
     }
   }
 
-  var baseTable = _react2['default'].createElement(_BaseTable2['default'], {
+  var baseTable = React.createElement(BaseTable, {
     tableClassName: tableClassName,
     hasHead: !useFixedHeader,
     hasBody: true,
@@ -92,10 +70,10 @@ function BodyTable(props, _ref) {
     }
     delete bodyStyle.overflowX;
     delete bodyStyle.overflowY;
-    return _react2['default'].createElement(
+    return React.createElement(
       'div',
-      { key: 'bodyTable', className: prefixCls + '-body-outer', style: (0, _extends3['default'])({}, bodyStyle) },
-      _react2['default'].createElement(
+      { key: 'bodyTable', className: prefixCls + '-body-outer', style: _extends({}, bodyStyle) },
+      React.createElement(
         'div',
         {
           className: prefixCls + '-body-inner',
@@ -109,7 +87,7 @@ function BodyTable(props, _ref) {
     );
   }
 
-  return _react2['default'].createElement(
+  return React.createElement(
     'div',
     {
       key: 'bodyTable',
@@ -124,17 +102,16 @@ function BodyTable(props, _ref) {
 }
 
 BodyTable.propTypes = {
-  fixed: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].bool]),
-  columns: _propTypes2['default'].array.isRequired,
-  tableClassName: _propTypes2['default'].string.isRequired,
-  handleWheel: _propTypes2['default'].func.isRequired,
-  handleBodyScroll: _propTypes2['default'].func.isRequired,
-  getRowKey: _propTypes2['default'].func.isRequired,
-  expander: _propTypes2['default'].object.isRequired,
-  isAnyColumnsFixed: _propTypes2['default'].bool
+  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  columns: PropTypes.array.isRequired,
+  tableClassName: PropTypes.string.isRequired,
+  handleWheel: PropTypes.func.isRequired,
+  handleBodyScroll: PropTypes.func.isRequired,
+  getRowKey: PropTypes.func.isRequired,
+  expander: PropTypes.object.isRequired,
+  isAnyColumnsFixed: PropTypes.bool
 };
 
 BodyTable.contextTypes = {
-  table: _propTypes2['default'].any
+  table: PropTypes.any
 };
-module.exports = exports['default'];

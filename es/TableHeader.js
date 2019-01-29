@@ -1,23 +1,6 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports['default'] = TableHeader;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _TableHeaderRow = require('./TableHeaderRow');
-
-var _TableHeaderRow2 = _interopRequireDefault(_TableHeaderRow);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import React from 'react';
+import PropTypes from 'prop-types';
+import TableHeaderRow from './TableHeaderRow';
 
 function getHeaderRows(columns) {
   var currentRow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -56,7 +39,7 @@ function getHeaderRows(columns) {
   });
 }
 
-function TableHeader(props, _ref) {
+export default function TableHeader(props, _ref) {
   var table = _ref.table;
   var components = table.components;
   var _table$props = table.props,
@@ -78,11 +61,11 @@ function TableHeader(props, _ref) {
 
   var HeaderWrapper = components.header.wrapper;
 
-  return _react2['default'].createElement(
+  return React.createElement(
     HeaderWrapper,
     { className: prefixCls + '-thead' },
     rows.map(function (row, index) {
-      return _react2['default'].createElement(_TableHeaderRow2['default'], {
+      return React.createElement(TableHeaderRow, {
         prefixCls: prefixCls,
         key: index,
         index: index,
@@ -98,13 +81,12 @@ function TableHeader(props, _ref) {
 }
 
 TableHeader.propTypes = {
-  fixed: _propTypes2['default'].string,
-  columns: _propTypes2['default'].array.isRequired,
-  expander: _propTypes2['default'].object.isRequired,
-  onHeaderRow: _propTypes2['default'].func
+  fixed: PropTypes.string,
+  columns: PropTypes.array.isRequired,
+  expander: PropTypes.object.isRequired,
+  onHeaderRow: PropTypes.func
 };
 
 TableHeader.contextTypes = {
-  table: _propTypes2['default'].any
+  table: PropTypes.any
 };
-module.exports = exports['default'];

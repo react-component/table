@@ -1,76 +1,32 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _miniStore = require('mini-store');
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _ColGroup = require('./ColGroup');
-
-var _ColGroup2 = _interopRequireDefault(_ColGroup);
-
-var _TableHeader = require('./TableHeader');
-
-var _TableHeader2 = _interopRequireDefault(_TableHeader);
-
-var _TableRow = require('./TableRow');
-
-var _TableRow2 = _interopRequireDefault(_TableRow);
-
-var _ExpandableRow = require('./ExpandableRow');
-
-var _ExpandableRow2 = _interopRequireDefault(_ExpandableRow);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _extends from 'babel-runtime/helpers/extends';
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
+import _inherits from 'babel-runtime/helpers/inherits';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
+import classNames from 'classnames';
+import ColGroup from './ColGroup';
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
+import ExpandableRow from './ExpandableRow';
 
 var BaseTable = function (_React$Component) {
-  (0, _inherits3['default'])(BaseTable, _React$Component);
+  _inherits(BaseTable, _React$Component);
 
   function BaseTable() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    (0, _classCallCheck3['default'])(this, BaseTable);
+    _classCallCheck(this, BaseTable);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = BaseTable.__proto__ || Object.getPrototypeOf(BaseTable)).call.apply(_ref, [this].concat(args))), _this), _this.handleRowHover = function (isHover, key) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BaseTable.__proto__ || Object.getPrototypeOf(BaseTable)).call.apply(_ref, [this].concat(args))), _this), _this.handleRowHover = function (isHover, key) {
       _this.props.store.setState({
         currentHoverKey: isHover ? key : null
       });
@@ -120,9 +76,9 @@ var BaseTable = function (_React$Component) {
 
         var rowPrefixCls = prefixCls + '-row';
 
-        var row = _react2['default'].createElement(
-          _ExpandableRow2['default'],
-          (0, _extends3['default'])({}, expander.props, {
+        var row = React.createElement(
+          ExpandableRow,
+          _extends({}, expander.props, {
             fixed: fixed,
             index: i,
             prefixCls: rowPrefixCls,
@@ -135,7 +91,7 @@ var BaseTable = function (_React$Component) {
           }),
           function (expandableRow) {
             return (// eslint-disable-line
-              _react2['default'].createElement(_TableRow2['default'], (0, _extends3['default'])({
+              React.createElement(TableRow, _extends({
                 fixed: fixed,
                 indent: indent,
                 className: className,
@@ -170,10 +126,10 @@ var BaseTable = function (_React$Component) {
         _loop(i);
       }
       return rows;
-    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  (0, _createClass3['default'])(BaseTable, [{
+  _createClass(BaseTable, [{
     key: 'getColumns',
     value: function getColumns(cols) {
       var _props = this.props,
@@ -184,8 +140,8 @@ var BaseTable = function (_React$Component) {
       var prefixCls = table.props.prefixCls;
 
       return (cols || columns).map(function (column) {
-        return (0, _extends3['default'])({}, column, {
-          className: !!column.fixed && !fixed ? (0, _classnames2['default'])(prefixCls + '-fixed-columns-in-body', column.className) : column.className
+        return _extends({}, column, {
+          className: !!column.fixed && !fixed ? classNames(prefixCls + '-fixed-columns-in-body', column.className) : column.className
         });
       });
     }
@@ -222,7 +178,7 @@ var BaseTable = function (_React$Component) {
 
       var body = void 0;
       if (hasBody) {
-        body = _react2['default'].createElement(
+        body = React.createElement(
           BodyWrapper,
           { className: prefixCls + '-tbody' },
           this.renderRows(data, 0)
@@ -234,31 +190,33 @@ var BaseTable = function (_React$Component) {
 
       var columns = this.getColumns();
 
-      return _react2['default'].createElement(
+      return React.createElement(
         Table,
         { className: tableClassName, style: tableStyle, key: 'table' },
-        _react2['default'].createElement(_ColGroup2['default'], { columns: columns, fixed: fixed }),
-        hasHead && _react2['default'].createElement(_TableHeader2['default'], { expander: expander, columns: columns, fixed: fixed }),
+        React.createElement(ColGroup, { columns: columns, fixed: fixed }),
+        hasHead && React.createElement(TableHeader, { expander: expander, columns: columns, fixed: fixed }),
         body
       );
     }
   }]);
+
   return BaseTable;
-}(_react2['default'].Component);
+}(React.Component);
 
 BaseTable.propTypes = {
-  fixed: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].bool]),
-  columns: _propTypes2['default'].array.isRequired,
-  tableClassName: _propTypes2['default'].string.isRequired,
-  hasHead: _propTypes2['default'].bool.isRequired,
-  hasBody: _propTypes2['default'].bool.isRequired,
-  store: _propTypes2['default'].object.isRequired,
-  expander: _propTypes2['default'].object.isRequired,
-  getRowKey: _propTypes2['default'].func,
-  isAnyColumnsFixed: _propTypes2['default'].bool
+  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  columns: PropTypes.array.isRequired,
+  tableClassName: PropTypes.string.isRequired,
+  hasHead: PropTypes.bool.isRequired,
+  hasBody: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  expander: PropTypes.object.isRequired,
+  getRowKey: PropTypes.func,
+  isAnyColumnsFixed: PropTypes.bool
 };
 BaseTable.contextTypes = {
-  table: _propTypes2['default'].any
+  table: PropTypes.any
 };
-exports['default'] = (0, _miniStore.connect)()(BaseTable);
-module.exports = exports['default'];
+
+
+export default connect()(BaseTable);

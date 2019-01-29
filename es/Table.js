@@ -1,91 +1,36 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _shallowequal = require('shallowequal');
-
-var _shallowequal2 = _interopRequireDefault(_shallowequal);
-
-var _addEventListener = require('rc-util/lib/Dom/addEventListener');
-
-var _addEventListener2 = _interopRequireDefault(_addEventListener);
-
-var _miniStore = require('mini-store');
-
-var _merge = require('lodash/merge');
-
-var _merge2 = _interopRequireDefault(_merge);
-
-var _componentClasses = require('component-classes');
-
-var _componentClasses2 = _interopRequireDefault(_componentClasses);
-
-var _reactLifecyclesCompat = require('react-lifecycles-compat');
-
-var _utils = require('./utils');
-
-var _ColumnManager = require('./ColumnManager');
-
-var _ColumnManager2 = _interopRequireDefault(_ColumnManager);
-
-var _HeadTable = require('./HeadTable');
-
-var _HeadTable2 = _interopRequireDefault(_HeadTable);
-
-var _BodyTable = require('./BodyTable');
-
-var _BodyTable2 = _interopRequireDefault(_BodyTable);
-
-var _ExpandableTable = require('./ExpandableTable');
-
-var _ExpandableTable2 = _interopRequireDefault(_ExpandableTable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _extends from 'babel-runtime/helpers/extends';
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
+import _inherits from 'babel-runtime/helpers/inherits';
+import React from 'react';
+import PropTypes from 'prop-types';
+import shallowequal from 'shallowequal';
+import addEventListener from 'rc-util/es/Dom/addEventListener';
+import { Provider, create } from 'mini-store';
+import merge from 'lodash/merge';
+import classes from 'component-classes';
+import { polyfill } from 'react-lifecycles-compat';
+import { debounce, warningOnce, getDataAndAriaProps } from './utils';
+import ColumnManager from './ColumnManager';
+import HeadTable from './HeadTable';
+import BodyTable from './BodyTable';
+import ExpandableTable from './ExpandableTable';
 
 var Table = function (_React$Component) {
-  (0, _inherits3['default'])(Table, _React$Component);
+  _inherits(Table, _React$Component);
 
   function Table(props) {
-    (0, _classCallCheck3['default'])(this, Table);
+    _classCallCheck(this, Table);
 
-    var _this = (0, _possibleConstructorReturn3['default'])(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
 
     _this.state = {};
 
     _this.getRowKey = function (record, index) {
       var rowKey = _this.props.rowKey;
       var key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-      (0, _utils.warningOnce)(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
+      warningOnce(key !== undefined, 'Each record in table should have a unique `key` prop,' + 'or set `rowKey` to an unique primary key.');
       return key === undefined ? index : key;
     };
 
@@ -115,7 +60,7 @@ var Table = function (_React$Component) {
         acc[rowKey] = height;
         return acc;
       }, {});
-      if ((0, _shallowequal2['default'])(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && (0, _shallowequal2['default'])(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+      if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) && shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
         return;
       }
 
@@ -221,14 +166,14 @@ var Table = function (_React$Component) {
     };
 
     ['onRowClick', 'onRowDoubleClick', 'onRowContextMenu', 'onRowMouseEnter', 'onRowMouseLeave'].forEach(function (name) {
-      (0, _utils.warningOnce)(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
+      warningOnce(props[name] === undefined, name + ' is deprecated, please use onRow instead.');
     });
 
-    (0, _utils.warningOnce)(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
+    warningOnce(props.getBodyWrapper === undefined, 'getBodyWrapper is deprecated, please use custom components instead.');
 
-    _this.columnManager = new _ColumnManager2['default'](props.columns, props.children);
+    _this.columnManager = new ColumnManager(props.columns, props.children);
 
-    _this.store = (0, _miniStore.create)({
+    _this.store = create({
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {}
@@ -236,11 +181,11 @@ var Table = function (_React$Component) {
 
     _this.setScrollPosition('left');
 
-    _this.debouncedWindowResize = (0, _utils.debounce)(_this.handleWindowResize, 150);
+    _this.debouncedWindowResize = debounce(_this.handleWindowResize, 150);
     return _this;
   }
 
-  (0, _createClass3['default'])(Table, [{
+  _createClass(Table, [{
     key: 'getChildContext',
     value: function getChildContext() {
       return {
@@ -248,7 +193,7 @@ var Table = function (_React$Component) {
           props: this.props,
           columnManager: this.columnManager,
           saveRef: this.saveRef,
-          components: (0, _merge2['default'])({
+          components: merge({
             table: 'table',
             header: {
               wrapper: 'thead',
@@ -269,7 +214,7 @@ var Table = function (_React$Component) {
     value: function componentDidMount() {
       if (this.columnManager.isAnyColumnsFixed()) {
         this.handleWindowResize();
-        this.resizeEvent = (0, _addEventListener2['default'])(window, 'resize', this.debouncedWindowResize);
+        this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
       }
 
       // https://github.com/ant-design/ant-design/issues/11635
@@ -286,7 +231,7 @@ var Table = function (_React$Component) {
       if (this.columnManager.isAnyColumnsFixed()) {
         this.handleWindowResize();
         if (!this.resizeEvent) {
-          this.resizeEvent = (0, _addEventListener2['default'])(window, 'resize', this.debouncedWindowResize);
+          this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
         }
       }
       // when table changes to empty, reset scrollLeft
@@ -312,9 +257,9 @@ var Table = function (_React$Component) {
         var prefixCls = this.props.prefixCls;
 
         if (position === 'both') {
-          (0, _componentClasses2['default'])(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-left').add(prefixCls + '-scroll-position-right');
+          classes(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-left').add(prefixCls + '-scroll-position-right');
         } else {
-          (0, _componentClasses2['default'])(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
+          classes(this.tableNode).remove(new RegExp('^' + prefixCls + '-scroll-position-.+$')).add(prefixCls + '-scroll-position-' + position);
         }
       }
     }
@@ -367,7 +312,7 @@ var Table = function (_React$Component) {
         isAnyColumnsFixed: isAnyColumnsFixed
       }), this.renderEmptyText(), this.renderFooter()];
 
-      return scrollable ? _react2['default'].createElement(
+      return scrollable ? React.createElement(
         'div',
         { className: prefixCls + '-scroll' },
         table
@@ -379,7 +324,7 @@ var Table = function (_React$Component) {
       var prefixCls = this.props.prefixCls;
 
 
-      return _react2['default'].createElement(
+      return React.createElement(
         'div',
         { className: prefixCls + '-fixed-left' },
         this.renderTable({
@@ -394,7 +339,7 @@ var Table = function (_React$Component) {
       var prefixCls = this.props.prefixCls;
 
 
-      return _react2['default'].createElement(
+      return React.createElement(
         'div',
         { className: prefixCls + '-fixed-right' },
         this.renderTable({
@@ -416,7 +361,7 @@ var Table = function (_React$Component) {
 
       var tableClassName = scroll.x || fixed ? prefixCls + '-fixed' : '';
 
-      var headTable = _react2['default'].createElement(_HeadTable2['default'], {
+      var headTable = React.createElement(HeadTable, {
         key: 'head',
         columns: columns,
         fixed: fixed,
@@ -425,7 +370,7 @@ var Table = function (_React$Component) {
         expander: this.expander
       });
 
-      var bodyTable = _react2['default'].createElement(_BodyTable2['default'], {
+      var bodyTable = React.createElement(BodyTable, {
         key: 'body',
         columns: columns,
         fixed: fixed,
@@ -446,7 +391,7 @@ var Table = function (_React$Component) {
           title = _props3.title,
           prefixCls = _props3.prefixCls;
 
-      return title ? _react2['default'].createElement(
+      return title ? React.createElement(
         'div',
         { className: prefixCls + '-title', key: 'title' },
         title(this.props.data)
@@ -459,7 +404,7 @@ var Table = function (_React$Component) {
           footer = _props4.footer,
           prefixCls = _props4.prefixCls;
 
-      return footer ? _react2['default'].createElement(
+      return footer ? React.createElement(
         'div',
         { className: prefixCls + '-footer', key: 'footer' },
         footer(this.props.data)
@@ -477,7 +422,7 @@ var Table = function (_React$Component) {
         return null;
       }
       var emptyClassName = prefixCls + '-placeholder';
-      return _react2['default'].createElement(
+      return React.createElement(
         'div',
         { className: emptyClassName, key: 'emptyText' },
         typeof emptyText === 'function' ? emptyText() : emptyText
@@ -511,26 +456,26 @@ var Table = function (_React$Component) {
       }
       var hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
       var hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
-      var dataAndAriaProps = (0, _utils.getDataAndAriaProps)(props);
+      var dataAndAriaProps = getDataAndAriaProps(props);
 
-      return _react2['default'].createElement(
-        _miniStore.Provider,
+      return React.createElement(
+        Provider,
         { store: this.store },
-        _react2['default'].createElement(
-          _ExpandableTable2['default'],
-          (0, _extends3['default'])({}, props, { columnManager: this.columnManager, getRowKey: this.getRowKey }),
+        React.createElement(
+          ExpandableTable,
+          _extends({}, props, { columnManager: this.columnManager, getRowKey: this.getRowKey }),
           function (expander) {
             _this2.expander = expander;
-            return _react2['default'].createElement(
+            return React.createElement(
               'div',
-              (0, _extends3['default'])({
+              _extends({
                 ref: _this2.saveRef('tableNode'),
                 className: className,
                 style: props.style,
                 id: props.id
               }, dataAndAriaProps),
               _this2.renderTitle(),
-              _react2['default'].createElement(
+              React.createElement(
                 'div',
                 { className: prefixCls + '-content' },
                 _this2.renderMainTable(),
@@ -559,51 +504,52 @@ var Table = function (_React$Component) {
       return null;
     }
   }]);
-  return Table;
-}(_react2['default'].Component);
 
-Table.propTypes = (0, _extends3['default'])({
-  data: _propTypes2['default'].array,
-  useFixedHeader: _propTypes2['default'].bool,
-  columns: _propTypes2['default'].array,
-  prefixCls: _propTypes2['default'].string,
-  bodyStyle: _propTypes2['default'].object,
-  style: _propTypes2['default'].object,
-  rowKey: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].func]),
-  rowClassName: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].func]),
-  onRow: _propTypes2['default'].func,
-  onHeaderRow: _propTypes2['default'].func,
-  onRowClick: _propTypes2['default'].func,
-  onRowDoubleClick: _propTypes2['default'].func,
-  onRowContextMenu: _propTypes2['default'].func,
-  onRowMouseEnter: _propTypes2['default'].func,
-  onRowMouseLeave: _propTypes2['default'].func,
-  showHeader: _propTypes2['default'].bool,
-  title: _propTypes2['default'].func,
-  id: _propTypes2['default'].string,
-  footer: _propTypes2['default'].func,
-  emptyText: _propTypes2['default'].oneOfType([_propTypes2['default'].node, _propTypes2['default'].func]),
-  scroll: _propTypes2['default'].object,
-  rowRef: _propTypes2['default'].func,
-  getBodyWrapper: _propTypes2['default'].func,
-  children: _propTypes2['default'].node,
-  components: _propTypes2['default'].shape({
-    table: _propTypes2['default'].any,
-    header: _propTypes2['default'].shape({
-      wrapper: _propTypes2['default'].any,
-      row: _propTypes2['default'].any,
-      cell: _propTypes2['default'].any
+  return Table;
+}(React.Component);
+
+Table.propTypes = _extends({
+  data: PropTypes.array,
+  useFixedHeader: PropTypes.bool,
+  columns: PropTypes.array,
+  prefixCls: PropTypes.string,
+  bodyStyle: PropTypes.object,
+  style: PropTypes.object,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  onRow: PropTypes.func,
+  onHeaderRow: PropTypes.func,
+  onRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
+  onRowContextMenu: PropTypes.func,
+  onRowMouseEnter: PropTypes.func,
+  onRowMouseLeave: PropTypes.func,
+  showHeader: PropTypes.bool,
+  title: PropTypes.func,
+  id: PropTypes.string,
+  footer: PropTypes.func,
+  emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  scroll: PropTypes.object,
+  rowRef: PropTypes.func,
+  getBodyWrapper: PropTypes.func,
+  children: PropTypes.node,
+  components: PropTypes.shape({
+    table: PropTypes.any,
+    header: PropTypes.shape({
+      wrapper: PropTypes.any,
+      row: PropTypes.any,
+      cell: PropTypes.any
     }),
-    body: _propTypes2['default'].shape({
-      wrapper: _propTypes2['default'].any,
-      row: _propTypes2['default'].any,
-      cell: _propTypes2['default'].any
+    body: PropTypes.shape({
+      wrapper: PropTypes.any,
+      row: PropTypes.any,
+      cell: PropTypes.any
     })
   })
-}, _ExpandableTable2['default'].PropTypes);
+}, ExpandableTable.PropTypes);
 Table.childContextTypes = {
-  table: _propTypes2['default'].any,
-  components: _propTypes2['default'].any
+  table: PropTypes.any,
+  components: PropTypes.any
 };
 Table.defaultProps = {
   data: [],
@@ -629,7 +575,6 @@ Table.defaultProps = {
 };
 
 
-(0, _reactLifecyclesCompat.polyfill)(Table);
+polyfill(Table);
 
-exports['default'] = Table;
-module.exports = exports['default'];
+export default Table;

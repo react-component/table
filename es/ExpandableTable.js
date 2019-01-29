@@ -1,64 +1,24 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _miniStore = require('mini-store');
-
-var _reactLifecyclesCompat = require('react-lifecycles-compat');
-
-var _shallowequal = require('shallowequal');
-
-var _shallowequal2 = _interopRequireDefault(_shallowequal);
-
-var _TableRow = require('./TableRow');
-
-var _TableRow2 = _interopRequireDefault(_TableRow);
-
-var _utils = require('./utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _extends from 'babel-runtime/helpers/extends';
+import _toConsumableArray from 'babel-runtime/helpers/toConsumableArray';
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
+import _inherits from 'babel-runtime/helpers/inherits';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
+import { polyfill } from 'react-lifecycles-compat';
+import shallowEqual from 'shallowequal';
+import TableRow from './TableRow';
+import { remove } from './utils';
 
 var ExpandableTable = function (_React$Component) {
-  (0, _inherits3['default'])(ExpandableTable, _React$Component);
+  _inherits(ExpandableTable, _React$Component);
 
   function ExpandableTable(props) {
-    (0, _classCallCheck3['default'])(this, ExpandableTable);
+    _classCallCheck(this, ExpandableTable);
 
-    var _this = (0, _possibleConstructorReturn3['default'])(this, (ExpandableTable.__proto__ || Object.getPrototypeOf(ExpandableTable)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ExpandableTable.__proto__ || Object.getPrototypeOf(ExpandableTable)).call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -71,7 +31,7 @@ var ExpandableTable = function (_React$Component) {
 
 
     var finnalExpandedRowKeys = [];
-    var rows = [].concat((0, _toConsumableArray3['default'])(data));
+    var rows = [].concat(_toConsumableArray(data));
 
     if (defaultExpandAllRows) {
       for (var i = 0; i < rows.length; i++) {
@@ -93,7 +53,7 @@ var ExpandableTable = function (_React$Component) {
     return _this;
   }
 
-  (0, _createClass3['default'])(ExpandableTable, [{
+  _createClass(ExpandableTable, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.handleUpdated();
@@ -164,7 +124,7 @@ var ExpandableTable = function (_React$Component) {
         });
       }
 
-      return _react2['default'].createElement(_TableRow2['default'], {
+      return React.createElement(TableRow, {
         key: rowKey,
         columns: columns,
         className: className,
@@ -199,28 +159,29 @@ var ExpandableTable = function (_React$Component) {
       });
     }
   }]);
+
   return ExpandableTable;
-}(_react2['default'].Component);
+}(React.Component);
 
 ExpandableTable.propTypes = {
-  expandIconAsCell: _propTypes2['default'].bool,
-  expandedRowKeys: _propTypes2['default'].array,
-  expandedRowClassName: _propTypes2['default'].func,
-  defaultExpandAllRows: _propTypes2['default'].bool,
-  defaultExpandedRowKeys: _propTypes2['default'].array,
-  expandIconColumnIndex: _propTypes2['default'].number,
-  expandedRowRender: _propTypes2['default'].func,
-  expandIcon: _propTypes2['default'].func,
-  childrenColumnName: _propTypes2['default'].string,
-  indentSize: _propTypes2['default'].number,
-  onExpand: _propTypes2['default'].func,
-  onExpandedRowsChange: _propTypes2['default'].func,
-  columnManager: _propTypes2['default'].object.isRequired,
-  store: _propTypes2['default'].object.isRequired,
-  prefixCls: _propTypes2['default'].string.isRequired,
-  data: _propTypes2['default'].array,
-  children: _propTypes2['default'].func.isRequired,
-  getRowKey: _propTypes2['default'].func.isRequired
+  expandIconAsCell: PropTypes.bool,
+  expandedRowKeys: PropTypes.array,
+  expandedRowClassName: PropTypes.func,
+  defaultExpandAllRows: PropTypes.bool,
+  defaultExpandedRowKeys: PropTypes.array,
+  expandIconColumnIndex: PropTypes.number,
+  expandedRowRender: PropTypes.func,
+  expandIcon: PropTypes.func,
+  childrenColumnName: PropTypes.string,
+  indentSize: PropTypes.number,
+  onExpand: PropTypes.func,
+  onExpandedRowsChange: PropTypes.func,
+  columnManager: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+  prefixCls: PropTypes.string.isRequired,
+  data: PropTypes.array,
+  children: PropTypes.func.isRequired,
+  getRowKey: PropTypes.func.isRequired
 };
 ExpandableTable.defaultProps = {
   expandIconAsCell: false,
@@ -256,12 +217,12 @@ var _initialiseProps = function _initialiseProps() {
 
     if (expanded) {
       // row was expanded
-      expandedRowKeys = [].concat((0, _toConsumableArray3['default'])(expandedRowKeys), [rowKey]);
+      expandedRowKeys = [].concat(_toConsumableArray(expandedRowKeys), [rowKey]);
     } else {
       // row was collapse
       var expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys = (0, _utils.remove)(expandedRowKeys, rowKey);
+        expandedRowKeys = remove(expandedRowKeys, rowKey);
       }
     }
 
@@ -270,7 +231,7 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     // De-dup of repeat call
-    if (!_this3.latestExpandedRows || !(0, _shallowequal2['default'])(_this3.latestExpandedRows, expandedRowKeys)) {
+    if (!_this3.latestExpandedRows || !shallowEqual(_this3.latestExpandedRows, expandedRowKeys)) {
       _this3.latestExpandedRows = expandedRowKeys;
       onExpandedRowsChange(expandedRowKeys);
     }
@@ -295,7 +256,7 @@ var _initialiseProps = function _initialiseProps() {
       rowSpan: rows.length
     };
 
-    rows[0].unshift((0, _extends3['default'])({}, iconColumn, { column: iconColumn }));
+    rows[0].unshift(_extends({}, iconColumn, { column: iconColumn }));
   };
 
   this.renderRows = function (renderRows, rows, record, index, indent, fixed, parentKey, ancestorKeys) {
@@ -305,7 +266,7 @@ var _initialiseProps = function _initialiseProps() {
         childrenColumnName = _props5.childrenColumnName;
 
     var childrenData = record[childrenColumnName];
-    var nextAncestorKeys = [].concat((0, _toConsumableArray3['default'])(ancestorKeys), [parentKey]);
+    var nextAncestorKeys = [].concat(_toConsumableArray(ancestorKeys), [parentKey]);
     var nextIndent = indent + 1;
 
     if (expandedRowRender) {
@@ -313,12 +274,11 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (childrenData) {
-      rows.push.apply(rows, (0, _toConsumableArray3['default'])(renderRows(childrenData, nextIndent, nextAncestorKeys)));
+      rows.push.apply(rows, _toConsumableArray(renderRows(childrenData, nextIndent, nextAncestorKeys)));
     }
   };
 };
 
-(0, _reactLifecyclesCompat.polyfill)(ExpandableTable);
+polyfill(ExpandableTable);
 
-exports['default'] = (0, _miniStore.connect)()(ExpandableTable);
-module.exports = exports['default'];
+export default connect()(ExpandableTable);

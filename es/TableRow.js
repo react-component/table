@@ -1,72 +1,26 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
-
-var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-var _extends4 = require('babel-runtime/helpers/extends');
-
-var _extends5 = _interopRequireDefault(_extends4);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _miniStore = require('mini-store');
-
-var _reactLifecyclesCompat = require('react-lifecycles-compat');
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _TableCell = require('./TableCell');
-
-var _TableCell2 = _interopRequireDefault(_TableCell);
-
-var _utils = require('./utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _objectWithoutProperties from 'babel-runtime/helpers/objectWithoutProperties';
+import _defineProperty from 'babel-runtime/helpers/defineProperty';
+import _extends from 'babel-runtime/helpers/extends';
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
+import _inherits from 'babel-runtime/helpers/inherits';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
+import { polyfill } from 'react-lifecycles-compat';
+import classNames from 'classnames';
+import TableCell from './TableCell';
+import { warningOnce } from './utils';
 
 var TableRow = function (_React$Component) {
-  (0, _inherits3['default'])(TableRow, _React$Component);
+  _inherits(TableRow, _React$Component);
 
   function TableRow(props) {
-    (0, _classCallCheck3['default'])(this, TableRow);
+    _classCallCheck(this, TableRow);
 
-    var _this = (0, _possibleConstructorReturn3['default'])(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).call(this, props));
 
     _this.onRowClick = function (event) {
       var _this$props = _this.props,
@@ -135,7 +89,7 @@ var TableRow = function (_React$Component) {
     return _this;
   }
 
-  (0, _createClass3['default'])(TableRow, [{
+  _createClass(TableRow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (this.state.shouldRender) {
@@ -165,7 +119,7 @@ var TableRow = function (_React$Component) {
           expandedRowsHeight = _store$getState.expandedRowsHeight;
 
       var height = this.rowRef.getBoundingClientRect().height;
-      expandedRowsHeight = (0, _extends5['default'])({}, expandedRowsHeight, (0, _defineProperty3['default'])({}, rowKey, height));
+      expandedRowsHeight = _extends({}, expandedRowsHeight, _defineProperty({}, rowKey, height));
       store.setState({ expandedRowsHeight: expandedRowsHeight });
     }
   }, {
@@ -180,7 +134,7 @@ var TableRow = function (_React$Component) {
 
       var height = this.rowRef.getBoundingClientRect().height;
       store.setState({
-        fixedColumnsBodyRowsHeight: (0, _extends5['default'])({}, fixedColumnsBodyRowsHeight, (0, _defineProperty3['default'])({}, rowKey, height))
+        fixedColumnsBodyRowsHeight: _extends({}, fixedColumnsBodyRowsHeight, _defineProperty({}, rowKey, height))
       });
     }
   }, {
@@ -192,11 +146,11 @@ var TableRow = function (_React$Component) {
 
 
       if (height && height !== this.style.height) {
-        this.style = (0, _extends5['default'])({}, this.style, { height: height });
+        this.style = _extends({}, this.style, { height: height });
       }
 
       if (!visible && !this.style.display) {
-        this.style = (0, _extends5['default'])({}, this.style, { display: 'none' });
+        this.style = _extends({}, this.style, { display: 'none' });
       }
 
       return this.style;
@@ -204,7 +158,7 @@ var TableRow = function (_React$Component) {
   }, {
     key: 'saveRowRef',
     value: function saveRowRef() {
-      this.rowRef = _reactDom2['default'].findDOMNode(this);
+      this.rowRef = ReactDOM.findDOMNode(this);
 
       var _props4 = this.props,
           isAnyColumnsFixed = _props4.isAnyColumnsFixed,
@@ -268,9 +222,9 @@ var TableRow = function (_React$Component) {
       for (var i = 0; i < columns.length; i++) {
         var column = columns[i];
 
-        (0, _utils.warningOnce)(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
+        warningOnce(column.onCellClick === undefined, 'column[onCellClick] is deprecated, please use column[onCell] instead.');
 
-        cells.push(_react2['default'].createElement(_TableCell2['default'], {
+        cells.push(React.createElement(TableCell, {
           prefixCls: prefixCls,
           record: record,
           renderData: renderData,
@@ -287,7 +241,7 @@ var TableRow = function (_React$Component) {
       var _ref = onRow(record, index) || {},
           customClassName = _ref.className,
           customStyle = _ref.style,
-          rowProps = (0, _objectWithoutProperties3['default'])(_ref, ['className', 'style']);
+          rowProps = _objectWithoutProperties(_ref, ['className', 'style']);
 
       var style = { height: height };
 
@@ -295,13 +249,13 @@ var TableRow = function (_React$Component) {
         style.display = 'none';
       }
 
-      style = (0, _extends5['default'])({}, style, customStyle);
+      style = _extends({}, style, customStyle);
 
-      var rowClassName = (0, _classnames2['default'])(prefixCls, className, prefixCls + '-level-' + indent, customClassName);
+      var rowClassName = classNames(prefixCls, className, prefixCls + '-level-' + indent, customClassName);
 
-      return _react2['default'].createElement(
+      return React.createElement(
         BodyRow,
-        (0, _extends5['default'])({
+        _extends({
           onClick: this.onRowClick,
           onDoubleClick: this.onRowDoubleClick,
           onMouseEnter: this.onMouseEnter,
@@ -329,38 +283,39 @@ var TableRow = function (_React$Component) {
       };
     }
   }]);
+
   return TableRow;
-}(_react2['default'].Component);
+}(React.Component);
 
 TableRow.propTypes = {
-  onRow: _propTypes2['default'].func,
-  onRowClick: _propTypes2['default'].func,
-  onRowDoubleClick: _propTypes2['default'].func,
-  onRowContextMenu: _propTypes2['default'].func,
-  onRowMouseEnter: _propTypes2['default'].func,
-  onRowMouseLeave: _propTypes2['default'].func,
-  record: _propTypes2['default'].object,
-  renderData: _propTypes2['default'].array,
-  prefixCls: _propTypes2['default'].string,
-  onHover: _propTypes2['default'].func,
-  columns: _propTypes2['default'].array,
-  height: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].number]),
-  index: _propTypes2['default'].number,
-  rowKey: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].number]).isRequired,
-  className: _propTypes2['default'].string,
-  indent: _propTypes2['default'].number,
-  indentSize: _propTypes2['default'].number,
-  hasExpandIcon: _propTypes2['default'].func,
-  hovered: _propTypes2['default'].bool.isRequired,
-  visible: _propTypes2['default'].bool.isRequired,
-  store: _propTypes2['default'].object.isRequired,
-  fixed: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].bool]),
-  renderExpandIcon: _propTypes2['default'].func,
-  renderExpandIconCell: _propTypes2['default'].func,
-  components: _propTypes2['default'].any,
-  expandedRow: _propTypes2['default'].bool,
-  isAnyColumnsFixed: _propTypes2['default'].bool,
-  ancestorKeys: _propTypes2['default'].array.isRequired
+  onRow: PropTypes.func,
+  onRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
+  onRowContextMenu: PropTypes.func,
+  onRowMouseEnter: PropTypes.func,
+  onRowMouseLeave: PropTypes.func,
+  record: PropTypes.object,
+  renderData: PropTypes.array,
+  prefixCls: PropTypes.string,
+  onHover: PropTypes.func,
+  columns: PropTypes.array,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  index: PropTypes.number,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  className: PropTypes.string,
+  indent: PropTypes.number,
+  indentSize: PropTypes.number,
+  hasExpandIcon: PropTypes.func,
+  hovered: PropTypes.bool.isRequired,
+  visible: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  renderExpandIcon: PropTypes.func,
+  renderExpandIconCell: PropTypes.func,
+  components: PropTypes.any,
+  expandedRow: PropTypes.bool,
+  isAnyColumnsFixed: PropTypes.bool,
+  ancestorKeys: PropTypes.array.isRequired
 };
 TableRow.defaultProps = {
   onRow: function onRow() {},
@@ -393,9 +348,9 @@ function getRowHeight(state, props) {
   return null;
 }
 
-(0, _reactLifecyclesCompat.polyfill)(TableRow);
+polyfill(TableRow);
 
-exports['default'] = (0, _miniStore.connect)(function (state, props) {
+export default connect(function (state, props) {
   var currentHoverKey = state.currentHoverKey,
       expandedRowKeys = state.expandedRowKeys;
   var rowKey = props.rowKey,
@@ -411,4 +366,3 @@ exports['default'] = (0, _miniStore.connect)(function (state, props) {
     height: getRowHeight(state, props)
   };
 })(TableRow);
-module.exports = exports['default'];

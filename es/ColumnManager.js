@@ -1,40 +1,19 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _toConsumableArray from 'babel-runtime/helpers/toConsumableArray';
+import _extends from 'babel-runtime/helpers/extends';
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import React from 'react';
 
 var ColumnManager = function () {
   function ColumnManager(columns, elements) {
-    (0, _classCallCheck3['default'])(this, ColumnManager);
+    _classCallCheck(this, ColumnManager);
+
     this._cached = {};
 
     this.columns = columns || this.normalize(elements);
   }
 
-  (0, _createClass3['default'])(ColumnManager, [{
+  _createClass(ColumnManager, [{
     key: 'isAnyColumnsFixed',
     value: function isAnyColumnsFixed() {
       var _this = this;
@@ -141,7 +120,7 @@ var ColumnManager = function () {
             }
           };
           columns.forEach(function (column, index) {
-            var newColumn = (0, _extends3['default'])({}, column);
+            var newColumn = _extends({}, column);
             rows[currentRow].push(newColumn);
             parentColumn.colSpan = parentColumn.colSpan || 0;
             if (newColumn.children && newColumn.children.length > 0) {
@@ -171,11 +150,11 @@ var ColumnManager = function () {
       var _this10 = this;
 
       var columns = [];
-      _react2['default'].Children.forEach(elements, function (element) {
-        if (!_react2['default'].isValidElement(element)) {
+      React.Children.forEach(elements, function (element) {
+        if (!React.isValidElement(element)) {
           return;
         }
-        var column = (0, _extends3['default'])({}, element.props);
+        var column = _extends({}, element.props);
         if (element.key) {
           column.key = element.key;
         }
@@ -211,14 +190,14 @@ var ColumnManager = function () {
         if (!column.children) {
           leafColumns.push(column);
         } else {
-          leafColumns.push.apply(leafColumns, (0, _toConsumableArray3['default'])(_this11._leafColumns(column.children)));
+          leafColumns.push.apply(leafColumns, _toConsumableArray(_this11._leafColumns(column.children)));
         }
       });
       return leafColumns;
     }
   }]);
+
   return ColumnManager;
 }();
 
-exports['default'] = ColumnManager;
-module.exports = exports['default'];
+export default ColumnManager;

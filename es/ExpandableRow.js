@@ -1,56 +1,27 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _miniStore = require('mini-store');
-
-var _ExpandIcon = require('./ExpandIcon');
-
-var _ExpandIcon2 = _interopRequireDefault(_ExpandIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
+import _createClass from 'babel-runtime/helpers/createClass';
+import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
+import _inherits from 'babel-runtime/helpers/inherits';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
+import ExpandIcon from './ExpandIcon';
 
 var ExpandableRow = function (_React$Component) {
-  (0, _inherits3['default'])(ExpandableRow, _React$Component);
+  _inherits(ExpandableRow, _React$Component);
 
   function ExpandableRow() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    (0, _classCallCheck3['default'])(this, ExpandableRow);
+    _classCallCheck(this, ExpandableRow);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = ExpandableRow.__proto__ || Object.getPrototypeOf(ExpandableRow)).call.apply(_ref, [this].concat(args))), _this), _this.hasExpandIcon = function (columnIndex) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExpandableRow.__proto__ || Object.getPrototypeOf(ExpandableRow)).call.apply(_ref, [this].concat(args))), _this), _this.hasExpandIcon = function (columnIndex) {
       var expandRowByClick = _this.props.expandRowByClick;
 
       return !_this.expandIconAsCell && !expandRowByClick && columnIndex === _this.expandIconColumnIndex;
@@ -94,7 +65,7 @@ var ExpandableRow = function (_React$Component) {
         });
       }
 
-      return _react2['default'].createElement(_ExpandIcon2['default'], {
+      return React.createElement(ExpandIcon, {
         expandable: _this.expandable,
         prefixCls: prefixCls,
         onExpand: _this.handleExpandChange,
@@ -109,15 +80,15 @@ var ExpandableRow = function (_React$Component) {
       var prefixCls = _this.props.prefixCls;
 
 
-      cells.push(_react2['default'].createElement(
+      cells.push(React.createElement(
         'td',
         { className: prefixCls + '-expand-icon-cell', key: 'rc-table-expand-icon-cell' },
         _this.renderExpandIcon()
       ));
-    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  (0, _createClass3['default'])(ExpandableRow, [{
+  _createClass(ExpandableRow, [{
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.handleDestroy();
@@ -163,32 +134,34 @@ var ExpandableRow = function (_React$Component) {
       return this.props.children(expandableRowProps);
     }
   }]);
+
   return ExpandableRow;
-}(_react2['default'].Component);
+}(React.Component);
 
 ExpandableRow.propTypes = {
-  prefixCls: _propTypes2['default'].string.isRequired,
-  rowKey: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].number]).isRequired,
-  fixed: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].bool]),
-  record: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].array]).isRequired,
-  indentSize: _propTypes2['default'].number,
-  needIndentSpaced: _propTypes2['default'].bool.isRequired,
-  expandRowByClick: _propTypes2['default'].bool,
-  expanded: _propTypes2['default'].bool.isRequired,
-  expandIconAsCell: _propTypes2['default'].bool,
-  expandIconColumnIndex: _propTypes2['default'].number,
-  childrenColumnName: _propTypes2['default'].string,
-  expandedRowRender: _propTypes2['default'].func,
-  expandIcon: _propTypes2['default'].func,
-  onExpandedChange: _propTypes2['default'].func.isRequired,
-  onRowClick: _propTypes2['default'].func,
-  children: _propTypes2['default'].func.isRequired
+  prefixCls: PropTypes.string.isRequired,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  record: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  indentSize: PropTypes.number,
+  needIndentSpaced: PropTypes.bool.isRequired,
+  expandRowByClick: PropTypes.bool,
+  expanded: PropTypes.bool.isRequired,
+  expandIconAsCell: PropTypes.bool,
+  expandIconColumnIndex: PropTypes.number,
+  childrenColumnName: PropTypes.string,
+  expandedRowRender: PropTypes.func,
+  expandIcon: PropTypes.func,
+  onExpandedChange: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func,
+  children: PropTypes.func.isRequired
 };
-exports['default'] = (0, _miniStore.connect)(function (_ref2, _ref3) {
+
+
+export default connect(function (_ref2, _ref3) {
   var expandedRowKeys = _ref2.expandedRowKeys;
   var rowKey = _ref3.rowKey;
   return {
     expanded: !!~expandedRowKeys.indexOf(rowKey)
   };
 })(ExpandableRow);
-module.exports = exports['default'];
