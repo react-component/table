@@ -78,7 +78,7 @@
     "rc-util": "^4.0.4",
     "react-lifecycles-compat": "^3.0.2",
     "shallowequal": "^1.0.2",
-    "warning": "^3.0.0"
+    "warning": "^4.0.3"
   },
   "devDependencies": {
     "enzyme": "^3.1.0",
