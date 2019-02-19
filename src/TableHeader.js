@@ -37,7 +37,7 @@ function getHeaderRows(columns, currentRow = 0, rows) {
 export default function TableHeader(props, { table }) {
   const { components } = table;
   const { prefixCls, showHeader, onHeaderRow } = table.props;
-  const { expander, columns, fixed } = props;
+  const { expander, columns, fixed, headTable, useFixedHeader } = props;
 
   if (!showHeader) {
     return null;
@@ -62,6 +62,8 @@ export default function TableHeader(props, { table }) {
           row={row}
           components={components}
           onHeaderRow={onHeaderRow}
+          useFixedHeader={useFixedHeader}
+          headTable={headTable}
         />
       ))}
     </HeaderWrapper>
@@ -73,6 +75,8 @@ TableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
   expander: PropTypes.object.isRequired,
   onHeaderRow: PropTypes.func,
+  headTable: PropTypes.bool,
+  useFixedHeader: PropTypes.bool,
 };
 
 TableHeader.contextTypes = {

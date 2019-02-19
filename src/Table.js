@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
 import classes from 'component-classes';
 import { polyfill } from 'react-lifecycles-compat';
+import ResizeObserver from 'resize-observer-polyfill';
 import { debounce, warningOnce, getDataAndAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
@@ -99,11 +99,14 @@ class Table extends React.Component {
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
+      firstRowCellsWidth: {},
     });
 
     this.setScrollPosition('left');
 
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
+
+    this.observer = this.createObserver();
   }
 
   state = {};
@@ -114,6 +117,7 @@ class Table extends React.Component {
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
+        observer: this.observer,
         components: merge(
           {
             table: 'table',
@@ -184,6 +188,7 @@ class Table extends React.Component {
     if (this.debouncedWindowResize) {
       this.debouncedWindowResize.cancel();
     }
+    this.observer.disconnect();
   }
 
   getRowKey = (record, index) => {
@@ -231,50 +236,51 @@ class Table extends React.Component {
     }
   }
 
-  handleWindowResize = () => {
-    this.syncFixedTableRowHeight();
-    this.setScrollPositionClassName();
-  };
-
-  syncFixedTableRowHeight = () => {
-    const tableRect = this.tableNode.getBoundingClientRect();
-    // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
-    // see: https://github.com/ant-design/ant-design/issues/4836
-    if (tableRect.height !== undefined && tableRect.height <= 0) {
-      return;
-    }
-    const { prefixCls } = this.props;
-    const headRows = this.headTable
-      ? this.headTable.querySelectorAll('thead')
-      : this.bodyTable.querySelectorAll('thead');
-    const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
-    const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows,
-      row => row.getBoundingClientRect().height || 'auto',
-    );
-    const state = this.store.getState();
-    const fixedColumnsBodyRowsHeight = [].reduce.call(
-      bodyRows,
-      (acc, row) => {
-        const rowKey = row.getAttribute('data-row-key');
-        const height =
-          row.getBoundingClientRect().height || state.fixedColumnsBodyRowsHeight[rowKey] || 'auto';
-        acc[rowKey] = height;
-        return acc;
-      },
-      {},
-    );
-    if (
-      shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
-    ) {
-      return;
-    }
-
-    this.store.setState({
-      fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
+  createObserver() {
+    return new ResizeObserver(entries => {
+      const state = this.store.getState();
+      const fixedColumnsHeadRowsHeight = { ...state.fixedColumnsHeadRowsHeight };
+      const fixedColumnsBodyRowsHeight = { ...state.fixedColumnsBodyRowsHeight };
+      const firstRowCellsWidth = { ...state.firstRowCellsWidth };
+      for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        const { target } = entry;
+        const headerRowIndex = target.getAttribute('data-header-row-index');
+        const rowKey = target.getAttribute('data-row-key');
+        const columnKey = target.getAttribute('data-column-Key');
+        const { width, height } = target.getBoundingClientRect();
+        if (headerRowIndex !== null) {
+          // it's a header row
+          if (fixedColumnsHeadRowsHeight[headerRowIndex] !== height) {
+            fixedColumnsHeadRowsHeight[headerRowIndex] = height;
+          }
+        }
+        if (rowKey !== null) {
+          // it's a body row
+          if (fixedColumnsBodyRowsHeight[rowKey] !== height) {
+            fixedColumnsBodyRowsHeight[rowKey] = height;
+          }
+        }
+        if (columnKey !== null) {
+          // it's a header cell
+          if (
+            firstRowCellsWidth[columnKey] === undefined ||
+            width !== firstRowCellsWidth[columnKey]
+          ) {
+            firstRowCellsWidth[columnKey] = width;
+          }
+        }
+      }
+      this.store.setState({
+        fixedColumnsHeadRowsHeight,
+        fixedColumnsBodyRowsHeight,
+        firstRowCellsWidth,
+      });
     });
+  }
+
+  handleWindowResize = () => {
+    this.setScrollPositionClassName();
   };
 
   resetScrollX() {

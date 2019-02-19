@@ -33,9 +33,12 @@ class TableRow extends React.Component {
     renderExpandIcon: PropTypes.func,
     renderExpandIconCell: PropTypes.func,
     components: PropTypes.any,
-    expandedRow: PropTypes.bool,
     isAnyColumnsFixed: PropTypes.bool,
     ancestorKeys: PropTypes.array.isRequired,
+  };
+
+  static contextTypes = {
+    table: PropTypes.any,
   };
 
   static defaultProps = {
@@ -82,6 +85,14 @@ class TableRow extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { fixed } = this.props;
+    if (!fixed) {
+      const { observer } = this.context.table;
+      observer.unobserve(this.rowRef);
+    }
+  }
+
   onRowClick = event => {
     const { record, index, onRowClick } = this.props;
     if (onRowClick) {
@@ -119,29 +130,6 @@ class TableRow extends React.Component {
     }
   };
 
-  setExpanedRowHeight() {
-    const { store, rowKey } = this.props;
-    let { expandedRowsHeight } = store.getState();
-    const height = this.rowRef.getBoundingClientRect().height;
-    expandedRowsHeight = {
-      ...expandedRowsHeight,
-      [rowKey]: height,
-    };
-    store.setState({ expandedRowsHeight });
-  }
-
-  setRowHeight() {
-    const { store, rowKey } = this.props;
-    const { fixedColumnsBodyRowsHeight } = store.getState();
-    const height = this.rowRef.getBoundingClientRect().height;
-    store.setState({
-      fixedColumnsBodyRowsHeight: {
-        ...fixedColumnsBodyRowsHeight,
-        [rowKey]: height,
-      },
-    });
-  }
-
   getStyle() {
     const { height, visible } = this.props;
 
@@ -159,18 +147,15 @@ class TableRow extends React.Component {
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
 
-    const { isAnyColumnsFixed, fixed, expandedRow, ancestorKeys } = this.props;
+    const { isAnyColumnsFixed, fixed } = this.props;
 
     if (!isAnyColumnsFixed) {
       return;
     }
 
-    if (!fixed && expandedRow) {
-      this.setExpanedRowHeight();
-    }
-
-    if (!fixed && ancestorKeys.length >= 0) {
-      this.setRowHeight();
+    if (!fixed) {
+      const { observer } = this.context.table;
+      observer.observe(this.rowRef);
     }
   }
 
@@ -225,6 +210,7 @@ class TableRow extends React.Component {
           indentSize={indentSize}
           indent={indent}
           index={index}
+          rowKey={rowKey}
           column={column}
           key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
