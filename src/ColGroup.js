@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'mini-store';
 
-export default function ColGroup(props, { table }) {
+function ColGroup(props, { table }) {
   const { prefixCls, expandIconAsCell } = table.props;
-  const { fixed } = props;
+  const { fixed, headTable, firstRowCellsWidth } = props;
+
+  console.log(headTable);
+
+  console.log(firstRowCellsWidth);
 
   let cols = [];
 
@@ -20,9 +25,12 @@ export default function ColGroup(props, { table }) {
   } else {
     leafColumns = table.columnManager.leafColumns();
   }
+
   cols = cols.concat(
     leafColumns.map(c => {
-      return <col key={c.key || c.dataIndex} style={{ width: c.width, minWidth: c.width }} />;
+      const columnKey = c.key || c.dataIndex;
+      const width = headTable || fixed ? firstRowCellsWidth[columnKey] || c.width : c.width;
+      return <col key={columnKey} style={{ width, minWidth: width }} />;
     }),
   );
 
@@ -31,8 +39,14 @@ export default function ColGroup(props, { table }) {
 
 ColGroup.propTypes = {
   fixed: PropTypes.string,
+  firstRowCellsWidth: PropTypes.object,
+  headTable: PropTypes.bool,
 };
 
 ColGroup.contextTypes = {
   table: PropTypes.any,
 };
+
+export default connect(state => ({
+  firstRowCellsWidth: state.firstRowCellsWidth,
+}))(ColGroup);

@@ -20,7 +20,28 @@ export default class TableCell extends React.Component {
     column: PropTypes.object,
     expandIcon: PropTypes.node,
     component: PropTypes.any,
+    firstColumn: PropTypes.bool,
   };
+
+  static contextTypes = {
+    table: PropTypes.any,
+  };
+
+  componentDidMount() {
+    const { firstColumn } = this.props;
+    if (firstColumn) {
+      const { observer } = this.context.table;
+      observer.observe(this.cellRef);
+    }
+  }
+
+  componentWillUnmount() {
+    const { firstColumn } = this.props;
+    if (firstColumn) {
+      const { observer } = this.context.table;
+      observer.unobserve(this.cellRef);
+    }
+  }
 
   handleClick = e => {
     const {
@@ -41,6 +62,7 @@ export default class TableCell extends React.Component {
       index,
       expandIcon,
       column,
+      rowKey,
       component: BodyCell,
     } = this.props;
     const { dataIndex, render, className = '' } = column;
@@ -94,7 +116,13 @@ export default class TableCell extends React.Component {
     }
 
     return (
-      <BodyCell className={className} onClick={this.handleClick} {...tdProps}>
+      <BodyCell
+        ref={node => (this.cellRef = node)}
+        className={className}
+        onClick={this.handleClick}
+        data-row-key={rowKey}
+        {...tdProps}
+      >
         {indentText}
         {expandIcon}
         {text}

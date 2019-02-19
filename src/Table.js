@@ -99,11 +99,14 @@ class Table extends React.Component {
       currentHoverKey: null,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: {},
+      firstRowCellsWidth: {},
     });
 
     this.setScrollPosition('left');
 
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
+
+    this.observer = this.createObserver();
   }
 
   state = {};
@@ -114,6 +117,7 @@ class Table extends React.Component {
         props: this.props,
         columnManager: this.columnManager,
         saveRef: this.saveRef,
+        observer: this.observer,
         components: merge(
           {
             table: 'table',
@@ -184,6 +188,50 @@ class Table extends React.Component {
     if (this.debouncedWindowResize) {
       this.debouncedWindowResize.cancel();
     }
+    this.observer.disconnect();
+  }
+
+  createObserver() {
+    return new window.ResizeObserver(entries => {
+      const state = this.store.getState();
+      const fixedColumnsHeadRowsHeight = { ...state.fixedColumnsHeadRowsHeight };
+      const fixedColumnsBodyRowsHeight = { ...state.fixedColumnsBodyRowsHeight };
+      const firstRowCellsWidth = { ...state.firstRowCellsWidth };
+      for (let entry of entries) {
+        const { target } = entry;
+        const headerRowIndex = target.getAttribute('data-header-row-index');
+        const rowKey = target.getAttribute('data-row-key');
+        const columnKey = target.getAttribute('data-column-Key');
+        const { width, height } = target.getBoundingClientRect();
+        if (headerRowIndex !== null) {
+          // it's header row
+          if (fixedColumnsHeadRowsHeight[headerRowIndex] !== height) {
+            fixedColumnsHeadRowsHeight[headerRowIndex] = height;
+          }
+        }
+        if (rowKey !== null) {
+          // it's first column cell
+          if (fixedColumnsBodyRowsHeight[rowKey] !== height) {
+            fixedColumnsBodyRowsHeight[rowKey] = height;
+          }
+        }
+        if (columnKey !== null) {
+          // it's header cell
+          console.log(columnKey, width);
+          if (
+            firstRowCellsWidth[columnKey] === undefined ||
+            width > firstRowCellsWidth[columnKey]
+          ) {
+            firstRowCellsWidth[columnKey] = width;
+          }
+        }
+      }
+      this.store.setState({
+        fixedColumnsHeadRowsHeight,
+        fixedColumnsBodyRowsHeight,
+        firstRowCellsWidth,
+      });
+    });
   }
 
   getRowKey = (record, index) => {
@@ -237,6 +285,7 @@ class Table extends React.Component {
   };
 
   syncFixedTableRowHeight = () => {
+    return;
     const tableRect = this.tableNode.getBoundingClientRect();
     // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
     // see: https://github.com/ant-design/ant-design/issues/4836

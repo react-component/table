@@ -225,6 +225,9 @@ class TableRow extends React.Component {
           indentSize={indentSize}
           indent={indent}
           index={index}
+          firstRow={index === 0}
+          firstColumn={i === 0}
+          rowKey={rowKey}
           column={column}
           key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
