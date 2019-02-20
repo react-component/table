@@ -150,7 +150,6 @@ class Table extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.headTable);
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
