@@ -386,14 +386,7 @@ class Table extends React.Component {
       this.renderFooter(),
     ];
 
-    return scrollable ? (
-      <div style={{ width: 780 }}>
-        {' '}
-        <div className={`${prefixCls}-scroll`}>{table}</div>{' '}
-      </div>
-    ) : (
-      table
-    );
+    return scrollable ? <div className={`${prefixCls}-scroll`}>{table}</div> : table;
   }
 
   renderLeftFixedTable() {
