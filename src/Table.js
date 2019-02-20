@@ -150,6 +150,7 @@ class Table extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.headTable);
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
@@ -385,7 +386,14 @@ class Table extends React.Component {
       this.renderFooter(),
     ];
 
-    return scrollable ? <div className={`${prefixCls}-scroll`}>{table}</div> : table;
+    return scrollable ? (
+      <div style={{ width: 780 }}>
+        {' '}
+        <div className={`${prefixCls}-scroll`}>{table}</div>{' '}
+      </div>
+    ) : (
+      table
+    );
   }
 
   renderLeftFixedTable() {
@@ -420,14 +428,20 @@ class Table extends React.Component {
     const tableClassName = scroll.x || fixed ? `${prefixCls}-fixed` : '';
 
     const headTable = (
-      <HeadTable
-        key="head"
-        columns={columns}
-        fixed={fixed}
-        tableClassName={tableClassName}
-        handleBodyScrollLeft={this.handleBodyScrollLeft}
-        expander={this.expander}
-      />
+      <div
+        style={{
+          overflow: 'hidden',
+        }}
+      >
+        <HeadTable
+          key="head"
+          columns={columns}
+          fixed={fixed}
+          tableClassName={tableClassName}
+          handleBodyScrollLeft={this.handleBodyScrollLeft}
+          expander={this.expander}
+        />
+      </div>
     );
 
     const bodyTable = (

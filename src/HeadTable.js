@@ -17,6 +17,7 @@ export default function HeadTable(props, { table }) {
     if (scrollbarWidth > 0 && !fixed) {
       headStyle.marginBottom = `-${scrollbarWidth}px`;
       headStyle.paddingBottom = '0px';
+      headStyle.width = '797px';
     }
   }
 
