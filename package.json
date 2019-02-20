@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "6.2.1",
+  "version": "6.4.3",
   "description": "table ui component for react",
   "keywords": [
     "react",
@@ -51,6 +51,7 @@
     "lint": "rc-tools run lint",
     "test": "jest",
     "coverage": "jest --coverage",
+    "pre-commit": "rc-tools run pre-commit",
     "lint-staged": "lint-staged"
   },
   "jest": {
@@ -69,9 +70,10 @@
   },
   "dependencies": {
     "babel-runtime": "6.x",
+    "classnames": "^2.2.5",
     "component-classes": "^1.2.6",
     "lodash": "^4.17.5",
-    "mini-store": "^1.0.2",
+    "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
     "react-lifecycles-compat": "^3.0.2",
@@ -90,7 +92,7 @@
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~2.0.1",
     "rc-menu": "^5.0.11",
-    "rc-tools": "8.x",
+    "rc-tools": "^8.4.1",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
@@ -101,13 +103,12 @@
     "styled-components": "^2.2.1"
   },
   "lint-staged": {
-    "**/*.js": [
-      "npx prettier --write",
+    "*.{js,jsx,tsx}": [
+      "npm run pre-commit",
       "git add"
     ]
   },
   "pre-commit": [
-    "lint-staged",
-    "lint"
+    "lint-staged"
   ]
 }

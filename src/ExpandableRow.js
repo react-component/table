@@ -8,7 +8,7 @@ class ExpandableRow extends React.Component {
     prefixCls: PropTypes.string.isRequired,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    record: PropTypes.object.isRequired,
+    record: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     indentSize: PropTypes.number,
     needIndentSpaced: PropTypes.bool.isRequired,
     expandRowByClick: PropTypes.bool,
@@ -17,6 +17,7 @@ class ExpandableRow extends React.Component {
     expandIconColumnIndex: PropTypes.number,
     childrenColumnName: PropTypes.string,
     expandedRowRender: PropTypes.func,
+    expandIcon: PropTypes.func,
     onExpandedChange: PropTypes.func.isRequired,
     onRowClick: PropTypes.func,
     children: PropTypes.func.isRequired,
@@ -58,7 +59,18 @@ class ExpandableRow extends React.Component {
   };
 
   renderExpandIcon = () => {
-    const { prefixCls, expanded, record, needIndentSpaced } = this.props;
+    const { prefixCls, expanded, record, needIndentSpaced, expandIcon } = this.props;
+
+    if (expandIcon) {
+      return expandIcon({
+        prefixCls,
+        expanded,
+        record,
+        needIndentSpaced,
+        expandable: this.expandable,
+        onExpand: this.handleExpandChange,
+      });
+    }
 
     return (
       <ExpandIcon
@@ -86,7 +98,14 @@ class ExpandableRow extends React.Component {
   };
 
   render() {
-    const { childrenColumnName, expandedRowRender, indentSize, record, fixed } = this.props;
+    const {
+      childrenColumnName,
+      expandedRowRender,
+      indentSize,
+      record,
+      fixed,
+      expanded,
+    } = this.props;
 
     this.expandIconAsCell = fixed !== 'right' ? this.props.expandIconAsCell : false;
     this.expandIconColumnIndex = fixed !== 'right' ? this.props.expandIconColumnIndex : -1;
@@ -95,6 +114,7 @@ class ExpandableRow extends React.Component {
 
     const expandableRowProps = {
       indentSize,
+      expanded, // not used in TableRow, but it's required to re-render TableRow when `expanded` changes
       onRowClick: this.handleRowClick,
       hasExpandIcon: this.hasExpandIcon,
       renderExpandIcon: this.renderExpandIcon,

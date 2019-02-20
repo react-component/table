@@ -45,6 +45,11 @@ ReactDOM.render(
       expandIconAsCell
       scroll={{ x: 1200 }}
       data={data}
+      onRow={(record, index) => {
+        return {
+          className: `customize-class-${index}`,
+        };
+      }}
     />
   </div>,
   document.getElementById('__react-content'),

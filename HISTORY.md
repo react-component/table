@@ -1,7 +1,21 @@
 # History
 ----
 
-## 6.2.0 / 2019-05-09
+## 6.4.0 / 2018-10-15
+
+- Render data- and aria- props [#227](https://github.com/react-component/table/pull/227)
+- onCell add row index [#222](https://github.com/react-component/table/pull/222)
+- Add expandIcon [#236](https://github.com/react-component/table/pull/236)
+
+## 6.3.1 / 2018-08-02
+
+- Revert [112346](https://github.com/react-component/table/commit/112346ca75e8057771cf70fc8fde4bf5f63ce2e8) since too many edge cases.
+
+## 6.3.0 / 2018-08-02
+
+- Fixed header will read cell width from body.
+
+## 6.2.0 / 2018-05-09
 
 - Add `expanded` as the fourth parameter to `expandedRowRender`.
 

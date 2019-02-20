@@ -29,9 +29,9 @@ const columns = [
     key: 'age',
     width: 100,
     render: text => <span>{text} (Trigger Cell Click)</span>,
-    onCell: record => ({
+    onCell: (record, index) => ({
       onClick(e) {
-        console.log('Click cell', record, e.target);
+        console.log('Click cell', ` row ${index}`, record, e.target);
       },
     }),
   },

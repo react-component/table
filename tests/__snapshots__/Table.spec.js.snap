@@ -27,7 +27,7 @@ exports[`Table align column 1`] = `
               Name
             </th>
             <th
-              class=""
+              class="rc-table-align-center"
               style="text-align:center"
             >
               Age
@@ -38,7 +38,8 @@ exports[`Table align column 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -55,7 +56,8 @@ exports[`Table align column 1`] = `
             />
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -105,7 +107,7 @@ exports[`Table align column should not override cell style 1`] = `
               Name
             </th>
             <th
-              class=""
+              class="rc-table-align-center"
               style="color:red;text-align:center"
             >
               Age
@@ -116,7 +118,8 @@ exports[`Table align column should not override cell style 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -133,7 +136,8 @@ exports[`Table align column should not override cell style 1`] = `
             />
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -193,7 +197,8 @@ exports[`Table custom components renders correctly 1`] = `
           name="my-body-wrapper"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
             name="my-body-row"
           >
             <td
@@ -208,7 +213,8 @@ exports[`Table custom components renders correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
             name="my-body-row"
           >
             <td
@@ -258,7 +264,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-header-row"
             >
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-header-cell"
               >
                 Name
@@ -270,7 +276,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 Age
               </th>
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-header-cell"
               >
                 Gender
@@ -297,11 +303,12 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             name="my-body-wrapper"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="0"
               name="my-body-row"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-body-cell"
               >
                 <span
@@ -317,7 +324,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 27
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
                 name="my-body-cell"
               >
                 F
@@ -376,7 +383,8 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-body-wrapper"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="0"
                 name="my-body-row"
               >
                 <td
@@ -444,7 +452,8 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-body-wrapper"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="0"
                 name="my-body-row"
               >
                 <td
@@ -500,7 +509,8 @@ exports[`Table dataIndex render text by path 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -518,7 +528,8 @@ exports[`Table dataIndex render text by path 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -533,6 +544,72 @@ exports[`Table dataIndex render text by path 1`] = `
               class=""
             >
               Garner
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table renders aria- attributes 1`] = `
+<div
+  aria-label="names-table-aria"
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
             </td>
           </tr>
         </tbody>
@@ -575,7 +652,8 @@ exports[`Table renders colSpan correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -589,7 +667,8 @@ exports[`Table renders colSpan correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -646,7 +725,8 @@ exports[`Table renders column correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class="name-class"
@@ -659,7 +739,8 @@ exports[`Table renders column correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class="name-class"
@@ -743,7 +824,8 @@ exports[`Table renders correctly 1`] = `
           class="test-prefix-tbody"
         >
           <tr
-            class="test-prefix-row  test-prefix-row-level-0"
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -756,7 +838,8 @@ exports[`Table renders correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="test-prefix-row  test-prefix-row-level-0"
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -807,6 +890,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
         >
           <tr
             class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -820,6 +904,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
           </tr>
           <tr
             class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -870,6 +955,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
         >
           <tr
             class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -883,6 +969,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
           </tr>
           <tr
             class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -932,7 +1019,8 @@ exports[`Table renders custom cell correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -947,7 +1035,8 @@ exports[`Table renders custom cell correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -959,6 +1048,72 @@ exports[`Table renders custom cell correctly 1`] = `
               <p>
                 Jack
               </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table renders data- attributes 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+  data-test="names-table"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
             </td>
           </tr>
         </tbody>
@@ -1092,7 +1247,8 @@ exports[`Table renders fixed header correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1105,7 +1261,8 @@ exports[`Table renders fixed header correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1155,7 +1312,8 @@ exports[`Table renders footer correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1168,7 +1326,8 @@ exports[`Table renders footer correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1209,7 +1368,8 @@ exports[`Table renders onHeaderRow correctly 1`] = `
 exports[`Table renders onRow correctly 1`] = `
 Array [
   <tr
-    class="rc-table-row  rc-table-row-level-0"
+    class="rc-table-row rc-table-row-level-0"
+    data-row-key="key0"
     id="row-key0"
     index="0"
   >
@@ -1224,7 +1384,8 @@ Array [
     </td>
   </tr>,
   <tr
-    class="rc-table-row  rc-table-row-level-0"
+    class="rc-table-row rc-table-row-level-0"
+    data-row-key="key1"
     id="row-key1"
     index="1"
   >
@@ -1278,7 +1439,8 @@ exports[`Table renders rowSpan correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1297,7 +1459,8 @@ exports[`Table renders rowSpan correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1347,7 +1510,8 @@ exports[`Table renders table body to the wrapper 1`] = `
           class="custom-wapper"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1360,7 +1524,8 @@ exports[`Table renders table body to the wrapper 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1417,7 +1582,8 @@ exports[`Table renders title correctly 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1430,7 +1596,8 @@ exports[`Table renders title correctly 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1469,7 +1636,8 @@ exports[`Table renders without header 1`] = `
           class="rc-table-tbody"
         >
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
             <td
               class=""
@@ -1482,7 +1650,8 @@ exports[`Table renders without header 1`] = `
             </td>
           </tr>
           <tr
-            class="rc-table-row  rc-table-row-level-0"
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
             <td
               class=""
@@ -1537,7 +1706,8 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
             class="rc-table-tbody"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key0"
             >
               <td
                 class=""
@@ -1550,7 +1720,8 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key1"
             >
               <td
                 class=""
@@ -1606,7 +1777,8 @@ exports[`Table scroll renders scroll.x is true 1`] = `
             class="rc-table-tbody"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key0"
             >
               <td
                 class=""
@@ -1619,7 +1791,8 @@ exports[`Table scroll renders scroll.x is true 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key1"
             >
               <td
                 class=""
@@ -1685,7 +1858,8 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
             class="rc-table-tbody"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key0"
             >
               <td
                 class=""
@@ -1698,7 +1872,8 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="key1"
             >
               <td
                 class=""

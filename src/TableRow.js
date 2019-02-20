@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
+import classNames from 'classnames';
 import TableCell from './TableCell';
 import { warningOnce } from './utils';
 
@@ -45,6 +46,14 @@ class TableRow extends React.Component {
     renderExpandIconCell() {},
   };
 
+  constructor(props) {
+    super(props);
+
+    this.shouldRender = props.visible;
+
+    this.state = {};
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.visible || (!prevState.visible && nextProps.visible)) {
       return {
@@ -55,14 +64,6 @@ class TableRow extends React.Component {
     return {
       visible: nextProps.visible,
     };
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.shouldRender = props.visible;
-
-    this.state = {};
   }
 
   componentDidMount() {
@@ -130,11 +131,15 @@ class TableRow extends React.Component {
   }
 
   setRowHeight() {
-    const { store, index } = this.props;
-    const fixedColumnsBodyRowsHeight = store.getState().fixedColumnsBodyRowsHeight.slice();
+    const { store, rowKey } = this.props;
+    const { fixedColumnsBodyRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
-    fixedColumnsBodyRowsHeight[index] = height;
-    store.setState({ fixedColumnsBodyRowsHeight });
+    store.setState({
+      fixedColumnsBodyRowsHeight: {
+        ...fixedColumnsBodyRowsHeight,
+        [rowKey]: height,
+      },
+    });
   }
 
   getStyle() {
@@ -178,6 +183,7 @@ class TableRow extends React.Component {
       prefixCls,
       columns,
       record,
+      rowKey,
       index,
       onRow,
       indent,
@@ -227,10 +233,8 @@ class TableRow extends React.Component {
       );
     }
 
-    const rowClassName = `${prefixCls} ${className} ${prefixCls}-level-${indent}`.trim();
-
-    const rowProps = onRow(record, index);
-    const customStyle = rowProps ? rowProps.style : {};
+    const { className: customClassName, style: customStyle, ...rowProps } =
+      onRow(record, index) || {};
     let style = { height };
 
     if (!visible) {
@@ -239,6 +243,13 @@ class TableRow extends React.Component {
 
     style = { ...style, ...customStyle };
 
+    const rowClassName = classNames(
+      prefixCls,
+      className,
+      `${prefixCls}-level-${indent}`,
+      customClassName,
+    );
+
     return (
       <BodyRow
         onClick={this.onRowClick}
@@ -246,9 +257,10 @@ class TableRow extends React.Component {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        className={rowClassName}
         {...rowProps}
+        className={rowClassName}
         style={style}
+        data-row-key={rowKey}
       >
         {cells}
       </BodyRow>
@@ -258,7 +270,7 @@ class TableRow extends React.Component {
 
 function getRowHeight(state, props) {
   const { expandedRowsHeight, fixedColumnsBodyRowsHeight } = state;
-  const { fixed, index, rowKey } = props;
+  const { fixed, rowKey } = props;
 
   if (!fixed) {
     return null;
@@ -268,8 +280,8 @@ function getRowHeight(state, props) {
     return expandedRowsHeight[rowKey];
   }
 
-  if (fixedColumnsBodyRowsHeight[index]) {
-    return fixedColumnsBodyRowsHeight[index];
+  if (fixedColumnsBodyRowsHeight[rowKey]) {
+    return fixedColumnsBodyRowsHeight[rowKey];
   }
 
   return null;

@@ -43,12 +43,12 @@ exports[`Table.fixedColumns renders correctly 1`] = `
           >
             <tr>
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 title1
               </th>
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 title2
               </th>
@@ -98,7 +98,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 title11
               </th>
               <th
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 title12
               </th>
@@ -108,10 +108,11 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             class="rc-table-tbody"
           >
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="1"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -120,7 +121,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 123
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 xxxxxxxx
               </td>
@@ -168,16 +169,17 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 xxxxxxxx
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 xxxxxxxx
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="2"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -186,7 +188,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 cdd
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 edd12221
               </td>
@@ -234,16 +236,17 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 edd12221
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 edd12221
               </td>
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="3"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -252,7 +255,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -284,14 +287,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="4"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -300,7 +304,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -332,14 +336,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="5"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -348,7 +353,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -380,14 +385,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="6"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -396,7 +402,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -428,14 +434,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="7"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -444,7 +451,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -476,14 +483,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="8"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -492,7 +500,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -524,14 +532,15 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
             <tr
-              class="rc-table-row  rc-table-row-level-0"
+              class="rc-table-row rc-table-row-level-0"
+              data-row-key="9"
             >
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               >
                 <span
                   class="rc-table-row-indent indent-level-0"
@@ -540,7 +549,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 133
               </td>
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
               <td
                 class=""
@@ -572,7 +581,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 class=""
               />
               <td
-                class=""
+                class="rc-table-fixed-columns-in-body"
               />
             </tr>
           </tbody>
@@ -620,7 +629,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               class="rc-table-tbody"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="1"
               >
                 <td
                   class=""
@@ -638,7 +648,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="2"
               >
                 <td
                   class=""
@@ -656,7 +667,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="3"
               >
                 <td
                   class=""
@@ -672,7 +684,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="4"
               >
                 <td
                   class=""
@@ -688,7 +701,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="5"
               >
                 <td
                   class=""
@@ -704,7 +718,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="6"
               >
                 <td
                   class=""
@@ -720,7 +735,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="7"
               >
                 <td
                   class=""
@@ -736,7 +752,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="8"
               >
                 <td
                   class=""
@@ -752,7 +769,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="9"
               >
                 <td
                   class=""
@@ -805,7 +823,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
               class="rc-table-tbody"
             >
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="1"
               >
                 <td
                   class=""
@@ -814,7 +833,8 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="2"
               >
                 <td
                   class=""
@@ -823,49 +843,56 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 </td>
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="3"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="4"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="5"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="6"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="7"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="8"
               >
                 <td
                   class=""
                 />
               </tr>
               <tr
-                class="rc-table-row  rc-table-row-level-0"
+                class="rc-table-row rc-table-row-level-0"
+                data-row-key="9"
               >
                 <td
                   class=""

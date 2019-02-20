@@ -70,7 +70,7 @@ export default class TableCell extends React.Component {
     }
 
     if (column.onCell) {
-      tdProps = { ...tdProps, ...column.onCell(record) };
+      tdProps = { ...tdProps, ...column.onCell(record, index) };
     }
 
     // Fix https://github.com/ant-design/ant-design/issues/1202
