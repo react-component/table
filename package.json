@@ -86,7 +86,7 @@
     "enzyme-to-json": "^3.1.2",
     "immutability-helper": "^2.4.0",
     "jest": "^21.2.1",
-    "lint-staged": "^7.0.2",
+    "lint-staged": "^8.1.5",
     "pre-commit": "1.x",
     "prettier": "^1.11.1",
     "rc-animate": "^2.3.0",
