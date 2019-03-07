@@ -148,7 +148,10 @@ class BaseTable extends React.Component {
         tableStyle.width = scroll.x;
       }
     } else {
-      tableStyle.width = getFixedColumnsWidth(columns);
+      const width = getFixedColumnsWidth(columns);
+      if (!isNaN(width)) {
+        tableStyle.width = width;
+      }
     }
 
     const Table = hasBody ? components.table : 'table';

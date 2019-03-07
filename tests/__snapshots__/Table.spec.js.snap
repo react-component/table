@@ -547,6 +547,7 @@ exports[`Table renders column correctly 1`] = `
     >
       <table
         class=""
+        style="width:100px"
       >
         <colgroup>
           <col
