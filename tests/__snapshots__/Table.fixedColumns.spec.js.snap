@@ -591,6 +591,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
         >
           <table
             class="rc-table-fixed"
+            style="width:200px"
           >
             <colgroup>
               <col
@@ -784,6 +785,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
         >
           <table
             class="rc-table-fixed"
+            style="width:100px"
           >
             <colgroup>
               <col
