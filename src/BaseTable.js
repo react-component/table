@@ -6,6 +6,11 @@ import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 
+const getFixedColumnsWidth = (columns) => {
+  const w = columns && columns.reduce((prev, { width }) => prev + width, 0) || 'auto';
+  return w;
+};
+
 class BaseTable extends React.Component {
   static propTypes = {
     fixed: PropTypes.oneOfType([
@@ -142,6 +147,8 @@ class BaseTable extends React.Component {
       } else {
         tableStyle.width = scroll.x;
       }
+    } else {
+      tableStyle.width = getFixedColumnsWidth(columns);
     }
 
     const Table = hasBody ? components.table : 'table';
