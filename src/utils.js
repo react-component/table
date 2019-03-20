@@ -31,6 +31,7 @@ export function measureScrollbar(direction = 'vertical') {
   } else {
     scrollDiv.style.overflowX = 'scroll';
   }
+  scrollDiv.className = 'scroll-div-append-to-body';
   document.body.appendChild(scrollDiv);
   let size = 0;
   if (isVertical) {
