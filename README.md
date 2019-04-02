@@ -298,6 +298,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>className of this column</td>
     </tr>
     <tr>
+      <td>colClassName</td>
+      <td>String</td>
+      <td></td>
+      <td>className of this column colgroup col</td>
+    </tr>
+    <tr>
       <td>colSpan</td>
       <td>Number</td>
       <td></td>
