@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px) {
+  .hidden-xs {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .hidden-sm {
+    display: none;
+  }
+}
