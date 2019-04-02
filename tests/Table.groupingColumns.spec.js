@@ -155,4 +155,38 @@ describe('Table with grouping columns', () => {
     const titleB = wrapper.find('.title-b');
     expect(titleB.prop('rowSpan')).toBe(2);
   });
+
+  it('col class name', () => {
+    const columns = [
+      { title: '表头A', className: 'title-a', dataIndex: 'a', key: 'a' },
+      {
+        title: '表头B',
+        className: 'title-a',
+        colClassName: 'col-title-b',
+        dataIndex: 'b',
+        key: 'b',
+      },
+      {
+        title: '表头C',
+        className: 'title-a',
+        colClassName: 'col-title-c',
+        dataIndex: 'c',
+        key: 'c',
+      },
+    ];
+
+    const data = [
+      { key: '1', a: 'a1', b: 'b1', c: 'c1' },
+      { key: '2', a: 'a2', b: 'b2', c: 'c2' },
+      { key: '3', a: 'a3', b: 'b3', c: 'c3' },
+    ];
+
+    const wrapper = mount(<Table columns={columns} data={data} />);
+
+    const colB = wrapper.find('.col-title-b');
+    const colC = wrapper.find('.col-title-c');
+
+    expect(colB.prop('className')).toEqual('col-title-b');
+    expect(colC.prop('className')).toEqual('col-title-c');
+  });
 });
