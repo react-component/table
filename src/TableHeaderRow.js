@@ -35,6 +35,7 @@ TableHeaderRow.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   components: PropTypes.any,
   onHeaderRow: PropTypes.func,
+  prefixCls: PropTypes.string,
 };
 
 function getRowHeight(state, props) {
