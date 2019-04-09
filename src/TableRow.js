@@ -86,15 +86,18 @@ class TableRow extends React.Component {
     const { record, index } = this.props;
 
     return (...args) => {
+      // Additional function like trigger `this.onHover` to handle self logic
       if (additionalFunc) {
         additionalFunc();
       }
 
+      // [Legacy] Some legacy function like `onRowClick`.
       const [event] = args;
       if (legacyFunc) {
         legacyFunc(record, index, event);
       }
 
+      // Pass to the function from `onRow`
       if (rowPropFunc) {
         rowPropFunc(...args);
       }
