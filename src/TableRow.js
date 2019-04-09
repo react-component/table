@@ -82,41 +82,35 @@ class TableRow extends React.Component {
     }
   }
 
-  onRowClick = event => {
-    const { record, index, onRowClick } = this.props;
-    if (onRowClick) {
-      onRowClick(record, index, event);
-    }
+  onTriggerEvent = (rowPropFunc, legacyFunc, additionalFunc) => {
+    const { record, index } = this.props;
+
+    return (...args) => {
+      // Additional function like trigger `this.onHover` to handle self logic
+      if (additionalFunc) {
+        additionalFunc();
+      }
+
+      // [Legacy] Some legacy function like `onRowClick`.
+      const [event] = args;
+      if (legacyFunc) {
+        legacyFunc(record, index, event);
+      }
+
+      // Pass to the function from `onRow`
+      if (rowPropFunc) {
+        rowPropFunc(...args);
+      }
+    };
   };
 
-  onRowDoubleClick = event => {
-    const { record, index, onRowDoubleClick } = this.props;
-    if (onRowDoubleClick) {
-      onRowDoubleClick(record, index, event);
-    }
-  };
-
-  onContextMenu = event => {
-    const { record, index, onRowContextMenu } = this.props;
-    if (onRowContextMenu) {
-      onRowContextMenu(record, index, event);
-    }
-  };
-
-  onMouseEnter = event => {
-    const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
+  onMouseEnter = () => {
+    const { onHover, rowKey } = this.props;
     onHover(true, rowKey);
-    if (onRowMouseEnter) {
-      onRowMouseEnter(record, index, event);
-    }
   };
-
-  onMouseLeave = event => {
-    const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
+  onMouseLeave = () => {
+    const { onHover, rowKey } = this.props;
     onHover(false, rowKey);
-    if (onRowMouseLeave) {
-      onRowMouseLeave(record, index, event);
-    }
   };
 
   setExpanedRowHeight() {
@@ -195,6 +189,11 @@ class TableRow extends React.Component {
       hasExpandIcon,
       renderExpandIcon,
       renderExpandIconCell,
+      onRowClick,
+      onRowDoubleClick,
+      onRowMouseEnter,
+      onRowMouseLeave,
+      onRowContextMenu,
     } = this.props;
 
     const BodyRow = components.body.row;
@@ -252,12 +251,20 @@ class TableRow extends React.Component {
 
     return (
       <BodyRow
-        onClick={this.onRowClick}
-        onDoubleClick={this.onRowDoubleClick}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        onContextMenu={this.onContextMenu}
         {...rowProps}
+        onClick={this.onTriggerEvent(rowProps.onClick, onRowClick)}
+        onDoubleClick={this.onTriggerEvent(rowProps.onDoubleClick, onRowDoubleClick)}
+        onMouseEnter={this.onTriggerEvent(
+          rowProps.onMouseEnter,
+          onRowMouseEnter,
+          this.onMouseEnter,
+        )}
+        onMouseLeave={this.onTriggerEvent(
+          rowProps.onMouseLeave,
+          onRowMouseLeave,
+          this.onMouseLeave,
+        )}
+        onContextMenu={this.onTriggerEvent(rowProps.onContextMenu, onRowContextMenu)}
         className={rowClassName}
         style={style}
         data-row-key={rowKey}
