@@ -583,7 +583,8 @@ describe('Table', () => {
 
     it('fires row click event', () => {
       const onRowClick = jest.fn();
-      const wrapper = mount(createTable({ onRowClick }));
+      const onClick = jest.fn();
+      const wrapper = mount(createTable({ onRowClick, onRow: () => ({ onClick }) }));
       wrapper
         .find('tbody tr')
         .first()
@@ -595,11 +596,14 @@ describe('Table', () => {
       expect(spy.mock.calls[0][0]).toMatch(
         'Warning: onRowClick is deprecated, please use onRow instead.',
       );
+
+      expect(onClick).toHaveBeenCalled();
     });
 
     it('fires double row click event', () => {
       const onRowDoubleClick = jest.fn();
-      const wrapper = mount(createTable({ onRowDoubleClick }));
+      const onDoubleClick = jest.fn();
+      const wrapper = mount(createTable({ onRowDoubleClick, onRow: () => ({ onDoubleClick }) }));
       wrapper
         .find('tbody tr')
         .first()
@@ -611,11 +615,14 @@ describe('Table', () => {
       expect(spy.mock.calls[0][0]).toMatch(
         'Warning: onRowDoubleClick is deprecated, please use onRow instead.',
       );
+
+      expect(onDoubleClick).toHaveBeenCalled();
     });
 
     it('fires row contextmenu event', () => {
       const onRowContextMenu = jest.fn();
-      const wrapper = mount(createTable({ onRowContextMenu }));
+      const onContextMenu = jest.fn();
+      const wrapper = mount(createTable({ onRowContextMenu, onRow: () => ({ onContextMenu }) }));
       wrapper
         .find('tbody tr')
         .first()
@@ -627,13 +634,17 @@ describe('Table', () => {
       expect(spy.mock.calls[0][0]).toMatch(
         'Warning: onRowContextMenu is deprecated, please use onRow instead.',
       );
+
+      expect(onRowContextMenu).toHaveBeenCalled();
     });
 
     it('fires onRowMouseEnter', () => {
       const handleRowMouseEnter = jest.fn();
+      const onMouseEnter = jest.fn();
       const wrapper = mount(
         createTable({
           onRowMouseEnter: handleRowMouseEnter,
+          onRow: () => ({ onMouseEnter }),
         }),
       );
       wrapper
@@ -644,13 +655,17 @@ describe('Table', () => {
       expect(spy.mock.calls[0][0]).toMatch(
         'Warning: onRowMouseEnter is deprecated, please use onRow instead.',
       );
+
+      expect(onMouseEnter).toHaveBeenCalled();
     });
 
     it('fires onRowMouseLeave', () => {
       const handleRowMouseLeave = jest.fn();
+      const onMouseLeave = jest.fn();
       const wrapper = mount(
         createTable({
           onRowMouseLeave: handleRowMouseLeave,
+          onRow: () => ({ onMouseLeave }),
         }),
       );
       wrapper
@@ -661,6 +676,8 @@ describe('Table', () => {
       expect(spy.mock.calls[0][0]).toMatch(
         'Warning: onRowMouseLeave is deprecated, please use onRow instead.',
       );
+
+      expect(onMouseLeave).toHaveBeenCalled();
     });
   });
 });
