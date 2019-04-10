@@ -113,7 +113,7 @@ class TableRow extends React.Component {
     onHover(false, rowKey);
   };
 
-  setExpanedRowHeight() {
+  setExpandedRowHeight() {
     const { store, rowKey } = this.props;
     let { expandedRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
@@ -160,7 +160,7 @@ class TableRow extends React.Component {
     }
 
     if (!fixed && expandedRow) {
-      this.setExpanedRowHeight();
+      this.setExpandedRowHeight();
     }
 
     if (!fixed && ancestorKeys.length >= 0) {
