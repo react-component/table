@@ -20,7 +20,7 @@ describe('Table.expand', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('pass proper paramters to expandedRowRender', () => {
+  it('pass proper parameters to expandedRowRender', () => {
     const rowRender = jest.fn(() => <div>expanded row</div>);
     const wrapper = mount(
       createTable({

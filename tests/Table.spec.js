@@ -50,7 +50,7 @@ describe('Table', () => {
 
   it('renders table body to the wrapper', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const getBodyWrapper = body => <tbody className="custom-wapper">{body.props.children}</tbody>;
+    const getBodyWrapper = body => <tbody className="custom-wrapper">{body.props.children}</tbody>;
     const wrapper = render(createTable({ getBodyWrapper }));
     expect(wrapper).toMatchSnapshot();
     expect(spy.mock.calls[0][0]).toMatch(
