@@ -4077,8 +4077,8 @@ var TableRow = function (_React$Component) {
       }
     }
   }, {
-    key: 'setExpanedRowHeight',
-    value: function setExpanedRowHeight() {
+    key: 'setExpandedRowHeight',
+    value: function setExpandedRowHeight() {
       var _props = this.props,
           store = _props.store,
           rowKey = _props.rowKey;
@@ -4140,7 +4140,7 @@ var TableRow = function (_React$Component) {
       }
 
       if (!fixed && expandedRow) {
-        this.setExpanedRowHeight();
+        this.setExpandedRowHeight();
       }
 
       if (!fixed && ancestorKeys.length >= 0) {
@@ -35529,7 +35529,7 @@ function BodyTable(props, _ref) {
 
   if (scroll.x || fixed) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'scroll';
-    // Fix weired webkit render bug
+    // Fix weird webkit render bug
     // https://github.com/ant-design/ant-design/issues/7783
     bodyStyle.WebkitTransform = 'translate3d (0, 0, 0)';
   }
@@ -35680,17 +35680,17 @@ var ExpandableTable = function (_React$Component) {
         getRowKey = props.getRowKey;
 
 
-    var finnalExpandedRowKeys = [];
+    var finalExpandedRowKeys = [];
     var rows = [].concat(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray___default()(data));
 
     if (defaultExpandAllRows) {
       for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
-        finnalExpandedRowKeys.push(getRowKey(row, i));
+        finalExpandedRowKeys.push(getRowKey(row, i));
         rows = rows.concat(row[childrenColumnName] || []);
       }
     } else {
-      finnalExpandedRowKeys = expandedRowKeys || defaultExpandedRowKeys;
+      finalExpandedRowKeys = expandedRowKeys || defaultExpandedRowKeys;
     }
 
     _this.columnManager = props.columnManager;
@@ -35698,7 +35698,7 @@ var ExpandableTable = function (_React$Component) {
 
     _this.store.setState({
       expandedRowsHeight: {},
-      expandedRowKeys: finnalExpandedRowKeys
+      expandedRowKeys: finalExpandedRowKeys
     });
     return _this;
   }
@@ -35854,7 +35854,6 @@ var _initialiseProps = function _initialiseProps() {
     var destroy = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
 
     if (event) {
-      event.preventDefault();
       event.stopPropagation();
     }
 
