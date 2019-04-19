@@ -20,42 +20,21 @@ exports[`Table.fixedColumns renders correctly 1`] = `
         >
           <colgroup>
             <col
-              class=""
               style="width:100px;min-width:100px"
             />
             <col
-              class=""
               style="width:100px;min-width:100px"
             />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
             <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
               style="width:100px;min-width:100px"
             />
           </colgroup>
@@ -624,11 +603,9 @@ exports[`Table.fixedColumns renders correctly 1`] = `
           >
             <colgroup>
               <col
-                class=""
                 style="width:100px;min-width:100px"
               />
               <col
-                class=""
                 style="width:100px;min-width:100px"
               />
             </colgroup>
@@ -828,7 +805,6 @@ exports[`Table.fixedColumns renders correctly 1`] = `
           >
             <colgroup>
               <col
-                class=""
                 style="width:100px;min-width:100px"
               />
             </colgroup>

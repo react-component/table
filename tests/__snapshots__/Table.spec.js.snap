@@ -14,12 +14,8 @@ exports[`Table align column 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
-          <col
-            class=""
-          />
+          <col />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -98,12 +94,8 @@ exports[`Table align column should not override cell style 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
-          <col
-            class=""
-          />
+          <col />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -183,9 +175,7 @@ exports[`Table custom components renders correctly 1`] = `
         name="my-table"
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -262,15 +252,9 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
           class=""
         >
           <colgroup>
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
+            <col />
+            <col />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -310,15 +294,9 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
           name="my-table"
         >
           <colgroup>
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
-            <col
-              class=""
-            />
+            <col />
+            <col />
+            <col />
           </colgroup>
           <tbody
             class="rc-table-tbody"
@@ -366,9 +344,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
           class="rc-table-fixed"
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -400,9 +376,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             name="my-table"
           >
             <colgroup>
-              <col
-                class=""
-              />
+              <col />
             </colgroup>
             <tbody
               class="rc-table-tbody"
@@ -439,9 +413,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
           class="rc-table-fixed"
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -473,9 +445,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
             name="my-table"
           >
             <colgroup>
-              <col
-                class=""
-              />
+              <col />
             </colgroup>
             <tbody
               class="rc-table-tbody"
@@ -516,12 +486,8 @@ exports[`Table dataIndex render text by path 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
-          <col
-            class=""
-          />
+          <col />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -602,9 +568,7 @@ exports[`Table renders aria- attributes 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -669,12 +633,8 @@ exports[`Table renders colSpan correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
-          <col
-            class=""
-          />
+          <col />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -747,7 +707,6 @@ exports[`Table renders column correctly 1`] = `
       >
         <colgroup>
           <col
-            class="name-class-colgroup-col"
             style="width:100px;min-width:100px"
           />
         </colgroup>
@@ -848,9 +807,7 @@ exports[`Table renders correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="test-prefix-thead"
@@ -915,9 +872,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -982,9 +937,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1049,9 +1002,7 @@ exports[`Table renders custom cell correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1121,9 +1072,7 @@ exports[`Table renders data- attributes 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1188,9 +1137,7 @@ exports[`Table renders empty text correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1231,9 +1178,7 @@ exports[`Table renders empty text correctly 2`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1274,9 +1219,7 @@ exports[`Table renders fixed header correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1298,9 +1241,7 @@ exports[`Table renders fixed header correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <tbody
           class="rc-table-tbody"
@@ -1354,9 +1295,7 @@ exports[`Table renders footer correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1477,12 +1416,8 @@ exports[`Table renders rowSpan correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
-          <col
-            class=""
-          />
+          <col />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1558,9 +1493,7 @@ exports[`Table renders table body to the wrapper 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1632,9 +1565,7 @@ exports[`Table renders title correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1699,9 +1630,7 @@ exports[`Table renders without header 1`] = `
         class=""
       >
         <colgroup>
-          <col
-            class=""
-          />
+          <col />
         </colgroup>
         <tbody
           class="rc-table-tbody"
@@ -1760,9 +1689,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
           style="width:200px"
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -1833,9 +1760,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
           style="table-layout:fixed"
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -1904,9 +1829,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
           class=""
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -1929,9 +1852,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
           class=""
         >
           <colgroup>
-            <col
-              class=""
-            />
+            <col />
           </colgroup>
           <tbody
             class="rc-table-tbody"

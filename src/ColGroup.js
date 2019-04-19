@@ -1,6 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { INTERNAL_COL_DEFINE } from './utils';
 
 export default function ColGroup(props, { table }) {
   const { prefixCls, expandIconAsCell } = table.props;
@@ -22,14 +22,8 @@ export default function ColGroup(props, { table }) {
     leafColumns = table.columnManager.leafColumns();
   }
   cols = cols.concat(
-    leafColumns.map(({ key, dataIndex, width, className }) => {
-      return (
-        <col
-          key={key || dataIndex}
-          style={{ width, minWidth: width }}
-          className={classNames(className && `${className}-colgroup-col`)}
-        />
-      );
+    leafColumns.map(({ key, dataIndex, width, [INTERNAL_COL_DEFINE]: additionalProps }) => {
+      return <col key={key || dataIndex} style={{ width, minWidth: width }} {...additionalProps} />;
     }),
   );
 
