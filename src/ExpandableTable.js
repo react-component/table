@@ -94,7 +94,6 @@ class ExpandableTable extends React.Component {
 
   handleExpandChange = (expanded, record, event, rowKey, destroy = false) => {
     if (event) {
-      event.preventDefault();
       event.stopPropagation();
     }
 
