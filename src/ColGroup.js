@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 export default function ColGroup(props, { table }) {
@@ -26,7 +27,7 @@ export default function ColGroup(props, { table }) {
         <col
           key={key || dataIndex}
           style={{ width, minWidth: width }}
-          className={`${className}-colgroup-col`}
+          className={classNames(className && `${className}-colgroup-col`)}
         />
       );
     }),

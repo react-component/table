@@ -14,8 +14,12 @@ exports[`Table.expand controlled by expandedRowKeys 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -114,8 +118,12 @@ exports[`Table.expand controlled by expandedRowKeys 2`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -228,8 +236,12 @@ exports[`Table.expand expand all rows by default 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -341,8 +353,12 @@ exports[`Table.expand expand row by click 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -441,8 +457,12 @@ exports[`Table.expand expand rows by defaultExpandedRowKeys 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -541,8 +561,12 @@ exports[`Table.expand renders a custom icon 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -639,8 +663,12 @@ exports[`Table.expand renders expand icon as cell 1`] = `
           <col
             class="rc-table-expand-icon-col"
           />
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -731,8 +759,12 @@ exports[`Table.expand renders expand icon to the specify column 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -818,8 +850,12 @@ exports[`Table.expand renders expand row correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -905,8 +941,12 @@ exports[`Table.expand renders expend row class correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1008,9 +1048,15 @@ exports[`Table.expand renders fixed column correctly 1`] = `
           class=""
         >
           <colgroup>
-            <col />
-            <col />
-            <col />
+            <col
+              class=""
+            />
+            <col
+              class=""
+            />
+            <col
+              class=""
+            />
           </colgroup>
           <thead
             class="rc-table-thead"
@@ -1108,7 +1154,9 @@ exports[`Table.expand renders fixed column correctly 1`] = `
             class="rc-table-fixed"
           >
             <colgroup>
-              <col />
+              <col
+                class=""
+              />
             </colgroup>
             <thead
               class="rc-table-thead"
@@ -1177,7 +1225,9 @@ exports[`Table.expand renders fixed column correctly 1`] = `
             class="rc-table-fixed"
           >
             <colgroup>
-              <col />
+              <col
+                class=""
+              />
             </colgroup>
             <thead
               class="rc-table-thead"
@@ -1236,8 +1286,12 @@ exports[`Table.expand renders nested data correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
@@ -1323,8 +1377,12 @@ exports[`Table.expand renders tree row correctly 1`] = `
         class=""
       >
         <colgroup>
-          <col />
-          <col />
+          <col
+            class=""
+          />
+          <col
+            class=""
+          />
         </colgroup>
         <thead
           class="rc-table-thead"
