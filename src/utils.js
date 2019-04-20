@@ -11,6 +11,9 @@ const scrollbarMeasure = {
   height: '50px',
 };
 
+// This const is used for colgroup.col internal props. And should not provides to user.
+export const INTERNAL_COL_DEFINE = 'RC_TABLE_INTERNAL_COL_DEFINE';
+
 export function measureScrollbar(direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
