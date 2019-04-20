@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.5.0 / 2019-04-20
+
+- Add internal interface for col definition.
+
 ## 6.4.0 / 2018-10-15
 
 - Render data- and aria- props [#227](https://github.com/react-component/table/pull/227)
