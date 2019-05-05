@@ -76,6 +76,7 @@
     "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
     "rc-util": "^4.0.4",
+    "react-fast-compare": "^2.0.4",
     "react-lifecycles-compat": "^3.0.2",
     "shallowequal": "^1.0.2",
     "warning": "^3.0.0"

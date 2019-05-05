@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import shallowequal from 'shallowequal';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
+import isEqual from 'react-fast-compare';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
 import TableCell from './TableCell';
@@ -75,9 +75,10 @@ class TableRow extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const nextCompare = pick(nextProps, ['visible', 'fixed', 'expanded', 'hovered', 'height']);
-    const prevComare = pick(this.props, ['visible', 'fixed', 'expanded', 'hovered', 'height']);
-    return !shallowequal(nextCompare, prevComare);
+    const compareItems = ['visible', 'fixed', 'expanded', 'hovered', 'height', 'record', 'columns'];
+    const nextCompare = pick(nextProps, compareItems);
+    const prevComare = pick(this.props, compareItems);
+    return !isEqual(nextCompare, prevComare);
   }
 
   componentDidUpdate() {
