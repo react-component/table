@@ -34571,7 +34571,8 @@ function ColGroup(props, _ref) {
         width = _ref2.width,
         additionalProps = _ref2[__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* INTERNAL_COL_DEFINE */]];
 
-    return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('col', __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ key: key || dataIndex, style: { width: width, minWidth: width } }, additionalProps));
+    var mergedKey = key !== undefined ? key : dataIndex;
+    return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('col', __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ key: mergedKey, style: { width: width, minWidth: width } }, additionalProps));
   }));
 
   return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
