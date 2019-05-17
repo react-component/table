@@ -15,4 +15,15 @@ describe('Table.colgroup', () => {
     const wrapper = mount(<Table columns={columns} />);
     expect(wrapper.find('colgroup col').props().className).toEqual('show-in-col');
   });
+
+  it('correct key', () => {
+    const columns = [
+      {
+        key: 0,
+      },
+    ];
+
+    const wrapper = mount(<Table columns={columns} />);
+    expect(String(wrapper.find('colgroup col').key())).toEqual('0');
+  });
 });

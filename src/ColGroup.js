@@ -23,7 +23,8 @@ export default function ColGroup(props, { table }) {
   }
   cols = cols.concat(
     leafColumns.map(({ key, dataIndex, width, [INTERNAL_COL_DEFINE]: additionalProps }) => {
-      return <col key={key || dataIndex} style={{ width, minWidth: width }} {...additionalProps} />;
+      const mergedKey = key !== undefined ? key : dataIndex;
+      return <col key={mergedKey} style={{ width, minWidth: width }} {...additionalProps} />;
     }),
   );
 
