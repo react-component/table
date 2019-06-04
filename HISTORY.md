@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.6.0 / 2019-06-04
+
+- Fixed Table header extra vertial scrollbar style.
+
 ## 6.5.0 / 2019-04-20
 
 - Add internal interface for col definition.
