@@ -26,11 +26,16 @@
   overflow: scroll;
 }
 .rc-table-fixed-header .rc-table-scroll .rc-table-header {
-  overflow-x: scroll;
   padding-bottom: 20px;
   margin-bottom: -20px;
-  overflow-y: scroll;
+  overflow: scroll;
   box-sizing: border-box;
+}
+.rc-table-hide-scrollbar {
+  scrollbar-color: transparent transparent;
+}
+.rc-table-hide-scrollbar::-webkit-scrollbar {
+  background-color: transparent;
 }
 .rc-table-fixed-columns-in-body {
   visibility: hidden;

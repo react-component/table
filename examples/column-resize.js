@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 154:
+/***/ 153:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14,7 +14,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(2);
+var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -127,7 +127,7 @@ var Resizable = function (_React$Component) {
    */
 
 
-  Resizable.prototype.resizeHandler = function resizeHandler(handlerName) {
+  Resizable.prototype.resizeHandler = function resizeHandler(handlerName, axis) {
     var _this2 = this;
 
     return function (e, _ref2) {
@@ -137,8 +137,16 @@ var Resizable = function (_React$Component) {
 
 
       // Axis restrictions
-      var canDragX = _this2.props.axis === 'both' || _this2.props.axis === 'x';
-      var canDragY = _this2.props.axis === 'both' || _this2.props.axis === 'y';
+      var canDragX = (_this2.props.axis === 'both' || _this2.props.axis === 'x') && ['n', 's'].indexOf(axis) === -1;
+      var canDragY = (_this2.props.axis === 'both' || _this2.props.axis === 'y') && ['e', 'w'].indexOf(axis) === -1;
+
+      // reverse delta if using top or left drag handles
+      if (canDragX && axis[axis.length - 1] === 'w') {
+        deltaX = -deltaX;
+      }
+      if (canDragY && axis[0] === 'n') {
+        deltaY = -deltaY;
+      }
 
       // Update w/h
       var width = _this2.state.width + (canDragX ? deltaX : 0);
@@ -169,9 +177,10 @@ var Resizable = function (_React$Component) {
 
       var hasCb = typeof _this2.props[handlerName] === 'function';
       if (hasCb) {
+        // $FlowIgnore isn't refining this correctly to SyntheticEvent
         if (typeof e.persist === 'function') e.persist();
         _this2.setState(newState, function () {
-          return _this2.props[handlerName](e, { node: node, size: { width: width, height: height } });
+          return _this2.props[handlerName](e, { node: node, size: { width: width, height: height }, handle: axis });
         });
       } else {
         _this2.setState(newState);
@@ -179,7 +188,21 @@ var Resizable = function (_React$Component) {
     };
   };
 
+  Resizable.prototype.renderResizeHandle = function renderResizeHandle(resizeHandle) {
+    var handle = this.props.handle;
+
+    if (handle) {
+      if (typeof handle === 'function') {
+        return handle(resizeHandle);
+      }
+      return handle;
+    }
+    return _react2.default.createElement('span', { className: 'react-resizable-handle react-resizable-handle-' + resizeHandle });
+  };
+
   Resizable.prototype.render = function render() {
+    var _this3 = this;
+
     // eslint-disable-next-line no-unused-vars
     var _props = this.props,
         children = _props.children,
@@ -194,26 +217,29 @@ var Resizable = function (_React$Component) {
         onResize = _props.onResize,
         onResizeStop = _props.onResizeStop,
         onResizeStart = _props.onResizeStart,
-        p = _objectWithoutProperties(_props, ['children', 'draggableOpts', 'width', 'height', 'handleSize', 'lockAspectRatio', 'axis', 'minConstraints', 'maxConstraints', 'onResize', 'onResizeStop', 'onResizeStart']);
+        resizeHandles = _props.resizeHandles,
+        p = _objectWithoutProperties(_props, ['children', 'draggableOpts', 'width', 'height', 'handleSize', 'lockAspectRatio', 'axis', 'minConstraints', 'maxConstraints', 'onResize', 'onResizeStop', 'onResizeStart', 'resizeHandles']);
 
     var className = p.className ? p.className + ' react-resizable' : 'react-resizable';
 
     // What we're doing here is getting the child of this element, and cloning it with this element's props.
     // We are then defining its children as:
     // Its original children (resizable's child's children), and
-    // A draggable handle.
+    // One or more draggable handles.
     return (0, _cloneElement2.default)(children, _extends({}, p, {
       className: className,
-      children: [children.props.children, _react2.default.createElement(
-        _reactDraggable.DraggableCore,
-        _extends({}, draggableOpts, {
-          key: 'resizableHandle',
-          onStop: this.resizeHandler('onResizeStop'),
-          onStart: this.resizeHandler('onResizeStart'),
-          onDrag: this.resizeHandler('onResize')
-        }),
-        _react2.default.createElement('span', { className: 'react-resizable-handle' })
-      )]
+      children: [children.props.children, resizeHandles.map(function (h) {
+        return _react2.default.createElement(
+          _reactDraggable.DraggableCore,
+          _extends({}, draggableOpts, {
+            key: 'resizableHandle-' + h,
+            onStop: _this3.resizeHandler('onResizeStop', h),
+            onStart: _this3.resizeHandler('onResizeStart', h),
+            onDrag: _this3.resizeHandler('onResize', h)
+          }),
+          _this3.renderResizeHandle(h)
+        );
+      })]
     }));
   };
 
@@ -236,8 +262,23 @@ Resizable.propTypes = {
   // Optional props
   //
 
+  // Custom resize handle
+  handle: _propTypes2.default.element,
+
   // If you change this, be sure to update your css
   handleSize: _propTypes2.default.array,
+
+  // Defines which resize handles should be rendered (default: 'se')
+  // Allows for any combination of:
+  // 's' - South handle (bottom-center)
+  // 'w' - West handle (left-center)
+  // 'e' - East handle (right-center)
+  // 'n' - North handle (top-center)
+  // 'sw' - Southwest handle (bottom-left)
+  // 'nw' - Northwest handle (top-left)
+  // 'se' - Southeast handle (bottom-right)
+  // 'ne' - Northeast handle (top-center)
+  resizeHandles: _propTypes2.default.arrayOf(_propTypes2.default.oneOf(['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne'])),
 
   // If true, will only allow width/height to move in lockstep
   lockAspectRatio: _propTypes2.default.bool,
@@ -266,7 +307,8 @@ Resizable.defaultProps = {
   lockAspectRatio: false,
   axis: 'both',
   minConstraints: [20, 20],
-  maxConstraints: [Infinity, Infinity]
+  maxConstraints: [Infinity, Infinity],
+  resizeHandles: ['se']
 };
 exports.default = Resizable;
 
@@ -287,7 +329,7 @@ module.exports = __webpack_require__(335);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -301,9 +343,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_dom__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_dom__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_prop_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_table__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_table_assets_index_less__ = __webpack_require__(4);
@@ -442,7 +484,7 @@ module.exports = function() {
   throw new Error("Don't instantiate Resizable directly! Use require('react-resizable').Resizable");
 };
 
-module.exports.Resizable = __webpack_require__(154).default;
+module.exports.Resizable = __webpack_require__(153).default;
 module.exports.ResizableBox = __webpack_require__(339).default;
 
 
@@ -452,7 +494,7 @@ module.exports.ResizableBox = __webpack_require__(339).default;
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
-	 true ? module.exports = factory(__webpack_require__(1), __webpack_require__(0)) :
+	 true ? module.exports = factory(__webpack_require__(2), __webpack_require__(0)) :
 	typeof define === 'function' && define.amd ? define(['react-dom', 'react'], factory) :
 	(global.ReactDraggable = factory(global.ReactDOM,global.React));
 }(this, (function (ReactDOM,React) { 'use strict';
@@ -2713,11 +2755,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(2);
+var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Resizable = __webpack_require__(154);
+var _Resizable = __webpack_require__(153);
 
 var _Resizable2 = _interopRequireDefault(_Resizable);
 
@@ -2778,6 +2820,7 @@ var ResizableBox = function (_React$Component) {
     // If you use Resizable directly, you are responsible for updating the child component
     // with a new width and height.
     var _props = this.props,
+        handle = _props.handle,
         handleSize = _props.handleSize,
         onResize = _props.onResize,
         onResizeStart = _props.onResizeStart,
@@ -2789,11 +2832,13 @@ var ResizableBox = function (_React$Component) {
         axis = _props.axis,
         width = _props.width,
         height = _props.height,
-        props = _objectWithoutProperties(_props, ['handleSize', 'onResize', 'onResizeStart', 'onResizeStop', 'draggableOpts', 'minConstraints', 'maxConstraints', 'lockAspectRatio', 'axis', 'width', 'height']);
+        resizeHandles = _props.resizeHandles,
+        props = _objectWithoutProperties(_props, ['handle', 'handleSize', 'onResize', 'onResizeStart', 'onResizeStop', 'draggableOpts', 'minConstraints', 'maxConstraints', 'lockAspectRatio', 'axis', 'width', 'height', 'resizeHandles']);
 
     return _react2.default.createElement(
       _Resizable2.default,
       {
+        handle: handle,
         handleSize: handleSize,
         width: this.state.width,
         height: this.state.height,
@@ -2804,7 +2849,8 @@ var ResizableBox = function (_React$Component) {
         minConstraints: minConstraints,
         maxConstraints: maxConstraints,
         lockAspectRatio: lockAspectRatio,
-        axis: axis
+        axis: axis,
+        resizeHandles: resizeHandles
       },
       _react2.default.createElement('div', _extends({ style: { width: this.state.width + 'px', height: this.state.height + 'px' } }, props))
     );
