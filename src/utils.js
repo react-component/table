@@ -29,7 +29,7 @@ export function measureScrollbar({ direction = 'vertical', prefixCls }) {
     scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
   });
   // apply hide scrollbar className ahead
-  scrollDiv.className = `${prefixCls}-hide-scrollbar`;
+  scrollDiv.className = `${prefixCls}-hide-scrollbar scroll-div-append-to-body`;
   // Append related overflow style
   if (isVertical) {
     scrollDiv.style.overflowY = 'scroll';
