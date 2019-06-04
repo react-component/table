@@ -39,11 +39,17 @@
   }
 
   &-fixed-header &-scroll &-header {
-    overflow-x: scroll;
     padding-bottom: 20px;
     margin-bottom: -20px;
-    overflow-y: scroll;
+    overflow: scroll;
     box-sizing: border-box;
+  }
+
+  &-hide-scrollbar {
+    scrollbar-color: transparent transparent;
+    &::-webkit-scrollbar {
+      background-color: transparent;
+    }
   }
 
   // https://github.com/ant-design/ant-design/issues/10828
