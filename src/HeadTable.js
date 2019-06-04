@@ -13,7 +13,7 @@ export default function HeadTable(props, { table }) {
   if (scroll.y) {
     useFixedHeader = true;
     // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar('horizontal');
+    const scrollbarWidth = measureScrollbar({ direction: 'horizontal', prefixCls });
     if (scrollbarWidth > 0 && !fixed) {
       headStyle.marginBottom = `-${scrollbarWidth}px`;
       headStyle.paddingBottom = '0px';
@@ -28,7 +28,7 @@ export default function HeadTable(props, { table }) {
     <div
       key="headTable"
       ref={fixed ? null : saveRef('headTable')}
-      className={`${prefixCls}-header`}
+      className={`${prefixCls}-header ${prefixCls}-hide-scrollbar`}
       style={headStyle}
       onScroll={handleBodyScrollLeft}
     >

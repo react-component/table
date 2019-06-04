@@ -14,7 +14,7 @@ const scrollbarMeasure = {
 // This const is used for colgroup.col internal props. And should not provides to user.
 export const INTERNAL_COL_DEFINE = 'RC_TABLE_INTERNAL_COL_DEFINE';
 
-export function measureScrollbar(direction = 'vertical') {
+export function measureScrollbar({ direction = 'vertical', prefixCls }) {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
   }
@@ -28,6 +28,8 @@ export function measureScrollbar(direction = 'vertical') {
   Object.keys(scrollbarMeasure).forEach(scrollProp => {
     scrollDiv.style[scrollProp] = scrollbarMeasure[scrollProp];
   });
+  // apply hide scrollbar className ahead
+  scrollDiv.className = `${prefixCls}-hide-scrollbar`;
   // Append related overflow style
   if (isVertical) {
     scrollDiv.style.overflowY = 'scroll';

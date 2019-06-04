@@ -40,7 +40,7 @@ export default function BodyTable(props, { table }) {
     useFixedHeader = true;
 
     // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar();
+    const scrollbarWidth = measureScrollbar({ prefixCls });
     if (scrollbarWidth > 0 && fixed) {
       bodyStyle.marginBottom = `-${scrollbarWidth}px`;
       bodyStyle.paddingBottom = '0px';
