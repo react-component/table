@@ -34502,7 +34502,7 @@ function HeadTable(props, _ref) {
   var useFixedHeader = table.props.useFixedHeader;
 
   var headStyle = {};
-  var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* measureScrollbar */])({ direction: 'horizontal' });
+  var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* measureScrollbar */])({ direction: 'vertical' });
 
   if (scroll.y) {
     useFixedHeader = true;
