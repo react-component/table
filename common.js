@@ -34506,11 +34506,14 @@ function HeadTable(props, _ref) {
 
   if (scroll.y) {
     useFixedHeader = true;
+    // https://github.com/ant-design/ant-design/issues/17051
     var scrollbarWidthOfHeader = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* measureScrollbar */])({ direction: 'horizontal', prefixCls: prefixCls });
     // Add negative margin bottom for scroll bar overflow bug
     if (scrollbarWidthOfHeader > 0 && !fixed) {
       headStyle.marginBottom = '-' + scrollbarWidthOfHeader + 'px';
       headStyle.paddingBottom = '0px';
+      // https://github.com/ant-design/ant-design/issues/17051
+      headStyle.overflow = 'scroll ' + (scrollbarWidth === 0 ? 'hidden' : 'scroll');
     }
   }
 
