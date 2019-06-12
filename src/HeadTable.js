@@ -14,11 +14,14 @@ export default function HeadTable(props, { table }) {
 
   if (scroll.y) {
     useFixedHeader = true;
+    // https://github.com/ant-design/ant-design/issues/17051
     const scrollbarWidthOfHeader = measureScrollbar({ direction: 'horizontal', prefixCls });
     // Add negative margin bottom for scroll bar overflow bug
     if (scrollbarWidthOfHeader > 0 && !fixed) {
       headStyle.marginBottom = `-${scrollbarWidthOfHeader}px`;
       headStyle.paddingBottom = '0px';
+      // https://github.com/ant-design/ant-design/issues/17051
+      headStyle.overflow = `scroll ${scrollbarWidth === 0 ? 'hidden' : 'scroll'}`;
     }
   }
 
