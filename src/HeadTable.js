@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { measureScrollbar } from './utils';
 import BaseTable from './BaseTable';
 
@@ -9,11 +10,11 @@ export default function HeadTable(props, { table }) {
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const headStyle = {};
+  const scrollbarWidth = measureScrollbar({ direction: 'horizontal' });
 
   if (scroll.y) {
     useFixedHeader = true;
     // Add negative margin bottom for scroll bar overflow bug
-    const scrollbarWidth = measureScrollbar({ direction: 'horizontal', prefixCls });
     if (scrollbarWidth > 0 && !fixed) {
       headStyle.marginBottom = `-${scrollbarWidth}px`;
       headStyle.paddingBottom = '0px';
@@ -28,7 +29,9 @@ export default function HeadTable(props, { table }) {
     <div
       key="headTable"
       ref={fixed ? null : saveRef('headTable')}
-      className={`${prefixCls}-header ${prefixCls}-hide-scrollbar`}
+      className={classNames(`${prefixCls}-header`, {
+        [`${prefixCls}-hide-scrollbar`]: scrollbarWidth > 0,
+      })}
       style={headStyle}
       onScroll={handleBodyScrollLeft}
     >
