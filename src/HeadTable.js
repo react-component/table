@@ -10,7 +10,7 @@ export default function HeadTable(props, { table }) {
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const headStyle = {};
-  const scrollbarWidth = measureScrollbar({ direction: 'horizontal' });
+  const scrollbarWidth = measureScrollbar({ direction: 'vertical' });
 
   if (scroll.y) {
     useFixedHeader = true;
