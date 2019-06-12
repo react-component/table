@@ -246,7 +246,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
       class="rc-table-scroll"
     >
       <div
-        class="rc-table-header rc-table-hide-scrollbar"
+        class="rc-table-header"
       >
         <table
           class=""
@@ -338,7 +338,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
       class="rc-table-fixed-left"
     >
       <div
-        class="rc-table-header rc-table-hide-scrollbar"
+        class="rc-table-header"
       >
         <table
           class="rc-table-fixed"
@@ -407,7 +407,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
       class="rc-table-fixed-right"
     >
       <div
-        class="rc-table-header rc-table-hide-scrollbar"
+        class="rc-table-header"
       >
         <table
           class="rc-table-fixed"
@@ -1213,7 +1213,7 @@ exports[`Table renders fixed header correctly 1`] = `
     class="rc-table-content"
   >
     <div
-      class="rc-table-header rc-table-hide-scrollbar"
+      class="rc-table-header"
     >
       <table
         class=""
@@ -1823,7 +1823,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
       class="rc-table-scroll"
     >
       <div
-        class="rc-table-header rc-table-hide-scrollbar"
+        class="rc-table-header"
       >
         <table
           class=""
