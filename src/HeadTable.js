@@ -21,7 +21,8 @@ export default function HeadTable(props, { table }) {
       headStyle.marginBottom = `-${scrollbarWidthOfHeader}px`;
       headStyle.paddingBottom = '0px';
       // https://github.com/ant-design/ant-design/issues/17051
-      headStyle.overflow = `scroll ${scrollbarWidth === 0 ? 'hidden' : 'scroll'}`;
+      headStyle.overflowX = 'scroll';
+      headStyle.overflowY = `${scrollbarWidth === 0 ? 'hidden' : 'scroll'}`;
     }
   }
 
