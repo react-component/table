@@ -94,7 +94,7 @@
     "rc-menu": "^5.0.11",
     "rc-tools": "^8.4.1",
     "react": "^16.0.0",
-    "react-dnd": "^2.5.4",
+    "react-dnd": "^8.0.0",
     "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.0.0",
     "react-resizable": "^1.7.5",
