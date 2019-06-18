@@ -35595,7 +35595,7 @@ function BodyTable(props, _ref) {
     useFixedHeader = true;
 
     // Add negative margin bottom for scroll bar overflow bug
-    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* measureScrollbar */])({ direction: 'horizontal', prefixCls: prefixCls });
+    var scrollbarWidth = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* measureScrollbar */])({ direction: 'vertical' });
     if (scrollbarWidth > 0 && fixed) {
       bodyStyle.marginBottom = '-' + scrollbarWidth + 'px';
       bodyStyle.paddingBottom = '0px';
