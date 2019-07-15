@@ -288,6 +288,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
       <div
         class="rc-table-body"
         style="max-height:100px;overflow-y:scroll"
+        tabindex="-1"
       >
         <table
           class=""
@@ -1683,6 +1684,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
       <div
         class="rc-table-body"
         style="overflow-x:scroll;-webkit-transform:translate3d (0, 0, 0)"
+        tabindex="-1"
       >
         <table
           class="rc-table-fixed"
@@ -1754,6 +1756,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
       <div
         class="rc-table-body"
         style="overflow-x:scroll;-webkit-transform:translate3d (0, 0, 0)"
+        tabindex="-1"
       >
         <table
           class="rc-table-fixed"
@@ -1847,6 +1850,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
       <div
         class="rc-table-body"
         style="max-height:200px;overflow-y:scroll"
+        tabindex="-1"
       >
         <table
           class=""
