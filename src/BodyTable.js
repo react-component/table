@@ -84,9 +84,12 @@ export default function BodyTable(props, { table }) {
     );
   }
 
+  // Should provides `tabIndex` if use scroll to enable keyboard scroll
+  const useTabIndex = scroll && (scroll.x || scroll.y);
+
   return (
     <div
-      tabIndex={scroll ? -1 : undefined}
+      tabIndex={useTabIndex ? -1 : undefined}
       key="bodyTable"
       className={`${prefixCls}-body`}
       style={bodyStyle}
