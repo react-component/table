@@ -86,6 +86,7 @@ export default function BodyTable(props, { table }) {
 
   return (
     <div
+      tabIndex={scroll ? -1 : undefined}
       key="bodyTable"
       className={`${prefixCls}-body`}
       style={bodyStyle}
