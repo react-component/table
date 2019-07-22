@@ -1,6 +1,10 @@
 # History
 ----
 
+## 6.7.0 / 2019-07-22
+
+- Show icon if using `expandIcon` even if `expandRowByClick` is set
+
 ## 6.6.0 / 2019-06-04
 
 - Fixed Table header extra vertial scrollbar style.
