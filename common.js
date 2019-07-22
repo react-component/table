@@ -35317,22 +35317,29 @@ var ExpandableRow = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = ExpandableRow.__proto__ || Object.getPrototypeOf(ExpandableRow)).call.apply(_ref, [this].concat(args))), _this), _this.hasExpandIcon = function (columnIndex) {
-      var expandRowByClick = _this.props.expandRowByClick;
-
-      return !_this.expandIconAsCell && !expandRowByClick && columnIndex === _this.expandIconColumnIndex;
-    }, _this.handleExpandChange = function (record, event) {
       var _this$props = _this.props,
-          onExpandedChange = _this$props.onExpandedChange,
-          expanded = _this$props.expanded,
-          rowKey = _this$props.rowKey;
+          expandRowByClick = _this$props.expandRowByClick,
+          expandIcon = _this$props.expandIcon;
+
+
+      if (_this.expandIconAsCell || columnIndex !== _this.expandIconColumnIndex) {
+        return false;
+      }
+
+      return !!expandIcon || !expandRowByClick;
+    }, _this.handleExpandChange = function (record, event) {
+      var _this$props2 = _this.props,
+          onExpandedChange = _this$props2.onExpandedChange,
+          expanded = _this$props2.expanded,
+          rowKey = _this$props2.rowKey;
 
       if (_this.expandable) {
         onExpandedChange(!expanded, record, event, rowKey);
       }
     }, _this.handleRowClick = function (record, index, event) {
-      var _this$props2 = _this.props,
-          expandRowByClick = _this$props2.expandRowByClick,
-          onRowClick = _this$props2.onRowClick;
+      var _this$props3 = _this.props,
+          expandRowByClick = _this$props3.expandRowByClick,
+          onRowClick = _this$props3.onRowClick;
 
       if (expandRowByClick) {
         _this.handleExpandChange(record, event);
@@ -35341,12 +35348,12 @@ var ExpandableRow = function (_React$Component) {
         onRowClick(record, index, event);
       }
     }, _this.renderExpandIcon = function () {
-      var _this$props3 = _this.props,
-          prefixCls = _this$props3.prefixCls,
-          expanded = _this$props3.expanded,
-          record = _this$props3.record,
-          needIndentSpaced = _this$props3.needIndentSpaced,
-          expandIcon = _this$props3.expandIcon;
+      var _this$props4 = _this.props,
+          prefixCls = _this$props4.prefixCls,
+          expanded = _this$props4.expanded,
+          record = _this$props4.record,
+          needIndentSpaced = _this$props4.needIndentSpaced,
+          expandIcon = _this$props4.expandIcon;
 
 
       if (expandIcon) {
@@ -35388,6 +35395,9 @@ var ExpandableRow = function (_React$Component) {
     value: function componentWillUnmount() {
       this.handleDestroy();
     }
+
+    // Show icon within first column
+
   }, {
     key: 'handleDestroy',
     value: function handleDestroy() {
