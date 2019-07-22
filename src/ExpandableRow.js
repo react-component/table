@@ -27,11 +27,15 @@ class ExpandableRow extends React.Component {
     this.handleDestroy();
   }
 
+  // Show icon within first column
   hasExpandIcon = columnIndex => {
-    const { expandRowByClick } = this.props;
-    return (
-      !this.expandIconAsCell && !expandRowByClick && columnIndex === this.expandIconColumnIndex
-    );
+    const { expandRowByClick, expandIcon } = this.props;
+
+    if (this.expandIconAsCell || columnIndex !== this.expandIconColumnIndex) {
+      return false;
+    }
+
+    return !!expandIcon || !expandRowByClick;
   };
 
   handleExpandChange = (record, event) => {
