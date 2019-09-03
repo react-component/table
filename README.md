@@ -72,6 +72,12 @@ React.render(<Table columns={columns} data={data} />, mountNode);
   </thead>
   <tbody>
     <tr>
+      <td>tableLayout</td>
+      <td>'auto' | 'fixed'</td>
+      <td>'auto', 'fixed' for any columns is fixed or ellipsis or header is fixed</td>
+      <td>https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout</td>
+    </tr>
+    <tr>
       <td>prefixCls</td>
       <td>String</td>
       <td>rc-table</td>
@@ -331,7 +337,13 @@ React.render(<Table columns={columns} data={data} />, mountNode);
       <td>align</td>
       <td>String</td>
       <td></td>
-      <td>specify how content is aligned</td>
+      <td>specify how cell content is aligned</td>
+    </tr>
+    <tr>
+      <td>ellipsis</td>
+      <td>Boolean</td>
+      <td></td>
+      <td>specify whether cell content be ellipsized</td>
     </tr>
     <tr>
       <td>onCell</td>
