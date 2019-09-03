@@ -139,6 +139,16 @@ describe('Table', () => {
           .prop('rowKey'),
       ).toBe('key11');
     });
+
+    it('renders tableLayout', () => {
+      const wrapper = render(createTable({ tableLayout: true }));
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('renders ellipsis', () => {
+      const wrapper = render(createTable({ columns: [{ title: 'title', ellipsis: true }] }));
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 
   describe('scroll', () => {
