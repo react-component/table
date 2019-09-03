@@ -5,7 +5,6 @@ React table component.
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
-[![gemnasium deps][gemnasium-image]][gemnasium-url]
 [![npm download][download-image]][download-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-table.svg?style=flat-square
@@ -14,8 +13,6 @@ React table component.
 [travis-url]: https://travis-ci.org/react-component/table
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/react-component/table/branch/master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/table.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/table
 [download-image]: https://img.shields.io/npm/dm/rc-table.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-table
 
