@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import get from 'lodash/get';
 
 function isInvalidRenderCellText(text) {
@@ -93,8 +94,12 @@ export default class TableCell extends React.Component {
       tdProps.style = { ...tdProps.style, textAlign: column.align };
     }
 
+    const cellClassName = classNames(className, {
+      [`${prefixCls}-cell-ellipsis`]: !!column.ellipsis,
+    });
+
     return (
-      <BodyCell className={className} onClick={this.handleClick} {...tdProps}>
+      <BodyCell className={cellClassName} onClick={this.handleClick} {...tdProps}>
         {indentText}
         {expandIcon}
         {text}

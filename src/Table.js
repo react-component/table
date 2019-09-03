@@ -5,6 +5,7 @@ import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
 import classes from 'component-classes';
+import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
 import { debounce, warningOnce, getDataAndAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
@@ -229,6 +230,26 @@ class Table extends React.Component {
     } else if (this.scrollPosition !== 'middle') {
       this.setScrollPosition('middle');
     }
+  }
+
+  isTableLayoutFixed() {
+    const { tableLayout, columns = [], rowSelection, useFixedHeader, scroll = {} } = this.props;
+    if (tableLayout === 'fixed') {
+      return true;
+    }
+    // if one column is fixed or ellipsis, use fixed table layout to fix align issue
+    if (columns.some(({ fixed, ellipsis }) => !!fixed || !!ellipsis)) {
+      return true;
+    }
+    // if selection column fixed, use fixed table layout to fix align issue
+    if (rowSelection && rowSelection.fixed) {
+      return true;
+    }
+    // if header fixed, use fixed table layout to fix align issue
+    if (useFixedHeader || scroll.y) {
+      return true;
+    }
+    return false;
   }
 
   handleWindowResize = () => {
@@ -488,18 +509,14 @@ class Table extends React.Component {
       this.columnManager.reset(null, props.children);
     }
 
-    let className = props.prefixCls;
-    if (props.className) {
-      className += ` ${props.className}`;
-    }
-    if (props.useFixedHeader || (props.scroll && props.scroll.y)) {
-      className += ` ${prefixCls}-fixed-header`;
-    }
-    if (this.scrollPosition === 'both') {
-      className += ` ${prefixCls}-scroll-position-left ${prefixCls}-scroll-position-right`;
-    } else {
-      className += ` ${prefixCls}-scroll-position-${this.scrollPosition}`;
-    }
+    const tableClassName = classNames(props.prefixCls, props.className, {
+      [`${prefixCls}-fixed-header`]: props.useFixedHeader || (props.scroll && props.scroll.y),
+      [`${prefixCls}-scroll-position-left ${prefixCls}-scroll-position-right`]:
+        this.scrollPosition === 'both',
+      [`${prefixCls}-scroll-position-${this.scrollPosition}`]: this.scrollPosition !== 'both',
+      [`${prefixCls}-layout-fixed`]: this.isTableLayoutFixed(),
+    });
+
     const hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
     const hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
     const dataAndAriaProps = getDataAndAriaProps(props);
@@ -512,7 +529,7 @@ class Table extends React.Component {
             return (
               <div
                 ref={this.saveRef('tableNode')}
-                className={className}
+                className={tableClassName}
                 style={props.style}
                 id={props.id}
                 {...dataAndAriaProps}
