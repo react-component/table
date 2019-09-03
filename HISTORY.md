@@ -1,6 +1,11 @@
 # History
 ----
 
+## 6.8.0 / 2019-09-03
+
+- Add `tableLayout`, could be set to `fixed`: https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
+- Add `column.ellipsis` to ellipsize cell content.
+
 ## 6.7.0 / 2019-07-22
 
 - Show icon if using `expandIcon` even if `expandRowByClick` is set
