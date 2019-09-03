@@ -233,16 +233,12 @@ class Table extends React.Component {
   }
 
   isTableLayoutFixed() {
-    const { tableLayout, columns = [], rowSelection, useFixedHeader, scroll = {} } = this.props;
+    const { tableLayout, columns = [], useFixedHeader, scroll = {} } = this.props;
     if (tableLayout === 'fixed') {
       return true;
     }
     // if one column is fixed or ellipsis, use fixed table layout to fix align issue
     if (columns.some(({ fixed, ellipsis }) => !!fixed || !!ellipsis)) {
-      return true;
-    }
-    // if selection column fixed, use fixed table layout to fix align issue
-    if (rowSelection && rowSelection.fixed) {
       return true;
     }
     // if header fixed, use fixed table layout to fix align issue
