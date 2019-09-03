@@ -993,7 +993,7 @@ exports[`Table.expand renders expend row class correctly 1`] = `
 
 exports[`Table.expand renders fixed column correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
 >
   <div
     class="rc-table-content"

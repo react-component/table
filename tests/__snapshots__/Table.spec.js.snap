@@ -237,7 +237,7 @@ exports[`Table custom components renders correctly 1`] = `
 
 exports[`Table custom components renders fixed column and header correctly 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left"
+  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
 >
   <div
     class="rc-table-content"
@@ -1208,7 +1208,7 @@ exports[`Table renders empty text correctly 2`] = `
 
 exports[`Table renders fixed header correctly 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left"
+  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
 >
   <div
     class="rc-table-content"
@@ -1671,6 +1671,134 @@ exports[`Table renders without header 1`] = `
 </div>
 `;
 
+exports[`Table rowKey renders ellipsis 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-row-cell-ellipsis"
+            >
+              title
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-row-cell-ellipsis"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-row-cell-ellipsis"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table rowKey renders tableLayout 1`] = `
+<div
+  class="rc-table rc-table-scroll-position-left"
+>
+  <div
+    class="rc-table-content"
+  >
+    <div
+      class="rc-table-body"
+    >
+      <table
+        class=""
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class=""
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class=""
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+                style="padding-left:0px"
+              />
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table scroll renders scroll.x is a number 1`] = `
 <div
   class="rc-table rc-table-scroll-position-left"
@@ -1817,7 +1945,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
 
 exports[`Table scroll renders scroll.y is a number 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left"
+  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
 >
   <div
     class="rc-table-content"
