@@ -34919,7 +34919,6 @@ var Table = function (_React$Component) {
           tableLayout = _props.tableLayout,
           _props$columns = _props.columns,
           columns = _props$columns === undefined ? [] : _props$columns,
-          rowSelection = _props.rowSelection,
           useFixedHeader = _props.useFixedHeader,
           _props$scroll = _props.scroll,
           scroll = _props$scroll === undefined ? {} : _props$scroll;
@@ -34933,10 +34932,6 @@ var Table = function (_React$Component) {
             ellipsis = _ref.ellipsis;
         return !!fixed || !!ellipsis;
       })) {
-        return true;
-      }
-      // if selection column fixed, use fixed table layout to fix align issue
-      if (rowSelection && rowSelection.fixed) {
         return true;
       }
       // if header fixed, use fixed table layout to fix align issue
