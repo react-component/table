@@ -1,14 +1,14 @@
-webpackJsonp([17],{
+webpackJsonp([25],{
 
-/***/ 389:
+/***/ 370:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(390);
+module.exports = __webpack_require__(371);
 
 
 /***/ }),
 
-/***/ 390:
+/***/ 371:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26,10 +26,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 }, { title: 'title3', dataIndex: 'c', key: 'c', width: 200 }, {
+var columns = [{ title: 'name', dataIndex: 'name', width: 100, ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 1', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 2', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 3', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 4', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 5', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 6', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 7', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 8', ellipsis: true }, { title: 'descrption', dataIndex: 'descrption', key: 'descrption 9', ellipsis: true }, {
   title: 'Operations',
-  dataIndex: '',
-  key: 'd',
+  key: 'operations',
+  ellipsis: true,
   render: function render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'a',
@@ -39,7 +39,7 @@ var columns = [{ title: 'title1', dataIndex: 'a', key: 'a', width: 100 }, { id: 
   }
 }];
 
-var data = [{ a: '123', key: '1' }, { a: 'cdd', b: 'edd', key: '2' }, { a: '1333', c: 'eee', d: 2, key: '3' }];
+var data = [{ name: 'jack', descrption: 'descrption descrption descrption', key: '1' }, { name: 'jackjackjackjackjackjack', descrption: 'descrption descrption', key: '2' }, { name: 'jack ma', descrption: 'descrption descrption descrption descrption', key: '3' }, { name: 'jack nickson', descrption: 'descrption descrption', key: '4' }];
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
   'div',
@@ -47,12 +47,12 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'h2',
     null,
-    'hide table head'
+    'Table ellipsis'
   ),
-  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], { columns: columns, showHeader: false, data: data })
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_rc_table__["a" /* default */], { columns: columns, data: data })
 ), document.getElementById('__react-content'));
 
 /***/ })
 
-},[389]);
-//# sourceMappingURL=hide-header.js.map
+},[370]);
+//# sourceMappingURL=ellipsis.js.map

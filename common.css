@@ -207,5 +207,13 @@ tr.rc-table-expanded-row:hover {
 .rc-table.rc-table-scroll-position-right .rc-table-fixed-right {
   box-shadow: none;
 }
+.rc-table-row-cell-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.rc-table-layout-fixed table {
+  table-layout: fixed;
+}
 
 /*# sourceMappingURL=common.css.map*/
