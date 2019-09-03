@@ -17,10 +17,11 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
         if (column.align) {
           customProps.style = { ...customProps.style, textAlign: column.align };
-          customProps.className = classNames(customProps.className, column.className, {
-            [`${prefixCls}-align-${column.align}`]: !!column.align,
-          });
         }
+        customProps.className = classNames(customProps.className, column.className, {
+          [`${prefixCls}-align-${column.align}`]: !!column.align,
+          [`${prefixCls}-row-cell-ellipsis`]: !!column.ellipsis,
+        });
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />
         );
