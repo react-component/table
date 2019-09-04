@@ -34923,8 +34923,8 @@ var Table = function (_React$Component) {
           _props$scroll = _props.scroll,
           scroll = _props$scroll === undefined ? {} : _props$scroll;
 
-      if (tableLayout === 'fixed') {
-        return true;
+      if (typeof tableLayout !== 'undefined') {
+        return tableLayout === 'fixed';
       }
       // if one column is fixed or ellipsis, use fixed table layout to fix align issue
       if (columns.some(function (_ref) {
