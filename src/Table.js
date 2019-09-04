@@ -234,8 +234,8 @@ class Table extends React.Component {
 
   isTableLayoutFixed() {
     const { tableLayout, columns = [], useFixedHeader, scroll = {} } = this.props;
-    if (tableLayout === 'fixed') {
-      return true;
+    if (typeof tableLayout !== 'undefined') {
+      return tableLayout === 'fixed';
     }
     // if one column is fixed or ellipsis, use fixed table layout to fix align issue
     if (columns.some(({ fixed, ellipsis }) => !!fixed || !!ellipsis)) {
