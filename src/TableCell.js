@@ -91,7 +91,20 @@ export default class TableCell extends React.Component {
     }
 
     if (column.align) {
-      tdProps.style = { ...tdProps.style, textAlign: column.align };
+      tdProps.style = {
+        textAlign: column.align,
+        ...tdProps.style,
+      };
+    }
+
+    if (column.width) {
+      tdProps.style = {
+        // 如果有宽度，增加断行处理
+        // https://github.com/ant-design/ant-design/issues/13825#issuecomment-449889241
+        wordWrap: 'break-word',
+        wordBreak: 'break-word',
+        ...tdProps.style,
+      };
     }
 
     const cellClassName = classNames(className, {
