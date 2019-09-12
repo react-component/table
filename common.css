@@ -212,6 +212,10 @@ tr.rc-table-expanded-row:hover {
   white-space: nowrap;
   overflow: hidden;
 }
+.rc-table-row-cell-break-word {
+  word-wrap: break-word;
+  word-break: break-word;
+}
 .rc-table-layout-fixed table {
   table-layout: fixed;
 }

@@ -39444,6 +39444,8 @@ var TableCell = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TableCell, [{
     key: 'render',
     value: function render() {
+      var _classNames;
+
       var _props = this.props,
           record = _props.record,
           indentSize = _props.indentSize,
@@ -39507,16 +39509,7 @@ var TableCell = function (_React$Component) {
         }, tdProps.style);
       }
 
-      if (column.width) {
-        tdProps.style = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({
-          // 如果有宽度，增加断行处理
-          // https://github.com/ant-design/ant-design/issues/13825#issuecomment-449889241
-          wordWrap: 'break-word',
-          wordBreak: 'break-word'
-        }, tdProps.style);
-      }
-
-      var cellClassName = __WEBPACK_IMPORTED_MODULE_8_classnames___default()(className, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()({}, prefixCls + '-cell-ellipsis', !!column.ellipsis));
+      var cellClassName = __WEBPACK_IMPORTED_MODULE_8_classnames___default()(className, (_classNames = {}, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_classNames, prefixCls + '-cell-ellipsis', !!column.ellipsis), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_classNames, prefixCls + '-cell-break-word', !!column.width), _classNames));
 
       return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
         BodyCell,
