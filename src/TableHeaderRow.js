@@ -21,7 +21,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls
         customProps.className = classNames(customProps.className, column.className, {
           [`${prefixCls}-align-${column.align}`]: !!column.align,
           [`${prefixCls}-row-cell-ellipsis`]: !!column.ellipsis,
-          [`${prefixCls}-row-break-word`]: !!column.width,
+          [`${prefixCls}-row-cell-break-word`]: !!column.width,
         });
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />

@@ -132,7 +132,7 @@ exports[`Table align column should not override cell style 1`] = `
             </td>
             <td
               class=""
-              style="color:red;text-align:center"
+              style="text-align:center;color:red"
             />
           </tr>
           <tr
@@ -150,7 +150,7 @@ exports[`Table align column should not override cell style 1`] = `
             </td>
             <td
               class=""
-              style="color:red;text-align:center"
+              style="text-align:center;color:red"
             />
           </tr>
         </tbody>
@@ -716,7 +716,7 @@ exports[`Table renders column correctly 1`] = `
         >
           <tr>
             <th
-              class="name-class"
+              class="name-class rc-table-row-cell-break-word"
             >
               Name
             </th>
@@ -730,7 +730,7 @@ exports[`Table renders column correctly 1`] = `
             data-row-key="key0"
           >
             <td
-              class="name-class"
+              class="name-class rc-table-row-cell-break-word"
             >
               <span
                 class="rc-table-row-indent indent-level-0"
@@ -744,7 +744,7 @@ exports[`Table renders column correctly 1`] = `
             data-row-key="key1"
           >
             <td
-              class="name-class"
+              class="name-class rc-table-row-cell-break-word"
             >
               <span
                 class="rc-table-row-indent indent-level-0"
