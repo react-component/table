@@ -73,7 +73,10 @@ class TableRow extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !!(this.props.visible || nextProps.visible);
+    // return !!(this.props.visible || nextProps.visible);
+    return Object.keys(this.props.record || {}).some(
+      val => nextProps.record[val] !== this.props.record[val],
+    );
   }
 
   componentDidUpdate() {
