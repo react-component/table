@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-expressions,new-cap */
 import React from 'react';
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Table from '../src';
 import '../assets/index.less';
 
-injectGlobal`
+createGlobalStyle`
   tr.drop-over-downward td {
     border-bottom: 2px dashed red;
   }
@@ -169,6 +169,8 @@ class Demo extends React.Component {
     );
   }
 }
+
+console.log('>>>', DragDropContext);
 
 const WrappedDemo = DragDropContext(HTML5Backend)(Demo);
 
