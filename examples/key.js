@@ -29,10 +29,11 @@ class Demo extends React.Component {
   }
 
   remove(index) {
-    const rows = this.state.data;
-    rows.splice(index, 1);
-    this.setState({
-      data: rows,
+    this.setState(({ data }) => {
+      data.splice(index, 1);
+      return {
+        data,
+      };
     });
   }
 
@@ -41,10 +42,10 @@ class Demo extends React.Component {
   };
 
   renderAction = (o, row, index) => (
-      <a href="#" onClick={this.handleClick(index)}>
-        Delete
-      </a>
-    );
+    <a href="#" onClick={this.handleClick(index)}>
+      Delete
+    </a>
+  );
 
   render() {
     const { state } = this;
@@ -62,11 +63,12 @@ class Demo extends React.Component {
 
 const data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
 
-const Demo = () => (
+const Test = () => (
   <div>
     <h2>specify key</h2>
     <Demo data={data} />
   </div>
 );
 
-export default Demo;
+export default Test;
+/* eslint-enable */

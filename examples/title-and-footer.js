@@ -36,3 +36,4 @@ const Demo = () => (
 );
 
 export default Demo;
+/* eslint-enable */

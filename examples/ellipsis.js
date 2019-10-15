@@ -1,7 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from '../src
-import '../srcssets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   { title: 'name', dataIndex: 'name', width: 100, ellipsis: true },
@@ -39,3 +39,4 @@ const Demo = () => (
 );
 
 export default Demo;
+/* eslint-enable */

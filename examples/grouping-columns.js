@@ -2,7 +2,7 @@
 import React from 'react';
 import Table from '../src';
 import '../assets/index.less';
-import '../src/assets/bordered.less';
+import '../assets/bordered.less';
 
 const columns = [
   {
@@ -100,3 +100,4 @@ const Demo = () => (
 );
 
 export default Demo;
+/* eslint-enable */

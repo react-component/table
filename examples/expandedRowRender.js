@@ -1,7 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import Table from '../src';
-import '../assets/index.less
+import '../assets/index.less';
 
 const tableData = [
   { key: 0, a: '123' },
@@ -49,10 +49,18 @@ class Demo extends React.Component {
   toggleButton() {
     if (this.state.expandedRowKeys.length) {
       const closeAll = () => this.setState({ expandedRowKeys: [] });
-      return <button onClick={closeAll}>Close All</button>;
+      return (
+        <button type="button" onClick={closeAll}>
+          Close All
+        </button>
+      );
     }
     const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
-    return <button onClick={openAll}>Expand All</button>;
+    return (
+      <button type="button" onClick={openAll}>
+        Expand All
+      </button>
+    );
   }
 
   remove(index) {
@@ -93,7 +101,7 @@ class Demo extends React.Component {
           expandIconAsCell={expandIconAsCell}
           expandRowByClick={expandRowByClick}
           expandedRowRender={(record, index, indent, expanded) =>
-            (expanded ? <p>extra: {record.a}</p> : null)
+            expanded ? <p>extra: {record.a}</p> : null
           }
           expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
@@ -105,11 +113,12 @@ class Demo extends React.Component {
   }
 }
 
-const Demo = () => (
+const Test = () => (
   <div>
     <h2>expandedRowRender</h2>
     <Demo />
   </div>
 );
 
-export default Demo;
+export default Test;
+/* eslint-enable */

@@ -1,7 +1,7 @@
 /* eslint-disable no-console,react/prop-types,react/no-danger */
 import React from 'react';
 import Table from '../src';
-import '../assets/index.less
+import '../assets/index.less';
 
 const data = [
   { key: 0, a: '123' },
@@ -53,11 +53,12 @@ class Demo extends React.Component {
   }
 }
 
-const Demo = () => (
+const Test = () => (
   <div>
     <h2>expandIcon</h2>
     <Demo />
   </div>
 );
 
-export default Demo;
+export default Test;
+/* eslint-enable */

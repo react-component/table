@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Table from '../src';
-import '../assets/index.less
+import '../assets/index.less';
 
 injectGlobal`
   tr.drop-over-downward td {
@@ -146,8 +146,8 @@ class Demo extends React.Component {
     const { data } = this.state;
     const dragRow = data[dragIndex];
 
-    this.setState(
-      update(this.state, {
+    this.setState(prevState =>
+      update(prevState, {
         data: {
           $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]],
         },
@@ -170,13 +170,14 @@ class Demo extends React.Component {
   }
 }
 
-Demo = DragDropContext(HTML5Backend)(Demo);
+const WrappedDemo = DragDropContext(HTML5Backend)(Demo);
 
-const Demo = () => (
+const Test = () => (
   <div>
     <h2>Integrate with react-dnd</h2>
-    <Demo />
+    <WrappedDemo />
   </div>
 );
 
-export default Demo;
+export default Test;
+/* eslint-enable */

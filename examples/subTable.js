@@ -44,10 +44,10 @@ class Demo extends React.Component {
         dataIndex: '',
         key: 'x',
         render: (text, record) => (
-            <a href="#" onClick={e => this.handleClick(record, e)}>
-              click {record.a}
-            </a>
-          ),
+          <a href="#" onClick={e => this.handleClick(record, e)}>
+            click {record.a}
+          </a>
+        ),
       },
     ];
     return (
@@ -60,3 +60,4 @@ class Demo extends React.Component {
 }
 
 export default Demo;
+/* eslint-enable */

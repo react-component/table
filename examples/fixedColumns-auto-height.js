@@ -45,10 +45,11 @@ const Demo = () => (
       scroll={{ x: 1200 }}
       data={data}
       onRow={(record, index) => ({
-          className: `customize-class-${index}`,
-        })}
+        className: `customize-class-${index}`,
+      })}
     />
   </div>
 );
 
 export default Demo;
+/* eslint-enable */

@@ -1,10 +1,10 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import Table from '../src';
-import '../assets/index.less
+import '../assets/index.less';
 
 const data = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i += 1) {
   data.push({
     key: i,
     a: `a${i}`,
@@ -19,9 +19,7 @@ class Demo extends React.Component {
   };
 
   toggleBody = () => {
-    this.setState({
-      showBody: !this.state.showBody,
-    });
+    this.setState(({ showBody }) => ({ showBody: !showBody }));
   };
 
   render() {
@@ -56,11 +54,12 @@ class Demo extends React.Component {
   }
 }
 
-const Demo = () => (
+const Test = () => (
   <div>
     <h2>scroll body table</h2>
     <Demo />
   </div>
 );
 
-export default Demo;
+export default Test;
+/* eslint-enable */

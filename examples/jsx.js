@@ -1,4 +1,5 @@
-/* eslint-disable no-console,func-names,react/no-multi-comp */
+/* eslint-disable
+  no-console, func-names, react/no-multi-comp, import/no-named-as-default-member */
 import React from 'react';
 import Table from '../src';
 import '../assets/index.less';
@@ -26,3 +27,4 @@ const Demo = () => (
 );
 
 export default Demo;
+/* eslint-enable */

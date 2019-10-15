@@ -1,7 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from '../src
-import '../srcssets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const onRowClick = (record, index, event) => {
   console.log(`Click nth(${index}) row of parent, record.name: ${record.name}`);
@@ -119,3 +119,4 @@ const Demo = () => (
 );
 
 export default Demo;
+/* eslint-enable */

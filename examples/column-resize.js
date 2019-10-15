@@ -1,9 +1,9 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Table from '../src
-import '../srcssets/index.less';
 import { Resizable } from 'react-resizable';
+import Table from '../src';
+import '../assets/index.less';
 import 'react-resizable/css/styles.css';
 
 const ResizeableTitle = props => {
@@ -83,6 +83,5 @@ class Demo extends React.Component {
   }
 }
 
-const Demo = () => <Demo />;
-
 export default Demo;
+/* eslint-enable */
