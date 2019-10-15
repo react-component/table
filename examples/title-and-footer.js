@@ -1,8 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
@@ -24,7 +23,7 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '3' },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>title and footer</h2>
     <Table
@@ -33,6 +32,8 @@ ReactDOM.render(
       title={currentData => <div>Title: {currentData.length} items</div>}
       footer={currentData => <div>Footer: {currentData.length} items</div>}
     />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;
+/* eslint-enable */

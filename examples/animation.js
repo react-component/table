@@ -1,10 +1,9 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
 import Animate from 'rc-animate';
-import 'rc-table/assets/index.less';
-import 'rc-table/assets/animation.less';
+import Table from '../src';
+import '../assets/index.less';
+import '../assets/animation.less';
 
 const AnimateBody = props => <Animate transitionName="move" component="tbody" {...props} />;
 
@@ -38,26 +37,32 @@ class Demo extends React.Component {
   onDelete(key, e) {
     console.log('Delete', key);
     e.preventDefault();
-    const data = this.state.data.filter(item => item.key !== key);
-    this.setState({ data });
+    this.setState(({ data }) => ({
+      data: data.filter(item => item.key !== key),
+    }));
   }
 
   onAdd() {
-    const data = [...this.state.data];
-    data.push({
-      a: 'new data',
-      b: 'new data',
-      c: 'new data',
-      key: Date.now(),
-    });
-    this.setState({ data });
+    this.setState(({ data }) => ({
+      data: [
+        ...data,
+        {
+          a: 'new data',
+          b: 'new data',
+          c: 'new data',
+          key: Date.now(),
+        },
+      ],
+    }));
   }
 
   render() {
     return (
       <div style={{ margin: 20 }}>
         <h2>Table row with animation</h2>
-        <button onClick={() => this.onAdd()}>添加</button>
+        <button type="button" onClick={() => this.onAdd()}>
+          添加
+        </button>
         <Table
           columns={this.columns}
           data={this.state.data}
@@ -69,4 +74,6 @@ class Demo extends React.Component {
     );
   }
 }
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+
+export default Demo;
+/* eslint-enable */

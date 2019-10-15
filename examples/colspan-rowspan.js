@@ -1,8 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   {
@@ -128,10 +127,12 @@ const data = [
   { a: '资料统计完毕于xxxx年xxx月xxx日', key: '6' },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>colSpan & rowSpan</h2>
     <Table columns={columns} data={data} className="table" />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;
+/* eslint-enable */

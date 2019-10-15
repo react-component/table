@@ -1,8 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   {
@@ -100,7 +99,9 @@ function onExpand(expanded, record) {
   console.log('onExpand', expanded, record);
 }
 
-ReactDOM.render(
-  <Table defaultExpandAllRows columns={columns} data={data} indentSize={30} onExpand={onExpand} />,
-  document.getElementById('__react-content'),
+const Demo = () => (
+  <Table defaultExpandAllRows columns={columns} data={data} indentSize={30} onExpand={onExpand} />
 );
+
+export default Demo;
+/* eslint-enable */

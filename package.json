@@ -30,85 +30,54 @@
     "url": "http://github.com/react-component/table/issues"
   },
   "license": "MIT",
-  "config": {
-    "port": 8000,
-    "entry": {
-      "rc-table": [
-        "./assets/animation.less",
-        "./assets/bordered.less",
-        "./assets/index.less",
-        "./src/index.js"
-      ]
-    }
-  },
   "scripts": {
-    "dist": "rc-tools run dist",
-    "build": "rc-tools run build",
-    "compile": "rc-tools run compile --babel-runtime",
-    "gh-pages": "rc-tools run gh-pages",
-    "start": "rc-tools run server",
-    "pub": "rc-tools run pub --babel-runtime",
-    "lint": "rc-tools run lint",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "pre-commit": "rc-tools run pre-commit",
-    "lint-staged": "lint-staged"
+    "start": "cross-env NODE_ENV=development father doc dev --storybook",
+    "build": "father doc build --storybook",
+    "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/animation.less assets/animation.css && lessc assets/bordered.less assets/bordered.css",
+    "gh-pages": "npm run build && father doc deploy",
+    "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish && npm run gh-pages",
+    "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
+    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "test": "father test",
+    "coverage": "father test --coverage"
   },
-  "jest": {
-    "setupFiles": [
-      "./tests/setup.js"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*"
-    ],
-    "transform": {
-      "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "babel-runtime": "6.x",
     "classnames": "^2.2.5",
     "component-classes": "^1.2.6",
     "lodash": "^4.17.5",
     "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
-    "rc-util": "^4.0.4",
+    "rc-util": "^4.13.0",
     "react-lifecycles-compat": "^3.0.2",
-    "shallowequal": "^1.0.2",
-    "warning": "^4.0.3"
+    "shallowequal": "^1.0.2"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@umijs/fabric": "^1.1.10",
+    "cross-env": "^6.0.3",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
+    "father": "^2.22.0",
     "immutability-helper": "^3.0.0",
-    "jest": "^21.2.1",
-    "lint-staged": "^9.0.0",
-    "pre-commit": "1.x",
     "prettier": "^1.11.1",
     "rc-animate": "^2.3.0",
     "rc-dropdown": "~2.0.1",
     "rc-menu": "^7.4.23",
-    "rc-tools": "^8.4.1",
     "react": "^16.0.0",
-    "react-dnd": "^9.3.4",
-    "react-dnd-html5-backend": "^9.3.4",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.0.0",
     "react-resizable": "^1.7.5",
     "react-test-renderer": "^16.0.0",
     "react-virtualized": "^9.12.0",
-    "styled-components": "^4.3.2"
-  },
-  "lint-staged": {
-    "*.{js,jsx,tsx}": [
-      "npm run pre-commit",
-      "git add"
-    ]
-  },
-  "pre-commit": [
-    "lint-staged"
-  ]
+    "styled-components": "^4.3.2",
+    "typescript": "^3.6.4"
+  }
 }

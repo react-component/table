@@ -1,9 +1,8 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const CheckBox = ({ id }) => (
   <label>
@@ -30,10 +29,11 @@ class Demo extends React.Component {
   }
 
   remove(index) {
-    const rows = this.state.data;
-    rows.splice(index, 1);
-    this.setState({
-      data: rows,
+    this.setState(({ data }) => {
+      data.splice(index, 1);
+      return {
+        data,
+      };
     });
   }
 
@@ -41,16 +41,14 @@ class Demo extends React.Component {
     this.remove(index);
   };
 
-  renderAction = (o, row, index) => {
-    return (
-      <a href="#" onClick={this.handleClick(index)}>
-        Delete
-      </a>
-    );
-  };
+  renderAction = (o, row, index) => (
+    <a href="#" onClick={this.handleClick(index)}>
+      Delete
+    </a>
+  );
 
   render() {
-    const state = this.state;
+    const { state } = this;
     const columns = [
       { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: a => <CheckBox id={a} /> },
       { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
@@ -65,10 +63,12 @@ class Demo extends React.Component {
 
 const data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
 
-ReactDOM.render(
+const Test = () => (
   <div>
     <h2>specify key</h2>
     <Demo data={data} />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Test;
+/* eslint-enable */

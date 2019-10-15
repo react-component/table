@@ -1,8 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   { title: 'name', dataIndex: 'name', width: 100, ellipsis: true },
@@ -32,10 +31,12 @@ const data = [
   { name: 'jack nickson', descrption: 'descrption descrption', key: '4' },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>Table ellipsis</h2>
     <Table columns={columns} data={data} />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;
+/* eslint-enable */

@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-expressions,new-cap */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
-injectGlobal`
+createGlobalStyle`
   tr.drop-over-downward td {
     border-bottom: 2px dashed red;
   }
@@ -50,7 +49,7 @@ let BodyRow = props => {
   } = props;
   const style = { cursor: 'move' };
 
-  let className = restProps.className;
+  let { className } = restProps;
   if (isOver && initialClientOffset) {
     const direction = dragDirection(
       dragRow.index,
@@ -147,8 +146,8 @@ class Demo extends React.Component {
     const { data } = this.state;
     const dragRow = data[dragIndex];
 
-    this.setState(
-      update(this.state, {
+    this.setState(prevState =>
+      update(prevState, {
         data: {
           $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]],
         },
@@ -171,12 +170,16 @@ class Demo extends React.Component {
   }
 }
 
-Demo = DragDropContext(HTML5Backend)(Demo);
+console.log('>>>', DragDropContext);
 
-ReactDOM.render(
+const WrappedDemo = DragDropContext(HTML5Backend)(Demo);
+
+const Test = () => (
   <div>
     <h2>Integrate with react-dnd</h2>
-    <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+    <WrappedDemo />
+  </div>
 );
+
+export default Test;
+/* eslint-enable */

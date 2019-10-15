@@ -1,8 +1,8 @@
-/* eslint-disable no-console,func-names,react/no-multi-comp */
+/* eslint-disable
+  no-console, func-names, react/no-multi-comp, import/no-named-as-default-member */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const { ColumnGroup, Column } = Table;
 
@@ -12,7 +12,7 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '3' },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>JSX table</h2>
     <Table data={data}>
@@ -23,6 +23,8 @@ ReactDOM.render(
       <Column title="title3" dataIndex="c" key="c" width={200} />
       <Column title="Operations" dataIndex="" key="d" render={() => <a href="#">Operations</a>} />
     </Table>
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;
+/* eslint-enable */

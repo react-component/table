@@ -1,15 +1,14 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
 import Menu, { Item, Divider } from 'rc-menu';
 import DropDown from 'rc-dropdown';
-import 'rc-table/assets/index.less';
 import 'rc-dropdown/assets/index.css';
 import 'rc-menu/assets/index.css';
+import Table from '../src';
+import '../assets/index.less';
 
 const data = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i += 1) {
   data.push({
     key: i,
     a: `a${i}`,
@@ -61,6 +60,7 @@ class Demo extends React.Component {
         <Divider />
         <Item disabled>
           <button
+            type="button"
             style={{
               cursor: 'pointer',
               color: '#000',
@@ -101,10 +101,12 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(
+const Test = () => (
   <div>
     <h2>use dropdown</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Test;
+/* eslint-enable */

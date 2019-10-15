@@ -1,8 +1,7 @@
 /* eslint-disable no-console,react/prop-types,react/no-danger */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const data = [
   { key: 0, a: '123' },
@@ -54,10 +53,12 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(
+const Test = () => (
   <div>
     <h2>expandIcon</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Test;
+/* eslint-enable */

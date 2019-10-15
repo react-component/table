@@ -1,8 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const tableData = [
   { key: 0, a: '123' },
@@ -50,14 +49,22 @@ class Demo extends React.Component {
   toggleButton() {
     if (this.state.expandedRowKeys.length) {
       const closeAll = () => this.setState({ expandedRowKeys: [] });
-      return <button onClick={closeAll}>Close All</button>;
+      return (
+        <button type="button" onClick={closeAll}>
+          Close All
+        </button>
+      );
     }
     const openAll = () => this.setState({ expandedRowKeys: [0, 1, 2] });
-    return <button onClick={openAll}>Expand All</button>;
+    return (
+      <button type="button" onClick={openAll}>
+        Expand All
+      </button>
+    );
   }
 
   remove(index) {
-    const data = this.state.data;
+    const { data } = this.state;
     data.splice(index, 1);
     this.setState({ data });
   }
@@ -106,10 +113,12 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(
+const Test = () => (
   <div>
     <h2>expandedRowRender</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Test;
+/* eslint-enable */
