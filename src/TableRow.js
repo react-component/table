@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import warning from 'rc-util/lib/warning';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
 import TableCell from './TableCell';
-import { warningOnce } from './utils';
 
 class TableRow extends React.Component {
   static propTypes = {
@@ -212,7 +212,7 @@ class TableRow extends React.Component {
     for (let i = 0; i < columns.length; i++) {
       const column = columns[i];
 
-      warningOnce(
+      warning(
         column.onCellClick === undefined,
         'column[onCellClick] is deprecated, please use column[onCell] instead.',
       );

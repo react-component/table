@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
+import warning from 'rc-util/lib/warning';
 import { Provider, create } from 'mini-store';
 import merge from 'lodash/merge';
 import classes from 'component-classes';
 import classNames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
-import { debounce, warningOnce, getDataAndAriaProps } from './utils';
+import { debounce, getDataAndAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
@@ -86,10 +87,10 @@ class Table extends React.Component {
       'onRowMouseEnter',
       'onRowMouseLeave',
     ].forEach(name => {
-      warningOnce(props[name] === undefined, `${name} is deprecated, please use onRow instead.`);
+      warning(props[name] === undefined, `${name} is deprecated, please use onRow instead.`);
     });
 
-    warningOnce(
+    warning(
       props.getBodyWrapper === undefined,
       'getBodyWrapper is deprecated, please use custom components instead.',
     );
@@ -190,7 +191,7 @@ class Table extends React.Component {
   getRowKey = (record, index) => {
     const rowKey = this.props.rowKey;
     const key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-    warningOnce(
+    warning(
       key !== undefined,
       'Each record in table should have a unique `key` prop,' +
         'or set `rowKey` to an unique primary key.',

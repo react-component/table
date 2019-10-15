@@ -53,8 +53,7 @@
     "prop-types": "^15.5.8",
     "rc-util": "^4.13.0",
     "react-lifecycles-compat": "^3.0.2",
-    "shallowequal": "^1.0.2",
-    "warning": "^4.0.3"
+    "shallowequal": "^1.0.2"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",

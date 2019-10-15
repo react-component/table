@@ -1,7 +1,5 @@
-import warning from 'warning';
-
-let scrollbarVerticalSize;
-let scrollbarHorizontalSize;
+let scrollbarVerticalSize: number;
+let scrollbarHorizontalSize: number;
 
 // Measure scrollbar width for padding body during modal show/hide
 const scrollbarMeasure = {
@@ -21,7 +19,9 @@ export function measureScrollbar({ direction = 'vertical', prefixCls }) {
   const isVertical = direction === 'vertical';
   if (isVertical && scrollbarVerticalSize) {
     return scrollbarVerticalSize;
-  } else if (!isVertical && scrollbarHorizontalSize) {
+  }
+
+  if (!isVertical && scrollbarHorizontalSize) {
     return scrollbarHorizontalSize;
   }
   const scrollDiv = document.createElement('div');
@@ -50,9 +50,9 @@ export function measureScrollbar({ direction = 'vertical', prefixCls }) {
   return size;
 }
 
-export function debounce(func, wait, immediate) {
-  let timeout;
-  function debounceFunc(...args) {
+export function debounce(func: Function, wait: number, immediate: boolean) {
+  let timeout: NodeJS.Timeout;
+  function debounceFunc(...args: any[]) {
     const context = this;
     // https://fb.me/react-event-pooling
     if (args[0] && args[0].persist) {
@@ -80,15 +80,7 @@ export function debounce(func, wait, immediate) {
   return debounceFunc;
 }
 
-const warned = {};
-export function warningOnce(condition, format, args) {
-  if (!warned[format]) {
-    warning(condition, format, args);
-    warned[format] = !condition;
-  }
-}
-
-export function remove(array, item) {
+export function remove<T>(array: T[], item: T) {
   const index = array.indexOf(item);
   const front = array.slice(0, index);
   const last = array.slice(index + 1, array.length);
@@ -99,7 +91,7 @@ export function remove(array, item) {
  * Returns only data- and aria- key/value pairs
  * @param {object} props
  */
-export function getDataAndAriaProps(props) {
+export function getDataAndAriaProps(props: object) {
   return Object.keys(props).reduce((memo, key) => {
     if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-') {
       memo[key] = props[key];

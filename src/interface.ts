@@ -6,20 +6,27 @@ export type FixedType = 'left' | 'right' | boolean;
 
 export type DefaultValueType = Record<string, any>;
 
+export interface RenderedCell {
+  props?: Cell;
+  children?: React.ReactNode;
+}
+
 export interface ColumnType<ValueType = DefaultValueType> {
   // TODO: https://ant.design/components/table-cn/#Column
-  key: Key;
+  key?: Key;
   dataIndex?: Key;
   fixed?: boolean;
   className?: string;
+  ellipsis?: boolean;
+  align?: 'left' | 'center' | 'right';
   width?: number | string;
   rowSpan?: number;
   colSpan?: number;
   title?: React.ReactNode;
-  render?: (value: any, record: ValueType, index: number) => React.ReactNode;
+  render?: (value: any, record: ValueType, index: number) => React.ReactNode | RenderedCell;
 
   /** @deprecated Please use `onCell` instead */
-  onCellClick?: React.MouseEventHandler<HTMLElement>;
+  onCellClick?: (record: ValueType, e: React.MouseEvent<HTMLElement>) => void;
   onCell?: GetComponentProps<ValueType>;
   onHeaderCell?: GetComponentProps<ColumnType>;
 }
@@ -30,10 +37,11 @@ export interface InternalColumnType extends ColumnType {
 }
 
 export interface Cell {
-  key: Key;
-  className: string;
-  children: React.ReactNode;
-  column: ColumnType;
+  key?: Key;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  column?: ColumnType;
   colSpan?: number;
   rowSpan?: number;
 }
@@ -90,3 +98,7 @@ export type ExpandEventHandler<ValueType> = (
   record: ValueType,
   event: React.MouseEvent<HTMLElement>,
 ) => void;
+
+export type CustomizeComponent<
+  P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
+> = React.ComponentType<P> | React.FC<P> | string;

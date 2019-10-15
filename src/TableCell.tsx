@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import get from 'lodash/get';
+import { ColumnType, CustomizeComponent, Cell, RenderedCell } from './interface';
 
-function isInvalidRenderCellText(text) {
+function isInvalidRenderCellText(text: any): text is RenderedCell {
   return (
     text &&
     !React.isValidElement(text) &&
@@ -11,19 +11,19 @@ function isInvalidRenderCellText(text) {
   );
 }
 
-export default class TableCell extends React.Component {
-  static propTypes = {
-    record: PropTypes.object,
-    prefixCls: PropTypes.string,
-    index: PropTypes.number,
-    indent: PropTypes.number,
-    indentSize: PropTypes.number,
-    column: PropTypes.object,
-    expandIcon: PropTypes.node,
-    component: PropTypes.any,
-  };
+export interface TableCellProps<ValueType> {
+  record?: ValueType;
+  prefixCls?: string;
+  index?: number;
+  indent?: number;
+  indentSize?: number;
+  column?: ColumnType;
+  expandIcon?: React.ReactNode;
+  component?: CustomizeComponent;
+}
 
-  handleClick = e => {
+export default class TableCell<ValueType> extends React.Component<TableCellProps<ValueType>> {
+  handleClick: React.MouseEventHandler<HTMLElement> = e => {
     const {
       record,
       column: { onCellClick },
@@ -48,7 +48,7 @@ export default class TableCell extends React.Component {
 
     // We should return undefined if no dataIndex is specified, but in order to
     // be compatible with object-path's behavior, we return the record object instead.
-    let text;
+    let text: React.ReactNode | RenderedCell;
     if (typeof dataIndex === 'number') {
       text = get(record, dataIndex);
     } else if (!dataIndex || dataIndex.length === 0) {
@@ -56,16 +56,17 @@ export default class TableCell extends React.Component {
     } else {
       text = get(record, dataIndex);
     }
-    let tdProps = {};
-    let colSpan;
-    let rowSpan;
+    let tdProps: Cell = {};
+    let colSpan: number;
+    let rowSpan: number;
 
     if (render) {
       text = render(text, record, index);
+
+      // `render` support cell with additional config like `props`
       if (isInvalidRenderCellText(text)) {
         tdProps = text.props || tdProps;
-        colSpan = tdProps.colSpan;
-        rowSpan = tdProps.rowSpan;
+        ({ colSpan, rowSpan } = tdProps);
         text = text.children;
       }
     }
