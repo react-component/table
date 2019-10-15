@@ -1,43 +1,60 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import warning from 'rc-util/lib/warning';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
 import TableCell from './TableCell';
+import {
+  GetComponentProps,
+  LegacyFunction,
+  Key,
+  ColumnType,
+  TableStore,
+  FixedType,
+  RenderNode,
+  Cell,
+  TableComponents,
+  DefaultValueType,
+  TableStoreState,
+} from './interface';
 
-class TableRow extends React.Component {
-  static propTypes = {
-    onRow: PropTypes.func,
-    onRowClick: PropTypes.func,
-    onRowDoubleClick: PropTypes.func,
-    onRowContextMenu: PropTypes.func,
-    onRowMouseEnter: PropTypes.func,
-    onRowMouseLeave: PropTypes.func,
-    record: PropTypes.object,
-    prefixCls: PropTypes.string,
-    onHover: PropTypes.func,
-    columns: PropTypes.array,
-    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    index: PropTypes.number,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    className: PropTypes.string,
-    indent: PropTypes.number,
-    indentSize: PropTypes.number,
-    hasExpandIcon: PropTypes.func,
-    hovered: PropTypes.bool.isRequired,
-    visible: PropTypes.bool.isRequired,
-    store: PropTypes.object.isRequired,
-    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    renderExpandIcon: PropTypes.func,
-    renderExpandIconCell: PropTypes.func,
-    components: PropTypes.any,
-    expandedRow: PropTypes.bool,
-    isAnyColumnsFixed: PropTypes.bool,
-    ancestorKeys: PropTypes.array.isRequired,
-  };
+export interface TableRowProps<ValueType> {
+  onRow?: GetComponentProps<ValueType>;
+  onRowClick?: LegacyFunction<ValueType>;
+  onRowDoubleClick?: LegacyFunction<ValueType>;
+  onRowContextMenu?: LegacyFunction<ValueType>;
+  onRowMouseEnter?: LegacyFunction<ValueType>;
+  onRowMouseLeave?: LegacyFunction<ValueType>;
+  record?: ValueType;
+  prefixCls?: string;
+  onHover?: (hovered: boolean, rowKey: Key) => void;
+  columns?: ColumnType[];
+  height?: string | number;
+  index?: number;
+  rowKey: Key;
+  className?: string;
+  indent?: number;
+  indentSize?: number;
+  hasExpandIcon?: (index: number) => boolean;
+  hovered: boolean;
+  visible: boolean;
+  store: TableStore;
+  fixed?: FixedType;
+  renderExpandIcon?: RenderNode;
+  renderExpandIconCell?: (cells: Cell[]) => void;
+  components?: TableComponents;
+  expandedRow?: boolean;
+  isAnyColumnsFixed?: boolean;
+  ancestorKeys: Key[];
+}
 
+interface TableRowState {
+  shouldRender?: boolean;
+  visible?: boolean;
+}
+
+class TableRow<ValueType> extends React.Component<TableRowProps<ValueType>, TableRowState> {
   static defaultProps = {
     onRow() {},
     onHover() {},
@@ -46,15 +63,16 @@ class TableRow extends React.Component {
     renderExpandIconCell() {},
   };
 
-  constructor(props) {
-    super(props);
+  state: TableRowState = {};
 
-    this.shouldRender = props.visible;
+  rowRef: HTMLElement;
 
-    this.state = {};
-  }
+  style: React.CSSProperties;
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(
+    nextProps: TableRowProps<DefaultValueType>,
+    prevState: TableRowState,
+  ): Partial<TableRowState> {
     if (prevState.visible || (!prevState.visible && nextProps.visible)) {
       return {
         shouldRender: true,
@@ -82,10 +100,14 @@ class TableRow extends React.Component {
     }
   }
 
-  onTriggerEvent = (rowPropFunc, legacyFunc, additionalFunc) => {
+  onTriggerEvent = (
+    rowPropFunc: Function,
+    legacyFunc: LegacyFunction<ValueType>,
+    additionalFunc?: Function,
+  ) => {
     const { record, index } = this.props;
 
-    return (...args) => {
+    return (...args: [React.SyntheticEvent]) => {
       // Additional function like trigger `this.onHover` to handle self logic
       if (additionalFunc) {
         additionalFunc();
@@ -108,6 +130,7 @@ class TableRow extends React.Component {
     const { onHover, rowKey } = this.props;
     onHover(true, rowKey);
   };
+
   onMouseLeave = () => {
     const { onHover, rowKey } = this.props;
     onHover(false, rowKey);
@@ -116,7 +139,7 @@ class TableRow extends React.Component {
   setExpandedRowHeight() {
     const { store, rowKey } = this.props;
     let { expandedRowsHeight } = store.getState();
-    const height = this.rowRef.getBoundingClientRect().height;
+    const { height } = this.rowRef.getBoundingClientRect();
     expandedRowsHeight = {
       ...expandedRowsHeight,
       [rowKey]: height,
@@ -127,7 +150,7 @@ class TableRow extends React.Component {
   setRowHeight() {
     const { store, rowKey } = this.props;
     const { fixedColumnsBodyRowsHeight } = store.getState();
-    const height = this.rowRef.getBoundingClientRect().height;
+    const { height } = this.rowRef.getBoundingClientRect();
     store.setState({
       fixedColumnsBodyRowsHeight: {
         ...fixedColumnsBodyRowsHeight,
@@ -151,7 +174,7 @@ class TableRow extends React.Component {
   }
 
   saveRowRef() {
-    this.rowRef = ReactDOM.findDOMNode(this);
+    this.rowRef = ReactDOM.findDOMNode(this) as HTMLElement;
 
     const { isAnyColumnsFixed, fixed, expandedRow, ancestorKeys } = this.props;
 
@@ -205,11 +228,11 @@ class TableRow extends React.Component {
       className += ` ${prefixCls}-hover`;
     }
 
-    const cells = [];
+    const cells: Cell[] = [];
 
     renderExpandIconCell(cells);
 
-    for (let i = 0; i < columns.length; i++) {
+    for (let i = 0; i < columns.length; i += 1) {
       const column = columns[i];
 
       warning(
@@ -234,7 +257,7 @@ class TableRow extends React.Component {
 
     const { className: customClassName, style: customStyle, ...rowProps } =
       onRow(record, index) || {};
-    let style = { height };
+    let style: React.CSSProperties = { height };
 
     if (!visible) {
       style.display = 'none';
@@ -296,10 +319,10 @@ function getRowHeight(state, props) {
 
 polyfill(TableRow);
 
-export default connect((state, props) => {
+export default connect((state: TableStoreState, props: TableRowProps<DefaultValueType>) => {
   const { currentHoverKey, expandedRowKeys } = state;
   const { rowKey, ancestorKeys } = props;
-  const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
+  const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => expandedRowKeys.includes(k));
 
   return {
     visible,

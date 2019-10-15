@@ -48,6 +48,9 @@ export interface Cell {
 
 export interface TableStoreState {
   currentHoverKey: Key;
+  expandedRowKeys: Key[];
+  expandedRowsHeight: Record<Key, number>;
+  fixedColumnsBodyRowsHeight: Record<Key, number>;
 }
 
 export interface TableStore {
@@ -86,13 +89,7 @@ export type RowHoverEventHandler = (isHover: boolean, key: Key) => void;
 export type GetComponentProps<DataType> = (
   data: DataType,
   index: number,
-) => {
-  onClick?: React.MouseEventHandler<HTMLElement>;
-  onDoubleClick?: React.MouseEventHandler<HTMLElement>;
-  onContextMenu?: React.MouseEventHandler<HTMLElement>;
-  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
-  onMouseLeave?: React.MouseEventHandler<HTMLElement>;
-};
+) => React.HTMLAttributes<HTMLElement>;
 
 export type ExpandEventHandler<ValueType> = (
   record: ValueType,
@@ -102,3 +99,25 @@ export type ExpandEventHandler<ValueType> = (
 export type CustomizeComponent<
   P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
 > = React.ComponentType<P> | React.FC<P> | string;
+
+export type LegacyFunction<ValueType> = (
+  record: ValueType,
+  index: number,
+  event: React.SyntheticEvent,
+) => void;
+
+export type RenderNode = () => React.ReactNode;
+
+export interface TableComponents {
+  table?: CustomizeComponent;
+  header?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
+  body?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
+}
