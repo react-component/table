@@ -49,6 +49,8 @@ export interface TableProps<RecordType> {
 
     id?: string;
 
+    tableNodeRef?: ((node: HTMLElement) => void);
+
     useFixedHeader?: boolean;
 
     scroll?: Scroll;
