@@ -6,25 +6,34 @@ import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
+import {
+  Column,
+  TableStore,
+  Expander,
+  GetRowKey,
+  RowHoverHandler,
+  RenderRows,
+  FixedType,
+} from './interface';
 
-class BaseTable extends React.Component {
-  static propTypes = {
-    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    columns: PropTypes.array.isRequired,
-    tableClassName: PropTypes.string.isRequired,
-    hasHead: PropTypes.bool.isRequired,
-    hasBody: PropTypes.bool.isRequired,
-    store: PropTypes.object.isRequired,
-    expander: PropTypes.object.isRequired,
-    getRowKey: PropTypes.func,
-    isAnyColumnsFixed: PropTypes.bool,
-  };
+export interface BaseTableProps<ValueType> {
+  fixed?: FixedType;
+  columns: Column[];
+  tableClassName: string;
+  hasHead: boolean;
+  hasBody: boolean;
+  store: TableStore;
+  expander: Expander<ValueType>;
+  getRowKey?: GetRowKey<ValueType>;
+  isAnyColumnsFixed?: boolean;
+}
 
+class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
   static contextTypes = {
     table: PropTypes.any,
   };
 
-  getColumns(cols) {
+  getColumns(cols?: Column[]) {
     const { columns = [], fixed } = this.props;
     const { table } = this.context;
     const { prefixCls } = table.props;
@@ -37,13 +46,13 @@ class BaseTable extends React.Component {
     }));
   }
 
-  handleRowHover = (isHover, key) => {
+  handleRowHover: RowHoverHandler = (isHover, key) => {
     this.props.store.setState({
       currentHoverKey: isHover ? key : null,
     });
   };
 
-  renderRows = (renderData, indent, ancestorKeys = []) => {
+  renderRows: RenderRows<ValueType> = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
     const { columnManager, components } = table;
     const {
@@ -60,20 +69,20 @@ class BaseTable extends React.Component {
     } = table.props;
     const { getRowKey, fixed, expander, isAnyColumnsFixed } = this.props;
 
-    const rows = [];
+    const rows: React.ReactElement[] = [];
 
-    for (let i = 0; i < renderData.length; i++) {
+    for (let i = 0; i < renderData.length; i += 1) {
       const record = renderData[i];
       const key = getRowKey(record, i);
-      const className =
+      const className: string =
         typeof rowClassName === 'string' ? rowClassName : rowClassName(record, i, indent);
 
-      const onHoverProps = {};
+      const onHoverProps: { onHover?: RowHoverHandler } = {};
       if (columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      let leafColumns;
+      let leafColumns: Column[];
       if (fixed === 'left') {
         leafColumns = columnManager.leftLeafColumns();
       } else if (fixed === 'right') {
@@ -97,9 +106,7 @@ class BaseTable extends React.Component {
           needIndentSpaced={expander.needIndentSpaced}
           onExpandedChange={expander.handleExpandChange}
         >
-          {(
-            expandableRow, // eslint-disable-line
-          ) => (
+          {(expandableRow: any) => (
             <TableRow
               fixed={fixed}
               indent={indent}
@@ -138,7 +145,7 @@ class BaseTable extends React.Component {
     const { components } = table;
     const { prefixCls, scroll, data, getBodyWrapper } = table.props;
     const { expander, tableClassName, hasHead, hasBody, fixed } = this.props;
-    const tableStyle = {};
+    const tableStyle: React.CSSProperties = {};
 
     if (!fixed && scroll.x) {
       // not set width, then use content fixed width
@@ -152,7 +159,7 @@ class BaseTable extends React.Component {
     const Table = hasBody ? components.table : 'table';
     const BodyWrapper = components.body.wrapper;
 
-    let body;
+    let body: React.ReactElement;
     if (hasBody) {
       body = <BodyWrapper className={`${prefixCls}-tbody`}>{this.renderRows(data, 0)}</BodyWrapper>;
       if (getBodyWrapper) {
