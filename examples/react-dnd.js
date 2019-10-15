@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-expressions,new-cap */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { injectGlobal } from 'styled-components';
 import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
@@ -50,7 +49,7 @@ let BodyRow = props => {
   } = props;
   const style = { cursor: 'move' };
 
-  let className = restProps.className;
+  let { className } = restProps;
   if (isOver && initialClientOffset) {
     const direction = dragDirection(
       dragRow.index,
@@ -173,10 +172,11 @@ class Demo extends React.Component {
 
 Demo = DragDropContext(HTML5Backend)(Demo);
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>Integrate with react-dnd</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

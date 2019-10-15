@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
@@ -41,16 +40,14 @@ class Demo extends React.Component {
     this.remove(index);
   };
 
-  renderAction = (o, row, index) => {
-    return (
+  renderAction = (o, row, index) => (
       <a href="#" onClick={this.handleClick(index)}>
         Delete
       </a>
     );
-  };
 
   render() {
-    const state = this.state;
+    const { state } = this;
     const columns = [
       { title: 'title1', dataIndex: 'a', key: 'a', width: 100, render: a => <CheckBox id={a} /> },
       { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
@@ -65,10 +62,11 @@ class Demo extends React.Component {
 
 const data = [{ a: '123' }, { a: 'cdd', b: 'edd' }, { a: '1333', c: 'eee', d: 2 }];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>specify key</h2>
     <Demo data={data} />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

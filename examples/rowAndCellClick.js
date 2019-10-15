@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
@@ -108,7 +107,7 @@ const data = [
   },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <Table
     columns={columns}
     data={data}
@@ -116,6 +115,7 @@ ReactDOM.render(
       onClick: onRowClick.bind(null, record, index),
       onDoubleClick: onRowDoubleClick.bind(null, record, index),
     })}
-  />,
-  document.getElementById('__react-content'),
+  />
 );
+
+export default Demo;

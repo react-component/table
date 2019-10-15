@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
@@ -36,10 +35,11 @@ const components = {
   },
 };
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>Integrate with styled-components</h2>
     <Table columns={columns} data={data} components={components} />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 import 'rc-table/assets/bordered.less';
@@ -93,10 +92,11 @@ const data = [
   },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>grouping columns</h2>
     <Table columns={columns} data={data} className="bordered" />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
@@ -57,7 +56,7 @@ class Demo extends React.Component {
   }
 
   remove(index) {
-    const data = this.state.data;
+    const { data } = this.state;
     data.splice(index, 1);
     this.setState({ data });
   }
@@ -94,7 +93,7 @@ class Demo extends React.Component {
           expandIconAsCell={expandIconAsCell}
           expandRowByClick={expandRowByClick}
           expandedRowRender={(record, index, indent, expanded) =>
-            expanded ? <p>extra: {record.a}</p> : null
+            (expanded ? <p>extra: {record.a}</p> : null)
           }
           expandedRowKeys={expandedRowKeys}
           onExpandedRowsChange={this.onExpandedRowsChange}
@@ -106,10 +105,11 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>expandedRowRender</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

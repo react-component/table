@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Table from 'rc-table';
 import Menu, { Item, Divider } from 'rc-menu';
 import DropDown from 'rc-dropdown';
@@ -101,10 +100,11 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(
+const Demo = () => (
   <div>
     <h2>use dropdown</h2>
     <Demo />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

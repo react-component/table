@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
 
@@ -14,9 +13,11 @@ const columns = [
   {
     title: (
       <div>
-        title7<br />
+        title7
         <br />
-        <br />Hello world!
+        <br />
+        <br />
+        Hello world!
       </div>
     ),
     dataIndex: 'b',
@@ -41,7 +42,7 @@ const data = [
   { a: '133', c: 'edd12221', d: 2, key: '9' },
 ];
 
-ReactDOM.render(
+const Demo = () => (
   <div style={{ width: 800 }}>
     <h2>Fixed columns</h2>
     <Table
@@ -51,6 +52,7 @@ ReactDOM.render(
       scroll={{ x: 1200 }}
       data={data}
     />
-  </div>,
-  document.getElementById('__react-content'),
+  </div>
 );
+
+export default Demo;

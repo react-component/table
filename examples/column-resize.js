@@ -1,6 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import 'rc-table/assets/index.less';
@@ -84,4 +83,6 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+const Demo = () => <Demo />;
+
+export default Demo;
