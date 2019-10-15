@@ -1,6 +1,6 @@
 import React from 'react';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   { title: 'First Name', dataIndex: 'names.first', key: 'a', width: 100 },

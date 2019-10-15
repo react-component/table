@@ -1,7 +1,7 @@
 /* eslint-disable no-console,react/prop-types,react/no-danger */
 import React from 'react';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less
 
 const data = [
   { key: 0, a: '123' },

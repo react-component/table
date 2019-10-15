@@ -1,7 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less';
 
 const columns = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },

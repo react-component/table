@@ -1,9 +1,9 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from 'rc-table';
+import Table from '../src';
 import Menu, { Item, Divider } from 'rc-menu';
 import DropDown from 'rc-dropdown';
-import 'rc-table/assets/index.less';
+import '../assets/index.less
 import 'rc-dropdown/assets/index.css';
 import 'rc-menu/assets/index.css';
 

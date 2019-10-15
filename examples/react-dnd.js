@@ -4,8 +4,8 @@ import { injectGlobal } from 'styled-components';
 import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
+import Table from '../src';
+import '../assets/index.less
 
 injectGlobal`
   tr.drop-over-downward td {

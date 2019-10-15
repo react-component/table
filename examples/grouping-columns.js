@@ -1,8 +1,8 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from 'rc-table';
-import 'rc-table/assets/index.less';
-import 'rc-table/assets/bordered.less';
+import Table from '../src';
+import '../assets/index.less';
+import '../src/assets/bordered.less';
 
 const columns = [
   {
