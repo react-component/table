@@ -524,7 +524,12 @@ class Table extends React.Component {
             this.expander = expander;
             return (
               <div
-                ref={this.saveRef('tableNode')}
+                ref={e => {
+                  this.saveRef('tableNode')(e);
+                  if (this.props.tableNodeRef) {
+                    this.props.tableNodeRef(this.tableNode);
+                  }
+                }}
                 className={tableClassName}
                 style={props.style}
                 id={props.id}
