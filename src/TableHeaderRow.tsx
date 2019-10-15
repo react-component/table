@@ -1,9 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import classNames from 'classnames';
+import {
+  TableComponents,
+  GetComponentProps,
+  ColumnType,
+  Cell,
+  TableStoreState,
+  FixedType,
+} from './interface';
 
-function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls }) {
+export interface TableHeaderRowProps {
+  row: Cell[];
+  index: number;
+  height: string | number;
+  components: TableComponents;
+  onHeaderRow: GetComponentProps<ColumnType[]>;
+  prefixCls: string;
+  columns: ColumnType[];
+  rows: Cell[];
+  fixed: FixedType;
+}
+
+function TableHeaderRow({
+  row,
+  index,
+  height,
+  components,
+  onHeaderRow,
+  prefixCls,
+}: TableHeaderRowProps) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
@@ -31,16 +57,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow, prefixCls
   );
 }
 
-TableHeaderRow.propTypes = {
-  row: PropTypes.array,
-  index: PropTypes.number,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  components: PropTypes.any,
-  onHeaderRow: PropTypes.func,
-  prefixCls: PropTypes.string,
-};
-
-function getRowHeight(state, props) {
+function getRowHeight(state: TableStoreState, props: TableHeaderRowProps) {
   const { fixedColumnsHeadRowsHeight } = state;
   const { columns, rows, fixed } = props;
   const headerHeight = fixedColumnsHeadRowsHeight[0];
@@ -58,8 +75,6 @@ function getRowHeight(state, props) {
   return null;
 }
 
-export default connect((state, props) => {
-  return {
-    height: getRowHeight(state, props),
-  };
-})(TableHeaderRow);
+export default connect((state: TableStoreState, props: TableHeaderRowProps) => ({
+  height: getRowHeight(state, props),
+}))(TableHeaderRow);

@@ -15,7 +15,7 @@ export interface ColumnType<ValueType = DefaultValueType> {
   // TODO: https://ant.design/components/table-cn/#Column
   key?: Key;
   dataIndex?: Key;
-  fixed?: boolean;
+  fixed?: FixedType;
   className?: string;
   ellipsis?: boolean;
   align?: 'left' | 'center' | 'right';
@@ -23,6 +23,7 @@ export interface ColumnType<ValueType = DefaultValueType> {
   rowSpan?: number;
   colSpan?: number;
   title?: React.ReactNode;
+  children?: ColumnType[];
   render?: (value: any, record: ValueType, index: number) => React.ReactNode | RenderedCell;
 
   /** @deprecated Please use `onCell` instead */
@@ -33,7 +34,6 @@ export interface ColumnType<ValueType = DefaultValueType> {
 
 export interface InternalColumnType extends ColumnType {
   RC_TABLE_INTERNAL_COL_DEFINE?: object;
-  children?: InternalColumnType[];
 }
 
 export interface Cell {
@@ -50,6 +50,7 @@ export interface TableStoreState {
   currentHoverKey: Key;
   expandedRowKeys: Key[];
   expandedRowsHeight: Record<Key, number>;
+  fixedColumnsHeadRowsHeight: Record<Key, number | 'auto'>;
   fixedColumnsBodyRowsHeight: Record<Key, number>;
 }
 
@@ -88,7 +89,7 @@ export type RowHoverEventHandler = (isHover: boolean, key: Key) => void;
 
 export type GetComponentProps<DataType> = (
   data: DataType,
-  index: number,
+  index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
 
 export type ExpandEventHandler<ValueType> = (

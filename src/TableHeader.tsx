@@ -46,7 +46,7 @@ export interface TableHeaderProps {
   fixed?: FixedType;
   columns: ColumnType[];
   expander: Expander;
-  onHeaderRow?: GetComponentProps<ColumnType>;
+  onHeaderRow?: GetComponentProps<ColumnType[]>;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = (props, { table }) => {
