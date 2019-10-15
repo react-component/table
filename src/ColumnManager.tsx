@@ -121,7 +121,7 @@ export default class ColumnManager {
     return columns;
   }
 
-  reset(columns: ColumnType[], elements: React.ReactNode) {
+  reset(columns: ColumnType[], elements?: React.ReactNode) {
     this.columns = columns || this.normalize(elements);
     this._cached = {};
   }

@@ -1,34 +1,60 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ExpandIcon from './ExpandIcon';
+import {
+  Key,
+  FixedType,
+  ExpandedRowRender,
+  IconExpandEventHandler,
+  RenderExpandIcon,
+  LegacyFunction,
+} from './interface';
 
-class ExpandableRow extends React.Component {
-  static propTypes = {
-    prefixCls: PropTypes.string.isRequired,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    record: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-    indentSize: PropTypes.number,
-    needIndentSpaced: PropTypes.bool.isRequired,
-    expandRowByClick: PropTypes.bool,
-    expanded: PropTypes.bool.isRequired,
-    expandIconAsCell: PropTypes.bool,
-    expandIconColumnIndex: PropTypes.number,
-    childrenColumnName: PropTypes.string,
-    expandedRowRender: PropTypes.func,
-    expandIcon: PropTypes.func,
-    onExpandedChange: PropTypes.func.isRequired,
-    onRowClick: PropTypes.func,
-    children: PropTypes.func.isRequired,
-  };
+export interface ExpandableRowProps<ValueType> {
+  prefixCls: string;
+  rowKey: Key;
+  fixed?: FixedType;
+  record: ValueType;
+  indentSize?: number;
+  needIndentSpaced: boolean;
+  expandRowByClick?: boolean;
+  expanded: boolean;
+  expandIconAsCell?: boolean;
+  expandIconColumnIndex?: number;
+  childrenColumnName?: string;
+  expandedRowRender?: ExpandedRowRender<ValueType>;
+  expandIcon?: RenderExpandIcon<ValueType>;
+  onExpandedChange: (
+    expanded: boolean,
+    record: ValueType,
+    event: React.MouseEvent<HTMLElement>,
+    rowKey: Key,
+    destroy?: boolean,
+  ) => void;
+  onRowClick?: LegacyFunction<ValueType>;
+  children: (info: {
+    indentSize: number;
+    expanded: boolean;
+    onRowClick: LegacyFunction<ValueType>;
+    hasExpandIcon: (index: number) => boolean;
+    renderExpandIcon: () => React.ReactNode;
+    renderExpandIconCell: (cells: React.ReactElement[]) => void;
+  }) => React.ReactNode;
+}
+
+class ExpandableRow<ValueType> extends React.Component<ExpandableRowProps<ValueType>> {
+  expandIconAsCell: boolean;
+
+  expandIconColumnIndex: number;
+
+  expandable: boolean;
 
   componentWillUnmount() {
     this.handleDestroy();
   }
 
   // Show icon within first column
-  hasExpandIcon = columnIndex => {
+  hasExpandIcon = (columnIndex: number) => {
     const { expandRowByClick, expandIcon } = this.props;
 
     if (this.expandIconAsCell || columnIndex !== this.expandIconColumnIndex) {
@@ -38,7 +64,7 @@ class ExpandableRow extends React.Component {
     return !!expandIcon || !expandRowByClick;
   };
 
-  handleExpandChange = (record, event) => {
+  handleExpandChange: IconExpandEventHandler<ValueType> = (record, event) => {
     const { onExpandedChange, expanded, rowKey } = this.props;
     if (this.expandable) {
       onExpandedChange(!expanded, record, event, rowKey);
@@ -118,7 +144,8 @@ class ExpandableRow extends React.Component {
 
     const expandableRowProps = {
       indentSize,
-      expanded, // not used in TableRow, but it's required to re-render TableRow when `expanded` changes
+      // not used in TableRow, but it's required to re-render TableRow when `expanded` changes
+      expanded,
       onRowClick: this.handleRowClick,
       hasExpandIcon: this.hasExpandIcon,
       renderExpandIcon: this.renderExpandIcon,
@@ -130,5 +157,5 @@ class ExpandableRow extends React.Component {
 }
 
 export default connect(({ expandedRowKeys }, { rowKey }) => ({
-  expanded: !!~expandedRowKeys.indexOf(rowKey),
+  expanded: expandedRowKeys.includes(rowKey),
 }))(ExpandableRow);

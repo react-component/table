@@ -2,8 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { measureScrollbar } from './utils';
 import BaseTable from './BaseTable';
+import { FixedType, ColumnType, GetRowKey, Expander } from './interface';
 
-export default function BodyTable(props, { table }) {
+export interface BodyTableProps<ValueType> {
+  fixed?: FixedType;
+  columns: ColumnType[];
+  tableClassName: string;
+  handleWheel: React.WheelEventHandler<HTMLDivElement>;
+  handleBodyScroll: React.UIEventHandler<HTMLDivElement>;
+  getRowKey: GetRowKey<ValueType>;
+  expander: Expander;
+  isAnyColumnsFixed?: boolean;
+}
+
+export default function BodyTable<ValueType>(props: BodyTableProps<ValueType>, { table }) {
   const { prefixCls, scroll } = table.props;
   const {
     columns,
@@ -18,7 +30,7 @@ export default function BodyTable(props, { table }) {
   const { saveRef } = table;
   let { useFixedHeader } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
-  const innerBodyStyle = {};
+  const innerBodyStyle: React.CSSProperties = {};
 
   if (scroll.x || fixed) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'scroll';
@@ -61,7 +73,7 @@ export default function BodyTable(props, { table }) {
   );
 
   if (fixed && columns.length) {
-    let refName;
+    let refName: string;
     if (columns[0].fixed === 'left' || columns[0].fixed === true) {
       refName = 'fixedColumnsBodyLeft';
     } else if (columns[0].fixed === 'right') {
@@ -101,17 +113,6 @@ export default function BodyTable(props, { table }) {
     </div>
   );
 }
-
-BodyTable.propTypes = {
-  fixed: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  columns: PropTypes.array.isRequired,
-  tableClassName: PropTypes.string.isRequired,
-  handleWheel: PropTypes.func.isRequired,
-  handleBodyScroll: PropTypes.func.isRequired,
-  getRowKey: PropTypes.func.isRequired,
-  expander: PropTypes.object.isRequired,
-  isAnyColumnsFixed: PropTypes.bool,
-};
 
 BodyTable.contextTypes = {
   table: PropTypes.any,

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { INTERNAL_COL_DEFINE } from './utils';
-import { FixedType, InternalColumn, Column } from './interface';
+import { FixedType, ColumnType, InternalColumnType } from './interface';
 
 export interface ColGroupProps {
   fixed: FixedType;
   /** FIXME: Not used. Should confirm why this prop here */
-  columns?: Column[];
+  columns?: ColumnType[];
 }
 
 const ColGroup: React.FC<ColGroupProps> = (props, { table }) => {
@@ -19,7 +19,7 @@ const ColGroup: React.FC<ColGroupProps> = (props, { table }) => {
     cols.push(<col className={`${prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col" />);
   }
 
-  let leafColumns: InternalColumn[];
+  let leafColumns: InternalColumnType[];
 
   if (fixed === 'left') {
     leafColumns = table.columnManager.leftLeafColumns();

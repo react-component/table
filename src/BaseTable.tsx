@@ -12,8 +12,8 @@ import {
   Expander,
   GetRowKey,
   RowHoverEventHandler,
-  RenderRows,
   FixedType,
+  RenderRows,
 } from './interface';
 
 export interface BaseTableProps<ValueType> {

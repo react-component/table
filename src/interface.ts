@@ -59,19 +59,13 @@ export interface TableStore {
   setState: (state: Partial<TableStoreState>) => void;
 }
 
-export type RenderRows<ValueType> = (
-  renderData: ValueType[],
-  indent: number,
-  ancestorKeys?: Key[],
-) => React.ReactElement[];
-
 // TODO: Fill this
 export interface Expander<ValueType = DefaultValueType> {
   props: any;
   needIndentSpaced: boolean;
   handleExpandChange: any;
   renderRows: (
-    renderRows: RenderRows<ValueType>,
+    renderRows: any,
     rows: React.ReactElement[],
     record: ValueType,
     index: number,
@@ -92,7 +86,7 @@ export type GetComponentProps<DataType> = (
   index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
 
-export type ExpandEventHandler<ValueType> = (
+export type IconExpandEventHandler<ValueType> = (
   record: ValueType,
   event: React.MouseEvent<HTMLElement>,
 ) => void;
@@ -122,3 +116,27 @@ export interface TableComponents {
     cell?: CustomizeComponent;
   };
 }
+
+export type RenderExpandIcon<ValueType> = (props: {
+  prefixCls: string;
+  expanded: boolean;
+  record: ValueType;
+  needIndentSpaced: boolean;
+  expandable: boolean;
+  onExpand: IconExpandEventHandler<ValueType>;
+}) => React.ReactNode;
+
+export type RenderRows<ValueType> = (
+  renderData: ValueType[],
+  indent: number,
+  ancestorKeys?: Key[],
+) => React.ReactElement[];
+
+export type ExpandedRowRender<ValueType> = (
+  record: ValueType,
+  index: number,
+  indent: number,
+  expanded: boolean,
+) => React.ReactNode;
+
+export type ScrollPosition = 'left' | 'middle' | 'right' | 'both';

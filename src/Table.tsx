@@ -12,54 +12,67 @@ import { debounce, getDataAndAriaProps } from './utils';
 import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
-import ExpandableTable from './ExpandableTable';
+import Column from './Column';
+import ColumnGroup from './ColumnGroup';
+import ExpandableTable, { ExpandableTableProps } from './ExpandableTable';
+import {
+  ColumnType,
+  GetRowKey,
+  GetComponentProps,
+  LegacyFunction,
+  TableComponents,
+  TableStore,
+  DefaultValueType,
+  ScrollPosition,
+  Expander,
+  Key,
+} from './interface';
 
-class Table extends React.Component {
-  static propTypes = {
-    data: PropTypes.array,
-    useFixedHeader: PropTypes.bool,
-    columns: PropTypes.array,
-    prefixCls: PropTypes.string,
-    bodyStyle: PropTypes.object,
-    style: PropTypes.object,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    onRow: PropTypes.func,
-    onHeaderRow: PropTypes.func,
-    onRowClick: PropTypes.func,
-    onRowDoubleClick: PropTypes.func,
-    onRowContextMenu: PropTypes.func,
-    onRowMouseEnter: PropTypes.func,
-    onRowMouseLeave: PropTypes.func,
-    showHeader: PropTypes.bool,
-    title: PropTypes.func,
-    id: PropTypes.string,
-    footer: PropTypes.func,
-    emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    scroll: PropTypes.object,
-    rowRef: PropTypes.func,
-    getBodyWrapper: PropTypes.func,
-    children: PropTypes.node,
-    components: PropTypes.shape({
-      table: PropTypes.any,
-      header: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-      body: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-    }),
-    ...ExpandableTable.PropTypes,
-  };
+export interface TableProps<ValueType>
+  extends Omit<ExpandableTableProps<ValueType>, 'prefixCls' | 'children'> {
+  data?: ValueType[];
+  useFixedHeader?: boolean;
+  columns?: ColumnType[];
+  prefixCls?: string;
+  bodyStyle?: React.CSSProperties;
+  className?: string;
+  style?: React.CSSProperties;
+  rowKey?: string | GetRowKey<ValueType>;
+  rowClassName?: string | ((record: ValueType, index: number, indent: number) => string);
+  onRow?: GetComponentProps<ValueType>;
+  onHeaderRow?: GetComponentProps<ColumnType[]>;
+  onRowClick?: LegacyFunction<ValueType>;
+  onRowDoubleClick?: LegacyFunction<ValueType>;
+  onRowContextMenu?: LegacyFunction<ValueType>;
+  onRowMouseEnter?: LegacyFunction<ValueType>;
+  onRowMouseLeave?: LegacyFunction<ValueType>;
+  showHeader?: boolean;
+  title?: (data: ValueType[]) => React.ReactNode;
+  id?: string;
+  footer?: (data: ValueType[]) => React.ReactNode;
+  emptyText?: React.ReactNode | (() => React.ReactNode);
+  scroll?: { x?: number | true | string; y?: number };
+  rowRef?: (record: ValueType, index: number, indent: number) => React.Ref<React.ReactElement>;
+  getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
+  children?: React.ReactNode;
+  components?: TableComponents;
+  tableLayout?: 'fixed';
+}
 
+interface TableState {
+  columns?: ColumnType[];
+  children?: React.ReactNode;
+}
+
+class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState> {
   static childContextTypes = {
     table: PropTypes.any,
     components: PropTypes.any,
   };
+
+  static Column = Column;
+
+  static ColumnGroup = ColumnGroup;
 
   static defaultProps = {
     data: [],
@@ -77,7 +90,7 @@ class Table extends React.Component {
     emptyText: () => 'No Data',
   };
 
-  constructor(props) {
+  constructor(props: TableProps<ValueType>) {
     super(props);
 
     [
@@ -108,7 +121,37 @@ class Table extends React.Component {
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
-  state = {};
+  state: TableState = {};
+
+  columnManager: ColumnManager;
+
+  store: TableStore;
+
+  debouncedWindowResize: Function & {
+    cancel: Function;
+  };
+
+  resizeEvent: {
+    remove: Function;
+  };
+
+  headTable: HTMLDivElement;
+
+  bodyTable: HTMLDivElement;
+
+  tableNode: HTMLDivElement;
+
+  scrollPosition: ScrollPosition;
+
+  lastScrollLeft: number;
+
+  lastScrollTop: number;
+
+  fixedColumnsBodyLeft: HTMLDivElement;
+
+  fixedColumnsBodyRight: HTMLDivElement;
+
+  expander: Expander;
 
   getChildContext() {
     return {
@@ -136,18 +179,21 @@ class Table extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: TableProps<DefaultValueType>, prevState: TableState) {
     if (nextProps.columns && nextProps.columns !== prevState.columns) {
       return {
         columns: nextProps.columns,
         children: null,
       };
-    } else if (nextProps.children !== prevState.children) {
+    }
+
+    if (nextProps.children !== prevState.children) {
       return {
         columns: null,
         children: nextProps.children,
       };
     }
+
     return null;
   }
 
@@ -188,8 +234,8 @@ class Table extends React.Component {
     }
   }
 
-  getRowKey = (record, index) => {
-    const rowKey = this.props.rowKey;
+  getRowKey = (record: ValueType, index: number) => {
+    const { rowKey } = this.props;
     const key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
     warning(
       key !== undefined,
@@ -199,7 +245,7 @@ class Table extends React.Component {
     return key === undefined ? index : key;
   };
 
-  setScrollPosition(position) {
+  setScrollPosition(position: ScrollPosition) {
     this.scrollPosition = position;
     if (this.tableNode) {
       const { prefixCls } = this.props;
@@ -268,12 +314,12 @@ class Table extends React.Component {
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows,
-      row => row.getBoundingClientRect().height || 'auto',
+      (row: HTMLElement) => row.getBoundingClientRect().height || 'auto',
     );
     const state = this.store.getState();
     const fixedColumnsBodyRowsHeight = [].reduce.call(
       bodyRows,
-      (acc, row) => {
+      (acc: Record<string, number | 'auto'>, row: HTMLElement) => {
         const rowKey = row.getAttribute('data-row-key');
         const height =
           row.getBoundingClientRect().height || state.fixedColumnsBodyRowsHeight[rowKey] || 'auto';
@@ -309,12 +355,12 @@ class Table extends React.Component {
     return 'x' in scroll;
   }
 
-  handleBodyScrollLeft = e => {
+  handleBodyScrollLeft: React.UIEventHandler<HTMLDivElement> = e => {
     // Fix https://github.com/ant-design/ant-design/issues/7635
     if (e.currentTarget !== e.target) {
       return;
     }
-    const target = e.target;
+    const target = e.target as HTMLDivElement;
     const { scroll = {} } = this.props;
     const { headTable, bodyTable } = this;
     if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
@@ -329,8 +375,8 @@ class Table extends React.Component {
     this.lastScrollLeft = target.scrollLeft;
   };
 
-  handleBodyScrollTop = e => {
-    const target = e.target;
+  handleBodyScrollTop: React.UIEventHandler<HTMLDivElement> = e => {
+    const target = e.target as HTMLDivElement;
     // Fix https://github.com/ant-design/ant-design/issues/9033
     if (e.currentTarget !== target) {
       return;
@@ -338,7 +384,7 @@ class Table extends React.Component {
     const { scroll = {} } = this.props;
     const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
-      const scrollTop = target.scrollTop;
+      const { scrollTop } = target;
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
@@ -353,17 +399,17 @@ class Table extends React.Component {
     this.lastScrollTop = target.scrollTop;
   };
 
-  handleBodyScroll = e => {
+  handleBodyScroll: React.UIEventHandler<HTMLDivElement> = e => {
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
   };
 
-  handleWheel = event => {
+  handleWheel: React.WheelEventHandler<HTMLDivElement> = event => {
     const { scroll = {} } = this.props;
     if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
       event.preventDefault();
       const wd = event.deltaY;
-      const target = event.target;
+      const { target } = event;
       const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
       let scrollTop = 0;
 
@@ -385,7 +431,7 @@ class Table extends React.Component {
     }
   };
 
-  saveRef = name => node => {
+  saveRef = (name: string) => (node: HTMLElement) => {
     this[name] = node;
   };
 
@@ -497,8 +543,8 @@ class Table extends React.Component {
   }
 
   render() {
-    const props = this.props;
-    const prefixCls = props.prefixCls;
+    const { props } = this;
+    const { prefixCls } = props;
 
     if (this.state.columns) {
       this.columnManager.reset(props.columns);
@@ -521,7 +567,7 @@ class Table extends React.Component {
     return (
       <Provider store={this.store}>
         <ExpandableTable {...props} columnManager={this.columnManager} getRowKey={this.getRowKey}>
-          {expander => {
+          {(expander: Expander) => {
             this.expander = expander;
             return (
               <div

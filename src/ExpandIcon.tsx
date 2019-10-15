@@ -1,6 +1,6 @@
 import React from 'react';
 import shallowequal from 'shallowequal';
-import { ExpandEventHandler } from './interface';
+import { IconExpandEventHandler } from './interface';
 
 export interface ExpandIconProps<ValueType> {
   record?: ValueType;
@@ -8,7 +8,7 @@ export interface ExpandIconProps<ValueType> {
   expandable?: boolean;
   expanded?: boolean;
   needIndentSpaced?: boolean;
-  onExpand?: ExpandEventHandler<ValueType>;
+  onExpand?: IconExpandEventHandler<ValueType>;
 }
 
 export default class ExpandIcon<ValueType> extends React.Component<ExpandIconProps<ValueType>> {
