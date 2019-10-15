@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableHeaderRow from './TableHeaderRow';
+import { Column, Expander, Cell, InternalColumn, FixedType, OnHeaderRow } from './interface';
 
-function getHeaderRows(columns, currentRow = 0, rows) {
-  rows = rows || [];
+function getHeaderRows(columns: InternalColumn[], currentRow = 0, rows: Cell[][] = []) {
+  // eslint-disable-next-line no-param-reassign
   rows[currentRow] = rows[currentRow] || [];
 
   columns.forEach(column => {
@@ -12,7 +13,7 @@ function getHeaderRows(columns, currentRow = 0, rows) {
         rows.push([]);
       }
     }
-    const cell = {
+    const cell: Cell = {
       key: column.key,
       className: column.className || '',
       children: column.title,
@@ -34,7 +35,14 @@ function getHeaderRows(columns, currentRow = 0, rows) {
   return rows.filter(row => row.length > 0);
 }
 
-export default function TableHeader(props, { table }) {
+export interface TableHeaderProps {
+  fixed?: FixedType;
+  columns: Column[];
+  expander: Expander;
+  onHeaderRow?: OnHeaderRow;
+}
+
+const TableHeader: React.FC<TableHeaderProps> = (props, { table }) => {
   const { components } = table;
   const { prefixCls, showHeader, onHeaderRow } = table.props;
   const { expander, columns, fixed } = props;
@@ -66,15 +74,10 @@ export default function TableHeader(props, { table }) {
       ))}
     </HeaderWrapper>
   );
-}
-
-TableHeader.propTypes = {
-  fixed: PropTypes.string,
-  columns: PropTypes.array.isRequired,
-  expander: PropTypes.object.isRequired,
-  onHeaderRow: PropTypes.func,
 };
 
 TableHeader.contextTypes = {
   table: PropTypes.any,
 };
+
+export default TableHeader;
