@@ -73,7 +73,7 @@ export interface Expander<ValueType = DefaultValueType> {
 
 export type GetRowKey<ValueType> = (value: ValueType, index: number) => Key;
 
-export type RowHoverHandler = (isHover: boolean, key: Key) => void;
+export type RowHoverEventHandler = (isHover: boolean, key: Key) => void;
 
 export type GetComponentProps<DataType> = (
   data: DataType,
@@ -85,3 +85,8 @@ export type GetComponentProps<DataType> = (
   onMouseEnter?: React.MouseEventHandler<HTMLElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
 };
+
+export type ExpandEventHandler<ValueType> = (
+  record: ValueType,
+  event: React.MouseEvent<HTMLElement>,
+) => void;

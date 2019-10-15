@@ -1,18 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
+import { ExpandEventHandler } from './interface';
 
-export default class ExpandIcon extends React.Component {
-  static propTypes = {
-    record: PropTypes.object,
-    prefixCls: PropTypes.string,
-    expandable: PropTypes.any,
-    expanded: PropTypes.bool,
-    needIndentSpaced: PropTypes.bool,
-    onExpand: PropTypes.func,
-  };
+export interface ExpandIconProps<ValueType> {
+  record?: ValueType;
+  prefixCls?: string;
+  expandable?: boolean;
+  expanded?: boolean;
+  needIndentSpaced?: boolean;
+  onExpand?: ExpandEventHandler<ValueType>;
+}
 
-  shouldComponentUpdate(nextProps) {
+export default class ExpandIcon<ValueType> extends React.Component<ExpandIconProps<ValueType>> {
+  shouldComponentUpdate(nextProps: ExpandIconProps<ValueType>) {
     return !shallowequal(nextProps, this.props);
   }
 
@@ -26,9 +26,12 @@ export default class ExpandIcon extends React.Component {
           onClick={e => onExpand(record, e)}
         />
       );
-    } else if (needIndentSpaced) {
+    }
+
+    if (needIndentSpaced) {
       return <span className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />;
     }
+
     return null;
   }
 }

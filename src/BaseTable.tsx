@@ -7,18 +7,18 @@ import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 import {
-  Column,
+  ColumnType,
   TableStore,
   Expander,
   GetRowKey,
-  RowHoverHandler,
+  RowHoverEventHandler,
   RenderRows,
   FixedType,
 } from './interface';
 
 export interface BaseTableProps<ValueType> {
   fixed?: FixedType;
-  columns: Column[];
+  columns: ColumnType[];
   tableClassName: string;
   hasHead: boolean;
   hasBody: boolean;
@@ -33,7 +33,7 @@ class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
     table: PropTypes.any,
   };
 
-  getColumns(cols?: Column[]) {
+  getColumns(cols?: ColumnType[]) {
     const { columns = [], fixed } = this.props;
     const { table } = this.context;
     const { prefixCls } = table.props;
@@ -46,7 +46,7 @@ class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
     }));
   }
 
-  handleRowHover: RowHoverHandler = (isHover, key) => {
+  handleRowHover: RowHoverEventHandler = (isHover, key) => {
     this.props.store.setState({
       currentHoverKey: isHover ? key : null,
     });
@@ -77,12 +77,12 @@ class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
       const className: string =
         typeof rowClassName === 'string' ? rowClassName : rowClassName(record, i, indent);
 
-      const onHoverProps: { onHover?: RowHoverHandler } = {};
+      const onHoverProps: { onHover?: RowHoverEventHandler } = {};
       if (columnManager.isAnyColumnsFixed()) {
         onHoverProps.onHover = this.handleRowHover;
       }
 
-      let leafColumns: Column[];
+      let leafColumns: ColumnType[];
       if (fixed === 'left') {
         leafColumns = columnManager.leftLeafColumns();
       } else if (fixed === 'right') {
