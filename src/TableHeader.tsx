@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableHeaderRow from './TableHeaderRow';
-import { Column, Expander, Cell, InternalColumn, FixedType, OnHeaderRow } from './interface';
+import {
+  ColumnType,
+  Expander,
+  Cell,
+  InternalColumnType,
+  FixedType,
+  GetComponentProps,
+} from './interface';
 
-function getHeaderRows(columns: InternalColumn[], currentRow = 0, rows: Cell[][] = []) {
+function getHeaderRows(columns: InternalColumnType[], currentRow = 0, rows: Cell[][] = []) {
   // eslint-disable-next-line no-param-reassign
   rows[currentRow] = rows[currentRow] || [];
 
@@ -37,9 +44,9 @@ function getHeaderRows(columns: InternalColumn[], currentRow = 0, rows: Cell[][]
 
 export interface TableHeaderProps {
   fixed?: FixedType;
-  columns: Column[];
+  columns: ColumnType[];
   expander: Expander;
-  onHeaderRow?: OnHeaderRow;
+  onHeaderRow?: GetComponentProps<ColumnType>;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = (props, { table }) => {

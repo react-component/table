@@ -6,28 +6,34 @@ export type FixedType = 'left' | 'right' | boolean;
 
 export type DefaultValueType = Record<string, any>;
 
-export interface Column {
+export interface ColumnType<ValueType = DefaultValueType> {
   // TODO: https://ant.design/components/table-cn/#Column
   key: Key;
   dataIndex?: Key;
   fixed?: boolean;
   className?: string;
-  width?: number;
+  width?: number | string;
   rowSpan?: number;
   colSpan?: number;
   title?: React.ReactNode;
+  render?: (value: any, record: ValueType, index: number) => React.ReactNode;
+
+  /** @deprecated Please use `onCell` instead */
+  onCellClick?: React.MouseEventHandler<HTMLElement>;
+  onCell?: GetComponentProps<ValueType>;
+  onHeaderCell?: GetComponentProps<ColumnType>;
 }
 
-export interface InternalColumn extends Column {
+export interface InternalColumnType extends ColumnType {
   RC_TABLE_INTERNAL_COL_DEFINE?: object;
-  children?: InternalColumn[];
+  children?: InternalColumnType[];
 }
 
 export interface Cell {
   key: Key;
   className: string;
   children: React.ReactNode;
-  column: Column;
+  column: ColumnType;
   colSpan?: number;
   rowSpan?: number;
 }
@@ -69,4 +75,13 @@ export type GetRowKey<ValueType> = (value: ValueType, index: number) => Key;
 
 export type RowHoverHandler = (isHover: boolean, key: Key) => void;
 
-export type OnHeaderRow = any;
+export type GetComponentProps<DataType> = (
+  data: DataType,
+  index: number,
+) => {
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  onDoubleClick?: React.MouseEventHandler<HTMLElement>;
+  onContextMenu?: React.MouseEventHandler<HTMLElement>;
+  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLElement>;
+};
