@@ -1,9 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Key, ColumnType, DefaultRecordType, GetRowKey } from './interface';
+import ColumnGroup from './sugar/ColumnGroup';
+import Column from './sugar/Column';
+import { GetRowKey, ColumnsType } from './interface';
 import TableContext from './context';
-import { convertChildrenToColumn } from './utils/legacyUtil';
 import DataList from './DataList';
+import useColumns from './hooks/useColumns';
 
 export interface TableProps<RecordType> {
   prefixCls?: string;
@@ -11,7 +13,7 @@ export interface TableProps<RecordType> {
   style?: React.CSSProperties;
   children?: React.ReactNode;
   data?: RecordType[];
-  columns?: ColumnType<RecordType>[];
+  columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
 
   // TODO: Handle this
@@ -57,59 +59,35 @@ export interface TableProps<RecordType> {
   // tableLayout?: 'fixed';
 }
 
-interface TableState<RecordType> {
-  columns: ColumnType<RecordType>[];
+function Table<RecordType>(props: TableProps<RecordType>) {
+  const { prefixCls, className, style, data, rowKey } = props;
+
+  const [columns, flattenColumns] = useColumns(props);
+
+  return (
+    <TableContext.Provider value={{ columns, flattenColumns }}>
+      <div className={classNames(prefixCls, className)} style={style}>
+        <table>
+          <thead />
+          <DataList data={data} rowKey={rowKey} />
+          <tfoot />
+        </table>
+      </div>
+    </TableContext.Provider>
+  );
 }
 
-// Using class component since still need support user get DOM node by `findDOMNode`
-class Table<RecordType extends object = DefaultRecordType> extends React.Component<
-  TableProps<RecordType>,
-  TableState<RecordType>
-> {
-  static defaultProps = {
-    data: [],
-    useFixedHeader: false,
-    rowKey: 'key',
-    prefixCls: 'rc-table',
-    showHeader: true,
-    emptyText: () => 'No Data',
-  };
+Table.Column = Column;
 
-  state: TableState<RecordType> = {
-    columns: [],
-  };
+Table.ColumnGroup = ColumnGroup;
 
-  static getDerivedStateFromProps(
-    nextProps: TableProps<DefaultRecordType>,
-    prevState: TableState<DefaultRecordType>,
-  ): Partial<TableState<DefaultRecordType>> {
-    const newState: Partial<TableState<DefaultRecordType>> = {};
-
-    if ('columns' in nextProps) {
-      newState.columns = nextProps.columns || [];
-    } else {
-      newState.columns = convertChildrenToColumn(nextProps.children);
-    }
-
-    return newState;
-  }
-
-  render() {
-    const { columns } = this.state;
-    const { prefixCls, className, style, data, rowKey } = this.props;
-
-    return (
-      <TableContext.Provider value={{ columns }}>
-        <div className={classNames(prefixCls, className)} style={style}>
-          <table>
-            <thead />
-            <DataList data={data} rowKey={rowKey} />
-            <tfoot />
-          </table>
-        </div>
-      </TableContext.Provider>
-    );
-  }
-}
+Table.defaultProps = {
+  data: [],
+  useFixedHeader: false,
+  rowKey: 'key',
+  prefixCls: 'rc-table',
+  showHeader: true,
+  emptyText: () => 'No Data',
+};
 
 export default Table;

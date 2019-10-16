@@ -1,5 +1,22 @@
 import React from 'react';
 
+/**
+ * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
+ * - defaultSortOrder
+ * - filterDropdown
+ * - filterDropdownVisible
+ * - filtered
+ * - filteredValue
+ * - filterIcon
+ * - filterMultiple
+ * - filters
+ * - sorter
+ * - sortOrder
+ * - sortDirections
+ * - onFilter
+ * - onFilterDropdownVisibleChange
+ */
+
 export type Key = React.Key;
 
 export type FixedType = 'left' | 'right' | boolean;
@@ -23,9 +40,16 @@ export interface RenderedCell<RecordType> {
 
 export type DataIndex = string | number | (string | number)[];
 
-export interface ColumnType<RecordType> {
+interface ColumnSharedType {
+  title?: React.ReactNode;
+}
+
+export interface ColumnGroupType<RecordType> extends ColumnSharedType {
+  children: ColumnType<RecordType>[];
+}
+
+export interface ColumnType<RecordType> extends ColumnSharedType {
   align?: 'left' | 'center' | 'right';
-  children?: ColumnType<RecordType>[];
   className?: string;
   colSpan?: number;
   dataIndex?: DataIndex;
@@ -38,29 +62,14 @@ export interface ColumnType<RecordType> {
     index: number,
   ) => React.ReactNode | RenderedCell<RecordType>;
   rowSpan?: number;
-  title?: React.ReactNode;
   width?: number | string;
   onCell?: GetComponentProps<RecordType>;
   /** @deprecated Please use `onCell` instead */
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
   onHeaderCell?: GetComponentProps<RecordType>;
-
-  // Applied in antd
-  // https://ant.design/components/table-cn/#Column
-  // defaultSortOrder
-  // filterDropdown
-  // filterDropdownVisible
-  // filtered
-  // filteredValue
-  // filterIcon
-  // filterMultiple
-  // filters
-  // sorter
-  // sortOrder
-  // sortDirections
-  // onFilter
-  // onFilterDropdownVisibleChange
 }
+
+export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
 
 export type GetComponentProps<DataType> = (
   data: DataType,

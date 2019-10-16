@@ -38,29 +38,29 @@ function skipUpdate<RecordType>(
 }
 
 function Row<RecordType>({ record, index }: RowProps<RecordType>) {
-  const { columns } = React.useContext<TableContextProps<RecordType>>(TableContext);
-  const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(columns), [columns]);
+  const { flattenColumns } = React.useContext<TableContextProps<RecordType>>(TableContext);
+  const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
+    flattenColumns,
+  ]);
 
   return useMemo<React.ReactElement>(
-    () => {
-      return (
-        <tr>
-          {rowColumns.map((column, colIndex) => {
-            const { render, dataIndex } = column;
+    () => (
+      <tr>
+        {rowColumns.map((column, colIndex) => {
+          const { render, dataIndex } = column;
 
-            return (
-              <Cell
-                key={getColumnKey(column, colIndex)}
-                record={record}
-                index={index}
-                dataIndex={dataIndex}
-                render={render}
-              />
-            );
-          })}
-        </tr>
-      );
-    },
+          return (
+            <Cell
+              key={getColumnKey(column, colIndex)}
+              record={record}
+              index={index}
+              dataIndex={dataIndex}
+              render={render}
+            />
+          );
+        })}
+      </tr>
+    ),
     [record, index, rowColumns],
     skipUpdate,
   );

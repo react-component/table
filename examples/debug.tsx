@@ -1,7 +1,8 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
-import Table from '../src';
+import Table, { Column, ColumnGroup } from '../src';
 import '../assets/index.less';
+import { ColumnsType } from '../src/interface';
 
 interface RecordType {
   key: React.Key;
@@ -37,13 +38,26 @@ const Demo = () => {
     setData(newData);
   }
 
-  const columns = [
+  const columns: ColumnsType<RecordType> = [
     { title: 'ID', key: 'id', dataIndex: 'id', width: 100 },
     {
       title: 'Date',
       dataIndex: 'date',
       width: 200,
       render: renderDate,
+    },
+    {
+      title: 'Merged Title',
+      children: [
+        {
+          title: '0 - ID',
+          dataIndex: 'id',
+        },
+        {
+          title: '1 - Date',
+          dataIndex: 'date',
+        },
+      ],
     },
     {
       title: 'Operations',

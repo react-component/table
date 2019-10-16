@@ -1,4 +1,4 @@
-import { ColumnType, Key, DataIndex } from '../interface';
+import { Key, DataIndex } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -37,9 +37,7 @@ export function getColumnKey({ key, dataIndex }: GetColumnKeyColumn, index: numb
     return key;
   }
 
-  if (dataIndex !== undefined) {
-    return toArray(dataIndex).join('-');
-  }
+  const prefix = dataIndex !== undefined ? toArray(dataIndex).join('-') : INTERNAL_KEY_PREFIX;
 
-  return `${INTERNAL_KEY_PREFIX}_${index}`;
+  return `${prefix}_${index}`;
 }
