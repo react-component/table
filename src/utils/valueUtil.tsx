@@ -1,4 +1,4 @@
-import { ColumnType } from '../interface';
+import { ColumnType, Key, DataIndex } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -10,10 +10,7 @@ function toArray<T>(arr: T | T[]): T[] {
   return Array.isArray(arr) ? arr : [arr];
 }
 
-export function getPathValue<RecordType>(
-  record: RecordType,
-  path: string | number | (string | number)[],
-) {
+export function getPathValue<RecordType>(record: RecordType, path: DataIndex) {
   const pathList = toArray(path);
 
   let current = record;
@@ -30,13 +27,18 @@ export function getPathValue<RecordType>(
   return current;
 }
 
-export function getColumnKey(column: ColumnType<any>, index: number) {
-  if ('key' in column) {
-    return column.key;
+interface GetColumnKeyColumn {
+  key?: Key;
+  dataIndex?: DataIndex;
+}
+
+export function getColumnKey({ key, dataIndex }: GetColumnKeyColumn, index: number) {
+  if (key) {
+    return key;
   }
 
-  if ('dataIndex' in column) {
-    return toArray(column.dataIndex).join('-');
+  if (dataIndex !== undefined) {
+    return toArray(dataIndex).join('-');
   }
 
   return `${INTERNAL_KEY_PREFIX}_${index}`;

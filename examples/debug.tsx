@@ -11,6 +11,18 @@ interface RecordType {
 
 let UUID = 0;
 
+function renderDate(timestamp: number, record: RecordType) {
+  return (
+    <span style={{ color: 'pink' }}>
+      {record.id
+        .toString(36)
+        .substr(4)
+        .toUpperCase()}{' '}
+      - {new Date(timestamp).toString()}
+    </span>
+  );
+}
+
 const Demo = () => {
   const [data, setData] = React.useState([]);
 
@@ -31,17 +43,7 @@ const Demo = () => {
       title: 'Date',
       dataIndex: 'date',
       width: 200,
-      render(timestamp: number, record: RecordType) {
-        return (
-          <span style={{ color: 'pink' }}>
-            {record.id
-              .toString(36)
-              .substr(4)
-              .toUpperCase()}{' '}
-            - {new Date(timestamp).toString()}
-          </span>
-        );
-      },
+      render: renderDate,
     },
     {
       title: 'Operations',
@@ -95,6 +97,8 @@ const Demo = () => {
     }
   }, []);
 
+  const [_, forceUpdate] = React.useState();
+
   return (
     <div>
       <h2>simple table</h2>
@@ -102,6 +106,15 @@ const Demo = () => {
         Add Row
       </button>
       <Table<RecordType> columns={columns} data={data} />
+
+      <button
+        type="button"
+        onClick={() => {
+          forceUpdate(Math.random());
+        }}
+      >
+        Update
+      </button>
     </div>
   );
 };

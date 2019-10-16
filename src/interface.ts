@@ -21,12 +21,14 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
+export type DataIndex = string | number | (string | number)[];
+
 export interface ColumnType<RecordType> {
   align?: 'left' | 'center' | 'right';
   children?: ColumnType<RecordType>[];
   className?: string;
   colSpan?: number;
-  dataIndex?: Key;
+  dataIndex?: DataIndex;
   ellipsis?: boolean;
   fixed?: FixedType;
   key?: Key;

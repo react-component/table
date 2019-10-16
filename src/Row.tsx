@@ -1,48 +1,71 @@
 import React from 'react';
-import TableContext from './context';
+import shallowEqual from 'shallowequal';
+import Cell from './Cell';
+import TableContext, { TableContextProps } from './context';
 import { getPathValue, getColumnKey } from './utils/valueUtil';
-import { RenderedCell } from './interface';
+import { ColumnType } from './interface';
+import useMemo from './hooks/useMemo';
 
 export interface RowProps<RecordType> {
   record: RecordType;
   index: number;
 }
 
-function isRenderCell<RecordType>(
-  data: React.ReactNode | RenderedCell<RecordType>,
-): data is RenderedCell<RecordType> {
-  return data && typeof data === 'object' && !React.isValidElement(data);
+interface RawColumnType<RecordType> {
+  key: ColumnType<RecordType>['key'];
+  dataIndex: ColumnType<RecordType>['dataIndex'];
+  render: ColumnType<RecordType>['render'];
+}
+
+type CompareCondition<RecordType> = [RecordType, number, ColumnType<RecordType>[]];
+
+/** Return a subset of `ColumnType` which used in Row */
+function getRequiredColumnProps<RecordType>(
+  columns: ColumnType<RecordType>[],
+): RawColumnType<RecordType>[] {
+  return (columns || []).map(({ key, dataIndex, render }) => ({ key, dataIndex, render }));
+}
+
+function skipUpdate<RecordType>(
+  [prevRecord, prevIndex, prevColumns]: CompareCondition<RecordType>,
+  [record, index, columns]: CompareCondition<RecordType>,
+): boolean {
+  if (prevRecord !== record || prevIndex !== index || prevColumns.length !== columns.length) {
+    return false;
+  }
+
+  return prevColumns.every((prevColumn, colIndex) => shallowEqual(prevColumn, columns[colIndex]));
 }
 
 function Row<RecordType>({ record, index }: RowProps<RecordType>) {
-  const { columns } = React.useContext(TableContext);
-  return (
-    <tr>
-      {(columns || []).map((column, colIndex) => {
-        const { render } = column;
+  const { columns } = React.useContext<TableContextProps<RecordType>>(TableContext);
+  const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(columns), [columns]);
 
-        const value = getPathValue(record, column.dataIndex);
+  return useMemo<React.ReactElement>(
+    () => {
+      return (
+        <tr>
+          {rowColumns.map((column, colIndex) => {
+            const { render, dataIndex } = column;
 
-        // Customize render node
-        let renderNode: React.ReactNode = value;
-        if (render) {
-          const renderData = render(value, record, index);
-
-          //
-          if (isRenderCell(renderData)) {
-            renderNode = renderData.children;
-          } else {
-            renderNode = renderData;
-          }
-        }
-
-        return <td key={getColumnKey(column, colIndex)}>{renderNode}</td>;
-      })}
-    </tr>
+            return (
+              <Cell
+                key={getColumnKey(column, colIndex)}
+                record={record}
+                index={index}
+                dataIndex={dataIndex}
+                render={render}
+              />
+            );
+          })}
+        </tr>
+      );
+    },
+    [record, index, rowColumns],
+    skipUpdate,
   );
 }
 
-const MemoRow = React.memo(Row);
-MemoRow.displayName = 'Row';
+Row.displayName = 'Row';
 
-export default MemoRow;
+export default Row;
