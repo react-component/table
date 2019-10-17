@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
+import Header from './Header';
 import { GetRowKey, ColumnsType } from './interface';
 import TableContext from './context';
 import DataList from './DataList';
@@ -68,7 +69,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
     <TableContext.Provider value={{ columns, flattenColumns }}>
       <div className={classNames(prefixCls, className)} style={style}>
         <table>
-          <thead />
+          <Header />
           <DataList data={data} rowKey={rowKey} />
           <tfoot />
         </table>
