@@ -2,7 +2,7 @@
 
 exports[`Table.fixedColumns renders correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
+  class="rc-table rc-table-scroll-position-left"
 >
   <div
     class="rc-table-content"

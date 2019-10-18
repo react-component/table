@@ -1888,7 +1888,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
       >
         <table
           class="rc-table-fixed"
-          style="table-layout:fixed"
+          style="width:max-content"
         >
           <colgroup>
             <col />
