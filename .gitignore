@@ -28,3 +28,4 @@ lib
 coverage
 yarn.lock
 es/
+.storybook
