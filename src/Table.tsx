@@ -5,7 +5,7 @@ import Column from './sugar/Column';
 import Header from './Header';
 import { GetRowKey, ColumnsType } from './interface';
 import TableContext from './context';
-import DataList from './DataList';
+import Body from './Body';
 import useColumns from './hooks/useColumns';
 
 export interface TableProps<RecordType> {
@@ -66,11 +66,11 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   const [columns, flattenColumns] = useColumns(props);
 
   return (
-    <TableContext.Provider value={{ columns, flattenColumns }}>
+    <TableContext.Provider value={{ columns, flattenColumns, prefixCls }}>
       <div className={classNames(prefixCls, className)} style={style}>
         <table>
           <Header />
-          <DataList data={data} rowKey={rowKey} />
+          <Body data={data} rowKey={rowKey} />
           <tfoot />
         </table>
       </div>

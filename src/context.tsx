@@ -4,6 +4,7 @@ import { ColumnType, DefaultRecordType, ColumnsType } from './interface';
 export interface TableContextProps<RecordType = DefaultRecordType> {
   columns: ColumnsType<RecordType>;
   flattenColumns: ColumnType<RecordType>[];
+  prefixCls: string;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

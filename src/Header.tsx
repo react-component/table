@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { PureContextConsumer, DefaultPureCompareProps } from './context';
 import { ColumnsType, CellType } from './interface';
 import HeaderRow from './HeaderRow';
@@ -56,6 +57,7 @@ function parseHeaderRows<RecordType>(
   for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
     rows[rowIndex].forEach(cell => {
       if (!('rowSpan' in cell) && !cell.hasSubColumns) {
+        // eslint-disable-next-line no-param-reassign
         cell.rowSpan = rowCount - rowIndex;
       }
     });
@@ -65,15 +67,16 @@ function parseHeaderRows<RecordType>(
 }
 
 interface ComputeProps<RecordType> {
+  prefixCls: string;
   rows: CellType<RecordType>[][];
 }
 
 function useComputeProps<RecordType>({
-  context: { columns },
+  context: { columns, prefixCls },
 }: DefaultPureCompareProps<RecordType, HeaderProps<RecordType>>): ComputeProps<RecordType> {
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
-  return { rows };
+  return { rows, prefixCls };
 }
 
 // TODO: Optimize header render if performance leak
@@ -96,9 +99,11 @@ function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement 
       shouldUpdate={shouldUpdate}
       useComputeProps={useComputeProps}
     >
-      {({ rows }) => (
-        <thead>
-          {rows.map((row, rowIndex) => <HeaderRow key={rowIndex} cells={row} />)}
+      {({ rows, prefixCls }) => (
+        <thead className={classNames(`${prefixCls}-header`)}>
+          {rows.map((row, rowIndex) => (
+            <HeaderRow key={rowIndex} cells={row} />
+          ))}
         </thead>
       )}
     </PureContextConsumer>

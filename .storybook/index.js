@@ -8,7 +8,9 @@ import { withConsole } from '@storybook/addon-console';
 import { withViewport } from '@storybook/addon-viewport';
 import { withInfo } from '@storybook/addon-info';
 import DebugSource from 'rc-source-loader!../examples/debug';
+import SimpleSource from 'rc-source-loader!../examples/simple';
 import Debug from '../examples/debug';
+import Simple from '../examples/simple';
 import READMECode from '../README.md';
 storiesOf('rc-table', module)
 .addDecorator(checkA11y) 
@@ -36,5 +38,10 @@ storiesOf('rc-table', module)
 .add('debug', () => <Debug />,{
       source: {
         code: DebugSource,
+      },
+    })
+.add('simple', () => <Simple />,{
+      source: {
+        code: SimpleSource,
       },
     })
