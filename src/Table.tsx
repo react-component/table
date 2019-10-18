@@ -284,13 +284,18 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
     if (typeof tableLayout !== 'undefined') {
       return tableLayout === 'fixed';
     }
-    // if one column is fixed or ellipsis, use fixed table layout to fix align issue
-    if (columns.some(({ fixed, ellipsis }) => !!fixed || !!ellipsis)) {
+    // if one column is ellipsis, use fixed table layout to fix align issue
+    if (columns.some(({ ellipsis }) => !!ellipsis)) {
       return true;
     }
     // if header fixed, use fixed table layout to fix align issue
     if (useFixedHeader || scroll.y) {
       return true;
+    }
+    // if scroll.x is number/px/% width value, we should fixed table layout
+    // to avoid long word layout broken issue
+    if (scroll.x && scroll.x !== true && scroll.x !== 'max-content') {
+      return false;
     }
     return false;
   }
