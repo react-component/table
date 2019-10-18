@@ -23,7 +23,7 @@ export type FixedType = 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
-export interface Cell<RecordType> {
+export interface CellType<RecordType> {
   key?: Key;
   className?: string;
   style?: React.CSSProperties;
@@ -31,10 +31,12 @@ export interface Cell<RecordType> {
   column?: ColumnType<RecordType>;
   colSpan?: number;
   rowSpan?: number;
+  /** Only used for table header */
+  hasSubColumns?: boolean;
 }
 
 export interface RenderedCell<RecordType> {
-  props?: Cell<RecordType>;
+  props?: CellType<RecordType>;
   children?: React.ReactNode;
 }
 
@@ -42,20 +44,20 @@ export type DataIndex = string | number | (string | number)[];
 
 interface ColumnSharedType {
   title?: React.ReactNode;
+  key?: Key;
+  className?: string;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType {
-  children: ColumnType<RecordType>[];
+  children: ColumnsType<RecordType>;
 }
 
 export interface ColumnType<RecordType> extends ColumnSharedType {
   align?: 'left' | 'center' | 'right';
-  className?: string;
   colSpan?: number;
   dataIndex?: DataIndex;
   ellipsis?: boolean;
   fixed?: FixedType;
-  key?: Key;
   render?: (
     value: any,
     record: RecordType,

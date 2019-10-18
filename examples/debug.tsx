@@ -54,8 +54,17 @@ const Demo = () => {
           dataIndex: 'id',
         },
         {
-          title: '1 - Date',
-          dataIndex: 'date',
+          title: '1 - Merge Date',
+          children: [
+            {
+              title: '1 - 0 - ID',
+              dataIndex: 'id',
+            },
+            {
+              title: '1 - 1 - Date',
+              dataIndex: 'date',
+            },
+          ],
         },
       ],
     },
@@ -120,6 +129,24 @@ const Demo = () => {
         Add Row
       </button>
       <Table<RecordType> columns={columns} data={data} />
+
+      <br />
+
+      <Table<RecordType> data={data}>
+        <Column dataIndex="id" title="ID" />
+        <ColumnGroup title="Merged Title">
+          <Column dataIndex="id" title="0 - ID" />
+          <Column dataIndex="date" title="1 - Date" />
+        </ColumnGroup>
+      </Table>
+
+      <br />
+
+      <Table<RecordType> data={data}>
+        <Column dataIndex="id" title="ID" />
+        <Column dataIndex="id" title="Merged Title" colSpan={2} />
+        <Column dataIndex="date" colSpan={0} />
+      </Table>
 
       <button
         type="button"

@@ -3,12 +3,11 @@ import shallowEqual from 'shallowequal';
 import Cell from './Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from './context';
 import { getColumnKey } from './utils/valueUtil';
-import { ColumnType } from './interface';
+import { ColumnType, CellType } from './interface';
 
-export interface RowProps<RecordType> {
+export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
-  flattenColumns?: ColumnType<RecordType>[];
 }
 
 interface RawColumnType<RecordType> {
@@ -38,29 +37,21 @@ function shouldUpdate<RecordType>(
   const { record, index, rowColumns } = props;
 
   if (prevRecord !== record || prevIndex !== index || prevRowColumns.length !== rowColumns.length) {
-    return false;
+    return true;
   }
 
-  return prevRowColumns.every((prevColumn, colIndex) =>
-    shallowEqual(prevColumn, rowColumns[colIndex]),
+  return prevRowColumns.some(
+    (prevColumn, colIndex) => !shallowEqual(prevColumn, rowColumns[colIndex]),
   );
 }
 
 function useComputeRowProps<RecordType>({
   record,
   index,
-  flattenColumns,
-  context,
-}: DefaultPureCompareProps<RecordType, RowProps<RecordType>>): ComputedProps<RecordType> {
-  /**
-   * Row is both used in `tbody` & `thead`.
-   * In `tbody`, we use `flattenColumns` from Table context.
-   * In `thead`, we need use `flattenColumns` row by row since it will change by nested head
-   */
-  const mergedFlattenColumns = flattenColumns || context.flattenColumns;
-
-  const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(mergedFlattenColumns), [
-    mergedFlattenColumns,
+  context: { flattenColumns },
+}: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
+  const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
+    flattenColumns,
   ]);
 
   return {
@@ -70,9 +61,9 @@ function useComputeRowProps<RecordType>({
   };
 }
 
-function Row<RecordType>(props: RowProps<RecordType>) {
+function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
   return (
-    <PureContextConsumer<RecordType, RowProps<RecordType>, ComputedProps<RecordType>>
+    <PureContextConsumer<RecordType, BodyRowProps<RecordType>, ComputedProps<RecordType>>
       {...props}
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
@@ -98,6 +89,6 @@ function Row<RecordType>(props: RowProps<RecordType>) {
   );
 }
 
-Row.displayName = 'Row';
+BodyRow.displayName = 'BodyRow';
 
-export default Row;
+export default BodyRow;

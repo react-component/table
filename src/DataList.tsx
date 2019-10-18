@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './Row';
+import BodyRow from './BodyRow';
 import { GetRowKey } from './interface';
 
 export interface DataListProps<RecordType> {
@@ -20,7 +20,7 @@ function DataList<RecordType>({ data, rowKey }: DataListProps<RecordType>) {
       {(data || []).map((record, index) => {
         const key = getRowKey(record, index);
 
-        return <Row key={key} record={record} index={index} />;
+        return <BodyRow key={key} record={record} index={index} />;
       })}
     </tbody>
   );

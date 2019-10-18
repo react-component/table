@@ -9,12 +9,15 @@ function isRenderCell<RecordType>(
 }
 
 export interface CellProps<RecordType> {
-  record: RecordType;
+  record?: RecordType;
   /** `record` index. Not `column` index. */
-  index: number;
-  dataIndex: DataIndex;
-  render: ColumnType<RecordType>['render'];
+  index?: number;
+  dataIndex?: DataIndex;
+  render?: ColumnType<RecordType>['render'];
   component?: keyof React.ReactHTML;
+  children?: React.ReactNode;
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 function Cell<RecordType>({
@@ -22,25 +25,40 @@ function Cell<RecordType>({
   index,
   dataIndex,
   render,
+  children,
   component: Component = 'td',
-}: CellProps<RecordType>) {
+  colSpan,
+  rowSpan,
+}: CellProps<RecordType>): React.ReactElement {
+  if (colSpan === 0) {
+    return null;
+  }
 
-  const value = getPathValue(record, dataIndex);
+  let childNode: React.ReactNode;
+  if (children) {
+    childNode = children;
+  } else {
+    const value = getPathValue(record, dataIndex);
 
-  // Customize render node
-  let renderNode: React.ReactNode = value;
-  if (render) {
-    const renderData = render(value, record, index);
+    // Customize render node
+    childNode = value;
+    if (render) {
+      const renderData = render(value, record, index);
 
-    // TODO: Need handle additional props
-    if (isRenderCell(renderData)) {
-      renderNode = renderData.children;
-    } else {
-      renderNode = renderData;
+      // TODO: Need handle additional props
+      if (isRenderCell(renderData)) {
+        childNode = renderData.children;
+      } else {
+        childNode = renderData;
+      }
     }
   }
 
-  return <Component>{renderNode}</Component>;
+  return (
+    <Component colSpan={colSpan} rowSpan={rowSpan}>
+      {childNode}
+    </Component>
+  );
 }
 
 const MemoCell = React.memo(Cell);
