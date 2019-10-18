@@ -439,6 +439,10 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
     this[name] = node;
   };
 
+  saveTableNodeRef = (node: HTMLDivElement) => {
+    this.tableNode = node;
+  };
+
   renderMainTable() {
     const { scroll, prefixCls } = this.props;
     const isAnyColumnsFixed = this.columnManager.isAnyColumnsFixed();
@@ -575,7 +579,7 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
             this.expander = expander;
             return (
               <div
-                ref={this.saveRef('tableNode')}
+                ref={this.saveTableNodeRef}
                 className={tableClassName}
                 style={props.style}
                 id={props.id}
