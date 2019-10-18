@@ -25,7 +25,6 @@ import {
   DefaultValueType,
   ScrollPosition,
   Expander,
-  Key,
 } from './interface';
 
 export interface TableProps<ValueType>
@@ -295,7 +294,7 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
     // if scroll.x is number/px/% width value, we should fixed table layout
     // to avoid long word layout broken issue
     if (scroll.x && scroll.x !== true && scroll.x !== 'max-content') {
-      return false;
+      return true;
     }
     return false;
   }

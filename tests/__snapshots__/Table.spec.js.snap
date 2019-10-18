@@ -1801,7 +1801,7 @@ exports[`Table rowKey renders tableLayout 1`] = `
 
 exports[`Table scroll renders scroll.x is a number 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
 >
   <div
     class="rc-table-content"
