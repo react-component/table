@@ -18,6 +18,7 @@ export interface TableCellProps<ValueType> {
   indent?: number;
   indentSize?: number;
   column?: ColumnType;
+  title?: string;
   expandIcon?: React.ReactNode;
   component?: CustomizeComponent;
 }
@@ -56,7 +57,7 @@ export default class TableCell<ValueType> extends React.Component<TableCellProps
     } else {
       text = get(record, dataIndex);
     }
-    let tdProps: Cell = {};
+    let tdProps: Cell & { title?: string } = {};
     let colSpan: number;
     let rowSpan: number;
 
@@ -108,13 +109,11 @@ export default class TableCell<ValueType> extends React.Component<TableCellProps
     if (column.ellipsis) {
       if (typeof text === 'string') {
         tdProps.title = text;
-      } else if (
-        text &&
-        text.props &&
-        text.props.children &&
-        typeof text.props.children === 'string'
-      ) {
-        tdProps.title = text.children;
+      } else if (text) {
+        const { props: textProps } = text as React.ReactElement<any>;
+        if (textProps && textProps.children && typeof textProps.children === 'string') {
+          tdProps.title = textProps.children;
+        }
       }
     }
 
