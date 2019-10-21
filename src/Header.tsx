@@ -69,14 +69,16 @@ function parseHeaderRows<RecordType>(
 interface ComputeProps<RecordType> {
   prefixCls: string;
   rows: CellType<RecordType>[][];
+  fixHeader: boolean;
 }
 
 function useComputeProps<RecordType>({
+  fixHeader,
   context: { columns, prefixCls },
 }: DefaultPureCompareProps<RecordType, HeaderProps<RecordType>>): ComputeProps<RecordType> {
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
-  return { rows, prefixCls };
+  return { rows, prefixCls, fixHeader };
 }
 
 // TODO: Optimize header render if performance leak
@@ -90,7 +92,9 @@ function shouldUpdate<RecordType>(
   return prevRows !== rows;
 }
 
-export interface HeaderProps<RecordType> {}
+export interface HeaderProps<RecordType> {
+  fixHeader: boolean;
+}
 
 function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement {
   return (
@@ -99,10 +103,10 @@ function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement 
       shouldUpdate={shouldUpdate}
       useComputeProps={useComputeProps}
     >
-      {({ rows, prefixCls }) => (
+      {({ rows, prefixCls, fixHeader }) => (
         <thead className={classNames(`${prefixCls}-header`)}>
           {rows.map((row, rowIndex) => (
-            <HeaderRow key={rowIndex} cells={row} />
+            <HeaderRow fixHeader={fixHeader} key={rowIndex} cells={row} />
           ))}
         </thead>
       )}

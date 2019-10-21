@@ -1,4 +1,5 @@
 .storybook
+.doc
 *.iml
 *.log
 .idea/

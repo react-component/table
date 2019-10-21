@@ -17,6 +17,10 @@ export interface TableProps<RecordType> {
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
 
+  // Fixed
+  useFixedHeader?: boolean;
+  scroll?: { x?: number | true | string; y?: number };
+
   // TODO: Handle this
   // expandIconAsCell?: boolean;
   // expandedRowKeys?: Key[];
@@ -35,7 +39,6 @@ export interface TableProps<RecordType> {
 
   // getRowKey: GetRowKey<RecordType>;
 
-  // useFixedHeader?: boolean;
   // columns?: ColumnType[];
   // bodyStyle?: React.CSSProperties;
 
@@ -52,7 +55,6 @@ export interface TableProps<RecordType> {
   // id?: string;
   // footer?: (data: RecordType[]) => React.ReactNode;
   // emptyText?: React.ReactNode | (() => React.ReactNode);
-  // scroll?: { x?: number | true | string; y?: number };
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
 
@@ -61,15 +63,44 @@ export interface TableProps<RecordType> {
 }
 
 function Table<RecordType>(props: TableProps<RecordType>) {
-  const { prefixCls, className, style, data, rowKey } = props;
+  const { prefixCls, className, style, data, rowKey, scroll } = props;
 
   const [columns, flattenColumns] = useColumns(props);
 
+  // ========================= Fixed =========================
+  const fixedLeft = React.useState(false);
+  const fixedTop = React.useState(false);
+
+  const scrollX: boolean = scroll && 'x' in scroll;
+  const scrollY: boolean = scroll && 'y' in scroll;
+
+  const scrollStyle: React.CSSProperties = {
+    overflowX: scrollX ? 'auto' : null,
+    overflowY: scrollY ? 'auto' : null,
+    maxHeight: scrollY ? scroll.y : null,
+  };
+
+  if (scrollX || scrollY) {
+    scrollStyle.position = 'relative';
+  }
+
+  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+    const { scrollLeft, scrollTop } = currentTarget;
+    console.log('=>', scrollLeft, scrollTop);
+  };
+
   return (
     <TableContext.Provider value={{ columns, flattenColumns, prefixCls }}>
-      <div className={classNames(prefixCls, className)} style={style}>
+      <div
+        className={classNames(prefixCls, className)}
+        style={{
+          ...style,
+          ...scrollStyle,
+        }}
+        onScroll={onScroll}
+      >
         <table>
-          <Header />
+          <Header fixHeader={scrollY} />
           <Body data={data} rowKey={rowKey} />
           <tfoot />
         </table>

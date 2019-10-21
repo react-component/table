@@ -18,6 +18,9 @@ export interface CellProps<RecordType> {
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
+
+  // Fixed
+  fixTop?: boolean;
 }
 
 function Cell<RecordType>({
@@ -29,11 +32,13 @@ function Cell<RecordType>({
   component: Component = 'td',
   colSpan,
   rowSpan,
+  fixTop,
 }: CellProps<RecordType>): React.ReactElement {
   if (colSpan === 0) {
     return null;
   }
 
+  // Child node
   let childNode: React.ReactNode;
   if (children) {
     childNode = children;
@@ -54,8 +59,15 @@ function Cell<RecordType>({
     }
   }
 
+  // Fixed
+  const fixedStyle: React.CSSProperties = {};
+  if (fixTop) {
+    fixedStyle.position = 'sticky';
+    fixedStyle.top = 0;
+  }
+
   return (
-    <Component colSpan={colSpan} rowSpan={rowSpan}>
+    <Component colSpan={colSpan} rowSpan={rowSpan} style={fixedStyle}>
       {childNode}
     </Component>
   );

@@ -7,12 +7,15 @@ import { ColumnType, CellType } from './interface';
 
 export interface RowProps<RecordType> {
   cells: CellType<RecordType>[];
+  fixHeader: boolean;
 }
 
-function HeaderRow<RecordType>({ cells }: RowProps<RecordType>) {
+function HeaderRow<RecordType>({ cells, fixHeader }: RowProps<RecordType>) {
   return (
     <tr>
-      {cells.map((cell, cellIndex) => <Cell {...cell} key={cellIndex} />)}
+      {cells.map((cell, cellIndex) => (
+        <Cell {...cell} fixTop={fixHeader} key={cellIndex} />
+      ))}
     </tr>
   );
 }
