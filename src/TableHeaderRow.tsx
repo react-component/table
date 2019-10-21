@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'mini-store';
 import classNames from 'classnames';
 import {

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import * as React from 'react';
 import { ColumnType, Cell } from './interface';
 import ColumnGroup from './ColumnGroup';
 

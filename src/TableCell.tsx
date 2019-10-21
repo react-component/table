@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import get from 'lodash/get';
 import { ColumnType, CustomizeComponent, Cell, RenderedCell } from './interface';

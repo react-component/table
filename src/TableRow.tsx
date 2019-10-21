@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import warning from 'rc-util/lib/warning';
 import { connect } from 'mini-store';
