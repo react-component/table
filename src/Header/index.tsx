@@ -1,8 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import { PureContextConsumer, DefaultPureCompareProps } from './context';
-import { ColumnsType, CellType } from './interface';
+import DataContext from '../context/DataContext';
+import ResizeContext from '../context/ResizeContext';
+import { ColumnsType, CellType } from '../interface';
 import HeaderRow from './HeaderRow';
+import { useFrameState } from '../hooks/useFrameState';
 
 // TODO: warning user if mix using `children` & `xxxSpan`
 function parseHeaderRows<RecordType>(
@@ -66,51 +68,50 @@ function parseHeaderRows<RecordType>(
   return rows;
 }
 
-interface ComputeProps<RecordType> {
-  prefixCls: string;
-  rows: CellType<RecordType>[][];
-  fixHeader: boolean;
-}
-
-function useComputeProps<RecordType>({
-  fixHeader,
-  context: { columns, prefixCls },
-}: DefaultPureCompareProps<RecordType, HeaderProps<RecordType>>): ComputeProps<RecordType> {
-  const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
-
-  return { rows, prefixCls, fixHeader };
-}
-
-// TODO: Optimize header render if performance leak
-function shouldUpdate<RecordType>(
-  prevProps: ComputeProps<RecordType>,
-  props: ComputeProps<RecordType>,
-): boolean {
-  const { rows: prevRows } = prevProps;
-  const { rows } = props;
-
-  return prevRows !== rows;
-}
-
 export interface HeaderProps<RecordType> {
   fixHeader: boolean;
 }
 
 function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement {
+  const { fixHeader } = props;
+  const { columns, prefixCls } = React.useContext(DataContext);
+  const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
+
+  // =============== Fix ===============
+  const [rowHeights, updateRowHeights] = useFrameState<number[]>([]);
+  function onRowResize(rowIndex: number, height: number) {
+    updateRowHeights((heights: number[]) => {
+      const newHeights = [...heights];
+      newHeights[rowIndex] = height;
+      return newHeights;
+    });
+  }
+
+  let fixedTop = 0;
+
   return (
-    <PureContextConsumer<RecordType, HeaderProps<RecordType>, ComputeProps<RecordType>>
-      {...props}
-      shouldUpdate={shouldUpdate}
-      useComputeProps={useComputeProps}
+    <ResizeContext.Provider
+      value={{
+        onRowResize,
+      }}
     >
-      {({ rows, prefixCls, fixHeader }) => (
-        <thead className={classNames(`${prefixCls}-header`)}>
-          {rows.map((row, rowIndex) => (
-            <HeaderRow fixHeader={fixHeader} key={rowIndex} cells={row} />
-          ))}
-        </thead>
-      )}
-    </PureContextConsumer>
+      <thead className={classNames(`${prefixCls}-header`)}>
+        {rows.map((row, rowIndex) => {
+          const rowNode = (
+            <HeaderRow
+              key={rowIndex}
+              cells={row}
+              index={rowIndex}
+              fixedTop={fixHeader ? fixedTop : false}
+            />
+          );
+
+          fixedTop += rowHeights[rowIndex] || 0;
+
+          return rowNode;
+        })}
+      </thead>
+    </ResizeContext.Provider>
   );
 }
 

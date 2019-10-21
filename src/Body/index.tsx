@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import BodyRow from './BodyRow';
-import TableContext from './context';
-import { GetRowKey } from './interface';
+import DataContext from '../context/DataContext';
+import { GetRowKey } from '../interface';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
@@ -10,7 +10,7 @@ export interface BodyProps<RecordType> {
 }
 
 function Body<RecordType>({ data, rowKey }: BodyProps<RecordType>) {
-  const { prefixCls } = React.useContext(TableContext);
+  const { prefixCls } = React.useContext(DataContext);
 
   const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
     if (typeof rowKey === 'function') {

@@ -4,7 +4,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
 import Header from './Header';
 import { GetRowKey, ColumnsType } from './interface';
-import TableContext from './context';
+import DataContext from './context/DataContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 
@@ -90,7 +90,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   };
 
   return (
-    <TableContext.Provider value={{ columns, flattenColumns, prefixCls }}>
+    <DataContext.Provider value={{ columns, flattenColumns, prefixCls }}>
       <div
         className={classNames(prefixCls, className)}
         style={{
@@ -105,7 +105,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
           <tfoot />
         </table>
       </div>
-    </TableContext.Provider>
+    </DataContext.Provider>
   );
 }
 

@@ -1,26 +1,27 @@
 import React from 'react';
 import shallowEqual from 'shallowequal';
-import Cell from './Cell';
-import { PureContextConsumer, DefaultPureCompareProps } from './context';
-import { getColumnKey } from './utils/valueUtil';
-import { ColumnType, CellType } from './interface';
+import Cell from '../Cell';
+import { PureContextConsumer, DefaultPureCompareProps } from '../context/DataContext';
+import { getColumnKey } from '../utils/valueUtil';
+import { ColumnType, CellType } from '../interface';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
 }
 
-interface RawColumnType<RecordType> {
-  key: ColumnType<RecordType>['key'];
-  dataIndex: ColumnType<RecordType>['dataIndex'];
-  render: ColumnType<RecordType>['render'];
-}
+type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
 
 /** Return a subset of `ColumnType` which used in Row */
 function getRequiredColumnProps<RecordType>(
   columns: ColumnType<RecordType>[],
 ): RawColumnType<RecordType>[] {
-  return (columns || []).map(({ key, dataIndex, render }) => ({ key, dataIndex, render }));
+  return (columns || []).map(({ key, dataIndex, render, fixed }) => ({
+    key,
+    dataIndex,
+    render,
+    fixed,
+  }));
 }
 
 interface ComputedProps<RecordType> {
@@ -71,7 +72,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
       {({ rowColumns, record, index }) => (
         <tr>
           {rowColumns.map((column, colIndex) => {
-            const { render, dataIndex } = column;
+            const { render, dataIndex, fixed } = column;
 
             return (
               <Cell
@@ -80,6 +81,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                 index={index}
                 dataIndex={dataIndex}
                 render={render}
+                fixLeft={fixed === 'left'}
               />
             );
           })}

@@ -51,6 +51,8 @@
     "lodash": "^4.17.5",
     "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
+    "raf": "^3.4.1",
+    "rc-resize-observer": "^0.1.2",
     "rc-util": "^4.13.0",
     "react-lifecycles-compat": "^3.0.2",
     "shallowequal": "^1.1.0"

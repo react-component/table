@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColumnType, DefaultRecordType, ColumnsType } from './interface';
+import { ColumnType, DefaultRecordType, ColumnsType } from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
   columns: ColumnsType<RecordType>;

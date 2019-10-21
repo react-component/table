@@ -21,7 +21,8 @@
   // }
 
   table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0px;
     width: 100%;
   }
 
@@ -29,6 +30,10 @@
   td {
     padding: @vertical-padding @horizontal-padding;
     white-space: nowrap;
+
+    border: 1px solid red;
+    border-top: 0;
+    border-left: 0;
   }
 
   // ================= Header =================
@@ -36,6 +41,7 @@
     td,
     th {
       background: @table-head-background-color;
+      text-align: center;
     }
   }
 
@@ -43,6 +49,10 @@
   &-body {
     tr {
       border-bottom: 1px solid @table-border-color;
+
+      td, th {
+        background: #FFF;
+      }
     }
   }
 }

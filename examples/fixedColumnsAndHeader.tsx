@@ -14,9 +14,16 @@ interface RecordType {
 const columns: ColumnsType<RecordType> = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
-  { title: 'title3', dataIndex: 'c', key: 'c', width: 150 },
-  { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
-  { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+  // { title: 'title3', dataIndex: 'c', key: 'c', width: 150 },
+  // { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
+  // { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+  {
+    title: 'title3',
+    children: [
+      { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
+      { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+    ],
+  },
   { title: 'title6', dataIndex: 'c', key: 'f', width: 150 },
   { title: 'title7', dataIndex: 'c', key: 'g', width: 150 },
   { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
@@ -26,7 +33,7 @@ const columns: ColumnsType<RecordType> = [
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
-const data: RecordType[] = [
+const originData: RecordType[] = [
   { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '1' },
   { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '2' },
   { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '3' },
@@ -38,16 +45,33 @@ const data: RecordType[] = [
   { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '9' },
 ];
 
-const Demo = () => (
-  <div>
-    <h2>Fixed columns and header</h2>
-    <Table<RecordType>
-      columns={columns}
-      scroll={{ x: 1650, y: 300 }}
-      data={data}
-      style={{ width: 800 }}
-    />
-  </div>
-);
+const Demo = () => {
+  const [data, setData] = React.useState(originData);
+
+  return (
+    <div>
+      <h2>Fixed columns and header</h2>
+      <Table<RecordType>
+        columns={columns}
+        scroll={{ x: 1650, y: 300 }}
+        data={data}
+        style={{ width: 800 }}
+      />
+      <button
+        type="button"
+        onClick={() => {
+          const newData = [...originData];
+          newData[0] = {
+            ...newData[0],
+            a: 'aaaaaaaaaaaaaaa',
+          };
+          setData(newData);
+        }}
+      >
+        Resize
+      </button>
+    </div>
+  );
+};
 
 export default Demo;

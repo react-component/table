@@ -20,7 +20,9 @@ export interface CellProps<RecordType> {
   rowSpan?: number;
 
   // Fixed
-  fixTop?: boolean;
+  fixedTop?: number | false;
+  fixLeft?: boolean;
+  fixRight?: boolean;
 }
 
 function Cell<RecordType>({
@@ -32,13 +34,15 @@ function Cell<RecordType>({
   component: Component = 'td',
   colSpan,
   rowSpan,
-  fixTop,
+  fixedTop,
+  fixLeft,
+  fixRight,
 }: CellProps<RecordType>): React.ReactElement {
   if (colSpan === 0) {
     return null;
   }
 
-  // Child node
+  // ==================== Child Node ====================
   let childNode: React.ReactNode;
   if (children) {
     childNode = children;
@@ -59,11 +63,20 @@ function Cell<RecordType>({
     }
   }
 
-  // Fixed
+  // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  if (fixTop) {
+  if (typeof fixedTop === 'number') {
     fixedStyle.position = 'sticky';
-    fixedStyle.top = 0;
+    fixedStyle.top = fixedTop;
+    fixedStyle.zIndex = 2;
+  }
+  if (fixLeft) {
+    fixedStyle.position = 'sticky';
+    fixedStyle.left = 0;
+  }
+  if (fixRight) {
+    fixedStyle.position = 'sticky';
+    fixedStyle.right = 0;
   }
 
   return (
