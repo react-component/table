@@ -105,6 +105,19 @@ export default class TableCell<ValueType> extends React.Component<TableCellProps
       [`${prefixCls}-cell-break-word`]: !!column.width,
     });
 
+    if (column.ellipsis) {
+      if (typeof text === 'string') {
+        tdProps.title = text;
+      } else if (
+        text &&
+        text.props &&
+        text.props.children &&
+        typeof text.props.children === 'string'
+      ) {
+        tdProps.title = text.children;
+      }
+    }
+
     return (
       <BodyCell className={cellClassName} onClick={this.handleClick} {...tdProps}>
         {indentText}
