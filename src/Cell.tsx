@@ -25,19 +25,22 @@ export interface CellProps<RecordType> {
   fixRight?: boolean;
 }
 
-function Cell<RecordType>({
-  record,
-  index,
-  dataIndex,
-  render,
-  children,
-  component: Component = 'td',
-  colSpan,
-  rowSpan,
-  fixedTop,
-  fixLeft,
-  fixRight,
-}: CellProps<RecordType>): React.ReactElement {
+function Cell<RecordType>(
+  {
+    record,
+    index,
+    dataIndex,
+    render,
+    children,
+    component: Component = 'td',
+    colSpan,
+    rowSpan,
+    fixedTop,
+    fixLeft,
+    fixRight,
+  }: CellProps<RecordType>,
+  ref: any,
+): React.ReactElement {
   if (colSpan === 0) {
     return null;
   }
@@ -79,14 +82,19 @@ function Cell<RecordType>({
     fixedStyle.right = 0;
   }
 
-  return (
-    <Component colSpan={colSpan} rowSpan={rowSpan} style={fixedStyle}>
-      {childNode}
-    </Component>
-  );
+  const componentProps = {
+    colSpan,
+    rowSpan,
+    style: fixedStyle,
+    ref,
+  };
+
+  return <Component {...componentProps}>{childNode}</Component>;
 }
 
-const MemoCell = React.memo(Cell);
+const RefCell = React.forwardRef(Cell);
+
+const MemoCell = React.memo(RefCell);
 MemoCell.displayName = 'Cell';
 
 export default MemoCell;
