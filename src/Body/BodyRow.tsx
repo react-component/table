@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import shallowEqual from 'shallowequal';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
@@ -14,6 +14,8 @@ export interface BodyRowProps<RecordType> {
   /** Set if need collect column width info */
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
+  expandable: boolean;
+  expanded: boolean;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -39,51 +41,30 @@ function shouldUpdate<RecordType>(
   prevProps: ComputedProps<RecordType>,
   props: ComputedProps<RecordType>,
 ): boolean {
-  const {
-    prefixCls: prevPrefixCls,
-    record: prevRecord,
-    index: prevIndex,
-    rowColumns: prevRowColumns,
-    stickyOffsets: prevStickyOffsets,
-  } = prevProps;
-  const { prefixCls, record, index, rowColumns, stickyOffsets } = props;
+  const { rowColumns: prevRowColumns, ...prevRestProps } = prevProps;
+  const { rowColumns, ...restProps } = props;
 
   if (
-    prevPrefixCls !== prefixCls ||
-    prevRecord !== record ||
-    prevIndex !== index ||
     prevRowColumns.length !== rowColumns.length ||
-    prevStickyOffsets !== stickyOffsets
-  ) {
-    return true;
-  }
-
-  if (
     prevRowColumns.some((prevColumn, colIndex) => !shallowEqual(prevColumn, rowColumns[colIndex]))
   ) {
     return true;
   }
 
-  return false;
+  return !shallowEqual(prevRestProps, restProps);
 }
 
 function useComputeRowProps<RecordType>({
-  record,
-  index,
-  measureColumnWidth,
-  stickyOffsets,
   context: { flattenColumns, prefixCls },
+  ...props
 }: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
   const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
     flattenColumns,
   ]);
 
   return {
-    record,
-    index,
-    measureColumnWidth,
+    ...props,
     rowColumns,
-    stickyOffsets,
     prefixCls,
   };
 }
@@ -97,7 +78,17 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
     >
-      {({ prefixCls, rowColumns, record, index, measureColumnWidth, stickyOffsets }) => (
+      {({
+        prefixCls,
+        rowColumns,
+        record,
+        index,
+        measureColumnWidth,
+        stickyOffsets,
+        expandable,
+        expanded,
+      }) => {
+        return (
           <tr>
             {rowColumns.map((column, colIndex) => {
               const { render, dataIndex } = column;
@@ -134,7 +125,8 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               return cellNode;
             })}
           </tr>
-        )}
+        );
+      }}
     </PureContextConsumer>
   );
 }

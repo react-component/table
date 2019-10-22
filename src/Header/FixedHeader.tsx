@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import Header, { HeaderProps } from './Header';
 

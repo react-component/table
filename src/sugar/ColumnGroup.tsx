@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ColumnProps } from './Column';
 import { ColumnType } from '../interface';
 

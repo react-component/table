@@ -1,11 +1,24 @@
-import React from 'react';
+/**
+ * Removed:
+ *  - expandIconAsCell
+ */
+
+import * as React from 'react';
 import classNames from 'classnames';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
 import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
-import { GetRowKey, ColumnsType, TableComponents, CustomizeComponent } from './interface';
+import {
+  GetRowKey,
+  ColumnsType,
+  TableComponents,
+  CustomizeComponent,
+  ExpandedRowRender,
+  Key,
+  DefaultRecordType,
+} from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
@@ -16,7 +29,7 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 
 const scrollbarSize = getScrollBarSize();
 
-export interface TableProps<RecordType> {
+export interface TableProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -31,18 +44,18 @@ export interface TableProps<RecordType> {
   useFixedHeader?: boolean;
 
   // Expandable
+  expandedRowKeys?: Key[];
+  defaultExpandedRowKeys?: Key[];
+  expandedRowRender?: ExpandedRowRender<RecordType>;
 
   // TODO: Handle this
   // Customize
   components?: TableComponents;
 
   // expandIconAsCell?: boolean;
-  // expandedRowKeys?: Key[];
   // expandedRowClassName?: (record: RecordType, index: number, indent: number) => string;
   // defaultExpandAllRows?: boolean;
-  // defaultExpandedRowKeys?: Key[];
   // expandIconColumnIndex?: number;
-  // expandedRowRender?: ExpandedRowRender<RecordType>;
   // expandIcon?: RenderExpandIcon<RecordType>;
   // childrenColumnName?: string;
   // indentSize?: number;
@@ -75,8 +88,21 @@ export interface TableProps<RecordType> {
   // tableLayout?: 'fixed';
 }
 
-function Table<RecordType>(props: TableProps<RecordType>) {
-  const { prefixCls, className, style, data, rowKey, scroll, components } = props;
+function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+  const {
+    prefixCls,
+    className,
+    style,
+    data = [],
+    rowKey,
+    scroll,
+    components,
+
+    // Expand
+    expandedRowKeys,
+    defaultExpandedRowKeys,
+    expandedRowRender,
+  } = props;
 
   const [columns, flattenColumns] = useColumns(props);
 
@@ -84,6 +110,12 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   function getComponent(path: string[], defaultComponent: CustomizeComponent): CustomizeComponent {
     return getPathValue(components, path) || defaultComponent;
   }
+
+  // ====================== Expand ======================
+  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(defaultExpandedRowKeys);
+  const mergedExpandedKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
+
+  const expandable: boolean = !!expandedRowRender || data.some(({ children }) => !!children);
 
   // ====================== Scroll ======================
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
@@ -153,6 +185,8 @@ function Table<RecordType>(props: TableProps<RecordType>) {
       rowKey={rowKey}
       measureColumnWidth={fixHeader || fixColumn}
       stickyOffsets={stickyOffsets}
+      expandedKeys={mergedExpandedKeys}
+      expandable={expandable}
     />
   );
 

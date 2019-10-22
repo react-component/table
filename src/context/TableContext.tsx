@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ColumnType, DefaultRecordType, ColumnsType, CustomizeComponent } from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {

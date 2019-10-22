@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import { DataIndex, ColumnType, RenderedCell } from './interface';
 import { getPathValue } from './utils/valueUtil';
@@ -24,8 +24,8 @@ export interface CellProps<RecordType> {
   // Fixed
   fixLeft?: number | false;
   fixRight?: number | false;
-  lastFixLeft: boolean;
-  firstFixRight: boolean;
+  lastFixLeft?: boolean;
+  firstFixRight?: boolean;
 }
 
 function Cell<RecordType>(

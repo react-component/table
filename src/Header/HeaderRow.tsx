@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Cell from '../Cell';
 import { CellType, StickyOffsets } from '../interface';
 import TableContext from '../context/TableContext';

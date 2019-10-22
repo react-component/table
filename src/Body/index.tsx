@@ -1,14 +1,17 @@
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import BodyRow from './BodyRow';
 import DataContext from '../context/TableContext';
-import { GetRowKey, StickyOffsets } from '../interface';
+import { GetRowKey, StickyOffsets, Key, ExpandedRowRender } from '../interface';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
   rowKey: string | GetRowKey<RecordType>;
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
+  expandedKeys: Set<Key>;
+  expandable: boolean;
+  expandedRowRender?: ExpandedRowRender<RecordType>;
 }
 
 function Body<RecordType>({
@@ -16,6 +19,8 @@ function Body<RecordType>({
   rowKey,
   measureColumnWidth,
   stickyOffsets,
+  expandedKeys,
+  expandable,
 }: BodyProps<RecordType>) {
   const { prefixCls } = React.useContext(DataContext);
 
@@ -32,19 +37,21 @@ function Body<RecordType>({
         {(data || []).map((record, index) => {
           const key = getRowKey(record, index);
 
-          return (
+          return [
             <BodyRow
               measureColumnWidth={measureColumnWidth && index === 0}
               key={key}
               record={record}
               index={index}
               stickyOffsets={stickyOffsets}
-            />
-          );
+              expandable={expandable}
+              expanded={expandedKeys.has(key)}
+            />,
+          ];
         })}
       </tbody>
     ),
-    [data, rowKey, prefixCls, measureColumnWidth, stickyOffsets],
+    [data, rowKey, prefixCls, measureColumnWidth, stickyOffsets, expandedKeys, expandable],
   );
 }
 

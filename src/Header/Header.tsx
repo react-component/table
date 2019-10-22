@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import DataContext from '../context/TableContext';
 import { ColumnsType, CellType, StickyOffsets } from '../interface';
 import HeaderRow from './HeaderRow';

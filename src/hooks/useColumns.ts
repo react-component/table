@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import warning from 'rc-util/lib/warning';
 import toArray from 'rc-util/lib/Children/toArray';
 import { ColumnsType, ColumnType } from '../interface';
@@ -35,6 +35,9 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
   }, []);
 }
 
+/**
+ * Parse `columns` & `children` into `columns`.
+ */
 function useColumns<RecordType>({
   columns,
   children,

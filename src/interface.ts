@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 /**
  * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
@@ -21,7 +21,9 @@ export type Key = React.Key;
 
 export type FixedType = 'left' | 'right' | boolean;
 
-export type DefaultRecordType = Record<string, any>;
+export interface DefaultRecordType {
+  children?: DefaultRecordType[];
+}
 
 export interface CellType<RecordType> {
   key?: Key;
@@ -104,3 +106,10 @@ export interface StickyOffsets {
   left: number[];
   right: number[];
 }
+
+export type ExpandedRowRender<ValueType> = (
+  record: ValueType,
+  index: number,
+  indent: number,
+  expanded: boolean,
+) => React.ReactNode;
