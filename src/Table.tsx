@@ -25,15 +25,17 @@ export interface TableProps<RecordType> {
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
 
-  // Fixed
+  // Fixed Columns
   scroll?: { x?: number | true | string; y?: number };
   /** @deprecated No need to set this */
   useFixedHeader?: boolean;
 
+  // Expandable
+
+  // TODO: Handle this
   // Customize
   components?: TableComponents;
 
-  // TODO: Handle this
   // expandIconAsCell?: boolean;
   // expandedRowKeys?: Key[];
   // expandedRowClassName?: (record: RecordType, index: number, indent: number) => string;
@@ -131,7 +133,9 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   };
 
   React.useEffect(() => {
-    onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+    if (scrollBodyRef.current) {
+      onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+    }
   }, []);
 
   // ====================== Render ======================
