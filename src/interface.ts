@@ -113,3 +113,8 @@ export type ExpandedRowRender<ValueType> = (
   indent: number,
   expanded: boolean,
 ) => React.ReactNode;
+
+export type TriggerEventHandler<RecordType> = (
+  record: RecordType,
+  event: React.MouseEvent<HTMLElement>,
+) => void;

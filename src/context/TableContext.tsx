@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { ColumnType, DefaultRecordType, ColumnsType, CustomizeComponent } from '../interface';
+import {
+  ColumnType,
+  DefaultRecordType,
+  ColumnsType,
+  CustomizeComponent,
+  GetRowKey,
+} from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
   columns: ColumnsType<RecordType>;
   flattenColumns: ColumnType<RecordType>[];
   prefixCls: string;
   getComponent: (path: string[], defaultComponent: CustomizeComponent) => CustomizeComponent;
+  getRowKey: GetRowKey<RecordType>;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

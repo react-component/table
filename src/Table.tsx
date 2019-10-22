@@ -1,4 +1,7 @@
 /**
+ * TODO:
+ *  rowKey should not provide index as second param
+ *
  * Removed:
  *  - expandIconAsCell
  */
@@ -18,6 +21,7 @@ import {
   ExpandedRowRender,
   Key,
   DefaultRecordType,
+  TriggerEventHandler,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
@@ -47,6 +51,8 @@ export interface TableProps<RecordType extends DefaultRecordType> {
   expandedRowKeys?: Key[];
   defaultExpandedRowKeys?: Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
+  onExpand?: (expanded: boolean, record: RecordType) => void;
+  onExpandedRowsChange?: (expandedKeys: Key[]) => void;
 
   // TODO: Handle this
   // Customize
@@ -59,8 +65,6 @@ export interface TableProps<RecordType extends DefaultRecordType> {
   // expandIcon?: RenderExpandIcon<RecordType>;
   // childrenColumnName?: string;
   // indentSize?: number;
-  // onExpand?: ExpandEventHandler<RecordType>;
-  // onExpandedRowsChange?: (expandedKeys: Key[]) => void;
   // columnManager: ColumnManager;
   // store: TableStore;
 
@@ -102,20 +106,57 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandedRowKeys,
     defaultExpandedRowKeys,
     expandedRowRender,
+    onExpand,
+    onExpandedRowsChange,
   } = props;
-
-  const [columns, flattenColumns] = useColumns(props);
 
   // ==================== Customize =====================
   function getComponent(path: string[], defaultComponent: CustomizeComponent): CustomizeComponent {
     return getPathValue(components, path) || defaultComponent;
   }
 
+  const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
+    if (typeof rowKey === 'function') {
+      return rowKey;
+    }
+    return (record: RecordType) => record[rowKey];
+  }, [rowKey]);
+
   // ====================== Expand ======================
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(defaultExpandedRowKeys);
   const mergedExpandedKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
 
-  const expandable: boolean = !!expandedRowRender || data.some(({ children }) => !!children);
+  const expandable: boolean = !!expandedRowRender;
+
+  const onTriggerExpand: TriggerEventHandler<RecordType> = (record: RecordType) => {
+    const key = getRowKey(record, data.indexOf(record));
+
+    let newExpandedKeys: Key[];
+    const hasKey = mergedExpandedKeys.has(key);
+    if (hasKey) {
+      mergedExpandedKeys.delete(key);
+      newExpandedKeys = [...mergedExpandedKeys];
+    } else {
+      newExpandedKeys = [...mergedExpandedKeys, key];
+    }
+
+    setInnerExpandedKeys(newExpandedKeys);
+    if (onExpand) {
+      onExpand(!hasKey, record);
+    }
+    if (onExpandedRowsChange) {
+      onExpandedRowsChange(newExpandedKeys);
+    }
+  };
+
+  // ====================== Column ======================
+  const [columns, flattenColumns] = useColumns({
+    ...props,
+    expandable,
+    expandedKeys: mergedExpandedKeys,
+    getRowKey,
+    onTriggerExpand,
+  });
 
   // ====================== Scroll ======================
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
@@ -232,7 +273,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   return (
-    <DataContext.Provider value={{ columns, flattenColumns, prefixCls, getComponent }}>
+    <DataContext.Provider value={{ columns, flattenColumns, prefixCls, getComponent, getRowKey }}>
       <ResizeContext.Provider value={{ onColumnResize }}>
         <div
           className={classNames(prefixCls, className, {

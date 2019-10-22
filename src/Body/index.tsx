@@ -22,14 +22,7 @@ function Body<RecordType>({
   expandedKeys,
   expandable,
 }: BodyProps<RecordType>) {
-  const { prefixCls } = React.useContext(DataContext);
-
-  const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
-    if (typeof rowKey === 'function') {
-      return rowKey;
-    }
-    return (record: RecordType) => record[rowKey];
-  }, [rowKey]);
+  const { prefixCls, getRowKey } = React.useContext(DataContext);
 
   return React.useMemo(
     () => (
@@ -51,7 +44,16 @@ function Body<RecordType>({
         })}
       </tbody>
     ),
-    [data, rowKey, prefixCls, measureColumnWidth, stickyOffsets, expandedKeys, expandable],
+    [
+      data,
+      rowKey,
+      prefixCls,
+      measureColumnWidth,
+      stickyOffsets,
+      expandedKeys,
+      expandable,
+      getRowKey,
+    ],
   );
 }
 
