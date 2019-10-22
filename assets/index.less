@@ -13,13 +13,6 @@
   line-height: @line-height;
 
   // ================= Global =================
-  // table,
-  // tr,
-  // th,
-  // td {
-  //   border: 1px solid red;
-  // }
-
   table {
     border-collapse: separate;
     border-spacing: 0px;
@@ -30,10 +23,54 @@
   td {
     padding: @vertical-padding @horizontal-padding;
     white-space: nowrap;
+  }
 
+  // ================== Cell ==================
+  &-cell {
     border: 1px solid red;
     border-top: 0;
     border-left: 0;
+    transition: box-shadow 0.3s;
+
+    &-fix-left-last::after {
+      pointer-events: none;
+      content: '';
+      transition: box-shadow 0.3s;
+      position: absolute;
+      top: 0;
+      bottom: -1px;
+      width: 20px;
+      right: -1px;
+      transform: translateX(100%);
+    }
+
+    &-fix-right-first {
+      box-shadow: -1px 0 0 red;
+
+      &::after {
+        pointer-events: none;
+        content: '';
+        transition: box-shadow 0.3s;
+        position: absolute;
+        top: 0;
+        bottom: -1px;
+        width: 20px;
+        left: -1px;
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  &-ping-left {
+    .@{tablePrefixCls}-cell-fix-left-last::after {
+      box-shadow: inset 10px 0 8px -8px green;
+    }
+  }
+
+  &-ping-right {
+    .@{tablePrefixCls}-cell-fix-right-first::after {
+      box-shadow: inset -10px 0 8px -8px green;
+    }
   }
 
   // ================= Header =================
@@ -50,8 +87,9 @@
     tr {
       border-bottom: 1px solid @table-border-color;
 
-      td, th {
-        background: #FFF;
+      td,
+      th {
+        background: #fff;
       }
     }
   }

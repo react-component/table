@@ -4,7 +4,7 @@ import { StickyOffsets } from '../interface';
 /**
  * Get sticky column offset width
  */
-export function useStickyOffsets(colWidths: number[], columCount: number) {
+function useStickyOffsets(colWidths: number[], columCount: number) {
   const stickyOffsets: StickyOffsets = useMemo(() => {
     const leftOffsets: number[] = [];
     const rightOffsets: number[] = [];
@@ -30,3 +30,5 @@ export function useStickyOffsets(colWidths: number[], columCount: number) {
 
   return stickyOffsets;
 }
+
+export default useStickyOffsets;

@@ -6,6 +6,7 @@ import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableCo
 import { getColumnKey } from '../utils/valueUtil';
 import { ColumnType, StickyOffsets } from '../interface';
 import ResizeContext from '../context/ResizeContext';
+import { getCellFixedInfo } from '../utils/fixUtil';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -31,6 +32,7 @@ function getRequiredColumnProps<RecordType>(
 
 interface ComputedProps<RecordType> extends BodyRowProps<RecordType> {
   rowColumns: ColumnType<RecordType>[];
+  prefixCls: string;
 }
 
 function shouldUpdate<RecordType>(
@@ -38,14 +40,16 @@ function shouldUpdate<RecordType>(
   props: ComputedProps<RecordType>,
 ): boolean {
   const {
+    prefixCls: prevPrefixCls,
     record: prevRecord,
     index: prevIndex,
     rowColumns: prevRowColumns,
     stickyOffsets: prevStickyOffsets,
   } = prevProps;
-  const { record, index, rowColumns, stickyOffsets } = props;
+  const { prefixCls, record, index, rowColumns, stickyOffsets } = props;
 
   if (
+    prevPrefixCls !== prefixCls ||
     prevRecord !== record ||
     prevIndex !== index ||
     prevRowColumns.length !== rowColumns.length ||
@@ -68,7 +72,7 @@ function useComputeRowProps<RecordType>({
   index,
   measureColumnWidth,
   stickyOffsets,
-  context: { flattenColumns },
+  context: { flattenColumns, prefixCls },
 }: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
   const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
     flattenColumns,
@@ -80,6 +84,7 @@ function useComputeRowProps<RecordType>({
     measureColumnWidth,
     rowColumns,
     stickyOffsets,
+    prefixCls,
   };
 }
 
@@ -92,42 +97,44 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
     >
-      {({ rowColumns, record, index, measureColumnWidth, stickyOffsets }) => (
-        <tr>
-          {rowColumns.map((column, colIndex) => {
-            const { render, dataIndex, fixed } = column;
+      {({ prefixCls, rowColumns, record, index, measureColumnWidth, stickyOffsets }) => (
+          <tr>
+            {rowColumns.map((column, colIndex) => {
+              const { render, dataIndex } = column;
 
-            const key = getColumnKey(column, colIndex);
+              const key = getColumnKey(column, colIndex);
 
-            const cellNode = (
-              <Cell
-                key={key}
-                record={record}
-                index={index}
-                dataIndex={dataIndex}
-                render={render}
-                fixLeft={fixed === 'left' ? stickyOffsets.left[colIndex] : false}
-                fixRight={fixed === 'right' ? stickyOffsets.right[colIndex] : false}
-              />
-            );
+              const fixedInfo = getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets);
 
-            if (measureColumnWidth) {
-              return (
-                <ResizeObserver
+              const cellNode = (
+                <Cell
+                  prefixCls={prefixCls}
                   key={key}
-                  onResize={({ width }) => {
-                    onColumnResize(colIndex, width);
-                  }}
-                >
-                  {cellNode}
-                </ResizeObserver>
+                  record={record}
+                  index={index}
+                  dataIndex={dataIndex}
+                  render={render}
+                  {...fixedInfo}
+                />
               );
-            }
 
-            return cellNode;
-          })}
-        </tr>
-      )}
+              if (measureColumnWidth) {
+                return (
+                  <ResizeObserver
+                    key={key}
+                    onResize={({ width }) => {
+                      onColumnResize(colIndex, width);
+                    }}
+                  >
+                    {cellNode}
+                  </ResizeObserver>
+                );
+              }
+
+              return cellNode;
+            })}
+          </tr>
+        )}
     </PureContextConsumer>
   );
 }

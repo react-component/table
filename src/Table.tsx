@@ -12,7 +12,7 @@ import useColumns from './hooks/useColumns';
 import useFrameState from './hooks/useFrameState';
 import { getPathValue } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
-import { useStickyOffsets } from './hooks/useStickyOffsets';
+import useStickyOffsets from './hooks/useStickyOffsets';
 
 const scrollbarSize = getScrollBarSize();
 
@@ -86,6 +86,8 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   // ====================== Scroll ======================
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const [pingedLeft, setPingedLeft] = React.useState(false);
+  const [pingedRight, setPingedRight] = React.useState(false);
   const [colWidths, updateColWidths] = useFrameState<number[]>([]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
@@ -119,11 +121,18 @@ function Table<RecordType>(props: TableProps<RecordType>) {
     }
   }
 
-  const syncScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    const { scrollLeft } = currentTarget;
+  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+    const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
     forceScroll(scrollLeft, scrollHeaderRef.current);
     forceScroll(scrollLeft, scrollBodyRef.current);
+
+    setPingedLeft(scrollLeft > 0);
+    setPingedRight(scrollLeft < scrollWidth - clientWidth);
   };
+
+  React.useEffect(() => {
+    onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+  }, []);
 
   // ====================== Render ======================
   let groupTableNode: React.ReactNode;
@@ -151,7 +160,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
             ...scrollXStyle,
             marginBottom: -scrollbarSize,
           }}
-          onScroll={syncScroll}
+          onScroll={onScroll}
           ref={scrollHeaderRef}
         >
           <FixedHeader {...headerProps} />
@@ -161,7 +170,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
             ...scrollXStyle,
             ...scrollYStyle,
           }}
-          onScroll={syncScroll}
+          onScroll={onScroll}
           ref={scrollBodyRef}
         >
           <table>{bodyTable}</table>
@@ -187,7 +196,13 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   return (
     <DataContext.Provider value={{ columns, flattenColumns, prefixCls, getComponent }}>
       <ResizeContext.Provider value={{ onColumnResize }}>
-        <div className={classNames(prefixCls, className)} style={style}>
+        <div
+          className={classNames(prefixCls, className, {
+            [`${prefixCls}-ping-left`]: pingedLeft,
+            [`${prefixCls}-ping-right`]: pingedRight,
+          })}
+          style={style}
+        >
           {groupTableNode}
         </div>
       </ResizeContext.Provider>

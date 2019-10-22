@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { DataIndex, ColumnType, RenderedCell } from './interface';
 import { getPathValue } from './utils/valueUtil';
 
@@ -9,6 +10,7 @@ function isRenderCell<RecordType>(
 }
 
 export interface CellProps<RecordType> {
+  prefixCls?: string;
   record?: RecordType;
   /** `record` index. Not `column` index. */
   index?: number;
@@ -22,10 +24,13 @@ export interface CellProps<RecordType> {
   // Fixed
   fixLeft?: number | false;
   fixRight?: number | false;
+  lastFixLeft: boolean;
+  firstFixRight: boolean;
 }
 
 function Cell<RecordType>(
   {
+    prefixCls,
     record,
     index,
     dataIndex,
@@ -36,6 +41,8 @@ function Cell<RecordType>(
     rowSpan,
     fixLeft,
     fixRight,
+    lastFixLeft,
+    firstFixRight,
   }: CellProps<RecordType>,
   ref: any,
 ): React.ReactElement {
@@ -66,18 +73,29 @@ function Cell<RecordType>(
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  if (fixLeft !== undefined && fixLeft !== false) {
+  const isFixLeft = typeof fixLeft === 'number';
+  const isFixRight = typeof fixRight === 'number';
+
+  if (isFixLeft) {
     fixedStyle.position = 'sticky';
-    fixedStyle.left = fixLeft;
+    fixedStyle.left = fixLeft as number;
   }
-  if (fixRight !== undefined && fixRight !== false) {
+  if (isFixRight) {
     fixedStyle.position = 'sticky';
-    fixedStyle.right = fixRight;
+    fixedStyle.right = fixRight as number;
   }
+
+  const cellPrefixCls = `${prefixCls}-cell`;
 
   const componentProps = {
     colSpan,
     rowSpan,
+    className: classNames(cellPrefixCls, {
+      [`${cellPrefixCls}-fix-left`]: isFixLeft,
+      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
+      [`${cellPrefixCls}-fix-right`]: isFixRight,
+      [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
+    }),
     style: fixedStyle,
     ref,
   };
