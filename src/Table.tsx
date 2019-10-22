@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';

@@ -81,7 +81,6 @@ export interface HeaderProps<RecordType> {
 function Header<RecordType>({ stickyOffsets }: HeaderProps<RecordType>): React.ReactElement {
   const { columns } = React.useContext(DataContext);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
-  console.log('->', rows);
 
   return (
     <thead>

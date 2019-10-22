@@ -48,6 +48,7 @@ interface ColumnSharedType {
   title?: React.ReactNode;
   key?: Key;
   className?: string;
+  fixed?: FixedType;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType {
@@ -59,7 +60,6 @@ export interface ColumnType<RecordType> extends ColumnSharedType {
   colSpan?: number;
   dataIndex?: DataIndex;
   ellipsis?: boolean;
-  fixed?: FixedType;
   render?: (
     value: any,
     record: RecordType,

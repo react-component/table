@@ -11,26 +11,6 @@ interface RecordType {
   key: string;
 }
 
-const columns: ColumnsType<RecordType> = [
-  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
-  {
-    title: 'title3',
-    fixed: 'left',
-    children: [
-      { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
-      { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
-    ],
-  },
-  { title: 'title6', dataIndex: 'c', key: 'f', width: 150 },
-  { title: 'title7', dataIndex: 'c', key: 'g', width: 150 },
-  { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
-  { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
-  { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
-  { title: 'title11', dataIndex: 'b', key: 'k', width: 150, fixed: 'right' },
-  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
-];
-
 const originData: RecordType[] = [
   { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '1' },
   { a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: '2' },
@@ -43,8 +23,37 @@ const originData: RecordType[] = [
   { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '9' },
 ];
 
+const useColumn = (fixTitle: boolean) => {
+  const columns: ColumnsType<RecordType> = React.useMemo(
+    () => [
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+      {
+        title: 'title3',
+        fixed: fixTitle ? 'left' : null,
+        children: [
+          { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
+          { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
+        ],
+      },
+      { title: 'title6', dataIndex: 'c', key: 'f', width: 150 },
+      { title: 'title7', dataIndex: 'c', key: 'g', width: 150 },
+      { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
+      { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
+      { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
+      { title: 'title11', dataIndex: 'b', key: 'k', width: 150, fixed: 'right' },
+      { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+    ],
+    [fixTitle],
+  );
+
+  return columns;
+};
+
 const Demo = () => {
   const [data, setData] = React.useState(originData);
+  const [fixTitle3, setFixTitle3] = React.useState(false);
+  const columns = useColumn(fixTitle3);
 
   return (
     <React.StrictMode>
@@ -69,6 +78,16 @@ const Demo = () => {
         >
           Resize
         </button>
+        <label>
+          <input
+            type="checkbox"
+            checked={fixTitle3}
+            onChange={() => {
+              setFixTitle3(!fixTitle3);
+            }}
+          />
+          Fix title3
+        </label>
       </div>
     </React.StrictMode>
   );

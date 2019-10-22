@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import raf from 'raf';
 
 export type Updater<State> = (prev: State) => State;
@@ -7,6 +7,7 @@ export default function useFrameState<State>(
   defaultState: State,
 ): [State, (updater: Updater<State>) => void] {
   const [state, setState] = useState<State>(defaultState);
+
   const timeoutRef = useRef<number>(null);
   const tmpStateRef = useRef<State>(null);
 
@@ -21,6 +22,10 @@ export default function useFrameState<State>(
 
     tmpStateRef.current = updater(tmpStateRef.current);
   }
+
+  useEffect(() => {
+    raf.cancel(timeoutRef.current);
+  }, []);
 
   return [state, setFrameState];
 }
