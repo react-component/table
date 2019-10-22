@@ -1,13 +1,16 @@
 import React from 'react';
 import shallowEqual from 'shallowequal';
+import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
-import { PureContextConsumer, DefaultPureCompareProps } from '../context/DataContext';
+import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
 import { getColumnKey } from '../utils/valueUtil';
-import { ColumnType, CellType } from '../interface';
+import { ColumnType } from '../interface';
+import ResizeContext from '../context/ResizeContext';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
+  fixColumn: boolean;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -24,9 +27,7 @@ function getRequiredColumnProps<RecordType>(
   }));
 }
 
-interface ComputedProps<RecordType> {
-  record: RecordType;
-  index: number;
+interface ComputedProps<RecordType> extends BodyRowProps<RecordType> {
   rowColumns: ColumnType<RecordType>[];
 }
 
@@ -49,6 +50,7 @@ function shouldUpdate<RecordType>(
 function useComputeRowProps<RecordType>({
   record,
   index,
+  fixColumn,
   context: { flattenColumns },
 }: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
   const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
@@ -58,25 +60,30 @@ function useComputeRowProps<RecordType>({
   return {
     record,
     index,
+    fixColumn,
     rowColumns,
   };
 }
 
 function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
+  const { onColumnResize } = React.useContext(ResizeContext);
+
   return (
     <PureContextConsumer<RecordType, BodyRowProps<RecordType>, ComputedProps<RecordType>>
       {...props}
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
     >
-      {({ rowColumns, record, index }) => (
+      {({ rowColumns, record, index, fixColumn }) => (
         <tr>
           {rowColumns.map((column, colIndex) => {
             const { render, dataIndex, fixed } = column;
 
-            return (
+            const key = getColumnKey(column, colIndex);
+
+            const cellNode = (
               <Cell
-                key={getColumnKey(column, colIndex)}
+                key={key}
                 record={record}
                 index={index}
                 dataIndex={dataIndex}
@@ -84,6 +91,21 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                 fixLeft={fixed === 'left'}
               />
             );
+
+            if (fixColumn && index === 0) {
+              return (
+                <ResizeObserver
+                  key={key}
+                  onResize={({ width }) => {
+                    onColumnResize(colIndex, width);
+                  }}
+                >
+                  {cellNode}
+                </ResizeObserver>
+              );
+            }
+
+            return cellNode;
           })}
         </tr>
       )}

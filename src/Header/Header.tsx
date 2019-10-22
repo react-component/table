@@ -1,10 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
-import DataContext from '../context/DataContext';
-import ResizeContext from '../context/ResizeContext';
+import DataContext from '../context/TableContext';
 import { ColumnsType, CellType } from '../interface';
 import HeaderRow from './HeaderRow';
-import { useFrameState } from '../hooks/useFrameState';
 
 // TODO: warning user if mix using `children` & `xxxSpan`
 function parseHeaderRows<RecordType>(
@@ -68,50 +65,20 @@ function parseHeaderRows<RecordType>(
   return rows;
 }
 
-export interface HeaderProps<RecordType> {
-  fixHeader: boolean;
-}
+export interface HeaderProps<RecordType> {}
 
 function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement {
-  const { fixHeader } = props;
-  const { columns, prefixCls } = React.useContext(DataContext);
+  const { columns } = React.useContext(DataContext);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
-  // =============== Fix ===============
-  const [rowHeights, updateRowHeights] = useFrameState<number[]>([]);
-  function onRowResize(rowIndex: number, height: number) {
-    updateRowHeights((heights: number[]) => {
-      const newHeights = [...heights];
-      newHeights[rowIndex] = height;
-      return newHeights;
-    });
-  }
-
-  let fixedTop = 0;
-
   return (
-    <ResizeContext.Provider
-      value={{
-        onRowResize,
-      }}
-    >
-      <thead className={classNames(`${prefixCls}-header`)}>
-        {rows.map((row, rowIndex) => {
-          const rowNode = (
-            <HeaderRow
-              key={rowIndex}
-              cells={row}
-              index={rowIndex}
-              fixedTop={fixHeader ? fixedTop : false}
-            />
-          );
+    <thead>
+      {rows.map((row, rowIndex) => {
+        const rowNode = <HeaderRow key={rowIndex} cells={row} index={rowIndex} />;
 
-          fixedTop += rowHeights[rowIndex] || 0;
-
-          return rowNode;
-        })}
-      </thead>
-    </ResizeContext.Provider>
+        return rowNode;
+      })}
+    </thead>
   );
 }
 

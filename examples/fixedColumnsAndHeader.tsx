@@ -49,28 +49,30 @@ const Demo = () => {
   const [data, setData] = React.useState(originData);
 
   return (
-    <div>
-      <h2>Fixed columns and header</h2>
-      <Table<RecordType>
-        columns={columns}
-        scroll={{ x: 1650, y: 300 }}
-        data={data}
-        style={{ width: 800 }}
-      />
-      <button
-        type="button"
-        onClick={() => {
-          const newData = [...originData];
-          newData[0] = {
-            ...newData[0],
-            a: 'aaaaaaaaaaaaaaa',
-          };
-          setData(newData);
-        }}
-      >
-        Resize
-      </button>
-    </div>
+    <React.StrictMode>
+      <div>
+        <h2>Fixed columns and header</h2>
+        <Table<RecordType>
+          columns={columns}
+          scroll={{ x: 1650, y: 300 }}
+          data={data}
+          style={{ width: 800 }}
+        />
+        <button
+          type="button"
+          onClick={() => {
+            const newData = [...originData];
+            newData[0] = {
+              ...newData[0],
+              a: 'aaaaaaaaaaaaaaa',
+            };
+            setData(newData);
+          }}
+        >
+          Resize
+        </button>
+      </div>
+    </React.StrictMode>
   );
 };
 

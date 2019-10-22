@@ -79,3 +79,21 @@ export type GetComponentProps<DataType> = (
 ) => React.HTMLAttributes<HTMLElement>;
 
 export type GetRowKey<RecordType> = (record: RecordType, index: number) => Key;
+
+export type CustomizeComponent<
+  P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
+> = React.ComponentType<P> | React.FC<P> | string;
+
+export interface TableComponents {
+  table?: CustomizeComponent;
+  header?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
+  body?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
+}

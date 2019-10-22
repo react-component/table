@@ -3,7 +3,7 @@ import raf from 'raf';
 
 export type Updater<State> = (prev: State) => State;
 
-export function useFrameState<State>(
+export default function useFrameState<State>(
   defaultState: State,
 ): [State, (updater: Updater<State>) => void] {
   const [state, setState] = useState<State>(defaultState);

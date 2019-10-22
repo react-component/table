@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 interface ResizeContextProps {
-  onRowResize: (rowIndex: number, height: number) => void;
+  onColumnResize: (colIndex: number, width: number) => void;
 }
 
 const ResizeContext = createContext<ResizeContextProps>(null);

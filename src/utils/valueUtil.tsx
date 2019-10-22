@@ -13,7 +13,7 @@ function toArray<T>(arr: T | T[]): T[] {
 export function getPathValue<RecordType>(record: RecordType, path: DataIndex) {
   const pathList = toArray(path);
 
-  let current = record;
+  let current: any = record;
 
   for (let i = 0; i < pathList.length; i += 1) {
     if (!current) {

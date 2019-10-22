@@ -1,12 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
+import ResizeObserver from 'rc-resize-observer';
+import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
-import Header from './Header';
-import { GetRowKey, ColumnsType } from './interface';
-import DataContext from './context/DataContext';
+import FixedHeader from './Header/FixedHeader';
+import Header from './Header/Header';
+import { GetRowKey, ColumnsType, TableComponents, CustomizeComponent } from './interface';
+import DataContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
+import useFrameState from './hooks/useFrameState';
+import { getPathValue } from './utils/valueUtil';
+import ResizeContext from './context/ResizeContext';
+
+const scrollbarSize = getScrollBarSize();
 
 export interface TableProps<RecordType> {
   prefixCls?: string;
@@ -18,8 +26,12 @@ export interface TableProps<RecordType> {
   rowKey?: string | GetRowKey<RecordType>;
 
   // Fixed
-  useFixedHeader?: boolean;
   scroll?: { x?: number | true | string; y?: number };
+  /** @deprecated No need to set this */
+  useFixedHeader?: boolean;
+
+  // Customize
+  components?: TableComponents;
 
   // TODO: Handle this
   // expandIconAsCell?: boolean;
@@ -58,53 +70,115 @@ export interface TableProps<RecordType> {
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
 
-  // components?: TableComponents;
   // tableLayout?: 'fixed';
 }
 
 function Table<RecordType>(props: TableProps<RecordType>) {
-  const { prefixCls, className, style, data, rowKey, scroll } = props;
+  const { prefixCls, className, style, data, rowKey, scroll, components } = props;
 
   const [columns, flattenColumns] = useColumns(props);
 
-  // ========================= Fixed =========================
-  const fixedLeft = React.useState(false);
-  const fixedTop = React.useState(false);
-
-  const scrollX: boolean = scroll && 'x' in scroll;
-  const scrollY: boolean = scroll && 'y' in scroll;
-
-  const scrollStyle: React.CSSProperties = {
-    overflowX: scrollX ? 'auto' : null,
-    overflowY: scrollY ? 'auto' : null,
-    maxHeight: scrollY ? scroll.y : null,
-  };
-
-  if (scrollX || scrollY) {
-    scrollStyle.position = 'relative';
+  // ==================== Customize =====================
+  function getComponent(path: string[], defaultComponent: CustomizeComponent): CustomizeComponent {
+    return getPathValue(components, path) || defaultComponent;
   }
 
-  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    const { scrollLeft, scrollTop } = currentTarget;
-    console.log('=>', scrollLeft, scrollTop);
+  // ====================== Scroll ======================
+  const scrollHeaderRef = React.useRef<HTMLDivElement>();
+  const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const [colWidths, updateColWidths] = useFrameState<number[]>([]);
+
+  const fixHeader = scroll && 'y' in scroll;
+  const fixColumn = scroll && 'x' in scroll;
+
+  const bodyTableStyle: React.CSSProperties = {};
+
+  let scrollXStyle: React.CSSProperties;
+  let scrollYStyle: React.CSSProperties;
+
+  if (fixHeader) {
+    scrollYStyle = {
+      overflowY: 'auto',
+      maxHeight: scroll.y,
+    };
+  }
+  if (fixColumn) {
+    scrollXStyle = { overflowX: 'auto' };
+  }
+
+  function onColumnResize(colIndex: number, width: number) {
+    updateColWidths((widths: number[]) => {
+      const newWidth = widths.slice(0, flattenColumns.length);
+      newWidth[colIndex] = width;
+      return newWidth;
+    });
+  }
+
+  function forceScroll(scrollLeft: number, target: HTMLDivElement) {
+    if (target && target.scrollLeft !== scrollLeft) {
+      target.scrollLeft = scrollLeft;
+    }
+  }
+
+  const syncScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+    const { scrollLeft } = currentTarget;
+    forceScroll(scrollLeft, scrollHeaderRef.current);
+    forceScroll(scrollLeft, scrollBodyRef.current);
   };
 
-  return (
-    <DataContext.Provider value={{ columns, flattenColumns, prefixCls }}>
+  // ====================== Render ======================
+  let groupTableNode: React.ReactNode;
+
+  const bodyTable = <Body data={data} rowKey={rowKey} fixColumn={fixColumn} />;
+
+  if (fixHeader) {
+    groupTableNode = (
+      <>
+        <div
+          style={{
+            ...scrollXStyle,
+            marginBottom: -scrollbarSize,
+          }}
+          onScroll={syncScroll}
+          ref={scrollHeaderRef}
+        >
+          <FixedHeader colWidths={colWidths} columCount={flattenColumns.length} />
+        </div>
+        <div
+          style={{
+            ...scrollXStyle,
+            ...scrollYStyle,
+          }}
+          onScroll={syncScroll}
+          ref={scrollBodyRef}
+        >
+          <table>{bodyTable}</table>
+        </div>
+      </>
+    );
+  } else {
+    groupTableNode = (
       <div
-        className={classNames(prefixCls, className)}
         style={{
-          ...style,
-          ...scrollStyle,
+          ...scrollXStyle,
+          ...scrollYStyle,
         }}
-        onScroll={onScroll}
       >
         <table>
-          <Header fixHeader={scrollY} />
-          <Body data={data} rowKey={rowKey} />
-          <tfoot />
+          <Header />
+          {bodyTable}
         </table>
       </div>
+    );
+  }
+
+  return (
+    <DataContext.Provider value={{ columns, flattenColumns, prefixCls, getComponent }}>
+      <ResizeContext.Provider value={{ onColumnResize }}>
+        <div className={classNames(prefixCls, className)} style={style}>
+          {groupTableNode}
+        </div>
+      </ResizeContext.Provider>
     </DataContext.Provider>
   );
 }
