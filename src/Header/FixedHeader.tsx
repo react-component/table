@@ -12,8 +12,20 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
 function FixedHeader<RecordType>({
   colWidths,
   columCount,
+  stickyOffsets,
   ...props
 }: FixedHeaderProps<RecordType>) {
+  const headerStickyOffsets = React.useMemo(() => {
+    const { right } = stickyOffsets;
+
+    return {
+      ...stickyOffsets,
+      right: right.map((width, index) =>
+        index === columCount - 1 ? width : width + scrollbarSize,
+      ),
+    };
+  }, [stickyOffsets]);
+
   return (
     <table style={{ tableLayout: 'fixed' }}>
       <colgroup>
@@ -22,7 +34,7 @@ function FixedHeader<RecordType>({
           return <col key={index} style={{ width: colWidth, minWidth: colWidth }} />;
         })}
       </colgroup>
-      <Header {...props} />
+      <Header {...props} stickyOffsets={headerStickyOffsets} />
     </table>
   );
 }

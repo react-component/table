@@ -13,6 +13,7 @@ import useColumns from './hooks/useColumns';
 import useFrameState from './hooks/useFrameState';
 import { getPathValue } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
+import { useStickyOffsets } from './hooks/useStickyOffsets';
 
 const scrollbarSize = getScrollBarSize();
 
@@ -87,11 +88,10 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [colWidths, updateColWidths] = useFrameState<number[]>([]);
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
   const fixHeader = scroll && 'y' in scroll;
   const fixColumn = scroll && 'x' in scroll;
-
-  const bodyTableStyle: React.CSSProperties = {};
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -129,13 +129,18 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   // ====================== Render ======================
   let groupTableNode: React.ReactNode;
 
+  const headerProps = {
+    colWidths,
+    columCount: flattenColumns.length,
+    stickyOffsets,
+  };
+
   const bodyTable = (
     <Body
       data={data}
       rowKey={rowKey}
       measureColumnWidth={fixHeader || fixColumn}
-      colWidths={colWidths}
-      columCount={flattenColumns.length}
+      stickyOffsets={stickyOffsets}
     />
   );
 
@@ -150,7 +155,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
           onScroll={syncScroll}
           ref={scrollHeaderRef}
         >
-          <FixedHeader colWidths={colWidths} columCount={flattenColumns.length} />
+          <FixedHeader {...headerProps} />
         </div>
         <div
           style={{
@@ -173,7 +178,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
         }}
       >
         <table>
-          <Header />
+          <Header {...headerProps} />
           {bodyTable}
         </table>
       </div>

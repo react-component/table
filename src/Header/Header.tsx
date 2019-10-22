@@ -1,6 +1,6 @@
 import React from 'react';
 import DataContext from '../context/TableContext';
-import { ColumnsType, CellType } from '../interface';
+import { ColumnsType, CellType, StickyOffsets } from '../interface';
 import HeaderRow from './HeaderRow';
 
 // TODO: warning user if mix using `children` & `xxxSpan`
@@ -9,22 +9,28 @@ function parseHeaderRows<RecordType>(
 ): CellType<RecordType>[][] {
   const rows: CellType<RecordType>[][] = [];
 
-  function fillRowCells(columns: ColumnsType<RecordType>, rowIndex: number = 0): number[] {
+  function fillRowCells(
+    columns: ColumnsType<RecordType>,
+    colIndex: number,
+    rowIndex: number = 0,
+  ): number[] {
     // Init rows
     rows[rowIndex] = rows[rowIndex] || [];
 
+    let currentColIndex = colIndex;
     const colSpans: number[] = columns.map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
         className: column.className || '',
         children: column.title,
         column,
+        colStart: currentColIndex,
       };
 
       let colSpan = 1;
 
       if ('children' in column) {
-        colSpan = fillRowCells(column.children, rowIndex + 1).reduce(
+        colSpan = fillRowCells(column.children, currentColIndex, rowIndex + 1).reduce(
           (total, count) => total + count,
           0,
         );
@@ -40,7 +46,10 @@ function parseHeaderRows<RecordType>(
       }
 
       cell.colSpan = colSpan;
+      cell.colEnd = cell.colStart + colSpan - 1;
       rows[rowIndex].push(cell);
+
+      currentColIndex += colSpan;
 
       return colSpan;
     });
@@ -49,7 +58,7 @@ function parseHeaderRows<RecordType>(
   }
 
   // Generate `rows` cell data
-  fillRowCells(rootColumns);
+  fillRowCells(rootColumns, 0);
 
   // Handle `rowSpan`
   const rowCount = rows.length;
@@ -65,16 +74,19 @@ function parseHeaderRows<RecordType>(
   return rows;
 }
 
-export interface HeaderProps<RecordType> {}
+export interface HeaderProps<RecordType> {
+  stickyOffsets: StickyOffsets;
+}
 
-function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement {
+function Header<RecordType>({ stickyOffsets }: HeaderProps<RecordType>): React.ReactElement {
   const { columns } = React.useContext(DataContext);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
+  console.log('->', rows);
 
   return (
     <thead>
       {rows.map((row, rowIndex) => {
-        const rowNode = <HeaderRow key={rowIndex} cells={row} index={rowIndex} />;
+        const rowNode = <HeaderRow key={rowIndex} cells={row} stickyOffsets={stickyOffsets} />;
 
         return rowNode;
       })}

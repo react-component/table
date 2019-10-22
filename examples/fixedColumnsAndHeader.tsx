@@ -14,11 +14,9 @@ interface RecordType {
 const columns: ColumnsType<RecordType> = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
-  // { title: 'title3', dataIndex: 'c', key: 'c', width: 150 },
-  // { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
-  // { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
   {
     title: 'title3',
+    fixed: 'left',
     children: [
       { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
       { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },

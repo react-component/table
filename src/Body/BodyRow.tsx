@@ -4,7 +4,7 @@ import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
 import { getColumnKey } from '../utils/valueUtil';
-import { ColumnType } from '../interface';
+import { ColumnType, StickyOffsets } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 
 export interface BodyRowProps<RecordType> {
@@ -12,7 +12,7 @@ export interface BodyRowProps<RecordType> {
   index: number;
   /** Set if need collect column width info */
   measureColumnWidth: boolean;
-  stickyOffsets: { left: number[]; right: number[] };
+  stickyOffsets: StickyOffsets;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;

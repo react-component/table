@@ -2,22 +2,20 @@ import React from 'react';
 import classNames from 'classnames';
 import BodyRow from './BodyRow';
 import DataContext from '../context/TableContext';
-import { GetRowKey } from '../interface';
+import { GetRowKey, StickyOffsets } from '../interface';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
   rowKey: string | GetRowKey<RecordType>;
   measureColumnWidth: boolean;
-  colWidths: number[];
-  columCount: number;
+  stickyOffsets: StickyOffsets;
 }
 
 function Body<RecordType>({
   data,
   rowKey,
   measureColumnWidth,
-  colWidths,
-  columCount,
+  stickyOffsets,
 }: BodyProps<RecordType>) {
   const { prefixCls } = React.useContext(DataContext);
 
@@ -27,33 +25,6 @@ function Body<RecordType>({
     }
     return (record: RecordType) => record[rowKey];
   }, [rowKey]);
-
-  const stickyOffsets: { left: number[]; rigth: number[] } = React.useMemo(() => {
-    if (!measureColumnWidth) {
-      return { left: [], right: [] };
-    }
-
-    const leftOffsets: number[] = [];
-    const rightOffsets: number[] = [];
-    let left = 0;
-    let right = 0;
-
-    for (let start = 0; start < columCount; start += 1) {
-      // Left offset
-      leftOffsets[start] = left;
-      left += colWidths[start] || 0;
-
-      // Right offset
-      const end = columCount - start - 1;
-      rightOffsets[end] = right;
-      right += colWidths[end] || 0;
-    }
-
-    return {
-      left: leftOffsets,
-      right: rightOffsets,
-    };
-  }, [colWidths, measureColumnWidth]);
 
   return React.useMemo(
     () => (

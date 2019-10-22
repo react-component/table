@@ -33,6 +33,8 @@ export interface CellType<RecordType> {
   rowSpan?: number;
   /** Only used for table header */
   hasSubColumns?: boolean;
+  colStart?: number;
+  colEnd?: number;
 }
 
 export interface RenderedCell<RecordType> {
@@ -96,4 +98,9 @@ export interface TableComponents {
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
   };
+}
+
+export interface StickyOffsets {
+  left: number[];
+  right: number[];
 }
