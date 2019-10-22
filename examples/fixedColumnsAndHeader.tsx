@@ -29,7 +29,7 @@ const columns: ColumnsType<RecordType> = [
   { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
   { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
   { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
-  { title: 'title11', dataIndex: 'b', key: 'k', width: 150 },
+  { title: 'title11', dataIndex: 'b', key: 'k', width: 150, fixed: 'right' },
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 

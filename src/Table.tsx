@@ -129,7 +129,15 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   // ====================== Render ======================
   let groupTableNode: React.ReactNode;
 
-  const bodyTable = <Body data={data} rowKey={rowKey} fixColumn={fixColumn} />;
+  const bodyTable = (
+    <Body
+      data={data}
+      rowKey={rowKey}
+      measureColumnWidth={fixHeader || fixColumn}
+      colWidths={colWidths}
+      columCount={flattenColumns.length}
+    />
+  );
 
   if (fixHeader) {
     groupTableNode = (

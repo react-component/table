@@ -10,7 +10,9 @@ import ResizeContext from '../context/ResizeContext';
 export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
-  fixColumn: boolean;
+  /** Set if need collect column width info */
+  measureColumnWidth: boolean;
+  stickyOffsets: { left: number[]; right: number[] };
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -35,22 +37,37 @@ function shouldUpdate<RecordType>(
   prevProps: ComputedProps<RecordType>,
   props: ComputedProps<RecordType>,
 ): boolean {
-  const { record: prevRecord, index: prevIndex, rowColumns: prevRowColumns } = prevProps;
-  const { record, index, rowColumns } = props;
+  const {
+    record: prevRecord,
+    index: prevIndex,
+    rowColumns: prevRowColumns,
+    stickyOffsets: prevStickyOffsets,
+  } = prevProps;
+  const { record, index, rowColumns, stickyOffsets } = props;
 
-  if (prevRecord !== record || prevIndex !== index || prevRowColumns.length !== rowColumns.length) {
+  if (
+    prevRecord !== record ||
+    prevIndex !== index ||
+    prevRowColumns.length !== rowColumns.length ||
+    prevStickyOffsets !== stickyOffsets
+  ) {
     return true;
   }
 
-  return prevRowColumns.some(
-    (prevColumn, colIndex) => !shallowEqual(prevColumn, rowColumns[colIndex]),
-  );
+  if (
+    prevRowColumns.some((prevColumn, colIndex) => !shallowEqual(prevColumn, rowColumns[colIndex]))
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 function useComputeRowProps<RecordType>({
   record,
   index,
-  fixColumn,
+  measureColumnWidth,
+  stickyOffsets,
   context: { flattenColumns },
 }: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
   const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
@@ -60,8 +77,9 @@ function useComputeRowProps<RecordType>({
   return {
     record,
     index,
-    fixColumn,
+    measureColumnWidth,
     rowColumns,
+    stickyOffsets,
   };
 }
 
@@ -74,7 +92,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
     >
-      {({ rowColumns, record, index, fixColumn }) => (
+      {({ rowColumns, record, index, measureColumnWidth, stickyOffsets }) => (
         <tr>
           {rowColumns.map((column, colIndex) => {
             const { render, dataIndex, fixed } = column;
@@ -88,11 +106,12 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                 index={index}
                 dataIndex={dataIndex}
                 render={render}
-                fixLeft={fixed === 'left'}
+                fixLeft={fixed === 'left' ? stickyOffsets.left[colIndex] : false}
+                fixRight={fixed === 'right' ? stickyOffsets.right[colIndex] : false}
               />
             );
 
-            if (fixColumn && index === 0) {
+            if (measureColumnWidth) {
               return (
                 <ResizeObserver
                   key={key}

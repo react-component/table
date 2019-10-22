@@ -20,8 +20,8 @@ export interface CellProps<RecordType> {
   rowSpan?: number;
 
   // Fixed
-  fixLeft?: boolean;
-  fixRight?: boolean;
+  fixLeft?: number | false;
+  fixRight?: number | false;
 }
 
 function Cell<RecordType>(
@@ -66,13 +66,13 @@ function Cell<RecordType>(
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  if (fixLeft) {
+  if (fixLeft !== undefined && fixLeft !== false) {
     fixedStyle.position = 'sticky';
-    fixedStyle.left = 0;
+    fixedStyle.left = fixLeft;
   }
-  if (fixRight) {
+  if (fixRight !== undefined && fixRight !== false) {
     fixedStyle.position = 'sticky';
-    fixedStyle.right = 0;
+    fixedStyle.right = fixRight;
   }
 
   const componentProps = {
