@@ -73,6 +73,7 @@ const useColumn = (
 const Demo = () => {
   const [autoWidth, autoWidthProps] = useCheckbox(false);
   const [longText, longTextProps] = useCheckbox(false);
+  const [fixHeader, fixHeaderProps] = useCheckbox(true);
   const [fixLeft, fixLeftProps] = useCheckbox(true);
   const [fixRight, fixRightProps] = useCheckbox(true);
   const [fixTitle3, fixTitle3Props] = useCheckbox(false);
@@ -84,12 +85,7 @@ const Demo = () => {
     <React.StrictMode>
       <div>
         <h2>Fixed columns and header</h2>
-        <Table<RecordType>
-          columns={columns}
-          scroll={{ x: 1650, y: 300 }}
-          data={longText ? longTextData : originData}
-          style={{ width: autoWidth ? null : 800 }}
-        />
+
         <label>
           <input {...autoWidthProps} />
           Auto Width
@@ -97,6 +93,10 @@ const Demo = () => {
         <label>
           <input {...longTextProps} />
           Long Text
+        </label>
+        <label>
+          <input {...fixHeaderProps} />
+          Fix Header
         </label>
         <label>
           <input {...fixLeftProps} />
@@ -118,6 +118,13 @@ const Demo = () => {
           <input {...percentageProps} />
           Percentage Width
         </label>
+
+        <Table<RecordType>
+          columns={columns}
+          scroll={{ x: 1650, y: fixHeader ? 300 : null }}
+          data={longText ? longTextData : originData}
+          style={{ width: autoWidth ? null : 800 }}
+        />
       </div>
     </React.StrictMode>
   );
