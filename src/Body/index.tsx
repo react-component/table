@@ -21,6 +21,7 @@ export interface BodyProps<RecordType> {
   expandedRowRender: ExpandedRowRender<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   onRow: GetComponentProps<RecordType>;
+  rowExpandable: (record: RecordType) => boolean;
 }
 
 function Body<RecordType>({
@@ -33,6 +34,7 @@ function Body<RecordType>({
   expandedRowRender,
   onTriggerExpand,
   onRow,
+  rowExpandable,
 }: BodyProps<RecordType>) {
   const mergedData = data || [];
   const { prefixCls, getRowKey } = React.useContext(DataContext);
@@ -50,7 +52,7 @@ function Body<RecordType>({
             additionalProps = onRow(record, index);
           }
 
-          if (onTriggerExpand) {
+          if (onTriggerExpand && (!rowExpandable || rowExpandable(record))) {
             additionalProps = indexMemo(
               index,
               (): React.HTMLAttributes<HTMLElement> => {

@@ -134,6 +134,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     onExpand,
     onExpandedRowsChange,
     expandRowByClick,
+    rowExpandable,
   } = expandableConfig;
 
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(defaultExpandedRowKeys);
@@ -254,6 +255,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedKeys={mergedExpandedKeys}
       expandable={expandable}
       expandedRowRender={expandedRowRender}
+      rowExpandable={rowExpandable}
       onTriggerExpand={expandRowByClick ? onTriggerExpand : null}
       onRow={onRow}
     />
