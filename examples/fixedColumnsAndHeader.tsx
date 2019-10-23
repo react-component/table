@@ -71,6 +71,7 @@ const useColumn = (
 };
 
 const Demo = () => {
+  const [autoWidth, autoWidthProps] = useCheckbox(false);
   const [longText, longTextProps] = useCheckbox(false);
   const [fixLeft, fixLeftProps] = useCheckbox(true);
   const [fixRight, fixRightProps] = useCheckbox(true);
@@ -87,8 +88,12 @@ const Demo = () => {
           columns={columns}
           scroll={{ x: 1650, y: 300 }}
           data={longText ? longTextData : originData}
-          style={{ width: 800 }}
+          style={{ width: autoWidth ? null : 800 }}
         />
+        <label>
+          <input {...autoWidthProps} />
+          Auto Width
+        </label>
         <label>
           <input {...longTextProps} />
           Long Text

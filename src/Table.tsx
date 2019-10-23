@@ -231,6 +231,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     scrollXStyle = { overflowX: 'scroll' };
     scrollTableStyle = {
       width: scroll.x === true ? null : scroll.x,
+      minWidth: '100%',
     };
   }
 
@@ -249,6 +250,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+    console.log('Trigger!');
+
     const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
     forceScroll(scrollLeft, scrollHeaderRef.current);
     forceScroll(scrollLeft, scrollBodyRef.current);
@@ -257,11 +260,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     setPingedRight(scrollLeft < scrollWidth - clientWidth);
   };
 
-  React.useEffect(() => {
+  const triggerOnScroll = () => {
     if (scrollBodyRef.current) {
       onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
     }
-  }, []);
+  };
+
+  React.useEffect(() => triggerOnScroll, []);
 
   // ====================== Render ======================
   let groupTableNode: React.ReactNode;
@@ -346,19 +351,25 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     );
   }
 
+  let fullTable = (
+    <div
+      className={classNames(prefixCls, className, {
+        [`${prefixCls}-ping-left`]: pingedLeft,
+        [`${prefixCls}-ping-right`]: pingedRight,
+      })}
+      style={style}
+    >
+      {groupTableNode}
+    </div>
+  );
+
+  if (fixColumn) {
+    fullTable = <ResizeObserver onResize={triggerOnScroll}>{fullTable}</ResizeObserver>;
+  }
+
   return (
     <DataContext.Provider value={{ ...columnContext, prefixCls, getComponent, getRowKey }}>
-      <ResizeContext.Provider value={{ onColumnResize }}>
-        <div
-          className={classNames(prefixCls, className, {
-            [`${prefixCls}-ping-left`]: pingedLeft,
-            [`${prefixCls}-ping-right`]: pingedRight,
-          })}
-          style={style}
-        >
-          {groupTableNode}
-        </div>
-      </ResizeContext.Provider>
+      <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
     </DataContext.Provider>
   );
 }
