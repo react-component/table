@@ -1,16 +1,17 @@
 import * as React from 'react';
 import Cell from '../Cell';
-import { CellType, StickyOffsets } from '../interface';
+import { CellType, StickyOffsets, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
 export interface RowProps<RecordType> {
   cells: CellType<RecordType>[];
   stickyOffsets: StickyOffsets;
+  flattenColumns: ColumnType<RecordType>[];
 }
 
-function HeaderRow<RecordType>({ cells, stickyOffsets }: RowProps<RecordType>) {
-  const { flattenColumns, prefixCls } = React.useContext(TableContext);
+function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProps<RecordType>) {
+  const { prefixCls } = React.useContext(TableContext);
 
   return (
     <tr>

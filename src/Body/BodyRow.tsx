@@ -155,7 +155,8 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         if (expandRended || expanded) {
           expandRowNode = (
             <tr style={{ display: expanded ? null : 'none' }}>
-              <Cell prefixCls={prefixCls} colSpan={rowColumns.length}>
+              <Cell prefixCls={prefixCls}>{null}</Cell>
+              <Cell prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
                 {expandedRowRender(record, index, 0, expanded)}
               </Cell>
             </tr>

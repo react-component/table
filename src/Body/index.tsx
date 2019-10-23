@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import BodyRow from './BodyRow';
 import DataContext from '../context/TableContext';
 import { GetRowKey, StickyOffsets, Key, ExpandedRowRender } from '../interface';

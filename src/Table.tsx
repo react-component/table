@@ -158,6 +158,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     onTriggerExpand,
   });
 
+  const columnContext = {
+    columns,
+    flattenColumns,
+  };
+
   // ====================== Scroll ======================
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
@@ -174,7 +179,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   if (fixHeader) {
     scrollYStyle = {
-      overflowY: 'auto',
+      overflowY: 'scroll',
       maxHeight: scroll.y,
     };
   }
@@ -244,7 +249,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollHeaderRef}
           className={classNames(`${prefixCls}-header`)}
         >
-          <FixedHeader {...headerProps} />
+          <FixedHeader {...headerProps} {...columnContext} />
         </div>
         <div
           style={{
@@ -269,7 +274,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         className={classNames(`${prefixCls}-content`)}
       >
         <table>
-          <Header {...headerProps} />
+          <Header {...headerProps} {...columnContext} />
           {bodyTable}
         </table>
       </div>
@@ -277,7 +282,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   return (
-    <DataContext.Provider value={{ columns, flattenColumns, prefixCls, getComponent, getRowKey }}>
+    <DataContext.Provider value={{ ...columnContext, prefixCls, getComponent, getRowKey }}>
       <ResizeContext.Provider value={{ onColumnResize }}>
         <div
           className={classNames(prefixCls, className, {

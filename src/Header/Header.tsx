@@ -1,6 +1,5 @@
 import * as React from 'react';
-import DataContext from '../context/TableContext';
-import { ColumnsType, CellType, StickyOffsets } from '../interface';
+import { ColumnsType, CellType, StickyOffsets, ColumnType } from '../interface';
 import HeaderRow from './HeaderRow';
 
 // TODO: warning user if mix using `children` & `xxxSpan`
@@ -75,17 +74,29 @@ function parseHeaderRows<RecordType>(
 }
 
 export interface HeaderProps<RecordType> {
+  columns: ColumnsType<RecordType>;
+  flattenColumns: ColumnType<RecordType>[];
   stickyOffsets: StickyOffsets;
 }
 
-function Header<RecordType>({ stickyOffsets }: HeaderProps<RecordType>): React.ReactElement {
-  const { columns } = React.useContext(DataContext);
+function Header<RecordType>({
+  stickyOffsets,
+  columns,
+  flattenColumns,
+}: HeaderProps<RecordType>): React.ReactElement {
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
   return (
     <thead>
       {rows.map((row, rowIndex) => {
-        const rowNode = <HeaderRow key={rowIndex} cells={row} stickyOffsets={stickyOffsets} />;
+        const rowNode = (
+          <HeaderRow
+            key={rowIndex}
+            flattenColumns={flattenColumns}
+            cells={row}
+            stickyOffsets={stickyOffsets}
+          />
+        );
 
         return rowNode;
       })}
