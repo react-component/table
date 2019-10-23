@@ -38,7 +38,7 @@ import DataContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import useFrameState from './hooks/useFrameState';
-import { getPathValue, mergeObject } from './utils/valueUtil';
+import { getPathValue, mergeObject, validateValue } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -214,8 +214,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const [colWidths, updateColWidths] = useFrameState<number[]>([]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
-  const fixHeader = scroll && 'y' in scroll;
-  const fixColumn = scroll && 'x' in scroll;
+  const fixHeader = scroll && validateValue(scroll.y);
+  const fixColumn = scroll && validateValue(scroll.x);
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -250,8 +250,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    console.log('Trigger!');
-
     const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
     forceScroll(scrollLeft, scrollHeaderRef.current);
     forceScroll(scrollLeft, scrollBodyRef.current);
@@ -339,6 +337,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ...scrollYStyle,
         }}
         className={classNames(`${prefixCls}-content`)}
+        onScroll={onScroll}
       >
         <ResizeObserver onResize={onTableResize}>
           <table style={scrollTableStyle}>

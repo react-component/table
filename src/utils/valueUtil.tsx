@@ -67,3 +67,7 @@ export function mergeObject<ReturnObject extends object>(
 
   return merged as ReturnObject;
 }
+
+export function validateValue<T>(val: T) {
+  return val !== null && val !== undefined;
+}
