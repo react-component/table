@@ -4,7 +4,13 @@ import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
 import { getColumnKey, mergeObject } from '../utils/valueUtil';
-import { ColumnType, StickyOffsets, ExpandedRowRender, CustomizeComponent } from '../interface';
+import {
+  ColumnType,
+  StickyOffsets,
+  ExpandedRowRender,
+  CustomizeComponent,
+  InternalColumnType,
+} from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -21,18 +27,19 @@ export interface BodyRowProps<RecordType> {
   cellComponent: CustomizeComponent;
 }
 
-type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
+type RawColumnType<RecordType> = Partial<InternalColumnType<RecordType>>;
 
 /** Return a subset of `ColumnType` which used in Row */
 function getRequiredColumnProps<RecordType>(
-  columns: ColumnType<RecordType>[],
+  columns: InternalColumnType<RecordType>[],
 ): RawColumnType<RecordType>[] {
-  return (columns || []).map(({ key, dataIndex, render, fixed, width, ellipsis }) => ({
+  return (columns || []).map(({ key, dataIndex, render, fixed, width, ellipsis, colWidth }) => ({
     key,
     dataIndex,
     render,
     fixed,
     width,
+    colWidth,
     ellipsis,
   }));
 }
@@ -127,13 +134,15 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         // Base tr row
         const baseRowNode = (
           <tr {...additionalProps}>
-            {rowColumns.map((column, colIndex) => {
+            {rowColumns.map((column: InternalColumnType<RecordType>, colIndex) => {
               const { render, dataIndex } = column;
 
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
 
-              let additionalCellProps: React.HTMLAttributes<HTMLElement>;
+              let additionalCellProps: React.HTMLAttributes<HTMLElement> & {
+                'data-col-width'?: boolean;
+              };
               if (column.onCell) {
                 additionalCellProps = column.onCell(record, index);
               }
@@ -143,6 +152,12 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                   style: {
                     width: column.width,
                   },
+                });
+              }
+
+              if (column.colWidth) {
+                additionalCellProps = mergeObject(additionalCellProps, {
+                  'data-col-width': column.colWidth,
                 });
               }
 
@@ -188,8 +203,10 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                 display: expanded ? null : 'none',
               }}
             >
-              <Cell prefixCls={prefixCls}>{null}</Cell>
-              <Cell prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
+              <Cell component={cellComponent} prefixCls={prefixCls}>
+                {null}
+              </Cell>
+              <Cell component={cellComponent} prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
                 {expandedRowRender(record, index, 1, expanded)}
               </Cell>
             </tr>

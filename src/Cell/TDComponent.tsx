@@ -2,11 +2,18 @@ import * as React from 'react';
 
 export interface TDComponentProps extends React.HTMLAttributes<HTMLElement> {
   'data-ellipsis'?: boolean;
+  'data-col-width'?: boolean;
   children?: React.ReactNode;
 }
 
 function TDComponent(
-  { 'data-ellipsis': ellipsis, children, style, ...restProps }: TDComponentProps,
+  {
+    'data-ellipsis': ellipsis,
+    'data-col-width': colWidth,
+    children,
+    style,
+    ...restProps
+  }: TDComponentProps,
   ref: React.Ref<HTMLTableDataCellElement>,
 ) {
   const { width, ...restStyle } = style || {};
@@ -14,7 +21,7 @@ function TDComponent(
   let tdStyle: React.CSSProperties = style;
   let divStyle: React.CSSProperties;
 
-  if (width) {
+  if (width && !colWidth) {
     tdStyle = {
       ...restStyle,
     };

@@ -109,7 +109,8 @@ function useColumns<RecordType>({
       return [
         {
           title: '',
-          width: 10,
+          width: 1,
+          colWidth: true,
           fixed: firstColumn ? firstColumn.fixed : null,
           render: (_, record, index) => {
             const rowKey = getRowKey(record, index);
