@@ -3,6 +3,7 @@
  *  rowKey should not provide index as second param
  *
  * Feature:
+ * - fixed not need to set width
  * - support `rowExpandable` to config row expand logic
  *
  * Removed:
@@ -30,16 +31,18 @@ import {
   GetComponentProps,
   ExpandableConfig,
   LegacyExpandableProps,
+  GetComponent,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import useFrameState from './hooks/useFrameState';
-import { getPathValue } from './utils/valueUtil';
+import { getPathValue, mergeObject } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps } from './utils/legacyUtil';
+import TDComponent from './Cell/TDComponent';
 
 const scrollbarSize = getScrollBarSize();
 
@@ -113,9 +116,20 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   } = props;
 
   // ==================== Customize =====================
-  function getComponent(path: string[], defaultComponent: CustomizeComponent): CustomizeComponent {
-    return getPathValue(components, path) || defaultComponent;
-  }
+  const mergedComponents = React.useMemo(
+    () =>
+      mergeObject<TableComponents>(components, {
+        body: {
+          cell: TDComponent,
+        },
+      }),
+    [components],
+  );
+
+  const getComponent = React.useCallback<GetComponent>(
+    (path, defaultComponent) => getPathValue(mergedComponents, path) || defaultComponent,
+    [mergedComponents],
+  );
 
   const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
     if (typeof rowKey === 'function') {
@@ -197,6 +211,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
+  let scrollTableStyle: React.CSSProperties;
 
   if (fixHeader) {
     scrollYStyle = {
@@ -205,7 +220,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
   if (fixColumn) {
-    scrollXStyle = { overflowX: 'auto' };
+    scrollXStyle = { overflowX: 'scroll' };
+    scrollTableStyle = {
+      width: scroll.x === true ? null : scroll.x,
+    };
   }
 
   function onColumnResize(colIndex: number, width: number) {
@@ -291,7 +309,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <table>
+          <table style={scrollTableStyle}>
             {bodyColGroup}
             {bodyTable}
           </table>
@@ -307,7 +325,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         }}
         className={classNames(`${prefixCls}-content`)}
       >
-        <table>
+        <table style={scrollTableStyle}>
           {bodyColGroup}
           <Header {...headerProps} {...columnContext} />
           {bodyTable}

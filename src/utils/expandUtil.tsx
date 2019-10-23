@@ -7,7 +7,6 @@ export function renderExpandIcon<RecordType>({
   expanded,
   expandable,
 }: RenderExpandIconProps<RecordType>) {
-  console.log('!!!!', expandable);
   if (!expandable) {
     return null;
   }

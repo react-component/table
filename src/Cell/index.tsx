@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { DataIndex, ColumnType, RenderedCell } from './interface';
-import { getPathValue } from './utils/valueUtil';
+import { DataIndex, ColumnType, RenderedCell, CustomizeComponent } from '../interface';
+import { getPathValue } from '../utils/valueUtil';
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
@@ -16,7 +16,7 @@ export interface CellProps<RecordType> {
   index?: number;
   dataIndex?: DataIndex;
   render?: ColumnType<RecordType>['render'];
-  component?: keyof React.ReactHTML;
+  component?: CustomizeComponent;
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;

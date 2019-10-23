@@ -3,8 +3,8 @@ import shallowEqual from 'shallowequal';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
-import { getColumnKey } from '../utils/valueUtil';
-import { ColumnType, StickyOffsets, ExpandedRowRender } from '../interface';
+import { getColumnKey, mergeObject } from '../utils/valueUtil';
+import { ColumnType, StickyOffsets, ExpandedRowRender, CustomizeComponent } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -18,6 +18,7 @@ export interface BodyRowProps<RecordType> {
   expanded: boolean;
   expandedRowRender: ExpandedRowRender<RecordType>;
   additionalProps: React.HTMLAttributes<HTMLTableRowElement>;
+  cellComponent: CustomizeComponent;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -26,11 +27,13 @@ type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
 function getRequiredColumnProps<RecordType>(
   columns: ColumnType<RecordType>[],
 ): RawColumnType<RecordType>[] {
-  return (columns || []).map(({ key, dataIndex, render, fixed }) => ({
+  return (columns || []).map(({ key, dataIndex, render, fixed, width, ellipsis }) => ({
     key,
     dataIndex,
     render,
     fixed,
+    width,
+    ellipsis,
   }));
 }
 
@@ -115,6 +118,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         expanded,
         expandedRowRender,
         additionalProps = {},
+        cellComponent,
       }) => {
         const fixedInfoList = rowColumns.map((column, colIndex) =>
           getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
@@ -129,8 +133,33 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
 
+              let additionalCellProps: React.HTMLAttributes<HTMLElement>;
+              if (column.onCell) {
+                additionalCellProps = column.onCell(record, index);
+              }
+
+              if (column.width) {
+                additionalCellProps = mergeObject(additionalCellProps, {
+                  style: {
+                    width: column.width,
+                  },
+                });
+              }
+
+              if (column.ellipsis) {
+                console.warn('~================>');
+                additionalCellProps = mergeObject(additionalCellProps, {
+                  style: {
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  },
+                });
+                console.warn('=>', additionalCellProps);
+              }
+
               const cellNode = (
                 <Cell
+                  component={cellComponent}
                   prefixCls={prefixCls}
                   key={key}
                   record={record}
@@ -138,6 +167,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                   dataIndex={dataIndex}
                   render={render}
                   {...fixedInfo}
+                  additionalProps={additionalCellProps}
                 />
               );
 

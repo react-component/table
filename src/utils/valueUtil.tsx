@@ -41,3 +41,29 @@ export function getColumnKey({ key, dataIndex }: GetColumnKeyColumn, index: numb
 
   return `${prefix}_${index}`;
 }
+
+export function mergeObject<ReturnObject extends object>(
+  ...objects: Partial<ReturnObject>[]
+): ReturnObject {
+  const merged: Partial<ReturnObject> = {};
+
+  function fillProps(obj: object, clone: object) {
+    if (clone) {
+      Object.keys(clone).forEach(key => {
+        const value = clone[key];
+        if (value && typeof value === 'object') {
+          obj[key] = obj[key] || {};
+          fillProps(obj[key], value);
+        } else {
+          obj[key] = value;
+        }
+      });
+    }
+  }
+
+  objects.forEach(clone => {
+    fillProps(merged, clone);
+  });
+
+  return merged as ReturnObject;
+}

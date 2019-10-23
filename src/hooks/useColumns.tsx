@@ -100,10 +100,13 @@ function useColumns<RecordType>({
   // Add expand column
   const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     if (expandable) {
+      const firstColumn = mergedColumns[0];
+
       return [
         {
           title: '',
           width: 10,
+          fixed: firstColumn ? firstColumn.fixed : null,
           render: (_, record, index) => {
             const rowKey = getRowKey(record, index);
             const expanded = expandedKeys.has(rowKey);

@@ -84,9 +84,11 @@ export type GetComponentProps<DataType> = (
   index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
 
-export type CustomizeComponent<
-  P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
-> = React.ComponentType<P> | React.FC<P> | string;
+export type CustomizeComponent =
+  | React.ComponentType<any>
+  | React.ForwardRefExoticComponent<any>
+  | React.FC<any>
+  | keyof React.ReactHTML;
 
 export interface TableComponents {
   table?: CustomizeComponent;
@@ -101,6 +103,11 @@ export interface TableComponents {
     cell?: CustomizeComponent;
   };
 }
+
+export type GetComponent = (
+  path: string[],
+  defaultComponent?: CustomizeComponent,
+) => CustomizeComponent;
 
 // ================= Fix Column =================
 export interface StickyOffsets {

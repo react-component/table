@@ -37,12 +37,14 @@ function Body<RecordType>({
   rowExpandable,
 }: BodyProps<RecordType>) {
   const mergedData = data || [];
-  const { prefixCls, getRowKey } = React.useContext(DataContext);
+  const { prefixCls, getRowKey, getComponent } = React.useContext(DataContext);
 
   const indexMemo = useIndexMemo(mergedData.length);
 
-  return React.useMemo(
-    () => (
+  return React.useMemo(() => {
+    const tdComponent = getComponent(['body', 'cell']);
+
+    return (
       <tbody>
         {mergedData.map((record, index) => {
           const key = getRowKey(record, index);
@@ -75,6 +77,7 @@ function Body<RecordType>({
 
           return [
             <BodyRow
+              cellComponent={tdComponent}
               measureColumnWidth={measureColumnWidth && index === 0}
               key={key}
               record={record}
@@ -88,19 +91,19 @@ function Body<RecordType>({
           ];
         })}
       </tbody>
-    ),
-    [
-      data,
-      rowKey,
-      prefixCls,
-      measureColumnWidth,
-      stickyOffsets,
-      expandedKeys,
-      expandable,
-      onTriggerExpand,
-      getRowKey,
-    ],
-  );
+    );
+  }, [
+    data,
+    rowKey,
+    prefixCls,
+    measureColumnWidth,
+    stickyOffsets,
+    expandedKeys,
+    expandable,
+    onTriggerExpand,
+    getRowKey,
+    getComponent,
+  ]);
 }
 
 Body.displayName = 'Body';
