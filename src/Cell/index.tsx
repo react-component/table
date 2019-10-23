@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { DataIndex, ColumnType, RenderedCell, CustomizeComponent } from '../interface';
+import { DataIndex, ColumnType, RenderedCell, CustomizeComponent, CellType } from '../interface';
 import { getPathValue } from '../utils/valueUtil';
 
 function isRenderCell<RecordType>(
@@ -52,12 +52,10 @@ function Cell<RecordType>(
   }: CellProps<RecordType>,
   ref: any,
 ): React.ReactElement {
-  if (colSpan === 0) {
-    return null;
-  }
-
   // ==================== Child Node ====================
+  let cellProps: CellType<RecordType>;
   let childNode: React.ReactNode;
+
   if (children) {
     childNode = children;
   } else {
@@ -71,10 +69,20 @@ function Cell<RecordType>(
       // TODO: Need handle additional props
       if (isRenderCell(renderData)) {
         childNode = renderData.children;
+        cellProps = renderData.props;
+        console.warn(cellProps);
       } else {
         childNode = renderData;
       }
     }
+  }
+
+  const { colSpan: cellColSpan, rowSpan: cellRowSpan } = cellProps || {};
+  const mergedColSpan = cellColSpan !== undefined ? cellColSpan : colSpan;
+  const mergedRowSpan = cellRowSpan !== undefined ? cellRowSpan : rowSpan;
+
+  if (mergedColSpan === 0 || mergedRowSpan === 0) {
+    return null;
   }
 
   // ====================== Fixed =======================
@@ -95,8 +103,8 @@ function Cell<RecordType>(
 
   const componentProps = {
     ...additionalProps,
-    colSpan,
-    rowSpan,
+    colSpan: mergedColSpan,
+    rowSpan: mergedRowSpan,
     className: classNames(
       cellPrefixCls,
       {

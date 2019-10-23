@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface TDComponentProps extends React.HTMLAttributes<HTMLElement> {
   'data-ellipsis'?: boolean;
   'data-col-width'?: boolean;
+  colSpan?: number;
   children?: React.ReactNode;
 }
 
@@ -11,6 +12,7 @@ function TDComponent(
     'data-ellipsis': ellipsis,
     'data-col-width': colWidth,
     children,
+    colSpan,
     style,
     ...restProps
   }: TDComponentProps,
@@ -21,10 +23,10 @@ function TDComponent(
   let tdStyle: React.CSSProperties = style;
   let divStyle: React.CSSProperties;
 
-  if (width && !colWidth) {
-    tdStyle = {
-      ...restStyle,
-    };
+  if (colSpan >= 2) {
+    tdStyle = restStyle;
+  } else if (width && !colWidth) {
+    tdStyle = restStyle;
 
     divStyle = {
       width,
@@ -32,7 +34,7 @@ function TDComponent(
   }
 
   return (
-    <td {...restProps} style={tdStyle} ref={ref}>
+    <td {...restProps} colSpan={colSpan} style={tdStyle} ref={ref}>
       <div style={divStyle}>{children}</div>
     </td>
   );

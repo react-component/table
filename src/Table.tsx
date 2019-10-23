@@ -5,6 +5,7 @@
  * Feature:
  * - fixed not need to set width
  * - support `rowExpandable` to config row expand logic
+ * - add `summary` to support `() => ReactNode`
  *
  * Removed:
  *  - expandIconAsCell
@@ -95,6 +96,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // title?: (data: RecordType[]) => React.ReactNode;
   // id?: string;
   // footer?: (data: RecordType[]) => React.ReactNode;
+  // summary?: (data: RecordType[]) => React.ReactNode;
   // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
