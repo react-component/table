@@ -6,6 +6,8 @@
 @table-head-background-color: #f7f7f7;
 @vertical-padding: 16px;
 @horizontal-padding: 8px;
+@border-color: red;
+@border: 1px solid @border-color;
 
 .@{tablePrefixCls} {
   font-size: @font-size-base;
@@ -17,6 +19,9 @@
     border-collapse: separate;
     border-spacing: 0px;
     width: 100%;
+    border: @border;
+    border-right: 0;
+    border-bottom: 0;
   }
 
   th,
@@ -27,7 +32,7 @@
 
   // ================== Cell ==================
   &-cell {
-    border: 1px solid red;
+    border: @border;
     border-top: 0;
     border-left: 0;
     transition: box-shadow 0.3s;
@@ -45,7 +50,7 @@
     }
 
     &-fix-right-first {
-      box-shadow: -1px 0 0 red;
+      box-shadow: -1px 0 0 @border-color;
 
       &::after {
         pointer-events: none;
@@ -82,8 +87,12 @@
     }
   }
 
+  &-body table {
+    border-top: 0;
+  }
+
   // ================== Body ==================
-  &-body {
+  tbody {
     tr {
       border-bottom: 1px solid @table-border-color;
 

@@ -4,7 +4,7 @@ import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
 import { getColumnKey } from '../utils/valueUtil';
-import { ColumnType, StickyOffsets } from '../interface';
+import { ColumnType, StickyOffsets, ExpandedRowRender } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -16,6 +16,7 @@ export interface BodyRowProps<RecordType> {
   stickyOffsets: StickyOffsets;
   expandable: boolean;
   expanded: boolean;
+  expandedRowRender: ExpandedRowRender<RecordType>;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -32,7 +33,14 @@ function getRequiredColumnProps<RecordType>(
   }));
 }
 
-interface ComputedProps<RecordType> extends BodyRowProps<RecordType> {
+/**
+ * Merged with BodyRowProps & function component internal state props
+ */
+interface BodyRowPassingProps<RecordType> extends BodyRowProps<RecordType> {
+  expandRended: boolean;
+}
+
+interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
   rowColumns: ColumnType<RecordType>[];
   prefixCls: string;
 }
@@ -57,7 +65,9 @@ function shouldUpdate<RecordType>(
 function useComputeRowProps<RecordType>({
   context: { flattenColumns, prefixCls },
   ...props
-}: DefaultPureCompareProps<RecordType, BodyRowProps<RecordType>>): ComputedProps<RecordType> {
+}: DefaultPureCompareProps<RecordType, BodyRowPassingProps<RecordType>>): ComputedProps<
+  RecordType
+> {
   const rowColumns = React.useMemo(() => getRequiredColumnProps<RecordType>(flattenColumns), [
     flattenColumns,
   ]);
@@ -71,10 +81,18 @@ function useComputeRowProps<RecordType>({
 
 function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
   const { onColumnResize } = React.useContext(ResizeContext);
+  const [expandRended, setExpandRended] = React.useState(false);
+
+  React.useEffect(() => {
+    if (props.expandable && props.expanded) {
+      setExpandRended(true);
+    }
+  }, [props.expanded, props.expandable]);
 
   return (
-    <PureContextConsumer<RecordType, BodyRowProps<RecordType>, ComputedProps<RecordType>>
+    <PureContextConsumer<RecordType, BodyRowPassingProps<RecordType>, ComputedProps<RecordType>>
       {...props}
+      expandRended={expandRended}
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
     >
@@ -87,15 +105,20 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         stickyOffsets,
         expandable,
         expanded,
+        expandedRowRender,
       }) => {
-        return (
+        const fixedInfoList = rowColumns.map((column, colIndex) =>
+          getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
+        );
+
+        // Base tr row
+        const baseRowNode = (
           <tr>
             {rowColumns.map((column, colIndex) => {
               const { render, dataIndex } = column;
 
               const key = getColumnKey(column, colIndex);
-
-              const fixedInfo = getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets);
+              const fixedInfo = fixedInfoList[colIndex];
 
               const cellNode = (
                 <Cell
@@ -125,6 +148,25 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               return cellNode;
             })}
           </tr>
+        );
+
+        // Expand row
+        let expandRowNode: React.ReactElement;
+        if (expandRended || expanded) {
+          expandRowNode = (
+            <tr style={{ display: expanded ? null : 'none' }}>
+              <Cell prefixCls={prefixCls} colSpan={rowColumns.length}>
+                {expandedRowRender(record, index, 0, expanded)}
+              </Cell>
+            </tr>
+          );
+        }
+
+        return (
+          <>
+            {baseRowNode}
+            {expandRowNode}
+          </>
         );
       }}
     </PureContextConsumer>

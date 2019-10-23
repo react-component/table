@@ -37,7 +37,9 @@ export function PureContextConsumer<
   RecordType,
   RestProps,
   CompareProps = DefaultPureCompareProps<RecordType, RestProps>
->(props: PureContextConsumerProps<RecordType, RestProps, CompareProps>): React.ReactElement {
+>(
+  props: PureContextConsumerProps<RecordType, RestProps, CompareProps> & RestProps,
+): React.ReactElement {
   const { children, shouldUpdate, useComputeProps = defaultComputeProps, ...restProps } = props;
   const propsRef = React.useRef<CompareProps>(null);
   const childrenRef = React.useRef<React.ReactElement>(null);

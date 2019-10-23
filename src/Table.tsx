@@ -228,6 +228,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
       expandable={expandable}
+      expandedRowRender={expandedRowRender}
     />
   );
 
@@ -241,6 +242,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           }}
           onScroll={onScroll}
           ref={scrollHeaderRef}
+          className={classNames(`${prefixCls}-header`)}
         >
           <FixedHeader {...headerProps} />
         </div>
@@ -251,6 +253,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           }}
           onScroll={onScroll}
           ref={scrollBodyRef}
+          className={classNames(`${prefixCls}-body`)}
         >
           <table>{bodyTable}</table>
         </div>
@@ -263,6 +266,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ...scrollXStyle,
           ...scrollYStyle,
         }}
+        className={classNames(`${prefixCls}-content`)}
       >
         <table>
           <Header {...headerProps} />

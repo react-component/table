@@ -11,7 +11,7 @@ export interface BodyProps<RecordType> {
   stickyOffsets: StickyOffsets;
   expandedKeys: Set<Key>;
   expandable: boolean;
-  expandedRowRender?: ExpandedRowRender<RecordType>;
+  expandedRowRender: ExpandedRowRender<RecordType>;
 }
 
 function Body<RecordType>({
@@ -21,12 +21,13 @@ function Body<RecordType>({
   stickyOffsets,
   expandedKeys,
   expandable,
+  expandedRowRender,
 }: BodyProps<RecordType>) {
   const { prefixCls, getRowKey } = React.useContext(DataContext);
 
   return React.useMemo(
     () => (
-      <tbody className={classNames(`${prefixCls}-body`)}>
+      <tbody>
         {(data || []).map((record, index) => {
           const key = getRowKey(record, index);
 
@@ -39,6 +40,7 @@ function Body<RecordType>({
               stickyOffsets={stickyOffsets}
               expandable={expandable}
               expanded={expandedKeys.has(key)}
+              expandedRowRender={expandedRowRender}
             />,
           ];
         })}
