@@ -20,6 +20,7 @@ export interface CellProps<RecordType> {
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  ellipsis?: boolean;
 
   // Fixed
   fixLeft?: number | false;
@@ -47,6 +48,7 @@ function Cell<RecordType>(
     lastFixLeft,
     firstFixRight,
     additionalProps = {},
+    ellipsis,
   }: CellProps<RecordType>,
   ref: any,
 ): React.ReactElement {
@@ -102,6 +104,7 @@ function Cell<RecordType>(
         [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
         [`${cellPrefixCls}-fix-right`]: isFixRight,
         [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
+        [`${cellPrefixCls}-ellipsis`]: ellipsis,
       },
       additionalProps.className,
     ),
@@ -109,7 +112,11 @@ function Cell<RecordType>(
     ref,
   };
 
-  return <Component {...componentProps}>{childNode}</Component>;
+  return (
+    <Component {...componentProps} data-ellipsis={ellipsis}>
+      {childNode}
+    </Component>
+  );
 }
 
 const RefCell = React.forwardRef(Cell);

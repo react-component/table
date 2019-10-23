@@ -12,6 +12,8 @@ import {
 } from '../interface';
 import { renderExpandIcon } from '../utils/expandUtil';
 
+const PERCENTAGE_WIDTH = /^(\d+(\.\d+)?)%$/;
+
 function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
   return toArray(children).map(({ key, props }: React.ReactElement) => {
     const { children: nodeChildren, ...restProps } = props;
@@ -81,6 +83,7 @@ function useColumns<RecordType>({
   onTriggerExpand,
   expandIcon = renderExpandIcon,
   rowExpandable,
+  tableWidth,
 }: {
   prefixCls?: string;
   columns?: ColumnsType<RecordType>;
@@ -91,6 +94,7 @@ function useColumns<RecordType>({
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIcon?: RenderExpandIcon<RecordType>;
   rowExpandable?: (record: RecordType) => boolean;
+  tableWidth: number;
 }): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
   const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
@@ -127,7 +131,24 @@ function useColumns<RecordType>({
     return mergedColumns;
   }, [expandable, mergedColumns, getRowKey, expandedKeys, expandIcon]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(withExpandColumns), [withExpandColumns]);
+  const flattenColumns = React.useMemo(
+    () =>
+      flatColumns(withExpandColumns).map(column => {
+        const { width } = column;
+        const widthMatch = typeof width === 'string' ? width.match(PERCENTAGE_WIDTH) : null;
+
+        if (widthMatch) {
+          const ptg = Number(widthMatch[1]);
+          return {
+            ...column,
+            width: (tableWidth * ptg) / 100,
+          };
+        }
+
+        return column;
+      }),
+    [withExpandColumns, tableWidth],
+  );
 
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {

@@ -15,6 +15,7 @@
 
 import * as React from 'react';
 import classNames from 'classnames';
+import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
@@ -184,6 +185,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   // ====================== Column ======================
+  const [tableWidth, setTableWidth] = React.useState(0);
+
   const [columns, flattenColumns] = useColumns({
     ...props,
     ...expandableConfig,
@@ -191,11 +194,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandedKeys: mergedExpandedKeys,
     getRowKey,
     onTriggerExpand,
+    tableWidth,
   });
 
   const columnContext = {
     columns,
     flattenColumns,
+  };
+
+  const onTableResize = ({ width }: { width: number }) => {
+    setTableWidth(width);
   };
 
   // ====================== Scroll ======================
@@ -309,10 +317,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <table style={scrollTableStyle}>
-            {bodyColGroup}
-            {bodyTable}
-          </table>
+          <ResizeObserver onResize={onTableResize}>
+            <table style={scrollTableStyle}>
+              {bodyColGroup}
+              {bodyTable}
+            </table>
+          </ResizeObserver>
         </div>
       </>
     );
@@ -325,11 +335,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         }}
         className={classNames(`${prefixCls}-content`)}
       >
-        <table style={scrollTableStyle}>
-          {bodyColGroup}
-          <Header {...headerProps} {...columnContext} />
-          {bodyTable}
-        </table>
+        <ResizeObserver onResize={onTableResize}>
+          <table style={scrollTableStyle}>
+            {bodyColGroup}
+            <Header {...headerProps} {...columnContext} />
+            {bodyTable}
+          </table>
+        </ResizeObserver>
       </div>
     );
   }

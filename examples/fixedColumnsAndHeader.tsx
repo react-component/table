@@ -24,14 +24,26 @@ const originData: RecordType[] = [
   { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '9' },
 ];
 
-const useColumn = (fixLeft: boolean, fixTitle: boolean, fixRight: boolean, ellipsis: boolean) => {
+const longTextData: RecordType[] = [...originData];
+longTextData[0] = {
+  ...longTextData[0],
+  a: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+};
+
+const useColumn = (
+  fixLeft: boolean,
+  fixTitle: boolean,
+  fixRight: boolean,
+  ellipsis: boolean,
+  percentage: boolean,
+) => {
   const columns: ColumnsType<RecordType> = React.useMemo(
     () => [
       {
         title: 'title1',
         dataIndex: 'a',
         key: 'a',
-        width: '10%',
+        width: percentage ? '10%' : 80,
         fixed: fixLeft ? 'left' : null,
         ellipsis,
       },
@@ -52,19 +64,20 @@ const useColumn = (fixLeft: boolean, fixTitle: boolean, fixRight: boolean, ellip
       { title: 'title11', dataIndex: 'b', key: 'k', width: 100, fixed: fixRight ? 'right' : null },
       { title: 'title12', dataIndex: 'b', key: 'l', width: 80, fixed: fixRight ? 'right' : null },
     ],
-    [fixLeft, fixTitle, fixRight, ellipsis],
+    [fixLeft, fixTitle, fixRight, ellipsis, percentage],
   );
 
   return columns;
 };
 
 const Demo = () => {
-  const [data, setData] = React.useState(originData);
+  const [longText, longTextProps] = useCheckbox(false);
   const [fixLeft, fixLeftProps] = useCheckbox(true);
   const [fixRight, fixRightProps] = useCheckbox(true);
   const [fixTitle3, fixTitle3Props] = useCheckbox(false);
   const [ellipsis, ellipsisProps] = useCheckbox(false);
-  const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis);
+  const [percentage, percentageProps] = useCheckbox(false);
+  const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis, percentage);
 
   return (
     <React.StrictMode>
@@ -73,24 +86,13 @@ const Demo = () => {
         <Table<RecordType>
           columns={columns}
           scroll={{ x: 1650, y: 300 }}
-          data={data}
+          data={longText ? longTextData : originData}
           style={{ width: 800 }}
         />
-        <button
-          type="button"
-          onClick={() => {
-            const newData = [...originData];
-            newData[0] = {
-              ...newData[0],
-              a:
-                'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            };
-            setData(newData);
-          }}
-        >
-          Resize
-        </button>
-
+        <label>
+          <input {...longTextProps} />
+          Long Text
+        </label>
         <label>
           <input {...fixLeftProps} />
           Fix Left
@@ -106,6 +108,10 @@ const Demo = () => {
         <label>
           <input {...ellipsisProps} />
           Ellipsis First Column
+        </label>
+        <label>
+          <input {...percentageProps} />
+          Percentage Width
         </label>
       </div>
     </React.StrictMode>

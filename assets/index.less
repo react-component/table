@@ -35,7 +35,6 @@
   th,
   td > div {
     padding: @vertical-padding @horizontal-padding;
-    white-space: nowrap;
     box-sizing: border-box;
   }
 
@@ -46,6 +45,11 @@
     border-top: 0;
     border-left: 0;
     transition: box-shadow 0.3s;
+
+    > div {
+      white-space: normal;
+      word-break: break-word;
+    }
 
     &-fix-left,
     &-fix-right {
@@ -77,6 +81,14 @@
         width: 20px;
         left: -1px;
         transform: translateX(-100%);
+      }
+    }
+
+    &-ellipsis {
+      > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

@@ -1,27 +1,26 @@
 import * as React from 'react';
 
 export interface TDComponentProps extends React.HTMLAttributes<HTMLElement> {
+  'data-ellipsis'?: boolean;
   children?: React.ReactNode;
 }
 
 function TDComponent(
-  { children, style, ...restProps }: TDComponentProps,
+  { 'data-ellipsis': ellipsis, children, style, ...restProps }: TDComponentProps,
   ref: React.Ref<HTMLTableDataCellElement>,
 ) {
-  const { width, textOverflow, overflow, ...restStyle } = style || {};
+  const { width, ...restStyle } = style || {};
 
   let tdStyle: React.CSSProperties = style;
   let divStyle: React.CSSProperties;
 
-  if (width && textOverflow) {
+  if (width) {
     tdStyle = {
       ...restStyle,
     };
 
     divStyle = {
       width,
-      textOverflow,
-      overflow,
     };
   }
 

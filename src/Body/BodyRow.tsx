@@ -146,17 +146,9 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                 });
               }
 
-              if (column.ellipsis) {
-                additionalCellProps = mergeObject(additionalCellProps, {
-                  style: {
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  },
-                });
-              }
-
               const cellNode = (
                 <Cell
+                  ellipsis={column.ellipsis}
                   component={cellComponent}
                   prefixCls={prefixCls}
                   key={key}
