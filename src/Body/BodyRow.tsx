@@ -170,7 +170,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
             >
               <Cell prefixCls={prefixCls}>{null}</Cell>
               <Cell prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
-                {expandedRowRender(record, index, 0, expanded)}
+                {expandedRowRender(record, index, 1, expanded)}
               </Cell>
             </tr>
           );

@@ -23,6 +23,7 @@ export type FixedType = 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
+// =================== Column ===================
 export interface CellType<RecordType> {
   key?: Key;
   className?: string;
@@ -75,12 +76,13 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
 
 export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
 
+export type GetRowKey<RecordType> = (record: RecordType, index: number) => Key;
+
+// ================= Customized =================
 export type GetComponentProps<DataType> = (
   data: DataType,
   index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
-
-export type GetRowKey<RecordType> = (record: RecordType, index: number) => Key;
 
 export type CustomizeComponent<
   P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
@@ -100,9 +102,28 @@ export interface TableComponents {
   };
 }
 
+// ================= Fix Column =================
 export interface StickyOffsets {
   left: number[];
   right: number[];
+}
+
+// =================== Expand ===================
+export interface LegacyExpandableProps<RecordType> {
+  /** @deprecated Use `expandable.expandedRowKeys` instead */
+  expandedRowKeys?: Key[];
+  /** @deprecated Use `expandable.defaultExpandedRowKeys` instead */
+  defaultExpandedRowKeys?: Key[];
+  /** @deprecated Use `expandable.expandedRowRender` instead */
+  expandedRowRender?: ExpandedRowRender<RecordType>;
+  /** @deprecated Use `expandable.expandRowByClick` instead */
+  expandRowByClick?: boolean;
+  /** @deprecated Use `expandable.expandIcon` instead */
+  expandIcon?: RenderExpandIcon<RecordType>;
+  /** @deprecated Use `expandable.onExpand` instead */
+  onExpand?: (expanded: boolean, record: RecordType) => void;
+  /** @deprecated Use `expandable.onExpandedRowsChange` instead */
+  onExpandedRowsChange?: (expandedKeys: Key[]) => void;
 }
 
 export type ExpandedRowRender<ValueType> = (
@@ -112,6 +133,23 @@ export type ExpandedRowRender<ValueType> = (
   expanded: boolean,
 ) => React.ReactNode;
 
+export interface RenderExpandIconProps<RecordType> {
+  prefixCls: string;
+  expanded: boolean;
+  record: RecordType;
+  expandable: boolean;
+  onExpand: TriggerEventHandler<RecordType>;
+}
+
+export type RenderExpandIcon<RecordType> = (
+  props: RenderExpandIconProps<RecordType>,
+) => React.ReactNode;
+
+export interface ExpandableConfig<RecordType> extends LegacyExpandableProps<RecordType> {
+  rowExpandable?: (record: RecordType) => boolean;
+}
+
+// =================== Events ===================
 export type TriggerEventHandler<RecordType> = (
   record: RecordType,
   event: React.MouseEvent<HTMLElement>,

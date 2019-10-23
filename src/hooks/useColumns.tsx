@@ -8,7 +8,9 @@ import {
   Key,
   GetRowKey,
   TriggerEventHandler,
+  RenderExpandIcon,
 } from '../interface';
+import { renderExpandIcon } from '../utils/expandUtil';
 
 function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
   return toArray(children).map(({ key, props }: React.ReactElement) => {
@@ -70,19 +72,25 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
  * Parse `columns` & `children` into `columns`.
  */
 function useColumns<RecordType>({
+  prefixCls,
   columns,
   children,
   expandable,
   expandedKeys,
   getRowKey,
   onTriggerExpand,
+  expandIcon = renderExpandIcon,
+  rowExpandable,
 }: {
+  prefixCls?: string;
   columns?: ColumnsType<RecordType>;
   children?: React.ReactNode;
   expandable: boolean;
   expandedKeys: Set<Key>;
   getRowKey: GetRowKey<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
+  expandIcon?: RenderExpandIcon<RecordType>;
+  rowExpandable?: (record: RecordType) => boolean;
 }): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
   const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
@@ -98,30 +106,23 @@ function useColumns<RecordType>({
           width: 10,
           render: (_, record, index) => {
             const rowKey = getRowKey(record, index);
-            const onClick: React.MouseEventHandler<HTMLElement> = event => {
-              onTriggerExpand(record, event);
-              event.stopPropagation();
-            };
+            const expanded = expandedKeys.has(rowKey);
+            const recordExpandable = rowExpandable ? rowExpandable(record) : true;
 
-            if (expandedKeys.has(rowKey)) {
-              return (
-                <button type="button" onClick={onClick}>
-                  -
-                </button>
-              );
-            }
-            return (
-              <button type="button" onClick={onClick}>
-                +
-              </button>
-            );
+            return expandIcon({
+              prefixCls,
+              expanded,
+              expandable: recordExpandable,
+              record,
+              onExpand: onTriggerExpand,
+            });
           },
         },
         ...mergedColumns,
       ];
     }
     return mergedColumns;
-  }, [expandable, mergedColumns, getRowKey, expandedKeys]);
+  }, [expandable, mergedColumns, getRowKey, expandedKeys, expandIcon]);
 
   const flattenColumns = React.useMemo(() => flatColumns(withExpandColumns), [withExpandColumns]);
 
