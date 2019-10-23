@@ -84,13 +84,13 @@ function useColumns<RecordType>({
   getRowKey: GetRowKey<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
 }): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
-  let mergedColumns = React.useMemo<ColumnsType<RecordType>>(
+  const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
     [columns, children],
   );
 
   // Add expand column
-  mergedColumns = React.useMemo<ColumnsType<RecordType>>(() => {
+  const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     if (expandable) {
       return [
         {
@@ -121,7 +121,7 @@ function useColumns<RecordType>({
     return mergedColumns;
   }, [expandable, mergedColumns, getRowKey, expandedKeys]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
+  const flattenColumns = React.useMemo(() => flatColumns(withExpandColumns), [withExpandColumns]);
 
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {

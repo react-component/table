@@ -3,6 +3,7 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import Header, { HeaderProps } from './Header';
 import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
+import TableContext from '../context/TableContext';
 
 const scrollbarSize = getScrollBarSize();
 
@@ -10,11 +11,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];
   columCount: number;
 }
-
-const ScrollBarColumn: ColumnType<any> = {
-  fixed: 'right',
-  render: () => null,
-};
 
 function FixedHeader<RecordType>({
   columns,
@@ -24,14 +20,25 @@ function FixedHeader<RecordType>({
   stickyOffsets,
   ...props
 }: FixedHeaderProps<RecordType>) {
+  const { prefixCls } = React.useContext(TableContext);
+
   // Add scrollbar column
+  const lastColumn = flattenColumns[flattenColumns.length - 1];
+  const ScrollBarColumn: ColumnType<RecordType> = {
+    fixed: lastColumn ? lastColumn.fixed : null,
+    onHeaderCell: () => ({
+      className: `${prefixCls}-cell-scrollbar`,
+    }),
+    render: () => null,
+  };
+
   const columnsWithScrollbar = React.useMemo<ColumnsType<RecordType>>(
-    () => [...columns, ScrollBarColumn],
+    () => (scrollbarSize ? [...columns, ScrollBarColumn] : columns),
     [columns],
   );
 
   const flattenColumnsWithScrollbar = React.useMemo<ColumnType<RecordType>[]>(
-    () => [...flattenColumns, ScrollBarColumn],
+    () => (scrollbarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
     [flattenColumns],
   );
 

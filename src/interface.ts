@@ -21,16 +21,14 @@ export type Key = React.Key;
 
 export type FixedType = 'left' | 'right' | boolean;
 
-export interface DefaultRecordType {
-  children?: DefaultRecordType[];
-}
+export type DefaultRecordType = Record<string, any>;
 
 export interface CellType<RecordType> {
   key?: Key;
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  column?: ColumnType<RecordType>;
+  column?: ColumnsType<RecordType>[number];
   colSpan?: number;
   rowSpan?: number;
   /** Only used for table header */
@@ -46,18 +44,19 @@ export interface RenderedCell<RecordType> {
 
 export type DataIndex = string | number | (string | number)[];
 
-interface ColumnSharedType {
+interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
   key?: Key;
   className?: string;
   fixed?: FixedType;
+  onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
 }
 
-export interface ColumnGroupType<RecordType> extends ColumnSharedType {
+export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
   children: ColumnsType<RecordType>;
 }
 
-export interface ColumnType<RecordType> extends ColumnSharedType {
+export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   align?: 'left' | 'center' | 'right';
   colSpan?: number;
   dataIndex?: DataIndex;
@@ -72,7 +71,6 @@ export interface ColumnType<RecordType> extends ColumnSharedType {
   onCell?: GetComponentProps<RecordType>;
   /** @deprecated Please use `onCell` instead */
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
-  onHeaderCell?: GetComponentProps<RecordType>;
 }
 
 export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];

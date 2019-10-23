@@ -15,7 +15,8 @@ function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProp
 
   return (
     <tr>
-      {cells.map((cell, cellIndex) => {
+      {cells.map((cell: CellType<RecordType>, cellIndex) => {
+        const { column } = cell;
         const fixedInfo = getCellFixedInfo(
           cell.colStart,
           cell.colEnd,
@@ -23,8 +24,20 @@ function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProp
           stickyOffsets,
         );
 
+        let additionalProps: React.HTMLAttributes<HTMLElement>;
+        if (column && column.onHeaderCell) {
+          additionalProps = cell.column.onHeaderCell(column);
+        }
+
         return (
-          <Cell {...cell} component="th" prefixCls={prefixCls} key={cellIndex} {...fixedInfo} />
+          <Cell
+            {...cell}
+            component="th"
+            prefixCls={prefixCls}
+            key={cellIndex}
+            {...fixedInfo}
+            additionalProps={additionalProps}
+          />
         );
       })}
     </tr>

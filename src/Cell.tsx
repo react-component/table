@@ -26,6 +26,9 @@ export interface CellProps<RecordType> {
   fixRight?: number | false;
   lastFixLeft?: boolean;
   firstFixRight?: boolean;
+
+  // Additional props
+  additionalProps?: React.HTMLAttributes<HTMLElement>;
 }
 
 function Cell<RecordType>(
@@ -43,6 +46,7 @@ function Cell<RecordType>(
     fixRight,
     lastFixLeft,
     firstFixRight,
+    additionalProps = {},
   }: CellProps<RecordType>,
   ref: any,
 ): React.ReactElement {
@@ -88,15 +92,20 @@ function Cell<RecordType>(
   const cellPrefixCls = `${prefixCls}-cell`;
 
   const componentProps = {
+    ...additionalProps,
     colSpan,
     rowSpan,
-    className: classNames(cellPrefixCls, {
-      [`${cellPrefixCls}-fix-left`]: isFixLeft,
-      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
-      [`${cellPrefixCls}-fix-right`]: isFixRight,
-      [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
-    }),
-    style: fixedStyle,
+    className: classNames(
+      cellPrefixCls,
+      {
+        [`${cellPrefixCls}-fix-left`]: isFixLeft,
+        [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
+        [`${cellPrefixCls}-fix-right`]: isFixRight,
+        [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
+      },
+      additionalProps.className,
+    ),
+    style: { ...additionalProps.style, ...fixedStyle },
     ref,
   };
 

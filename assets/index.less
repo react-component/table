@@ -9,6 +9,12 @@
 @border-color: red;
 @border: 1px solid @border-color;
 
+.tableBorder() {
+  border: @border;
+  border-right: 0;
+  border-bottom: 0;
+}
+
 .@{tablePrefixCls} {
   font-size: @font-size-base;
   color: @text-color;
@@ -19,9 +25,6 @@
     border-collapse: separate;
     border-spacing: 0px;
     width: 100%;
-    border: @border;
-    border-right: 0;
-    border-bottom: 0;
   }
 
   th,
@@ -32,10 +35,16 @@
 
   // ================== Cell ==================
   &-cell {
+    position: relative;
     border: @border;
     border-top: 0;
     border-left: 0;
     transition: box-shadow 0.3s;
+
+    &-fix-left,
+    &-fix-right {
+      z-index: 1;
+    }
 
     &-fix-left-last::after {
       pointer-events: none;
@@ -85,10 +94,20 @@
       background: @table-head-background-color;
       text-align: center;
     }
+
+    .@{tablePrefixCls}-cell-scrollbar::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      bottom: 0;
+      left: -1px;
+      width: 1px;
+      background: @table-head-background-color;
+    }
   }
 
-  &-body table {
-    border-top: 0;
+  &-header {
+    .tableBorder();
   }
 
   // ================== Body ==================
@@ -101,5 +120,10 @@
         background: #fff;
       }
     }
+  }
+
+  &-body {
+    .tableBorder();
+    border-top: 0;
   }
 }

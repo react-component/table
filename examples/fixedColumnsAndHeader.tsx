@@ -23,14 +23,14 @@ const originData: RecordType[] = [
   { a: 'aaa', c: '内容内容内容内容内容', d: 2, key: '9' },
 ];
 
-const useColumn = (fixTitle: boolean) => {
+const useColumn = (fixLeft: boolean, fixTitle: boolean, fixRight: boolean) => {
   const columns: ColumnsType<RecordType> = React.useMemo(
     () => [
-      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-      { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: fixLeft ? 'left' : null },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: fixLeft ? 'left' : null },
       {
         title: 'title3',
-        fixed: fixTitle ? 'left' : null,
+        fixed: fixLeft && fixTitle ? 'left' : null,
         children: [
           { title: 'title4', dataIndex: 'c', key: 'd', width: 150 },
           { title: 'title5', dataIndex: 'c', key: 'e', width: 150 },
@@ -41,10 +41,10 @@ const useColumn = (fixTitle: boolean) => {
       { title: 'title8', dataIndex: 'c', key: 'h', width: 150 },
       { title: 'title9', dataIndex: 'b', key: 'i', width: 150 },
       { title: 'title10', dataIndex: 'b', key: 'j', width: 150 },
-      { title: 'title11', dataIndex: 'b', key: 'k', width: 150, fixed: 'right' },
-      { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+      { title: 'title11', dataIndex: 'b', key: 'k', width: 150, fixed: fixRight ? 'right' : null },
+      { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: fixRight ? 'right' : null },
     ],
-    [fixTitle],
+    [fixLeft, fixTitle, fixRight],
   );
 
   return columns;
@@ -52,8 +52,11 @@ const useColumn = (fixTitle: boolean) => {
 
 const Demo = () => {
   const [data, setData] = React.useState(originData);
+  const [fixLeft, setFixLeft] = React.useState(true);
+  const [fixRight, setFixRight] = React.useState(true);
   const [fixTitle3, setFixTitle3] = React.useState(false);
-  const columns = useColumn(fixTitle3);
+  const columns = useColumn(fixLeft, fixTitle3, fixRight);
+  console.log('><>>>', columns, fixLeft);
 
   return (
     <React.StrictMode>
@@ -78,6 +81,17 @@ const Demo = () => {
         >
           Resize
         </button>
+
+        <label>
+          <input
+            type="checkbox"
+            checked={fixLeft}
+            onChange={() => {
+              setFixLeft(!fixLeft);
+            }}
+          />
+          Fix Left
+        </label>
         <label>
           <input
             type="checkbox"
@@ -87,6 +101,16 @@ const Demo = () => {
             }}
           />
           Fix title3
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={fixRight}
+            onChange={() => {
+              setFixRight(!fixRight);
+            }}
+          />
+          Fix Right
         </label>
       </div>
     </React.StrictMode>
