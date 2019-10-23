@@ -22,6 +22,7 @@ import {
   Key,
   DefaultRecordType,
   TriggerEventHandler,
+  GetComponentProps,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
@@ -30,6 +31,7 @@ import useFrameState from './hooks/useFrameState';
 import { getPathValue } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
+import ColGroup from './ColGroup';
 
 const scrollbarSize = getScrollBarSize();
 
@@ -51,14 +53,15 @@ export interface TableProps<RecordType extends DefaultRecordType> {
   expandedRowKeys?: Key[];
   defaultExpandedRowKeys?: Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
+  expandRowByClick?: boolean;
   onExpand?: (expanded: boolean, record: RecordType) => void;
   onExpandedRowsChange?: (expandedKeys: Key[]) => void;
 
   // TODO: Handle this
   // Customize
   components?: TableComponents;
+  onRow?: GetComponentProps<RecordType>;
 
-  // expandIconAsCell?: boolean;
   // expandedRowClassName?: (record: RecordType, index: number, indent: number) => string;
   // defaultExpandAllRows?: boolean;
   // expandIconColumnIndex?: number;
@@ -74,7 +77,6 @@ export interface TableProps<RecordType extends DefaultRecordType> {
   // bodyStyle?: React.CSSProperties;
 
   // rowClassName?: string | ((record: RecordType, index: number, indent: number) => string);
-  // onRow?: GetComponentProps<RecordType>;
   // onHeaderRow?: GetComponentProps<ColumnType[]>;
   // onRowClick?: LegacyFunction<RecordType>;
   // onRowDoubleClick?: LegacyFunction<RecordType>;
@@ -106,8 +108,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandedRowKeys,
     defaultExpandedRowKeys,
     expandedRowRender,
+    expandRowByClick,
     onExpand,
     onExpandedRowsChange,
+
+    // Customize
+    onRow,
   } = props;
 
   // ==================== Customize =====================
@@ -124,30 +130,36 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // ====================== Expand ======================
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(defaultExpandedRowKeys);
-  const mergedExpandedKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
+  const mergedExpandedKeys = React.useMemo(
+    () => new Set(expandedRowKeys || innerExpandedKeys || []),
+    [expandedRowKeys, innerExpandedKeys],
+  );
 
   const expandable: boolean = !!expandedRowRender;
 
-  const onTriggerExpand: TriggerEventHandler<RecordType> = (record: RecordType) => {
-    const key = getRowKey(record, data.indexOf(record));
+  const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
+    (record: RecordType) => {
+      const key = getRowKey(record, data.indexOf(record));
 
-    let newExpandedKeys: Key[];
-    const hasKey = mergedExpandedKeys.has(key);
-    if (hasKey) {
-      mergedExpandedKeys.delete(key);
-      newExpandedKeys = [...mergedExpandedKeys];
-    } else {
-      newExpandedKeys = [...mergedExpandedKeys, key];
-    }
+      let newExpandedKeys: Key[];
+      const hasKey = mergedExpandedKeys.has(key);
+      if (hasKey) {
+        mergedExpandedKeys.delete(key);
+        newExpandedKeys = [...mergedExpandedKeys];
+      } else {
+        newExpandedKeys = [...mergedExpandedKeys, key];
+      }
 
-    setInnerExpandedKeys(newExpandedKeys);
-    if (onExpand) {
-      onExpand(!hasKey, record);
-    }
-    if (onExpandedRowsChange) {
-      onExpandedRowsChange(newExpandedKeys);
-    }
-  };
+      setInnerExpandedKeys(newExpandedKeys);
+      if (onExpand) {
+        onExpand(!hasKey, record);
+      }
+      if (onExpandedRowsChange) {
+        onExpandedRowsChange(newExpandedKeys);
+      }
+    },
+    [getRowKey, mergedExpandedKeys, data, onExpand, onExpandedRowsChange],
+  );
 
   // ====================== Column ======================
   const [columns, flattenColumns] = useColumns({
@@ -234,6 +246,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedKeys={mergedExpandedKeys}
       expandable={expandable}
       expandedRowRender={expandedRowRender}
+      onTriggerExpand={expandRowByClick ? onTriggerExpand : null}
+      onRow={onRow}
+    />
+  );
+
+  const bodyColGroup = (
+    <ColGroup
+      colWidths={flattenColumns.map(({ width }) => width)}
+      columCount={flattenColumns.length}
     />
   );
 
@@ -260,7 +281,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <table>{bodyTable}</table>
+          <table>
+            {bodyColGroup}
+            {bodyTable}
+          </table>
         </div>
       </>
     );
@@ -274,6 +298,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         className={classNames(`${prefixCls}-content`)}
       >
         <table>
+          {bodyColGroup}
           <Header {...headerProps} {...columnContext} />
           {bodyTable}
         </table>

@@ -95,22 +95,24 @@ function useColumns<RecordType>({
       return [
         {
           title: '',
+          width: 10,
           render: (_, record, index) => {
             const rowKey = getRowKey(record, index);
             const onClick: React.MouseEventHandler<HTMLElement> = event => {
               onTriggerExpand(record, event);
+              event.stopPropagation();
             };
 
             if (expandedKeys.has(rowKey)) {
               return (
                 <button type="button" onClick={onClick}>
-                  collapse
+                  -
                 </button>
               );
             }
             return (
               <button type="button" onClick={onClick}>
-                expand
+                +
               </button>
             );
           },
@@ -128,7 +130,7 @@ function useColumns<RecordType>({
     warningFixed(flattenColumns);
   }
 
-  return [mergedColumns, flattenColumns];
+  return [withExpandColumns, flattenColumns];
 }
 
 export default useColumns;

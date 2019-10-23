@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface ColGroupProps {
-  colWidths: number[];
+  colWidths: (number | string)[];
   columCount: number;
 }
 

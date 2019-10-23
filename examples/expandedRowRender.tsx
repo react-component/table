@@ -12,7 +12,6 @@ class Demo extends React.Component {
   state = {
     data: tableData,
     expandedRowKeys: [],
-    expandIconAsCell: true,
     expandRowByClick: false,
   };
 
@@ -23,12 +22,6 @@ class Demo extends React.Component {
   onExpandedRowsChange = rows => {
     this.setState({
       expandedRowKeys: rows,
-    });
-  };
-
-  onExpandIconAsCellChange = e => {
-    this.setState({
-      expandIconAsCell: e.target.checked,
     });
   };
 
@@ -77,27 +70,20 @@ class Demo extends React.Component {
   }
 
   render() {
-    const { expandIconAsCell, expandRowByClick, expandedRowKeys, data } = this.state;
+    const { expandRowByClick, expandedRowKeys, data } = this.state;
     return (
       <div>
         {this.toggleButton()}
-        <span style={{ display: 'inline-block', width: 20 }} />
-        <input
-          type="checkbox"
-          checked={expandIconAsCell}
-          onChange={this.onExpandIconAsCellChange}
-        />
-        expandIconAsCell
-        <span style={{ display: 'inline-block', width: 20 }} />
-        <input
-          type="checkbox"
-          checked={expandRowByClick}
-          onChange={this.onExpandRowByClickChange}
-        />
-        expandRowByClick
+        <label>
+          <input
+            type="checkbox"
+            checked={expandRowByClick}
+            onChange={this.onExpandRowByClickChange}
+          />
+          expandRowByClick
+        </label>
         <Table
           columns={this.columns}
-          expandIconAsCell={expandIconAsCell}
           expandRowByClick={expandRowByClick}
           expandedRowRender={(record, index, indent, expanded) =>
             expanded ? <p>extra: {record.a}</p> : null

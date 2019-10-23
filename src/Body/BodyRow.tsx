@@ -17,6 +17,7 @@ export interface BodyRowProps<RecordType> {
   expandable: boolean;
   expanded: boolean;
   expandedRowRender: ExpandedRowRender<RecordType>;
+  additionalProps: React.HTMLAttributes<HTMLTableRowElement>;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -49,13 +50,21 @@ function shouldUpdate<RecordType>(
   prevProps: ComputedProps<RecordType>,
   props: ComputedProps<RecordType>,
 ): boolean {
-  const { rowColumns: prevRowColumns, ...prevRestProps } = prevProps;
-  const { rowColumns, ...restProps } = props;
+  const {
+    rowColumns: prevRowColumns,
+    additionalProps: prevAdditionalProps,
+    ...prevRestProps
+  } = prevProps;
+  const { rowColumns, additionalProps, ...restProps } = props;
 
   if (
     prevRowColumns.length !== rowColumns.length ||
     prevRowColumns.some((prevColumn, colIndex) => !shallowEqual(prevColumn, rowColumns[colIndex]))
   ) {
+    return true;
+  }
+
+  if (!shallowEqual(prevAdditionalProps, additionalProps)) {
     return true;
   }
 
@@ -103,9 +112,9 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         index,
         measureColumnWidth,
         stickyOffsets,
-        expandable,
         expanded,
         expandedRowRender,
+        additionalProps = {},
       }) => {
         const fixedInfoList = rowColumns.map((column, colIndex) =>
           getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
@@ -113,7 +122,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
         // Base tr row
         const baseRowNode = (
-          <tr>
+          <tr {...additionalProps}>
             {rowColumns.map((column, colIndex) => {
               const { render, dataIndex } = column;
 
@@ -154,7 +163,11 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         let expandRowNode: React.ReactElement;
         if (expandRended || expanded) {
           expandRowNode = (
-            <tr style={{ display: expanded ? null : 'none' }}>
+            <tr
+              style={{
+                display: expanded ? null : 'none',
+              }}
+            >
               <Cell prefixCls={prefixCls}>{null}</Cell>
               <Cell prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
                 {expandedRowRender(record, index, 0, expanded)}
