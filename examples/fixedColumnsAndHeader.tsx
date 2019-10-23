@@ -31,7 +31,7 @@ const useColumn = (fixLeft: boolean, fixTitle: boolean, fixRight: boolean, ellip
         title: 'title1',
         dataIndex: 'a',
         key: 'a',
-        width: 80,
+        width: '10%',
         fixed: fixLeft ? 'left' : null,
         ellipsis,
       },

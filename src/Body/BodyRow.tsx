@@ -147,14 +147,12 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               }
 
               if (column.ellipsis) {
-                console.warn('~================>');
                 additionalCellProps = mergeObject(additionalCellProps, {
                   style: {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   },
                 });
-                console.warn('=>', additionalCellProps);
               }
 
               const cellNode = (
