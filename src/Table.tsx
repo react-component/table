@@ -187,6 +187,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // ====================== Column ======================
   const [tableWidth, setTableWidth] = React.useState(0);
+  const [componentWidth, setComponentWidth] = React.useState(0);
 
   const [columns, flattenColumns] = useColumns({
     ...props,
@@ -263,6 +264,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (scrollBodyRef.current) {
       onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
     }
+  };
+
+  const onFullTableResize = ({ width }) => {
+    triggerOnScroll();
+    setComponentWidth(width);
   };
 
   React.useEffect(() => triggerOnScroll, []);
@@ -370,11 +376,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   if (fixColumn) {
-    fullTable = <ResizeObserver onResize={triggerOnScroll}>{fullTable}</ResizeObserver>;
+    fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
   return (
-    <DataContext.Provider value={{ ...columnContext, prefixCls, getComponent, getRowKey }}>
+    <DataContext.Provider
+      value={{ ...columnContext, prefixCls, getComponent, getRowKey, componentWidth, fixColumn }}
+    >
       <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
     </DataContext.Provider>
   );

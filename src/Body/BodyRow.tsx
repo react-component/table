@@ -54,6 +54,8 @@ interface BodyRowPassingProps<RecordType> extends BodyRowProps<RecordType> {
 interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
   rowColumns: ColumnType<RecordType>[];
   prefixCls: string;
+  componentWidth: number;
+  fixColumn: boolean;
 }
 
 function shouldUpdate<RecordType>(
@@ -82,7 +84,7 @@ function shouldUpdate<RecordType>(
 }
 
 function useComputeRowProps<RecordType>({
-  context: { flattenColumns, prefixCls },
+  context: { flattenColumns, prefixCls, fixColumn, componentWidth },
   ...props
 }: DefaultPureCompareProps<RecordType, BodyRowPassingProps<RecordType>>): ComputedProps<
   RecordType
@@ -95,6 +97,8 @@ function useComputeRowProps<RecordType>({
     ...props,
     rowColumns,
     prefixCls,
+    fixColumn,
+    componentWidth,
   };
 }
 
@@ -127,13 +131,15 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         expandedRowRender,
         additionalProps = {},
         cellComponent,
+        fixColumn,
+        componentWidth,
       }) => {
         // Move to Body to enhance performance
         const fixedInfoList = rowColumns.map((column, colIndex) =>
           getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
         );
 
-        // Base tr row
+        // ======================== Base tr row ========================
         const baseRowNode = (
           <tr {...additionalProps}>
             {rowColumns.map((column: InternalColumnType<RecordType>, colIndex) => {
@@ -196,55 +202,37 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
           </tr>
         );
 
-        // Expand row
+        // ======================== Expand row =========================
         let expandRowNode: React.ReactElement;
         if (expandable && (expandRended || expanded)) {
-          let leftFixedCount = 0;
-          let rightFixedCount = 0;
+          let expandContent = expandedRowRender(record, index, 1, expanded);
 
-          fixedInfoList.slice(1).forEach(({ fixLeft, fixRight }) => {
-            leftFixedCount += typeof fixLeft === 'number' ? 1 : 0;
-            rightFixedCount += typeof fixRight === 'number' ? 1 : 0;
-          });
-
-          let expandFixRightNode: React.ReactNode;
-          if (rightFixedCount) {
-            expandFixRightNode = (
-              <Cell
-                component={cellComponent}
-                prefixCls={prefixCls}
-                fixRight={rightFixedCount ? 0 : false}
-                firstFixRight
-                colSpan={rightFixedCount}
+          if (fixColumn) {
+            expandContent = (
+              <div
+                style={{
+                  width: componentWidth,
+                  position: 'sticky',
+                  left: 0,
+                  overflow: 'hidden',
+                }}
+                className={`${prefixCls}-expanded-row-fixed`}
               >
-                {null}
-              </Cell>
+                {expandContent}
+              </div>
             );
           }
 
           expandRowNode = (
             <tr
+              className={`${prefixCls}-expanded-row`}
               style={{
                 display: expanded ? null : 'none',
               }}
             >
-              <Cell
-                component={cellComponent}
-                prefixCls={prefixCls}
-                fixLeft={leftFixedCount ? 0 : false}
-                lastFixLeft={!!leftFixedCount}
-                colSpan={1 + leftFixedCount}
-              >
-                {null}
+              <Cell component={cellComponent} prefixCls={prefixCls} colSpan={rowColumns.length}>
+                {expandContent}
               </Cell>
-              <Cell
-                component={cellComponent}
-                prefixCls={prefixCls}
-                colSpan={rowColumns.length - 1 - leftFixedCount - rightFixedCount}
-              >
-                {expandedRowRender(record, index, 1, expanded)}
-              </Cell>
-              {expandFixRightNode}
             </tr>
           );
         }

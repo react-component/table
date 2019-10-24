@@ -7,6 +7,8 @@ export interface TableContextProps<RecordType = DefaultRecordType> {
   prefixCls: string;
   getComponent: GetComponent;
   getRowKey: GetRowKey<RecordType>;
+  componentWidth: number;
+  fixColumn: boolean;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

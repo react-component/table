@@ -6,8 +6,9 @@
 @table-head-background-color: #f7f7f7;
 @vertical-padding: 16px;
 @horizontal-padding: 8px;
+@border-width: 1px;
 @border-color: red;
-@border: 1px solid @border-color;
+@border: @border-width solid @border-color;
 
 .tableBorder() {
   border: @border;
@@ -147,5 +148,25 @@
   &-body {
     .tableBorder();
     border-top: 0;
+  }
+
+  // ================= Expand =================
+  &-expanded-row {
+    &-fixed {
+      box-sizing: border-box;
+      margin: -@vertical-padding -@horizontal-padding;
+      padding: @vertical-padding @horizontal-padding;
+      margin-right: -@horizontal-padding - 2 * @border-width;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        top: 0;
+        bottom: 0;
+        right: 1px;
+        border-right: @border;
+      }
+    }
   }
 }
