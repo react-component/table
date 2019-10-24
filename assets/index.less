@@ -42,24 +42,12 @@
 
     padding: @cell-padding;
     box-sizing: border-box;
+    white-space: normal;
+    word-break: break-word;
   }
-
-  // th,
-  // td > div {
-  //   padding: @cell-padding;
-  //   box-sizing: border-box;
-  // }
 
   // ================== Cell ==================
   &-cell {
-    &-inner {
-      box-sizing: border-box;
-      margin: @cell-margin;
-      padding: @cell-padding;
-      white-space: normal;
-      word-break: break-word;
-    }
-
     &-fix-left,
     &-fix-right {
       z-index: 1;
@@ -93,12 +81,10 @@
       }
     }
 
-    &-ellipsis {
-      > div {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+    &&-ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

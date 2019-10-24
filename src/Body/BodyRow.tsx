@@ -154,25 +154,9 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
 
-              let additionalCellProps: React.HTMLAttributes<HTMLElement> & {
-                'data-col-width'?: boolean;
-              };
+              let additionalCellProps: React.HTMLAttributes<HTMLElement>;
               if (column.onCell) {
                 additionalCellProps = column.onCell(record, index);
-              }
-
-              if (column.width) {
-                additionalCellProps = mergeObject(additionalCellProps, {
-                  style: {
-                    width: column.width,
-                  },
-                });
-              }
-
-              if (column.colWidth) {
-                additionalCellProps = mergeObject(additionalCellProps, {
-                  'data-col-width': column.colWidth,
-                });
               }
 
               const cellNode = (

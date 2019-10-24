@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { ColumnType, DefaultRecordType, ColumnsType, GetRowKey, GetComponent } from '../interface';
+import {
+  ColumnType,
+  DefaultRecordType,
+  ColumnsType,
+  GetRowKey,
+  GetComponent,
+  TableLayout,
+} from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
   columns: ColumnsType<RecordType>;
@@ -8,6 +15,7 @@ export interface TableContextProps<RecordType = DefaultRecordType> {
   getComponent: GetComponent;
   getRowKey: GetRowKey<RecordType>;
   componentWidth: number;
+  tableLayout: TableLayout;
   fixHeader: boolean;
   fixColumn: boolean;
 }

@@ -120,11 +120,7 @@ function Cell<RecordType>(
     ref,
   };
 
-  return (
-    <Component {...componentProps} data-ellipsis={ellipsis} data-prefix-cls={cellPrefixCls}>
-      {childNode}
-    </Component>
-  );
+  return <Component {...componentProps}>{childNode}</Component>;
 }
 
 const RefCell = React.forwardRef(Cell);

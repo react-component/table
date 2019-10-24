@@ -34,6 +34,7 @@ import {
   LegacyExpandableProps,
   GetComponent,
   PanelRender,
+  TableLayout,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
@@ -44,7 +45,6 @@ import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps } from './utils/legacyUtil';
-import TDComponent from './Cell/TDComponent';
 import Panel from './Panel';
 import Footer from './Footer';
 import { findAllChildrenKeys } from './utils/expandUtil';
@@ -62,6 +62,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   data?: RecordType[];
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
+  tableLayout?: TableLayout;
 
   // Fixed Columns
   scroll?: { x?: number | true | string; y?: number };
@@ -105,8 +106,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
-
-  // tableLayout?: 'fixed';
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -117,7 +116,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     data,
     rowKey,
     scroll,
-    components,
+    tableLayout,
 
     // Additional Part
     title,
@@ -125,21 +124,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     summary,
 
     // Customize
+    components,
     onRow,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
 
   // ==================== Customize =====================
-  const mergedComponents = React.useMemo(
-    () =>
-      mergeObject<TableComponents>(components, {
-        body: {
-          cell: TDComponent,
-        },
-      }),
-    [components],
-  );
+  const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
+    components,
+  ]);
 
   const getComponent = React.useCallback<GetComponent>(
     (path, defaultComponent) => getPathValue(mergedComponents, path) || defaultComponent,
@@ -208,7 +202,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   // ====================== Column ======================
-  const [tableWidth, setTableWidth] = React.useState(0);
   const [componentWidth, setComponentWidth] = React.useState(0);
 
   const [columns, flattenColumns] = useColumns({
@@ -218,17 +211,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandedKeys: mergedExpandedKeys,
     getRowKey,
     onTriggerExpand,
-    tableWidth,
-    borderWidth: 1,
   });
 
   const columnContext = {
     columns,
     flattenColumns,
-  };
-
-  const onTableResize = ({ width }: { width: number }) => {
-    setTableWidth(width);
   };
 
   // ====================== Scroll ======================
@@ -302,6 +289,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }, [fixColumn]);
 
   // ====================== Render ======================
+  const mergedTableLayout = React.useMemo<TableLayout>(() => {
+    if (tableLayout) {
+      return tableLayout;
+    }
+
+    if (fixHeader || fixColumn || flattenColumns.some(({ ellipsis }) => ellipsis)) {
+      return 'fixed';
+    }
+    return 'auto';
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
+
   let groupTableNode: React.ReactNode;
 
   const headerProps = {
@@ -357,13 +355,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <ResizeObserver onResize={onTableResize}>
-            <table style={scrollTableStyle}>
-              {bodyColGroup}
-              {bodyTable}
-              {footerTable}
-            </table>
-          </ResizeObserver>
+          <table
+            style={{
+              ...scrollTableStyle,
+              tableLayout: mergedTableLayout,
+            }}
+          >
+            {bodyColGroup}
+            {bodyTable}
+            {footerTable}
+          </table>
         </div>
       </>
     );
@@ -378,14 +379,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         onScroll={onScroll}
         ref={scrollBodyRef}
       >
-        <ResizeObserver onResize={onTableResize}>
-          <table style={scrollTableStyle}>
-            {bodyColGroup}
-            <Header {...headerProps} {...columnContext} />
-            {bodyTable}
-            {footerTable}
-          </table>
-        </ResizeObserver>
+        <table style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
+          {bodyColGroup}
+          <Header {...headerProps} {...columnContext} />
+          {bodyTable}
+          {footerTable}
+        </table>
       </div>
     );
   }
@@ -412,6 +411,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <DataContext.Provider
       value={{
         ...columnContext,
+        tableLayout: mergedTableLayout,
         prefixCls,
         getComponent,
         getRowKey,

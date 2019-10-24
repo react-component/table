@@ -23,6 +23,8 @@ export type FixedType = 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
+export type TableLayout = 'auto' | 'fixed';
+
 // =================== Column ===================
 export interface CellType<RecordType> {
   key?: Key;
