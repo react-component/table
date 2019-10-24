@@ -36,17 +36,16 @@ function Body<RecordType>({
   onRow,
   rowExpandable,
 }: BodyProps<RecordType>) {
-  const mergedData = data || [];
   const { prefixCls, getRowKey, getComponent } = React.useContext(DataContext);
 
-  const indexMemo = useIndexMemo(mergedData.length);
+  const indexMemo = useIndexMemo(data.length);
 
   return React.useMemo(() => {
     const tdComponent = getComponent(['body', 'cell']);
 
     return (
       <tbody>
-        {mergedData.map((record, index) => {
+        {data.map((record, index) => {
           const key = getRowKey(record, index);
 
           let additionalProps: React.HTMLAttributes<HTMLElement> = {};

@@ -82,6 +82,12 @@ export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<
 
 export type GetRowKey<RecordType> = (record: RecordType, index: number) => Key;
 
+// ================= Fix Column =================
+export interface StickyOffsets {
+  left: number[];
+  right: number[];
+}
+
 // ================= Customized =================
 export type GetComponentProps<DataType> = (
   data: DataType,
@@ -112,12 +118,6 @@ export type GetComponent = (
   path: string[],
   defaultComponent?: CustomizeComponent,
 ) => CustomizeComponent;
-
-// ================= Fix Column =================
-export interface StickyOffsets {
-  left: number[];
-  right: number[];
-}
 
 // =================== Expand ===================
 export interface LegacyExpandableProps<RecordType> {
@@ -159,6 +159,9 @@ export type RenderExpandIcon<RecordType> = (
 export interface ExpandableConfig<RecordType> extends LegacyExpandableProps<RecordType> {
   rowExpandable?: (record: RecordType) => boolean;
 }
+
+// =================== Render ===================
+export type PanelRender<RecordType> = (data: RecordType[]) => React.ReactNode;
 
 // =================== Events ===================
 export type TriggerEventHandler<RecordType> = (

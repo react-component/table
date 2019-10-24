@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export interface TDComponentProps extends React.HTMLAttributes<HTMLElement> {
+  'data-prefix-cls'?: boolean;
   'data-ellipsis'?: boolean;
   'data-col-width'?: boolean;
   colSpan?: number;
@@ -9,6 +10,7 @@ export interface TDComponentProps extends React.HTMLAttributes<HTMLElement> {
 
 function TDComponent(
   {
+    'data-prefix-cls': prefixCls,
     'data-ellipsis': ellipsis,
     'data-col-width': colWidth,
     children,
@@ -35,7 +37,9 @@ function TDComponent(
 
   return (
     <td {...restProps} colSpan={colSpan} style={tdStyle} ref={ref}>
-      <div style={divStyle}>{children}</div>
+      <div style={divStyle} className={`${prefixCls}-inner`}>
+        {children}
+      </div>
     </td>
   );
 }

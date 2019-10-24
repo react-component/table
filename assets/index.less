@@ -9,6 +9,8 @@
 @border-width: 1px;
 @border-color: red;
 @border: @border-width solid @border-color;
+@cell-padding: @vertical-padding @horizontal-padding;
+@cell-margin: -@vertical-padding -@horizontal-padding;
 
 .tableBorder() {
   border: @border;
@@ -31,23 +33,29 @@
   th,
   td {
     padding: 0;
-  }
 
-  th,
-  td > div {
-    padding: @vertical-padding @horizontal-padding;
-    box-sizing: border-box;
-  }
-
-  // ================== Cell ==================
-  &-cell {
     position: relative;
     border: @border;
     border-top: 0;
     border-left: 0;
     transition: box-shadow 0.3s;
 
-    > div {
+    padding: @cell-padding;
+    box-sizing: border-box;
+  }
+
+  // th,
+  // td > div {
+  //   padding: @cell-padding;
+  //   box-sizing: border-box;
+  // }
+
+  // ================== Cell ==================
+  &-cell {
+    &-inner {
+      box-sizing: border-box;
+      margin: @cell-margin;
+      padding: @cell-padding;
       white-space: normal;
       word-break: break-word;
     }
@@ -152,10 +160,14 @@
 
   // ================= Expand =================
   &-expanded-row {
+    .@{tablePrefixCls}-cell {
+      box-shadow: inset 0 8px 8px -8px green;
+    }
+
     &-fixed {
       box-sizing: border-box;
-      margin: -@vertical-padding -@horizontal-padding;
-      padding: @vertical-padding @horizontal-padding;
+      margin: @cell-margin;
+      padding: @cell-padding;
       margin-right: -@horizontal-padding - 2 * @border-width;
 
       &::after {
@@ -168,5 +180,19 @@
         border-right: @border;
       }
     }
+  }
+
+  // ================= Title ==================
+  &-title {
+    border: @border;
+    border-bottom: 0;
+    padding: @cell-padding;
+  }
+
+  // ================= Footer =================
+  &-footer {
+    border: @border;
+    border-top: 0;
+    padding: @cell-padding;
   }
 }

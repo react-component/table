@@ -121,7 +121,7 @@ function Cell<RecordType>(
   };
 
   return (
-    <Component {...componentProps} data-ellipsis={ellipsis}>
+    <Component {...componentProps} data-ellipsis={ellipsis} data-prefix-cls={cellPrefixCls}>
       {childNode}
     </Component>
   );

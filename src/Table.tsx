@@ -33,6 +33,7 @@ import {
   ExpandableConfig,
   LegacyExpandableProps,
   GetComponent,
+  PanelRender,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
@@ -44,7 +45,11 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps } from './utils/legacyUtil';
 import TDComponent from './Cell/TDComponent';
+import Panel from './Panel';
+import Footer from './Footer';
 
+// Used for conditions cache
+const EMPTY_DATA = [];
 const scrollbarSize = getScrollBarSize();
 
 export interface TableProps<RecordType extends DefaultRecordType>
@@ -65,6 +70,11 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // Expandable
   /** Config expand rows */
   expandable?: ExpandableConfig<RecordType>;
+
+  // Additional Part
+  title?: PanelRender<RecordType>;
+  footer?: PanelRender<RecordType>;
+  summary?: (data: RecordType[]) => React.ReactNode;
 
   // TODO: Handle this
   // Customize
@@ -92,10 +102,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // onRowMouseEnter?: LegacyFunction<RecordType>;
   // onRowMouseLeave?: LegacyFunction<RecordType>;
   // showHeader?: boolean;
-  // title?: (data: RecordType[]) => React.ReactNode;
   // id?: string;
-  // footer?: (data: RecordType[]) => React.ReactNode;
-  // summary?: (data: RecordType[]) => React.ReactNode;
   // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
@@ -108,14 +115,21 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     prefixCls,
     className,
     style,
-    data = [],
+    data,
     rowKey,
     scroll,
     components,
 
+    // Additional Part
+    title,
+    footer,
+    summary,
+
     // Customize
     onRow,
   } = props;
+
+  const mergedData = data || EMPTY_DATA;
 
   // ==================== Customize =====================
   const mergedComponents = React.useMemo(
@@ -163,7 +177,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
-      const key = getRowKey(record, data.indexOf(record));
+      const key = getRowKey(record, mergedData.indexOf(record));
 
       let newExpandedKeys: Key[];
       const hasKey = mergedExpandedKeys.has(key);
@@ -182,7 +196,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         onExpandedRowsChange(newExpandedKeys);
       }
     },
-    [getRowKey, mergedExpandedKeys, data, onExpand, onExpandedRowsChange],
+    [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
   );
 
   // ====================== Column ======================
@@ -289,7 +303,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const bodyTable = (
     <Body
-      data={data}
+      data={mergedData}
       rowKey={rowKey}
       measureColumnWidth={fixHeader || fixColumn}
       stickyOffsets={stickyOffsets}
@@ -308,6 +322,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       columCount={flattenColumns.length}
     />
   );
+
+  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
 
   if (fixHeader) {
     groupTableNode = (
@@ -336,6 +352,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             <table style={scrollTableStyle}>
               {bodyColGroup}
               {bodyTable}
+              {footerTable}
             </table>
           </ResizeObserver>
         </div>
@@ -357,6 +374,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {bodyColGroup}
             <Header {...headerProps} {...columnContext} />
             {bodyTable}
+            {footerTable}
           </table>
         </ResizeObserver>
       </div>
@@ -371,7 +389,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       })}
       style={style}
     >
+      {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
       {groupTableNode}
+      {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
     </div>
   );
 
@@ -401,8 +421,6 @@ Table.Column = Column;
 Table.ColumnGroup = ColumnGroup;
 
 Table.defaultProps = {
-  data: [],
-  useFixedHeader: false,
   rowKey: 'key',
   prefixCls: 'rc-table',
   showHeader: true,
