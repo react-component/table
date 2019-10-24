@@ -84,6 +84,7 @@ function useColumns<RecordType>({
   expandIcon = renderExpandIcon,
   rowExpandable,
   tableWidth,
+  borderWidth,
 }: {
   prefixCls?: string;
   columns?: ColumnsType<RecordType>;
@@ -95,6 +96,7 @@ function useColumns<RecordType>({
   expandIcon?: RenderExpandIcon<RecordType>;
   rowExpandable?: (record: RecordType) => boolean;
   tableWidth: number;
+  borderWidth: number;
 }): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
   const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
@@ -132,24 +134,43 @@ function useColumns<RecordType>({
     return mergedColumns;
   }, [expandable, mergedColumns, getRowKey, expandedKeys, expandIcon]);
 
-  const flattenColumns = React.useMemo(
-    () =>
-      flatColumns(withExpandColumns).map(column => {
-        const { width } = column;
-        const widthMatch = typeof width === 'string' ? width.match(PERCENTAGE_WIDTH) : null;
+  const flattenColumns = React.useMemo(() => {
+    let totalWidth: number | false = 0;
 
-        if (widthMatch) {
-          const ptg = Number(widthMatch[1]);
-          return {
-            ...column,
-            width: (tableWidth * ptg) / 100,
-          };
-        }
+    const innerFlattenColumns = flatColumns(withExpandColumns);
+    const mergedTableWidth = tableWidth - (innerFlattenColumns.length + 1) * borderWidth;
 
-        return column;
-      }),
-    [withExpandColumns, tableWidth],
-  );
+    const newColumns = innerFlattenColumns.map(column => {
+      let { width } = column;
+      const widthMatch = typeof width === 'string' ? width.match(PERCENTAGE_WIDTH) : null;
+      if (widthMatch) {
+        const ptg = Number(widthMatch[1]);
+        width = Math.floor((mergedTableWidth * ptg) / 100);
+      }
+
+      if (totalWidth !== false && typeof width === 'number' && !Number.isNaN(width)) {
+        totalWidth += width;
+      } else {
+        totalWidth = false;
+      }
+
+      return {
+        ...column,
+        width,
+      };
+    });
+
+    // We will adjust width since total width is less than table width
+    if (typeof totalWidth === 'number' && totalWidth < mergedTableWidth) {
+      newColumns.forEach(column => {
+        column.width = Math.floor(
+          ((column.width as number) / (totalWidth as number)) * mergedTableWidth,
+        );
+      });
+    }
+
+    return newColumns;
+  }, [withExpandColumns, tableWidth]);
 
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {

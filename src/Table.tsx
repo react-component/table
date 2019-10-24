@@ -47,6 +47,7 @@ import { getExpandableProps } from './utils/legacyUtil';
 import TDComponent from './Cell/TDComponent';
 import Panel from './Panel';
 import Footer from './Footer';
+import { findAllChildrenKeys } from './utils/expandUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -158,6 +159,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const {
     expandedRowKeys,
     defaultExpandedRowKeys,
+    defaultExpandAllRows,
     expandedRowRender,
     onExpand,
     onExpandedRowsChange,
@@ -165,7 +167,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     rowExpandable,
   } = expandableConfig;
 
-  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(defaultExpandedRowKeys);
+  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
+    if (defaultExpandedRowKeys) {
+      return defaultExpandedRowKeys;
+    }
+    if (defaultExpandAllRows) {
+      return findAllChildrenKeys<RecordType>(mergedData, getRowKey);
+    }
+    return [];
+  });
   const mergedExpandedKeys = React.useMemo(
     () => new Set(expandedRowKeys || innerExpandedKeys || []),
     [expandedRowKeys, innerExpandedKeys],
@@ -209,6 +219,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     getRowKey,
     onTriggerExpand,
     tableWidth,
+    borderWidth: 1,
   });
 
   const columnContext = {
