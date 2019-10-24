@@ -26,7 +26,6 @@ import {
   GetRowKey,
   ColumnsType,
   TableComponents,
-  CustomizeComponent,
   Key,
   DefaultRecordType,
   TriggerEventHandler,
@@ -38,7 +37,7 @@ import {
 import DataContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
-import useFrameState from './hooks/useFrameState';
+import { useFrameState } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -267,6 +266,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   React.useEffect(() => triggerOnScroll, []);
+  React.useEffect(() => {
+    if (fixColumn) {
+      triggerOnScroll();
+    }
+  }, [fixColumn]);
 
   // ====================== Render ======================
   let groupTableNode: React.ReactNode;
@@ -340,6 +344,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         }}
         className={classNames(`${prefixCls}-content`)}
         onScroll={onScroll}
+        ref={scrollBodyRef}
       >
         <ResizeObserver onResize={onTableResize}>
           <table style={scrollTableStyle}>

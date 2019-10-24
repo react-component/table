@@ -54,7 +54,9 @@ function Body<RecordType>({
             additionalProps = onRow(record, index);
           }
 
-          if (onTriggerExpand && (!rowExpandable || rowExpandable(record))) {
+          const rowSupportExpand = !rowExpandable || rowExpandable(record);
+
+          if (onTriggerExpand && rowSupportExpand) {
             additionalProps = indexMemo(
               index,
               (): React.HTMLAttributes<HTMLElement> => {
@@ -83,7 +85,7 @@ function Body<RecordType>({
               record={record}
               index={index}
               stickyOffsets={stickyOffsets}
-              expandable={expandable}
+              expandable={expandable && rowSupportExpand}
               expanded={expandedKeys.has(key)}
               expandedRowRender={expandedRowRender}
               additionalProps={additionalProps}

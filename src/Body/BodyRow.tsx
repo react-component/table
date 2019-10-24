@@ -123,10 +123,12 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         measureColumnWidth,
         stickyOffsets,
         expanded,
+        expandable,
         expandedRowRender,
         additionalProps = {},
         cellComponent,
       }) => {
+        // Move to Body to enhance performance
         const fixedInfoList = rowColumns.map((column, colIndex) =>
           getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
         );
@@ -196,19 +198,53 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
         // Expand row
         let expandRowNode: React.ReactElement;
-        if (expandRended || expanded) {
+        if (expandable && (expandRended || expanded)) {
+          let leftFixedCount = 0;
+          let rightFixedCount = 0;
+
+          fixedInfoList.slice(1).forEach(({ fixLeft, fixRight }) => {
+            leftFixedCount += typeof fixLeft === 'number' ? 1 : 0;
+            rightFixedCount += typeof fixRight === 'number' ? 1 : 0;
+          });
+
+          let expandFixRightNode: React.ReactNode;
+          if (rightFixedCount) {
+            expandFixRightNode = (
+              <Cell
+                component={cellComponent}
+                prefixCls={prefixCls}
+                fixRight={rightFixedCount ? 0 : false}
+                firstFixRight
+                colSpan={rightFixedCount}
+              >
+                {null}
+              </Cell>
+            );
+          }
+
           expandRowNode = (
             <tr
               style={{
                 display: expanded ? null : 'none',
               }}
             >
-              <Cell component={cellComponent} prefixCls={prefixCls}>
+              <Cell
+                component={cellComponent}
+                prefixCls={prefixCls}
+                fixLeft={leftFixedCount ? 0 : false}
+                lastFixLeft={!!leftFixedCount}
+                colSpan={1 + leftFixedCount}
+              >
                 {null}
               </Cell>
-              <Cell component={cellComponent} prefixCls={prefixCls} colSpan={rowColumns.length - 1}>
+              <Cell
+                component={cellComponent}
+                prefixCls={prefixCls}
+                colSpan={rowColumns.length - 1 - leftFixedCount - rightFixedCount}
+              >
                 {expandedRowRender(record, index, 1, expanded)}
               </Cell>
+              {expandFixRightNode}
             </tr>
           );
         }
