@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '../src';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
 import '../assets/index.less';
 import { useCheckbox } from './utils/useInput';
 import { ColumnsType } from '../src/interface';

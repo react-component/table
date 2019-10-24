@@ -324,10 +324,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   const bodyColGroup = (
-    <ColGroup
-      colWidths={flattenColumns.map(({ width }) => width)}
-      columCount={flattenColumns.length}
-    />
+    <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
   const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;

@@ -4,14 +4,8 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
-import { getColumnKey, mergeObject } from '../utils/valueUtil';
-import {
-  ColumnType,
-  StickyOffsets,
-  ExpandedRowRender,
-  CustomizeComponent,
-  InternalColumnType,
-} from '../interface';
+import { getColumnKey } from '../utils/valueUtil';
+import { ColumnType, StickyOffsets, ExpandedRowRender, CustomizeComponent } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -30,20 +24,20 @@ export interface BodyRowProps<RecordType> {
   cellComponent: CustomizeComponent;
 }
 
-type RawColumnType<RecordType> = Partial<InternalColumnType<RecordType>>;
+type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
 
 /** Return a subset of `ColumnType` which used in Row */
 function getRequiredColumnProps<RecordType>(
-  columns: InternalColumnType<RecordType>[],
+  columns: ColumnType<RecordType>[],
 ): RawColumnType<RecordType>[] {
-  return (columns || []).map(({ key, dataIndex, render, fixed, width, ellipsis, colWidth }) => ({
+  return (columns || []).map(({ key, dataIndex, render, fixed, width, ellipsis, className }) => ({
     key,
     dataIndex,
     render,
     fixed,
     width,
-    colWidth,
     ellipsis,
+    className,
   }));
 }
 
@@ -148,8 +142,8 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         // ======================== Base tr row ========================
         const baseRowNode = (
           <tr {...additionalProps}>
-            {rowColumns.map((column: InternalColumnType<RecordType>, colIndex) => {
-              const { render, dataIndex } = column;
+            {rowColumns.map((column: ColumnType<RecordType>, colIndex) => {
+              const { render, dataIndex, className } = column;
 
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
@@ -161,6 +155,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
               const cellNode = (
                 <Cell
+                  className={className}
                   ellipsis={column.ellipsis}
                   component={cellComponent}
                   prefixCls={prefixCls}

@@ -11,8 +11,7 @@ import {
   RenderExpandIcon,
 } from '../interface';
 import { renderExpandIcon } from '../utils/expandUtil';
-
-const PERCENTAGE_WIDTH = /^(\d+(\.\d+)?)%$/;
+import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 
 function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
   return toArray(children).map(({ key, props }: React.ReactElement) => {
@@ -106,10 +105,12 @@ function useColumns<RecordType>({
 
       return [
         {
+          [INTERNAL_COL_DEFINE]: {
+            className: `${prefixCls}-expand-icon-col`,
+          },
           title: '',
-          width: 1,
-          colWidth: true,
           fixed: firstColumn ? firstColumn.fixed : null,
+          className: `${prefixCls}-row-expand-icon-cell`,
           render: (_, record, index) => {
             const rowKey = getRowKey(record, index);
             const expanded = expandedKeys.has(rowKey);

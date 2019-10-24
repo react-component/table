@@ -11,6 +11,7 @@ function isRenderCell<RecordType>(
 
 export interface CellProps<RecordType> {
   prefixCls?: string;
+  className?: string;
   record?: RecordType;
   /** `record` index. Not `column` index. */
   index?: number;
@@ -35,6 +36,7 @@ export interface CellProps<RecordType> {
 function Cell<RecordType>(
   {
     prefixCls,
+    className,
     record,
     index,
     dataIndex,
@@ -107,6 +109,7 @@ function Cell<RecordType>(
     rowSpan: mergedRowSpan,
     className: classNames(
       cellPrefixCls,
+      className,
       {
         [`${cellPrefixCls}-fix-left`]: isFixLeft,
         [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
