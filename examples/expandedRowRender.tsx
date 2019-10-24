@@ -12,17 +12,30 @@ interface RecordType {
   d?: number;
 }
 
-const tableData = [
+const tableData: RecordType[] = [
   { key: 0, a: '123' },
   { key: 1, a: 'cdd', b: 'edd' },
   { key: 2, a: '1333', c: 'eee', d: 2 },
 ];
+
+for (let i = 0; i < 10; i += 1) {
+  const str = `${i}`;
+  const item: RecordType = {
+    key: i * 10 + 99,
+    a: str.repeat(3),
+    b: str.repeat(5),
+    c: str.repeat(7),
+    d: i,
+  };
+  tableData.push(item);
+}
 
 const Demo = () => {
   const [data, setData] = React.useState(tableData);
   const [expandedRowKeys, setExpandedRowKeys] = React.useState([]);
   const [expandRowByClick, expandRowByClickProps] = useCheckbox(false);
   const [fixColumns, fixColumnsProps] = useCheckbox(false);
+  const [fixHeader, fixHeaderProps] = useCheckbox(false);
 
   const remove = (index: number) => {
     const newData = data.slice();
@@ -31,10 +44,10 @@ const Demo = () => {
   };
 
   const renderAction = (o: any, row: RecordType, index: number) => (
-      <a href="#" onClick={() => remove(index)}>
-        Delete
-      </a>
-    );
+    <a href="#" onClick={() => remove(index)}>
+      Delete
+    </a>
+  );
 
   const columns: ColumnsType<RecordType> = [
     { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
@@ -88,6 +101,10 @@ const Demo = () => {
         <input {...fixColumnsProps} />
         Fix Columns
       </label>
+      <label>
+        <input {...fixHeaderProps} />
+        Fix Header
+      </label>
       <Table<RecordType>
         columns={columns}
         expandable={{
@@ -99,7 +116,7 @@ const Demo = () => {
           onExpand,
           rowExpandable,
         }}
-        scroll={fixColumns ? { x: 2000 } : null}
+        scroll={{ x: fixColumns ? 2000 : null, y: fixHeader ? 300 : null }}
         data={data}
       />
     </div>

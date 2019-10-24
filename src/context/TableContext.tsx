@@ -8,6 +8,7 @@ export interface TableContextProps<RecordType = DefaultRecordType> {
   getComponent: GetComponent;
   getRowKey: GetRowKey<RecordType>;
   componentWidth: number;
+  fixHeader: boolean;
   fixColumn: boolean;
 }
 

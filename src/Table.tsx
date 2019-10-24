@@ -315,7 +315,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         <div
           style={{
             ...scrollXStyle,
-            marginBottom: -scrollbarSize,
+            marginBottom: fixColumn ? -scrollbarSize : null,
           }}
           onScroll={onScroll}
           ref={scrollHeaderRef}
@@ -381,7 +381,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   return (
     <DataContext.Provider
-      value={{ ...columnContext, prefixCls, getComponent, getRowKey, componentWidth, fixColumn }}
+      value={{
+        ...columnContext,
+        prefixCls,
+        getComponent,
+        getRowKey,
+        componentWidth,
+        fixHeader,
+        fixColumn,
+      }}
     >
       <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
     </DataContext.Provider>

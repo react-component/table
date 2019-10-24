@@ -1,5 +1,6 @@
 import * as React from 'react';
 import shallowEqual from 'shallowequal';
+import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
@@ -13,6 +14,8 @@ import {
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
+
+const scrollBarSize = getScrollBarSize();
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -55,6 +58,7 @@ interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
   rowColumns: ColumnType<RecordType>[];
   prefixCls: string;
   componentWidth: number;
+  fixHeader: boolean;
   fixColumn: boolean;
 }
 
@@ -84,7 +88,7 @@ function shouldUpdate<RecordType>(
 }
 
 function useComputeRowProps<RecordType>({
-  context: { flattenColumns, prefixCls, fixColumn, componentWidth },
+  context: { flattenColumns, prefixCls, fixHeader, fixColumn, componentWidth },
   ...props
 }: DefaultPureCompareProps<RecordType, BodyRowPassingProps<RecordType>>): ComputedProps<
   RecordType
@@ -97,6 +101,7 @@ function useComputeRowProps<RecordType>({
     ...props,
     rowColumns,
     prefixCls,
+    fixHeader,
     fixColumn,
     componentWidth,
   };
@@ -131,6 +136,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         expandedRowRender,
         additionalProps = {},
         cellComponent,
+        fixHeader,
         fixColumn,
         componentWidth,
       }) => {
@@ -211,7 +217,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
             expandContent = (
               <div
                 style={{
-                  width: componentWidth,
+                  width: componentWidth - (fixHeader ? scrollBarSize : 0),
                   position: 'sticky',
                   left: 0,
                   overflow: 'hidden',
