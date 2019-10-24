@@ -82,10 +82,8 @@ export interface TableProps<RecordType extends DefaultRecordType>
   onRow?: GetComponentProps<RecordType>;
 
   // expandedRowClassName?: (record: RecordType, index: number, indent: number) => string;
-  // defaultExpandAllRows?: boolean;
   // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
-  // indentSize?: number;
   // columnManager: ColumnManager;
   // store: TableStore;
 

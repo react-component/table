@@ -135,6 +135,10 @@ export interface LegacyExpandableProps<RecordType> {
   onExpand?: (expanded: boolean, record: RecordType) => void;
   /** @deprecated Use `expandable.onExpandedRowsChange` instead */
   onExpandedRowsChange?: (expandedKeys: Key[]) => void;
+  /** @deprecated Use `expandable.defaultExpandAllRows` instead */
+  defaultExpandAllRows?: boolean;
+  /** @deprecated Use `expandable.indentSize` instead */
+  indentSize?: number;
 }
 
 export type ExpandedRowRender<ValueType> = (
