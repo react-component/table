@@ -36,10 +36,12 @@ function Body<RecordType>({
   const { prefixCls, getRowKey, getComponent } = React.useContext(DataContext);
 
   return React.useMemo(() => {
-    const tdComponent = getComponent(['body', 'cell']);
+    const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
+    const trComponent = getComponent(['body', 'row'], 'tr');
+    const tdComponent = getComponent(['body', 'cell'], 'td');
 
     return (
-      <tbody>
+      <WrapperComponent>
         {data.map((record, index) => {
           const key = getRowKey(record, index);
 
@@ -51,6 +53,7 @@ function Body<RecordType>({
               index={index}
               measureColumnWidth={measureColumnWidth && index === 0}
               onTriggerExpand={onTriggerExpand}
+              rowComponent={trComponent}
               cellComponent={tdComponent}
               stickyOffsets={stickyOffsets}
               expandedKeys={expandedKeys}
@@ -60,7 +63,7 @@ function Body<RecordType>({
             />,
           ];
         })}
-      </tbody>
+      </WrapperComponent>
     );
   }, [
     data,

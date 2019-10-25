@@ -1,5 +1,6 @@
 import * as React from 'react';
 import shallowEqual from 'shallowequal';
+import classNames from 'classnames';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
@@ -25,12 +26,15 @@ const scrollBarSize = getScrollBarSize();
 export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
+  className?: string;
+  style?: React.CSSProperties;
   /** Set if need collect column width info */
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
   recordKey: Key;
   expandedKeys: Set<Key>;
   expandedRowRender: ExpandedRowRender<RecordType>;
+  rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   onRow: GetComponentProps<RecordType>;
@@ -151,12 +155,15 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
     >
       {({
         prefixCls,
+        className,
+        style,
         rowColumns,
         record,
         index,
         measureColumnWidth,
         stickyOffsets,
         expandedRowRender,
+        rowComponent: RowComponent,
         cellComponent,
         fixHeader,
         fixColumn,
@@ -201,9 +208,17 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
         // ======================== Base tr row ========================
         const baseRowNode = (
-          <tr {...additionalProps} onClick={onClick}>
+          <RowComponent
+            {...additionalProps}
+            className={classNames(className, additionalProps && additionalProps.className)}
+            style={{
+              ...style,
+              ...(additionalProps ? additionalProps.style : null),
+            }}
+            onClick={onClick}
+          >
             {rowColumns.map((column: ColumnType<RecordType>, colIndex) => {
-              const { render, dataIndex, className } = column;
+              const { render, dataIndex, className: columnClassName } = column;
 
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
@@ -235,7 +250,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
               const cellNode = (
                 <Cell
-                  className={className}
+                  className={columnClassName}
                   ellipsis={column.ellipsis}
                   component={cellComponent}
                   prefixCls={prefixCls}
@@ -265,7 +280,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
 
               return cellNode;
             })}
-          </tr>
+          </RowComponent>
         );
 
         // ======================== Expand Row =========================
@@ -290,7 +305,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
           }
 
           expandRowNode = (
-            <tr
+            <RowComponent
               className={`${prefixCls}-expanded-row`}
               style={{
                 display: expanded ? null : 'none',
@@ -299,7 +314,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
               <Cell component={cellComponent} prefixCls={prefixCls} colSpan={rowColumns.length}>
                 {expandContent}
               </Cell>
-            </tr>
+            </RowComponent>
           );
         }
 

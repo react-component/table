@@ -69,7 +69,7 @@
     "father": "^2.22.0",
     "immutability-helper": "^3.0.0",
     "prettier": "^1.11.1",
-    "rc-animate": "^2.3.0",
+    "rc-animate": "^2.10.1",
     "rc-dropdown": "~2.0.1",
     "rc-menu": "^7.4.23",
     "react": "^16.0.0",
