@@ -36,8 +36,9 @@ import {
   PanelRender,
   TableLayout,
   ExpandableType,
+  RowClassName,
 } from './interface';
-import DataContext from './context/TableContext';
+import TableContext from './context/TableContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useFrameState } from './hooks/useFrame';
@@ -74,6 +75,8 @@ export interface TableProps<RecordType extends DefaultRecordType>
   /** Config expand rows */
   expandable?: ExpandableConfig<RecordType>;
   indentSize?: number;
+  rowClassName?: string | RowClassName<RecordType>;
+  expandedRowClassName?: RowClassName<RecordType>;
 
   // Additional Part
   title?: PanelRender<RecordType>;
@@ -85,7 +88,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   components?: TableComponents;
   onRow?: GetComponentProps<RecordType>;
 
-  // expandedRowClassName?: (record: RecordType, index: number, indent: number) => string;
   // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
   // columnManager: ColumnManager;
@@ -96,7 +98,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // columns?: ColumnType[];
   // bodyStyle?: React.CSSProperties;
 
-  // rowClassName?: string | ((record: RecordType, index: number, indent: number) => string);
   // onHeaderRow?: GetComponentProps<ColumnType[]>;
   // onRowClick?: LegacyFunction<RecordType>;
   // onRowDoubleClick?: LegacyFunction<RecordType>;
@@ -114,6 +115,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const {
     prefixCls,
     className,
+    rowClassName,
+    expandedRowClassName,
     style,
     data,
     rowKey,
@@ -418,11 +421,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   return (
-    <DataContext.Provider
+    <TableContext.Provider
       value={{
         ...columnContext,
         tableLayout: mergedTableLayout,
         prefixCls,
+        rowClassName,
+        expandedRowClassName,
         getComponent,
         getRowKey,
         componentWidth,
@@ -435,7 +440,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       }}
     >
       <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
-    </DataContext.Provider>
+    </TableContext.Provider>
   );
 }
 

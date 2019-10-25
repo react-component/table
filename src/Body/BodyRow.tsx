@@ -17,6 +17,7 @@ import {
   Key,
   GetRowKey,
   ExpandableType,
+  RowClassName,
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
@@ -78,6 +79,8 @@ interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
   indentSize: number;
   expandableType: ExpandableType;
   expandRowByClick: boolean;
+  rowClassName: string | RowClassName<RecordType>;
+  expandedRowClassName: RowClassName<RecordType>;
 }
 
 function shouldUpdate<RecordType>(
@@ -109,6 +112,8 @@ function useComputeRowProps<RecordType>({
     indentSize,
     expandableType,
     expandRowByClick,
+    rowClassName,
+    expandedRowClassName,
   },
   ...props
 }: DefaultPureCompareProps<RecordType, BodyRowPassingProps<RecordType>>): ComputedProps<
@@ -130,6 +135,8 @@ function useComputeRowProps<RecordType>({
     indentSize,
     expandableType,
     expandRowByClick,
+    rowClassName,
+    expandedRowClassName,
   };
 }
 
@@ -177,6 +184,8 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         indentSize,
         expandableType,
         expandRowByClick,
+        rowClassName,
+        expandedRowClassName,
       }) => {
         // Move to Body to enhance performance
         const fixedInfoList = rowColumns.map((column, colIndex) =>
@@ -207,10 +216,23 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         };
 
         // ======================== Base tr row ========================
+        let computeRowClassName: string;
+        if (typeof rowClassName === 'string') {
+          computeRowClassName = rowClassName;
+        } else if (typeof rowClassName === 'function') {
+          computeRowClassName = rowClassName(record, index, indent);
+        }
+
         const baseRowNode = (
           <RowComponent
             {...additionalProps}
-            className={classNames(className, additionalProps && additionalProps.className)}
+            className={classNames(
+              className,
+              `${prefixCls}-row`,
+              `${prefixCls}-row-level-${indent}`,
+              computeRowClassName,
+              additionalProps && additionalProps.className,
+            )}
             style={{
               ...style,
               ...(additionalProps ? additionalProps.style : null),
@@ -304,9 +326,18 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
             );
           }
 
+          let computeExpandRowClassName: string;
+          if (expandedRowClassName) {
+            computeExpandRowClassName = expandedRowClassName(record, index, indent);
+          }
+
           expandRowNode = (
             <RowComponent
-              className={`${prefixCls}-expanded-row`}
+              className={classNames(
+                `${prefixCls}-expanded-row`,
+                `${prefixCls}-expanded-row-level-${indent + 1}`,
+                computeExpandRowClassName,
+              )}
               style={{
                 display: expanded ? null : 'none',
               }}

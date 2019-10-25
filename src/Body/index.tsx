@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BodyRow from './BodyRow';
-import DataContext from '../context/TableContext';
+import TableContext from '../context/TableContext';
 import {
   GetRowKey,
   StickyOffsets,
@@ -33,7 +33,7 @@ function Body<RecordType>({
   onRow,
   rowExpandable,
 }: BodyProps<RecordType>) {
-  const { prefixCls, getRowKey, getComponent } = React.useContext(DataContext);
+  const { prefixCls, getRowKey, getComponent } = React.useContext(TableContext);
 
   return React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');

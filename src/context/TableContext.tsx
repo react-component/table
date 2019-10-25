@@ -8,12 +8,17 @@ import {
   TableLayout,
   RenderExpandIcon,
   ExpandableType,
+  RowClassName,
 } from '../interface';
+
+// TODO: Move these into new Context of `BodyContext`
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
   prefixCls: string;
   getComponent: GetComponent;
   getRowKey: GetRowKey<RecordType>;
+  rowClassName: string | RowClassName<RecordType>;
+  expandedRowClassName: RowClassName<RecordType>;
 
   columns: ColumnsType<RecordType>;
   flattenColumns: ColumnType<RecordType>[];

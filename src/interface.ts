@@ -25,6 +25,13 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+// ==================== Row =====================
+export type RowClassName<RecordType> = (
+  record: RecordType,
+  index: number,
+  indent: number,
+) => string;
+
 // =================== Column ===================
 export interface CellType<RecordType> {
   key?: Key;
