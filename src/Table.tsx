@@ -47,7 +47,7 @@ import ColGroup from './ColGroup';
 import { getExpandableProps } from './utils/legacyUtil';
 import Panel from './Panel';
 import Footer from './Footer';
-import { findAllChildrenKeys } from './utils/expandUtil';
+import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -72,6 +72,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // Expandable
   /** Config expand rows */
   expandable?: ExpandableConfig<RecordType>;
+  indentSize?: number;
 
   // Additional Part
   title?: PanelRender<RecordType>;
@@ -117,6 +118,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     rowKey,
     scroll,
     tableLayout,
+    indentSize,
 
     // Additional Part
     title,
@@ -151,6 +153,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const expandableConfig = getExpandableProps(props);
 
   const {
+    expandIcon,
     expandedRowKeys,
     defaultExpandedRowKeys,
     defaultExpandAllRows,
@@ -160,6 +163,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandRowByClick,
     rowExpandable,
   } = expandableConfig;
+
+  const mergedExpandIcon = expandIcon || renderExpandIcon;
 
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
     if (defaultExpandedRowKeys) {
@@ -174,8 +179,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     () => new Set(expandedRowKeys || innerExpandedKeys || []),
     [expandedRowKeys, innerExpandedKeys],
   );
-
-  const expandable: boolean = !!expandedRowRender;
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
@@ -207,10 +210,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const [columns, flattenColumns] = useColumns({
     ...props,
     ...expandableConfig,
-    expandable,
+    expandable: !!expandedRowRender,
     expandedKeys: mergedExpandedKeys,
     getRowKey,
     onTriggerExpand,
+    expandIcon: mergedExpandIcon,
   });
 
   const columnContext = {
@@ -315,7 +319,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       measureColumnWidth={fixHeader || fixColumn}
       stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
-      expandable={expandable}
       expandedRowRender={expandedRowRender}
       rowExpandable={rowExpandable}
       onTriggerExpand={expandRowByClick ? onTriggerExpand : null}
@@ -415,6 +418,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         componentWidth,
         fixHeader,
         fixColumn,
+        expandIcon: mergedExpandIcon,
+        indentSize,
       }}
     >
       <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
@@ -429,7 +434,6 @@ Table.ColumnGroup = ColumnGroup;
 Table.defaultProps = {
   rowKey: 'key',
   prefixCls: 'rc-table',
-  showHeader: true,
   emptyText: () => 'No Data',
 };
 

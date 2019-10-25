@@ -5,7 +5,17 @@ import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import { PureContextConsumer, DefaultPureCompareProps } from '../context/TableContext';
 import { getColumnKey } from '../utils/valueUtil';
-import { ColumnType, StickyOffsets, ExpandedRowRender, CustomizeComponent } from '../interface';
+import {
+  ColumnType,
+  StickyOffsets,
+  ExpandedRowRender,
+  CustomizeComponent,
+  RenderExpandIcon,
+  TriggerEventHandler,
+  GetComponentProps,
+  Key,
+  GetRowKey,
+} from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -17,11 +27,14 @@ export interface BodyRowProps<RecordType> {
   /** Set if need collect column width info */
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
-  expandable: boolean;
-  expanded: boolean;
+  recordKey: Key;
+  expandedKeys: Set<Key>;
   expandedRowRender: ExpandedRowRender<RecordType>;
-  additionalProps: React.HTMLAttributes<HTMLTableRowElement>;
   cellComponent: CustomizeComponent;
+  onTriggerExpand: TriggerEventHandler<RecordType>;
+  onRow: GetComponentProps<RecordType>;
+  rowExpandable: (record: RecordType) => boolean;
+  indent?: number;
 }
 
 type RawColumnType<RecordType> = Partial<ColumnType<RecordType>>;
@@ -46,6 +59,8 @@ function getRequiredColumnProps<RecordType>(
  */
 interface BodyRowPassingProps<RecordType> extends BodyRowProps<RecordType> {
   expandRended: boolean;
+  expandable: boolean;
+  expanded: boolean;
 }
 
 interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
@@ -54,18 +69,17 @@ interface ComputedProps<RecordType> extends BodyRowPassingProps<RecordType> {
   componentWidth: number;
   fixHeader: boolean;
   fixColumn: boolean;
+  expandIcon: RenderExpandIcon<RecordType>;
+  getRowKey: GetRowKey<RecordType>;
+  indentSize: number;
 }
 
 function shouldUpdate<RecordType>(
   prevProps: ComputedProps<RecordType>,
   props: ComputedProps<RecordType>,
 ): boolean {
-  const {
-    rowColumns: prevRowColumns,
-    additionalProps: prevAdditionalProps,
-    ...prevRestProps
-  } = prevProps;
-  const { rowColumns, additionalProps, ...restProps } = props;
+  const { rowColumns: prevRowColumns, ...prevRestProps } = prevProps;
+  const { rowColumns, ...restProps } = props;
 
   if (
     prevRowColumns.length !== rowColumns.length ||
@@ -74,15 +88,20 @@ function shouldUpdate<RecordType>(
     return true;
   }
 
-  if (!shallowEqual(prevAdditionalProps, additionalProps)) {
-    return true;
-  }
-
   return !shallowEqual(prevRestProps, restProps);
 }
 
 function useComputeRowProps<RecordType>({
-  context: { flattenColumns, prefixCls, fixHeader, fixColumn, componentWidth },
+  context: {
+    flattenColumns,
+    prefixCls,
+    fixHeader,
+    fixColumn,
+    componentWidth,
+    expandIcon,
+    getRowKey,
+    indentSize,
+  },
   ...props
 }: DefaultPureCompareProps<RecordType, BodyRowPassingProps<RecordType>>): ComputedProps<
   RecordType
@@ -98,6 +117,9 @@ function useComputeRowProps<RecordType>({
     fixHeader,
     fixColumn,
     componentWidth,
+    expandIcon,
+    getRowKey,
+    indentSize,
   };
 }
 
@@ -105,15 +127,20 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
   const { onColumnResize } = React.useContext(ResizeContext);
   const [expandRended, setExpandRended] = React.useState(false);
 
+  const expandable = !!props.expandedRowRender;
+  const expanded = props.expandedKeys.has(props.recordKey);
+
   React.useEffect(() => {
-    if (props.expandable && props.expanded) {
+    if (expandable && expanded) {
       setExpandRended(true);
     }
-  }, [props.expanded, props.expandable]);
+  }, [expanded, expandable]);
 
   return (
     <PureContextConsumer<RecordType, BodyRowPassingProps<RecordType>, ComputedProps<RecordType>>
       {...props}
+      expandable={expandable}
+      expanded={expanded}
       expandRended={expandRended}
       useComputeProps={useComputeRowProps}
       shouldUpdate={shouldUpdate}
@@ -125,28 +152,73 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
         index,
         measureColumnWidth,
         stickyOffsets,
-        expanded,
-        expandable,
         expandedRowRender,
-        additionalProps = {},
         cellComponent,
         fixHeader,
         fixColumn,
         componentWidth,
+        expandIcon,
+        onTriggerExpand,
+        onRow,
+        rowExpandable,
+        getRowKey,
+        indent = 0,
+        indentSize,
       }) => {
         // Move to Body to enhance performance
         const fixedInfoList = rowColumns.map((column, colIndex) =>
           getCellFixedInfo(colIndex, colIndex, rowColumns, stickyOffsets),
         );
 
+        const rowSupportExpand = expandable && (!rowExpandable || rowExpandable(record));
+        // Only when row is not expandable and `children` exist in record
+        const nestExpandable = !expandable && 'children' in record;
+        const mergedExpandable = rowSupportExpand || nestExpandable;
+
+        // =========================== onRow ===========================
+        let additionalProps: React.HTMLAttributes<HTMLElement>;
+        if (onRow) {
+          additionalProps = onRow(record, index);
+        }
+
+        const onClick: React.MouseEventHandler<HTMLTableRowElement> = (event, ...args) => {
+          if (onTriggerExpand && mergedExpandable) {
+            onTriggerExpand(record, event);
+          }
+
+          if (additionalProps && additionalProps.onClick) {
+            additionalProps.onClick(event, ...args);
+          }
+        };
+
         // ======================== Base tr row ========================
         const baseRowNode = (
-          <tr {...additionalProps}>
+          <tr {...additionalProps} onClick={onClick}>
             {rowColumns.map((column: ColumnType<RecordType>, colIndex) => {
               const { render, dataIndex, className } = column;
 
               const key = getColumnKey(column, colIndex);
               const fixedInfo = fixedInfoList[colIndex];
+
+              // Used for nest expandable
+              let appendCellNode: React.ReactNode;
+              if (colIndex === 0 && nestExpandable) {
+                appendCellNode = (
+                  <>
+                    <span
+                      style={{ paddingLeft: `${indentSize * indent}px` }}
+                      className={`${prefixCls}-indent indent-level-${indent}`}
+                    />
+                    {expandIcon({
+                      prefixCls,
+                      expanded,
+                      expandable: nestExpandable,
+                      record,
+                      onExpand: onTriggerExpand,
+                    })}
+                  </>
+                );
+              }
 
               let additionalCellProps: React.HTMLAttributes<HTMLElement>;
               if (column.onCell) {
@@ -165,6 +237,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
                   dataIndex={dataIndex}
                   render={render}
                   {...fixedInfo}
+                  appendNode={appendCellNode}
                   additionalProps={additionalCellProps}
                 />
               );
@@ -187,10 +260,10 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
           </tr>
         );
 
-        // ======================== Expand row =========================
+        // ======================== Expand Row =========================
         let expandRowNode: React.ReactElement;
-        if (expandable && (expandRended || expanded)) {
-          let expandContent = expandedRowRender(record, index, 1, expanded);
+        if (rowSupportExpand && (expandRended || expanded)) {
+          let expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
           if (fixColumn) {
             expandContent = (
@@ -222,10 +295,31 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
           );
         }
 
+        // ========================= Nest Row ==========================
+        let nestRowNode: React.ReactElement;
+        if (nestExpandable) {
+          nestRowNode = (record as any).children.map((subRecord: RecordType, subIndex: number) => {
+            const subKey = getRowKey(subRecord, subIndex);
+
+            return (
+              <BodyRow
+                {...props}
+                key={subKey}
+                record={subRecord}
+                recordKey={subKey}
+                index={subIndex}
+                indent={indent + 1}
+                measureColumnWidth={false}
+              />
+            );
+          });
+        }
+
         return (
           <>
             {baseRowNode}
             {expandRowNode}
+            {nestRowNode}
           </>
         );
       }}

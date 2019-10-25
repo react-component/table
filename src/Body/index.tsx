@@ -9,7 +9,6 @@ import {
   GetComponentProps,
   TriggerEventHandler,
 } from '../interface';
-import useIndexMemo from '../hooks/useIndexMemo';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
@@ -17,7 +16,6 @@ export interface BodyProps<RecordType> {
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
   expandedKeys: Set<Key>;
-  expandable: boolean;
   expandedRowRender: ExpandedRowRender<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   onRow: GetComponentProps<RecordType>;
@@ -30,15 +28,12 @@ function Body<RecordType>({
   measureColumnWidth,
   stickyOffsets,
   expandedKeys,
-  expandable,
   expandedRowRender,
   onTriggerExpand,
   onRow,
   rowExpandable,
 }: BodyProps<RecordType>) {
   const { prefixCls, getRowKey, getComponent } = React.useContext(DataContext);
-
-  const indexMemo = useIndexMemo(data.length);
 
   return React.useMemo(() => {
     const tdComponent = getComponent(['body', 'cell']);
@@ -48,46 +43,20 @@ function Body<RecordType>({
         {data.map((record, index) => {
           const key = getRowKey(record, index);
 
-          let additionalProps: React.HTMLAttributes<HTMLElement> = {};
-          if (onRow) {
-            additionalProps = onRow(record, index);
-          }
-
-          const rowSupportExpand = !rowExpandable || rowExpandable(record);
-
-          if (onTriggerExpand && rowSupportExpand) {
-            additionalProps = indexMemo(
-              index,
-              (): React.HTMLAttributes<HTMLElement> => {
-                const { onClick } = additionalProps;
-
-                return {
-                  ...additionalProps,
-                  onClick: (event, ...restArgs) => {
-                    onTriggerExpand(record, event);
-
-                    if (onClick) {
-                      onClick(event, ...restArgs);
-                    }
-                  },
-                };
-              },
-              [additionalProps.onClick, onTriggerExpand],
-            );
-          }
-
           return [
             <BodyRow
-              cellComponent={tdComponent}
-              measureColumnWidth={measureColumnWidth && index === 0}
               key={key}
               record={record}
+              recordKey={key}
               index={index}
+              measureColumnWidth={measureColumnWidth && index === 0}
+              onTriggerExpand={onTriggerExpand}
+              cellComponent={tdComponent}
               stickyOffsets={stickyOffsets}
-              expandable={expandable && rowSupportExpand}
-              expanded={expandedKeys.has(key)}
+              expandedKeys={expandedKeys}
               expandedRowRender={expandedRowRender}
-              additionalProps={additionalProps}
+              onRow={onRow}
+              rowExpandable={rowExpandable}
             />,
           ];
         })}
@@ -100,10 +69,10 @@ function Body<RecordType>({
     measureColumnWidth,
     stickyOffsets,
     expandedKeys,
-    expandable,
     onTriggerExpand,
     getRowKey,
     getComponent,
+    expandedRowRender,
   ]);
 }
 

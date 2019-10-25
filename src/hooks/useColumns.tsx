@@ -80,7 +80,7 @@ function useColumns<RecordType>({
   expandedKeys,
   getRowKey,
   onTriggerExpand,
-  expandIcon = renderExpandIcon,
+  expandIcon,
   rowExpandable,
 }: {
   prefixCls?: string;

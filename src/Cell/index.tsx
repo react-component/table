@@ -29,7 +29,9 @@ export interface CellProps<RecordType> {
   lastFixLeft?: boolean;
   firstFixRight?: boolean;
 
-  // Additional props
+  // Additional
+  /** @private Used for `expandable` with nest tree */
+  appendNode?: React.ReactNode;
   additionalProps?: React.HTMLAttributes<HTMLElement>;
 }
 
@@ -49,6 +51,7 @@ function Cell<RecordType>(
     fixRight,
     lastFixLeft,
     firstFixRight,
+    appendNode,
     additionalProps = {},
     ellipsis,
   }: CellProps<RecordType>,
@@ -123,7 +126,12 @@ function Cell<RecordType>(
     ref,
   };
 
-  return <Component {...componentProps}>{childNode}</Component>;
+  return (
+    <Component {...componentProps}>
+      {appendNode}
+      {childNode}
+    </Component>
+  );
 }
 
 const RefCell = React.forwardRef(Cell);

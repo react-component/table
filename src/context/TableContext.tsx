@@ -6,6 +6,7 @@ import {
   GetRowKey,
   GetComponent,
   TableLayout,
+  RenderExpandIcon,
 } from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
@@ -18,6 +19,8 @@ export interface TableContextProps<RecordType = DefaultRecordType> {
   tableLayout: TableLayout;
   fixHeader: boolean;
   fixColumn: boolean;
+  expandIcon: RenderExpandIcon<RecordType>;
+  indentSize: number;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);
