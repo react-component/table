@@ -6,13 +6,13 @@ import Table from '../src';
 import '../assets/index.less';
 import './animation.less';
 
-// const AnimateBody = props => <Animate transitionName="move" component="tbody" {...props} />;
-interface MotionBodyProps {}
+type MotionBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
 const MotionBody: React.FC<MotionBodyProps> = ({ children, ...props }) => {
   const nodeList = toArray(children);
   const nodesRef = React.useRef<Record<React.Key, React.ReactElement>>({});
 
+  // Better apply clean up logic to avoid OOM
   const keys: React.Key[] = [];
   nodeList.forEach(node => {
     const { key } = node;
