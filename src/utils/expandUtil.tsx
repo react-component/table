@@ -1,14 +1,18 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { RenderExpandIconProps, Key, GetRowKey } from '../interface';
 
 export function renderExpandIcon<RecordType>({
+  prefixCls,
   record,
   onExpand,
   expanded,
   expandable,
 }: RenderExpandIconProps<RecordType>) {
+  const expandClassName = `${prefixCls}-row-expand-icon`;
+
   if (!expandable) {
-    return null;
+    return <span className={classNames(expandClassName, `${prefixCls}-row-spaced`)} />;
   }
 
   const onClick: React.MouseEventHandler<HTMLElement> = event => {
@@ -17,9 +21,13 @@ export function renderExpandIcon<RecordType>({
   };
 
   return (
-    <button type="button" onClick={onClick}>
-      {expanded ? '-' : '+'}
-    </button>
+    <span
+      className={classNames(expandClassName, {
+        [`${prefixCls}-row-expanded`]: expanded,
+        [`${prefixCls}-row-collapsed`]: !expanded,
+      })}
+      onClick={onClick}
+    />
   );
 }
 

@@ -135,8 +135,6 @@
   // ================== Body ==================
   tbody {
     tr {
-      border-bottom: 1px solid @table-border-color;
-
       td,
       th {
         background: #fff;
@@ -174,6 +172,28 @@
         right: 1px;
         border-right: @border;
       }
+    }
+  }
+
+  &-row-expand-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid green;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+
+    &.@{tablePrefixCls}-row-expanded::after {
+      content: '-';
+    }
+
+    &.@{tablePrefixCls}-row-collapsed::after {
+      content: '+';
+    }
+
+    &.@{tablePrefixCls}-row-spaced {
+      visibility: hidden;
     }
   }
 

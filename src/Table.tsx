@@ -35,6 +35,7 @@ import {
   GetComponent,
   PanelRender,
   TableLayout,
+  ExpandableType,
 } from './interface';
 import DataContext from './context/TableContext';
 import Body from './Body';
@@ -165,6 +166,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   } = expandableConfig;
 
   const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const expandableType = React.useMemo<ExpandableType>(() => {
+    if (expandedRowRender) {
+      return 'row';
+    }
+    if (mergedData.some(record => 'children' in record)) {
+      return 'nest';
+    }
+    return false;
+  }, [!!expandedRowRender, mergedData]);
 
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
     if (defaultExpandedRowKeys) {
@@ -321,7 +331,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedKeys={mergedExpandedKeys}
       expandedRowRender={expandedRowRender}
       rowExpandable={rowExpandable}
-      onTriggerExpand={expandRowByClick ? onTriggerExpand : null}
+      onTriggerExpand={onTriggerExpand}
       onRow={onRow}
     />
   );
@@ -419,6 +429,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         fixHeader,
         fixColumn,
         expandIcon: mergedExpandIcon,
+        expandableType,
+        expandRowByClick,
         indentSize,
       }}
     >

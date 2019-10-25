@@ -7,20 +7,26 @@ import {
   GetComponent,
   TableLayout,
   RenderExpandIcon,
+  ExpandableType,
 } from '../interface';
 
 export interface TableContextProps<RecordType = DefaultRecordType> {
-  columns: ColumnsType<RecordType>;
-  flattenColumns: ColumnType<RecordType>[];
   prefixCls: string;
   getComponent: GetComponent;
   getRowKey: GetRowKey<RecordType>;
+
+  columns: ColumnsType<RecordType>;
+  flattenColumns: ColumnType<RecordType>[];
+
   componentWidth: number;
   tableLayout: TableLayout;
   fixHeader: boolean;
   fixColumn: boolean;
-  expandIcon: RenderExpandIcon<RecordType>;
+
   indentSize: number;
+  expandableType: ExpandableType;
+  expandRowByClick: boolean;
+  expandIcon: RenderExpandIcon<RecordType>;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

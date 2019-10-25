@@ -118,6 +118,8 @@ export type GetComponent = (
 ) => CustomizeComponent;
 
 // =================== Expand ===================
+export type ExpandableType = false | 'row' | 'nest';
+
 export interface LegacyExpandableProps<RecordType> {
   /** @deprecated Use `expandable.expandedRowKeys` instead */
   expandedRowKeys?: Key[];
