@@ -39,6 +39,7 @@ import {
   RowClassName,
 } from './interface';
 import TableContext from './context/TableContext';
+import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useFrameState } from './hooks/useFrame';
@@ -423,23 +424,28 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   return (
     <TableContext.Provider
       value={{
-        ...columnContext,
-        tableLayout: mergedTableLayout,
         prefixCls,
-        rowClassName,
-        expandedRowClassName,
         getComponent,
-        getRowKey,
-        componentWidth,
-        fixHeader,
-        fixColumn,
-        expandIcon: mergedExpandIcon,
-        expandableType,
-        expandRowByClick,
-        indentSize,
       }}
     >
-      <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
+      <BodyContext.Provider
+        value={{
+          ...columnContext,
+          tableLayout: mergedTableLayout,
+          rowClassName,
+          expandedRowClassName,
+          getRowKey,
+          componentWidth,
+          fixHeader,
+          fixColumn,
+          expandIcon: mergedExpandIcon,
+          expandableType,
+          expandRowByClick,
+          indentSize,
+        }}
+      >
+        <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
+      </BodyContext.Provider>
     </TableContext.Provider>
   );
 }
