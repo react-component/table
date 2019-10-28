@@ -62,7 +62,7 @@ function Cell<RecordType extends DefaultRecordType>(
     additionalProps = {},
     ellipsis,
   }: CellProps<RecordType>,
-  ref: any,
+  ref: React.Ref<any>,
 ): React.ReactElement {
   // ==================== Child Node ====================
   let cellProps: CellType<RecordType>;
@@ -78,11 +78,9 @@ function Cell<RecordType extends DefaultRecordType>(
     if (render) {
       const renderData = render(value, record, index);
 
-      // TODO: Need handle additional props
       if (isRenderCell(renderData)) {
         childNode = renderData.children;
         cellProps = renderData.props;
-        console.warn(cellProps);
       } else {
         childNode = renderData;
       }

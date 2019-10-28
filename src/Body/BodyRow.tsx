@@ -12,7 +12,6 @@ import {
   GetComponentProps,
   Key,
   GetRowKey,
-  DefaultRecordType,
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
@@ -36,7 +35,7 @@ export interface BodyRowProps<RecordType> {
   getRowKey: GetRowKey<RecordType>;
 }
 
-function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
+function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowProps<RecordType>) {
   const {
     className,
     style,
@@ -94,7 +93,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
     additionalProps = onRow(record, index);
   }
 
-  const onClick: React.MouseEventHandler<HTMLTableRowElement> = (event, ...args) => {
+  const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
     if (expandRowByClick && mergedExpandable) {
       onTriggerExpand(record, event);
     }
@@ -222,10 +221,10 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
   }
 
   // ========================= Nest Row ==========================
-  let nestRowNode: React.ReactElement;
+  let nestRowNode: React.ReactElement[];
   if (hasNestChildren && expanded) {
-    nestRowNode = ((record as any).children || []).map(
-      (subRecord: RecordType, subIndex: number) => {
+    nestRowNode = (record.children || []).map(
+      (subRecord: RecordType, subIndex: number): React.ReactElement => {
         const subKey = getRowKey(subRecord, subIndex);
 
         return (

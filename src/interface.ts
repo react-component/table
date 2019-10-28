@@ -101,11 +101,15 @@ export type GetComponentProps<DataType> = (
   index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
 
-export type CustomizeComponent =
-  | React.ComponentType<any>
-  | React.ForwardRefExoticComponent<any>
-  | React.FC<any>
+type Component<P> =
+  | React.ComponentType<P>
+  | React.ForwardRefExoticComponent<P>
+  | React.FC<P>
   | keyof React.ReactHTML;
+
+export type CustomizeComponent<
+  P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
+> = Component<P>;
 
 export interface TableComponents {
   table?: CustomizeComponent;
