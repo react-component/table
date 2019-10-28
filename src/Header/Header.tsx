@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ColumnsType, CellType, StickyOffsets, ColumnType } from '../interface';
 import HeaderRow from './HeaderRow';
+import TableContext from '../context/TableContext';
 
 // TODO: warning user if mix using `children` & `xxxSpan`
 function parseHeaderRows<RecordType>(
@@ -84,10 +85,15 @@ function Header<RecordType>({
   columns,
   flattenColumns,
 }: HeaderProps<RecordType>): React.ReactElement {
+  const { getComponent } = React.useContext(TableContext);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
+  const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
+  const trComponent = getComponent(['header', 'row'], 'tr');
+  const thComponent = getComponent(['header', 'cell'], 'th');
+
   return (
-    <thead>
+    <WrapperComponent>
       {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
@@ -95,12 +101,14 @@ function Header<RecordType>({
             flattenColumns={flattenColumns}
             cells={row}
             stickyOffsets={stickyOffsets}
+            rowComponent={trComponent}
+            cellComponent={thComponent}
           />
         );
 
         return rowNode;
       })}
-    </thead>
+    </WrapperComponent>
   );
 }
 

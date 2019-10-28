@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Cell from '../Cell';
-import { CellType, StickyOffsets, ColumnType } from '../interface';
+import { CellType, StickyOffsets, ColumnType, CustomizeComponent } from '../interface';
 import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
@@ -8,13 +8,21 @@ export interface RowProps<RecordType> {
   cells: CellType<RecordType>[];
   stickyOffsets: StickyOffsets;
   flattenColumns: ColumnType<RecordType>[];
+  rowComponent: CustomizeComponent;
+  cellComponent: CustomizeComponent;
 }
 
-function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProps<RecordType>) {
+function HeaderRow<RecordType>({
+  cells,
+  stickyOffsets,
+  flattenColumns,
+  rowComponent: RowComponent,
+  cellComponent: CellComponent,
+}: RowProps<RecordType>) {
   const { prefixCls } = React.useContext(TableContext);
 
   return (
-    <tr>
+    <RowComponent>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
         const fixedInfo = getCellFixedInfo(
@@ -32,7 +40,7 @@ function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProp
         return (
           <Cell
             {...cell}
-            component="th"
+            component={CellComponent}
             prefixCls={prefixCls}
             key={cellIndex}
             {...fixedInfo}
@@ -40,7 +48,7 @@ function HeaderRow<RecordType>({ cells, stickyOffsets, flattenColumns }: RowProp
           />
         );
       })}
-    </tr>
+    </RowComponent>
   );
 }
 
