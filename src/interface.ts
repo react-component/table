@@ -60,6 +60,7 @@ interface ColumnSharedType<RecordType> {
   className?: string;
   fixed?: FixedType;
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
+  ellipsis?: boolean;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
@@ -70,7 +71,6 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   align?: 'left' | 'center' | 'right';
   colSpan?: number;
   dataIndex?: DataIndex;
-  ellipsis?: boolean;
   render?: (
     value: any,
     record: RecordType,

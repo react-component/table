@@ -104,9 +104,20 @@ function Cell<RecordType>(
     fixedStyle.right = fixRight as number;
   }
 
+  // ====================== Render ======================
+  let title: string;
+  if (ellipsis) {
+    if (typeof childNode === 'string') {
+      title = childNode;
+    } else if (React.isValidElement(childNode) && typeof childNode.props.children === 'string') {
+      title = childNode.props.children;
+    }
+  }
+
   const cellPrefixCls = `${prefixCls}-cell`;
 
   const componentProps = {
+    title,
     ...additionalProps,
     colSpan: mergedColSpan,
     rowSpan: mergedRowSpan,

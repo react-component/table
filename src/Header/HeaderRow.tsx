@@ -40,6 +40,7 @@ function HeaderRow<RecordType>({
         return (
           <Cell
             {...cell}
+            ellipsis={column.ellipsis}
             component={CellComponent}
             prefixCls={prefixCls}
             key={cellIndex}
