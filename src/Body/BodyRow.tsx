@@ -1,5 +1,4 @@
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
 import classNames from 'classnames';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ResizeObserver from 'rc-resize-observer';
@@ -10,15 +9,10 @@ import { getColumnKey } from '../utils/valueUtil';
 import {
   ColumnType,
   StickyOffsets,
-  ExpandedRowRender,
   CustomizeComponent,
-  RenderExpandIcon,
-  TriggerEventHandler,
   GetComponentProps,
   Key,
   GetRowKey,
-  ExpandableType,
-  RowClassName,
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
@@ -35,19 +29,44 @@ export interface BodyRowProps<RecordType> {
   stickyOffsets: StickyOffsets;
   recordKey: Key;
   expandedKeys: Set<Key>;
-  expandedRowRender: ExpandedRowRender<RecordType>;
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
-  onTriggerExpand: TriggerEventHandler<RecordType>;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   indent?: number;
+  getRowKey: GetRowKey<RecordType>;
 }
 
 function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
-  const { className, style, stickyOffsets, record, index, rowExpandable, onRow } = props;
+  const {
+    className,
+    style,
+    stickyOffsets,
+    record,
+    index,
+    getRowKey,
+    rowExpandable,
+    onRow,
+    indent = 0,
+    rowComponent: RowComponent,
+    cellComponent,
+    measureColumnWidth,
+  } = props;
   const { prefixCls } = React.useContext(TableContext);
-  const { flattenColumns, expandableType } = React.useContext(BodyContext);
+  const {
+    fixHeader,
+    fixColumn,
+    componentWidth,
+    flattenColumns,
+    expandableType,
+    expandRowByClick,
+    onTriggerExpand,
+    rowClassName,
+    expandedRowClassName,
+    indentSize,
+    expandIcon,
+    expandedRowRender,
+  } = React.useContext(BodyContext);
   const { onColumnResize } = React.useContext(ResizeContext);
   const [expandRended, setExpandRended] = React.useState(false);
 
@@ -110,7 +129,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
       }}
       onClick={onClick}
     >
-      {rowColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
         const key = getColumnKey(column, colIndex);
@@ -213,7 +232,7 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
           display: expanded ? null : 'none',
         }}
       >
-        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={rowColumns.length}>
+        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={flattenColumns.length}>
           {expandContent}
         </Cell>
       </RowComponent>

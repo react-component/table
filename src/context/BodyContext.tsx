@@ -3,15 +3,15 @@ import {
   ColumnType,
   DefaultRecordType,
   ColumnsType,
-  GetRowKey,
   TableLayout,
   RenderExpandIcon,
   ExpandableType,
   RowClassName,
+  TriggerEventHandler,
+  ExpandedRowRender,
 } from '../interface';
 
 export interface BodyContextProps<RecordType = DefaultRecordType> {
-  getRowKey: GetRowKey<RecordType>;
   rowClassName: string | RowClassName<RecordType>;
   expandedRowClassName: RowClassName<RecordType>;
 
@@ -26,7 +26,9 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   indentSize: number;
   expandableType: ExpandableType;
   expandRowByClick: boolean;
+  expandedRowRender: ExpandedRowRender<RecordType>;
   expandIcon: RenderExpandIcon<RecordType>;
+  onTriggerExpand: TriggerEventHandler<RecordType>;
 }
 
 const BodyContext = React.createContext<BodyContextProps>(null);

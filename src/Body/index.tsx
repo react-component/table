@@ -1,39 +1,28 @@
 import * as React from 'react';
 import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
-import {
-  GetRowKey,
-  StickyOffsets,
-  Key,
-  ExpandedRowRender,
-  GetComponentProps,
-  TriggerEventHandler,
-} from '../interface';
+import { GetRowKey, StickyOffsets, Key, GetComponentProps } from '../interface';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
-  rowKey: string | GetRowKey<RecordType>;
+  getRowKey: GetRowKey<RecordType>;
   measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
   expandedKeys: Set<Key>;
-  expandedRowRender: ExpandedRowRender<RecordType>;
-  onTriggerExpand: TriggerEventHandler<RecordType>;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
 }
 
 function Body<RecordType>({
   data,
-  rowKey,
+  getRowKey,
   measureColumnWidth,
   stickyOffsets,
   expandedKeys,
-  expandedRowRender,
-  onTriggerExpand,
   onRow,
   rowExpandable,
 }: BodyProps<RecordType>) {
-  const { prefixCls, getRowKey, getComponent } = React.useContext(TableContext);
+  const { prefixCls, getComponent } = React.useContext(TableContext);
 
   return React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -52,33 +41,22 @@ function Body<RecordType>({
               recordKey={key}
               index={index}
               measureColumnWidth={measureColumnWidth && index === 0}
-              onTriggerExpand={onTriggerExpand}
               rowComponent={trComponent}
               cellComponent={tdComponent}
               stickyOffsets={stickyOffsets}
               expandedKeys={expandedKeys}
-              expandedRowRender={expandedRowRender}
               onRow={onRow}
+              getRowKey={getRowKey}
               rowExpandable={rowExpandable}
             />,
           ];
         })}
       </WrapperComponent>
     );
-  }, [
-    data,
-    rowKey,
-    prefixCls,
-    measureColumnWidth,
-    stickyOffsets,
-    expandedKeys,
-    onTriggerExpand,
-    getRowKey,
-    getComponent,
-    expandedRowRender,
-  ]);
+  }, [data, prefixCls, measureColumnWidth, stickyOffsets, expandedKeys, getRowKey, getComponent]);
 }
 
-Body.displayName = 'Body';
+const MemoBody = React.memo(Body);
+MemoBody.displayName = 'Body';
 
-export default Body;
+export default MemoBody;

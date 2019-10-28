@@ -329,13 +329,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const bodyTable = (
     <Body
       data={mergedData}
-      rowKey={rowKey}
       measureColumnWidth={fixHeader || fixColumn}
       stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
-      expandedRowRender={expandedRowRender}
       rowExpandable={rowExpandable}
-      onTriggerExpand={onTriggerExpand}
+      getRowKey={getRowKey}
       onRow={onRow}
     />
   );
@@ -441,6 +439,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           expandIcon: mergedExpandIcon,
           expandableType,
           expandRowByClick,
+          expandedRowRender,
+          onTriggerExpand,
           indentSize,
         }}
       >
