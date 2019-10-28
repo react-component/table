@@ -79,7 +79,17 @@ const Demo = () => {
   const [fixTitle3, fixTitle3Props] = useCheckbox(false);
   const [ellipsis, ellipsisProps] = useCheckbox(false);
   const [percentage, percentageProps] = useCheckbox(false);
+  const [empty, emptyProps] = useCheckbox(true);
   const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis, percentage);
+
+  let mergedData: RecordType[];
+  if (empty) {
+    mergedData = null;
+  } else if (longText) {
+    mergedData = longTextData;
+  } else {
+    mergedData = originData;
+  }
 
   return (
     <React.StrictMode>
@@ -118,11 +128,15 @@ const Demo = () => {
           <input {...percentageProps} />
           Percentage Width
         </label>
+        <label>
+          <input {...emptyProps} />
+          Empty
+        </label>
 
         <Table<RecordType>
           columns={columns}
           scroll={{ x: 1650, y: fixHeader ? 300 : null }}
-          data={longText ? longTextData : originData}
+          data={mergedData}
           style={{ width: autoWidth ? null : 800 }}
         />
       </div>

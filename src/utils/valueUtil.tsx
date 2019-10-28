@@ -71,3 +71,14 @@ export function mergeObject<ReturnObject extends object>(
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
 }
+
+/**
+ * Create a packaged array to fast the v8 process speed
+ */
+export function newArr(len: number): number[] {
+  const list: number[] = [];
+  for (let i = 0; i < len; i += 1) {
+    list[i] = null;
+  }
+  return list;
+}

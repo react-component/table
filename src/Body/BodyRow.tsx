@@ -202,13 +202,16 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
-        className={computedExpandedRowClassName}
+        className={classNames(
+          `${prefixCls}-expanded-row`,
+          `${prefixCls}-expanded-row-level-${indent + 1}`,
+          computedExpandedRowClassName,
+        )}
         prefixCls={prefixCls}
         fixHeader={fixHeader}
         fixColumn={fixColumn}
         component={RowComponent}
         componentWidth={componentWidth}
-        indent={indent}
         cellComponent={cellComponent}
         colSpan={flattenColumns.length}
       >

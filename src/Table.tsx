@@ -46,7 +46,7 @@ import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useFrameState } from './hooks/useFrame';
-import { getPathValue, mergeObject, validateValue } from './utils/valueUtil';
+import { getPathValue, mergeObject, validateValue, newArr } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -93,6 +93,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   showHeader?: boolean;
   components?: TableComponents;
   onRow?: GetComponentProps<RecordType>;
+  emptyText?: React.ReactNode | (() => React.ReactNode);
 
   // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
@@ -110,7 +111,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // onRowContextMenu?: LegacyFunction<RecordType>;
   // onRowMouseEnter?: LegacyFunction<RecordType>;
   // onRowMouseLeave?: LegacyFunction<RecordType>;
-  // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
 }
@@ -137,10 +137,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     id,
     showHeader,
     components,
+    emptyText,
     onRow,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
+  const hasData = !!mergedData.length;
 
   // ==================== Customize =====================
   const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
@@ -246,10 +248,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  const [colWidths, updateColWidths] = useFrameState<number[]>([]);
+  const [colWidths, updateColWidths] = useFrameState<number[]>(newArr(flattenColumns.length));
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
-  const fixHeader = scroll && validateValue(scroll.y);
+  const fixHeader = hasData && scroll && validateValue(scroll.y);
   const fixColumn = scroll && validateValue(scroll.x);
 
   let scrollXStyle: React.CSSProperties;
@@ -304,6 +306,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     setComponentWidth(width);
   };
 
+  // Sync scroll bar when init or `fixColumn` changed
   React.useEffect(() => triggerOnScroll, []);
   React.useEffect(() => {
     if (fixColumn) {
@@ -314,6 +317,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   // ====================== Render ======================
   const TableComponent = getComponent(['table'], 'table');
 
+  // Table layout
   const mergedTableLayout = React.useMemo<TableLayout>(() => {
     if (tableLayout) {
       return tableLayout;
@@ -327,12 +331,26 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   let groupTableNode: React.ReactNode;
 
+  // Header props
   const headerProps = {
     colWidths,
     columCount: flattenColumns.length,
     stickyOffsets,
   };
 
+  // Empty
+  const emptyNode: React.ReactNode = React.useMemo(() => {
+    if (hasData) {
+      return null;
+    }
+
+    if (typeof emptyText === 'function') {
+      return emptyText();
+    }
+    return emptyText;
+  }, [hasData, emptyText]);
+
+  // Body
   const bodyTable = (
     <Body
       data={mergedData}
@@ -342,6 +360,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
       onRow={onRow}
+      emptyNode={emptyNode}
     />
   );
 

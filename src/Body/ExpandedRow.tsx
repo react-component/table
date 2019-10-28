@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
@@ -16,7 +15,6 @@ export interface ExpandedRowProps<RecordType> {
   className: string;
   expanded: boolean;
   children: React.ReactNode;
-  indent: number;
   colSpan: number;
 }
 
@@ -30,7 +28,6 @@ function ExpandedRow<RecordType>({
   className,
   expanded,
   componentWidth,
-  indent = 0,
   colSpan,
 }: ExpandedRowProps<RecordType>) {
   let contentNode = children;
@@ -53,11 +50,7 @@ function ExpandedRow<RecordType>({
 
   return (
     <Component
-      className={classNames(
-        `${prefixCls}-expanded-row`,
-        `${prefixCls}-expanded-row-level-${indent + 1}`,
-        className,
-      )}
+      className={className}
       style={{
         display: expanded ? null : 'none',
       }}
