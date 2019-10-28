@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "6.8.6",
+  "version": "6.9.5",
   "description": "table ui component for react",
   "keywords": [
     "react",
@@ -68,6 +68,8 @@
     "enzyme-to-json": "^3.1.2",
     "father": "^2.22.0",
     "immutability-helper": "^3.0.0",
+    "less": "^3.10.3",
+    "np": "^5.1.0",
     "prettier": "^1.11.1",
     "rc-animate": "^2.10.1",
     "rc-dropdown": "~2.0.1",

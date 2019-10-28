@@ -1,6 +1,11 @@
 # History
 ----
 
+## 6.9.0 / 2019-10-18
+
+- Rewrite in typescript
+- Fix `scroll={{ x: 'max-content' }}` not working.
+
 ## 6.8.0 / 2019-09-03
 
 - Add `tableLayout`, could be set to `fixed`: https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
