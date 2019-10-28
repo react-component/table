@@ -41,10 +41,12 @@ export interface CellType<RecordType> {
   column?: ColumnsType<RecordType>[number];
   colSpan?: number;
   rowSpan?: number;
+
   /** Only used for table header */
   hasSubColumns?: boolean;
   colStart?: number;
   colEnd?: number;
+  measure?: boolean;
 }
 
 export interface RenderedCell<RecordType> {

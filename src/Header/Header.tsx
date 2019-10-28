@@ -6,8 +6,12 @@ import TableContext from '../context/TableContext';
 // TODO: warning user if mix using `children` & `xxxSpan`
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
+  measureColumnWidth: boolean,
 ): CellType<RecordType>[][] {
   const rows: CellType<RecordType>[][] = [];
+
+  // Record which cell should wrapped with resize observer used for fixed
+  const measureCells: boolean[] = [];
 
   function fillRowCells(
     columns: ColumnsType<RecordType>,
@@ -51,6 +55,12 @@ function parseHeaderRows<RecordType>(
 
       currentColIndex += colSpan;
 
+      // Measure only happen on single node
+      if (measureColumnWidth && colSpan === 1 && !measureCells[cell.colStart]) {
+        cell.measure = true;
+        measureCells[cell.colStart] = true;
+      }
+
       return colSpan;
     });
 
@@ -78,15 +88,20 @@ export interface HeaderProps<RecordType> {
   columns: ColumnsType<RecordType>;
   flattenColumns: ColumnType<RecordType>[];
   stickyOffsets: StickyOffsets;
+  measureColumnWidth?: boolean;
 }
 
 function Header<RecordType>({
   stickyOffsets,
   columns,
   flattenColumns,
+  measureColumnWidth,
 }: HeaderProps<RecordType>): React.ReactElement {
   const { getComponent } = React.useContext(TableContext);
-  const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
+  const rows: CellType<RecordType>[][] = React.useMemo(
+    () => parseHeaderRows(columns, measureColumnWidth),
+    [columns],
+  );
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
