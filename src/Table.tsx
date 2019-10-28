@@ -7,6 +7,9 @@
  * - support `rowExpandable` to config row expand logic
  * - add `summary` to support `() => ReactNode`
  *
+ * Update:
+ * - `dataIndex` is `array[]` now
+ *
  * Removed:
  *  - expandIconAsCell
  *
