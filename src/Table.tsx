@@ -86,6 +86,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
 
   // TODO: Handle this
   // Customize
+  id?: string;
   showHeader?: boolean;
   components?: TableComponents;
   onRow?: GetComponentProps<RecordType>;
@@ -106,7 +107,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // onRowContextMenu?: LegacyFunction<RecordType>;
   // onRowMouseEnter?: LegacyFunction<RecordType>;
   // onRowMouseLeave?: LegacyFunction<RecordType>;
-  // id?: string;
   // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
   // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
@@ -131,6 +131,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     summary,
 
     // Customize
+    id,
     showHeader,
     components,
     onRow,
@@ -413,6 +414,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         [`${prefixCls}-ping-right`]: pingedRight,
       })}
       style={style}
+      id={id}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
       {groupTableNode}
