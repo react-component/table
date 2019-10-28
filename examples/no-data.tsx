@@ -20,8 +20,11 @@ const data = [];
 
 const Demo = () => (
   <div>
-    <h2>simple table</h2>
     <Table columns={columns} data={data} />
+    <br />
+    <Table columns={columns} data={data} emptyText="customize!!" />
+    <br />
+    <Table columns={columns} data={data} emptyText={() => <h1>No No No!</h1>} />
   </div>
 );
 
