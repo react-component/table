@@ -86,6 +86,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
 
   // TODO: Handle this
   // Customize
+  showHeader?: boolean;
   components?: TableComponents;
   onRow?: GetComponentProps<RecordType>;
 
@@ -105,7 +106,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // onRowContextMenu?: LegacyFunction<RecordType>;
   // onRowMouseEnter?: LegacyFunction<RecordType>;
   // onRowMouseLeave?: LegacyFunction<RecordType>;
-  // showHeader?: boolean;
   // id?: string;
   // emptyText?: React.ReactNode | (() => React.ReactNode);
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
@@ -131,6 +131,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     summary,
 
     // Customize
+    showHeader,
     components,
     onRow,
   } = props;
@@ -349,17 +350,19 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   if (fixHeader) {
     groupTableNode = (
       <>
-        <div
-          style={{
-            ...scrollXStyle,
-            marginBottom: fixColumn ? -scrollbarSize : null,
-          }}
-          onScroll={onScroll}
-          ref={scrollHeaderRef}
-          className={classNames(`${prefixCls}-header`)}
-        >
-          <FixedHeader {...headerProps} {...columnContext} />
-        </div>
+        {showHeader !== false && (
+          <div
+            style={{
+              ...scrollXStyle,
+              marginBottom: fixColumn ? -scrollbarSize : null,
+            }}
+            onScroll={onScroll}
+            ref={scrollHeaderRef}
+            className={classNames(`${prefixCls}-header`)}
+          >
+            <FixedHeader {...headerProps} {...columnContext} />
+          </div>
+        )}
         <div
           style={{
             ...scrollXStyle,
@@ -395,7 +398,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       >
         <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
           {bodyColGroup}
-          <Header {...headerProps} {...columnContext} />
+          {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
           {footerTable}
         </TableComponent>
