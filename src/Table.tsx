@@ -307,6 +307,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }, [fixColumn]);
 
   // ====================== Render ======================
+  const TableComponent = getComponent(['table'], 'table');
+
   const mergedTableLayout = React.useMemo<TableLayout>(() => {
     if (tableLayout) {
       return tableLayout;
@@ -367,7 +369,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <table
+          <TableComponent
             style={{
               ...scrollTableStyle,
               tableLayout: mergedTableLayout,
@@ -376,7 +378,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {bodyColGroup}
             {bodyTable}
             {footerTable}
-          </table>
+          </TableComponent>
         </div>
       </>
     );
@@ -391,12 +393,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         onScroll={onScroll}
         ref={scrollBodyRef}
       >
-        <table style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
+        <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
           {bodyColGroup}
           <Header {...headerProps} {...columnContext} />
           {bodyTable}
           {footerTable}
-        </table>
+        </TableComponent>
       </div>
     );
   }
@@ -432,7 +434,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           tableLayout: mergedTableLayout,
           rowClassName,
           expandedRowClassName,
-          getRowKey,
           componentWidth,
           fixHeader,
           fixColumn,
