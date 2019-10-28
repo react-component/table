@@ -87,6 +87,11 @@ function Cell<RecordType extends DefaultRecordType>(
     }
   }
 
+  // Not crash if final `childNode` is not validate ReactNode
+  if (typeof childNode === 'object' && !React.isValidElement(childNode)) {
+    childNode = null;
+  }
+
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = cellProps || {};
   const mergedColSpan = cellColSpan !== undefined ? cellColSpan : colSpan;
   const mergedRowSpan = cellRowSpan !== undefined ? cellRowSpan : rowSpan;

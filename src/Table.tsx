@@ -3,18 +3,20 @@
  *  rowKey should not provide index as second param
  *
  * Feature:
- * - fixed not need to set width
- * - support `rowExpandable` to config row expand logic
- * - add `summary` to support `() => ReactNode`
+ *  - fixed not need to set width
+ *  - support `rowExpandable` to config row expand logic
+ *  - add `summary` to support `() => ReactNode`
  *
  * Update:
- * - `dataIndex` is `array[]` now
+ *  - `dataIndex` is `array[]` now
  *
  * Removed:
  *  - expandIconAsCell
+ *  - useFixedHeader
+ *  - rowRef
  *
  * Deprecated:
- * - All expanded props, move into expandable
+ *  - All expanded props, move into expandable
  */
 
 import * as React from 'react';
@@ -52,7 +54,7 @@ import { getPathValue, mergeObject, validateValue, newArr } from './utils/valueU
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
-import { getExpandableProps } from './utils/legacyUtil';
+import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
 import Panel from './Panel';
 import Footer from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
@@ -74,8 +76,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
 
   // Fixed Columns
   scroll?: { x?: number | true | string; y?: number };
-  /** @deprecated No need to set this */
-  useFixedHeader?: boolean;
 
   // Expandable
   /** Config expand rows */
@@ -100,11 +100,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
 
-  // getRowKey: GetRowKey<RecordType>;
-
   // bodyStyle?: React.CSSProperties;
-
-  // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -459,17 +455,20 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     );
   }
 
+  const ariaProps = getDataAndAriaProps(props);
+
   let fullTable = (
     <div
       className={classNames(prefixCls, className, {
         [`${prefixCls}-ping-left`]: pingedLeft,
         [`${prefixCls}-ping-right`]: pingedRight,
-        [`${prefixCls}-layout-fixed`]: fixHeader || fixColumn,
+        [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
         [`${prefixCls}-fixed-column`]: fixColumn,
       })}
       style={style}
       id={id}
+      {...ariaProps}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
       {groupTableNode}
