@@ -285,7 +285,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   if (fixColumn) {
     scrollXStyle = { overflowX: 'scroll' };
     scrollTableStyle = {
-      width: scroll.x === true ? null : scroll.x,
+      width: scroll.x === true ? 'max-content' : scroll.x,
       minWidth: '100%',
     };
   }

@@ -146,111 +146,38 @@ describe('Table.Basic', () => {
     ).toBeTruthy();
   });
 
-  describe('scroll', () => {
-    //   it('renders scroll.x is true', () => {
-    //     const wrapper = render(createTable({ scroll: { x: true } }));
-    //     expect(wrapper).toMatchSnapshot();
-    //   });
-    //   it('renders scroll.x is a number', () => {
-    //     const wrapper = render(createTable({ scroll: { x: 200 } }));
-    //     expect(wrapper).toMatchSnapshot();
-    //   });
-    //   it('renders scroll.y is a number', () => {
-    //     const wrapper = render(createTable({ scroll: { y: 200 } }));
-    //     expect(wrapper).toMatchSnapshot();
-    //   });
-    //   it('fire scroll event', () => {
-    //     const newColumns = [
-    //       { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-    //       { title: 'title2', dataIndex: 'b', key: 'b' },
-    //       { title: 'title3', dataIndex: 'c', key: 'c' },
-    //       { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
-    //     ];
-    //     const newData = [
-    //       { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
-    //       { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
-    //     ];
-    //     const wrapper = mount(
-    //       <Table
-    //         columns={newColumns}
-    //         data={newData}
-    //         scroll={{
-    //           x: 200,
-    //           y: 200,
-    //         }}
-    //       />,
-    //     );
-    //     const inst = wrapper.instance();
-    //     const headTable = wrapper.find('.rc-table-header').at(0);
-    //     const bodyTable = wrapper.find('.rc-table-body').at(0);
-    //     const fixedColumnsBodyLeft = wrapper.find('.rc-table-body-inner').at(0);
-    //     const fixedColumnsBodyRight = wrapper.find('.rc-table-body-inner').at(1);
-    //     expect(inst.lastScrollLeft).toBe(undefined);
-    //     // fire headTable scroll.
-    //     headTable.getDOMNode().scrollTop = 0;
-    //     headTable.getDOMNode().scrollLeft = 20;
-    //     headTable.simulate('mouseover');
-    //     headTable.simulate('scroll');
-    //     expect(bodyTable.getDOMNode().scrollLeft).toBe(20);
-    //     expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(0);
-    //     expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(0);
-    //     expect(inst.lastScrollLeft).toBe(20);
-    //     // fire bodyTable scroll.
-    //     bodyTable.getDOMNode().scrollTop = 10;
-    //     bodyTable.getDOMNode().scrollLeft = 40;
-    //     bodyTable.simulate('mouseover');
-    //     bodyTable.simulate('scroll');
-    //     expect(headTable.getDOMNode().scrollLeft).toBe(40);
-    //     expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(10);
-    //     expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(10);
-    //     expect(inst.lastScrollLeft).toBe(40);
-    //     // fire fixedColumnsBodyLeft scroll.
-    //     fixedColumnsBodyLeft.getDOMNode().scrollTop = 30;
-    //     fixedColumnsBodyLeft.simulate('mouseover');
-    //     fixedColumnsBodyLeft.simulate('scroll');
-    //     expect(headTable.getDOMNode().scrollLeft).toBe(40);
-    //     expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
-    //     expect(bodyTable.getDOMNode().scrollTop).toBe(30);
-    //     expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(30);
-    //     expect(inst.lastScrollLeft).toBe(0);
-    //     // fire fixedColumnsBodyRight scroll.
-    //     fixedColumnsBodyRight.getDOMNode().scrollTop = 15;
-    //     fixedColumnsBodyRight.simulate('mouseover');
-    //     fixedColumnsBodyRight.simulate('scroll');
-    //     expect(headTable.getDOMNode().scrollLeft).toBe(40);
-    //     expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
-    //     expect(bodyTable.getDOMNode().scrollTop).toBe(15);
-    //     expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(15);
-    //     expect(inst.lastScrollLeft).toBe(0);
-    //   });
+  it('renders column correctly', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        className: 'name-class',
+        width: 100,
+      },
+    ];
+    const wrapper = mount(createTable({ columns }));
+    wrapper.find('td').forEach((td, index) => {
+      expect(td.hasClass('name-class')).toBeTruthy();
+      expect(td.text()).toEqual(['Lucy', 'Jack'][index]);
+    });
+
+    expect(wrapper.find('col').props().style).toEqual(expect.objectContaining({ width: 100 }));
   });
 
-  // it('renders column correctly', () => {
-  //   const columns = [
-  //     {
-  //       title: 'Name',
-  //       dataIndex: 'name',
-  //       key: 'name',
-  //       className: 'name-class',
-  //       width: 100,
-  //     },
-  //   ];
-  //   const wrapper = render(createTable({ columns }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-
-  // it('renders custom cell correctly', () => {
-  //   const columns = [
-  //     {
-  //       title: 'Name',
-  //       dataIndex: 'name',
-  //       key: 'name',
-  //       render: text => <p>{text}</p>,
-  //     },
-  //   ];
-  //   const wrapper = render(createTable({ columns }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('renders custom cell correctly', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        render: text => <p>!!!{text}!!!</p>,
+      },
+    ];
+    const wrapper = mount(createTable({ columns }));
+    wrapper.find('td').forEach((td, index) => {
+      expect(td.text()).toEqual(['!!!Lucy!!!', '!!!Jack!!!'][index]);
+    });
+  });
 
   // it('fires cell click event', () => {
   //   const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
