@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
@@ -16,8 +15,7 @@ import {
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
-
-const scrollBarSize = getScrollBarSize();
+import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -198,44 +196,24 @@ function BodyRow<RecordType>(props: BodyRowProps<RecordType>) {
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement;
   if (rowSupportExpand && (expandRended || expanded)) {
-    let expandContent = expandedRowRender(record, index, indent + 1, expanded);
-
-    if (fixColumn) {
-      expandContent = (
-        <div
-          style={{
-            width: componentWidth - (fixHeader ? scrollBarSize : 0),
-            position: 'sticky',
-            left: 0,
-            overflow: 'hidden',
-          }}
-          className={`${prefixCls}-expanded-row-fixed`}
-        >
-          {expandContent}
-        </div>
-      );
-    }
-
-    let computeExpandRowClassName: string;
-    if (expandedRowClassName) {
-      computeExpandRowClassName = expandedRowClassName(record, index, indent);
-    }
-
+    const expandContent = expandedRowRender(record, index, indent + 1, expanded);
+    const computedExpandedRowClassName =
+      expandedRowClassName && expandedRowClassName(record, index, indent);
     expandRowNode = (
-      <RowComponent
-        className={classNames(
-          `${prefixCls}-expanded-row`,
-          `${prefixCls}-expanded-row-level-${indent + 1}`,
-          computeExpandRowClassName,
-        )}
-        style={{
-          display: expanded ? null : 'none',
-        }}
+      <ExpandedRow
+        expanded={expanded}
+        className={computedExpandedRowClassName}
+        prefixCls={prefixCls}
+        fixHeader={fixHeader}
+        fixColumn={fixColumn}
+        component={RowComponent}
+        componentWidth={componentWidth}
+        indent={indent}
+        cellComponent={cellComponent}
+        colSpan={flattenColumns.length}
       >
-        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={flattenColumns.length}>
-          {expandContent}
-        </Cell>
-      </RowComponent>
+        {expandContent}
+      </ExpandedRow>
     );
   }
 
