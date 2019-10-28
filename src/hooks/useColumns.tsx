@@ -10,7 +10,6 @@ import {
   TriggerEventHandler,
   RenderExpandIcon,
 } from '../interface';
-import { renderExpandIcon } from '../utils/expandUtil';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 
 function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
