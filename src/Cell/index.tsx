@@ -1,6 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { DataIndex, ColumnType, RenderedCell, CustomizeComponent, CellType } from '../interface';
+import {
+  DataIndex,
+  ColumnType,
+  RenderedCell,
+  CustomizeComponent,
+  CellType,
+  DefaultRecordType,
+} from '../interface';
 import { getPathValue } from '../utils/valueUtil';
 
 function isRenderCell<RecordType>(
@@ -9,7 +16,7 @@ function isRenderCell<RecordType>(
   return data && typeof data === 'object' && !React.isValidElement(data);
 }
 
-export interface CellProps<RecordType> {
+export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -35,7 +42,7 @@ export interface CellProps<RecordType> {
   additionalProps?: React.HTMLAttributes<HTMLElement>;
 }
 
-function Cell<RecordType>(
+function Cell<RecordType extends DefaultRecordType>(
   {
     prefixCls,
     className,
@@ -64,7 +71,7 @@ function Cell<RecordType>(
   if (children) {
     childNode = children;
   } else {
-    const value = getPathValue(record, dataIndex);
+    const value = getPathValue<object | React.ReactNode, RecordType>(record, dataIndex);
 
     // Customize render node
     childNode = value;

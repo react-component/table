@@ -10,10 +10,13 @@ function toArray<T>(arr: T | T[]): T[] {
   return Array.isArray(arr) ? arr : [arr];
 }
 
-export function getPathValue<RecordType>(record: RecordType, path: DataIndex) {
+export function getPathValue<ValueType, ObjectType extends object>(
+  record: ObjectType,
+  path: DataIndex,
+) {
   const pathList = toArray(path);
 
-  let current: any = record;
+  let current: ValueType | ObjectType = record;
 
   for (let i = 0; i < pathList.length; i += 1) {
     if (!current) {
@@ -24,7 +27,7 @@ export function getPathValue<RecordType>(record: RecordType, path: DataIndex) {
     current = current[prop];
   }
 
-  return current;
+  return current as ValueType;
 }
 
 interface GetColumnKeyColumn {
@@ -47,6 +50,7 @@ export function mergeObject<ReturnObject extends object>(
 ): ReturnObject {
   const merged: Partial<ReturnObject> = {};
 
+  /* eslint-disable no-param-reassign */
   function fillProps(obj: object, clone: object) {
     if (clone) {
       Object.keys(clone).forEach(key => {
@@ -60,6 +64,7 @@ export function mergeObject<ReturnObject extends object>(
       });
     }
   }
+  /* eslint-enable */
 
   objects.forEach(clone => {
     fillProps(merged, clone);

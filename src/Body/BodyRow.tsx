@@ -12,6 +12,7 @@ import {
   GetComponentProps,
   Key,
   GetRowKey,
+  DefaultRecordType,
 } from '../interface';
 import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';

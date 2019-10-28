@@ -19,6 +19,7 @@
 
 import * as React from 'react';
 import classNames from 'classnames';
+import warning from 'rc-util/lib/warning';
 import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
@@ -40,6 +41,7 @@ import {
   TableLayout,
   ExpandableType,
   RowClassName,
+  CustomizeComponent,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -97,22 +99,12 @@ export interface TableProps<RecordType extends DefaultRecordType>
 
   // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
-  // columnManager: ColumnManager;
-  // store: TableStore;
 
   // getRowKey: GetRowKey<RecordType>;
 
-  // columns?: ColumnType[];
   // bodyStyle?: React.CSSProperties;
 
-  // onHeaderRow?: GetComponentProps<ColumnType[]>;
-  // onRowClick?: LegacyFunction<RecordType>;
-  // onRowDoubleClick?: LegacyFunction<RecordType>;
-  // onRowContextMenu?: LegacyFunction<RecordType>;
-  // onRowMouseEnter?: LegacyFunction<RecordType>;
-  // onRowMouseLeave?: LegacyFunction<RecordType>;
   // rowRef?: (record: RecordType, index: number, indent: number) => React.Ref<React.ReactElement>;
-  // getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -144,13 +136,32 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
 
+  // ===================== Warning ======================
+  if (process.env.NODE_ENV !== 'production') {
+    [
+      'onRowClick',
+      'onRowDoubleClick',
+      'onRowContextMenu',
+      'onRowMouseEnter',
+      'onRowMouseLeave',
+    ].forEach(name => {
+      warning(props[name] === undefined, `\`${name}\` is removed, please use \`onRow\` instead.`);
+    });
+
+    warning(
+      !('getBodyWrapper' in props),
+      '`getBodyWrapper` is deprecated, please use custom `components` instead.',
+    );
+  }
+
   // ==================== Customize =====================
   const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
     components,
   ]);
 
   const getComponent = React.useCallback<GetComponent>(
-    (path, defaultComponent) => getPathValue(mergedComponents, path) || defaultComponent,
+    (path, defaultComponent) =>
+      getPathValue<CustomizeComponent, TableComponents>(mergedComponents, path) || defaultComponent,
     [mergedComponents],
   );
 
@@ -158,7 +169,18 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (typeof rowKey === 'function') {
       return rowKey;
     }
-    return (record: RecordType) => record[rowKey];
+    return (record: RecordType) => {
+      const key = record[rowKey];
+
+      if (process.env.NODE_ENV !== 'production') {
+        warning(
+          key !== undefined,
+          'Each record in table should have a unique `key` prop, or set `rowKey` to an unique primary key.',
+        );
+      }
+
+      return key;
+    };
   }, [rowKey]);
 
   // ====================== Expand ======================
@@ -281,9 +303,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement) {
+    /* eslint-disable no-param-reassign */
     if (target && target.scrollLeft !== scrollLeft) {
       target.scrollLeft = scrollLeft;
     }
+    /* eslint-enable */
   }
 
   const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
