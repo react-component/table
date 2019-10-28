@@ -79,7 +79,7 @@ const Demo = () => {
   const [fixTitle3, fixTitle3Props] = useCheckbox(false);
   const [ellipsis, ellipsisProps] = useCheckbox(false);
   const [percentage, percentageProps] = useCheckbox(false);
-  const [empty, emptyProps] = useCheckbox(true);
+  const [empty, emptyProps] = useCheckbox(false);
   const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis, percentage);
 
   let mergedData: RecordType[];

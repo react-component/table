@@ -440,6 +440,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       className={classNames(prefixCls, className, {
         [`${prefixCls}-ping-left`]: pingedLeft,
         [`${prefixCls}-ping-right`]: pingedRight,
+        [`${prefixCls}-layout-fixed`]: fixHeader || fixColumn,
+        [`${prefixCls}-fixed-header`]: fixHeader,
+        [`${prefixCls}-fixed-column`]: fixColumn,
       })}
       style={style}
       id={id}

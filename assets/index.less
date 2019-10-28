@@ -23,6 +23,7 @@
   color: @text-color;
   line-height: @line-height;
   box-sizing: border-box;
+  position: relative;
 
   // ================= Global =================
   table {
@@ -51,6 +52,10 @@
     &-fix-left,
     &-fix-right {
       z-index: 1;
+    }
+
+    &-fix-right:last-child {
+      border-right-color: transparent;
     }
 
     &-fix-left-last::after {
@@ -149,11 +154,22 @@
 
   &-content {
     .tableBorder();
+    border-radius: 5px 0 0 0;
   }
 
   &-body {
     .tableBorder();
     border-top: 0;
+  }
+
+  &-fixed-column &-body::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: @border;
+    z-index: 1;
   }
 
   // ================= Expand =================
