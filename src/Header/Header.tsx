@@ -31,7 +31,7 @@ function parseHeaderRows<RecordType>(
         colStart: currentColIndex,
       };
 
-      let colSpan = 1;
+      let colSpan: number = 1;
 
       if ('children' in column) {
         colSpan = fillRowCells(column.children, currentColIndex, rowIndex + 1).reduce(
