@@ -228,37 +228,6 @@ describe('Table.Expand', () => {
     expect(onExpandedRowsChange).toHaveBeenCalledWith([0]);
   });
 
-  // TODO: handle this
-  it.skip('fires onExpandedRowsChange event when row is removed', () => {
-    const onExpandedRowsChange = jest.fn();
-    const onExpand = jest.fn();
-    const wrapper = mount(
-      createTable({
-        expandable: {
-          defaultExpandAllRows: true,
-          expandedRowRender,
-          onExpandedRowsChange,
-          onExpand,
-        },
-      }),
-    );
-    wrapper.setProps({
-      data: [{ key: 1, name: 'Jack', age: 28 }],
-    });
-    expect(onExpandedRowsChange).toHaveBeenCalledWith([1]);
-    expect(onExpand).not.toHaveBeenCalled();
-  });
-
-  // https://github.com/ant-design/ant-design/issues/12208
-  it.skip('avoid onExpandedRowsChange repeat trigger when rows removed', () => {
-    const onExpandedRowsChange = jest.fn();
-    const wrapper = mount(createTable({ expandedRowRender, onExpandedRowsChange }));
-    expect(onExpandedRowsChange).not.toHaveBeenCalled();
-    wrapper.setProps({ data: [{ key: 93, name: 'Bamboo', age: 14 }] });
-    expect(onExpandedRowsChange).toHaveBeenCalledWith([]);
-    expect(onExpandedRowsChange.mock.calls.length).toEqual(1);
-  });
-
   it('show icon if use `expandIcon` & `expandRowByClick`', () => {
     const wrapper = mount(
       createTable({
