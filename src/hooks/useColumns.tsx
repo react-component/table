@@ -61,7 +61,7 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
     if (allFixLeft && col.fixed !== 'left') {
       allFixLeft = false;
     } else if (!allFixLeft && col.fixed === 'left') {
-      warning(false, `Index ${i} of \`columns\` missing \`fixed='left'\` prop.`);
+      warning(false, `Index ${i - 1} of \`columns\` missing \`fixed='left'\` prop.`);
       break;
     }
   }
@@ -72,7 +72,7 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
     if (allFixRight && col.fixed !== 'right') {
       allFixRight = false;
     } else if (!allFixRight && col.fixed === 'right') {
-      warning(false, `Index ${i} of \`columns\` missing \`fixed='right'\` prop.`);
+      warning(false, `Index ${i + 1} of \`columns\` missing \`fixed='right'\` prop.`);
       break;
     }
   }

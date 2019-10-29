@@ -45,7 +45,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
             colspan="1"
             rowspan="1"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           >
             title2
           </th>
@@ -134,7 +134,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           >
             xxxxxxxx
           </td>
@@ -199,7 +199,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           >
             edd12221
           </td>
@@ -264,7 +264,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -311,7 +311,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -358,7 +358,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -405,7 +405,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -452,7 +452,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -499,7 +499,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"
@@ -546,7 +546,7 @@ exports[`Table.FixedColumn renders correctly 1`] = `
           </td>
           <td
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 0px;"
+            style="position: sticky; left: 93px;"
           />
           <td
             class="rc-table-cell"

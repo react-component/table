@@ -1,17 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+import { resetWarned } from 'rc-util/lib/warning';
 import Table from '../src';
 
 describe('Table.FixedColumn', () => {
-  // see:
-  // https://github.com/airbnb/enzyme/issues/49#issuecomment-270250193
-  // https://github.com/tmpvar/jsdom/issues/653
-  function mockClientRect(node, rect) {
-    node.getBoundingClientRect = () => ({
-      ...rect,
-    });
-  }
   const columns = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
     { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
@@ -38,21 +31,29 @@ describe('Table.FixedColumn', () => {
     { a: '133', c: 'edd12221', d: 2, key: '9' },
   ];
 
-  it('renders correctly', () => {
-    jest.useFakeTimers();
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
+  describe('renders correctly', () => {
+    [{ name: 'with data', data }, { name: 'without data', data: [] }].forEach(
+      ({ name, data: testData }) => {
+        it(name, () => {
+          jest.useFakeTimers();
+          const wrapper = mount(<Table columns={columns} data={testData} scroll={{ x: 1200 }} />);
 
-    act(() => {
-      wrapper
-        .find('tbody ResizeObserver')
-        .first()
-        .props()
-        .onResize({ width: 93 });
-    });
-    jest.runAllTimers();
-    wrapper.update();
-    expect(wrapper.render()).toMatchSnapshot();
-    jest.useRealTimers();
+          act(() => {
+            wrapper
+              .find('tbody ResizeObserver')
+              .first()
+              .props()
+              .onResize({ width: 93 });
+          });
+          act(() => {
+            jest.runAllTimers();
+            wrapper.update();
+          });
+          expect(wrapper.render()).toMatchSnapshot();
+          jest.useRealTimers();
+        });
+      },
+    );
   });
 
   it('has correct scroll classNames when table resize', () => {
@@ -110,5 +111,36 @@ describe('Table.FixedColumn', () => {
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
+  });
+
+  describe('warning if fixed not continue', () => {
+    let errorSpy;
+
+    beforeAll(() => {
+      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    beforeEach(() => {
+      resetWarned();
+      errorSpy.mockReset();
+    });
+
+    afterAll(() => {
+      errorSpy.mockRestore();
+    });
+
+    it('left', () => {
+      mount(<Table columns={[{}, { fixed: 'left' }, {}]} />);
+      expect(errorSpy).toHaveBeenCalledWith(
+        "Warning: Index 0 of `columns` missing `fixed='left'` prop.",
+      );
+    });
+
+    it('right', () => {
+      mount(<Table columns={[{}, { fixed: 'right' }, {}]} />);
+      expect(errorSpy).toHaveBeenCalledWith(
+        "Warning: Index 2 of `columns` missing `fixed='right'` prop.",
+      );
+    });
   });
 });
