@@ -1,7 +1,13 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
-import { CellType, StickyOffsets, ColumnType, CustomizeComponent } from '../interface';
+import {
+  CellType,
+  StickyOffsets,
+  ColumnType,
+  CustomizeComponent,
+  GetComponentProps,
+} from '../interface';
 import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import ResizeContext from '../context/ResizeContext';
@@ -12,6 +18,8 @@ export interface RowProps<RecordType> {
   flattenColumns: ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
+  onHeaderRow: GetComponentProps<ColumnType<RecordType>[]>;
+  index: number;
 }
 
 function HeaderRow<RecordType>({
@@ -20,12 +28,19 @@ function HeaderRow<RecordType>({
   flattenColumns,
   rowComponent: RowComponent,
   cellComponent: CellComponent,
+  onHeaderRow,
+  index,
 }: RowProps<RecordType>) {
   const { prefixCls } = React.useContext(TableContext);
   const { onColumnResize } = React.useContext(ResizeContext);
 
+  let rowProps: React.HTMLAttributes<HTMLElement>;
+  if (onHeaderRow) {
+    rowProps = onHeaderRow(cells.map(cell => cell.column), index);
+  }
+
   return (
-    <RowComponent>
+    <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column, measure } = cell;
         const fixedInfo = getCellFixedInfo(

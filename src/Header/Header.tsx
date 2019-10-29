@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnsType, CellType, StickyOffsets, ColumnType } from '../interface';
+import { ColumnsType, CellType, StickyOffsets, ColumnType, GetComponentProps } from '../interface';
 import HeaderRow from './HeaderRow';
 import TableContext from '../context/TableContext';
 
@@ -89,6 +89,7 @@ export interface HeaderProps<RecordType> {
   flattenColumns: ColumnType<RecordType>[];
   stickyOffsets: StickyOffsets;
   measureColumnWidth?: boolean;
+  onHeaderRow: GetComponentProps<ColumnType<RecordType>[]>;
 }
 
 function Header<RecordType>({
@@ -96,6 +97,7 @@ function Header<RecordType>({
   columns,
   flattenColumns,
   measureColumnWidth,
+  onHeaderRow,
 }: HeaderProps<RecordType>): React.ReactElement {
   const { getComponent } = React.useContext(TableContext);
   const rows: CellType<RecordType>[][] = React.useMemo(
@@ -118,6 +120,8 @@ function Header<RecordType>({
             stickyOffsets={stickyOffsets}
             rowComponent={trComponent}
             cellComponent={thComponent}
+            onHeaderRow={onHeaderRow}
+            index={rowIndex}
           />
         );
 

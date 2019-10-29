@@ -50,6 +50,7 @@ import {
   ExpandableType,
   RowClassName,
   CustomizeComponent,
+  ColumnType,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -101,6 +102,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   showHeader?: boolean;
   components?: TableComponents;
   onRow?: GetComponentProps<RecordType>;
+  onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
   // expandIconColumnIndex?: number;
@@ -133,6 +135,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     components,
     emptyText,
     onRow,
+    onHeaderRow,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
@@ -362,6 +365,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     colWidths,
     columCount: flattenColumns.length,
     stickyOffsets,
+    onHeaderRow,
   };
 
   // Empty

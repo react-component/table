@@ -13,10 +13,10 @@ function toArray<T>(arr: T | T[]): T[] {
 export function getPathValue<ValueType, ObjectType extends object>(
   record: ObjectType,
   path: DataIndex,
-) {
+): ValueType {
   // Skip if path is empty
   if (!path && typeof path !== 'number') {
-    return record;
+    return (record as unknown) as ValueType;
   }
 
   const pathList = toArray(path);

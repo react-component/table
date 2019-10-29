@@ -353,84 +353,88 @@ describe('Table.Basic', () => {
     });
   });
 
-  // it('renders column.onCell correctly', () => {
-  //   const onCell = record => ({
-  //     id: `cell-${record.name}`,
-  //   });
-  //   const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onCell }];
-  //   const wrapper = render(createTable({ columns }));
+  it('renders column.onCell correctly', () => {
+    const onCell = record => ({
+      id: `cell-${record.name}`,
+    });
+    const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onCell }];
+    const wrapper = mount(createTable({ columns }));
 
-  //   expect(wrapper.find('tbody td')).toMatchSnapshot();
-  // });
+    expect(wrapper.find('tbody td')).toHaveLength(2);
+    wrapper.find('tbody td').forEach((td, index) => {
+      expect(td.props().id).toEqual(`cell-${data[index].name}`);
+    });
+  });
 
-  // it('renders onHeaderRow correctly', () => {
-  //   const onHeaderRow = jest.fn((columns, index) => ({
-  //     id: `header-row-${index}`,
-  //   }));
-  //   const wrapper = render(createTable({ onHeaderRow }));
+  it('renders onHeaderRow correctly', () => {
+    const onHeaderRow = jest.fn((columns, index) => ({
+      id: `header-row-${index}`,
+    }));
+    const wrapper = mount(createTable({ onHeaderRow }));
 
-  //   expect(wrapper.find('thead tr')).toMatchSnapshot();
-  //   expect(onHeaderRow).toBeCalledWith([{ title: 'Name', dataIndex: 'name', key: 'name' }], 0);
-  // });
+    expect(wrapper.find('thead tr').props().id).toEqual('header-row-0');
+    expect(onHeaderRow).toHaveBeenCalledWith(
+      [{ title: 'Name', dataIndex: 'name', key: 'name' }],
+      0,
+    );
+  });
 
-  // it('renders column.onHeaderCell', () => {
-  //   const onHeaderCell = column => ({
-  //     id: `header-cell-${column.key}`,
-  //   });
-  //   const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell }];
-  //   const wrapper = render(createTable({ columns }));
+  it('renders column.onHeaderCell', () => {
+    const onHeaderCell = column => ({
+      id: `header-cell-${column.key}`,
+    });
+    const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell }];
+    const wrapper = mount(createTable({ columns }));
 
-  //   expect(wrapper.find('thead th')).toMatchSnapshot();
-  // });
+    expect(wrapper.find('thead th')).toHaveLength(1);
+    expect(wrapper.find('thead th').props().id).toEqual('header-cell-name');
+  });
 
-  // describe('custom components', () => {
-  //   const MyTable = props => <table name="my-table" {...props} />;
-  //   const HeaderWrapper = props => <thead name="my-header-wrapper" {...props} />;
-  //   const HeaderRow = props => <tr name="my-header-row" {...props} />;
-  //   const HeaderCell = props => <th name="my-header-cell" {...props} />;
-  //   const BodyWrapper = props => <tbody name="my-body-wrapper" {...props} />;
-  //   const BodyRow = props => <tr name="my-body-row" {...props} />;
-  //   const BodyCell = props => <td name="my-body-cell" {...props} />;
+  describe('custom components', () => {
+    const MyTable = props => <table name="my-table" {...props} />;
+    const HeaderWrapper = props => <thead name="my-header-wrapper" {...props} />;
+    const HeaderRow = props => <tr name="my-header-row" {...props} />;
+    const HeaderCell = props => <th name="my-header-cell" {...props} />;
+    const BodyWrapper = props => <tbody name="my-body-wrapper" {...props} />;
+    const BodyRow = props => <tr name="my-body-row" {...props} />;
+    const BodyCell = props => <td name="my-body-cell" {...props} />;
+    const components = {
+      table: MyTable,
+      header: {
+        wrapper: HeaderWrapper,
+        row: HeaderRow,
+        cell: HeaderCell,
+      },
+      body: {
+        wrapper: BodyWrapper,
+        row: BodyRow,
+        cell: BodyCell,
+      },
+    };
 
-  //   const components = {
-  //     table: MyTable,
-  //     header: {
-  //       wrapper: HeaderWrapper,
-  //       row: HeaderRow,
-  //       cell: HeaderCell,
-  //     },
-  //     body: {
-  //       wrapper: BodyWrapper,
-  //       row: BodyRow,
-  //       cell: BodyCell,
-  //     },
-  //   };
+    it('renders correctly', () => {
+      const wrapper = mount(createTable({ components }));
+      expect(wrapper.render()).toMatchSnapshot();
+    });
 
-  //   it('renders correctly', () => {
-  //     const wrapper = render(createTable({ components }));
-
-  //     expect(wrapper).toMatchSnapshot();
-  //   });
-
-  //   it('renders fixed column and header correctly', () => {
-  //     const columns = [
-  //       { title: 'Name', dataIndex: 'name', key: 'name', fixed: 'left' },
-  //       { title: 'Age', dataIndex: 'age', key: 'age' },
-  //       { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
-  //     ];
-  //     const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
-  //     const wrapper = render(
-  //       createTable({
-  //         columns,
-  //         data: sampleData,
-  //         components,
-  //         scroll: { y: 100 },
-  //       }),
-  //     );
-
-  //     expect(wrapper).toMatchSnapshot();
-  //   });
-  // });
+    //   it('renders fixed column and header correctly', () => {
+    //     const columns = [
+    //       { title: 'Name', dataIndex: 'name', key: 'name', fixed: 'left' },
+    //       { title: 'Age', dataIndex: 'age', key: 'age' },
+    //       { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
+    //     ];
+    //     const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
+    //     const wrapper = render(
+    //       createTable({
+    //         columns,
+    //         data: sampleData,
+    //         components,
+    //         scroll: { y: 100 },
+    //       }),
+    //     );
+    //     expect(wrapper).toMatchSnapshot();
+    //   });
+  });
 
   // it('align column', () => {
   //   const columns = [
