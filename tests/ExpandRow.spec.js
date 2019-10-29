@@ -259,16 +259,16 @@ describe('Table.Expand', () => {
     expect(onExpandedRowsChange.mock.calls.length).toEqual(1);
   });
 
-  // it('show icon if use `expandIcon` & `expandRowByClick`', () => {
-  //   const wrapper = mount(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandRowByClick: true,
-  //       expandIcon: () => <span className="should-display" />,
-  //       data: [{ key: 0, name: 'Lucy', age: 27, children: [{ key: 1, name: 'Jack', age: 28 }] }],
-  //     }),
-  //   );
+  it('show icon if use `expandIcon` & `expandRowByClick`', () => {
+    const wrapper = mount(
+      createTable({
+        expandedRowRender,
+        expandRowByClick: true,
+        expandIcon: () => <span className="should-display" />,
+        data: [{ key: 0, name: 'Lucy', age: 27, children: [{ key: 1, name: 'Jack', age: 28 }] }],
+      }),
+    );
 
-  //   expect(wrapper.find('.should-display').length).toBeTruthy();
-  // });
+    expect(wrapper.find('.should-display').length).toBeTruthy();
+  });
 });
