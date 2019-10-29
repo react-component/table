@@ -40,7 +40,7 @@ describe('Table.FixedColumn', () => {
 
           act(() => {
             wrapper
-              .find('tbody ResizeObserver')
+              .find('table ResizeObserver')
               .first()
               .props()
               .onResize({ width: 93 });
