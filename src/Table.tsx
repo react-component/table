@@ -14,6 +14,12 @@
  *  - expandIconAsCell
  *  - useFixedHeader
  *  - rowRef
+ *  - columns[number].onCellClick
+ *  - onRowClick
+ *  - onRowDoubleClick
+ *  - onRowMouseEnter
+ *  - onRowMouseLeave
+ *  - getBodyWrapper
  *
  * Deprecated:
  *  - All expanded props, move into expandable

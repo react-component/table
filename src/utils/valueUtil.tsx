@@ -14,6 +14,11 @@ export function getPathValue<ValueType, ObjectType extends object>(
   record: ObjectType,
   path: DataIndex,
 ) {
+  // Skip if path is empty
+  if (!path && typeof path !== 'number') {
+    return record;
+  }
+
   const pathList = toArray(path);
 
   let current: ValueType | ObjectType = record;

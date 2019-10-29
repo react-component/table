@@ -179,210 +179,179 @@ describe('Table.Basic', () => {
     });
   });
 
-  // it('fires cell click event', () => {
-  //   const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  //   const onCellClick = jest.fn();
-  //   const columns = [
-  //     {
-  //       title: 'Name',
-  //       dataIndex: 'name',
-  //       key: 'name',
-  //       onCellClick,
-  //     },
-  //   ];
-  //   const wrapper = mount(createTable({ columns }));
-  //   wrapper
-  //     .find('tbody td')
-  //     .first()
-  //     .simulate('click');
-  //   expect(onCellClick.mock.calls[0][0]).toBe(data[0]);
-  //   expect(onCellClick.mock.calls[0][1].type).toBe('click');
-  //   expect(spy.mock.calls[0][0]).toMatch(
-  //     'Warning: column[onCellClick] is deprecated, please use column[onCell] instead.',
-  //   );
-  //   spy.mockReset();
-  //   spy.mockRestore();
-  // });
+  describe('dataIndex', () => {
+    it("pass record to render when it's falsy", () => {
+      [null, undefined, '', []].forEach(dataIndex => {
+        const cellRender = jest.fn();
+        const columns = [
+          {
+            title: 'Name',
+            dataIndex,
+            key: 'name',
+            render: cellRender,
+          },
+        ];
+        mount(createTable({ columns }));
+        expect(cellRender).toHaveBeenCalledWith(data[0], data[0], 0);
+      });
+    });
 
-  // describe('dataIndex', () => {
-  //   it("pass record to render when it's falsy", () => {
-  //     [null, undefined, '', []].forEach(dataIndex => {
-  //       const cellRender = jest.fn();
-  //       const columns = [
-  //         {
-  //           title: 'Name',
-  //           dataIndex,
-  //           key: 'name',
-  //           render: cellRender,
-  //         },
-  //       ];
-  //       mount(createTable({ columns }));
-  //       expect(cellRender).toBeCalledWith(data[0], data[0], 0);
-  //     });
-  //   });
+    it('render text by path', () => {
+      const columns = [
+        { title: 'First Name', dataIndex: ['name', 'first'], key: 'a' },
+        { title: 'Last Name', dataIndex: ['name', 'last'], key: 'b' },
+      ];
+      const localData = [
+        { key: 'key0', name: { first: 'John', last: 'Doe' } },
+        { key: 'key1', name: { first: 'Terry', last: 'Garner' } },
+      ];
+      const wrapper = mount(createTable({ columns, data: localData }));
 
-  //   it('render text by path', () => {
-  //     const columns = [
-  //       { title: 'First Name', dataIndex: 'name.first', key: 'a' },
-  //       { title: 'Last Name', dataIndex: 'name.last', key: 'b' },
-  //     ];
-  //     const localData = [
-  //       { key: 'key0', name: { first: 'John', last: 'Doe' } },
-  //       { key: 'key1', name: { first: 'Terry', last: 'Garner' } },
-  //     ];
-  //     const wrapper = render(createTable({ columns, data: localData }));
-  //     expect(wrapper).toMatchSnapshot();
-  //   });
-  // });
+      const targetData = [['John', 'Doe'], ['Terry', 'Garner']];
 
-  // it('render empty cell if text is empty object', () => {
-  //   const localData = [{ key: 'key0', name: {} }, { key: 'key1', name: 'Jack' }];
-  //   const wrapper = render(createTable({ data: localData }));
-  //   expect(
-  //     wrapper
-  //       .find('table td')
-  //       .first()
-  //       .text(),
-  //   ).toBe('');
-  // });
+      wrapper.find('tbody tr').forEach((tr, ri) => {
+        tr.find('td').forEach((td, di) => {
+          expect(td.text()).toEqual(targetData[ri][di]);
+        });
+      });
+    });
+  });
 
-  // it('renders colSpan correctly', () => {
-  //   const columns = [
-  //     {
-  //       title: 'Name',
-  //       dataIndex: 'firstName',
-  //       key: 'firstName',
-  //       colSpan: 2,
-  //       render: (text, record, index) => {
-  //         const obj = {
-  //           children: text,
-  //           props: {},
-  //         };
-  //         if (index === 0) {
-  //           obj.props.colSpan = 2;
-  //         }
-  //         return obj;
-  //       },
-  //     },
-  //     {
-  //       title: '',
-  //       dataIndex: 'lastName',
-  //       key: 'lastName',
-  //       colSpan: 0,
-  //       render: (text, record, index) => {
-  //         const obj = {
-  //           children: text,
-  //           props: {},
-  //         };
-  //         if (index === 0) {
-  //           obj.props.colSpan = 0;
-  //         }
-  //         return obj;
-  //       },
-  //     },
-  //   ];
-  //   const localData = [
-  //     { key: 'key0', firstName: 'John', lastName: 'Doe' },
-  //     { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
-  //   ];
-  //   const wrapper = render(createTable({ columns, data: localData }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('render empty cell if text is empty object', () => {
+    const localData = [{ key: 'key0', name: {} }, { key: 'key1', name: 'Jack' }];
+    const wrapper = mount(createTable({ data: localData }));
+    expect(
+      wrapper
+        .find('table td')
+        .first()
+        .text(),
+    ).toBe('');
+  });
 
-  // it('renders rowSpan correctly', () => {
-  //   const columns = [
-  //     {
-  //       title: 'First Name',
-  //       dataIndex: 'firstName',
-  //       key: 'firstName',
-  //     },
-  //     {
-  //       title: 'Last Name',
-  //       dataIndex: 'lastName',
-  //       key: 'lastName',
-  //       render: (text, record, index) => {
-  //         const obj = {
-  //           children: text,
-  //           props: {},
-  //         };
-  //         if (index === 0) {
-  //           obj.props.rowSpan = 2;
-  //         } else {
-  //           obj.props.rowSpan = 0;
-  //         }
-  //         return obj;
-  //       },
-  //     },
-  //   ];
-  //   const localData = [
-  //     { key: 'key0', firstName: 'John', lastName: 'Doe' },
-  //     { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
-  //   ];
-  //   const wrapper = render(createTable({ columns, data: localData }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('renders colSpan correctly', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'firstName',
+        key: 'firstName',
+        colSpan: 2,
+        render: (text, record, index) => {
+          const obj = {
+            children: text,
+            props: {},
+          };
+          if (index === 0) {
+            obj.props.colSpan = 2;
+          }
+          return obj;
+        },
+      },
+      {
+        title: '',
+        dataIndex: 'lastName',
+        key: 'lastName',
+        colSpan: 0,
+        render: (text, record, index) => {
+          const obj = {
+            children: text,
+            props: {},
+          };
+          if (index === 0) {
+            obj.props.colSpan = 0;
+          }
+          return obj;
+        },
+      },
+    ];
+    const localData = [
+      { key: 'key0', firstName: 'John', lastName: 'Doe' },
+      { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
+    ];
+    const wrapper = mount(createTable({ columns, data: localData }));
+    expect(wrapper.render()).toMatchSnapshot();
+  });
 
-  // it('shows error if no rowKey specify', () => {
-  //   const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  //   const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
-  //   mount(createTable({ data: localData }));
-  //   expect(spy.mock.calls[0][0]).toMatch(
-  //     'Warning: Each record in table should have a unique `key` prop,' +
-  //       'or set `rowKey` to an unique primary key.',
-  //   );
-  //   spy.mockReset();
-  //   spy.mockRestore();
-  // });
+  it('renders rowSpan correctly', () => {
+    const columns = [
+      {
+        title: 'First Name',
+        dataIndex: 'firstName',
+        key: 'firstName',
+      },
+      {
+        title: 'Last Name',
+        dataIndex: 'lastName',
+        key: 'lastName',
+        render: (text, record, index) => {
+          const obj = {
+            children: text,
+            props: {},
+          };
+          if (index === 0) {
+            obj.props.rowSpan = 2;
+          } else {
+            obj.props.rowSpan = 0;
+          }
+          return obj;
+        },
+      },
+    ];
+    const localData = [
+      { key: 'key0', firstName: 'John', lastName: 'Doe' },
+      { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
+    ];
+    const wrapper = mount(createTable({ columns, data: localData }));
+    expect(wrapper.render()).toMatchSnapshot();
+  });
 
-  // describe('data change to empty', () => {
-  //   beforeAll(() => {
-  //     spyOn(Table.prototype, 'resetScrollX');
-  //   });
+  it('shows error if no rowKey specify', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
+    mount(createTable({ data: localData }));
+    expect(spy.mock.calls[0][0]).toMatch(
+      'Warning: Each record in table should have a unique `key` prop, or set `rowKey` to an unique primary key.',
+    );
+    spy.mockRestore();
+  });
 
-  //   beforeEach(() => {
-  //     Table.prototype.resetScrollX.calls.reset();
-  //   });
+  it('renders correctly RowClassName as string', () => {
+    const wrapper = mount(
+      createTable({
+        rowClassName: 'test-row-class-name-asStr',
+      }),
+    );
 
-  //   it('reset scrollLeft when scroll.x is present', () => {
-  //     const wrapper = mount(createTable({ scroll: { x: 100 } }));
-  //     wrapper.setProps({ data: [] });
-  //     expect(Table.prototype.resetScrollX.calls.count()).toBe(1);
-  //   });
+    wrapper.find('tbody tr').forEach(tr => {
+      expect(tr.hasClass('test-row-class-name-asStr')).toBeTruthy();
+    });
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
+  });
 
-  //   it('resetScrollX is not called when scroll.x is absent', () => {
-  //     const wrapper = mount(createTable());
-  //     wrapper.setProps({ data: [] });
-  //     expect(Table.prototype.resetScrollX.calls.count()).toBe(0);
-  //   });
-  // });
+  it('renders correctly RowClassName as function', () => {
+    const wrapper = mount(
+      createTable({
+        rowClassName: () => 'test-row-class-name-asFn',
+      }),
+    );
 
-  // it('renders correctly RowClassName as string', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       rowClassName: 'test-row-class-name-asStr',
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+    wrapper.find('tbody tr').forEach(tr => {
+      expect(tr.hasClass('test-row-class-name-asFn')).toBeTruthy();
+    });
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
+  });
 
-  // it('renders correctly RowClassName as function', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       rowClassName: () => 'test-row-class-name-asFn',
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('renders onRow correctly', () => {
+    const onRow = (record, index) => ({
+      id: `row-${record.key}`,
+      index,
+    });
+    const wrapper = mount(createTable({ onRow }));
 
-  // it('renders onRow correctly', () => {
-  //   const onRow = (record, index) => ({
-  //     id: `row-${record.key}`,
-  //     index,
-  //   });
-  //   const wrapper = render(createTable({ onRow }));
-
-  //   expect(wrapper.find('tbody tr')).toMatchSnapshot();
-  // });
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
+    wrapper.find('tbody tr').forEach((tr, index) => {
+      expect(tr.props().id).toEqual(`row-${data[index].key}`);
+    });
+  });
 
   // it('renders column.onCell correctly', () => {
   //   const onCell = record => ({
