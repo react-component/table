@@ -80,78 +80,47 @@ describe('Table with grouping columns', () => {
     });
   });
 
-  // it('work with fixed columns', () => {
-  //   const columns = [
-  //     { title: '表头A', className: 'title-a', dataIndex: 'a', key: 'a', fixed: 'left' },
-  //     {
-  //       title: '表头B',
-  //       className: 'title-b',
-  //       children: [
-  //         { title: '表头C', className: 'title-c', dataIndex: 'b', key: 'b' },
-  //         { title: '表头D', className: 'title-d', dataIndex: 'c', key: 'c' },
-  //       ],
-  //     },
-  //     { title: '表头E', className: 'title-e', dataIndex: 'd', key: 'd', fixed: 'right' },
-  //   ];
+  it('https://github.com/ant-design/ant-design/issues/4061', () => {
+    /**
+     * +-------+
+     * | A | C |
+     * +-------+
+     * |   | D |
+     * | B +---+
+     * |   | E |
+     * +---+---+
+     */
+    const columns = [
+      {
+        title: 'A',
+        children: [
+          {
+            title: 'B',
+            dataIndex: 'b',
+            key: 'b',
+            className: 'title-b',
+          },
+        ],
+      },
+      {
+        title: 'C',
+        children: [
+          {
+            title: 'D',
+            children: [
+              {
+                title: 'E',
+                dataIndex: 'e',
+                key: 'e',
+              },
+            ],
+          },
+        ],
+      },
+    ];
 
-  //   const data = [
-  //     { key: '1', a: 'a1', b: 'b1', c: 'c1', d: 'd1' },
-  //     { key: '2', a: 'a2', b: 'b2', c: 'c2', d: 'd2' },
-  //     { key: '3', a: 'a3', b: 'b3', c: 'c3', d: 'd3' },
-  //   ];
-
-  //   const wrapper = mount(<Table columns={columns} data={data} />);
-
-  //   const fixedRows = wrapper.find('.rc-table-fixed-left thead tr');
-  //   const titleA = wrapper.find('.rc-table-fixed-left th.title-a');
-  //   const titleE = wrapper.find('.rc-table-fixed-right th.title-e');
-
-  //   expect(fixedRows.length).toBe(1);
-  //   expect(titleA.prop('rowSpan')).toBe(2);
-  //   expect(titleE.prop('rowSpan')).toBe(2);
-  // });
-
-  // it('https://github.com/ant-design/ant-design/issues/4061', () => {
-  //   /**
-  //    * +-------+
-  //    * | A | C |
-  //    * +-------+
-  //    * |   | D |
-  //    * | B +---+
-  //    * |   | E |
-  //    * +---+---+
-  //    */
-  //   const columns = [
-  //     {
-  //       title: 'A',
-  //       children: [
-  //         {
-  //           title: 'B',
-  //           dataIndex: 'b',
-  //           key: 'b',
-  //           className: 'title-b',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: 'C',
-  //       children: [
-  //         {
-  //           title: 'D',
-  //           children: [
-  //             {
-  //               title: 'E',
-  //               dataIndex: 'e',
-  //               key: 'e',
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   ];
-
-  //   const wrapper = mount(<Table columns={columns} data={[]} />);
-  //   const titleB = wrapper.find('.title-b');
-  //   expect(titleB.prop('rowSpan')).toBe(2);
-  // });
+    const wrapper = mount(<Table columns={columns} data={[]} />);
+    const titleB = wrapper.find('th.title-b');
+    expect(titleB.prop('rowSpan')).toBe(2);
+  });
 });
