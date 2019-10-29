@@ -39,8 +39,20 @@ describe('Table.FixedColumn', () => {
   ];
 
   it('renders correctly', () => {
+    jest.useFakeTimers();
     const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
+
+    act(() => {
+      wrapper
+        .find('tbody ResizeObserver')
+        .first()
+        .props()
+        .onResize({ width: 93 });
+    });
+    jest.runAllTimers();
+    wrapper.update();
     expect(wrapper.render()).toMatchSnapshot();
+    jest.useRealTimers();
   });
 
   it('has correct scroll classNames when table resize', () => {

@@ -174,6 +174,7 @@ function Cell<RecordType extends DefaultRecordType>(
 }
 
 const RefCell = React.forwardRef(Cell);
+RefCell.displayName = 'Cell';
 
 const MemoCell = React.memo(RefCell);
 MemoCell.displayName = 'Cell';

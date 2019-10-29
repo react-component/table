@@ -330,3 +330,52 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`Table.Basic syntactic sugar 1`] = `
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-content"
+  >
+    <table
+      style="table-layout: auto;"
+    >
+      <colgroup>
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+          >
+            total
+          </th>
+        </tr>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            rowspan="1"
+          >
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="rc-table-placeholder"
+        >
+          <td
+            class="rc-table-cell"
+            colspan="1"
+          >
+            No Data
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

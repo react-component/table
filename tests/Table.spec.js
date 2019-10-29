@@ -594,4 +594,32 @@ describe('Table.Basic', () => {
       );
     });
   });
+
+  it('columns without key', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [{ dataIndex: null }],
+      }),
+    );
+
+    expect(
+      wrapper
+        .find('tbody Cell')
+        .first()
+        .key(),
+    ).toBeTruthy();
+  });
+
+  it('syntactic sugar', () => {
+    const { Column, ColumnGroup } = Table;
+    expect(
+      mount(
+        <Table>
+          <ColumnGroup title="total">
+            <Column title="Name" dataIndex="name" />
+          </ColumnGroup>
+        </Table>,
+      ).render(),
+    ).toMatchSnapshot();
+  });
 });

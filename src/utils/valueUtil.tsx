@@ -3,7 +3,7 @@ import { Key, DataIndex } from '../interface';
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
 function toArray<T>(arr: T | T[]): T[] {
-  if (arr === undefined) {
+  if (arr === undefined || arr === null) {
     return [];
   }
 
@@ -45,7 +45,7 @@ export function getColumnKey({ key, dataIndex }: GetColumnKeyColumn, index: numb
     return key;
   }
 
-  const prefix = dataIndex !== undefined ? toArray(dataIndex).join('-') : INTERNAL_KEY_PREFIX;
+  const prefix = toArray(dataIndex).join('-') || INTERNAL_KEY_PREFIX;
 
   return `${prefix}_${index}`;
 }
