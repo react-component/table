@@ -154,6 +154,10 @@ export interface LegacyExpandableProps<RecordType> {
   defaultExpandAllRows?: boolean;
   /** @deprecated Use `expandable.indentSize` instead */
   indentSize?: number;
+  /** @deprecated Use `expandable.expandIconColumnIndex` instead */
+  expandIconColumnIndex?: number;
+  /** @deprecated Use `expandable.expandedRowClassName` instead */
+  expandedRowClassName?: RowClassName<RecordType>;
 }
 
 export type ExpandedRowRender<ValueType> = (

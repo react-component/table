@@ -89,7 +89,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   expandable?: ExpandableConfig<RecordType>;
   indentSize?: number;
   rowClassName?: string | RowClassName<RecordType>;
-  expandedRowClassName?: RowClassName<RecordType>;
 
   // Additional Part
   title?: PanelRender<RecordType>;
@@ -105,7 +104,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
-  // expandIconColumnIndex?: number;
   // childrenColumnName?: string;
 
   // bodyStyle?: React.CSSProperties;
@@ -116,7 +114,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     prefixCls,
     className,
     rowClassName,
-    expandedRowClassName,
     style,
     data,
     rowKey,
@@ -201,6 +198,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     onExpandedRowsChange,
     expandRowByClick,
     rowExpandable,
+    expandIconColumnIndex,
+    expandedRowClassName,
   } = expandableConfig;
 
   const mergedExpandIcon = expandIcon || renderExpandIcon;
@@ -263,6 +262,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     getRowKey,
     onTriggerExpand,
     expandIcon: mergedExpandIcon,
+    expandIconColumnIndex,
   });
 
   const columnContext = {

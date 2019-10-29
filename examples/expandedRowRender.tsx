@@ -36,6 +36,7 @@ const Demo = () => {
   const [expandRowByClick, expandRowByClickProps] = useCheckbox(false);
   const [fixColumns, fixColumnsProps] = useCheckbox(false);
   const [fixHeader, fixHeaderProps] = useCheckbox(false);
+  const [expandIconPosition, expandIconPositionProps] = useCheckbox(false);
 
   const remove = (index: number) => {
     const newData = data.slice();
@@ -57,7 +58,8 @@ const Demo = () => {
   ];
 
   if (fixColumns) {
-    columns.unshift({ title: 'fix left', dataIndex: 'a', width: 100, fixed: 'left' });
+    columns.unshift({ title: 'fix left 2', dataIndex: 'a', width: 100, fixed: 'left' });
+    columns.unshift({ title: 'fix left 1', dataIndex: 'a', width: 100, fixed: true });
     columns.push({ title: 'fix right', dataIndex: 'a', width: 100, fixed: 'right' });
   }
 
@@ -105,6 +107,10 @@ const Demo = () => {
         <input {...fixHeaderProps} />
         Fix Header
       </label>
+      <label>
+        <input {...expandIconPositionProps} />
+        Change Expand Icon Position
+      </label>
       <Table<RecordType>
         columns={columns}
         expandable={{
@@ -115,6 +121,7 @@ const Demo = () => {
           onExpandedRowsChange,
           onExpand,
           rowExpandable,
+          expandIconColumnIndex: expandIconPosition ? 1 : null,
         }}
         scroll={{ x: fixColumns ? 2000 : null, y: fixHeader ? 300 : null }}
         data={data}

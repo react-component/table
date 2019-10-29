@@ -16,7 +16,19 @@ export function getExpandableProps<RecordType>(
 
   if (
     process.env.NODE_ENV !== 'production' &&
-    ['expandedRowKeys', 'defaultExpandedRowKeys', 'expandedRowRender'].some(prop => prop in props)
+    [
+      'indentSize',
+      'expandedRowKeys',
+      'defaultExpandedRowKeys',
+      'defaultExpandAllRows',
+      'expandedRowRender',
+      'expandRowByClick',
+      'expandIcon',
+      'onExpand',
+      'onExpandedRowsChange',
+      'expandedRowClassName',
+      'expandIconColumnIndex',
+    ].some(prop => prop in props)
   ) {
     warning(false, 'expanded related props have been moved into `expandable`.');
   }

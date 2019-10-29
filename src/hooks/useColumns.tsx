@@ -30,17 +30,27 @@ function convertChildrenToColumns<RecordType>(children: React.ReactNode): Column
 
 function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
   return columns.reduce((list, column) => {
+    const { fixed } = column;
+
+    // Convert `fixed='true'` to `fixed='left'` instead
+    const parsedFixed = fixed === true ? 'left' : fixed;
+
     if ('children' in column) {
-      const { fixed } = column;
       return [
         ...list,
         ...flatColumns(column.children).map(subColum => ({
-          fixed,
+          fixed: parsedFixed,
           ...subColum,
         })),
       ];
     }
-    return [...list, column];
+    return [
+      ...list,
+      {
+        ...column,
+        fixed: parsedFixed,
+      },
+    ];
   }, []);
 }
 
@@ -81,6 +91,7 @@ function useColumns<RecordType>({
   onTriggerExpand,
   expandIcon,
   rowExpandable,
+  expandIconColumnIndex,
 }: {
   prefixCls?: string;
   columns?: ColumnsType<RecordType>;
@@ -91,6 +102,7 @@ function useColumns<RecordType>({
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIcon?: RenderExpandIcon<RecordType>;
   rowExpandable?: (record: RecordType) => boolean;
+  expandIconColumnIndex?: number;
 }): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
   const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
@@ -100,32 +112,36 @@ function useColumns<RecordType>({
   // Add expand column
   const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     if (expandable) {
-      const firstColumn = mergedColumns[0];
+      const expandColIndex = expandIconColumnIndex || 0;
+      const prevColumn = mergedColumns[expandColIndex];
 
-      return [
-        {
-          [INTERNAL_COL_DEFINE]: {
-            className: `${prefixCls}-expand-icon-col`,
-          },
-          title: '',
-          fixed: firstColumn ? firstColumn.fixed : null,
-          className: `${prefixCls}-row-expand-icon-cell`,
-          render: (_, record, index) => {
-            const rowKey = getRowKey(record, index);
-            const expanded = expandedKeys.has(rowKey);
-            const recordExpandable = rowExpandable ? rowExpandable(record) : true;
-
-            return expandIcon({
-              prefixCls,
-              expanded,
-              expandable: recordExpandable,
-              record,
-              onExpand: onTriggerExpand,
-            });
-          },
+      const expandColumn = {
+        [INTERNAL_COL_DEFINE]: {
+          className: `${prefixCls}-expand-icon-col`,
         },
-        ...mergedColumns,
-      ];
+        title: '',
+        fixed: prevColumn ? prevColumn.fixed : null,
+        className: `${prefixCls}-row-expand-icon-cell`,
+        render: (_, record, index) => {
+          const rowKey = getRowKey(record, index);
+          const expanded = expandedKeys.has(rowKey);
+          const recordExpandable = rowExpandable ? rowExpandable(record) : true;
+
+          return expandIcon({
+            prefixCls,
+            expanded,
+            expandable: recordExpandable,
+            record,
+            onExpand: onTriggerExpand,
+          });
+        },
+      };
+
+      // Insert expand column in the target position
+      const cloneColumns = mergedColumns.slice();
+      cloneColumns.splice(expandColIndex, 0, expandColumn);
+
+      return cloneColumns;
     }
     return mergedColumns;
   }, [expandable, mergedColumns, getRowKey, expandedKeys, expandIcon]);

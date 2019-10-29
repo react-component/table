@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Table from '../src';
 import { resetWarned } from 'rc-util/lib/warning';
+import Table from '../src';
 
 describe('Table.Expand', () => {
   const expandedRowRender = () => <p>extra data</p>;
@@ -64,132 +64,154 @@ describe('Table.Expand', () => {
     const wrapper = mount(
       createTable({ columns, data, expandable: { expandedRowRender, defaultExpandAllRows: true } }),
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
-  // it('renders expand icon as cell', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandIconAsCell: true,
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('renders expand icon to the specify column', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandIconColumnIndex: 1,
+        },
+      }),
+    );
+    expect(
+      wrapper
+        .find('tbody tr td')
+        .at(1)
+        .hasClass('rc-table-row-expand-icon-cell'),
+    ).toBeTruthy();
+  });
 
-  // it('renders expand icon to the specify column', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandIconColumnIndex: 1,
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('renders a custom icon', () => {
+    function CustomExpandIcon(props) {
+      return (
+        <a className="expand-row-icon" onClick={e => props.onExpand(props.record, e)}>
+          <i className="some-class" />
+        </a>
+      );
+    }
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandIcon: ({ onExpand, record }) => (
+            <CustomExpandIcon onExpand={onExpand} record={record} />
+          ),
+        },
+      }),
+    );
+    expect(wrapper.find('a.expand-row-icon').length).toBeTruthy();
+  });
 
-  // /* eslint-disable react/prop-types */
-  // it('renders a custom icon', () => {
-  //   function CustomExpandIcon(props) {
-  //     return (
-  //       <a className="expand-row-icon" onClick={e => props.onExpand(props.record, e)}>
-  //         <i className="some-class" />
-  //       </a>
-  //     );
-  //   }
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandIcon: ({ onExpand, record }) => (
-  //         <CustomExpandIcon onExpand={onExpand} record={record} />
-  //       ),
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-  // /* eslint-enable react/prop-types */
+  it('expand all rows by default', () => {
+    const wrapper = mount(
+      createTable({
+        expandedRowRender,
+        defaultExpandAllRows: true,
+      }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(4);
+  });
 
-  // it('renders nested data correctly', () => {
-  //   const localData = [
-  //     {
-  //       key: '0',
-  //       name: 'Lucy',
-  //       age: 27,
-  //       children: [{ key: '0-1', name: 'Jim', age: '2' }],
-  //     },
-  //     {
-  //       key: 1,
-  //       name: 'Jack',
-  //       age: 28,
-  //     },
-  //   ];
-  //   const wrapper = render(createTable({ data: localData }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('expand rows by defaultExpandedRowKeys', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          defaultExpandedRowKeys: [1],
+        },
+      }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(2)
+        .hasClass('rc-table-expanded-row'),
+    ).toBeTruthy();
+  });
 
-  // it('expand all rows by default', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       defaultExpandAllRows: true,
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('controlled by expandedRowKeys', () => {
+    const wrapper = mount(
+      createTable({
+        expandedRowRender,
+        expandedRowKeys: [0],
+      }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(1)
+        .hasClass('rc-table-expanded-row'),
+    ).toBeTruthy();
 
-  // it('expand rows by defaultExpandedRowKeys', () => {
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       defaultExpandedRowKeys: [1],
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+    wrapper.setProps({ expandedRowKeys: [1] });
+    expect(wrapper.find('tbody tr')).toHaveLength(4);
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(1)
+        .hasClass('rc-table-expanded-row'),
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(1)
+        .props().style.display,
+    ).toEqual('none');
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(3)
+        .hasClass('rc-table-expanded-row'),
+    ).toBeTruthy();
+  });
 
-  // it('controlled by expandedRowKeys', () => {
-  //   const wrapper = mount(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandedRowKeys: [0],
-  //     }),
-  //   );
-  //   expect(wrapper.render()).toMatchSnapshot();
-  //   wrapper.setProps({ expandedRowKeys: [1] });
-  //   expect(wrapper.render()).toMatchSnapshot();
-  // });
+  it('renders expend row class correctly', () => {
+    const expandedRowClassName = jest.fn().mockReturnValue('expand-row-test-class-name');
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandedRowKeys: [0],
+          expandedRowClassName,
+        },
+      }),
+    );
 
-  // it('renders expend row class correctly', () => {
-  //   const expandedRowClassName = jest.fn().mockReturnValue('expand-row-test-class-name');
-  //   const wrapper = render(
-  //     createTable({
-  //       expandedRowRender,
-  //       expandedRowKeys: [0],
-  //       expandedRowClassName,
-  //     }),
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  //   expect(expandedRowClassName).toBeCalledWith(sampleData[0], 0, 0);
-  // });
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(1)
+        .hasClass('expand-row-test-class-name'),
+    ).toBeTruthy();
+  });
 
-  // it('fires expand change event', () => {
-  //   const onExpand = jest.fn();
-  //   const wrapper = mount(
-  //     createTable({
-  //       expandedRowRender,
-  //       onExpand,
-  //     }),
-  //   );
-  //   wrapper
-  //     .find('ExpandIcon')
-  //     .first()
-  //     .simulate('click');
-  //   expect(onExpand).toBeCalledWith(true, sampleData[0]);
-  //   wrapper
-  //     .find('ExpandIcon')
-  //     .first()
-  //     .simulate('click');
-  //   expect(onExpand).toBeCalledWith(false, sampleData[0]);
-  // });
+  it('fires expand change event', () => {
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          onExpand,
+        },
+      }),
+    );
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
+
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+  });
 
   // it('fires onExpandedRowsChange event', () => {
   //   const onExpandedRowsChange = jest.fn();
