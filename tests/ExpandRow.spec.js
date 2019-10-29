@@ -213,57 +213,51 @@ describe('Table.Expand', () => {
     expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
   });
 
-  // it('fires onExpandedRowsChange event', () => {
-  //   const onExpandedRowsChange = jest.fn();
-  //   const wrapper = mount(
-  //     createTable({
-  //       expandedRowRender,
-  //       onExpandedRowsChange,
-  //     }),
-  //   );
-  //   wrapper
-  //     .find('ExpandIcon')
-  //     .first()
-  //     .simulate('click');
-  //   expect(onExpandedRowsChange).toBeCalledWith([0]);
-  // });
+  it('fires onExpandedRowsChange event', () => {
+    const onExpandedRowsChange = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandedRowRender,
+        onExpandedRowsChange,
+      }),
+    );
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpandedRowsChange).toHaveBeenCalledWith([0]);
+  });
 
-  // it('fires onExpandedRowsChange event when row is removed', () => {
-  //   const onExpandedRowsChange = jest.fn();
-  //   const onExpand = jest.fn();
-  //   const wrapper = mount(
-  //     createTable({
-  //       defaultExpandAllRows: true,
-  //       expandedRowRender,
-  //       onExpandedRowsChange,
-  //       onExpand,
-  //     }),
-  //   );
-  //   wrapper.setProps({
-  //     data: [{ key: 1, name: 'Jack', age: 28 }],
-  //   });
-  //   expect(onExpandedRowsChange).toBeCalledWith([1]);
-  //   expect(onExpand).not.toBeCalled();
-  // });
+  // TODO: handle this
+  it.skip('fires onExpandedRowsChange event when row is removed', () => {
+    const onExpandedRowsChange = jest.fn();
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          defaultExpandAllRows: true,
+          expandedRowRender,
+          onExpandedRowsChange,
+          onExpand,
+        },
+      }),
+    );
+    wrapper.setProps({
+      data: [{ key: 1, name: 'Jack', age: 28 }],
+    });
+    expect(onExpandedRowsChange).toHaveBeenCalledWith([1]);
+    expect(onExpand).not.toHaveBeenCalled();
+  });
 
-  // it('expand row by click', () => {
-  //   const wrapper = mount(createTable({ expandedRowRender }));
-  //   wrapper
-  //     .find('ExpandIcon')
-  //     .first()
-  //     .simulate('click');
-  //   expect(wrapper.render()).toMatchSnapshot();
-  // });
-
-  // // https://github.com/ant-design/ant-design/issues/12208
-  // it('avoid onExpandedRowsChange repeat trigger when rows removed', () => {
-  //   const onExpandedRowsChange = jest.fn();
-  //   const wrapper = mount(createTable({ expandedRowRender, onExpandedRowsChange }));
-  //   expect(onExpandedRowsChange).not.toBeCalled();
-  //   wrapper.setProps({ data: [{ key: 93, name: 'Bamboo', age: 14 }] });
-  //   expect(onExpandedRowsChange).toBeCalledWith([]);
-  //   expect(onExpandedRowsChange.mock.calls.length).toEqual(1);
-  // });
+  // https://github.com/ant-design/ant-design/issues/12208
+  it.skip('avoid onExpandedRowsChange repeat trigger when rows removed', () => {
+    const onExpandedRowsChange = jest.fn();
+    const wrapper = mount(createTable({ expandedRowRender, onExpandedRowsChange }));
+    expect(onExpandedRowsChange).not.toHaveBeenCalled();
+    wrapper.setProps({ data: [{ key: 93, name: 'Bamboo', age: 14 }] });
+    expect(onExpandedRowsChange).toHaveBeenCalledWith([]);
+    expect(onExpandedRowsChange.mock.calls.length).toEqual(1);
+  });
 
   // it('show icon if use `expandIcon` & `expandRowByClick`', () => {
   //   const wrapper = mount(
