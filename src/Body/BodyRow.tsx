@@ -162,6 +162,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
           <Cell
             className={columnClassName}
             ellipsis={column.ellipsis}
+            align={column.align}
             component={cellComponent}
             prefixCls={prefixCls}
             key={key}

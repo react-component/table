@@ -417,161 +417,181 @@ describe('Table.Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
 
-    //   it('renders fixed column and header correctly', () => {
-    //     const columns = [
-    //       { title: 'Name', dataIndex: 'name', key: 'name', fixed: 'left' },
-    //       { title: 'Age', dataIndex: 'age', key: 'age' },
-    //       { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
-    //     ];
-    //     const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
-    //     const wrapper = render(
-    //       createTable({
-    //         columns,
-    //         data: sampleData,
-    //         components,
-    //         scroll: { y: 100 },
-    //       }),
-    //     );
-    //     expect(wrapper).toMatchSnapshot();
-    //   });
+    it('renders fixed column and header correctly', () => {
+      const columns = [
+        { title: 'Name', dataIndex: 'name', key: 'name', fixed: 'left' },
+        { title: 'Age', dataIndex: 'age', key: 'age' },
+        { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
+      ];
+      const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
+      const wrapper = mount(
+        createTable({
+          columns,
+          data: sampleData,
+          components,
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 
-  // it('align column', () => {
-  //   const columns = [
-  //     { title: 'Name', dataIndex: 'name', key: 'name' },
-  //     { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
-  //   ];
-  //   const wrapper = render(createTable({ columns }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('align column', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
+    ];
+    const wrapper = mount(createTable({ columns }));
+    expect(
+      wrapper
+        .find('th')
+        .at(0)
+        .props().style.textAlign,
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .find('th')
+        .at(1)
+        .props().style.textAlign,
+    ).toEqual('center');
+    expect(
+      wrapper
+        .find('tbody tr')
+        .first()
+        .find('td')
+        .at(0)
+        .props().style.textAlign,
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .find('tbody tr')
+        .first()
+        .find('td')
+        .at(1)
+        .props().style.textAlign,
+    ).toEqual('center');
+  });
 
-  // it('align column should not override cell style', () => {
-  //   const columns = [
-  //     { title: 'Name', dataIndex: 'name', key: 'name' },
-  //     {
-  //       title: 'Age',
-  //       dataIndex: 'age',
-  //       key: 'age',
-  //       align: 'center',
-  //       onCell: () => ({ style: { color: 'red' } }),
-  //       onHeaderCell: () => ({ style: { color: 'red' } }),
-  //     },
-  //   ];
-  //   const wrapper = render(createTable({ columns }));
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('align column should not override cell style', () => {
+    const columns = [
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+        align: 'center',
+        onCell: () => ({ style: { color: 'red' } }),
+        onHeaderCell: () => ({ style: { color: 'green' } }),
+      },
+    ];
+    const wrapper = mount(createTable({ columns }));
+    expect(
+      wrapper
+        .find('th')
+        .first()
+        .props().style,
+    ).toEqual({
+      color: 'green',
+      textAlign: 'center',
+    });
+    expect(
+      wrapper
+        .find('td')
+        .first()
+        .props().style,
+    ).toEqual({
+      color: 'red',
+      textAlign: 'center',
+    });
+  });
 
-  // describe('row events', () => {
-  //   let spy;
-  //   beforeAll(() => {
-  //     spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  //   });
+  describe('row events', () => {
+    let spy;
 
-  //   afterEach(() => {
-  //     spy.mockReset();
-  //   });
+    beforeAll(() => {
+      spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
 
-  //   afterAll(() => {
-  //     spy.mockRestore();
-  //   });
+    afterEach(() => {
+      spy.mockReset();
+    });
 
-  //   it('fires row click event', () => {
-  //     const onRowClick = jest.fn();
-  //     const onClick = jest.fn();
-  //     const wrapper = mount(createTable({ onRowClick, onRow: () => ({ onClick }) }));
-  //     wrapper
-  //       .find('tbody tr')
-  //       .first()
-  //       .simulate('click');
-  //     const call = onRowClick.mock.calls[0];
-  //     expect(call[0]).toBe(data[0]);
-  //     expect(call[1]).toBe(0);
-  //     expect(call[2].type).toBe('click');
-  //     expect(spy.mock.calls[0][0]).toMatch(
-  //       'Warning: onRowClick is deprecated, please use onRow instead.',
-  //     );
+    afterAll(() => {
+      spy.mockRestore();
+    });
 
-  //     expect(onClick).toHaveBeenCalled();
-  //   });
+    it('fires row click event', () => {
+      const onClick = jest.fn();
+      const wrapper = mount(createTable({ onRow: () => ({ onClick }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-  //   it('fires double row click event', () => {
-  //     const onRowDoubleClick = jest.fn();
-  //     const onDoubleClick = jest.fn();
-  //     const wrapper = mount(createTable({ onRowDoubleClick, onRow: () => ({ onDoubleClick }) }));
-  //     wrapper
-  //       .find('tbody tr')
-  //       .first()
-  //       .simulate('doubleClick');
-  //     const call = onRowDoubleClick.mock.calls[0];
-  //     expect(call[0]).toBe(data[0]);
-  //     expect(call[1]).toBe(0);
-  //     expect(call[2].type).toBe('doubleclick');
-  //     expect(spy.mock.calls[0][0]).toMatch(
-  //       'Warning: onRowDoubleClick is deprecated, please use onRow instead.',
-  //     );
+      tr.simulate('click');
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
+    });
 
-  //     expect(onDoubleClick).toHaveBeenCalled();
-  //   });
+    it('fires double row click event', () => {
+      const onDoubleClick = jest.fn();
+      const wrapper = mount(createTable({ onRow: () => ({ onDoubleClick }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-  //   it('fires row contextmenu event', () => {
-  //     const onRowContextMenu = jest.fn();
-  //     const onContextMenu = jest.fn();
-  //     const wrapper = mount(createTable({ onRowContextMenu, onRow: () => ({ onContextMenu }) }));
-  //     wrapper
-  //       .find('tbody tr')
-  //       .first()
-  //       .simulate('contextMenu');
-  //     const call = onRowContextMenu.mock.calls[0];
-  //     expect(call[0]).toBe(data[0]);
-  //     expect(call[1]).toBe(0);
-  //     expect(call[2].type).toBe('contextmenu');
-  //     expect(spy.mock.calls[0][0]).toMatch(
-  //       'Warning: onRowContextMenu is deprecated, please use onRow instead.',
-  //     );
+      tr.first().simulate('doubleClick');
+      expect(onDoubleClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
+    });
 
-  //     expect(onRowContextMenu).toHaveBeenCalled();
-  //   });
+    it('fires row contextmenu event', () => {
+      const onContextMenu = jest.fn();
+      const wrapper = mount(createTable({ onRow: () => ({ onContextMenu }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-  //   it('fires onRowMouseEnter', () => {
-  //     const handleRowMouseEnter = jest.fn();
-  //     const onMouseEnter = jest.fn();
-  //     const wrapper = mount(
-  //       createTable({
-  //         onRowMouseEnter: handleRowMouseEnter,
-  //         onRow: () => ({ onMouseEnter }),
-  //       }),
-  //     );
-  //     wrapper
-  //       .find('.rc-table-row')
-  //       .first()
-  //       .simulate('mouseEnter');
-  //     expect(handleRowMouseEnter).toBeCalledWith(data[0], 0, expect.anything());
-  //     expect(spy.mock.calls[0][0]).toMatch(
-  //       'Warning: onRowMouseEnter is deprecated, please use onRow instead.',
-  //     );
+      tr.first().simulate('contextMenu');
+      expect(onContextMenu).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
+    });
 
-  //     expect(onMouseEnter).toHaveBeenCalled();
-  //   });
+    it('fires onRowMouseEnter', () => {
+      const onMouseEnter = jest.fn();
+      const wrapper = mount(
+        createTable({
+          onRow: () => ({ onMouseEnter }),
+        }),
+      );
 
-  //   it('fires onRowMouseLeave', () => {
-  //     const handleRowMouseLeave = jest.fn();
-  //     const onMouseLeave = jest.fn();
-  //     const wrapper = mount(
-  //       createTable({
-  //         onRowMouseLeave: handleRowMouseLeave,
-  //         onRow: () => ({ onMouseLeave }),
-  //       }),
-  //     );
-  //     wrapper
-  //       .find('.rc-table-row')
-  //       .first()
-  //       .simulate('mouseLeave');
-  //     expect(handleRowMouseLeave).toBeCalledWith(data[0], 0, expect.anything());
-  //     expect(spy.mock.calls[0][0]).toMatch(
-  //       'Warning: onRowMouseLeave is deprecated, please use onRow instead.',
-  //     );
+      const tr = wrapper.find('.rc-table-row').first();
 
-  //     expect(onMouseLeave).toHaveBeenCalled();
-  //   });
-  // });
+      tr.simulate('mouseEnter');
+      expect(onMouseEnter).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
+    });
+
+    it('fires onRowMouseLeave', () => {
+      const onMouseLeave = jest.fn();
+      const wrapper = mount(
+        createTable({
+          onRow: () => ({ onMouseLeave }),
+        }),
+      );
+
+      const tr = wrapper.find('.rc-table-row').first();
+
+      tr.simulate('mouseLeave');
+      expect(onMouseLeave).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
+    });
+  });
 });

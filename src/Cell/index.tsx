@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { supportRef } from 'rc-util/lib/ref';
 import {
   DataIndex,
   ColumnType,
@@ -7,6 +8,7 @@ import {
   CustomizeComponent,
   CellType,
   DefaultRecordType,
+  AlignType,
 } from '../interface';
 import { getPathValue } from '../utils/valueUtil';
 
@@ -14,6 +16,14 @@ function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
 ): data is RenderedCell<RecordType> {
   return data && typeof data === 'object' && !React.isValidElement(data);
+}
+
+function isRefComponent(component: CustomizeComponent) {
+  // String tag component also support ref
+  if (typeof component === 'string') {
+    return true;
+  }
+  return supportRef(component);
 }
 
 export interface CellProps<RecordType extends DefaultRecordType> {
@@ -29,6 +39,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   colSpan?: number;
   rowSpan?: number;
   ellipsis?: boolean;
+  align?: AlignType;
 
   // Fixed
   fixLeft?: number | false;
@@ -61,6 +72,7 @@ function Cell<RecordType extends DefaultRecordType>(
     appendNode,
     additionalProps = {},
     ellipsis,
+    align,
   }: CellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
@@ -114,6 +126,12 @@ function Cell<RecordType extends DefaultRecordType>(
     fixedStyle.right = fixRight as number;
   }
 
+  // ====================== Align =======================
+  const alignStyle: React.CSSProperties = {};
+  if (align) {
+    alignStyle.textAlign = align;
+  }
+
   // ====================== Render ======================
   let title: string;
   if (ellipsis) {
@@ -143,8 +161,8 @@ function Cell<RecordType extends DefaultRecordType>(
       },
       additionalProps.className,
     ),
-    style: { ...additionalProps.style, ...fixedStyle },
-    ref,
+    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle },
+    ref: isRefComponent(Component) ? ref : null,
   };
 
   return (

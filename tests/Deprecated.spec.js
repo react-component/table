@@ -29,5 +29,18 @@ describe('Table.Deprecated', () => {
         'Warning: `getBodyWrapper` is deprecated, please use custom `components` instead.',
       );
     });
+
+    ['onRowClick', 'onRowDoubleClick', 'onRowMouseEnter', 'onRowMouseLeave'].forEach(
+      removedProp => {
+        it(`warning for '${removedProp}'`, () => {
+          const props = {
+            [removedProp]: jest.fn(),
+          };
+          mount(<Table {...props} />);
+
+          expect(errorSpy.mock.calls[0][0].includes(removedProp)).toBeTruthy();
+        });
+      },
+    );
   });
 });

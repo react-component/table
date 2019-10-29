@@ -63,14 +63,16 @@ interface ColumnSharedType<RecordType> {
   fixed?: FixedType;
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: boolean;
+  align?: AlignType;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
   children: ColumnsType<RecordType>;
 }
 
+export type AlignType = 'left' | 'center' | 'right';
+
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
-  align?: 'left' | 'center' | 'right';
   colSpan?: number;
   dataIndex?: DataIndex;
   render?: (
