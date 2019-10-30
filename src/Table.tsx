@@ -20,6 +20,8 @@
  *  - onRowMouseEnter
  *  - onRowMouseLeave
  *  - getBodyWrapper
+ *  - bodyStyle
+ *  - childrenColumnName
  *
  * Deprecated:
  *  - All expanded props, move into expandable
@@ -95,7 +97,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   footer?: PanelRender<RecordType>;
   summary?: (data: RecordType[]) => React.ReactNode;
 
-  // TODO: Handle this
   // Customize
   id?: string;
   showHeader?: boolean;
@@ -103,10 +104,6 @@ export interface TableProps<RecordType extends DefaultRecordType>
   onRow?: GetComponentProps<RecordType>;
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
-
-  // childrenColumnName?: string;
-
-  // bodyStyle?: React.CSSProperties;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
