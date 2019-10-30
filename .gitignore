@@ -31,3 +31,4 @@ yarn.lock
 es/
 .storybook
 .doc
+!tests/__mocks__/rc-util/lib
