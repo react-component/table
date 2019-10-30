@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { resetWarned } from 'rc-util/lib/warning';
 import Table from '../src';
 
@@ -62,8 +63,21 @@ describe('Table.Expand', () => {
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
     const wrapper = mount(
-      createTable({ columns, data, expandable: { expandedRowRender, defaultExpandAllRows: true } }),
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, defaultExpandAllRows: true },
+      }),
     );
+    act(() => {
+      wrapper
+        .find('ResizeObserver')
+        .first()
+        .props()
+        .onResize({ width: 1128 });
+    });
+    wrapper.update();
     expect(wrapper.render()).toMatchSnapshot();
   });
 
@@ -239,5 +253,55 @@ describe('Table.Expand', () => {
     );
 
     expect(wrapper.find('.should-display').length).toBeTruthy();
+  });
+
+  it('expandRowByClick', () => {
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandRowByClick: true,
+          onExpand,
+        },
+      }),
+    );
+    wrapper
+      .find('tbody tr')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
+
+    wrapper
+      .find('tbody tr')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+  });
+
+  it('some row should not expandable', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          rowExpandable: ({ key }) => key === 1,
+        },
+      }),
+    );
+
+    expect(
+      wrapper
+        .find('tbody tr')
+        .first()
+        .find('.rc-table-row-expand-icon')
+        .hasClass('rc-table-row-spaced'),
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .find('tbody tr')
+        .last()
+        .find('.rc-table-row-expand-icon')
+        .hasClass('rc-table-row-collapsed'),
+    ).toBeTruthy();
   });
 });

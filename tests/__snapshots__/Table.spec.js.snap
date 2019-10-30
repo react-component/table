@@ -67,7 +67,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
 >
   <div
     class="rc-table-header"
-    style="overflow-x: scroll; margin-bottom: 0px;"
+    style="overflow-x: scroll; margin-bottom: -15px;"
   >
     <table
       style="table-layout: fixed;"
@@ -77,7 +77,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
         <col />
         <col />
         <col
-          style="width: 0px; min-width: 0;"
+          style="width: 15px; min-width: 15px;"
         />
       </colgroup>
       <thead
@@ -108,10 +108,17 @@ exports[`Table.Basic custom components renders fixed column and header correctly
             colspan="1"
             name="my-header-cell"
             rowspan="1"
-            style="position: sticky; right: 0px;"
+            style="position: sticky; right: 15px;"
           >
             Gender
           </th>
+          <th
+            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
+            style="position: sticky; right: 0px;"
+          />
         </tr>
       </thead>
     </table>

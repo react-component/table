@@ -29,7 +29,6 @@ function FixedHeader<RecordType>({
     onHeaderCell: () => ({
       className: `${prefixCls}-cell-scrollbar`,
     }),
-    render: () => null,
   };
 
   const columnsWithScrollbar = React.useMemo<ColumnsType<RecordType>>(

@@ -2,13 +2,14 @@
 
 exports[`Table.Expand renders fixed column correctly 1`] = `
 <div
-  class="rc-table"
+  class="rc-table rc-table-fixed-column"
 >
   <div
     class="rc-table-content"
+    style="overflow-x: scroll;"
   >
     <table
-      style="table-layout: auto;"
+      style="width: 903px; min-width: 100%; table-layout: fixed;"
     >
       <colgroup>
         <col
@@ -88,9 +89,14 @@ exports[`Table.Expand renders fixed column correctly 1`] = `
             class="rc-table-cell"
             colspan="4"
           >
-            <p>
-              extra data
-            </p>
+            <div
+              class="rc-table-expanded-row-fixed"
+              style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
+            >
+              <p>
+                extra data
+              </p>
+            </div>
           </td>
         </tr>
         <tr
@@ -129,9 +135,14 @@ exports[`Table.Expand renders fixed column correctly 1`] = `
             class="rc-table-cell"
             colspan="4"
           >
-            <p>
-              extra data
-            </p>
+            <div
+              class="rc-table-expanded-row-fixed"
+              style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
+            >
+              <p>
+                extra data
+              </p>
+            </div>
           </td>
         </tr>
       </tbody>

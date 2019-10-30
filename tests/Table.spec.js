@@ -67,6 +67,20 @@ describe('Table.Basic', () => {
     ).toEqual('footer');
   });
 
+  it('render summary correctly', () => {
+    const wrapper = mount(
+      createTable({
+        summary: () => (
+          <tr className="summary">
+            <td>Good</td>
+          </tr>
+        ),
+      }),
+    );
+
+    expect(wrapper.find('tfoot').text()).toEqual('Good');
+  });
+
   it('renders with id correctly', () => {
     const testId = 'test-identifier';
     const wrapper = mount(createTable({ id: testId }));
@@ -137,13 +151,18 @@ describe('Table.Basic', () => {
   });
 
   it('renders ellipsis', () => {
-    const wrapper = mount(createTable({ columns: [{ title: 'title', ellipsis: true }] }));
-    expect(
-      wrapper
-        .find('td')
-        .first()
-        .hasClass('rc-table-cell-ellipsis'),
-    ).toBeTruthy();
+    const wrapper = mount(
+      createTable({
+        columns: [
+          { title: 'title', ellipsis: true },
+          { title: 'node title', ellipsis: true, render: () => <h1>233</h1> },
+        ],
+      }),
+    );
+
+    wrapper.find('td').forEach(td => {
+      expect(td.hasClass('rc-table-cell-ellipsis')).toBeTruthy();
+    });
   });
 
   it('renders column correctly', () => {

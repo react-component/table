@@ -123,4 +123,35 @@ describe('Table with grouping columns', () => {
     const titleB = wrapper.find('th.title-b');
     expect(titleB.prop('rowSpan')).toBe(2);
   });
+
+  it('strange layout', () => {
+    /**
+     * +-------+
+     * |   | B |
+     * |   +---+
+     * | A | C |
+     * +   +---+
+     * |   |   |
+     * +---+---+
+     */
+    const columns = [
+      {
+        title: 'A',
+        rowSpan: 3,
+        className: 'title-a',
+      },
+      {
+        title: 'B',
+        children: [
+          {
+            title: 'C',
+          },
+        ],
+      },
+    ];
+
+    const wrapper = mount(<Table columns={columns} data={[]} />);
+    const titleA = wrapper.find('th.title-a');
+    expect(titleA.prop('rowSpan')).toBe(3);
+  });
 });
