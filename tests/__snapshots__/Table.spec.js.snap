@@ -22,9 +22,7 @@ exports[`Table.Basic custom components renders correctly 1`] = `
         >
           <th
             class="rc-table-cell"
-            colspan="1"
             name="my-header-cell"
-            rowspan="1"
           >
             Name
           </th>
@@ -88,35 +86,27 @@ exports[`Table.Basic custom components renders fixed column and header correctly
         >
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
             name="my-header-cell"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             Name
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
             name="my-header-cell"
-            rowspan="1"
           >
             Age
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
             name="my-header-cell"
-            rowspan="1"
             style="position: sticky; right: 15px;"
           >
             Gender
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-            colspan="1"
             name="my-header-cell"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           />
         </tr>
@@ -189,7 +179,6 @@ exports[`Table.Basic renders colSpan correctly 1`] = `
           <th
             class="rc-table-cell"
             colspan="2"
-            rowspan="1"
           >
             Name
           </th>
@@ -243,8 +232,6 @@ exports[`Table.Basic renders correctly 1`] = `
         <tr>
           <th
             class="test-prefix-cell"
-            colspan="1"
-            rowspan="1"
           >
             Name
           </th>
@@ -293,15 +280,11 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
         <tr>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             First Name
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             Last Name
           </th>
@@ -355,7 +338,6 @@ exports[`Table.Basic syntactic sugar 1`] = `
         <tr>
           <th
             class="rc-table-cell"
-            colspan="1"
           >
             total
           </th>
@@ -363,8 +345,6 @@ exports[`Table.Basic syntactic sugar 1`] = `
         <tr>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             Name
           </th>
@@ -376,7 +356,6 @@ exports[`Table.Basic syntactic sugar 1`] = `
         >
           <td
             class="rc-table-cell"
-            colspan="1"
           >
             No Data
           </td>

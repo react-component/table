@@ -147,8 +147,8 @@ function Cell<RecordType extends DefaultRecordType>(
   const componentProps = {
     title,
     ...additionalProps,
-    colSpan: mergedColSpan,
-    rowSpan: mergedRowSpan,
+    colSpan: mergedColSpan && mergedColSpan !== 1 ? mergedColSpan : null,
+    rowSpan: mergedRowSpan && mergedRowSpan !== 1 ? mergedRowSpan : null,
     className: classNames(
       cellPrefixCls,
       className,

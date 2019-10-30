@@ -35,87 +35,63 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
         <tr>
           <th
             class="rc-table-cell rc-table-cell-fix-left"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             title1
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 93px;"
           >
             title2
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title3
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title4
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title5
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title6
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title7
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title8
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title9
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title10
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title11
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           >
             title12
@@ -623,87 +599,63 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
         <tr>
           <th
             class="rc-table-cell rc-table-cell-fix-left"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             title1
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 93px;"
           >
             title2
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title3
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title4
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title5
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title6
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title7
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title8
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title9
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title10
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title11
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           >
             title12
@@ -766,95 +718,69 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
         <tr>
           <th
             class="rc-table-cell rc-table-cell-fix-left"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             title1
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 93px;"
           >
             title2
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title3
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title4
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title5
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title6
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title7
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title8
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title9
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title10
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title11
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 15px;"
           >
             title12
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           />
         </tr>
@@ -1389,87 +1315,63 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
         <tr>
           <th
             class="rc-table-cell rc-table-cell-fix-left"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             title1
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 93px;"
           >
             title2
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title3
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title4
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title5
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title6
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title7
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title8
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title9
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title10
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             title11
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           >
             title12

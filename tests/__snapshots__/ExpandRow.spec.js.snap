@@ -23,29 +23,21 @@ exports[`Table.Expand renders fixed column correctly 1`] = `
         <tr>
           <th
             class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           />
           <th
             class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; left: 0px;"
           >
             Name
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             Age
           </th>
           <th
             class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            colspan="1"
-            rowspan="1"
             style="position: sticky; right: 0px;"
           >
             Gender
@@ -169,15 +161,11 @@ exports[`Table.Expand renders tree row correctly 1`] = `
         <tr>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             Name
           </th>
           <th
             class="rc-table-cell"
-            colspan="1"
-            rowspan="1"
           >
             Age
           </th>
