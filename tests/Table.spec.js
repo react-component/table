@@ -641,4 +641,16 @@ describe('Table.Basic', () => {
       ).render(),
     ).toMatchSnapshot();
   });
+
+  describe('internal api', () => {
+    it('transformColumns', () => {
+      const wrapper = mount(
+        createTable({
+          transformColumns: columns => [{ title: 'before' }, ...columns, { title: 'after' }],
+        }),
+      );
+
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+  });
 });

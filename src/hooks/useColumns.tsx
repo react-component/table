@@ -81,30 +81,33 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
 /**
  * Parse `columns` & `children` into `columns`.
  */
-function useColumns<RecordType>({
-  prefixCls,
-  columns,
-  children,
-  expandable,
-  expandedKeys,
-  getRowKey,
-  onTriggerExpand,
-  expandIcon,
-  rowExpandable,
-  expandIconColumnIndex,
-}: {
-  prefixCls?: string;
-  columns?: ColumnsType<RecordType>;
-  children?: React.ReactNode;
-  expandable: boolean;
-  expandedKeys: Set<Key>;
-  getRowKey: GetRowKey<RecordType>;
-  onTriggerExpand: TriggerEventHandler<RecordType>;
-  expandIcon?: RenderExpandIcon<RecordType>;
-  rowExpandable?: (record: RecordType) => boolean;
-  expandIconColumnIndex?: number;
-}): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
-  const mergedColumns = React.useMemo<ColumnsType<RecordType>>(
+function useColumns<RecordType>(
+  {
+    prefixCls,
+    columns,
+    children,
+    expandable,
+    expandedKeys,
+    getRowKey,
+    onTriggerExpand,
+    expandIcon,
+    rowExpandable,
+    expandIconColumnIndex,
+  }: {
+    prefixCls?: string;
+    columns?: ColumnsType<RecordType>;
+    children?: React.ReactNode;
+    expandable: boolean;
+    expandedKeys: Set<Key>;
+    getRowKey: GetRowKey<RecordType>;
+    onTriggerExpand: TriggerEventHandler<RecordType>;
+    expandIcon?: RenderExpandIcon<RecordType>;
+    rowExpandable?: (record: RecordType) => boolean;
+    expandIconColumnIndex?: number;
+  },
+  transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
+): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
+  const baseColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
     [columns, children],
   );
@@ -113,7 +116,7 @@ function useColumns<RecordType>({
   const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     if (expandable) {
       const expandColIndex = expandIconColumnIndex || 0;
-      const prevColumn = mergedColumns[expandColIndex];
+      const prevColumn = baseColumns[expandColIndex];
 
       const expandColumn = {
         [INTERNAL_COL_DEFINE]: {
@@ -138,22 +141,27 @@ function useColumns<RecordType>({
       };
 
       // Insert expand column in the target position
-      const cloneColumns = mergedColumns.slice();
+      const cloneColumns = baseColumns.slice();
       cloneColumns.splice(expandColIndex, 0, expandColumn);
 
       return cloneColumns;
     }
-    return mergedColumns;
-  }, [expandable, mergedColumns, getRowKey, expandedKeys, expandIcon]);
+    return baseColumns;
+  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(withExpandColumns), [withExpandColumns]);
+  const mergedColumns = React.useMemo(
+    () => (transformColumns ? transformColumns(withExpandColumns) : withExpandColumns),
+    [transformColumns, withExpandColumns],
+  );
+
+  const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
 
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(flattenColumns);
   }
 
-  return [withExpandColumns, flattenColumns];
+  return [mergedColumns, flattenColumns];
 }
 
 export default useColumns;

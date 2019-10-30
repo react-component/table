@@ -101,6 +101,15 @@ export interface TableProps<RecordType extends DefaultRecordType>
   onRow?: GetComponentProps<RecordType>;
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
+
+  // Internal
+  /**
+   * @private Internal usage, may remove by refactor. Should always use `columns` instead.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
+  // Used for antd table transform column with additional column
+  transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -127,6 +136,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     emptyText,
     onRow,
     onHeaderRow,
+
+    // Internal
+    transformColumns,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
@@ -250,16 +262,19 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   // ====================== Column ======================
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns] = useColumns({
-    ...props,
-    ...expandableConfig,
-    expandable: !!expandedRowRender,
-    expandedKeys: mergedExpandedKeys,
-    getRowKey,
-    onTriggerExpand,
-    expandIcon: mergedExpandIcon,
-    expandIconColumnIndex,
-  });
+  const [columns, flattenColumns] = useColumns(
+    {
+      ...props,
+      ...expandableConfig,
+      expandable: !!expandedRowRender,
+      expandedKeys: mergedExpandedKeys,
+      getRowKey,
+      onTriggerExpand,
+      expandIcon: mergedExpandIcon,
+      expandIconColumnIndex,
+    },
+    transformColumns,
+  );
 
   const columnContext = {
     columns,
