@@ -3,7 +3,6 @@ import { ColumnsType, CellType, StickyOffsets, ColumnType, GetComponentProps } f
 import HeaderRow from './HeaderRow';
 import TableContext from '../context/TableContext';
 
-// TODO: warning user if mix using `children` & `xxxSpan`
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
   measureColumnWidth: boolean,

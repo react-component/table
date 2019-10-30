@@ -1,7 +1,4 @@
 /**
- * TODO:
- *  rowKey should not provide index as second param
- *
  * Feature:
  *  - fixed not need to set width
  *  - support `rowExpandable` to config row expand logic
@@ -9,6 +6,7 @@
  *
  * Update:
  *  - `dataIndex` is `array[]` now
+ *  - `expandable` wrap all the expand related props
  *
  * Removed:
  *  - expandIconAsCell
