@@ -1,18 +1,10 @@
 language: node_js
 
-sudo: false
-
-notifications:
-  email:
-  - yiminghe@gmail.com
-  - afc163@gmail.com
-  - yesmeck@gmail.com
-
 node_js:
-- 10
+  - 10
 
 script:
-- |
+  - |
     if [ "$TEST_TYPE" = test ]; then
       npm test -- --coverage && \
       bash <(curl -s https://codecov.io/bash)
@@ -21,5 +13,5 @@ script:
     fi
 env:
   matrix:
-  - TEST_TYPE=lint
-  - TEST_TYPE=test
+    - TEST_TYPE=lint
+    - TEST_TYPE=test
