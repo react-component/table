@@ -52,6 +52,23 @@ describe('Table.Expand', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
+  it('childrenColumnName', () => {
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        list: [{ key: 2, name: 'Jim', age: 1 }],
+      },
+      { key: 1, name: 'Jack', age: 28 },
+    ];
+    const wrapper = mount(
+      createTable({ data, expandable: { defaultExpandAllRows: true, childrenColumnName: 'list' } }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+
   it('renders fixed column correctly', () => {
     const columns = [
       { title: 'Name', dataIndex: 'name', key: 'name', fixed: true },

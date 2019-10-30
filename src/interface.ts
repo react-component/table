@@ -158,6 +158,8 @@ export interface LegacyExpandableProps<RecordType> {
   expandIconColumnIndex?: number;
   /** @deprecated Use `expandable.expandedRowClassName` instead */
   expandedRowClassName?: RowClassName<RecordType>;
+  /** @deprecated Use `expandable.childrenColumnName` instead */
+  childrenColumnName?: string;
 }
 
 export type ExpandedRowRender<ValueType> = (

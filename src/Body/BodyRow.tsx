@@ -33,6 +33,7 @@ export interface BodyRowProps<RecordType> {
   rowExpandable: (record: RecordType) => boolean;
   indent?: number;
   getRowKey: GetRowKey<RecordType>;
+  childrenColumnName: string;
 }
 
 function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowProps<RecordType>) {
@@ -49,6 +50,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     rowComponent: RowComponent,
     cellComponent,
     measureColumnWidth,
+    childrenColumnName,
   } = props;
   const { prefixCls } = React.useContext(TableContext);
   const {
@@ -84,7 +86,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
   // Only when row is not expandable and `children` exist in record
   const nestExpandable = expandableType === 'nest';
-  const hasNestChildren = 'children' in record;
+  const hasNestChildren = childrenColumnName in record;
   const mergedExpandable = rowSupportExpand || nestExpandable;
 
   // =========================== onRow ===========================
@@ -224,7 +226,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   // ========================= Nest Row ==========================
   let nestRowNode: React.ReactElement[];
   if (hasNestChildren && expanded) {
-    nestRowNode = (record.children || []).map(
+    nestRowNode = (record[childrenColumnName] || []).map(
       (subRecord: RecordType, subIndex: number): React.ReactElement => {
         const subKey = getRowKey(subRecord, subIndex);
 

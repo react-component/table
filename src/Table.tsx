@@ -19,7 +19,6 @@
  *  - onRowMouseLeave
  *  - getBodyWrapper
  *  - bodyStyle
- *  - childrenColumnName
  *
  * Deprecated:
  *  - All expanded props, move into expandable
@@ -195,14 +194,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     rowExpandable,
     expandIconColumnIndex,
     expandedRowClassName,
+    childrenColumnName,
   } = expandableConfig;
 
   const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const mergedChildrenColumnName = childrenColumnName || 'children';
   const expandableType = React.useMemo<ExpandableType>(() => {
     if (expandedRowRender) {
       return 'row';
     }
-    if (mergedData.some(record => 'children' in record)) {
+    if (mergedData.some(record => mergedChildrenColumnName in record)) {
       return 'nest';
     }
     return false;
@@ -386,6 +387,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       getRowKey={getRowKey}
       onRow={onRow}
       emptyNode={emptyNode}
+      childrenColumnName={mergedChildrenColumnName}
     />
   );
 

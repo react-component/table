@@ -14,6 +14,7 @@ export interface BodyProps<RecordType> {
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   emptyNode: React.ReactNode;
+  childrenColumnName: string;
 }
 
 function Body<RecordType>({
@@ -25,6 +26,7 @@ function Body<RecordType>({
   onRow,
   rowExpandable,
   emptyNode,
+  childrenColumnName,
 }: BodyProps<RecordType>) {
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { fixHeader, fixColumn, flattenColumns, componentWidth } = React.useContext(BodyContext);
@@ -53,6 +55,7 @@ function Body<RecordType>({
             onRow={onRow}
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
+            childrenColumnName={childrenColumnName}
           />,
         ];
       });
