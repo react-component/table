@@ -33,7 +33,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development father doc dev --storybook",
     "build": "father doc build --storybook",
-    "compile": "father build && lessc assets/index.less assets/index.css && lessc assets/animation.less assets/animation.css && lessc assets/bordered.less assets/bordered.css",
+    "compile": "father build && lessc assets/index.less assets/index.css",
     "gh-pages": "npm run build && father doc deploy",
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish && npm run gh-pages",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
@@ -51,12 +51,15 @@
     "lodash": "^4.17.5",
     "mini-store": "^2.0.0",
     "prop-types": "^15.5.8",
-    "rc-util": "^4.13.0",
+    "raf": "^3.4.1",
+    "rc-resize-observer": "^0.1.2",
+    "rc-util": "^4.14.1",
     "react-lifecycles-compat": "^3.0.2",
-    "shallowequal": "^1.0.2"
+    "shallowequal": "^1.1.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
+    "@types/jest": "^24.0.20",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@umijs/fabric": "^1.1.10",
@@ -69,7 +72,7 @@
     "less": "^3.10.3",
     "np": "^5.1.0",
     "prettier": "^1.11.1",
-    "rc-animate": "^2.3.0",
+    "rc-animate": "^2.10.1",
     "rc-dropdown": "~2.0.1",
     "rc-menu": "^7.4.23",
     "react": "^16.0.0",

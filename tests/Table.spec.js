@@ -1,9 +1,8 @@
-/* eslint-disable no-undef, no-console */
 import React from 'react';
-import { render, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Table from '../src';
 
-describe('Table', () => {
+describe('Table.Basic', () => {
   const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
@@ -12,83 +11,87 @@ describe('Table', () => {
   };
 
   it('renders correctly', () => {
-    const wrapper = render(
+    const wrapper = mount(
       createTable({
         prefixCls: 'test-prefix',
         className: 'test-class-name',
       }),
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('renders empty text correctly', () => {
-    const wrapper1 = render(createTable({ data: [], emptyText: 'No data' }));
-    const wrapper2 = render(createTable({ data: [], emptyText: () => 'No data' }));
-    expect(wrapper1).toMatchSnapshot();
-    expect(wrapper2).toMatchSnapshot();
+    const wrapper1 = mount(createTable({ data: [], emptyText: 'No data' }));
+    const wrapper2 = mount(createTable({ data: [], emptyText: () => 'No data' }));
+    expect(
+      wrapper1
+        .find('.rc-table-placeholder')
+        .hostNodes()
+        .text(),
+    ).toEqual('No data');
+    expect(
+      wrapper2
+        .find('.rc-table-placeholder')
+        .hostNodes()
+        .text(),
+    ).toEqual('No data');
   });
 
   it('renders without header', () => {
-    const wrapper = render(createTable({ showHeader: false }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ showHeader: false }));
+    expect(wrapper.find('thead').length).toBeFalsy();
   });
 
   it('renders fixed header correctly', () => {
-    const wrapper = render(createTable({ useFixedHeader: true }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ scroll: { y: 100 } }));
+    expect(wrapper.find('.rc-table-header').length).toBeTruthy();
   });
 
   it('renders title correctly', () => {
-    const wrapper = render(createTable({ title: () => <p>title</p> }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ title: () => <p>title</p> }));
+    expect(
+      wrapper
+        .find('.rc-table-title')
+        .hostNodes()
+        .text(),
+    ).toEqual('title');
   });
 
   it('renders footer correctly', () => {
-    const wrapper = render(createTable({ footer: () => <p>footer</p> }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ footer: () => <p>footer</p> }));
+    expect(
+      wrapper
+        .find('.rc-table-footer')
+        .hostNodes()
+        .text(),
+    ).toEqual('footer');
   });
 
-  it('renders table body to the wrapper', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const getBodyWrapper = body => <tbody className="custom-wrapper">{body.props.children}</tbody>;
-    const wrapper = render(createTable({ getBodyWrapper }));
-    expect(wrapper).toMatchSnapshot();
-    expect(spy.mock.calls[0][0]).toMatch(
-      'Warning: getBodyWrapper is deprecated, please use custom components instead.',
+  it('render summary correctly', () => {
+    const wrapper = mount(
+      createTable({
+        summary: () => (
+          <tr className="summary">
+            <td>Good</td>
+          </tr>
+        ),
+      }),
     );
-    spy.mockRestore();
+
+    expect(wrapper.find('tfoot').text()).toEqual('Good');
   });
 
   it('renders with id correctly', () => {
     const testId = 'test-identifier';
     const wrapper = mount(createTable({ id: testId }));
-    expect(wrapper.find(`div#${testId}`)).toHaveLength(1);
+    expect(wrapper.find(`div#${testId}`).length).toBeTruthy();
   });
 
-  it('renders data- attributes', () => {
-    const wrapper = render(createTable({ 'data-test': 'names-table' }));
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders aria- attributes', () => {
-    const wrapper = render(createTable({ 'aria-label': 'names-table-aria' }));
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  xit('sets row refs', () => {
-    const wrapper = mount(createTable({ rowRef: record => record.key }));
-    expect(wrapper.instance().refs.key0).toBe(
-      wrapper
-        .find('TableRow')
-        .at(0)
-        .instance(),
-    );
-    expect(wrapper.instance().refs.key1).toBe(
-      wrapper
-        .find('TableRow')
-        .at(1)
-        .instance(),
-    );
+  it('renders data- &  aria- attributes', () => {
+    const miscProps = { 'data-test': 'names-table', 'aria-label': 'names-table-aria' };
+    const wrapper = mount(createTable(miscProps));
+    const props = wrapper.find('div.rc-table').props();
+    expect(props).toEqual(expect.objectContaining(miscProps));
   });
 
   describe('rowKey', () => {
@@ -96,15 +99,15 @@ describe('Table', () => {
       const wrapper = mount(createTable());
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(0)
-          .prop('rowKey'),
+          .key(),
       ).toBe('key0');
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(1)
-          .prop('rowKey'),
+          .key(),
       ).toBe('key1');
     });
 
@@ -112,15 +115,15 @@ describe('Table', () => {
       const wrapper = mount(createTable({ rowKey: 'name' }));
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(0)
-          .prop('rowKey'),
+          .key(),
       ).toBe('Lucy');
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(1)
-          .prop('rowKey'),
+          .key(),
       ).toBe('Jack');
     });
 
@@ -128,116 +131,37 @@ describe('Table', () => {
       const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(0)
-          .prop('rowKey'),
+          .key(),
       ).toBe('key01');
       expect(
         wrapper
-          .find('TableRow')
+          .find('BodyRow')
           .at(1)
-          .prop('rowKey'),
+          .key(),
       ).toBe('key11');
-    });
-
-    it('renders tableLayout', () => {
-      const wrapper = render(createTable({ tableLayout: true }));
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    it('renders ellipsis', () => {
-      const wrapper = render(createTable({ columns: [{ title: 'title', ellipsis: true }] }));
-      expect(wrapper).toMatchSnapshot();
     });
   });
 
-  describe('scroll', () => {
-    it('renders scroll.x is true', () => {
-      const wrapper = render(createTable({ scroll: { x: true } }));
-      expect(wrapper).toMatchSnapshot();
-    });
+  it('renders tableLayout', () => {
+    const wrapper = mount(createTable({ tableLayout: 'fixed' }));
+    expect(wrapper.find('table').props().style.tableLayout).toEqual('fixed');
+    expect(wrapper.find('div.rc-table').hasClass('rc-table-layout-fixed')).toBeTruthy();
+  });
 
-    it('renders scroll.x is a number', () => {
-      const wrapper = render(createTable({ scroll: { x: 200 } }));
-      expect(wrapper).toMatchSnapshot();
-    });
+  it('renders ellipsis', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [
+          { title: 'title', ellipsis: true },
+          { title: 'node title', ellipsis: true, render: () => <h1>233</h1> },
+        ],
+      }),
+    );
 
-    it('renders scroll.y is a number', () => {
-      const wrapper = render(createTable({ scroll: { y: 200 } }));
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    it('fire scroll event', () => {
-      const newColumns = [
-        { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-        { title: 'title2', dataIndex: 'b', key: 'b' },
-        { title: 'title3', dataIndex: 'c', key: 'c' },
-        { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
-      ];
-      const newData = [
-        { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
-        { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
-      ];
-      const wrapper = mount(
-        <Table
-          columns={newColumns}
-          data={newData}
-          scroll={{
-            x: 200,
-            y: 200,
-          }}
-        />,
-      );
-      const inst = wrapper.instance();
-      const headTable = wrapper.find('.rc-table-header').at(0);
-      const bodyTable = wrapper.find('.rc-table-body').at(0);
-      const fixedColumnsBodyLeft = wrapper.find('.rc-table-body-inner').at(0);
-      const fixedColumnsBodyRight = wrapper.find('.rc-table-body-inner').at(1);
-
-      expect(inst.lastScrollLeft).toBe(undefined);
-
-      // fire headTable scroll.
-      headTable.getDOMNode().scrollTop = 0;
-      headTable.getDOMNode().scrollLeft = 20;
-      headTable.simulate('mouseover');
-      headTable.simulate('scroll');
-      expect(bodyTable.getDOMNode().scrollLeft).toBe(20);
-      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(0);
-      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(0);
-      expect(inst.lastScrollLeft).toBe(20);
-
-      // fire bodyTable scroll.
-      bodyTable.getDOMNode().scrollTop = 10;
-      bodyTable.getDOMNode().scrollLeft = 40;
-      bodyTable.simulate('mouseover');
-      bodyTable.simulate('scroll');
-      expect(headTable.getDOMNode().scrollLeft).toBe(40);
-      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(10);
-      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(10);
-
-      expect(inst.lastScrollLeft).toBe(40);
-
-      // fire fixedColumnsBodyLeft scroll.
-      fixedColumnsBodyLeft.getDOMNode().scrollTop = 30;
-      fixedColumnsBodyLeft.simulate('mouseover');
-      fixedColumnsBodyLeft.simulate('scroll');
-      expect(headTable.getDOMNode().scrollLeft).toBe(40);
-      expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
-      expect(bodyTable.getDOMNode().scrollTop).toBe(30);
-      expect(fixedColumnsBodyRight.getDOMNode().scrollTop).toBe(30);
-
-      expect(inst.lastScrollLeft).toBe(0);
-
-      // fire fixedColumnsBodyRight scroll.
-      fixedColumnsBodyRight.getDOMNode().scrollTop = 15;
-      fixedColumnsBodyRight.simulate('mouseover');
-      fixedColumnsBodyRight.simulate('scroll');
-      expect(headTable.getDOMNode().scrollLeft).toBe(40);
-      expect(bodyTable.getDOMNode().scrollLeft).toBe(40);
-      expect(bodyTable.getDOMNode().scrollTop).toBe(15);
-      expect(fixedColumnsBodyLeft.getDOMNode().scrollTop).toBe(15);
-
-      expect(inst.lastScrollLeft).toBe(0);
+    wrapper.find('td').forEach(td => {
+      expect(td.hasClass('rc-table-cell-ellipsis')).toBeTruthy();
     });
   });
 
@@ -251,8 +175,13 @@ describe('Table', () => {
         width: 100,
       },
     ];
-    const wrapper = render(createTable({ columns }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ columns }));
+    wrapper.find('td').forEach((td, index) => {
+      expect(td.hasClass('name-class')).toBeTruthy();
+      expect(td.text()).toEqual(['Lucy', 'Jack'][index]);
+    });
+
+    expect(wrapper.find('col').props().style).toEqual(expect.objectContaining({ width: 100 }));
   });
 
   it('renders custom cell correctly', () => {
@@ -260,37 +189,13 @@ describe('Table', () => {
       {
         title: 'Name',
         dataIndex: 'name',
-        key: 'name',
-        render: text => <p>{text}</p>,
-      },
-    ];
-    const wrapper = render(createTable({ columns }));
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('fires cell click event', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const onCellClick = jest.fn();
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        onCellClick,
+        render: text => <p>!!!{text}!!!</p>,
       },
     ];
     const wrapper = mount(createTable({ columns }));
-    wrapper
-      .find('tbody td')
-      .first()
-      .simulate('click');
-    expect(onCellClick.mock.calls[0][0]).toBe(data[0]);
-    expect(onCellClick.mock.calls[0][1].type).toBe('click');
-    expect(spy.mock.calls[0][0]).toMatch(
-      'Warning: column[onCellClick] is deprecated, please use column[onCell] instead.',
-    );
-    spy.mockReset();
-    spy.mockRestore();
+    wrapper.find('td').forEach((td, index) => {
+      expect(td.text()).toEqual(['!!!Lucy!!!', '!!!Jack!!!'][index]);
+    });
   });
 
   describe('dataIndex', () => {
@@ -306,27 +211,34 @@ describe('Table', () => {
           },
         ];
         mount(createTable({ columns }));
-        expect(cellRender).toBeCalledWith(data[0], data[0], 0);
+        expect(cellRender).toHaveBeenCalledWith(data[0], data[0], 0);
       });
     });
 
     it('render text by path', () => {
       const columns = [
-        { title: 'First Name', dataIndex: 'name.first', key: 'a' },
-        { title: 'Last Name', dataIndex: 'name.last', key: 'b' },
+        { title: 'First Name', dataIndex: ['name', 'first'], key: 'a' },
+        { title: 'Last Name', dataIndex: ['name', 'last'], key: 'b' },
       ];
       const localData = [
         { key: 'key0', name: { first: 'John', last: 'Doe' } },
         { key: 'key1', name: { first: 'Terry', last: 'Garner' } },
       ];
-      const wrapper = render(createTable({ columns, data: localData }));
-      expect(wrapper).toMatchSnapshot();
+      const wrapper = mount(createTable({ columns, data: localData }));
+
+      const targetData = [['John', 'Doe'], ['Terry', 'Garner']];
+
+      wrapper.find('tbody tr').forEach((tr, ri) => {
+        tr.find('td').forEach((td, di) => {
+          expect(td.text()).toEqual(targetData[ri][di]);
+        });
+      });
     });
   });
 
   it('render empty cell if text is empty object', () => {
     const localData = [{ key: 'key0', name: {} }, { key: 'key1', name: 'Jack' }];
-    const wrapper = render(createTable({ data: localData }));
+    const wrapper = mount(createTable({ data: localData }));
     expect(
       wrapper
         .find('table td')
@@ -374,8 +286,8 @@ describe('Table', () => {
       { key: 'key0', firstName: 'John', lastName: 'Doe' },
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
-    const wrapper = render(createTable({ columns, data: localData }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ columns, data: localData }));
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('renders rowSpan correctly', () => {
@@ -407,8 +319,8 @@ describe('Table', () => {
       { key: 'key0', firstName: 'John', lastName: 'Doe' },
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
-    const wrapper = render(createTable({ columns, data: localData }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ columns, data: localData }));
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   it('shows error if no rowKey specify', () => {
@@ -416,51 +328,35 @@ describe('Table', () => {
     const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
     mount(createTable({ data: localData }));
     expect(spy.mock.calls[0][0]).toMatch(
-      'Warning: Each record in table should have a unique `key` prop,' +
-        'or set `rowKey` to an unique primary key.',
+      'Warning: Each record in table should have a unique `key` prop, or set `rowKey` to an unique primary key.',
     );
-    spy.mockReset();
     spy.mockRestore();
   });
 
-  describe('data change to empty', () => {
-    beforeAll(() => {
-      spyOn(Table.prototype, 'resetScrollX');
-    });
-
-    beforeEach(() => {
-      Table.prototype.resetScrollX.calls.reset();
-    });
-
-    it('reset scrollLeft when scroll.x is present', () => {
-      const wrapper = mount(createTable({ scroll: { x: 100 } }));
-      wrapper.setProps({ data: [] });
-      expect(Table.prototype.resetScrollX.calls.count()).toBe(1);
-    });
-
-    it('resetScrollX is not called when scroll.x is absent', () => {
-      const wrapper = mount(createTable());
-      wrapper.setProps({ data: [] });
-      expect(Table.prototype.resetScrollX.calls.count()).toBe(0);
-    });
-  });
-
   it('renders correctly RowClassName as string', () => {
-    const wrapper = render(
+    const wrapper = mount(
       createTable({
         rowClassName: 'test-row-class-name-asStr',
       }),
     );
-    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('tbody tr').forEach(tr => {
+      expect(tr.hasClass('test-row-class-name-asStr')).toBeTruthy();
+    });
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
   });
 
   it('renders correctly RowClassName as function', () => {
-    const wrapper = render(
+    const wrapper = mount(
       createTable({
         rowClassName: () => 'test-row-class-name-asFn',
       }),
     );
-    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('tbody tr').forEach(tr => {
+      expect(tr.hasClass('test-row-class-name-asFn')).toBeTruthy();
+    });
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
   });
 
   it('renders onRow correctly', () => {
@@ -468,9 +364,12 @@ describe('Table', () => {
       id: `row-${record.key}`,
       index,
     });
-    const wrapper = render(createTable({ onRow }));
+    const wrapper = mount(createTable({ onRow }));
 
-    expect(wrapper.find('tbody tr')).toMatchSnapshot();
+    expect(wrapper.find('tbody tr').length).toBeTruthy();
+    wrapper.find('tbody tr').forEach((tr, index) => {
+      expect(tr.props().id).toEqual(`row-${data[index].key}`);
+    });
   });
 
   it('renders column.onCell correctly', () => {
@@ -478,19 +377,25 @@ describe('Table', () => {
       id: `cell-${record.name}`,
     });
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onCell }];
-    const wrapper = render(createTable({ columns }));
+    const wrapper = mount(createTable({ columns }));
 
-    expect(wrapper.find('tbody td')).toMatchSnapshot();
+    expect(wrapper.find('tbody td')).toHaveLength(2);
+    wrapper.find('tbody td').forEach((td, index) => {
+      expect(td.props().id).toEqual(`cell-${data[index].name}`);
+    });
   });
 
   it('renders onHeaderRow correctly', () => {
     const onHeaderRow = jest.fn((columns, index) => ({
       id: `header-row-${index}`,
     }));
-    const wrapper = render(createTable({ onHeaderRow }));
+    const wrapper = mount(createTable({ onHeaderRow }));
 
-    expect(wrapper.find('thead tr')).toMatchSnapshot();
-    expect(onHeaderRow).toBeCalledWith([{ title: 'Name', dataIndex: 'name', key: 'name' }], 0);
+    expect(wrapper.find('thead tr').props().id).toEqual('header-row-0');
+    expect(onHeaderRow).toHaveBeenCalledWith(
+      [{ title: 'Name', dataIndex: 'name', key: 'name' }],
+      0,
+    );
   });
 
   it('renders column.onHeaderCell', () => {
@@ -498,9 +403,10 @@ describe('Table', () => {
       id: `header-cell-${column.key}`,
     });
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell }];
-    const wrapper = render(createTable({ columns }));
+    const wrapper = mount(createTable({ columns }));
 
-    expect(wrapper.find('thead th')).toMatchSnapshot();
+    expect(wrapper.find('thead th')).toHaveLength(1);
+    expect(wrapper.find('thead th').props().id).toEqual('header-cell-name');
   });
 
   describe('custom components', () => {
@@ -511,7 +417,6 @@ describe('Table', () => {
     const BodyWrapper = props => <tbody name="my-body-wrapper" {...props} />;
     const BodyRow = props => <tr name="my-body-row" {...props} />;
     const BodyCell = props => <td name="my-body-cell" {...props} />;
-
     const components = {
       table: MyTable,
       header: {
@@ -527,9 +432,8 @@ describe('Table', () => {
     };
 
     it('renders correctly', () => {
-      const wrapper = render(createTable({ components }));
-
-      expect(wrapper).toMatchSnapshot();
+      const wrapper = mount(createTable({ components }));
+      expect(wrapper.render()).toMatchSnapshot();
     });
 
     it('renders fixed column and header correctly', () => {
@@ -539,16 +443,15 @@ describe('Table', () => {
         { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
       ];
       const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
-      const wrapper = render(
+      const wrapper = mount(
         createTable({
           columns,
           data: sampleData,
           components,
-          scroll: { y: 100 },
+          scroll: { x: 100, y: 100 },
         }),
       );
-
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.render()).toMatchSnapshot();
     });
   });
 
@@ -557,28 +460,72 @@ describe('Table', () => {
       { title: 'Name', dataIndex: 'name', key: 'name' },
       { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
     ];
-    const wrapper = render(createTable({ columns }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ columns }));
+    expect(
+      wrapper
+        .find('th')
+        .at(0)
+        .props().style.textAlign,
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .find('th')
+        .at(1)
+        .props().style.textAlign,
+    ).toEqual('center');
+    expect(
+      wrapper
+        .find('tbody tr')
+        .first()
+        .find('td')
+        .at(0)
+        .props().style.textAlign,
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .find('tbody tr')
+        .first()
+        .find('td')
+        .at(1)
+        .props().style.textAlign,
+    ).toEqual('center');
   });
 
   it('align column should not override cell style', () => {
     const columns = [
-      { title: 'Name', dataIndex: 'name', key: 'name' },
       {
         title: 'Age',
         dataIndex: 'age',
         key: 'age',
         align: 'center',
         onCell: () => ({ style: { color: 'red' } }),
-        onHeaderCell: () => ({ style: { color: 'red' } }),
+        onHeaderCell: () => ({ style: { color: 'green' } }),
       },
     ];
-    const wrapper = render(createTable({ columns }));
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(createTable({ columns }));
+    expect(
+      wrapper
+        .find('th')
+        .first()
+        .props().style,
+    ).toEqual({
+      color: 'green',
+      textAlign: 'center',
+    });
+    expect(
+      wrapper
+        .find('td')
+        .first()
+        .props().style,
+    ).toEqual({
+      color: 'red',
+      textAlign: 'center',
+    });
   });
 
   describe('row events', () => {
     let spy;
+
     beforeAll(() => {
       spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     });
@@ -592,102 +539,106 @@ describe('Table', () => {
     });
 
     it('fires row click event', () => {
-      const onRowClick = jest.fn();
       const onClick = jest.fn();
-      const wrapper = mount(createTable({ onRowClick, onRow: () => ({ onClick }) }));
-      wrapper
-        .find('tbody tr')
-        .first()
-        .simulate('click');
-      const call = onRowClick.mock.calls[0];
-      expect(call[0]).toBe(data[0]);
-      expect(call[1]).toBe(0);
-      expect(call[2].type).toBe('click');
-      expect(spy.mock.calls[0][0]).toMatch(
-        'Warning: onRowClick is deprecated, please use onRow instead.',
-      );
+      const wrapper = mount(createTable({ onRow: () => ({ onClick }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-      expect(onClick).toHaveBeenCalled();
+      tr.simulate('click');
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
     });
 
     it('fires double row click event', () => {
-      const onRowDoubleClick = jest.fn();
       const onDoubleClick = jest.fn();
-      const wrapper = mount(createTable({ onRowDoubleClick, onRow: () => ({ onDoubleClick }) }));
-      wrapper
-        .find('tbody tr')
-        .first()
-        .simulate('doubleClick');
-      const call = onRowDoubleClick.mock.calls[0];
-      expect(call[0]).toBe(data[0]);
-      expect(call[1]).toBe(0);
-      expect(call[2].type).toBe('doubleclick');
-      expect(spy.mock.calls[0][0]).toMatch(
-        'Warning: onRowDoubleClick is deprecated, please use onRow instead.',
-      );
+      const wrapper = mount(createTable({ onRow: () => ({ onDoubleClick }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-      expect(onDoubleClick).toHaveBeenCalled();
+      tr.first().simulate('doubleClick');
+      expect(onDoubleClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
     });
 
     it('fires row contextmenu event', () => {
-      const onRowContextMenu = jest.fn();
       const onContextMenu = jest.fn();
-      const wrapper = mount(createTable({ onRowContextMenu, onRow: () => ({ onContextMenu }) }));
-      wrapper
-        .find('tbody tr')
-        .first()
-        .simulate('contextMenu');
-      const call = onRowContextMenu.mock.calls[0];
-      expect(call[0]).toBe(data[0]);
-      expect(call[1]).toBe(0);
-      expect(call[2].type).toBe('contextmenu');
-      expect(spy.mock.calls[0][0]).toMatch(
-        'Warning: onRowContextMenu is deprecated, please use onRow instead.',
-      );
+      const wrapper = mount(createTable({ onRow: () => ({ onContextMenu }) }));
+      const tr = wrapper.find('tbody tr').first();
 
-      expect(onRowContextMenu).toHaveBeenCalled();
+      tr.first().simulate('contextMenu');
+      expect(onContextMenu).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
     });
 
     it('fires onRowMouseEnter', () => {
-      const handleRowMouseEnter = jest.fn();
       const onMouseEnter = jest.fn();
       const wrapper = mount(
         createTable({
-          onRowMouseEnter: handleRowMouseEnter,
           onRow: () => ({ onMouseEnter }),
         }),
       );
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .simulate('mouseEnter');
-      expect(handleRowMouseEnter).toBeCalledWith(data[0], 0, expect.anything());
-      expect(spy.mock.calls[0][0]).toMatch(
-        'Warning: onRowMouseEnter is deprecated, please use onRow instead.',
-      );
 
-      expect(onMouseEnter).toHaveBeenCalled();
+      const tr = wrapper.find('.rc-table-row').first();
+
+      tr.simulate('mouseEnter');
+      expect(onMouseEnter).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
     });
 
     it('fires onRowMouseLeave', () => {
-      const handleRowMouseLeave = jest.fn();
       const onMouseLeave = jest.fn();
       const wrapper = mount(
         createTable({
-          onRowMouseLeave: handleRowMouseLeave,
           onRow: () => ({ onMouseLeave }),
         }),
       );
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .simulate('mouseLeave');
-      expect(handleRowMouseLeave).toBeCalledWith(data[0], 0, expect.anything());
-      expect(spy.mock.calls[0][0]).toMatch(
-        'Warning: onRowMouseLeave is deprecated, please use onRow instead.',
-      );
 
-      expect(onMouseLeave).toHaveBeenCalled();
+      const tr = wrapper.find('.rc-table-row').first();
+
+      tr.simulate('mouseLeave');
+      expect(onMouseLeave).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: tr.instance(),
+        }),
+      );
     });
+  });
+
+  it('columns without key', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [{ dataIndex: null }],
+      }),
+    );
+
+    expect(
+      wrapper
+        .find('tbody Cell')
+        .first()
+        .key(),
+    ).toBeTruthy();
+  });
+
+  it('syntactic sugar', () => {
+    const { Column, ColumnGroup } = Table;
+    expect(
+      mount(
+        <Table>
+          <ColumnGroup title="total">
+            <Column title="Name" dataIndex="name" />
+          </ColumnGroup>
+        </Table>,
+      ).render(),
+    ).toMatchSnapshot();
   });
 });

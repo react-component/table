@@ -1,97 +1,140 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import shallowequal from 'shallowequal';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import warning from 'rc-util/lib/warning';
-import { Provider, create } from 'mini-store';
-import merge from 'lodash/merge';
-import classes from 'component-classes';
-import classNames from 'classnames';
-import { polyfill } from 'react-lifecycles-compat';
-import { debounce, getDataAndAriaProps } from './utils';
-import ColumnManager from './ColumnManager';
-import HeadTable from './HeadTable';
-import BodyTable from './BodyTable';
-import Column from './Column';
-import ColumnGroup from './ColumnGroup';
-import ExpandableTable, { ExpandableTableProps } from './ExpandableTable';
-import {
-  ColumnType,
-  GetRowKey,
-  GetComponentProps,
-  LegacyFunction,
-  TableComponents,
-  TableStore,
-  DefaultValueType,
-  ScrollPosition,
-  Expander,
-} from './interface';
+/**
+ * Feature:
+ *  - fixed not need to set width
+ *  - support `rowExpandable` to config row expand logic
+ *  - add `summary` to support `() => ReactNode`
+ *
+ * Update:
+ *  - `dataIndex` is `array[]` now
+ *  - `expandable` wrap all the expand related props
+ *
+ * Removed:
+ *  - expandIconAsCell
+ *  - useFixedHeader
+ *  - rowRef
+ *  - columns[number].onCellClick
+ *  - onRowClick
+ *  - onRowDoubleClick
+ *  - onRowMouseEnter
+ *  - onRowMouseLeave
+ *  - getBodyWrapper
+ *  - bodyStyle
+ *  - childrenColumnName
+ *
+ * Deprecated:
+ *  - All expanded props, move into expandable
+ */
 
-export interface TableProps<ValueType>
-  extends Omit<ExpandableTableProps<ValueType>, 'prefixCls' | 'children'> {
-  data?: ValueType[];
-  useFixedHeader?: boolean;
-  columns?: ColumnType[];
+import * as React from 'react';
+import classNames from 'classnames';
+import warning from 'rc-util/lib/warning';
+import ResizeObserver from 'rc-resize-observer';
+import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import ColumnGroup from './sugar/ColumnGroup';
+import Column from './sugar/Column';
+import FixedHeader from './Header/FixedHeader';
+import Header from './Header/Header';
+import {
+  GetRowKey,
+  ColumnsType,
+  TableComponents,
+  Key,
+  DefaultRecordType,
+  TriggerEventHandler,
+  GetComponentProps,
+  ExpandableConfig,
+  LegacyExpandableProps,
+  GetComponent,
+  PanelRender,
+  TableLayout,
+  ExpandableType,
+  RowClassName,
+  CustomizeComponent,
+  ColumnType,
+} from './interface';
+import TableContext from './context/TableContext';
+import BodyContext from './context/BodyContext';
+import Body from './Body';
+import useColumns from './hooks/useColumns';
+import { useFrameState } from './hooks/useFrame';
+import { getPathValue, mergeObject, validateValue, newArr } from './utils/valueUtil';
+import ResizeContext from './context/ResizeContext';
+import useStickyOffsets from './hooks/useStickyOffsets';
+import ColGroup from './ColGroup';
+import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
+import Panel from './Panel';
+import Footer from './Footer';
+import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
+
+// Used for conditions cache
+const EMPTY_DATA = [];
+const scrollbarSize = getScrollBarSize();
+
+export interface TableProps<RecordType extends DefaultRecordType>
+  extends LegacyExpandableProps<RecordType> {
   prefixCls?: string;
-  bodyStyle?: React.CSSProperties;
   className?: string;
   style?: React.CSSProperties;
-  rowKey?: string | GetRowKey<ValueType>;
-  rowClassName?: string | ((record: ValueType, index: number, indent: number) => string);
-  onRow?: GetComponentProps<ValueType>;
-  onHeaderRow?: GetComponentProps<ColumnType[]>;
-  onRowClick?: LegacyFunction<ValueType>;
-  onRowDoubleClick?: LegacyFunction<ValueType>;
-  onRowContextMenu?: LegacyFunction<ValueType>;
-  onRowMouseEnter?: LegacyFunction<ValueType>;
-  onRowMouseLeave?: LegacyFunction<ValueType>;
-  showHeader?: boolean;
-  title?: (data: ValueType[]) => React.ReactNode;
-  id?: string;
-  footer?: (data: ValueType[]) => React.ReactNode;
-  emptyText?: React.ReactNode | (() => React.ReactNode);
+  children?: React.ReactNode;
+  data?: RecordType[];
+  columns?: ColumnsType<RecordType>;
+  rowKey?: string | GetRowKey<RecordType>;
+  tableLayout?: TableLayout;
+
+  // Fixed Columns
   scroll?: { x?: number | true | string; y?: number };
-  rowRef?: (record: ValueType, index: number, indent: number) => React.Ref<React.ReactElement>;
-  getBodyWrapper?: (body: React.ReactElement) => React.ReactElement;
-  children?: React.ReactNode;
+
+  // Expandable
+  /** Config expand rows */
+  expandable?: ExpandableConfig<RecordType>;
+  indentSize?: number;
+  rowClassName?: string | RowClassName<RecordType>;
+
+  // Additional Part
+  title?: PanelRender<RecordType>;
+  footer?: PanelRender<RecordType>;
+  summary?: (data: RecordType[]) => React.ReactNode;
+
+  // Customize
+  id?: string;
+  showHeader?: boolean;
   components?: TableComponents;
-  tableLayout?: 'fixed';
+  onRow?: GetComponentProps<RecordType>;
+  onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
+  emptyText?: React.ReactNode | (() => React.ReactNode);
 }
 
-interface TableState {
-  columns?: ColumnType[];
-  children?: React.ReactNode;
-}
+function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+  const {
+    prefixCls,
+    className,
+    rowClassName,
+    style,
+    data,
+    rowKey,
+    scroll,
+    tableLayout,
+    indentSize,
 
-class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState> {
-  static childContextTypes = {
-    table: PropTypes.any,
-    components: PropTypes.any,
-  };
+    // Additional Part
+    title,
+    footer,
+    summary,
 
-  static Column = Column;
+    // Customize
+    id,
+    showHeader,
+    components,
+    emptyText,
+    onRow,
+    onHeaderRow,
+  } = props;
 
-  static ColumnGroup = ColumnGroup;
+  const mergedData = data || EMPTY_DATA;
+  const hasData = !!mergedData.length;
 
-  static defaultProps = {
-    data: [],
-    useFixedHeader: false,
-    rowKey: 'key',
-    rowClassName: () => '',
-    onRow() {},
-    onHeaderRow() {},
-    prefixCls: 'rc-table',
-    bodyStyle: {},
-    style: {},
-    showHeader: true,
-    scroll: {},
-    rowRef: () => null,
-    emptyText: () => 'No Data',
-  };
-
-  constructor(props: TableProps<ValueType>) {
-    super(props);
-
+  // ===================== Warning ======================
+  if (process.env.NODE_ENV !== 'production') {
     [
       'onRowClick',
       'onRowDoubleClick',
@@ -99,507 +142,387 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
       'onRowMouseEnter',
       'onRowMouseLeave',
     ].forEach(name => {
-      warning(props[name] === undefined, `${name} is deprecated, please use onRow instead.`);
+      warning(props[name] === undefined, `\`${name}\` is removed, please use \`onRow\` instead.`);
     });
 
     warning(
-      props.getBodyWrapper === undefined,
-      'getBodyWrapper is deprecated, please use custom components instead.',
+      !('getBodyWrapper' in props),
+      '`getBodyWrapper` is deprecated, please use custom `components` instead.',
     );
-
-    this.columnManager = new ColumnManager(props.columns, props.children);
-
-    this.store = create({
-      currentHoverKey: null,
-      fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: {},
-    });
-
-    this.setScrollPosition('left');
-
-    this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
-  state: TableState = {};
+  // ==================== Customize =====================
+  const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
+    components,
+  ]);
 
-  columnManager: ColumnManager;
+  const getComponent = React.useCallback<GetComponent>(
+    (path, defaultComponent) =>
+      getPathValue<CustomizeComponent, TableComponents>(mergedComponents, path) || defaultComponent,
+    [mergedComponents],
+  );
 
-  store: TableStore;
+  const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
+    if (typeof rowKey === 'function') {
+      return rowKey;
+    }
+    return (record: RecordType) => {
+      const key = record[rowKey];
 
-  debouncedWindowResize: Function & {
-    cancel: Function;
+      if (process.env.NODE_ENV !== 'production') {
+        warning(
+          key !== undefined,
+          'Each record in table should have a unique `key` prop, or set `rowKey` to an unique primary key.',
+        );
+      }
+
+      return key;
+    };
+  }, [rowKey]);
+
+  // ====================== Expand ======================
+  const expandableConfig = getExpandableProps(props);
+
+  const {
+    expandIcon,
+    expandedRowKeys,
+    defaultExpandedRowKeys,
+    defaultExpandAllRows,
+    expandedRowRender,
+    onExpand,
+    onExpandedRowsChange,
+    expandRowByClick,
+    rowExpandable,
+    expandIconColumnIndex,
+    expandedRowClassName,
+  } = expandableConfig;
+
+  const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const expandableType = React.useMemo<ExpandableType>(() => {
+    if (expandedRowRender) {
+      return 'row';
+    }
+    if (mergedData.some(record => 'children' in record)) {
+      return 'nest';
+    }
+    return false;
+  }, [!!expandedRowRender, mergedData]);
+
+  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
+    if (defaultExpandedRowKeys) {
+      return defaultExpandedRowKeys;
+    }
+    if (defaultExpandAllRows) {
+      return findAllChildrenKeys<RecordType>(mergedData, getRowKey);
+    }
+    return [];
+  });
+  const mergedExpandedKeys = React.useMemo(
+    () => new Set(expandedRowKeys || innerExpandedKeys || []),
+    [expandedRowKeys, innerExpandedKeys],
+  );
+
+  const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
+    (record: RecordType) => {
+      const key = getRowKey(record, mergedData.indexOf(record));
+
+      let newExpandedKeys: Key[];
+      const hasKey = mergedExpandedKeys.has(key);
+      if (hasKey) {
+        mergedExpandedKeys.delete(key);
+        newExpandedKeys = [...mergedExpandedKeys];
+      } else {
+        newExpandedKeys = [...mergedExpandedKeys, key];
+      }
+
+      setInnerExpandedKeys(newExpandedKeys);
+      if (onExpand) {
+        onExpand(!hasKey, record);
+      }
+      if (onExpandedRowsChange) {
+        onExpandedRowsChange(newExpandedKeys);
+      }
+    },
+    [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
+  );
+
+  // ====================== Column ======================
+  const [componentWidth, setComponentWidth] = React.useState(0);
+
+  const [columns, flattenColumns] = useColumns({
+    ...props,
+    ...expandableConfig,
+    expandable: !!expandedRowRender,
+    expandedKeys: mergedExpandedKeys,
+    getRowKey,
+    onTriggerExpand,
+    expandIcon: mergedExpandIcon,
+    expandIconColumnIndex,
+  });
+
+  const columnContext = {
+    columns,
+    flattenColumns,
   };
 
-  resizeEvent: {
-    remove: Function;
-  };
+  // ====================== Scroll ======================
+  const scrollHeaderRef = React.useRef<HTMLDivElement>();
+  const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const [pingedLeft, setPingedLeft] = React.useState(false);
+  const [pingedRight, setPingedRight] = React.useState(false);
+  const [colWidths, updateColWidths] = useFrameState<number[]>(newArr(flattenColumns.length));
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
-  headTable: HTMLDivElement;
+  const fixHeader = hasData && scroll && validateValue(scroll.y);
+  const fixColumn = scroll && validateValue(scroll.x);
 
-  bodyTable: HTMLDivElement;
+  let scrollXStyle: React.CSSProperties;
+  let scrollYStyle: React.CSSProperties;
+  let scrollTableStyle: React.CSSProperties;
 
-  tableNode: HTMLDivElement;
-
-  scrollPosition: ScrollPosition;
-
-  lastScrollLeft: number;
-
-  lastScrollTop: number;
-
-  fixedColumnsBodyLeft: HTMLDivElement;
-
-  fixedColumnsBodyRight: HTMLDivElement;
-
-  expander: Expander;
-
-  getChildContext() {
-    return {
-      table: {
-        props: this.props,
-        columnManager: this.columnManager,
-        saveRef: this.saveRef,
-        components: merge(
-          {
-            table: 'table',
-            header: {
-              wrapper: 'thead',
-              row: 'tr',
-              cell: 'th',
-            },
-            body: {
-              wrapper: 'tbody',
-              row: 'tr',
-              cell: 'td',
-            },
-          },
-          this.props.components,
-        ),
-      },
+  if (fixHeader) {
+    scrollYStyle = {
+      overflowY: 'scroll',
+      maxHeight: scroll.y,
+    };
+  }
+  if (fixColumn) {
+    scrollXStyle = { overflowX: 'scroll' };
+    scrollTableStyle = {
+      width: scroll.x === true ? 'max-content' : scroll.x,
+      minWidth: '100%',
     };
   }
 
-  static getDerivedStateFromProps(nextProps: TableProps<DefaultValueType>, prevState: TableState) {
-    if (nextProps.columns && nextProps.columns !== prevState.columns) {
-      return {
-        columns: nextProps.columns,
-        children: null,
-      };
-    }
-
-    if (nextProps.children !== prevState.children) {
-      return {
-        columns: null,
-        children: nextProps.children,
-      };
-    }
-
-    return null;
-  }
-
-  componentDidMount() {
-    if (this.columnManager.isAnyColumnsFixed()) {
-      this.handleWindowResize();
-      this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-    }
-
-    // https://github.com/ant-design/ant-design/issues/11635
-    if (this.headTable) {
-      this.headTable.scrollLeft = 0;
-    }
-    if (this.bodyTable) {
-      this.bodyTable.scrollLeft = 0;
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.columnManager.isAnyColumnsFixed()) {
-      this.handleWindowResize();
-      if (!this.resizeEvent) {
-        this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-      }
-    }
-    // when table changes to empty, reset scrollLeft
-    if (prevProps.data.length > 0 && this.props.data.length === 0 && this.hasScrollX()) {
-      this.resetScrollX();
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.resizeEvent) {
-      this.resizeEvent.remove();
-    }
-    if (this.debouncedWindowResize) {
-      this.debouncedWindowResize.cancel();
-    }
-  }
-
-  getRowKey = (record: ValueType, index: number) => {
-    const { rowKey } = this.props;
-    const key = typeof rowKey === 'function' ? rowKey(record, index) : record[rowKey];
-    warning(
-      key !== undefined,
-      'Each record in table should have a unique `key` prop,' +
-        'or set `rowKey` to an unique primary key.',
-    );
-    return key === undefined ? index : key;
-  };
-
-  setScrollPosition(position: ScrollPosition) {
-    this.scrollPosition = position;
-    if (this.tableNode) {
-      const { prefixCls } = this.props;
-      if (position === 'both') {
-        classes(this.tableNode)
-          .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
-          .add(`${prefixCls}-scroll-position-left`)
-          .add(`${prefixCls}-scroll-position-right`);
-      } else {
-        classes(this.tableNode)
-          .remove(new RegExp(`^${prefixCls}-scroll-position-.+$`))
-          .add(`${prefixCls}-scroll-position-${position}`);
-      }
-    }
-  }
-
-  setScrollPositionClassName() {
-    const node = this.bodyTable;
-    const scrollToLeft = node.scrollLeft === 0;
-    const scrollToRight =
-      node.scrollLeft + 1 >=
-      node.children[0].getBoundingClientRect().width - node.getBoundingClientRect().width;
-    if (scrollToLeft && scrollToRight) {
-      this.setScrollPosition('both');
-    } else if (scrollToLeft) {
-      this.setScrollPosition('left');
-    } else if (scrollToRight) {
-      this.setScrollPosition('right');
-    } else if (this.scrollPosition !== 'middle') {
-      this.setScrollPosition('middle');
-    }
-  }
-
-  isTableLayoutFixed() {
-    const { tableLayout, columns = [], useFixedHeader, scroll = {} } = this.props;
-    if (typeof tableLayout !== 'undefined') {
-      return tableLayout === 'fixed';
-    }
-    // if one column is ellipsis, use fixed table layout to fix align issue
-    if (columns.some(({ ellipsis }) => !!ellipsis)) {
-      return true;
-    }
-    // if header fixed, use fixed table layout to fix align issue
-    if (useFixedHeader || scroll.y) {
-      return true;
-    }
-    // if scroll.x is number/px/% width value, we should fixed table layout
-    // to avoid long word layout broken issue
-    if (scroll.x && scroll.x !== true && scroll.x !== 'max-content') {
-      return true;
-    }
-    return false;
-  }
-
-  handleWindowResize = () => {
-    this.syncFixedTableRowHeight();
-    this.setScrollPositionClassName();
-  };
-
-  syncFixedTableRowHeight = () => {
-    const tableRect = this.tableNode.getBoundingClientRect();
-    // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
-    // see: https://github.com/ant-design/ant-design/issues/4836
-    if (tableRect.height !== undefined && tableRect.height <= 0) {
-      return;
-    }
-    const { prefixCls } = this.props;
-    const headRows = this.headTable
-      ? this.headTable.querySelectorAll('thead')
-      : this.bodyTable.querySelectorAll('thead');
-    const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
-    const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows,
-      (row: HTMLElement) => row.getBoundingClientRect().height || 'auto',
-    );
-    const state = this.store.getState();
-    const fixedColumnsBodyRowsHeight = [].reduce.call(
-      bodyRows,
-      (acc: Record<string, number | 'auto'>, row: HTMLElement) => {
-        const rowKey = row.getAttribute('data-row-key');
-        const height =
-          row.getBoundingClientRect().height || state.fixedColumnsBodyRowsHeight[rowKey] || 'auto';
-        acc[rowKey] = height;
-        return acc;
-      },
-      {},
-    );
-    if (
-      shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-      shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)
-    ) {
-      return;
-    }
-
-    this.store.setState({
-      fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
+  function onColumnResize(colIndex: number, width: number) {
+    updateColWidths((widths: number[]) => {
+      const newWidth = widths.slice(0, flattenColumns.length);
+      newWidth[colIndex] = width;
+      return newWidth;
     });
-  };
-
-  resetScrollX() {
-    if (this.headTable) {
-      this.headTable.scrollLeft = 0;
-    }
-    if (this.bodyTable) {
-      this.bodyTable.scrollLeft = 0;
-    }
   }
 
-  hasScrollX() {
-    const { scroll = {} } = this.props;
-    return 'x' in scroll;
+  function forceScroll(scrollLeft: number, target: HTMLDivElement) {
+    /* eslint-disable no-param-reassign */
+    if (target && target.scrollLeft !== scrollLeft) {
+      target.scrollLeft = scrollLeft;
+    }
+    /* eslint-enable */
   }
 
-  handleBodyScrollLeft: React.UIEventHandler<HTMLDivElement> = e => {
-    // Fix https://github.com/ant-design/ant-design/issues/7635
-    if (e.currentTarget !== e.target) {
-      return;
-    }
-    const target = e.target as HTMLDivElement;
-    const { scroll = {} } = this.props;
-    const { headTable, bodyTable } = this;
-    if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
-      if (target === bodyTable && headTable) {
-        headTable.scrollLeft = target.scrollLeft;
-      } else if (target === headTable && bodyTable) {
-        bodyTable.scrollLeft = target.scrollLeft;
-      }
-      this.setScrollPositionClassName();
-    }
-    // Remember last scrollLeft for scroll direction detecting.
-    this.lastScrollLeft = target.scrollLeft;
+  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+    const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+    forceScroll(scrollLeft, scrollHeaderRef.current);
+    forceScroll(scrollLeft, scrollBodyRef.current);
+
+    setPingedLeft(scrollLeft > 0);
+    setPingedRight(scrollLeft < scrollWidth - clientWidth);
   };
 
-  handleBodyScrollTop: React.UIEventHandler<HTMLDivElement> = e => {
-    const target = e.target as HTMLDivElement;
-    // Fix https://github.com/ant-design/ant-design/issues/9033
-    if (e.currentTarget !== target) {
-      return;
-    }
-    const { scroll = {} } = this.props;
-    const { headTable, bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
-    if (target.scrollTop !== this.lastScrollTop && scroll.y && target !== headTable) {
-      const { scrollTop } = target;
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop;
-      }
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop;
-      }
-    }
-    // Remember last scrollTop for scroll direction detecting.
-    this.lastScrollTop = target.scrollTop;
-  };
-
-  handleBodyScroll: React.UIEventHandler<HTMLDivElement> = e => {
-    this.handleBodyScrollLeft(e);
-    this.handleBodyScrollTop(e);
-  };
-
-  handleWheel: React.WheelEventHandler<HTMLDivElement> = event => {
-    const { scroll = {} } = this.props;
-    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
-      event.preventDefault();
-      const wd = event.deltaY;
-      const { target } = event;
-      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
-      let scrollTop = 0;
-
-      if (this.lastScrollTop) {
-        scrollTop = this.lastScrollTop + wd;
-      } else {
-        scrollTop = wd;
-      }
-
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop;
-      }
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop;
-      }
+  const triggerOnScroll = () => {
+    if (scrollBodyRef.current) {
+      onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
     }
   };
 
-  saveRef = (name: string) => (node: HTMLElement) => {
-    this[name] = node;
+  const onFullTableResize = ({ width }) => {
+    triggerOnScroll();
+    setComponentWidth(width);
   };
 
-  saveTableNodeRef = (node: HTMLDivElement) => {
-    this.tableNode = node;
+  // Sync scroll bar when init or `fixColumn` changed
+  React.useEffect(() => triggerOnScroll, []);
+  React.useEffect(() => {
+    if (fixColumn) {
+      triggerOnScroll();
+    }
+  }, [fixColumn]);
+
+  // ====================== Render ======================
+  const TableComponent = getComponent(['table'], 'table');
+
+  // Table layout
+  const mergedTableLayout = React.useMemo<TableLayout>(() => {
+    if (tableLayout) {
+      return tableLayout;
+    }
+
+    if (fixHeader || fixColumn || flattenColumns.some(({ ellipsis }) => ellipsis)) {
+      return 'fixed';
+    }
+    return 'auto';
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
+
+  let groupTableNode: React.ReactNode;
+
+  // Header props
+  const headerProps = {
+    colWidths,
+    columCount: flattenColumns.length,
+    stickyOffsets,
+    onHeaderRow,
   };
 
-  renderMainTable() {
-    const { scroll, prefixCls } = this.props;
-    const isAnyColumnsFixed = this.columnManager.isAnyColumnsFixed();
-    const scrollable = isAnyColumnsFixed || scroll.x || scroll.y;
-
-    const table = [
-      this.renderTable({
-        columns: this.columnManager.groupedColumns(),
-        isAnyColumnsFixed,
-      }),
-      this.renderEmptyText(),
-      this.renderFooter(),
-    ];
-
-    return scrollable ? <div className={`${prefixCls}-scroll`}>{table}</div> : table;
-  }
-
-  renderLeftFixedTable() {
-    const { prefixCls } = this.props;
-
-    return (
-      <div className={`${prefixCls}-fixed-left`}>
-        {this.renderTable({
-          columns: this.columnManager.leftColumns(),
-          fixed: 'left',
-        })}
-      </div>
-    );
-  }
-
-  renderRightFixedTable() {
-    const { prefixCls } = this.props;
-
-    return (
-      <div className={`${prefixCls}-fixed-right`}>
-        {this.renderTable({
-          columns: this.columnManager.rightColumns(),
-          fixed: 'right',
-        })}
-      </div>
-    );
-  }
-
-  renderTable(options) {
-    const { columns, fixed, isAnyColumnsFixed } = options;
-    const { prefixCls, scroll = {} } = this.props;
-    const tableClassName = scroll.x || fixed ? `${prefixCls}-fixed` : '';
-
-    const headTable = (
-      <HeadTable
-        key="head"
-        columns={columns}
-        fixed={fixed}
-        tableClassName={tableClassName}
-        handleBodyScrollLeft={this.handleBodyScrollLeft}
-        expander={this.expander}
-      />
-    );
-
-    const bodyTable = (
-      <BodyTable
-        key="body"
-        columns={columns}
-        fixed={fixed}
-        tableClassName={tableClassName}
-        getRowKey={this.getRowKey}
-        handleWheel={this.handleWheel}
-        handleBodyScroll={this.handleBodyScroll}
-        expander={this.expander}
-        isAnyColumnsFixed={isAnyColumnsFixed}
-      />
-    );
-
-    return [headTable, bodyTable];
-  }
-
-  renderTitle() {
-    const { title, prefixCls } = this.props;
-    return title ? (
-      <div className={`${prefixCls}-title`} key="title">
-        {title(this.props.data)}
-      </div>
-    ) : null;
-  }
-
-  renderFooter() {
-    const { footer, prefixCls } = this.props;
-    return footer ? (
-      <div className={`${prefixCls}-footer`} key="footer">
-        {footer(this.props.data)}
-      </div>
-    ) : null;
-  }
-
-  renderEmptyText() {
-    const { emptyText, prefixCls, data } = this.props;
-    if (data.length) {
+  // Empty
+  const emptyNode: React.ReactNode = React.useMemo(() => {
+    if (hasData) {
       return null;
     }
-    const emptyClassName = `${prefixCls}-placeholder`;
-    return (
-      <div className={emptyClassName} key="emptyText">
-        {typeof emptyText === 'function' ? emptyText() : emptyText}
+
+    if (typeof emptyText === 'function') {
+      return emptyText();
+    }
+    return emptyText;
+  }, [hasData, emptyText]);
+
+  // Body
+  const bodyTable = (
+    <Body
+      data={mergedData}
+      measureColumnWidth={fixHeader || fixColumn}
+      stickyOffsets={stickyOffsets}
+      expandedKeys={mergedExpandedKeys}
+      rowExpandable={rowExpandable}
+      getRowKey={getRowKey}
+      onRow={onRow}
+      emptyNode={emptyNode}
+    />
+  );
+
+  const bodyColGroup = (
+    <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
+  );
+
+  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
+
+  if (fixHeader) {
+    groupTableNode = (
+      <>
+        {showHeader !== false && (
+          <div
+            style={{
+              ...scrollXStyle,
+              marginBottom: fixColumn ? -scrollbarSize : null,
+            }}
+            onScroll={onScroll}
+            ref={scrollHeaderRef}
+            className={classNames(`${prefixCls}-header`)}
+          >
+            <FixedHeader {...headerProps} {...columnContext} />
+          </div>
+        )}
+        <div
+          style={{
+            ...scrollXStyle,
+            ...scrollYStyle,
+          }}
+          onScroll={onScroll}
+          ref={scrollBodyRef}
+          className={classNames(`${prefixCls}-body`)}
+        >
+          <TableComponent
+            style={{
+              ...scrollTableStyle,
+              tableLayout: mergedTableLayout,
+            }}
+          >
+            {bodyColGroup}
+            {bodyTable}
+            {footerTable}
+          </TableComponent>
+        </div>
+      </>
+    );
+  } else {
+    groupTableNode = (
+      <div
+        style={{
+          ...scrollXStyle,
+          ...scrollYStyle,
+        }}
+        className={classNames(`${prefixCls}-content`)}
+        onScroll={onScroll}
+        ref={scrollBodyRef}
+      >
+        <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
+          {bodyColGroup}
+          {showHeader !== false && (
+            <Header
+              {...headerProps}
+              {...columnContext}
+              measureColumnWidth={!hasData && fixColumn}
+            />
+          )}
+          {bodyTable}
+          {footerTable}
+        </TableComponent>
       </div>
     );
   }
 
-  render() {
-    const { props } = this;
-    const { prefixCls } = props;
+  const ariaProps = getDataAndAriaProps(props);
 
-    if (this.state.columns) {
-      this.columnManager.reset(props.columns);
-    } else if (this.state.children) {
-      this.columnManager.reset(null, props.children);
-    }
+  let fullTable = (
+    <div
+      className={classNames(prefixCls, className, {
+        [`${prefixCls}-ping-left`]: pingedLeft,
+        [`${prefixCls}-ping-right`]: pingedRight,
+        [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
+        [`${prefixCls}-fixed-header`]: fixHeader,
+        [`${prefixCls}-fixed-column`]: fixColumn,
+      })}
+      style={style}
+      id={id}
+      {...ariaProps}
+    >
+      {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
+      {groupTableNode}
+      {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
+    </div>
+  );
 
-    const tableClassName = classNames(props.prefixCls, props.className, {
-      [`${prefixCls}-fixed-header`]: props.useFixedHeader || (props.scroll && props.scroll.y),
-      [`${prefixCls}-scroll-position-left ${prefixCls}-scroll-position-right`]:
-        this.scrollPosition === 'both',
-      [`${prefixCls}-scroll-position-${this.scrollPosition}`]: this.scrollPosition !== 'both',
-      [`${prefixCls}-layout-fixed`]: this.isTableLayoutFixed(),
-    });
-
-    const hasLeftFixed = this.columnManager.isAnyColumnsLeftFixed();
-    const hasRightFixed = this.columnManager.isAnyColumnsRightFixed();
-    const dataAndAriaProps = getDataAndAriaProps(props);
-
-    return (
-      <Provider store={this.store}>
-        <ExpandableTable {...props} columnManager={this.columnManager} getRowKey={this.getRowKey}>
-          {(expander: Expander) => {
-            this.expander = expander;
-            return (
-              <div
-                ref={this.saveTableNodeRef}
-                className={tableClassName}
-                style={props.style}
-                id={props.id}
-                {...dataAndAriaProps}
-              >
-                {this.renderTitle()}
-                <div className={`${prefixCls}-content`}>
-                  {this.renderMainTable()}
-                  {hasLeftFixed && this.renderLeftFixedTable()}
-                  {hasRightFixed && this.renderRightFixedTable()}
-                </div>
-              </div>
-            );
-          }}
-        </ExpandableTable>
-      </Provider>
-    );
+  if (fixColumn) {
+    fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
+
+  return (
+    <TableContext.Provider
+      value={{
+        prefixCls,
+        getComponent,
+      }}
+    >
+      <BodyContext.Provider
+        value={{
+          ...columnContext,
+          tableLayout: mergedTableLayout,
+          rowClassName,
+          expandedRowClassName,
+          componentWidth,
+          fixHeader,
+          fixColumn,
+          expandIcon: mergedExpandIcon,
+          expandableType,
+          expandRowByClick,
+          expandedRowRender,
+          onTriggerExpand,
+          indentSize,
+        }}
+      >
+        <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
+      </BodyContext.Provider>
+    </TableContext.Provider>
+  );
 }
 
-polyfill(Table);
+Table.Column = Column;
+
+Table.ColumnGroup = ColumnGroup;
+
+Table.defaultProps = {
+  rowKey: 'key',
+  prefixCls: 'rc-table',
+  emptyText: () => 'No Data',
+};
 
 export default Table;

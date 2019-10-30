@@ -1,107 +1,117 @@
 import * as React from 'react';
 
+/**
+ * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
+ * - defaultSortOrder
+ * - filterDropdown
+ * - filterDropdownVisible
+ * - filtered
+ * - filteredValue
+ * - filterIcon
+ * - filterMultiple
+ * - filters
+ * - sorter
+ * - sortOrder
+ * - sortDirections
+ * - onFilter
+ * - onFilterDropdownVisibleChange
+ */
+
 export type Key = React.Key;
 
 export type FixedType = 'left' | 'right' | boolean;
 
-export type DefaultValueType = Record<string, any>;
+export type DefaultRecordType = Record<string, any>;
 
-export interface RenderedCell {
-  props?: Cell;
-  children?: React.ReactNode;
-}
+export type TableLayout = 'auto' | 'fixed';
 
-export interface ColumnType<ValueType = DefaultValueType> {
-  // TODO: https://ant.design/components/table-cn/#Column
-  key?: Key;
-  dataIndex?: Key;
-  fixed?: FixedType;
-  className?: string;
-  ellipsis?: boolean;
-  align?: 'left' | 'center' | 'right';
-  width?: number | string;
-  rowSpan?: number;
-  colSpan?: number;
-  title?: React.ReactNode;
-  children?: ColumnType[];
-  render?: (value: any, record: ValueType, index: number) => React.ReactNode | RenderedCell;
+// ==================== Row =====================
+export type RowClassName<RecordType> = (
+  record: RecordType,
+  index: number,
+  indent: number,
+) => string;
 
-  /** @deprecated Please use `onCell` instead */
-  onCellClick?: (record: ValueType, e: React.MouseEvent<HTMLElement>) => void;
-  onCell?: GetComponentProps<ValueType>;
-  onHeaderCell?: GetComponentProps<ColumnType>;
-}
-
-export interface InternalColumnType extends ColumnType {
-  RC_TABLE_INTERNAL_COL_DEFINE?: object;
-}
-
-export interface Cell {
+// =================== Column ===================
+export interface CellType<RecordType> {
   key?: Key;
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  column?: ColumnType;
+  column?: ColumnsType<RecordType>[number];
   colSpan?: number;
   rowSpan?: number;
+
+  /** Only used for table header */
+  hasSubColumns?: boolean;
+  colStart?: number;
+  colEnd?: number;
+  measure?: boolean;
 }
 
-export interface TableStoreState {
-  currentHoverKey: Key;
-  expandedRowKeys: Key[];
-  expandedRowsHeight: Record<Key, number>;
-  fixedColumnsHeadRowsHeight: Record<Key, number | 'auto'>;
-  fixedColumnsBodyRowsHeight: Record<Key, number>;
+export interface RenderedCell<RecordType> {
+  props?: CellType<RecordType>;
+  children?: React.ReactNode;
 }
 
-export interface TableStore {
-  getState: () => TableStoreState;
-  setState: (state: Partial<TableStoreState>) => void;
+export type DataIndex = string | number | (string | number)[];
+
+interface ColumnSharedType<RecordType> {
+  title?: React.ReactNode;
+  key?: Key;
+  className?: string;
+  fixed?: FixedType;
+  onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
+  ellipsis?: boolean;
+  align?: AlignType;
 }
 
-// TODO: Fill this
-export interface Expander<ValueType = DefaultValueType> {
-  props: any;
-  needIndentSpaced: boolean;
-  handleExpandChange: any;
-  renderRows: (
-    renderRows: any,
-    rows: React.ReactElement[],
-    record: ValueType,
+export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
+  children: ColumnsType<RecordType>;
+}
+
+export type AlignType = 'left' | 'center' | 'right';
+
+export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
+  colSpan?: number;
+  dataIndex?: DataIndex;
+  render?: (
+    value: any,
+    record: RecordType,
     index: number,
-    indent: number,
-    fixed: FixedType,
-    key: Key,
-    ancestorKeys: Key[],
-  ) => React.ReactElement[];
-  renderExpandIndentCell: (rows: Cell[][], fixed: FixedType) => void;
+  ) => React.ReactNode | RenderedCell<RecordType>;
+  rowSpan?: number;
+  width?: number | string;
+  onCell?: GetComponentProps<RecordType>;
+  /** @deprecated Please use `onCell` instead */
+  onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export type GetRowKey<ValueType> = (value: ValueType, index: number) => Key;
+export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
 
-export type RowHoverEventHandler = (isHover: boolean, key: Key) => void;
+export type GetRowKey<RecordType> = (record: RecordType, index: number) => Key;
 
+// ================= Fix Column =================
+export interface StickyOffsets {
+  left: number[];
+  right: number[];
+}
+
+// ================= Customized =================
 export type GetComponentProps<DataType> = (
   data: DataType,
   index?: number,
 ) => React.HTMLAttributes<HTMLElement>;
 
-export type IconExpandEventHandler<ValueType> = (
-  record: ValueType,
-  event: React.MouseEvent<HTMLElement>,
-) => void;
+type Component<P> =
+  | React.ComponentType<P>
+  | React.ForwardRefExoticComponent<P>
+  | React.FC<P>
+  | keyof React.ReactHTML;
 
 export type CustomizeComponent<
   P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
-> = React.ComponentType<P> | React.FC<P> | string;
-
-export type LegacyFunction<ValueType> = (
-  record: ValueType,
-  index: number,
-  event: React.SyntheticEvent,
-) => void;
-
-export type RenderNode = () => React.ReactNode;
+> = Component<P>;
 
 export interface TableComponents {
   table?: CustomizeComponent;
@@ -117,20 +127,38 @@ export interface TableComponents {
   };
 }
 
-export type RenderExpandIcon<ValueType> = (props: {
-  prefixCls: string;
-  expanded: boolean;
-  record: ValueType;
-  needIndentSpaced: boolean;
-  expandable: boolean;
-  onExpand: IconExpandEventHandler<ValueType>;
-}) => React.ReactNode;
+export type GetComponent = (
+  path: string[],
+  defaultComponent?: CustomizeComponent,
+) => CustomizeComponent;
 
-export type RenderRows<ValueType> = (
-  renderData: ValueType[],
-  indent: number,
-  ancestorKeys?: Key[],
-) => React.ReactElement[];
+// =================== Expand ===================
+export type ExpandableType = false | 'row' | 'nest';
+
+export interface LegacyExpandableProps<RecordType> {
+  /** @deprecated Use `expandable.expandedRowKeys` instead */
+  expandedRowKeys?: Key[];
+  /** @deprecated Use `expandable.defaultExpandedRowKeys` instead */
+  defaultExpandedRowKeys?: Key[];
+  /** @deprecated Use `expandable.expandedRowRender` instead */
+  expandedRowRender?: ExpandedRowRender<RecordType>;
+  /** @deprecated Use `expandable.expandRowByClick` instead */
+  expandRowByClick?: boolean;
+  /** @deprecated Use `expandable.expandIcon` instead */
+  expandIcon?: RenderExpandIcon<RecordType>;
+  /** @deprecated Use `expandable.onExpand` instead */
+  onExpand?: (expanded: boolean, record: RecordType) => void;
+  /** @deprecated Use `expandable.onExpandedRowsChange` instead */
+  onExpandedRowsChange?: (expandedKeys: Key[]) => void;
+  /** @deprecated Use `expandable.defaultExpandAllRows` instead */
+  defaultExpandAllRows?: boolean;
+  /** @deprecated Use `expandable.indentSize` instead */
+  indentSize?: number;
+  /** @deprecated Use `expandable.expandIconColumnIndex` instead */
+  expandIconColumnIndex?: number;
+  /** @deprecated Use `expandable.expandedRowClassName` instead */
+  expandedRowClassName?: RowClassName<RecordType>;
+}
 
 export type ExpandedRowRender<ValueType> = (
   record: ValueType,
@@ -139,4 +167,27 @@ export type ExpandedRowRender<ValueType> = (
   expanded: boolean,
 ) => React.ReactNode;
 
-export type ScrollPosition = 'left' | 'middle' | 'right' | 'both';
+export interface RenderExpandIconProps<RecordType> {
+  prefixCls: string;
+  expanded: boolean;
+  record: RecordType;
+  expandable: boolean;
+  onExpand: TriggerEventHandler<RecordType>;
+}
+
+export type RenderExpandIcon<RecordType> = (
+  props: RenderExpandIconProps<RecordType>,
+) => React.ReactNode;
+
+export interface ExpandableConfig<RecordType> extends LegacyExpandableProps<RecordType> {
+  rowExpandable?: (record: RecordType) => boolean;
+}
+
+// =================== Render ===================
+export type PanelRender<RecordType> = (data: RecordType[]) => React.ReactNode;
+
+// =================== Events ===================
+export type TriggerEventHandler<RecordType> = (
+  record: RecordType,
+  event: React.MouseEvent<HTMLElement>,
+) => void;

@@ -1,2026 +1,388 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Table align column 1`] = `
+exports[`Table.Basic custom components renders correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table"
 >
   <div
     class="rc-table-content"
   >
-    <div
-      class="rc-table-body"
+    <table
+      name="my-table"
+      style="table-layout: auto;"
     >
-      <table
-        class=""
+      <colgroup>
+        <col />
+      </colgroup>
+      <thead
+        name="my-header-wrapper"
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
+        <tr
+          name="my-header-row"
         >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-            <th
-              class="rc-table-align-center"
-              style="text-align:center"
-            >
-              Age
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
+          >
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        name="my-body-wrapper"
+      >
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+          name="my-body-row"
         >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
+          <td
+            class="rc-table-cell"
+            name="my-body-cell"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-            <td
-              class=""
-              style="text-align:center"
-            />
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
+            Lucy
+          </td>
+        </tr>
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+          name="my-body-row"
+        >
+          <td
+            class="rc-table-cell"
+            name="my-body-cell"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-            <td
-              class=""
-              style="text-align:center"
-            />
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            Jack
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;
 
-exports[`Table align column should not override cell style 1`] = `
+exports[`Table.Basic custom components renders fixed column and header correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table rc-table-fixed-header rc-table-fixed-column"
 >
   <div
-    class="rc-table-content"
+    class="rc-table-header"
+    style="overflow-x: scroll; margin-bottom: -15px;"
   >
-    <div
-      class="rc-table-body"
+    <table
+      style="table-layout: fixed;"
     >
-      <table
-        class=""
+      <colgroup>
+        <col />
+        <col />
+        <col />
+        <col
+          style="width: 15px; min-width: 15px;"
+        />
+      </colgroup>
+      <thead
+        name="my-header-wrapper"
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
+        <tr
+          name="my-header-row"
         >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-            <th
-              class="rc-table-align-center"
-              style="color:red;text-align:center"
-            >
-              Age
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
+          <th
+            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
+            style="position: sticky; left: 0px;"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-            <td
-              class=""
-              style="text-align:center;color:red"
-            />
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
+            Name
+          </th>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-            <td
-              class=""
-              style="text-align:center;color:red"
-            />
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table custom components renders correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-        name="my-table"
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-          name="my-header-wrapper"
-        >
-          <tr
-            name="my-header-row"
+            Age
+          </th>
+          <th
+            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
+            style="position: sticky; right: 15px;"
           >
-            <th
-              class=""
-              name="my-header-cell"
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-          name="my-body-wrapper"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-            name="my-body-row"
-          >
-            <td
-              class=""
-              name="my-body-cell"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-            name="my-body-row"
-          >
-            <td
-              class=""
-              name="my-body-cell"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table custom components renders fixed column and header correctly 1`] = `
-<div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-scroll"
-    >
-      <div
-        class="rc-table-header"
-      >
-        <table
-          class=""
-        >
-          <colgroup>
-            <col />
-            <col />
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
-          >
-            <tr
-              name="my-header-row"
-            >
-              <th
-                class="rc-table-fixed-columns-in-body"
-                name="my-header-cell"
-              >
-                Name
-              </th>
-              <th
-                class=""
-                name="my-header-cell"
-              >
-                Age
-              </th>
-              <th
-                class="rc-table-fixed-columns-in-body"
-                name="my-header-cell"
-              >
-                Gender
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body"
-        style="max-height:100px;overflow-y:scroll"
-        tabindex="-1"
-      >
-        <table
-          class=""
-          name="my-table"
-        >
-          <colgroup>
-            <col />
-            <col />
-            <col />
-          </colgroup>
-          <tbody
-            class="rc-table-tbody"
-            name="my-body-wrapper"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
-              name="my-body-row"
-            >
-              <td
-                class="rc-table-fixed-columns-in-body"
-                name="my-body-cell"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Lucy
-              </td>
-              <td
-                class=""
-                name="my-body-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-fixed-columns-in-body"
-                name="my-body-cell"
-              >
-                F
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div
-      class="rc-table-fixed-left"
-    >
-      <div
-        class="rc-table-header"
-      >
-        <table
-          class="rc-table-fixed"
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
-          >
-            <tr
-              name="my-header-row"
-            >
-              <th
-                class=""
-                name="my-header-cell"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body-outer"
-        style="-webkit-transform:translate3d (0, 0, 0)"
-      >
-        <div
-          class="rc-table-body-inner"
-          style="max-height:100px;overflow-y:scroll"
-        >
-          <table
-            class="rc-table-fixed"
-            name="my-table"
-          >
-            <colgroup>
-              <col />
-            </colgroup>
-            <tbody
-              class="rc-table-tbody"
-              name="my-body-wrapper"
-            >
-              <tr
-                class="rc-table-row rc-table-row-level-0"
-                data-row-key="0"
-                name="my-body-row"
-              >
-                <td
-                  class=""
-                  name="my-body-cell"
-                >
-                  <span
-                    class="rc-table-row-indent indent-level-0"
-                    style="padding-left:0px"
-                  />
-                  Lucy
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div
-      class="rc-table-fixed-right"
-    >
-      <div
-        class="rc-table-header"
-      >
-        <table
-          class="rc-table-fixed"
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
-          >
-            <tr
-              name="my-header-row"
-            >
-              <th
-                class=""
-                name="my-header-cell"
-              >
-                Gender
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body-outer"
-        style="-webkit-transform:translate3d (0, 0, 0)"
-      >
-        <div
-          class="rc-table-body-inner"
-          style="max-height:100px;overflow-y:scroll"
-        >
-          <table
-            class="rc-table-fixed"
-            name="my-table"
-          >
-            <colgroup>
-              <col />
-            </colgroup>
-            <tbody
-              class="rc-table-tbody"
-              name="my-body-wrapper"
-            >
-              <tr
-                class="rc-table-row rc-table-row-level-0"
-                data-row-key="0"
-                name="my-body-row"
-              >
-                <td
-                  class=""
-                  name="my-body-cell"
-                >
-                  F
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table dataIndex render text by path 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              First Name
-            </th>
-            <th
-              class=""
-            >
-              Last Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              John
-            </td>
-            <td
-              class=""
-            >
-              Doe
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Terry
-            </td>
-            <td
-              class=""
-            >
-              Garner
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders aria- attributes 1`] = `
-<div
-  aria-label="names-table-aria"
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders colSpan correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-              colspan="2"
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-              colspan="2"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              John
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Terry
-            </td>
-            <td
-              class=""
-            >
-              Garner
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders column correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col
-            style="width:100px;min-width:100px"
+            Gender
+          </th>
+          <th
+            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+            colspan="1"
+            name="my-header-cell"
+            rowspan="1"
+            style="position: sticky; right: 0px;"
           />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div
+    class="rc-table-body"
+    style="overflow-x: scroll; overflow-y: scroll; max-height: 100px;"
+  >
+    <table
+      name="my-table"
+      style="width: 100px; min-width: 100%; table-layout: fixed;"
+    >
+      <colgroup>
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <tbody
+        name="my-body-wrapper"
+      >
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+          name="my-body-row"
         >
-          <tr>
-            <th
-              class="name-class rc-table-row-cell-break-word"
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
+          <td
+            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+            name="my-body-cell"
+            style="position: sticky; left: 0px;"
           >
-            <td
-              class="name-class rc-table-row-cell-break-word"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
+            Lucy
+          </td>
+          <td
+            class="rc-table-cell"
+            name="my-body-cell"
           >
-            <td
-              class="name-class rc-table-row-cell-break-word"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            27
+          </td>
+          <td
+            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+            name="my-body-cell"
+            style="position: sticky; right: 0px;"
+          >
+            F
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;
 
-exports[`Table renders column.onCell correctly 1`] = `
-Array [
-  <td
-    class=""
-    id="cell-Lucy"
-  >
-    <span
-      class="rc-table-row-indent indent-level-0"
-      style="padding-left:0px"
-    />
-    Lucy
-  </td>,
-  <td
-    class=""
-    id="cell-Jack"
-  >
-    <span
-      class="rc-table-row-indent indent-level-0"
-      style="padding-left:0px"
-    />
-    Jack
-  </td>,
-]
-`;
-
-exports[`Table renders column.onHeaderCell 1`] = `
-<th
-  class=""
-  id="header-cell-name"
->
-  Name
-</th>
-`;
-
-exports[`Table renders correctly 1`] = `
+exports[`Table.Basic renders colSpan correctly 1`] = `
 <div
-  class="test-prefix test-class-name test-prefix-scroll-position-left"
+  class="rc-table"
+>
+  <div
+    class="rc-table-content"
+  >
+    <table
+      style="table-layout: auto;"
+    >
+      <colgroup>
+        <col />
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="2"
+            rowspan="1"
+          >
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+        >
+          <td
+            class="rc-table-cell"
+            colspan="2"
+          >
+            John
+          </td>
+        </tr>
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+        >
+          <td
+            class="rc-table-cell"
+          >
+            Terry
+          </td>
+          <td
+            class="rc-table-cell"
+          >
+            Garner
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Table.Basic renders correctly 1`] = `
+<div
+  class="test-prefix test-class-name"
 >
   <div
     class="test-prefix-content"
   >
-    <div
-      class="test-prefix-body"
+    <table
+      style="table-layout: auto;"
     >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="test-prefix-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="test-prefix-tbody"
-        >
-          <tr
-            class="test-prefix-row test-prefix-row-level-0"
-            data-row-key="key0"
+      <colgroup>
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th
+            class="test-prefix-cell"
+            colspan="1"
+            rowspan="1"
           >
-            <td
-              class=""
-            >
-              <span
-                class="test-prefix-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="test-prefix-row test-prefix-row-level-0"
-            data-row-key="key1"
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="test-prefix-row test-prefix-row-level-0"
+        >
+          <td
+            class="test-prefix-cell"
           >
-            <td
-              class=""
-            >
-              <span
-                class="test-prefix-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            Lucy
+          </td>
+        </tr>
+        <tr
+          class="test-prefix-row test-prefix-row-level-0"
+        >
+          <td
+            class="test-prefix-cell"
+          >
+            Jack
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;
 
-exports[`Table renders correctly RowClassName as function 1`] = `
+exports[`Table.Basic renders rowSpan correctly 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table"
 >
   <div
     class="rc-table-content"
   >
-    <div
-      class="rc-table-body"
+    <table
+      style="table-layout: auto;"
     >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
-            data-row-key="key0"
+      <colgroup>
+        <col />
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            rowspan="1"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row test-row-class-name-asFn rc-table-row-level-0"
-            data-row-key="key1"
+            First Name
+          </th>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            rowspan="1"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            Last Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+        >
+          <td
+            class="rc-table-cell"
+          >
+            John
+          </td>
+          <td
+            class="rc-table-cell"
+            rowspan="2"
+          >
+            Doe
+          </td>
+        </tr>
+        <tr
+          class="rc-table-row rc-table-row-level-0"
+        >
+          <td
+            class="rc-table-cell"
+          >
+            Terry
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;
 
-exports[`Table renders correctly RowClassName as string 1`] = `
+exports[`Table.Basic syntactic sugar 1`] = `
 <div
-  class="rc-table rc-table-scroll-position-left"
+  class="rc-table"
 >
   <div
     class="rc-table-content"
   >
-    <div
-      class="rc-table-body"
+    <table
+      style="table-layout: auto;"
     >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
+      <colgroup>
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+          >
+            total
+          </th>
+        </tr>
+        <tr>
+          <th
+            class="rc-table-cell"
+            colspan="1"
+            rowspan="1"
+          >
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="rc-table-placeholder"
         >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
-            data-row-key="key0"
+          <td
+            class="rc-table-cell"
+            colspan="1"
           >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row test-row-class-name-asStr rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders custom cell correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <p>
-                Lucy
-              </p>
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              <p>
-                Jack
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders data- attributes 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
-  data-test="names-table"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders empty text correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        />
-      </table>
-    </div>
-    <div
-      class="rc-table-placeholder"
-    >
-      No data
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders empty text correctly 2`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        />
-      </table>
-    </div>
-    <div
-      class="rc-table-placeholder"
-    >
-      No data
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders fixed header correctly 1`] = `
-<div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-header"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders footer correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div
-      class="rc-table-footer"
-    >
-      <p>
-        footer
-      </p>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders onHeaderRow correctly 1`] = `
-<tr
-  id="header-row-0"
->
-  <th
-    class=""
-  >
-    Name
-  </th>
-</tr>
-`;
-
-exports[`Table renders onRow correctly 1`] = `
-Array [
-  <tr
-    class="rc-table-row rc-table-row-level-0"
-    data-row-key="key0"
-    id="row-key0"
-    index="0"
-  >
-    <td
-      class=""
-    >
-      <span
-        class="rc-table-row-indent indent-level-0"
-        style="padding-left:0px"
-      />
-      Lucy
-    </td>
-  </tr>,
-  <tr
-    class="rc-table-row rc-table-row-level-0"
-    data-row-key="key1"
-    id="row-key1"
-    index="1"
-  >
-    <td
-      class=""
-    >
-      <span
-        class="rc-table-row-indent indent-level-0"
-        style="padding-left:0px"
-      />
-      Jack
-    </td>
-  </tr>,
-]
-`;
-
-exports[`Table renders rowSpan correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              First Name
-            </th>
-            <th
-              class=""
-            >
-              Last Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              John
-            </td>
-            <td
-              class=""
-              rowspan="2"
-            >
-              Doe
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Terry
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders table body to the wrapper 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="custom-wrapper"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders title correctly 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-title"
-  >
-    <p>
-      title
-    </p>
-  </div>
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table renders without header 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table rowKey renders ellipsis 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class="rc-table-row-cell-ellipsis"
-            >
-              title
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class="rc-table-row-cell-ellipsis"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class="rc-table-row-cell-ellipsis"
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table rowKey renders tableLayout 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-body"
-    >
-      <table
-        class=""
-      >
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead
-          class="rc-table-thead"
-        >
-          <tr>
-            <th
-              class=""
-            >
-              Name
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          class="rc-table-tbody"
-        >
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key0"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Lucy
-            </td>
-          </tr>
-          <tr
-            class="rc-table-row rc-table-row-level-0"
-            data-row-key="key1"
-          >
-            <td
-              class=""
-            >
-              <span
-                class="rc-table-row-indent indent-level-0"
-                style="padding-left:0px"
-              />
-              Jack
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table scroll renders scroll.x is a number 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left rc-table-layout-fixed"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-scroll"
-    >
-      <div
-        class="rc-table-body"
-        style="overflow-x:scroll;-webkit-transform:translate3d (0, 0, 0)"
-        tabindex="-1"
-      >
-        <table
-          class="rc-table-fixed"
-          style="width:200px"
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class=""
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table scroll renders scroll.x is true 1`] = `
-<div
-  class="rc-table rc-table-scroll-position-left"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-scroll"
-    >
-      <div
-        class="rc-table-body"
-        style="overflow-x:scroll;-webkit-transform:translate3d (0, 0, 0)"
-        tabindex="-1"
-      >
-        <table
-          class="rc-table-fixed"
-          style="width:max-content"
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class=""
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Table scroll renders scroll.y is a number 1`] = `
-<div
-  class="rc-table rc-table-fixed-header rc-table-scroll-position-left rc-table-layout-fixed"
->
-  <div
-    class="rc-table-content"
-  >
-    <div
-      class="rc-table-scroll"
-    >
-      <div
-        class="rc-table-header"
-      >
-        <table
-          class=""
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class=""
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body"
-        style="max-height:200px;overflow-y:scroll"
-        tabindex="-1"
-      >
-        <table
-          class=""
-        >
-          <colgroup>
-            <col />
-          </colgroup>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-            >
-              <td
-                class=""
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                  style="padding-left:0px"
-                />
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+            No Data
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;

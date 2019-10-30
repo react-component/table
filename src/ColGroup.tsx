@@ -1,45 +1,25 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { INTERNAL_COL_DEFINE } from './utils';
-import { FixedType, ColumnType, InternalColumnType } from './interface';
+import { ColumnType } from './interface';
+import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
 
-export interface ColGroupProps {
-  fixed: FixedType;
-  /** FIXME: Not used. Should confirm why this prop here */
-  columns?: ColumnType[];
+export interface ColGroupProps<RecordType> {
+  colWidths: (number | string)[];
+  columns?: ColumnType<RecordType>[];
+  columCount?: number;
 }
 
-const ColGroup: React.FC<ColGroupProps> = (props, { table }) => {
-  const { prefixCls, expandIconAsCell } = table.props;
-  const { fixed } = props;
+function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<RecordType>) {
+  const cols: React.ReactElement[] = [];
+  const len = columCount || columns.length;
 
-  let cols: React.ReactElement[] = [];
-
-  if (expandIconAsCell && fixed !== 'right') {
-    cols.push(<col className={`${prefixCls}-expand-icon-col`} key="rc-table-expand-icon-col" />);
+  for (let i = 0; i < len; i += 1) {
+    const width = colWidths[i];
+    const column = columns && columns[i];
+    const additionalProps = column && column[INTERNAL_COL_DEFINE];
+    cols.push(<col key={i} style={{ width, minWidth: width }} {...additionalProps} />);
   }
-
-  let leafColumns: InternalColumnType[];
-
-  if (fixed === 'left') {
-    leafColumns = table.columnManager.leftLeafColumns();
-  } else if (fixed === 'right') {
-    leafColumns = table.columnManager.rightLeafColumns();
-  } else {
-    leafColumns = table.columnManager.leafColumns();
-  }
-  cols = cols.concat(
-    leafColumns.map(({ key, dataIndex, width, [INTERNAL_COL_DEFINE]: additionalProps }) => {
-      const mergedKey = key !== undefined ? key : dataIndex;
-      return <col key={mergedKey} style={{ width, minWidth: width }} {...additionalProps} />;
-    }),
-  );
 
   return <colgroup>{cols}</colgroup>;
-};
-
-ColGroup.contextTypes = {
-  table: PropTypes.any,
-};
+}
 
 export default ColGroup;
