@@ -11,7 +11,10 @@ export function getExpandableProps<RecordType>(
   const { expandable, ...legacyExpandableConfig } = props;
 
   if ('expandable' in props) {
-    return expandable;
+    return {
+      ...legacyExpandableConfig,
+      ...expandable,
+    };
   }
 
   if (
