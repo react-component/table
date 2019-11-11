@@ -122,7 +122,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     rowKey,
     scroll,
     tableLayout,
-    indentSize,
 
     // Additional Part
     title,
@@ -207,6 +206,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     expandIconColumnIndex,
     expandedRowClassName,
     childrenColumnName,
+    indentSize,
   } = expandableConfig;
 
   const mergedExpandIcon = expandIcon || renderExpandIcon;
