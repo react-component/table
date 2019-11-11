@@ -66,6 +66,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     indentSize,
     expandIcon,
     expandedRowRender,
+    expandIconColumnIndex,
   } = React.useContext(BodyContext);
   const { onColumnResize } = React.useContext(ResizeContext);
   const [expandRended, setExpandRended] = React.useState(false);
@@ -137,7 +138,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
 
         // ============= Used for nest expandable =============
         let appendCellNode: React.ReactNode;
-        if (colIndex === 0 && nestExpandable) {
+        if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
           appendCellNode = (
             <>
               <span

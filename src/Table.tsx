@@ -109,7 +109,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
    * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
    */
   // Used for antd table transform column with additional column
-  transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>;
+  transformColumns?: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -523,6 +523,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           expandRowByClick,
           expandedRowRender,
           onTriggerExpand,
+          expandIconColumnIndex,
           indentSize,
         }}
       >

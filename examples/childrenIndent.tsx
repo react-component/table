@@ -10,6 +10,23 @@ interface RecordType {
   children?: RecordType[];
 }
 
+function CustomExpandIcon(props) {
+  let text;
+  if (props.expanded) {
+    text = '&#8679; collapse';
+  } else {
+    text = '&#8681; expand';
+  }
+  return (
+    <a
+      className="expand-row-icon"
+      onClick={e => props.onExpand(props.record, e)}
+      dangerouslySetInnerHTML={{ __html: text }}
+      style={{ color: 'blue', cursor: 'pointer' }}
+    />
+  );
+}
+
 const columns = [
   {
     title: 'Name',
@@ -113,6 +130,7 @@ const Demo = () => (
     data={data}
     indentSize={30}
     onExpand={onExpand}
+    expandIcon={CustomExpandIcon}
   />
 );
 
