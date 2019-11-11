@@ -143,7 +143,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             <>
               <span
                 style={{ paddingLeft: `${indentSize * indent}px` }}
-                className={`${prefixCls}-indent indent-level-${indent}`}
+                className={`${prefixCls}-row-indent indent-level-${indent}`}
               />
               {expandIcon({
                 prefixCls,
