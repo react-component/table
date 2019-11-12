@@ -1,9 +1,7 @@
 import * as React from 'react';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
-
-const scrollBarSize = getScrollBarSize();
+import TableContext from '../context/TableContext';
 
 export interface ExpandedRowProps<RecordType> {
   prefixCls: string;
@@ -30,36 +28,51 @@ function ExpandedRow<RecordType>({
   componentWidth,
   colSpan,
 }: ExpandedRowProps<RecordType>) {
-  let contentNode = children;
+  const { scrollbarSize } = React.useContext(TableContext);
 
-  if (fixColumn) {
-    contentNode = (
-      <div
+  // Cache render node
+  return React.useMemo(() => {
+    let contentNode = children;
+
+    if (fixColumn) {
+      contentNode = (
+        <div
+          style={{
+            width: componentWidth - (fixHeader ? scrollbarSize : 0),
+            position: 'sticky',
+            left: 0,
+            overflow: 'hidden',
+          }}
+          className={`${prefixCls}-expanded-row-fixed`}
+        >
+          {contentNode}
+        </div>
+      );
+    }
+
+    return (
+      <Component
+        className={className}
         style={{
-          width: componentWidth - (fixHeader ? scrollBarSize : 0),
-          position: 'sticky',
-          left: 0,
-          overflow: 'hidden',
+          display: expanded ? null : 'none',
         }}
-        className={`${prefixCls}-expanded-row-fixed`}
       >
-        {contentNode}
-      </div>
+        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
+          {contentNode}
+        </Cell>
+      </Component>
     );
-  }
-
-  return (
-    <Component
-      className={className}
-      style={{
-        display: expanded ? null : 'none',
-      }}
-    >
-      <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
-        {contentNode}
-      </Cell>
-    </Component>
-  );
+  }, [
+    children,
+    Component,
+    fixHeader,
+    fixColumn,
+    className,
+    expanded,
+    componentWidth,
+    colSpan,
+    scrollbarSize,
+  ]);
 }
 
 export default ExpandedRow;

@@ -67,7 +67,6 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
-const scrollbarSize = getScrollBarSize();
 
 export interface TableProps<RecordType extends DefaultRecordType>
   extends LegacyExpandableProps<RecordType> {
@@ -142,6 +141,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
+
+  // ===================== Effects ======================
+  const [scrollbarSize, setScrollbarSize] = React.useState(0);
+  React.useEffect(() => {
+    setScrollbarSize(getScrollBarSize());
+  });
 
   // ===================== Warning ======================
   if (process.env.NODE_ENV !== 'production') {
@@ -507,6 +512,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       value={{
         prefixCls,
         getComponent,
+        scrollbarSize,
       }}
     >
       <BodyContext.Provider

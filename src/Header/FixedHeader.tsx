@@ -1,11 +1,8 @@
 import * as React from 'react';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import Header, { HeaderProps } from './Header';
 import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
-
-const scrollbarSize = getScrollBarSize();
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];
@@ -20,7 +17,7 @@ function FixedHeader<RecordType>({
   stickyOffsets,
   ...props
 }: FixedHeaderProps<RecordType>) {
-  const { prefixCls } = React.useContext(TableContext);
+  const { prefixCls, scrollbarSize } = React.useContext(TableContext);
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
@@ -33,12 +30,12 @@ function FixedHeader<RecordType>({
 
   const columnsWithScrollbar = React.useMemo<ColumnsType<RecordType>>(
     () => (scrollbarSize ? [...columns, ScrollBarColumn] : columns),
-    [columns],
+    [scrollbarSize, columns],
   );
 
   const flattenColumnsWithScrollbar = React.useMemo<ColumnType<RecordType>[]>(
     () => (scrollbarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-    [flattenColumns],
+    [scrollbarSize, flattenColumns],
   );
 
   // Calculate the sticky offsets
@@ -49,7 +46,7 @@ function FixedHeader<RecordType>({
       ...stickyOffsets,
       right: [...right.map(width => width + scrollbarSize), 0],
     };
-  }, [stickyOffsets]);
+  }, [scrollbarSize, stickyOffsets]);
 
   return (
     <table style={{ tableLayout: 'fixed' }}>

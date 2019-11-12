@@ -36,7 +36,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-0"
+              class="rc-table-row-indent indent-level-0"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-expanded"
@@ -56,7 +56,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-1"
+              class="rc-table-row-indent indent-level-1"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-spaced"
@@ -76,7 +76,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-0"
+              class="rc-table-row-indent indent-level-0"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-spaced"
@@ -274,7 +274,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-0"
+              class="rc-table-row-indent indent-level-0"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-expanded"
@@ -294,7 +294,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-1"
+              class="rc-table-row-indent indent-level-1"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-spaced"
@@ -314,7 +314,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             class="rc-table-cell"
           >
             <span
-              class="rc-table-indent indent-level-0"
+              class="rc-table-row-indent indent-level-0"
             />
             <span
               class="rc-table-row-expand-icon rc-table-row-spaced"
