@@ -76,6 +76,8 @@ function Cell<RecordType extends DefaultRecordType>(
   }: CellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
+  const cellPrefixCls = `${prefixCls}-cell`;
+
   // ==================== Child Node ====================
   let cellProps: CellType<RecordType>;
   let childNode: React.ReactNode;
@@ -102,6 +104,10 @@ function Cell<RecordType extends DefaultRecordType>(
   // Not crash if final `childNode` is not validate ReactNode
   if (typeof childNode === 'object' && !React.isValidElement(childNode)) {
     childNode = null;
+  }
+
+  if (ellipsis && (lastFixLeft || firstFixRight)) {
+    childNode = <span className={`${cellPrefixCls}-content`}>{childNode}</span>;
   }
 
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = cellProps || {};
@@ -142,8 +148,6 @@ function Cell<RecordType extends DefaultRecordType>(
     }
   }
 
-  const cellPrefixCls = `${prefixCls}-cell`;
-
   const componentProps = {
     title,
     ...additionalProps,
@@ -158,6 +162,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-fix-right`]: isFixRight,
         [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
+        [`${cellPrefixCls}-with-append`]: appendNode,
       },
       additionalProps.className,
     ),

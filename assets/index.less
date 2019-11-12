@@ -90,6 +90,18 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      // Fixed first or last should special process
+      &.@{tablePrefixCls}-cell-fix-left-last,
+      &.@{tablePrefixCls}-cell-fix-right-first {
+        overflow: visible;
+
+        .@{tablePrefixCls}-cell-content {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
+        }
+      }
     }
   }
 

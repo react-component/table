@@ -13,7 +13,7 @@ interface RecordType {
 
 const columns: ColumnType<RecordType>[] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
   { title: 'title3', dataIndex: 'c', key: 'c' },
   { title: 'title4', dataIndex: 'b', key: 'd' },
   { title: 'title5', dataIndex: 'b', key: 'e' },
@@ -39,7 +39,12 @@ const columns: ColumnType<RecordType>[] = [
 ];
 
 const data: RecordType[] = [
-  { a: '123', b: 'xxxxxxxx', d: 3, key: '1' },
+  {
+    a: '123',
+    b: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    d: 3,
+    key: '1',
+  },
   { a: 'cdd', b: 'edd12221', d: 3, key: '2' },
   { a: '133', c: 'edd12221', d: 2, key: '3' },
   { a: '133', c: 'edd12221', d: 2, key: '4' },
