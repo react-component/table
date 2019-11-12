@@ -144,6 +144,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
+
   React.useEffect(() => {
     setScrollbarSize(getScrollBarSize());
   });
@@ -492,6 +493,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
         [`${prefixCls}-fixed-column`]: fixColumn,
+        [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
+        [`${prefixCls}-has-fix-right`]:
+          flattenColumns[flattenColumns.length - 1] &&
+          flattenColumns[flattenColumns.length - 1].fixed === 'right',
       })}
       style={style}
       id={id}
