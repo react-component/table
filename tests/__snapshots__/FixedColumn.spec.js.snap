@@ -5,561 +5,565 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
   class="rc-table rc-table-fixed-column"
 >
   <div
-    class="rc-table-content"
-    style="overflow-x: scroll;"
+    class="rc-table-container"
   >
-    <table
-      style="width: 1200px; min-width: 100%; table-layout: fixed;"
+    <div
+      class="rc-table-content"
+      style="overflow-x: scroll;"
     >
-      <colgroup>
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-      </colgroup>
-      <thead>
-        <tr>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
+      <table
+        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              title1
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              title2
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title3
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title4
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title5
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title6
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title7
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title8
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title9
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title10
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title11
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              title12
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title1
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              123
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              xxxxxxxx
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title2
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              cdd
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              edd12221
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title3
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title4
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title5
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title6
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title7
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title8
-          </th>
-          <th
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            title9
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title10
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title11
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            title12
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            123
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            xxxxxxxx
-          </td>
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            cdd
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            edd12221
-          </td>
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-      </tbody>
-    </table>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 `;
@@ -569,117 +573,121 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
   class="rc-table rc-table-fixed-column"
 >
   <div
-    class="rc-table-content"
-    style="overflow-x: scroll;"
+    class="rc-table-container"
   >
-    <table
-      style="width: 1200px; min-width: 100%; table-layout: fixed;"
+    <div
+      class="rc-table-content"
+      style="overflow-x: scroll;"
     >
-      <colgroup>
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-      </colgroup>
-      <thead>
-        <tr>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            title1
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            title2
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title3
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title4
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title5
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title6
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title7
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title8
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title9
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title10
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title11
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            title12
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="rc-table-placeholder"
-        >
-          <td
-            class="rc-table-cell"
-            colspan="12"
-          >
-            <div
-              class="rc-table-expanded-row-fixed"
-              style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+      <table
+        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
             >
-              No Data
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              title1
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              title2
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title3
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title4
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title5
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title6
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title7
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title8
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title9
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title10
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title11
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              title12
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="rc-table-placeholder"
+          >
+            <td
+              class="rc-table-cell"
+              colspan="12"
+            >
+              <div
+                class="rc-table-expanded-row-fixed"
+                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+              >
+                No Data
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 `;
@@ -689,593 +697,597 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
   class="rc-table rc-table-fixed-header rc-table-fixed-column"
 >
   <div
-    class="rc-table-header"
-    style="overflow-x: scroll; margin-bottom: -15px;"
+    class="rc-table-container"
   >
-    <table
-      style="table-layout: fixed;"
+    <div
+      class="rc-table-header"
+      style="overflow-x: scroll; margin-bottom: -15px;"
     >
-      <colgroup>
-        <col
-          style="width: 93px; min-width: 93px;"
-        />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col
-          style="width: 15px; min-width: 15px;"
-        />
-      </colgroup>
-      <thead>
-        <tr>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            title1
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            title2
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title3
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title4
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title5
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title6
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title7
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title8
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title9
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title10
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title11
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 15px;"
-          >
-            title12
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-            style="position: sticky; right: 0px;"
+      <table
+        style="table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 93px; min-width: 93px;"
           />
-        </tr>
-      </thead>
-    </table>
-  </div>
-  <div
-    class="rc-table-body"
-    style="overflow-x: scroll; overflow-y: scroll; max-height: 100px;"
-  >
-    <table
-      style="width: 1200px; min-width: 100%; table-layout: fixed;"
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 15px; min-width: 15px;"
+          />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              title1
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              title2
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title3
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title4
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title5
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title6
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title7
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title8
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title9
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title10
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title11
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 15px;"
+            >
+              title12
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body"
+      style="overflow-x: scroll; overflow-y: scroll; max-height: 100px;"
     >
-      <colgroup>
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-      </colgroup>
-      <tbody>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
+      <table
+        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+        </colgroup>
+        <tbody>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            123
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              123
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              xxxxxxxx
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              xxxxxxxx
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              cdd
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              edd12221
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
           >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            xxxxxxxx
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            xxxxxxxx
-          </td>
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            cdd
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            edd12221
-          </td>
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-        <tr
-          class="rc-table-row rc-table-row-level-0"
-        >
-          <td
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            133
-          </td>
-          <td
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          />
-          <td
-            class="rc-table-cell"
-          >
-            edd12221
-          </td>
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell"
-          />
-          <td
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          />
-        </tr>
-      </tbody>
-    </table>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
+            >
+              133
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              edd12221
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 `;
@@ -1285,117 +1297,121 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
   class="rc-table rc-table-fixed-column"
 >
   <div
-    class="rc-table-content"
-    style="overflow-x: scroll;"
+    class="rc-table-container"
   >
-    <table
-      style="width: 1200px; min-width: 100%; table-layout: fixed;"
+    <div
+      class="rc-table-content"
+      style="overflow-x: scroll;"
     >
-      <colgroup>
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col
-          style="width: 100px; min-width: 100px;"
-        />
-      </colgroup>
-      <thead>
-        <tr>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left"
-            style="position: sticky; left: 0px;"
-          >
-            title1
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-            style="position: sticky; left: 93px;"
-          >
-            title2
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title3
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title4
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title5
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title6
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title7
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title8
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title9
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title10
-          </th>
-          <th
-            class="rc-table-cell"
-          >
-            title11
-          </th>
-          <th
-            class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-            style="position: sticky; right: 0px;"
-          >
-            title12
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="rc-table-placeholder"
-        >
-          <td
-            class="rc-table-cell"
-            colspan="12"
-          >
-            <div
-              class="rc-table-expanded-row-fixed"
-              style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+      <table
+        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left"
+              style="position: sticky; left: 0px;"
             >
-              No Data
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              title1
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 93px;"
+            >
+              title2
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title3
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title4
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title5
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title6
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title7
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title8
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title9
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title10
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              title11
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              title12
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="rc-table-placeholder"
+          >
+            <td
+              class="rc-table-cell"
+              colspan="12"
+            >
+              <div
+                class="rc-table-expanded-row-fixed"
+                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+              >
+                No Data
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 `;

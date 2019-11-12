@@ -498,7 +498,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       {...ariaProps}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-      {groupTableNode}
+      <div className={`${prefixCls}-container`}>{groupTableNode}</div>
       {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
     </div>
   );
