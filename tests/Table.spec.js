@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Table from '../src';
+import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
   const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
@@ -646,11 +647,29 @@ describe('Table.Basic', () => {
     it('transformColumns', () => {
       const wrapper = mount(
         createTable({
+          internalHooks: INTERNAL_HOOKS,
           transformColumns: columns => [{ title: 'before' }, ...columns, { title: 'after' }],
         }),
       );
 
       expect(wrapper.render()).toMatchSnapshot();
+    });
+
+    it('internalRefs', () => {
+      const internalRefs = {
+        body: React.createRef(),
+      };
+
+      mount(
+        createTable({
+          internalHooks: INTERNAL_HOOKS,
+          internalRefs,
+          scroll: { y: 20 },
+        }),
+      );
+
+      expect(internalRefs.body).toBeTruthy();
+      expect(internalRefs.body.current instanceof HTMLDivElement).toBeTruthy();
     });
   });
 });

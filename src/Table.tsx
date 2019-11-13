@@ -68,6 +68,8 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 // Used for conditions cache
 const EMPTY_DATA = [];
 
+export const INTERNAL_HOOKS = 'rc-table-internal-hook';
+
 export interface TableProps<RecordType extends DefaultRecordType>
   extends LegacyExpandableProps<RecordType> {
   prefixCls?: string;
@@ -101,7 +103,14 @@ export interface TableProps<RecordType extends DefaultRecordType>
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
-  // Internal
+  // =================================== Internal ===================================
+  /**
+   * @private Internal usage, may remove by refactor. Should always use `columns` instead.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
+  internalHooks?: string;
+
   /**
    * @private Internal usage, may remove by refactor. Should always use `columns` instead.
    *
@@ -109,6 +118,15 @@ export interface TableProps<RecordType extends DefaultRecordType>
    */
   // Used for antd table transform column with additional column
   transformColumns?: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>;
+
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
+  internalRefs?: {
+    body: React.MutableRefObject<HTMLDivElement>;
+  };
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -136,7 +154,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     onHeaderRow,
 
     // Internal
+    internalHooks,
     transformColumns,
+    internalRefs,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
@@ -279,7 +299,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex,
     },
-    transformColumns,
+    internalHooks === INTERNAL_HOOKS ? transformColumns : null,
   );
 
   const columnContext = {
@@ -360,6 +380,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
   }, [fixColumn]);
 
+  // ================== INTERNAL HOOKS ==================
+  React.useEffect(() => {
+    if (internalHooks === INTERNAL_HOOKS && internalRefs) {
+      internalRefs.body.current = scrollBodyRef.current;
+    }
+  });
+
   // ====================== Render ======================
   const TableComponent = getComponent(['table'], 'table');
 
@@ -421,6 +448,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   if (fixHeader) {
     groupTableNode = (
       <>
+        {/* Header Table */}
         {showHeader !== false && (
           <div
             style={{
@@ -434,6 +462,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             <FixedHeader {...headerProps} {...columnContext} />
           </div>
         )}
+
+        {/* Body Table */}
         <div
           style={{
             ...scrollXStyle,
