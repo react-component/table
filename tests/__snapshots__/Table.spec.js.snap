@@ -32,6 +32,7 @@ exports[`Table.Basic custom components renders correctly 1`] = `
           </tr>
         </thead>
         <tbody
+          class="rc-table-tbody"
           name="my-body-wrapper"
         >
           <tr
@@ -65,7 +66,7 @@ exports[`Table.Basic custom components renders correctly 1`] = `
 
 exports[`Table.Basic custom components renders fixed column and header correctly 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-fixed-column"
+  class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-has-fix-left rc-table-has-fix-right"
 >
   <div
     class="rc-table-container"
@@ -134,6 +135,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
           <col />
         </colgroup>
         <tbody
+          class="rc-table-tbody"
           name="my-body-wrapper"
         >
           <tr
@@ -205,7 +207,9 @@ exports[`Table.Basic internal api transformColumns 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          class="rc-table-tbody"
+        >
           <tr
             class="rc-table-row rc-table-row-level-0"
           >
@@ -270,7 +274,9 @@ exports[`Table.Basic renders colSpan correctly 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          class="rc-table-tbody"
+        >
           <tr
             class="rc-table-row rc-table-row-level-0"
           >
@@ -327,7 +333,9 @@ exports[`Table.Basic renders correctly 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          class="test-prefix-tbody"
+        >
           <tr
             class="test-prefix-row test-prefix-row-level-0"
           >
@@ -384,7 +392,9 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          class="rc-table-tbody"
+        >
           <tr
             class="rc-table-row rc-table-row-level-0"
           >
@@ -448,7 +458,9 @@ exports[`Table.Basic syntactic sugar 1`] = `
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          class="rc-table-tbody"
+        >
           <tr
             class="rc-table-placeholder"
           >

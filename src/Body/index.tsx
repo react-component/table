@@ -77,7 +77,7 @@ function Body<RecordType>({
       );
     }
 
-    return <WrapperComponent>{rows}</WrapperComponent>;
+    return <WrapperComponent className={`${prefixCls}-tbody`}>{rows}</WrapperComponent>;
   }, [
     data,
     prefixCls,
