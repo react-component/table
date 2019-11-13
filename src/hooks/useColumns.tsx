@@ -13,19 +13,21 @@ import {
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 
 function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
-  return toArray(children).map(({ key, props }: React.ReactElement) => {
-    const { children: nodeChildren, ...restProps } = props;
-    const column = {
-      key,
-      ...restProps,
-    };
+  return toArray(children)
+    .filter(node => React.isValidElement(node))
+    .map(({ key, props }: React.ReactElement) => {
+      const { children: nodeChildren, ...restProps } = props;
+      const column = {
+        key,
+        ...restProps,
+      };
 
-    if (nodeChildren) {
-      column.children = convertChildrenToColumns(nodeChildren);
-    }
+      if (nodeChildren) {
+        column.children = convertChildrenToColumns(nodeChildren);
+      }
 
-    return column;
-  });
+      return column;
+    });
 }
 
 function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {

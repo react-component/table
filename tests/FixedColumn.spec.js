@@ -148,4 +148,12 @@ describe('Table.FixedColumn', () => {
       );
     });
   });
+
+  it('ellipsis will wrap additional dom', () => {
+    const myColumns = [{ ...columns[0], ellipsis: true }];
+    const wrapper = mount(<Table columns={myColumns} data={data} />);
+
+    expect(wrapper.find('tr th').find('.rc-table-cell-content')).toHaveLength(1);
+    expect(wrapper.find('tr td').find('.rc-table-cell-content')).toHaveLength(data.length);
+  });
 });

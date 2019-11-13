@@ -638,6 +638,7 @@ describe('Table.Basic', () => {
           <ColumnGroup title="total">
             <Column title="Name" dataIndex="name" />
           </ColumnGroup>
+          {'Invalidate Column'}
         </Table>,
       ).render(),
     ).toMatchSnapshot();
