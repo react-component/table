@@ -11,14 +11,21 @@ describe('Table.Basic', () => {
     return <Table columns={columns} data={data} {...props} />;
   };
 
-  it('renders correctly', () => {
-    const wrapper = mount(
-      createTable({
-        prefixCls: 'test-prefix',
-        className: 'test-class-name',
-      }),
-    );
-    expect(wrapper.render()).toMatchSnapshot();
+  describe('renders correctly', () => {
+    it('basic', () => {
+      const wrapper = mount(
+        createTable({
+          prefixCls: 'test-prefix',
+          className: 'test-class-name',
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
+    it('no columns', () => {
+      const wrapper = mount(createTable({ columns: [] }));
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 
   it('renders empty text correctly', () => {

@@ -151,10 +151,23 @@ function useColumns<RecordType>(
     return baseColumns;
   }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon]);
 
-  const mergedColumns = React.useMemo(
-    () => (transformColumns ? transformColumns(withExpandColumns) : withExpandColumns),
-    [transformColumns, withExpandColumns],
-  );
+  const mergedColumns = React.useMemo(() => {
+    let finalColumns = withExpandColumns;
+    if (transformColumns) {
+      finalColumns = transformColumns(finalColumns);
+    }
+
+    // Always provides at least one column for table display
+    if (!finalColumns.length) {
+      finalColumns = [
+        {
+          render: () => null,
+        },
+      ];
+    }
+
+    return finalColumns;
+  }, [transformColumns, withExpandColumns]);
 
   const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
 

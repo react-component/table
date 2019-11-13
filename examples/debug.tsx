@@ -120,11 +120,11 @@ const Demo = () => {
     }
   }, []);
 
-  const [_, forceUpdate] = React.useState();
+  const [, forceUpdate] = React.useState();
 
   return (
     <div>
-      <h2>simple table</h2>
+      <h2>Debug Usage, remove after stable released</h2>
       <button type="button" onClick={addData}>
         Add Row
       </button>
@@ -147,6 +147,8 @@ const Demo = () => {
         <Column dataIndex="id" title="Merged Title" colSpan={2} />
         <Column dataIndex="date" colSpan={0} />
       </Table>
+
+      <Table<RecordType> />
 
       <button
         type="button"
