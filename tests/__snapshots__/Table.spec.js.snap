@@ -170,6 +170,53 @@ exports[`Table.Basic custom components renders fixed column and header correctly
 </div>
 `;
 
+exports[`Table.Basic custom components scroll content with scroll 1`] = `
+<div
+  class="rc-table rc-table-fixed-header rc-table-fixed-column"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-header"
+      style="overflow-x: scroll; margin-bottom: -15px;"
+    >
+      <table
+        style="table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 888px; min-width: 888px;"
+          />
+          <col
+            style="width: 15px; min-width: 15px;"
+          />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="rc-table-cell"
+            />
+            <th
+              class="rc-table-cell"
+            />
+            <th
+              class="rc-table-cell rc-table-cell-scrollbar"
+            />
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <h1>
+      Bamboo
+    </h1>
+  </div>
+</div>
+`;
+
 exports[`Table.Basic internal api transformColumns 1`] = `
 <div
   class="rc-table"

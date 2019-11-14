@@ -113,18 +113,29 @@ export type CustomizeComponent<
   P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
 > = Component<P>;
 
-export interface TableComponents {
+export type CustomizeScrollBody<RecordType> = (
+  data: RecordType[],
+  info: {
+    scrollbarSize: number;
+    ref: React.Ref<{ scrollLeft: number }>;
+    onScroll: (info: { currentTarget?: HTMLElement; scrollLeft?: number }) => void;
+  },
+) => React.ReactNode;
+
+export interface TableComponents<RecordType> {
   table?: CustomizeComponent;
   header?: {
     wrapper?: CustomizeComponent;
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
   };
-  body?: {
-    wrapper?: CustomizeComponent;
-    row?: CustomizeComponent;
-    cell?: CustomizeComponent;
-  };
+  body?:
+    | CustomizeScrollBody<RecordType>
+    | {
+        wrapper?: CustomizeComponent;
+        row?: CustomizeComponent;
+        cell?: CustomizeComponent;
+      };
 }
 
 export type GetComponent = (

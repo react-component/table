@@ -50,6 +50,7 @@ import {
   RowClassName,
   CustomizeComponent,
   ColumnType,
+  CustomizeScrollBody,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -67,6 +68,9 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
+
+// Used for customize scroll
+const EMPTY_SCROLL_TARGET = {};
 
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
@@ -98,7 +102,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // Customize
   id?: string;
   showHeader?: boolean;
-  components?: TableComponents;
+  components?: TableComponents<RecordType>;
   onRow?: GetComponentProps<RecordType>;
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
@@ -188,13 +192,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   // ==================== Customize =====================
-  const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
-    components,
-  ]);
+  const mergedComponents = React.useMemo(
+    () => mergeObject<TableComponents<RecordType>>(components, {}),
+    [components],
+  );
 
   const getComponent = React.useCallback<GetComponent>(
     (path, defaultComponent) =>
-      getPathValue<CustomizeComponent, TableComponents>(mergedComponents, path) || defaultComponent,
+      getPathValue<CustomizeComponent, TableComponents<RecordType>>(mergedComponents, path) ||
+      defaultComponent,
     [mergedComponents],
   );
 
@@ -354,18 +360,25 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     /* eslint-enable */
   }
 
-  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+  const onScroll = ({
+    currentTarget,
+    scrollLeft,
+  }: React.UIEvent<HTMLDivElement> & { scrollLeft?: number }) => {
+    const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
-    if (!getScrollTarget() || getScrollTarget() === currentTarget) {
-      setScrollTarget(currentTarget);
+    const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+    if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+      setScrollTarget(compareTarget);
 
-      forceScroll(scrollLeft, scrollHeaderRef.current);
-      forceScroll(scrollLeft, scrollBodyRef.current);
+      forceScroll(mergedScrollLeft, scrollHeaderRef.current);
+      forceScroll(mergedScrollLeft, scrollBodyRef.current);
     }
 
-    setPingedLeft(scrollLeft > 0);
-    setPingedRight(scrollLeft < scrollWidth - clientWidth);
+    if (currentTarget) {
+      const { scrollWidth, clientWidth } = currentTarget;
+      setPingedLeft(mergedScrollLeft > 0);
+      setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+    }
   };
 
   const triggerOnScroll = () => {
@@ -451,26 +464,40 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
+  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
+
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    typeof customizeScrollBody === 'function' &&
+    !fixHeader
+  ) {
+    warning(false, '`components.body` with render props is only work on `scroll.y`.');
+  }
 
   if (fixHeader) {
-    groupTableNode = (
-      <>
-        {/* Header Table */}
-        {showHeader !== false && (
-          <div
-            style={{
-              ...scrollXStyle,
-              marginBottom: fixColumn ? -scrollbarSize : null,
-            }}
-            onScroll={onScroll}
-            ref={scrollHeaderRef}
-            className={classNames(`${prefixCls}-header`)}
-          >
-            <FixedHeader {...headerProps} {...columnContext} />
-          </div>
-        )}
+    let bodyContent: React.ReactNode;
 
-        {/* Body Table */}
+    if (typeof customizeScrollBody === 'function') {
+      bodyContent = customizeScrollBody(mergedData, {
+        scrollbarSize,
+        ref: scrollBodyRef,
+        onScroll,
+      });
+      headerProps.colWidths = flattenColumns.map(({ width }, index) => {
+        const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
+
+        if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
+          return colWidth;
+        }
+        warning(
+          false,
+          'When use `components.body` with render props. Each column should have a fixed value.',
+        );
+
+        return 0;
+      }) as number[];
+    } else {
+      bodyContent = (
         <div
           style={{
             ...scrollXStyle,
@@ -491,6 +518,28 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {footerTable}
           </TableComponent>
         </div>
+      );
+    }
+
+    groupTableNode = (
+      <>
+        {/* Header Table */}
+        {showHeader !== false && (
+          <div
+            style={{
+              ...scrollXStyle,
+              marginBottom: fixColumn ? -scrollbarSize : null,
+            }}
+            onScroll={onScroll}
+            ref={scrollHeaderRef}
+            className={classNames(`${prefixCls}-header`)}
+          >
+            <FixedHeader {...headerProps} {...columnContext} />
+          </div>
+        )}
+
+        {/* Body Table */}
+        {bodyContent}
       </>
     );
   } else {
