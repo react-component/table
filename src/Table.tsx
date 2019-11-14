@@ -50,6 +50,7 @@ import {
   RowClassName,
   CustomizeComponent,
   ColumnType,
+  CustomizeScrollBody,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -67,6 +68,9 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
+
+// Used for customize scroll
+const EMPTY_SCROLL_TARGET = {};
 
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
@@ -356,18 +360,25 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     /* eslint-enable */
   }
 
-  const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+  const onScroll = ({
+    currentTarget,
+    scrollLeft,
+  }: React.UIEvent<HTMLDivElement> & { scrollLeft?: number }) => {
+    const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
-    if (!getScrollTarget() || getScrollTarget() === currentTarget) {
-      setScrollTarget(currentTarget);
+    const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+    if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+      setScrollTarget(compareTarget);
 
-      forceScroll(scrollLeft, scrollHeaderRef.current);
-      forceScroll(scrollLeft, scrollBodyRef.current);
+      forceScroll(mergedScrollLeft, scrollHeaderRef.current);
+      forceScroll(mergedScrollLeft, scrollBodyRef.current);
     }
 
-    setPingedLeft(scrollLeft > 0);
-    setPingedRight(scrollLeft < scrollWidth - clientWidth);
+    if (currentTarget) {
+      const { scrollWidth, clientWidth } = currentTarget;
+      setPingedLeft(mergedScrollLeft > 0);
+      setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+    }
   };
 
   const triggerOnScroll = () => {
@@ -456,12 +467,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   if (fixHeader) {
     let bodyContent: React.ReactNode;
-    const customizeScrollBody = getComponent(['body', 'scroll']) as (
-      data: RecordType[],
-      info: { scrollbarSize: number },
-    ) => React.ReactNode;
+    const customizeScrollBody = getComponent(['body', 'scroll']) as CustomizeScrollBody<RecordType>;
     if (typeof customizeScrollBody === 'function') {
-      bodyContent = customizeScrollBody(mergedData, { scrollbarSize });
+      bodyContent = customizeScrollBody(mergedData, {
+        scrollbarSize,
+        ref: scrollBodyRef,
+        onScroll,
+      });
       headerProps.colWidths = flattenColumns.map(({ width }, index) =>
         index === columns.length - 1 ? (width as number) - scrollbarSize : width,
       ) as number[];
