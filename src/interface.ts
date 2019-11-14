@@ -117,7 +117,7 @@ export type CustomizeScrollBody<RecordType> = (
   data: RecordType[],
   info: {
     scrollbarSize: number;
-    ref: React.Ref<any>;
+    ref: React.Ref<{ scrollLeft: number }>;
     onScroll: (info: { currentTarget?: HTMLElement; scrollLeft?: number }) => void;
   },
 ) => React.ReactNode;
