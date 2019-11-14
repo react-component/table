@@ -129,12 +129,13 @@ export interface TableComponents<RecordType> {
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
   };
-  body?: {
-    scroll?: CustomizeScrollBody<RecordType>;
-    wrapper?: CustomizeComponent;
-    row?: CustomizeComponent;
-    cell?: CustomizeComponent;
-  };
+  body?:
+    | CustomizeScrollBody<RecordType>
+    | {
+        wrapper?: CustomizeComponent;
+        row?: CustomizeComponent;
+        cell?: CustomizeComponent;
+      };
 }
 
 export type GetComponent = (

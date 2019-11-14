@@ -464,19 +464,35 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
+  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
+
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    typeof customizeScrollBody === 'function' &&
+    !fixHeader
+  ) {
+    warning(false, '`components.body` with render props is only work on `scroll.y`.');
+  }
 
   if (fixHeader) {
     let bodyContent: React.ReactNode;
-    const customizeScrollBody = getComponent(['body', 'scroll']) as CustomizeScrollBody<RecordType>;
+
     if (typeof customizeScrollBody === 'function') {
       bodyContent = customizeScrollBody(mergedData, {
         scrollbarSize,
         ref: scrollBodyRef,
         onScroll,
       });
-      headerProps.colWidths = flattenColumns.map(({ width }, index) =>
-        index === columns.length - 1 ? (width as number) - scrollbarSize : width,
-      ) as number[];
+      headerProps.colWidths = flattenColumns.map(({ width }, index) => {
+        const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
+
+        warning(
+          typeof colWidth === 'number',
+          'When use `components.body` with render props. Each column should have a fixed value.',
+        );
+
+        return colWidth;
+      }) as number[];
     } else {
       bodyContent = (
         <div

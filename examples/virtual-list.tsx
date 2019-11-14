@@ -68,9 +68,7 @@ const Demo = () => {
       data={data}
       scroll={{ y: 300 }}
       components={{
-        body: {
-          scroll: renderVirtualList,
-        },
+        body: renderVirtualList,
       }}
     />
   );
