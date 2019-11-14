@@ -170,7 +170,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
 </div>
 `;
 
-exports[`Table.Basic custom components scroll content 1`] = `
+exports[`Table.Basic custom components scroll content with scroll 1`] = `
 <div
   class="rc-table rc-table-fixed-header rc-table-fixed-column"
 >
@@ -186,7 +186,7 @@ exports[`Table.Basic custom components scroll content 1`] = `
       >
         <colgroup>
           <col
-            style="min-width: NaNpx;"
+            style="width: 0px; min-width: 0;"
           />
           <col
             style="width: 15px; min-width: 15px;"

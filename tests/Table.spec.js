@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { resetWarned } from 'rc-util/lib/warning';
 import Table from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
@@ -462,18 +463,41 @@ describe('Table.Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
 
-    it('scroll content', () => {
-      const wrapper = mount(
-        createTable({
-          components: {
-            body: {
-              scroll: () => <h1>Bamboo</h1>,
+    describe('scroll content', () => {
+      it('with scroll', () => {
+        resetWarned();
+        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const wrapper = mount(
+          createTable({
+            components: {
+              body: () => <h1>Bamboo</h1>,
             },
-          },
-          scroll: { x: 100, y: 100 },
-        }),
-      );
-      expect(wrapper.render()).toMatchSnapshot();
+            scroll: { x: 100, y: 100 },
+          }),
+        );
+        expect(wrapper.render()).toMatchSnapshot();
+
+        expect(errSpy).toHaveBeenCalledWith(
+          'Warning: When use `components.body` with render props. Each column should have a fixed value.',
+        );
+        errSpy.mockRestore();
+      });
+
+      it('without scroll', () => {
+        resetWarned();
+        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        mount(
+          createTable({
+            components: {
+              body: () => <h1>Bamboo</h1>,
+            },
+          }),
+        );
+        expect(errSpy).toHaveBeenCalledWith(
+          'Warning: `components.body` with render props is only work on `scroll.y`.',
+        );
+        errSpy.mockRestore();
+      });
     });
   });
 
