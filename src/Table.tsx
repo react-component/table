@@ -98,7 +98,7 @@ export interface TableProps<RecordType extends DefaultRecordType>
   // Customize
   id?: string;
   showHeader?: boolean;
-  components?: TableComponents;
+  components?: TableComponents<RecordType>;
   onRow?: GetComponentProps<RecordType>;
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
@@ -188,13 +188,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   // ==================== Customize =====================
-  const mergedComponents = React.useMemo(() => mergeObject<TableComponents>(components, {}), [
-    components,
-  ]);
+  const mergedComponents = React.useMemo(
+    () => mergeObject<TableComponents<RecordType>>(components, {}),
+    [components],
+  );
 
   const getComponent = React.useCallback<GetComponent>(
     (path, defaultComponent) =>
-      getPathValue<CustomizeComponent, TableComponents>(mergedComponents, path) || defaultComponent,
+      getPathValue<CustomizeComponent, TableComponents<RecordType>>(mergedComponents, path) ||
+      defaultComponent,
     [mergedComponents],
   );
 
@@ -453,24 +455,18 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
 
   if (fixHeader) {
-    groupTableNode = (
-      <>
-        {/* Header Table */}
-        {showHeader !== false && (
-          <div
-            style={{
-              ...scrollXStyle,
-              marginBottom: fixColumn ? -scrollbarSize : null,
-            }}
-            onScroll={onScroll}
-            ref={scrollHeaderRef}
-            className={classNames(`${prefixCls}-header`)}
-          >
-            <FixedHeader {...headerProps} {...columnContext} />
-          </div>
-        )}
-
-        {/* Body Table */}
+    let bodyContent: React.ReactNode;
+    const customizeScrollBody = getComponent(['body', 'scroll']) as (
+      data: RecordType[],
+      info: { scrollbarSize: number },
+    ) => React.ReactNode;
+    if (typeof customizeScrollBody === 'function') {
+      bodyContent = customizeScrollBody(mergedData, { scrollbarSize });
+      headerProps.colWidths = flattenColumns.map(({ width }, index) =>
+        index === columns.length - 1 ? (width as number) - scrollbarSize : width,
+      ) as number[];
+    } else {
+      bodyContent = (
         <div
           style={{
             ...scrollXStyle,
@@ -491,6 +487,28 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {footerTable}
           </TableComponent>
         </div>
+      );
+    }
+
+    groupTableNode = (
+      <>
+        {/* Header Table */}
+        {showHeader !== false && (
+          <div
+            style={{
+              ...scrollXStyle,
+              marginBottom: fixColumn ? -scrollbarSize : null,
+            }}
+            onScroll={onScroll}
+            ref={scrollHeaderRef}
+            className={classNames(`${prefixCls}-header`)}
+          >
+            <FixedHeader {...headerProps} {...columnContext} />
+          </div>
+        )}
+
+        {/* Body Table */}
+        {bodyContent}
       </>
     );
   } else {

@@ -113,7 +113,7 @@ export type CustomizeComponent<
   P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
 > = Component<P>;
 
-export interface TableComponents {
+export interface TableComponents<RecordType> {
   table?: CustomizeComponent;
   header?: {
     wrapper?: CustomizeComponent;
@@ -121,6 +121,7 @@ export interface TableComponents {
     cell?: CustomizeComponent;
   };
   body?: {
+    scroll?: (data: RecordType[], info: { scrollbarSize: number }) => React.ReactNode;
     wrapper?: CustomizeComponent;
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
