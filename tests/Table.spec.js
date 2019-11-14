@@ -461,6 +461,20 @@ describe('Table.Basic', () => {
       );
       expect(wrapper.render()).toMatchSnapshot();
     });
+
+    it('scroll content', () => {
+      const wrapper = mount(
+        createTable({
+          components: {
+            body: {
+              scroll: () => <h1>Bamboo</h1>,
+            },
+          },
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 
   it('align column', () => {
