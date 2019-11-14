@@ -22,18 +22,6 @@ for (let i = 0; i < 100000; i += 1) {
     d: `d${i}`,
   });
 }
-
-const Cell = ({ columnIndex, rowIndex, style }) => (
-  <div
-    className={classNames('virtual-cell', {
-      'virtual-cell-last': columnIndex === columns.length - 1,
-    })}
-    style={style}
-  >
-    r{rowIndex}, c{columnIndex}
-  </div>
-);
-
 const Demo = () => {
   const gridRef = React.useRef<any>();
   const [connectObject] = React.useState<any>(() => {
@@ -77,7 +65,16 @@ const Demo = () => {
           onScroll({ scrollLeft });
         }}
       >
-        {Cell}
+        {({ columnIndex, rowIndex, style }) => (
+          <div
+            className={classNames('virtual-cell', {
+              'virtual-cell-last': columnIndex === columns.length - 1,
+            })}
+            style={style}
+          >
+            r{rowIndex}, c{columnIndex}
+          </div>
+        )}
       </Grid>
     );
   };
