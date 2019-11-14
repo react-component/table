@@ -28,6 +28,7 @@ describe('Table.Scroll', () => {
   });
 
   it('fire scroll event', () => {
+    jest.useFakeTimers();
     let scrollLeft = 0;
     let scrollTop = 0;
 
@@ -76,6 +77,7 @@ describe('Table.Scroll', () => {
       />,
     );
 
+    jest.runAllTimers();
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
       wrapper
@@ -89,6 +91,7 @@ describe('Table.Scroll', () => {
           },
         });
     });
+    jest.runAllTimers();
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 10);
     setScrollLeft.mockReset();
 
@@ -108,5 +111,6 @@ describe('Table.Scroll', () => {
     setScrollLeft.mockReset();
 
     domSpy.mockRestore();
+    jest.useRealTimers();
   });
 });

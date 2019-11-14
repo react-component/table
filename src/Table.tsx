@@ -55,7 +55,7 @@ import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
-import { useFrameState } from './hooks/useFrame';
+import { useFrameState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue, newArr } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -344,6 +344,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     });
   }
 
+  const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
+
   function forceScroll(scrollLeft: number, target: HTMLDivElement) {
     /* eslint-disable no-param-reassign */
     if (target && target.scrollLeft !== scrollLeft) {
@@ -354,8 +356,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const onScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
     const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
-    forceScroll(scrollLeft, scrollHeaderRef.current);
-    forceScroll(scrollLeft, scrollBodyRef.current);
+
+    if (!getScrollTarget() || getScrollTarget() === currentTarget) {
+      setScrollTarget(currentTarget);
+
+      forceScroll(scrollLeft, scrollHeaderRef.current);
+      forceScroll(scrollLeft, scrollBodyRef.current);
+    }
 
     setPingedLeft(scrollLeft > 0);
     setPingedRight(scrollLeft < scrollWidth - clientWidth);

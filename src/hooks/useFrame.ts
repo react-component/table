@@ -29,3 +29,31 @@ export function useFrameState<State>(
 
   return [state, setFrameState];
 }
+
+/** Lock frame, when frame pass reset the lock. */
+export function useTimeoutLock<State>(defaultState?: State): [(state: State) => void, () => State] {
+  const frameRef = useRef<State | null>(defaultState);
+  const timeoutRef = useRef<number>(null);
+
+  function cleanUp() {
+    window.clearTimeout(timeoutRef.current);
+  }
+
+  function setState(newState: State) {
+    frameRef.current = newState;
+    cleanUp();
+
+    timeoutRef.current = window.setTimeout(() => {
+      frameRef.current = null;
+      timeoutRef.current = null;
+    }, 100);
+  }
+
+  function getState() {
+    return frameRef.current;
+  }
+
+  useEffect(() => cleanUp, []);
+
+  return [setState, getState];
+}
