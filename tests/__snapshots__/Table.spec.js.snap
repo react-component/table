@@ -189,6 +189,9 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
             style="width: 0px; min-width: 0;"
           />
           <col
+            style="width: 888px; min-width: 888px;"
+          />
+          <col
             style="width: 15px; min-width: 15px;"
           />
         </colgroup>
@@ -196,9 +199,10 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
           <tr>
             <th
               class="rc-table-cell"
-            >
-              Name
-            </th>
+            />
+            <th
+              class="rc-table-cell"
+            />
             <th
               class="rc-table-cell rc-table-cell-scrollbar"
             />

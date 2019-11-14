@@ -469,6 +469,7 @@ describe('Table.Basic', () => {
         const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         const wrapper = mount(
           createTable({
+            columns: [{ dataIndex: 'a' }, { dataIndex: 'b', width: 903 }],
             components: {
               body: () => <h1>Bamboo</h1>,
             },
