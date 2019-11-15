@@ -469,6 +469,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   if (
     process.env.NODE_ENV !== 'production' &&
     typeof customizeScrollBody === 'function' &&
+    hasData &&
     !fixHeader
   ) {
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
