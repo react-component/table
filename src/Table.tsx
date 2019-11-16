@@ -74,7 +74,7 @@ const EMPTY_SCROLL_TARGET = {};
 
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
-export interface TableProps<RecordType extends DefaultRecordType>
+export interface TableProps<RecordType extends DefaultRecordType = unknown>
   extends LegacyExpandableProps<RecordType> {
   prefixCls?: string;
   className?: string;

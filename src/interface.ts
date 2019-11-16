@@ -87,7 +87,9 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export type ColumnsType<RecordType> = (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
+export type ColumnsType<RecordType = unknown> = (
+  | ColumnGroupType<RecordType>
+  | ColumnType<RecordType>)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
