@@ -15,7 +15,7 @@ import { getPathValue } from '../utils/valueUtil';
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
 ): data is RenderedCell<RecordType> {
-  return data && typeof data === 'object' && !React.isValidElement(data);
+  return data && typeof data === 'object' && !Array.isArray(data) && !React.isValidElement(data);
 }
 
 function isRefComponent(component: CustomizeComponent) {
