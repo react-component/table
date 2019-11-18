@@ -87,7 +87,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
   // Only when row is not expandable and `children` exist in record
   const nestExpandable = expandableType === 'nest';
-  const hasNestChildren = childrenColumnName in record;
+  const hasNestChildren = childrenColumnName in record && record[childrenColumnName];
   const mergedExpandable = rowSupportExpand || nestExpandable;
 
   // =========================== onRow ===========================
