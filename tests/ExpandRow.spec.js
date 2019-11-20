@@ -52,6 +52,24 @@ describe('Table.Expand', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
+  it('renders tree row correctly with different children', () => {
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        children: [{ key: 2, name: 'Jim', age: 1 }],
+      },
+      { key: 1, name: 'Jack', age: 28 },
+      { key: 2, name: 'Jack', age: 28, children: null },
+      { key: 3, name: 'Jack', age: 28, children: [] },
+      { key: 4, name: 'Jack', age: 28, children: undefined },
+      { key: 5, name: 'Jack', age: 28, children: false },
+    ];
+    const wrapper = mount(createTable({ data }));
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+
   it('childrenColumnName', () => {
     const data = [
       {
