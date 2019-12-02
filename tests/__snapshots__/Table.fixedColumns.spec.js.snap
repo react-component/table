@@ -99,7 +99,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                 title11
               </th>
               <th
-                class="rc-table-fixed-columns-in-body rc-table-row-cell-break-word"
+                class="rc-table-fixed-columns-in-body rc-table-row-cell-break-word rc-table-row-cell-last"
               >
                 title12
               </th>
@@ -620,7 +620,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
                   title1
                 </th>
                 <th
-                  class="rc-table-row-cell-break-word"
+                  class="rc-table-row-cell-break-word rc-table-row-cell-last"
                 >
                   title2
                 </th>
@@ -814,7 +814,7 @@ exports[`Table.fixedColumns renders correctly 1`] = `
             >
               <tr>
                 <th
-                  class="rc-table-row-cell-break-word"
+                  class="rc-table-row-cell-break-word rc-table-row-cell-last"
                 >
                   title12
                 </th>
