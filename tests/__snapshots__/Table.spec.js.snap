@@ -27,7 +27,7 @@ exports[`Table align column 1`] = `
               Name
             </th>
             <th
-              class="rc-table-align-center"
+              class="rc-table-align-center rc-table-row-cell-last"
               style="text-align:center"
             >
               Age
@@ -107,7 +107,7 @@ exports[`Table align column should not override cell style 1`] = `
               Name
             </th>
             <th
-              class="rc-table-align-center"
+              class="rc-table-align-center rc-table-row-cell-last"
               style="color:red;text-align:center"
             >
               Age
@@ -185,7 +185,7 @@ exports[`Table custom components renders correctly 1`] = `
             name="my-header-row"
           >
             <th
-              class=""
+              class="rc-table-row-cell-last"
               name="my-header-cell"
             >
               Name
@@ -276,7 +276,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
                 Age
               </th>
               <th
-                class="rc-table-fixed-columns-in-body"
+                class="rc-table-fixed-columns-in-body rc-table-row-cell-last"
                 name="my-header-cell"
               >
                 Gender
@@ -355,7 +355,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-header-row"
             >
               <th
-                class=""
+                class="rc-table-row-cell-last"
                 name="my-header-cell"
               >
                 Name
@@ -424,7 +424,7 @@ exports[`Table custom components renders fixed column and header correctly 1`] =
               name="my-header-row"
             >
               <th
-                class=""
+                class="rc-table-row-cell-last"
                 name="my-header-cell"
               >
                 Gender
@@ -500,7 +500,7 @@ exports[`Table dataIndex render text by path 1`] = `
               First Name
             </th>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Last Name
             </th>
@@ -576,7 +576,7 @@ exports[`Table renders aria- attributes 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -642,7 +642,7 @@ exports[`Table renders colSpan correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
               colspan="2"
             >
               Name
@@ -716,7 +716,7 @@ exports[`Table renders column correctly 1`] = `
         >
           <tr>
             <th
-              class="name-class rc-table-row-cell-break-word"
+              class="name-class rc-table-row-cell-break-word rc-table-row-cell-last"
             >
               Name
             </th>
@@ -787,7 +787,7 @@ Array [
 
 exports[`Table renders column.onHeaderCell 1`] = `
 <th
-  class=""
+  class="rc-table-row-cell-last"
   id="header-cell-name"
 >
   Name
@@ -815,7 +815,7 @@ exports[`Table renders correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="test-prefix-row-cell-last"
             >
               Name
             </th>
@@ -880,7 +880,7 @@ exports[`Table renders correctly RowClassName as function 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -945,7 +945,7 @@ exports[`Table renders correctly RowClassName as string 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1010,7 +1010,7 @@ exports[`Table renders custom cell correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1080,7 +1080,7 @@ exports[`Table renders data- attributes 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1145,7 +1145,7 @@ exports[`Table renders empty text correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1186,7 +1186,7 @@ exports[`Table renders empty text correctly 2`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1227,7 +1227,7 @@ exports[`Table renders fixed header correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1303,7 +1303,7 @@ exports[`Table renders footer correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1359,7 +1359,7 @@ exports[`Table renders onHeaderRow correctly 1`] = `
   id="header-row-0"
 >
   <th
-    class=""
+    class="rc-table-row-cell-last"
   >
     Name
   </th>
@@ -1430,7 +1430,7 @@ exports[`Table renders rowSpan correctly 1`] = `
               First Name
             </th>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Last Name
             </th>
@@ -1501,7 +1501,7 @@ exports[`Table renders table body to the wrapper 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1573,7 +1573,7 @@ exports[`Table renders title correctly 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1692,7 +1692,7 @@ exports[`Table rowKey renders ellipsis 1`] = `
         >
           <tr>
             <th
-              class="rc-table-row-cell-ellipsis"
+              class="rc-table-row-cell-ellipsis rc-table-row-cell-last"
             >
               title
             </th>
@@ -1755,7 +1755,7 @@ exports[`Table rowKey renders tableLayout 1`] = `
         >
           <tr>
             <th
-              class=""
+              class="rc-table-row-cell-last"
             >
               Name
             </th>
@@ -1826,7 +1826,7 @@ exports[`Table scroll renders scroll.x is a number 1`] = `
           >
             <tr>
               <th
-                class=""
+                class="rc-table-row-cell-last"
               >
                 Name
               </th>
@@ -1898,7 +1898,7 @@ exports[`Table scroll renders scroll.x is true 1`] = `
           >
             <tr>
               <th
-                class=""
+                class="rc-table-row-cell-last"
               >
                 Name
               </th>
@@ -1967,7 +1967,7 @@ exports[`Table scroll renders scroll.y is a number 1`] = `
           >
             <tr>
               <th
-                class=""
+                class="rc-table-row-cell-last"
               >
                 Name
               </th>
