@@ -44,6 +44,7 @@ export interface Cell {
   column?: ColumnType;
   colSpan?: number;
   rowSpan?: number;
+  isLast?: boolean;
 }
 
 export interface TableStoreState {
