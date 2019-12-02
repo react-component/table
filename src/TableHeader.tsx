@@ -10,24 +10,41 @@ import {
   GetComponentProps,
 } from './interface';
 
-function getHeaderRows(columns: InternalColumnType[], currentRow = 0, rows: Cell[][] = []) {
+function getHeaderRows({
+  columns = [],
+  currentRow = 0,
+  rows = [],
+  isLast = true,
+}: {
+  columns?: InternalColumnType[];
+  currentRow?: number;
+  rows?: Cell[][];
+  isLast?: boolean;
+}) {
   // eslint-disable-next-line no-param-reassign
   rows[currentRow] = rows[currentRow] || [];
 
-  columns.forEach(column => {
+  columns.forEach((column, i) => {
     if (column.rowSpan && rows.length < column.rowSpan) {
       while (rows.length < column.rowSpan) {
         rows.push([]);
       }
     }
+    const cellIsLast = isLast && i === columns.length - 1;
     const cell: Cell = {
       key: column.key,
       className: column.className || '',
       children: column.title,
+      isLast: cellIsLast,
       column,
     };
     if (column.children) {
-      getHeaderRows(column.children, currentRow + 1, rows);
+      getHeaderRows({
+        columns: column.children,
+        currentRow: currentRow + 1,
+        rows,
+        isLast: cellIsLast,
+      });
     }
     if ('colSpan' in column) {
       cell.colSpan = column.colSpan;
@@ -58,7 +75,7 @@ const TableHeader: React.FC<TableHeaderProps> = (props, { table }) => {
     return null;
   }
 
-  const rows = getHeaderRows(columns);
+  const rows = getHeaderRows({ columns });
 
   expander.renderExpandIndentCell(rows, fixed);
 

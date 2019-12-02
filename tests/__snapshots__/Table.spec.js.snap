@@ -642,7 +642,7 @@ exports[`Table renders colSpan correctly 1`] = `
         >
           <tr>
             <th
-              class="rc-table-row-cell-last"
+              class=""
               colspan="2"
             >
               Name
