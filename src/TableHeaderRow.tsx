@@ -39,7 +39,7 @@ function TableHeaderRow({
   return (
     <HeaderRow {...rowProps} style={style}>
       {row.map((cell, i) => {
-        const { column, ...cellProps } = cell;
+        const { column, isLast, ...cellProps } = cell;
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
         if (column.align) {
           customProps.style = { ...customProps.style, textAlign: column.align };
@@ -48,7 +48,7 @@ function TableHeaderRow({
           [`${prefixCls}-align-${column.align}`]: !!column.align,
           [`${prefixCls}-row-cell-ellipsis`]: !!column.ellipsis,
           [`${prefixCls}-row-cell-break-word`]: !!column.width,
-          [`${prefixCls}-row-cell-last`]: cell.isLast,
+          [`${prefixCls}-row-cell-last`]: isLast,
         });
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />
