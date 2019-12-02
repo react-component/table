@@ -48,6 +48,7 @@ function TableHeaderRow({
           [`${prefixCls}-align-${column.align}`]: !!column.align,
           [`${prefixCls}-row-cell-ellipsis`]: !!column.ellipsis,
           [`${prefixCls}-row-cell-break-word`]: !!column.width,
+          [`${prefixCls}-row-cell-last`]: i === row.length - 1,
         });
         return (
           <HeaderCell {...cellProps} {...customProps} key={column.key || column.dataIndex || i} />
