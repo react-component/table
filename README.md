@@ -1,6 +1,6 @@
 # rc-table
 
-React table component.
+React table component with useful functions.
 
 [![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url]
 
