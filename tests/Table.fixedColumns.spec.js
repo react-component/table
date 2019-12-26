@@ -104,7 +104,7 @@ describe('Table.fixedColumns', () => {
 
   it('calculate fixedColumns row height', () => {
     const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
-    const tableNode = wrapper.instance().tableNode;
+    const { tableNode } = wrapper.instance();
     const rows = tableNode.querySelectorAll('tr');
     const theads = tableNode.querySelectorAll('thead');
     const fixedLeftRows = tableNode.querySelectorAll('.rc-table-fixed-left tr');
@@ -162,21 +162,21 @@ describe('Table.fixedColumns', () => {
     // <Table /> is show.
     simulateTableShow();
     wrapper.setProps({});
-    fixedLeftRows.forEach(tr => {
-      expect(tr.style.height).toBe(rowHeight);
+    fixedLeftRows.forEach((tr, i) => {
+      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
     });
-    fixedRightRows.forEach(tr => {
-      expect(tr.style.height).toBe(rowHeight);
+    fixedRightRows.forEach((tr, i) => {
+      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
     });
 
     // <Table /> is hidden.
     simulateTableHidden();
     wrapper.update();
-    fixedLeftRows.forEach(tr => {
-      expect(tr.style.height).toBe(rowHeight);
+    fixedLeftRows.forEach((tr, i) => {
+      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
     });
-    fixedRightRows.forEach(tr => {
-      expect(tr.style.height).toBe(rowHeight);
+    fixedRightRows.forEach((tr, i) => {
+      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
     });
   });
 
@@ -184,7 +184,7 @@ describe('Table.fixedColumns', () => {
     const wrapper = mount(
       <Table columns={columns} data={data} scroll={{ x: true }} style={{ width: 2000 }} />,
     );
-    const tableNode = wrapper.instance().tableNode;
+    const { tableNode } = wrapper.instance();
     const tableBodyContainer = tableNode.querySelectorAll('.rc-table-scroll > .rc-table-body')[0];
     const tableBodyNode = tableBodyContainer.children[0];
     expect(tableNode.className).toContain('rc-table-scroll-position-left');
