@@ -316,8 +316,9 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
       ? this.headTable.querySelectorAll('thead')
       : this.bodyTable.querySelectorAll('thead');
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
-    const fixedColumnsHeadRowsHeight = [].map.call(headRows, (row: HTMLElement) =>
-      row.getBoundingClientRect().height ? row.getBoundingClientRect().height - 0.5 : 'auto',
+    const fixedColumnsHeadRowsHeight = [].map.call(
+      headRows,
+      (row: HTMLElement) => row.getBoundingClientRect().height || 'auto',
     );
     const state = this.store.getState();
     const fixedColumnsBodyRowsHeight = [].reduce.call(

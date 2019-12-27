@@ -34,7 +34,16 @@ function TableHeaderRow({
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
   const customStyle = rowProps ? rowProps.style : {};
-  const style = { height, ...customStyle };
+  const style = {
+    // https://github.com/ant-design/ant-design/issues/20126
+    // https://github.com/ant-design/ant-design/issues/20269
+    // https://github.com/ant-design/ant-design/issues/20495
+    height:
+      row.length > 1 && index === 0 && height && height !== 'auto'
+        ? parseInt(height.toString(), 10)
+        : height,
+    ...customStyle,
+  };
 
   return (
     <HeaderRow {...rowProps} style={style}>
