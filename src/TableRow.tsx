@@ -178,7 +178,7 @@ class TableRow<ValueType> extends React.Component<TableRowProps<ValueType>, Tabl
 
     const { isAnyColumnsFixed, fixed, expandedRow, ancestorKeys } = this.props;
 
-    if (!isAnyColumnsFixed) {
+    if (!isAnyColumnsFixed || !this.rowRef) {
       return;
     }
 
