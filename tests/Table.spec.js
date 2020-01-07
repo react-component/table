@@ -719,4 +719,14 @@ describe('Table.Basic', () => {
       expect(internalRefs.body.current instanceof HTMLDivElement).toBeTruthy();
     });
   });
+
+  it('column render array', () => {
+    const wrapper = mount(
+      <Table
+        columns={[{ dataIndex: 'test', render: () => [<span className="test" key="test" />] }]}
+        data={[{ key: 1 }]}
+      />,
+    );
+    expect(wrapper.find('.test')).toHaveLength(1);
+  });
 });

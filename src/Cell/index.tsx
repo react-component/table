@@ -102,7 +102,11 @@ function Cell<RecordType extends DefaultRecordType>(
   }
 
   // Not crash if final `childNode` is not validate ReactNode
-  if (typeof childNode === 'object' && !React.isValidElement(childNode)) {
+  if (
+    typeof childNode === 'object' &&
+    !Array.isArray(childNode) &&
+    !React.isValidElement(childNode)
+  ) {
     childNode = null;
   }
 
