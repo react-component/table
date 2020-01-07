@@ -2,6 +2,9 @@
   "name": "rc-table",
   "version": "7.0.0-alpha.21",
   "description": "table ui component for react",
+  "engines": {
+    "node": "12.x"
+  },
   "keywords": [
     "react",
     "react-table",
