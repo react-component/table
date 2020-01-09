@@ -3,7 +3,7 @@
   "version": "7.0.0-rc.1",
   "description": "table ui component for react",
   "engines": {
-    "node": ">=10.x"
+    "node": ">=8.x"
   },
   "keywords": [
     "react",
