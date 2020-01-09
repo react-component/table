@@ -163,20 +163,20 @@ describe('Table.fixedColumns', () => {
     simulateTableShow();
     wrapper.setProps({});
     fixedLeftRows.forEach((tr, i) => {
-      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
+      expect(tr.style.height).toBe(rowHeight);
     });
     fixedRightRows.forEach((tr, i) => {
-      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
+      expect(tr.style.height).toBe(rowHeight);
     });
 
     // <Table /> is hidden.
     simulateTableHidden();
     wrapper.update();
     fixedLeftRows.forEach((tr, i) => {
-      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
+      expect(tr.style.height).toBe(rowHeight);
     });
     fixedRightRows.forEach((tr, i) => {
-      expect(tr.style.height).toBe(i === 0 ? '29.5px' : rowHeight);
+      expect(tr.style.height).toBe(rowHeight);
     });
   });
 
