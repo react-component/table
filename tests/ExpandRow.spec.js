@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { resetWarned } from 'rc-util/lib/warning';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
 describe('Table.Expand', () => {
@@ -87,33 +88,47 @@ describe('Table.Expand', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  it('renders fixed column correctly', () => {
-    const columns = [
-      { title: 'Name', dataIndex: 'name', key: 'name', fixed: true },
-      { title: 'Age', dataIndex: 'age', key: 'age' },
-      { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
-    ];
-    const data = [
-      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
-      { key: 1, name: 'Jack', age: 28, gender: 'M' },
-    ];
-    const wrapper = mount(
-      createTable({
-        columns,
-        data,
-        scroll: { x: 903 },
-        expandable: { expandedRowRender, defaultExpandAllRows: true },
-      }),
-    );
-    act(() => {
-      wrapper
-        .find('ResizeObserver')
-        .first()
-        .props()
-        .onResize({ width: 1128 });
+  describe('renders fixed column correctly', () => {
+    let domSpy;
+
+    beforeAll(() => {
+      domSpy = spyElementPrototype(HTMLDivElement, 'offsetWidth', {
+        get: () => 1128,
+      });
     });
-    wrapper.update();
-    expect(wrapper.render()).toMatchSnapshot();
+
+    afterAll(() => {
+      domSpy.mockRestore();
+    });
+
+    it('work', () => {
+      const columns = [
+        { title: 'Name', dataIndex: 'name', key: 'name', fixed: true },
+        { title: 'Age', dataIndex: 'age', key: 'age' },
+        { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
+      ];
+      const data = [
+        { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+        { key: 1, name: 'Jack', age: 28, gender: 'M' },
+      ];
+      const wrapper = mount(
+        createTable({
+          columns,
+          data,
+          scroll: { x: 903 },
+          expandable: { expandedRowRender, defaultExpandAllRows: true },
+        }),
+      );
+      act(() => {
+        wrapper
+          .find('ResizeObserver')
+          .first()
+          .props()
+          .onResize({ width: 1128 });
+      });
+      wrapper.update();
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 
   it('renders expand icon to the specify column', () => {
