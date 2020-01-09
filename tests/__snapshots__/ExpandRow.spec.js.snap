@@ -101,7 +101,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
 </div>
 `;
 
-exports[`Table.Expand renders fixed column correctly 1`] = `
+exports[`Table.Expand renders fixed column correctly work 1`] = `
 <div
   class="rc-table rc-table-fixed-column rc-table-has-fix-left rc-table-has-fix-right"
 >

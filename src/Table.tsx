@@ -313,6 +313,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   // ====================== Scroll ======================
+  const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
@@ -388,7 +389,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const onFullTableResize = ({ width }) => {
     triggerOnScroll();
-    setComponentWidth(width);
+    setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
   };
 
   // Sync scroll bar when init or `fixColumn` changed
@@ -586,6 +587,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       })}
       style={style}
       id={id}
+      ref={fullTableRef}
       {...ariaProps}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
