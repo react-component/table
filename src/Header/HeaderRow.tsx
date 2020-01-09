@@ -11,6 +11,7 @@ import {
 import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import ResizeContext from '../context/ResizeContext';
+import { getColumnsKey } from '../utils/valueUtil';
 
 export interface RowProps<RecordType> {
   cells: CellType<RecordType>[];
@@ -39,6 +40,8 @@ function HeaderRow<RecordType>({
     rowProps = onHeaderRow(cells.map(cell => cell.column), index);
   }
 
+  const columnsKey = getColumnsKey(cells.map(cell => cell.column));
+
   return (
     <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
@@ -62,7 +65,7 @@ function HeaderRow<RecordType>({
             align={column.align}
             component={CellComponent}
             prefixCls={prefixCls}
-            key={cellIndex}
+            key={columnsKey[cellIndex]}
             {...fixedInfo}
             additionalProps={additionalProps}
           />
