@@ -4,7 +4,7 @@ import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
-import { getColumnKey } from '../utils/valueUtil';
+import { getColumnsKey } from '../utils/valueUtil';
 import {
   ColumnType,
   StickyOffsets,
@@ -114,6 +114,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     computeRowClassName = rowClassName(record, index, indent);
   }
 
+  const columnsKey = getColumnsKey(flattenColumns);
   const baseRowNode = (
     <RowComponent
       {...additionalProps}
@@ -133,7 +134,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
-        const key = getColumnKey(column, colIndex);
+        const key = columnsKey[colIndex];
         const fixedInfo = fixedInfoList[colIndex];
 
         // ============= Used for nest expandable =============

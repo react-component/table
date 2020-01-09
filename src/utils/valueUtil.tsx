@@ -40,14 +40,23 @@ interface GetColumnKeyColumn {
   dataIndex?: DataIndex;
 }
 
-export function getColumnKey({ key, dataIndex }: GetColumnKeyColumn, index: number) {
-  if (key) {
-    return key;
-  }
+export function getColumnsKey(columns: GetColumnKeyColumn[]) {
+  const columnKeys: React.Key[] = [];
+  const keys: Record<React.Key, boolean> = {};
 
-  const prefix = toArray(dataIndex).join('-') || INTERNAL_KEY_PREFIX;
+  columns.forEach(column => {
+    const { key, dataIndex } = column || {};
 
-  return `${prefix}_${index}`;
+    let mergedKey = key || toArray(dataIndex).join('-') || INTERNAL_KEY_PREFIX;
+    while (keys[mergedKey]) {
+      mergedKey = `${mergedKey}_next`;
+    }
+    keys[mergedKey] = true;
+
+    columnKeys.push(mergedKey);
+  });
+
+  return columnKeys;
 }
 
 export function mergeObject<ReturnObject extends object>(
