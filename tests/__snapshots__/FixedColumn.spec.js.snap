@@ -106,6 +106,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -171,6 +172,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -236,6 +238,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="3"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -283,6 +286,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="4"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -330,6 +334,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="5"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -377,6 +382,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="6"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -424,6 +430,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="7"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -471,6 +478,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="8"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -518,6 +526,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="9"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -834,6 +843,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -899,6 +909,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -964,6 +975,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="3"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1011,6 +1023,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="4"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1058,6 +1071,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="5"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1105,6 +1119,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="6"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1152,6 +1167,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="7"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1199,6 +1215,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="8"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1246,6 +1263,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="9"
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"

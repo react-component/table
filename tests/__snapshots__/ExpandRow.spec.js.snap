@@ -36,6 +36,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -56,6 +57,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-1"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -76,6 +78,7 @@ exports[`Table.Expand childrenColumnName 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -153,6 +156,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
@@ -199,6 +203,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
@@ -286,6 +291,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -306,6 +312,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-1"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -326,6 +333,7 @@ exports[`Table.Expand renders tree row correctly 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -387,6 +395,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
         >
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -407,6 +416,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -427,6 +437,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -447,6 +458,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="3"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -467,6 +479,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="4"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
@@ -487,6 +500,7 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
+            data-row-key="5"
           >
             <td
               class="rc-table-cell rc-table-cell-with-append"
