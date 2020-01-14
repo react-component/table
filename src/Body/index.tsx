@@ -44,6 +44,7 @@ function Body<RecordType>({
         return [
           <BodyRow
             key={key}
+            rowKey={key}
             record={record}
             recordKey={key}
             index={index}

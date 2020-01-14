@@ -32,6 +32,7 @@ export interface BodyRowProps<RecordType> {
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   indent?: number;
+  rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
 }
@@ -43,6 +44,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     stickyOffsets,
     record,
     index,
+    rowKey,
     getRowKey,
     rowExpandable,
     onRow,
@@ -118,6 +120,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const baseRowNode = (
     <RowComponent
       {...additionalProps}
+      data-row-key={rowKey}
       className={classNames(
         className,
         `${prefixCls}-row`,

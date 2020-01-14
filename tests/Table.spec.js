@@ -729,4 +729,21 @@ describe('Table.Basic', () => {
     );
     expect(wrapper.find('.test')).toHaveLength(1);
   });
+
+  it('component body should pass `data-row-key`', () => {
+    const wrapper = mount(
+      <Table
+        columns={[{ dataIndex: 'test' }]}
+        components={{ body: { row: props => <tr {...props} /> } }}
+        data={[{ test: 'bamboo', key: 'light' }]}
+      />,
+    );
+
+    expect(
+      wrapper
+        .find('tr')
+        .last()
+        .props()['data-row-key'],
+    ).toEqual('light');
+  });
 });
