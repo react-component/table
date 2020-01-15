@@ -78,7 +78,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
       style="overflow-x: scroll; margin-bottom: -15px;"
     >
       <table
-        style="table-layout: fixed;"
+        style="table-layout: fixed; visibility: hidden;"
       >
         <colgroup>
           <col />
