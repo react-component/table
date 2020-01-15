@@ -48,8 +48,14 @@ function FixedHeader<RecordType>({
     };
   }, [scrollbarSize, stickyOffsets]);
 
+  const cloneWidths: number[] = [];
+  for (let i = 0; i < columCount; i += 1) {
+    cloneWidths[i] = colWidths[i];
+  }
+  const columnWidthsReady = !colWidths.every(width => !width);
+
   return (
-    <table style={{ tableLayout: 'fixed' }}>
+    <table style={{ tableLayout: 'fixed', visibility: columnWidthsReady ? null : 'hidden' }}>
       <ColGroup colWidths={[...colWidths, scrollbarSize]} columCount={columCount + 1} />
       <Header
         {...props}
