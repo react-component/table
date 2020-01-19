@@ -76,7 +76,7 @@ function HeaderRow<RecordType>({
             <ResizeObserver
               key={cellIndex}
               onResize={({ width }) => {
-                onColumnResize(cell.colStart, width);
+                onColumnResize(columnsKey[cell.colStart], width);
               }}
             >
               {cellNode}

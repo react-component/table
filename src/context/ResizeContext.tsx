@@ -1,9 +1,9 @@
-import { createContext } from 'react';
+import * as React from 'react';
 
 interface ResizeContextProps {
-  onColumnResize: (colIndex: number, width: number) => void;
+  onColumnResize: (columnKey: React.Key, width: number) => void;
 }
 
-const ResizeContext = createContext<ResizeContextProps>(null);
+const ResizeContext = React.createContext<ResizeContextProps>(null);
 
 export default ResizeContext;

@@ -188,7 +188,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             <ResizeObserver
               key={key}
               onResize={({ width }) => {
-                onColumnResize(colIndex, width);
+                onColumnResize(key, width);
               }}
             >
               {cellNode}
