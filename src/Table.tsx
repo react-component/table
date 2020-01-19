@@ -57,7 +57,7 @@ import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useFrameState, useTimeoutLock } from './hooks/useFrame';
-import { getPathValue, mergeObject, validateValue, newArr } from './utils/valueUtil';
+import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -318,7 +318,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  const [colWidths, updateColWidths] = useFrameState<number[]>(newArr(flattenColumns.length));
+  const [colsWidths, updateColsWidths] = useFrameState(new Map<React.Key, number>());
+
+  // Convert map to number width
+  const colsKeys = getColumnsKey(flattenColumns);
+  const colWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
 
   const fixHeader = hasData && scroll && validateValue(scroll.y);
@@ -342,11 +346,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  function onColumnResize(colIndex: number, width: number) {
-    updateColWidths((widths: number[]) => {
-      const newWidth = widths.slice(0, flattenColumns.length);
-      newWidth[colIndex] = width;
-      return newWidth;
+  function onColumnResize(columnKey: React.Key, width: number) {
+    updateColsWidths(widths => {
+      const newWidths = new Map(widths);
+      newWidths.set(columnKey, width);
+      return newWidths;
     });
   }
 
