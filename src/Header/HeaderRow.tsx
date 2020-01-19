@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import {
   CellType,
@@ -10,7 +9,6 @@ import {
 } from '../interface';
 import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
-import ResizeContext from '../context/ResizeContext';
 import { getColumnsKey } from '../utils/valueUtil';
 
 export interface RowProps<RecordType> {
@@ -33,7 +31,6 @@ function HeaderRow<RecordType>({
   index,
 }: RowProps<RecordType>) {
   const { prefixCls } = React.useContext(TableContext);
-  const { onColumnResize } = React.useContext(ResizeContext);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -45,7 +42,7 @@ function HeaderRow<RecordType>({
   return (
     <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
-        const { column, measure } = cell;
+        const { column } = cell;
         const fixedInfo = getCellFixedInfo(
           cell.colStart,
           cell.colEnd,
@@ -58,7 +55,7 @@ function HeaderRow<RecordType>({
           additionalProps = cell.column.onHeaderCell(column);
         }
 
-        let cellNode = (
+        return (
           <Cell
             {...cell}
             ellipsis={column.ellipsis}
@@ -70,21 +67,6 @@ function HeaderRow<RecordType>({
             additionalProps={additionalProps}
           />
         );
-
-        if (measure) {
-          cellNode = (
-            <ResizeObserver
-              key={cellIndex}
-              onResize={({ width }) => {
-                onColumnResize(columnsKey[cell.colStart], width);
-              }}
-            >
-              {cellNode}
-            </ResizeObserver>
-          );
-        }
-
-        return cellNode;
       })}
     </RowComponent>
   );

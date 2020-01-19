@@ -560,13 +560,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       >
         <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
           {bodyColGroup}
-          {showHeader !== false && (
-            <Header
-              {...headerProps}
-              {...columnContext}
-              measureColumnWidth={!hasData && fixColumn}
-            />
-          )}
+          {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
           {footerTable}
         </TableComponent>
