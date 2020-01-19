@@ -155,6 +155,23 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           class="rc-table-tbody"
         >
           <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+          >
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            />
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            />
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            />
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            />
+          </tr>
+          <tr
             class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >

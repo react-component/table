@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import ResizeObserver from 'rc-resize-observer';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
@@ -13,7 +12,6 @@ import {
   Key,
   GetRowKey,
 } from '../interface';
-import ResizeContext from '../context/ResizeContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import ExpandedRow from './ExpandedRow';
 
@@ -22,8 +20,6 @@ export interface BodyRowProps<RecordType> {
   index: number;
   className?: string;
   style?: React.CSSProperties;
-  /** Set if need collect column width info */
-  measureColumnWidth: boolean;
   stickyOffsets: StickyOffsets;
   recordKey: Key;
   expandedKeys: Set<Key>;
@@ -51,7 +47,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
-    measureColumnWidth,
     childrenColumnName,
   } = props;
   const { prefixCls } = React.useContext(TableContext);
@@ -70,7 +65,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     expandedRowRender,
     expandIconColumnIndex,
   } = React.useContext(BodyContext);
-  const { onColumnResize } = React.useContext(ResizeContext);
   const [expandRended, setExpandRended] = React.useState(false);
 
   const expanded = props.expandedKeys.has(props.recordKey);
@@ -165,7 +159,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
           additionalCellProps = column.onCell(record, index);
         }
 
-        const cellNode = (
+        return (
           <Cell
             className={columnClassName}
             ellipsis={column.ellipsis}
@@ -182,21 +176,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             additionalProps={additionalCellProps}
           />
         );
-
-        if (measureColumnWidth) {
-          return (
-            <ResizeObserver
-              key={key}
-              onResize={({ width }) => {
-                onColumnResize(key, width);
-              }}
-            >
-              {cellNode}
-            </ResizeObserver>
-          );
-        }
-
-        return cellNode;
       })}
     </RowComponent>
   );
@@ -243,7 +222,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             recordKey={subKey}
             index={subIndex}
             indent={indent + 1}
-            measureColumnWidth={false}
           />
         );
       },

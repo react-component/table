@@ -46,7 +46,6 @@ export interface CellType<RecordType> {
   hasSubColumns?: boolean;
   colStart?: number;
   colEnd?: number;
-  measure?: boolean;
 }
 
 export interface RenderedCell<RecordType> {
