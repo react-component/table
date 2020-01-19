@@ -318,7 +318,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  // const [colWidths, updateColWidths] = useFrameState<number[]>(newArr(flattenColumns.length));
   const [colsWidths, updateColsWidths] = useFrameState(new Map<React.Key, number>());
 
   // Convert map to number width
