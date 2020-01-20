@@ -331,11 +331,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
+  let fixHeaderStyle: React.CSSProperties;
 
   if (fixHeader) {
     scrollYStyle = {
-      overflowY: 'scroll',
       maxHeight: scroll.y,
+    };
+    fixHeaderStyle = {
+      position: 'sticky',
+      top: 0,
+      zIndex: 99,
     };
   }
   if (fixColumn) {
@@ -505,7 +510,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       bodyContent = (
         <div
           style={{
-            ...scrollXStyle,
             ...scrollYStyle,
           }}
           onScroll={onScroll}
@@ -532,7 +536,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {showHeader !== false && (
           <div
             style={{
-              ...scrollXStyle,
+              ...fixHeaderStyle,
               marginBottom: fixColumn ? -scrollbarSize : null,
             }}
             onScroll={onScroll}
@@ -589,7 +593,14 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       {...ariaProps}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-      <div className={`${prefixCls}-container`}>{groupTableNode}</div>
+      <div
+        className={`${prefixCls}-container`}
+        style={{
+          ...scrollXStyle,
+        }}
+      >
+        {groupTableNode}
+      </div>
       {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
     </div>
   );
