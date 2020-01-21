@@ -532,8 +532,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {showHeader !== false && (
           <div
             style={{
-              ...scrollXStyle,
-              marginBottom: fixColumn ? -scrollbarSize : null,
+              overflow: 'hidden',
             }}
             onScroll={onScroll}
             ref={scrollHeaderRef}

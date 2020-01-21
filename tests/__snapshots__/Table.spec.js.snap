@@ -75,7 +75,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
   >
     <div
       class="rc-table-header"
-      style="overflow-x: scroll; margin-bottom: -15px;"
+      style="overflow: hidden;"
     >
       <table
         style="table-layout: fixed; visibility: hidden;"
@@ -196,7 +196,7 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
   >
     <div
       class="rc-table-header"
-      style="overflow-x: scroll; margin-bottom: -15px;"
+      style="overflow: hidden;"
     >
       <table
         style="table-layout: fixed;"
