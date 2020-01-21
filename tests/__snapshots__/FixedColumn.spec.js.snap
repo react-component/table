@@ -796,7 +796,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
   >
     <div
       class="rc-table-header"
-      style="overflow-x: scroll; margin-bottom: -15px;"
+      style="overflow: hidden;"
     >
       <table
         style="table-layout: fixed;"
