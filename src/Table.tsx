@@ -256,7 +256,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
      *  Do not use `__PARENT_RENDER_ICON__` in prod since we will remove this when refactor
      */
     if (
-      (props.expandable && (props.expandable as any).__PARENT_RENDER_ICON__) ||
+      (props.expandable &&
+        internalHooks === INTERNAL_HOOKS &&
+        (props.expandable as any).__PARENT_RENDER_ICON__) ||
       mergedData.some(record => mergedChildrenColumnName in record)
     ) {
       return 'nest';
