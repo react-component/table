@@ -246,9 +246,22 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (expandedRowRender) {
       return 'row';
     }
-    if (mergedData.some(record => mergedChildrenColumnName in record)) {
+    /* eslint-disable no-underscore-dangle */
+    /**
+     * Fix https://github.com/ant-design/ant-design/issues/21154
+     * This is a workaround to not to break current behavior.
+     * We can remove follow code after final release.
+     *
+     * To other developer:
+     *  Do not use `__PARENT_RENDER_ICON__` in prod since we will remove this when refactor
+     */
+    if (
+      (props.expandable && (props.expandable as any).__PARENT_RENDER_ICON__) ||
+      mergedData.some(record => mergedChildrenColumnName in record)
+    ) {
       return 'nest';
     }
+    /* eslint-enable */
     return false;
   }, [!!expandedRowRender, mergedData]);
 
