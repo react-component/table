@@ -299,6 +299,26 @@ describe('Table.Basic', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
+  it('render with style & className', () => {
+    const columns = [
+      {
+        dataIndex: 'key',
+        render: text => ({
+          props: {
+            style: { background: 'red' },
+            className: 'customize-render',
+          },
+          children: text,
+        }),
+      },
+    ];
+
+    const wrapper = mount(<Table columns={columns} data={[{ key: '' }]} />);
+    const props = wrapper.find('td').props();
+    expect(props.style).toEqual(expect.objectContaining({ background: 'red' }));
+    expect(props.className.includes('customize-render')).toBeTruthy();
+  });
+
   it('renders rowSpan correctly', () => {
     const columns = [
       {

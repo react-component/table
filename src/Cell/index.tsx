@@ -114,7 +114,8 @@ function Cell<RecordType extends DefaultRecordType>(
     childNode = <span className={`${cellPrefixCls}-content`}>{childNode}</span>;
   }
 
-  const { colSpan: cellColSpan, rowSpan: cellRowSpan } = cellProps || {};
+  const { colSpan: cellColSpan, rowSpan: cellRowSpan, style: cellStyle, className: cellClassName } =
+    cellProps || {};
   const mergedColSpan = cellColSpan !== undefined ? cellColSpan : colSpan;
   const mergedRowSpan = cellRowSpan !== undefined ? cellRowSpan : rowSpan;
 
@@ -169,8 +170,9 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-with-append`]: appendNode,
       },
       additionalProps.className,
+      cellClassName,
     ),
-    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle },
+    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle, ...cellStyle },
     ref: isRefComponent(Component) ? ref : null,
   };
 
