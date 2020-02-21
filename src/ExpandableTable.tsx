@@ -225,7 +225,7 @@ class ExpandableTable<ValueType> extends React.Component<ExpandableTableProps<Va
       {
         key: 'extra-row',
         render: () => {
-          const { expandedRowKeys } = this.store.getState();
+          const { expandedRowKeys = [] } = this.store.getState();
           const expanded = expandedRowKeys.includes(parentKey);
           return {
             props: {

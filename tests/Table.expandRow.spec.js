@@ -249,4 +249,38 @@ describe('Table.expand', () => {
 
     expect(wrapper.find('.should-display').length).toBeTruthy();
   });
+
+  // https://github.com/ant-design/ant-design/issues/21502
+  it('expandedRowKeys.includes should not throws error', () => {
+    class Demo extends React.Component {
+      state = {
+        data: [],
+      };
+
+      componentDidMount() {
+        this.setState({
+          data: [
+            {
+              id: 1,
+            },
+          ],
+        });
+      }
+
+      render() {
+        return (
+          <Table
+            expandedRowKeys={undefined}
+            expandedRowRender={() => <p>opened</p>}
+            columns={[{ title: 'id', dataIndex: 'id', key: 'id' }]}
+            data={this.state.data}
+          />
+        );
+      }
+    }
+
+    expect(() => {
+      mount(<Demo />);
+    }).not.toThrow();
+  });
 });

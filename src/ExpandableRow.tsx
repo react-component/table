@@ -156,6 +156,6 @@ class ExpandableRow<ValueType> extends React.Component<ExpandableRowProps<ValueT
   }
 }
 
-export default connect(({ expandedRowKeys }, { rowKey }) => ({
+export default connect(({ expandedRowKeys = [] }, { rowKey }) => ({
   expanded: expandedRowKeys.includes(rowKey),
 }))(ExpandableRow);

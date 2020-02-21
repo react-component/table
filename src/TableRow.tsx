@@ -320,7 +320,7 @@ function getRowHeight(state, props) {
 polyfill(TableRow);
 
 export default connect((state: TableStoreState, props: TableRowProps<DefaultValueType>) => {
-  const { currentHoverKey, expandedRowKeys } = state;
+  const { currentHoverKey, expandedRowKeys = [] } = state;
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => expandedRowKeys.includes(k));
 
