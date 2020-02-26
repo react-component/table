@@ -77,7 +77,7 @@
     "np": "^6.0.0",
     "prettier": "^1.11.1",
     "rc-animate": "^2.10.1",
-    "rc-dropdown": "~2.4.1",
+    "rc-dropdown": "~3.0.0",
     "rc-menu": "^7.4.23",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
