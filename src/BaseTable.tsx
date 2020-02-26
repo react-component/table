@@ -149,7 +149,7 @@ class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
 
     if (!fixed && scroll.x) {
       // not set width, then use content fixed width
-      tableStyle.width = scroll.x === true ? 'max-content' : scroll.x;
+      tableStyle.width = scroll.x === true ? 'auto' : scroll.x;
     }
 
     const Table = hasBody ? components.table : 'table';
