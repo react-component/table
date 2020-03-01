@@ -12,7 +12,9 @@ import {
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 
-function convertChildrenToColumns<RecordType>(children: React.ReactNode): ColumnsType<RecordType> {
+export function convertChildrenToColumns<RecordType>(
+  children: React.ReactNode,
+): ColumnsType<RecordType> {
   return toArray(children)
     .filter(node => React.isValidElement(node))
     .map(({ key, props }: React.ReactElement) => {
