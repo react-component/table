@@ -85,7 +85,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   tableLayout?: TableLayout;
 
   // Fixed Columns
-  scroll?: { x?: number | true | string; y?: number };
+  scroll?: { x?: number | true | string; y?: number | string };
 
   // Expandable
   /** Config expand rows */
