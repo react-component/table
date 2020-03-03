@@ -272,7 +272,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       return defaultExpandedRowKeys;
     }
     if (defaultExpandAllRows) {
-      return findAllChildrenKeys<RecordType>(mergedData, getRowKey);
+      return findAllChildrenKeys<RecordType>(mergedData, getRowKey, mergedChildrenColumnName);
     }
     return [];
   });

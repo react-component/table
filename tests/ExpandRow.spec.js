@@ -354,4 +354,18 @@ describe('Table.Expand', () => {
         .hasClass('rc-table-row-collapsed'),
     ).toBeTruthy();
   });
+
+  // https://github.com/ant-design/ant-design/issues/21788
+  it('`defaultExpandAllRows` with `childrenColumnName`', () => {
+    const data = [
+      {
+        key: 0,
+        sub: [{ key: 1, sub: [{ key: 2 }] }],
+      },
+    ];
+    const wrapper = mount(
+      createTable({ data, childrenColumnName: 'sub', expandable: { defaultExpandAllRows: true } }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+  });
 });
