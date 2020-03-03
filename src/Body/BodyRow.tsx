@@ -49,7 +49,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     cellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls } = React.useContext(TableContext);
+  const { prefixCls, direction } = React.useContext(TableContext);
   const {
     fixHeader,
     fixColumn,
@@ -77,7 +77,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
 
   // Move to Body to enhance performance
   const fixedInfoList = flattenColumns.map((column, colIndex) =>
-    getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets),
+    getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
   );
 
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));

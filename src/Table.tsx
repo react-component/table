@@ -106,6 +106,8 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
+  direction?: 'ltr' | 'rtl';
+
   // =================================== Internal ===================================
   /**
    * @private Internal usage, may remove by refactor. Should always use `columns` instead.
@@ -142,6 +144,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     rowKey,
     scroll,
     tableLayout,
+    direction,
 
     // Additional Part
     title,
@@ -338,8 +341,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
   const colWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
-  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length);
-
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = hasData && scroll && validateValue(scroll.y);
   const fixColumn = scroll && validateValue(scroll.x);
 
@@ -505,7 +507,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       });
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
         const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
-
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
@@ -553,7 +554,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             ref={scrollHeaderRef}
             className={classNames(`${prefixCls}-header`)}
           >
-            <FixedHeader {...headerProps} {...columnContext} />
+            <FixedHeader {...headerProps} {...columnContext} direction={direction} />
           </div>
         )}
 
@@ -587,6 +588,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let fullTable = (
     <div
       className={classNames(prefixCls, className, {
+        [`${prefixCls}-rtl`]: direction === 'rtl',
         [`${prefixCls}-ping-left`]: pingedLeft,
         [`${prefixCls}-ping-right`]: pingedRight,
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
@@ -618,6 +620,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         prefixCls,
         getComponent,
         scrollbarSize,
+        direction,
       }}
     >
       <BodyContext.Provider

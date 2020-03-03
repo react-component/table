@@ -25,6 +25,9 @@
   box-sizing: border-box;
   position: relative;
 
+  &-rtl {
+    direction: rtl;
+  }
   // ================= Global =================
   table {
     border-spacing: 0px;
@@ -45,6 +48,10 @@
     box-sizing: border-box;
     white-space: normal;
     word-break: break-word;
+    .@{tablePrefixCls}-rtl& {
+      border-left: @border;
+      border-right: 0;
+    }
   }
 
   // ================== Cell ==================
@@ -58,6 +65,22 @@
       border-right-color: transparent;
     }
 
+    .@{tablePrefixCls}-rtl & {
+      &-fix-right:last-child {
+        border-right-color: @border-color;
+      }
+      &-fix-left:last-child {
+        border-left-color: transparent;
+      }
+    }
+
+    &-fix-left-first {
+      .@{tablePrefixCls}-rtl & {
+        box-shadow: 1px 0 0 @border-color;
+      }
+    }
+
+    &-fix-left-first::after,
     &-fix-left-last::after {
       pointer-events: none;
       content: '';
@@ -70,8 +93,13 @@
       transform: translateX(100%);
     }
 
-    &-fix-right-first {
+    &-fix-right-first,
+    &-fix-right-last {
       box-shadow: -1px 0 0 @border-color;
+
+      .@{tablePrefixCls}-rtl & {
+        box-shadow: none;
+      }
 
       &::after {
         pointer-events: none;
@@ -92,8 +120,9 @@
       text-overflow: ellipsis;
 
       // Fixed first or last should special process
+      &.@{tablePrefixCls}-cell-fix-left-first,
       &.@{tablePrefixCls}-cell-fix-left-last,
-      &.@{tablePrefixCls}-cell-fix-right-first {
+      &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
         overflow: visible;
 
         .@{tablePrefixCls}-cell-content {
@@ -106,13 +135,15 @@
   }
 
   &-ping-left {
+    .@{tablePrefixCls}-cell-fix-left-first::after,
     .@{tablePrefixCls}-cell-fix-left-last::after {
       box-shadow: inset 10px 0 8px -8px green;
     }
   }
 
   &-ping-right {
-    .@{tablePrefixCls}-cell-fix-right-first::after {
+    .@{tablePrefixCls}-cell-fix-right-first::after,
+    .@{tablePrefixCls}-cell-fix-right-last::after {
       box-shadow: inset -10px 0 8px -8px green;
     }
   }
@@ -142,6 +173,11 @@
       left: -1px;
       width: 1px;
       background: @table-head-background-color;
+
+      .@{tablePrefixCls}-rtl& {
+        right: -1px;
+        left: auto;
+      }
     }
   }
 

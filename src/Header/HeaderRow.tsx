@@ -30,7 +30,7 @@ function HeaderRow<RecordType>({
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
-  const { prefixCls } = React.useContext(TableContext);
+  const { prefixCls, direction } = React.useContext(TableContext);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -48,6 +48,7 @@ function HeaderRow<RecordType>({
           cell.colEnd,
           flattenColumns,
           stickyOffsets,
+          direction,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;

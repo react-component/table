@@ -5,6 +5,10 @@ export interface FixedInfo {
   fixRight: number | false;
   lastFixLeft: boolean;
   firstFixRight: boolean;
+
+  // For Rtl Direction
+  lastFixRight: boolean;
+  firstFixLeft: boolean;
 }
 
 export function getCellFixedInfo(
@@ -12,6 +16,7 @@ export function getCellFixedInfo(
   colEnd: number,
   columns: { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
+  direction: 'ltr' | 'rtl',
 ): FixedInfo {
   const startColumn = columns[colStart] || {};
   const endColumn = columns[colEnd] || {};
@@ -27,12 +32,25 @@ export function getCellFixedInfo(
 
   let lastFixLeft: boolean = false;
   let firstFixRight: boolean = false;
-  if (fixLeft !== undefined) {
-    const nextColumn = columns[colEnd + 1];
+
+  let lastFixRight: boolean = false;
+  let firstFixLeft: boolean = false;
+
+  const nextColumn = columns[colEnd + 1];
+  const prevColumn = columns[colStart - 1];
+
+  if (direction === 'rtl') {
+    if (fixLeft !== undefined) {
+      const prevFixLeft = prevColumn && prevColumn.fixed === 'left';
+      firstFixLeft = !prevFixLeft;
+    } else if (fixRight !== undefined) {
+      const nextFixRight = nextColumn && nextColumn.fixed === 'right';
+      lastFixRight = !nextFixRight;
+    }
+  } else if (fixLeft !== undefined) {
     const nextFixLeft = nextColumn && nextColumn.fixed === 'left';
     lastFixLeft = !nextFixLeft;
   } else if (fixRight !== undefined) {
-    const prevColumn = columns[colStart - 1];
     const prevFixRight = prevColumn && prevColumn.fixed === 'right';
     firstFixRight = !prevFixRight;
   }
@@ -42,5 +60,7 @@ export function getCellFixedInfo(
     fixRight,
     lastFixLeft,
     firstFixRight,
+    lastFixRight,
+    firstFixLeft,
   };
 }
