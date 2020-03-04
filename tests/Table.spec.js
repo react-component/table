@@ -766,4 +766,27 @@ describe('Table.Basic', () => {
         .props()['data-row-key'],
     ).toEqual('light');
   });
+
+  it('render with state change', () => {
+    class Test extends React.Component {
+      state = {
+        change: false,
+        columns: [
+          {
+            render: () => String(this.state.change),
+          },
+        ],
+      };
+
+      render() {
+        return <Table columns={this.state.columns} data={[{ key: 1 }]} />;
+      }
+    }
+
+    const wrapper = mount(<Test />);
+    expect(wrapper.find('td').text()).toEqual('false');
+
+    wrapper.setState({ change: true });
+    expect(wrapper.find('td').text()).toEqual('true');
+  });
 });
