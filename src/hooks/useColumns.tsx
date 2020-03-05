@@ -98,7 +98,7 @@ function reverseFixedForRtlDirection<RecordType>(
   return columns.map(value => {
     const { fixed, ...restProps } = value;
 
-    // Convert `fixed='true'` to `fixed='left'` instead
+    // Convert `fixed='left'` to `fixed='right'` instead
     let parsedFixed = fixed;
     if (direction === 'rtl') {
       if (fixed === true || fixed === 'left') {
@@ -207,8 +207,10 @@ function useColumns<RecordType>(
     return finalColumns;
   }, [transformColumns, withExpandColumns, direction]);
 
-  let flattenColumns = React.useMemo(() => flatColumns(mergedColumns, direction), [mergedColumns]);
-  flattenColumns = reverseFixedForRtlDirection(flattenColumns, direction);
+  const flattenColumns = React.useMemo(
+    () => reverseFixedForRtlDirection(flatColumns(mergedColumns, direction), direction),
+    [mergedColumns],
+  );
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(flattenColumns);
