@@ -356,6 +356,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   if (fixColumn) {
     scrollXStyle = { overflowX: 'scroll' };
+    // When no vertical scrollbar, should hide it
+    // https://github.com/ant-design/ant-design/pull/20705
+    // https://github.com/ant-design/ant-design/issues/21879
+    if (!fixHeader) {
+      scrollYStyle = { overflowY: 'hidden' };
+    }
     scrollTableStyle = {
       width: scroll.x === true ? 'auto' : scroll.x,
       minWidth: '100%',

@@ -9,7 +9,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll;"
+      style="overflow-x: scroll; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -629,7 +629,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll;"
+      style="overflow-x: scroll; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -1448,7 +1448,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll;"
+      style="overflow-x: scroll; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"

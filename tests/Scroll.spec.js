@@ -15,6 +15,8 @@ describe('Table.Scroll', () => {
   it('renders scroll.x is true', () => {
     const wrapper = mount(createTable({ scroll: { x: true } }));
     expect(wrapper.find('table').props().style.width).toEqual('auto');
+    expect(wrapper.find('.rc-table-content').props().style.overflowX).toEqual('scroll');
+    expect(wrapper.find('.rc-table-content').props().style.overflowY).toEqual('hidden');
   });
 
   it('renders scroll.x is a number', () => {
@@ -25,6 +27,12 @@ describe('Table.Scroll', () => {
   it('renders scroll.y is a number', () => {
     const wrapper = mount(createTable({ scroll: { y: 200 } }));
     expect(wrapper.find('.rc-table-body').props().style.maxHeight).toEqual(200);
+  });
+
+  it('renders scroll.x and scroll.y are both true', () => {
+    const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
+    expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('scroll');
+    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
   });
 
   it('fire scroll event', () => {
