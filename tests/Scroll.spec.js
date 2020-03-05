@@ -14,7 +14,7 @@ describe('Table.Scroll', () => {
 
   it('renders scroll.x is true', () => {
     const wrapper = mount(createTable({ scroll: { x: true } }));
-    expect(wrapper.find('table').props().style.width).toEqual('max-content');
+    expect(wrapper.find('table').props().style.width).toEqual('auto');
   });
 
   it('renders scroll.x is a number', () => {

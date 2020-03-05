@@ -353,10 +353,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       maxHeight: scroll.y,
     };
   }
+
   if (fixColumn) {
     scrollXStyle = { overflowX: 'scroll' };
     scrollTableStyle = {
-      width: scroll.x === true ? 'max-content' : scroll.x,
+      width: scroll.x === true ? 'auto' : scroll.x,
       minWidth: '100%',
     };
   }
