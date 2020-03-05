@@ -30,27 +30,12 @@ longTextData[0] = {
   a: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
 };
 
-function getFixedRightValue(fixRight: boolean, isRtlCol: boolean): 'left' | 'right' {
-  if (fixRight) {
-    return isRtlCol ? 'left' : 'right';
-  }
-  return null;
-}
-
-function getFixedLeftValue(fixLeft: boolean, isRtlCol: boolean): 'right' | 'left' {
-  if (fixLeft) {
-    return isRtlCol ? 'right' : 'left';
-  }
-  return null;
-}
-
 const useColumn = (
   fixLeft: boolean,
   fixTitle: boolean,
   fixRight: boolean,
   ellipsis: boolean,
   percentage: boolean,
-  isRtlCol: boolean,
 ) => {
   const columns: ColumnsType<RecordType> = React.useMemo(
     () => [
@@ -59,19 +44,13 @@ const useColumn = (
         dataIndex: 'a',
         key: 'a',
         width: percentage ? '10%' : 80,
-        fixed: getFixedLeftValue(fixLeft, isRtlCol),
+        fixed: fixLeft ? 'left' : null,
         ellipsis,
       },
-      {
-        title: 'title2',
-        dataIndex: 'b',
-        key: 'b',
-        width: 80,
-        fixed: getFixedLeftValue(fixLeft, isRtlCol),
-      },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 80, fixed: fixLeft ? 'left' : null },
       {
         title: 'title3',
-        fixed: fixTitle ? getFixedLeftValue(fixLeft, isRtlCol) : null,
+        fixed: fixLeft && fixTitle ? 'left' : null,
         children: [
           { title: 'title4', dataIndex: 'c', key: 'd', width: 100 },
           { title: 'title5', dataIndex: 'c', key: 'e', width: 100 },
@@ -82,22 +61,10 @@ const useColumn = (
       { title: 'title8', dataIndex: 'c', key: 'h' },
       { title: 'title9', dataIndex: 'b', key: 'i' },
       { title: 'title10', dataIndex: 'b', key: 'j' },
-      {
-        title: 'title11',
-        dataIndex: 'b',
-        key: 'k',
-        width: 100,
-        fixed: getFixedRightValue(fixRight, isRtlCol),
-      },
-      {
-        title: 'title12',
-        dataIndex: 'b',
-        key: 'l',
-        width: 80,
-        fixed: getFixedRightValue(fixRight, isRtlCol),
-      },
+      { title: 'title11', dataIndex: 'b', key: 'k', width: 100, fixed: fixRight ? 'right' : null },
+      { title: 'title12', dataIndex: 'b', key: 'l', width: 80, fixed: fixRight ? 'right' : null },
     ],
-    [fixLeft, fixTitle, fixRight, ellipsis, percentage, isRtlCol],
+    [fixLeft, fixTitle, fixRight, ellipsis, percentage],
   );
 
   return columns;
@@ -105,7 +72,7 @@ const useColumn = (
 
 const Demo = () => {
   const [autoWidth, autoWidthProps] = useCheckbox(false);
-  const [isRtl, isRtlProps] = useCheckbox(false);
+  const [isRtl, isRtlProps] = useCheckbox(true);
   const [longText, longTextProps] = useCheckbox(false);
   const [fixHeader, fixHeaderProps] = useCheckbox(true);
   const [fixLeft, fixLeftProps] = useCheckbox(true);
@@ -114,7 +81,7 @@ const Demo = () => {
   const [ellipsis, ellipsisProps] = useCheckbox(false);
   const [percentage, percentageProps] = useCheckbox(false);
   const [empty, emptyProps] = useCheckbox(false);
-  const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis, percentage, isRtl);
+  const columns = useColumn(fixLeft, fixTitle3, fixRight, ellipsis, percentage);
 
   let mergedData: RecordType[];
   if (empty) {

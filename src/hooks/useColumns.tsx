@@ -32,17 +32,26 @@ export function convertChildrenToColumns<RecordType>(
     });
 }
 
-function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
+function flatColumns<RecordType>(
+  columns: ColumnsType<RecordType>,
+  direction: 'ltr' | 'rtl',
+): ColumnType<RecordType>[] {
   return columns.reduce((list, column) => {
     const { fixed } = column;
 
     // Convert `fixed='true'` to `fixed='left'` instead
-    const parsedFixed = fixed === true ? 'left' : fixed;
-
+    let parsedFixed = fixed === true ? 'left' : fixed;
+    if (direction === 'rtl') {
+      if (fixed === true || fixed === 'left') {
+        parsedFixed = 'right';
+      } else if (fixed === 'right') {
+        parsedFixed = 'left';
+      }
+    }
     if ('children' in column) {
       return [
         ...list,
-        ...flatColumns(column.children).map(subColum => ({
+        ...flatColumns(column.children, direction).map(subColum => ({
           fixed: parsedFixed,
           ...subColum,
         })),
@@ -82,6 +91,31 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
   }
 }
 
+function reverseFixedForRtlDirection<RecordType>(
+  columns: ColumnsType<RecordType>,
+  direction: 'ltr' | 'rtl',
+): ColumnsType<RecordType> {
+  return columns.map(value => {
+    const { fixed, ...restProps } = value;
+
+    // Convert `fixed='true'` to `fixed='left'` instead
+    let parsedFixed = fixed;
+    if (direction === 'rtl') {
+      if (fixed === true || fixed === 'left') {
+        parsedFixed = 'right';
+      } else if (fixed === 'right') {
+        parsedFixed = 'left';
+      }
+    }
+    const column = {
+      fixed: parsedFixed,
+      ...restProps,
+    };
+
+    return column;
+  });
+}
+
 /**
  * Parse `columns` & `children` into `columns`.
  */
@@ -97,6 +131,7 @@ function useColumns<RecordType>(
     expandIcon,
     rowExpandable,
     expandIconColumnIndex,
+    direction,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -108,6 +143,7 @@ function useColumns<RecordType>(
     expandIcon?: RenderExpandIcon<RecordType>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
+    direction?: 'ltr' | 'rtl';
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
@@ -151,10 +187,11 @@ function useColumns<RecordType>(
       return cloneColumns;
     }
     return baseColumns;
-  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon]);
+  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
 
   const mergedColumns = React.useMemo(() => {
     let finalColumns = withExpandColumns;
+    finalColumns = reverseFixedForRtlDirection(finalColumns, direction);
     if (transformColumns) {
       finalColumns = transformColumns(finalColumns);
     }
@@ -167,17 +204,15 @@ function useColumns<RecordType>(
         },
       ];
     }
-
     return finalColumns;
-  }, [transformColumns, withExpandColumns]);
+  }, [transformColumns, withExpandColumns, direction]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
-
+  let flattenColumns = React.useMemo(() => flatColumns(mergedColumns, direction), [mergedColumns]);
+  flattenColumns = reverseFixedForRtlDirection(flattenColumns, direction);
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(flattenColumns);
   }
-
   return [mergedColumns, flattenColumns];
 }
 

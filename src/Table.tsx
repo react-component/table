@@ -321,6 +321,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       onTriggerExpand,
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex,
+      direction,
     },
     internalHooks === INTERNAL_HOOKS ? transformColumns : null,
   );
