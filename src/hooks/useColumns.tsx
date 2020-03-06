@@ -83,8 +83,8 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
 }
 
 function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType<RecordType> {
-  return columns.map(value => {
-    const { fixed, ...restProps } = value;
+  return columns.map(column => {
+    const { fixed, ...restProps } = column;
 
     // Convert `fixed='left'` to `fixed='right'` instead
     let parsedFixed = fixed;
@@ -93,10 +93,6 @@ function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType
     } else if (fixed === 'right') {
       parsedFixed = 'left';
     }
-    if ('children' in value) {
-      value.children = revertForRtl(value.children);
-    }
-
     return {
       fixed: parsedFixed,
       ...restProps,
@@ -179,9 +175,6 @@ function useColumns<RecordType>(
 
   const mergedColumns = React.useMemo(() => {
     let finalColumns = withExpandColumns;
-    if (direction === 'rtl') {
-      finalColumns = revertForRtl(finalColumns);
-    }
     if (transformColumns) {
       finalColumns = transformColumns(finalColumns);
     }
@@ -197,7 +190,12 @@ function useColumns<RecordType>(
     return finalColumns;
   }, [transformColumns, withExpandColumns, direction]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
+  const flattenColumns = React.useMemo(() => {
+    if (direction === 'rtl') {
+      return revertForRtl(flatColumns(mergedColumns));
+    }
+    return flatColumns(mergedColumns);
+  }, [mergedColumns, direction]);
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(flattenColumns);
