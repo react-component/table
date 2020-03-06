@@ -18,7 +18,6 @@ describe('Table.Basic', () => {
         createTable({
           prefixCls: 'test-prefix',
           className: 'test-class-name',
-          direction: 'rtl',
         }),
       );
       expect(wrapper.render()).toMatchSnapshot();
@@ -29,6 +28,7 @@ describe('Table.Basic', () => {
         createTable({
           prefixCls: 'test-prefix',
           className: 'test-class-name',
+          direction: 'rtl',
         }),
       );
       expect(wrapper.render()).toMatchSnapshot();

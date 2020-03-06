@@ -378,7 +378,7 @@ exports[`Table.Basic renders colSpan correctly 1`] = `
 
 exports[`Table.Basic renders correctly RTL 1`] = `
 <div
-  class="test-prefix test-class-name"
+  class="test-prefix test-class-name test-prefix-rtl"
 >
   <div
     class="test-prefix-container"
@@ -433,7 +433,7 @@ exports[`Table.Basic renders correctly RTL 1`] = `
 
 exports[`Table.Basic renders correctly basic 1`] = `
 <div
-  class="test-prefix test-class-name test-prefix-rtl"
+  class="test-prefix test-class-name"
 >
   <div
     class="test-prefix-container"
