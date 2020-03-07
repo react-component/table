@@ -7,6 +7,7 @@ import TableContext from '../context/TableContext';
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];
   columCount: number;
+  direction: 'ltr' | 'rtl';
 }
 
 function FixedHeader<RecordType>({
@@ -15,6 +16,7 @@ function FixedHeader<RecordType>({
   colWidths,
   columCount,
   stickyOffsets,
+  direction,
   ...props
 }: FixedHeaderProps<RecordType>) {
   const { prefixCls, scrollbarSize } = React.useContext(TableContext);
@@ -40,11 +42,11 @@ function FixedHeader<RecordType>({
 
   // Calculate the sticky offsets
   const headerStickyOffsets = React.useMemo(() => {
-    const { right } = stickyOffsets;
-
+    const { right, left } = stickyOffsets;
     return {
       ...stickyOffsets,
-      right: [...right.map(width => width + scrollbarSize), 0],
+      left: direction === 'rtl' ? [...left.map(width => width + scrollbarSize), 0] : left,
+      right: direction === 'rtl' ? right : [...right.map(width => width + scrollbarSize), 0],
     };
   }, [scrollbarSize, stickyOffsets]);
 

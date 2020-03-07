@@ -156,4 +156,34 @@ describe('Table.FixedColumn', () => {
     expect(wrapper.find('tr th').find('.rc-table-cell-content')).toHaveLength(1);
     expect(wrapper.find('tr td').find('.rc-table-cell-content')).toHaveLength(data.length);
   });
+
+  it('fixed column renders correctly RTL', () => {
+    const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+  it('has correct scroll classNames when table direction is RTL', () => {
+    const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
+
+    expect(wrapper.find('.rc-table').hasClass('rc-table-rtl')).toBeTruthy();
+
+    // Left should be right in RTL
+    expect(
+      wrapper
+        .find('.rc-table-row')
+        .first()
+        .find('.rc-table-cell')
+        .first()
+        .hasClass('rc-table-cell-fix-right'),
+    ).toBeTruthy();
+
+    // Right should be left in RTL
+    expect(
+      wrapper
+        .find('.rc-table-row')
+        .first()
+        .find('.rc-table-cell')
+        .last()
+        .hasClass('rc-table-cell-fix-left'),
+    ).toBeTruthy();
+  });
 });

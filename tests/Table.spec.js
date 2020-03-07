@@ -23,6 +23,17 @@ describe('Table.Basic', () => {
       expect(wrapper.render()).toMatchSnapshot();
     });
 
+    it('RTL', () => {
+      const wrapper = mount(
+        createTable({
+          prefixCls: 'test-prefix',
+          className: 'test-class-name',
+          direction: 'rtl',
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
+
     it('no columns', () => {
       const wrapper = mount(createTable({ columns: [] }));
       expect(wrapper.render()).toMatchSnapshot();
@@ -704,7 +715,7 @@ describe('Table.Basic', () => {
           <ColumnGroup title="total">
             <Column title="Name" dataIndex="name" />
           </ColumnGroup>
-          {'Invalidate Column'}
+          Invalidate Column
         </Table>,
       ).render(),
     ).toMatchSnapshot();

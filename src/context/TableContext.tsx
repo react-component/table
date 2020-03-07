@@ -7,6 +7,8 @@ export interface TableContextProps {
   getComponent: GetComponent;
 
   scrollbarSize: number;
+
+  direction: 'ltr' | 'rtl';
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

@@ -376,6 +376,61 @@ exports[`Table.Basic renders colSpan correctly 1`] = `
 </div>
 `;
 
+exports[`Table.Basic renders correctly RTL 1`] = `
+<div
+  class="test-prefix test-class-name test-prefix-rtl"
+>
+  <div
+    class="test-prefix-container"
+  >
+    <div
+      class="test-prefix-content"
+    >
+      <table
+        style="table-layout: auto;"
+      >
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th
+              class="test-prefix-cell"
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="test-prefix-tbody"
+        >
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="test-prefix-cell"
+            >
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="test-prefix-cell"
+            >
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table.Basic renders correctly basic 1`] = `
 <div
   class="test-prefix test-class-name"

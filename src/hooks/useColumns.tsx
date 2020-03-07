@@ -82,6 +82,24 @@ function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
   }
 }
 
+function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType<RecordType> {
+  return columns.map(column => {
+    const { fixed, ...restProps } = column;
+
+    // Convert `fixed='left'` to `fixed='right'` instead
+    let parsedFixed = fixed;
+    if (fixed === 'left') {
+      parsedFixed = 'right';
+    } else if (fixed === 'right') {
+      parsedFixed = 'left';
+    }
+    return {
+      fixed: parsedFixed,
+      ...restProps,
+    };
+  });
+}
+
 /**
  * Parse `columns` & `children` into `columns`.
  */
@@ -97,6 +115,7 @@ function useColumns<RecordType>(
     expandIcon,
     rowExpandable,
     expandIconColumnIndex,
+    direction,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -108,6 +127,7 @@ function useColumns<RecordType>(
     expandIcon?: RenderExpandIcon<RecordType>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
+    direction?: 'ltr' | 'rtl';
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
@@ -151,7 +171,7 @@ function useColumns<RecordType>(
       return cloneColumns;
     }
     return baseColumns;
-  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon]);
+  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
 
   const mergedColumns = React.useMemo(() => {
     let finalColumns = withExpandColumns;
@@ -167,17 +187,19 @@ function useColumns<RecordType>(
         },
       ];
     }
-
     return finalColumns;
-  }, [transformColumns, withExpandColumns]);
+  }, [transformColumns, withExpandColumns, direction]);
 
-  const flattenColumns = React.useMemo(() => flatColumns(mergedColumns), [mergedColumns]);
-
+  const flattenColumns = React.useMemo(() => {
+    if (direction === 'rtl') {
+      return revertForRtl(flatColumns(mergedColumns));
+    }
+    return flatColumns(mergedColumns);
+  }, [mergedColumns, direction]);
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(flattenColumns);
   }
-
   return [mergedColumns, flattenColumns];
 }
 

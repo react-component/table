@@ -44,8 +44,10 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   // Fixed
   fixLeft?: number | false;
   fixRight?: number | false;
+  firstFixLeft?: boolean;
   lastFixLeft?: boolean;
   firstFixRight?: boolean;
+  lastFixRight?: boolean;
 
   // Additional
   /** @private Used for `expandable` with nest tree */
@@ -67,8 +69,10 @@ function Cell<RecordType extends DefaultRecordType>(
     rowSpan,
     fixLeft,
     fixRight,
+    firstFixLeft,
     lastFixLeft,
     firstFixRight,
+    lastFixRight,
     appendNode,
     additionalProps = {},
     ellipsis,
@@ -134,6 +138,7 @@ function Cell<RecordType extends DefaultRecordType>(
   }
   if (isFixRight) {
     fixedStyle.position = 'sticky';
+
     fixedStyle.right = fixRight as number;
   }
 
@@ -163,9 +168,11 @@ function Cell<RecordType extends DefaultRecordType>(
       className,
       {
         [`${cellPrefixCls}-fix-left`]: isFixLeft,
+        [`${cellPrefixCls}-fix-left-first`]: firstFixLeft,
         [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
         [`${cellPrefixCls}-fix-right`]: isFixRight,
         [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
+        [`${cellPrefixCls}-fix-right-last`]: lastFixRight,
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
       },
