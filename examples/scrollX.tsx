@@ -3,8 +3,13 @@ import Table from '../src';
 import '../assets/index.less';
 
 const columns = [
-  { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+  {
+    title: 'title1',
+    dataIndex: 'a',
+    key: 'a',
+    width: 100,
+  },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, render: () => console.error('test') },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 100 },
   { title: 'title4', dataIndex: 'b', key: 'd', width: 100 },
   { title: 'title5', dataIndex: 'b', key: 'e', width: 100 },
@@ -19,15 +24,15 @@ const columns = [
 
 const data = [
   { a: '123', b: 'xxxxxxxx xxxxxxxx', d: 3, key: '1' },
-  { a: 'cdd', b: 'edd12221 edd12221', d: 3, key: '2' },
-  { a: '133', c: 'edd12221 edd12221', d: 2, key: '3' },
-  { a: '133', c: 'edd12221 edd12221', d: 2, key: '4' },
+  // { a: 'cdd', b: 'edd12221 edd12221', d: 3, key: '2' },
+  // { a: '133', c: 'edd12221 edd12221', d: 2, key: '3' },
+  // { a: '133', c: 'edd12221 edd12221', d: 2, key: '4' },
 ];
 
 const Demo = () => (
   <div>
     <h2>Scroll X</h2>
-    <Table style={{ width: 800 }} scroll={{ x: true }} columns={columns} data={data} />
+    <Table style={{ width: 800 }} scroll={{ x: 2000 }} columns={columns} data={data} />
   </div>
 );
 

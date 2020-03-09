@@ -74,6 +74,19 @@ const EMPTY_SCROLL_TARGET = {};
 
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
+interface MemoTableContentProps {
+  children: React.ReactNode;
+  pingLeft: boolean;
+  pingRight: boolean;
+}
+const MemoTableContent = React.memo<MemoTableContentProps>(
+  ({ children }) => {
+    console.error('render!');
+    return children as React.ReactElement;
+  },
+  (prev, next) => prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight,
+);
+
 export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<RecordType> {
   prefixCls?: string;
   className?: string;
@@ -371,13 +384,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  function onColumnResize(columnKey: React.Key, width: number) {
+  const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
     updateColsWidths(widths => {
       const newWidths = new Map(widths);
       newWidths.set(columnKey, width);
       return newWidths;
     });
-  }
+  }, []);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
@@ -612,9 +625,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ref={fullTableRef}
       {...ariaProps}
     >
-      {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-      <div className={`${prefixCls}-container`}>{groupTableNode}</div>
-      {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
+      <MemoTableContent pingLeft={pingedLeft} pingRight={pingedRight}>
+        {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
+        <div className={`${prefixCls}-container`}>{groupTableNode}</div>
+        {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
+      </MemoTableContent>
     </div>
   );
 
@@ -622,34 +637,57 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
+  const TableContextValue = React.useMemo(
+    () => ({
+      prefixCls,
+      getComponent,
+      scrollbarSize,
+      direction,
+    }),
+    [prefixCls, getComponent, scrollbarSize, direction],
+  );
+
+  const BodyContextValue = React.useMemo(
+    () => ({
+      ...columnContext,
+      tableLayout: mergedTableLayout,
+      rowClassName,
+      expandedRowClassName,
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      expandIcon: mergedExpandIcon,
+      expandableType,
+      expandRowByClick,
+      expandedRowRender,
+      onTriggerExpand,
+      expandIconColumnIndex,
+      indentSize,
+    }),
+    [
+      columnContext,
+      mergedTableLayout,
+      rowClassName,
+      expandedRowClassName,
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      mergedExpandIcon,
+      expandableType,
+      expandRowByClick,
+      expandedRowRender,
+      onTriggerExpand,
+      expandIconColumnIndex,
+      indentSize,
+    ],
+  );
+
+  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
+
   return (
-    <TableContext.Provider
-      value={{
-        prefixCls,
-        getComponent,
-        scrollbarSize,
-        direction,
-      }}
-    >
-      <BodyContext.Provider
-        value={{
-          ...columnContext,
-          tableLayout: mergedTableLayout,
-          rowClassName,
-          expandedRowClassName,
-          componentWidth,
-          fixHeader,
-          fixColumn,
-          expandIcon: mergedExpandIcon,
-          expandableType,
-          expandRowByClick,
-          expandedRowRender,
-          onTriggerExpand,
-          expandIconColumnIndex,
-          indentSize,
-        }}
-      >
-        <ResizeContext.Provider value={{ onColumnResize }}>{fullTable}</ResizeContext.Provider>
+    <TableContext.Provider value={TableContextValue}>
+      <BodyContext.Provider value={BodyContextValue}>
+        <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
       </BodyContext.Provider>
     </TableContext.Provider>
   );
