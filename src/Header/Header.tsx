@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { ColumnsType, CellType, StickyOffsets, ColumnType, GetComponentProps } from '../interface';
+import {
+  ColumnsType,
+  CellType,
+  StickyOffsets,
+  ColumnType,
+  GetComponentProps,
+  ColumnGroupType,
+} from '../interface';
 import HeaderRow from './HeaderRow';
 import TableContext from '../context/TableContext';
 
@@ -28,11 +35,12 @@ function parseHeaderRows<RecordType>(
 
       let colSpan: number = 1;
 
-      if ('children' in column) {
-        colSpan = fillRowCells(column.children, currentColIndex, rowIndex + 1).reduce(
-          (total, count) => total + count,
-          0,
-        );
+      if ((column as ColumnGroupType<RecordType>).children) {
+        colSpan = fillRowCells(
+          (column as ColumnGroupType<RecordType>).children,
+          currentColIndex,
+          rowIndex + 1,
+        ).reduce((total, count) => total + count, 0);
         cell.hasSubColumns = true;
       }
 
