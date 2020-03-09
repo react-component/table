@@ -26,6 +26,7 @@
 
 import * as React from 'react';
 import classNames from 'classnames';
+import shallowEqual from 'shallowequal';
 import warning from 'rc-util/lib/warning';
 import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
@@ -78,12 +79,20 @@ interface MemoTableContentProps {
   children: React.ReactNode;
   pingLeft: boolean;
   pingRight: boolean;
+  props: any;
 }
 const MemoTableContent = React.memo<MemoTableContentProps>(
   ({ children }) => children as React.ReactElement,
-  // No additional render when pinged status change.
-  // This is not a bug.
-  (prev, next) => prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight,
+
+  (prev, next) => {
+    if (!shallowEqual(prev.props, next.props)) {
+      return false;
+    }
+
+    // No additional render when pinged status change.
+    // This is not a bug.
+    return prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight;
+  },
 );
 
 export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<RecordType> {
@@ -624,7 +633,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ref={fullTableRef}
       {...ariaProps}
     >
-      <MemoTableContent pingLeft={pingedLeft} pingRight={pingedRight}>
+      <MemoTableContent pingLeft={pingedLeft} pingRight={pingedRight} props={props}>
         {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
         <div className={`${prefixCls}-container`}>{groupTableNode}</div>
         {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
