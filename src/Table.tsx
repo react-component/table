@@ -80,10 +80,7 @@ interface MemoTableContentProps {
   pingRight: boolean;
 }
 const MemoTableContent = React.memo<MemoTableContentProps>(
-  ({ children }) => {
-    console.error('render!');
-    return children as React.ReactElement;
-  },
+  ({ children }) => children as React.ReactElement,
   (prev, next) => prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight,
 );
 
@@ -339,10 +336,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     internalHooks === INTERNAL_HOOKS ? transformColumns : null,
   );
 
-  const columnContext = {
-    columns,
-    flattenColumns,
-  };
+  const columnContext = React.useMemo(
+    () => ({
+      columns,
+      flattenColumns,
+    }),
+    [columns, flattenColumns],
+  );
 
   // ====================== Scroll ======================
   const fullTableRef = React.useRef<HTMLDivElement>();
