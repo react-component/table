@@ -9,6 +9,7 @@ import {
   GetRowKey,
   TriggerEventHandler,
   RenderExpandIcon,
+  ColumnGroupType,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 
@@ -39,10 +40,11 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
     // Convert `fixed='true'` to `fixed='left'` instead
     const parsedFixed = fixed === true ? 'left' : fixed;
 
-    if ('children' in column) {
+    const columnAlias = column as ColumnGroupType<RecordType>;
+    if (columnAlias.children) {
       return [
         ...list,
-        ...flatColumns(column.children).map(subColum => ({
+        ...flatColumns(columnAlias.children).map(subColum => ({
           fixed: parsedFixed,
           ...subColum,
         })),
