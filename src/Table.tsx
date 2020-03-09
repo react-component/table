@@ -81,6 +81,8 @@ interface MemoTableContentProps {
 }
 const MemoTableContent = React.memo<MemoTableContentProps>(
   ({ children }) => children as React.ReactElement,
+  // No additional render when pinged status change.
+  // This is not a bug.
   (prev, next) => prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight,
 );
 
