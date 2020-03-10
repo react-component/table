@@ -110,9 +110,7 @@ type Component<P> =
   | React.FC<P>
   | keyof React.ReactHTML;
 
-export type CustomizeComponent<
-  P extends React.HTMLAttributes<HTMLElement> = React.HTMLAttributes<HTMLElement>
-> = Component<P>;
+export type CustomizeComponent = Component<any>;
 
 export type CustomizeScrollBody<RecordType> = (
   data: RecordType[],
