@@ -310,7 +310,7 @@ describe('Table.Basic', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  it('render with style & className', () => {
+  it('render with style & className & data-*', () => {
     const columns = [
       {
         dataIndex: 'key',
@@ -318,6 +318,7 @@ describe('Table.Basic', () => {
           props: {
             style: { background: 'red' },
             className: 'customize-render',
+            'data-light': 'bamboo',
           },
           children: text,
         }),
@@ -328,6 +329,7 @@ describe('Table.Basic', () => {
     const props = wrapper.find('td').props();
     expect(props.style).toEqual(expect.objectContaining({ background: 'red' }));
     expect(props.className.includes('customize-render')).toBeTruthy();
+    expect(props['data-light']).toEqual('bamboo');
   });
 
   it('renders rowSpan correctly', () => {
