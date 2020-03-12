@@ -66,42 +66,42 @@ export interface TableHeaderProps {
   onHeaderRow?: GetComponentProps<ColumnType[]>;
 }
 
-const TableHeader: React.FC<TableHeaderProps> = (props, { table }) => {
-  const { components } = table;
-  const { prefixCls, showHeader, onHeaderRow } = table.props;
-  const { expander, columns, fixed } = props;
+export default class TableHeader extends React.PureComponent<TableHeaderProps> {
+  static contextTypes = {
+    table: PropTypes.any,
+  };
 
-  if (!showHeader) {
-    return null;
+  render() {
+    const { components } = this.context.table;
+    const { prefixCls, showHeader, onHeaderRow } = this.context.table.props;
+    const { expander, columns, fixed } = this.props;
+
+    if (!showHeader) {
+      return null;
+    }
+
+    const rows = getHeaderRows({ columns });
+
+    expander.renderExpandIndentCell(rows, fixed);
+
+    const HeaderWrapper = components.header.wrapper;
+
+    return (
+      <HeaderWrapper className={`${prefixCls}-thead`}>
+        {rows.map((row, index) => (
+          <TableHeaderRow
+            prefixCls={prefixCls}
+            key={index}
+            index={index}
+            fixed={fixed}
+            columns={columns}
+            rows={rows}
+            row={row}
+            components={components}
+            onHeaderRow={onHeaderRow}
+          />
+        ))}
+      </HeaderWrapper>
+    );
   }
-
-  const rows = getHeaderRows({ columns });
-
-  expander.renderExpandIndentCell(rows, fixed);
-
-  const HeaderWrapper = components.header.wrapper;
-
-  return (
-    <HeaderWrapper className={`${prefixCls}-thead`}>
-      {rows.map((row, index) => (
-        <TableHeaderRow
-          prefixCls={prefixCls}
-          key={index}
-          index={index}
-          fixed={fixed}
-          columns={columns}
-          rows={rows}
-          row={row}
-          components={components}
-          onHeaderRow={onHeaderRow}
-        />
-      ))}
-    </HeaderWrapper>
-  );
-};
-
-TableHeader.contextTypes = {
-  table: PropTypes.any,
-};
-
-export default TableHeader;
+}
