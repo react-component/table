@@ -87,7 +87,7 @@ function Body<RecordType>({
       <WrapperComponent className={`${prefixCls}-tbody`}>
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (
-          <tr aria-hidden="true" className={`${prefixCls}-measure-row`}>
+          <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }}>
             {columnsKey.map(columnKey => (
               <ResizeObserver
                 key={columnKey}
