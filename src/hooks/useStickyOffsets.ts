@@ -37,7 +37,7 @@ function useStickyOffsets(colWidths: number[], columCount: number, direction: 'l
       left: leftOffsets,
       right: rightOffsets,
     };
-  }, [colWidths, columCount]);
+  }, [colWidths, columCount, direction]);
 
   return stickyOffsets;
 }
