@@ -365,7 +365,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
-  const colWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
+  const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
+  const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = hasData && scroll && validateValue(scroll.y);
   const fixColumn = scroll && validateValue(scroll.x);
@@ -636,7 +637,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ref={fullTableRef}
       {...ariaProps}
     >
-      <MemoTableContent pingLeft={pingedLeft} pingRight={pingedRight} props={props}>
+      <MemoTableContent
+        pingLeft={pingedLeft}
+        pingRight={pingedRight}
+        props={{ ...props, stickyOffsets }}
+      >
         {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
         <div className={`${prefixCls}-container`}>{groupTableNode}</div>
         {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
