@@ -6,28 +6,32 @@ export type Updater<State> = (prev: State) => State;
 export function useFrameState<State>(
   defaultState: State,
 ): [State, (updater: Updater<State>) => void] {
-  const [state, setState] = useState<State>(defaultState);
+  const stateRef = useRef(defaultState);
+  const [, forceUpdate] = useState({});
 
   const timeoutRef = useRef<number>(null);
-  const tmpStateRef = useRef<State>(null);
+  const updateBatchRef = useRef<Updater<State>[]>([]);
 
   function setFrameState(updater: Updater<State>) {
     if (timeoutRef.current === null) {
-      tmpStateRef.current = state;
+      updateBatchRef.current = [];
       timeoutRef.current = raf(() => {
-        setState(tmpStateRef.current);
+        updateBatchRef.current.forEach(batchUpdater => {
+          stateRef.current = batchUpdater(stateRef.current);
+        });
         timeoutRef.current = null;
+        forceUpdate({});
       });
     }
 
-    tmpStateRef.current = updater(tmpStateRef.current);
+    updateBatchRef.current.push(updater);
   }
 
   useEffect(() => {
     raf.cancel(timeoutRef.current);
   }, []);
 
-  return [state, setFrameState];
+  return [stateRef.current, setFrameState];
 }
 
 /** Lock frame, when frame pass reset the lock. */
