@@ -113,6 +113,7 @@ function Body<RecordType>({
     getRowKey,
     getComponent,
     componentWidth,
+    emptyNode,
   ]);
 }
 
