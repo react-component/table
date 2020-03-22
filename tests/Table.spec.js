@@ -40,21 +40,44 @@ describe('Table.Basic', () => {
     });
   });
 
-  it('renders empty text correctly', () => {
-    const wrapper1 = mount(createTable({ data: [], emptyText: 'No data' }));
-    const wrapper2 = mount(createTable({ data: [], emptyText: () => 'No data' }));
-    expect(
-      wrapper1
-        .find('.rc-table-placeholder')
-        .hostNodes()
-        .text(),
-    ).toEqual('No data');
-    expect(
-      wrapper2
-        .find('.rc-table-placeholder')
-        .hostNodes()
-        .text(),
-    ).toEqual('No data');
+  describe('renders empty text correctly', () => {
+    it('ReactNode', () => {
+      const wrapper = mount(createTable({ data: [], emptyText: 'No data' }));
+      expect(
+        wrapper
+          .find('.rc-table-placeholder')
+          .hostNodes()
+          .text(),
+      ).toEqual('No data');
+    });
+
+    it('renderProps', () => {
+      const wrapper = mount(createTable({ data: [], emptyText: () => 'No data' }));
+      expect(
+        wrapper
+          .find('.rc-table-placeholder')
+          .hostNodes()
+          .text(),
+      ).toEqual('No data');
+    });
+
+    it('effect update', () => {
+      const App = () => {
+        const [emptyText, setEmptyText] = React.useState('light');
+        React.useEffect(() => {
+          setEmptyText('bamboo');
+        }, []);
+        return <Table emptyText={emptyText} />;
+      };
+      const wrapper = mount(<App />);
+      wrapper.update();
+      expect(
+        wrapper
+          .find('.rc-table-placeholder')
+          .hostNodes()
+          .text(),
+      ).toEqual('bamboo');
+    });
   });
 
   it('renders without header', () => {
