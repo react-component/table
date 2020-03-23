@@ -11,7 +11,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
       class="rc-table-content"
     >
       <table
-        style="table-layout: auto;"
+        style="table-layout: fixed;"
       >
         <colgroup>
           <col

@@ -469,12 +469,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (tableLayout) {
       return tableLayout;
     }
-
-    if (fixHeader || fixColumn || flattenColumns.some(({ ellipsis }) => ellipsis)) {
+    if (fixHeader || flattenColumns.some(({ ellipsis, fixed }) => ellipsis || fixed)) {
       return 'fixed';
     }
     return 'auto';
-  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
+  }, [fixHeader, flattenColumns, tableLayout]);
 
   let groupTableNode: React.ReactNode;
 
