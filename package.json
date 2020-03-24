@@ -75,7 +75,7 @@
     "immutability-helper": "^3.0.0",
     "less": "^3.10.3",
     "np": "^6.0.0",
-    "prettier": "^1.11.1",
+    "prettier": "^2.0.1",
     "rc-animate": "^2.10.1",
     "rc-dropdown": "~3.0.1",
     "rc-menu": "^7.4.23",
