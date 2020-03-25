@@ -91,8 +91,8 @@ function Body<RecordType>({
             {columnsKey.map(columnKey => (
               <ResizeObserver
                 key={columnKey}
-                onResize={({ width }) => {
-                  onColumnResize(columnKey, width);
+                onResize={({ offsetWidth }) => {
+                  onColumnResize(columnKey, offsetWidth);
                 }}
               >
                 <td style={{ padding: 0, border: 0, height: 0 }} />
