@@ -27,9 +27,13 @@ export function useFrameState<State>(
     updateBatchRef.current.push(updater);
   }
 
-  useEffect(() => {
-    raf.cancel(timeoutRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      raf.cancel(timeoutRef.current);
+    },
+
+    [],
+  );
 
   return [stateRef.current, setFrameState];
 }
