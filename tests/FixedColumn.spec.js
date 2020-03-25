@@ -47,7 +47,7 @@ describe('Table.FixedColumn', () => {
                 .find('table ResizeObserver')
                 .first()
                 .props()
-                .onResize({ width: 93 });
+                .onResize({ width: 93, offsetWidth: 93 });
             });
             act(() => {
               jest.runAllTimers();

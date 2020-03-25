@@ -20,12 +20,12 @@ describe('Table.FixedHeader', () => {
       .find('ResizeObserver')
       .at(0)
       .props()
-      .onResize({ width: 100 });
+      .onResize({ width: 100, offsetWidth: 100 });
     wrapper
       .find('ResizeObserver')
       .at(1)
       .props()
-      .onResize({ width: 200 });
+      .onResize({ width: 200, offsetWidth: 200 });
 
     act(() => {
       jest.runAllTimers();
