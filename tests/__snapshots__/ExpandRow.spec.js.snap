@@ -17,7 +17,9 @@ exports[`Table.Expand childrenColumnName 1`] = `
           <col />
           <col />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell"
@@ -126,7 +128,9 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           <col />
           <col />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
@@ -290,7 +294,9 @@ exports[`Table.Expand renders tree row correctly 1`] = `
           <col />
           <col />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell"
@@ -394,7 +400,9 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           <col />
           <col />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell"

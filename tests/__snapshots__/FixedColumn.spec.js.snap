@@ -33,7 +33,9 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             style="width: 100px; min-width: 100px;"
           />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-right"
@@ -612,7 +614,9 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             style="width: 100px; min-width: 100px;"
           />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1233,7 +1237,9 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
             style="width: 100px; min-width: 100px;"
           />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
@@ -1400,7 +1406,9 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             style="width: 15px; min-width: 15px;"
           />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
@@ -2054,7 +2062,9 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             style="width: 100px; min-width: 100px;"
           />
         </colgroup>
-        <thead>
+        <thead
+          class="rc-table-thead"
+        >
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"

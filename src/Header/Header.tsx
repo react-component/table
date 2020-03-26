@@ -94,7 +94,7 @@ function Header<RecordType>({
   flattenColumns,
   onHeaderRow,
 }: HeaderProps<RecordType>): React.ReactElement {
-  const { getComponent } = React.useContext(TableContext);
+  const { prefixCls, getComponent } = React.useContext(TableContext);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
@@ -102,7 +102,7 @@ function Header<RecordType>({
   const thComponent = getComponent(['header', 'cell'], 'th');
 
   return (
-    <WrapperComponent>
+    <WrapperComponent className={`${prefixCls}-thead`}>
       {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
