@@ -14,9 +14,7 @@ exports[`Table.Basic custom components renders correctly 1`] = `
         name="my-table"
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
           name="my-header-wrapper"
@@ -133,11 +131,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
         name="my-table"
         style="width: 100px; min-width: 100%; table-layout: fixed;"
       >
-        <colgroup>
-          <col />
-          <col />
-          <col />
-        </colgroup>
+        <colgroup />
         <tbody
           class="rc-table-tbody"
           name="my-body-wrapper"
@@ -252,11 +246,7 @@ exports[`Table.Basic internal api transformColumns 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-          <col />
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -333,10 +323,7 @@ exports[`Table.Basic renders colSpan correctly 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -398,9 +385,7 @@ exports[`Table.Basic renders correctly RTL 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="test-prefix-thead"
         >
@@ -455,9 +440,7 @@ exports[`Table.Basic renders correctly basic 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="test-prefix-thead"
         >
@@ -512,9 +495,7 @@ exports[`Table.Basic renders correctly no columns 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -563,10 +544,7 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -632,9 +610,7 @@ exports[`Table.Basic syntactic sugar 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup>
-          <col />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
