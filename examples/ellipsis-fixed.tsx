@@ -4,7 +4,7 @@ import '../assets/index.less';
 
 const columns = [
   { title: 'name', fixed: 'left', dataIndex: 'name', width: 100, ellipsis: true },
-  { title: 'descrption', dataIndex: 'descrption', key: 'descrption 1', ellipsis: true, width: 50 },
+  { title: 'descrption', dataIndex: 'descrption', width: 50, key: 'descrption 1', ellipsis: true },
   { title: 'descrption', dataIndex: 'descrption', width: 100, key: 'descrption 2', ellipsis: true },
   { title: 'descrption', dataIndex: 'descrption', width: 100, key: 'descrption 3', ellipsis: true },
   { title: 'descrption', dataIndex: 'descrption', width: 100, key: 'descrption 4', ellipsis: true },
@@ -31,10 +31,17 @@ const data = [
   { name: 'verylongname verylongname verylongname', descrption: 'descrption descrption', key: '2' },
 ];
 
+let width = 0;
+columns.forEach(elem => {
+  width += elem.width * 1 || 0;
+});
+const scroll = {
+  x: width,
+};
 const Demo = () => (
   <div>
     <h2>Table ellipsis</h2>
-    <Table columns={columns} data={data} />
+    <Table columns={columns} data={data} scroll={scroll} />
   </div>
 );
 
