@@ -19,6 +19,7 @@ describe('Table.ColGroup', () => {
     const columns = [
       {
         key: 0,
+        width: 1,
       },
     ];
 
