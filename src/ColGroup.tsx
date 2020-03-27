@@ -12,11 +12,18 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
   const cols: React.ReactElement[] = [];
   const len = columCount || columns.length;
 
-  for (let i = 0; i < len; i += 1) {
+  // Only insert col with width & additional props
+  // Skip if rest col do not have any useful info
+  let mustInsert = false;
+  for (let i = len - 1; i >= 0; i -= 1) {
     const width = colWidths[i];
     const column = columns && columns[i];
     const additionalProps = column && column[INTERNAL_COL_DEFINE];
-    cols.push(<col key={i} style={{ width, minWidth: width }} {...additionalProps} />);
+
+    if (width || additionalProps || mustInsert) {
+      cols.unshift(<col key={i} style={{ width, minWidth: width }} {...additionalProps} />);
+      mustInsert = true;
+    }
   }
 
   return <colgroup>{cols}</colgroup>;
