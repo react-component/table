@@ -21,6 +21,7 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   componentWidth: number;
   tableLayout: TableLayout;
   fixHeader: boolean;
+  fixColumn: boolean;
   horizonScroll: boolean;
 
   indentSize: number;

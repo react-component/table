@@ -370,6 +370,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = hasData && scroll && validateValue(scroll.y);
   const horizonScroll = scroll && validateValue(scroll.x);
+  const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -469,11 +470,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (tableLayout) {
       return tableLayout;
     }
-    if (fixHeader || flattenColumns.some(({ ellipsis, fixed }) => ellipsis || fixed)) {
+    if (fixHeader || fixColumn || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
     }
     return 'auto';
-  }, [fixHeader, flattenColumns, tableLayout]);
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
 
   let groupTableNode: React.ReactNode;
 
@@ -625,7 +626,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         [`${prefixCls}-ping-right`]: pingedRight,
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
-        [`${prefixCls}-fixed-column`]: horizonScroll,
+        [`${prefixCls}-fixed-column`]: fixColumn,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:
           flattenColumns[flattenColumns.length - 1] &&
@@ -670,6 +671,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedRowClassName,
       componentWidth,
       fixHeader,
+      fixColumn,
       horizonScroll,
       expandIcon: mergedExpandIcon,
       expandableType,
@@ -686,6 +688,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedRowClassName,
       componentWidth,
       fixHeader,
+      fixColumn,
       horizonScroll,
       mergedExpandIcon,
       expandableType,

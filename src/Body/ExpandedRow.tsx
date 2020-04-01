@@ -8,6 +8,7 @@ export interface ExpandedRowProps<RecordType> {
   component: CustomizeComponent;
   cellComponent: CustomizeComponent;
   fixHeader: boolean;
+  fixColumn: boolean;
   horizonScroll: boolean;
   componentWidth: number;
   className: string;
@@ -22,6 +23,7 @@ function ExpandedRow<RecordType>({
   component: Component,
   cellComponent,
   fixHeader,
+  fixColumn,
   horizonScroll,
   className,
   expanded,
@@ -34,7 +36,7 @@ function ExpandedRow<RecordType>({
   return React.useMemo(() => {
     let contentNode = children;
 
-    if (horizonScroll) {
+    if (fixColumn) {
       contentNode = (
         <div
           style={{
