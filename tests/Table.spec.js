@@ -38,6 +38,34 @@ describe('Table.Basic', () => {
       const wrapper = mount(createTable({ columns: [] }));
       expect(wrapper.render()).toMatchSnapshot();
     });
+
+    it('column children undefined', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+              // antd传过来是[]，需要在antd/table添加undefined的用例
+              children: [],
+            },
+            {
+              title: '年龄',
+              dataIndex: 'age',
+              key: 'age',
+            },
+          ],
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+      expect(
+        wrapper
+          .find('th')
+          .at(0)
+          .text(),
+      ).toEqual('姓名');
+    });
   });
 
   describe('renders empty text correctly', () => {
