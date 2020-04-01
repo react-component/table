@@ -35,6 +35,7 @@ const Demo = () => {
   const [expandedRowKeys, setExpandedRowKeys] = React.useState([]);
   const [expandRowByClick, expandRowByClickProps] = useCheckbox(false);
   const [fixColumns, fixColumnsProps] = useCheckbox(false);
+  const [scrollX, scrollXProps] = useCheckbox(false);
   const [fixHeader, fixHeaderProps] = useCheckbox(false);
   const [expandIconPosition, expandIconPositionProps] = useCheckbox(false);
 
@@ -104,6 +105,10 @@ const Demo = () => {
         Fix Columns
       </label>
       <label>
+        <input {...scrollXProps} />
+        ScrollX
+      </label>
+      <label>
         <input {...fixHeaderProps} />
         Fix Header
       </label>
@@ -123,7 +128,7 @@ const Demo = () => {
           rowExpandable,
           expandIconColumnIndex: expandIconPosition ? 1 : null,
         }}
-        scroll={{ x: fixColumns ? 2000 : null, y: fixHeader ? 300 : null }}
+        scroll={{ x: fixColumns || scrollX ? 2000 : null, y: fixHeader ? 300 : null }}
         data={data}
       />
     </div>

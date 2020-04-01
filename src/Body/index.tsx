@@ -33,7 +33,9 @@ function Body<RecordType>({
 }: BodyProps<RecordType>) {
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { fixHeader, fixColumn, flattenColumns, componentWidth } = React.useContext(BodyContext);
+  const { fixHeader, horizonScroll, flattenColumns, componentWidth } = React.useContext(
+    BodyContext,
+  );
 
   return React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -70,7 +72,7 @@ function Body<RecordType>({
           className={`${prefixCls}-placeholder`}
           prefixCls={prefixCls}
           fixHeader={fixHeader}
-          fixColumn={fixColumn}
+          horizonScroll={horizonScroll}
           component={trComponent}
           componentWidth={componentWidth}
           cellComponent={tdComponent}
