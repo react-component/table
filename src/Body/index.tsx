@@ -72,6 +72,7 @@ function Body<RecordType>({
           className={`${prefixCls}-placeholder`}
           prefixCls={prefixCls}
           fixHeader={fixHeader}
+          fixColumn={false}
           horizonScroll={horizonScroll}
           component={trComponent}
           componentWidth={componentWidth}

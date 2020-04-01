@@ -52,6 +52,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const { prefixCls, direction } = React.useContext(TableContext);
   const {
     fixHeader,
+    fixColumn,
     horizonScroll,
     componentWidth,
     flattenColumns,
@@ -196,6 +197,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
         )}
         prefixCls={prefixCls}
         fixHeader={fixHeader}
+        fixColumn={fixColumn}
         horizonScroll={horizonScroll}
         component={RowComponent}
         componentWidth={componentWidth}
