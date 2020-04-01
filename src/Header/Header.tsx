@@ -35,12 +35,12 @@ function parseHeaderRows<RecordType>(
 
       let colSpan: number = 1;
 
-      if ((column as ColumnGroupType<RecordType>).children) {
-        colSpan = fillRowCells(
-          (column as ColumnGroupType<RecordType>).children,
-          currentColIndex,
-          rowIndex + 1,
-        ).reduce((total, count) => total + count, 0);
+      const subColumns = (column as ColumnGroupType<RecordType>).children;
+      if (subColumns && subColumns.length > 0) {
+        colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce(
+          (total, count) => total + count,
+          0,
+        );
         cell.hasSubColumns = true;
       }
 
