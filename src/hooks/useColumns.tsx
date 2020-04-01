@@ -40,10 +40,11 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
     // Convert `fixed='true'` to `fixed='left'` instead
     const parsedFixed = fixed === true ? 'left' : fixed;
 
-    if ((column as ColumnGroupType<RecordType>).children) {
+    const subColumns = (column as ColumnGroupType<RecordType>).children;
+    if (subColumns && subColumns.length > 0) {
       return [
         ...list,
-        ...flatColumns((column as ColumnGroupType<RecordType>).children).map(subColum => ({
+        ...flatColumns(subColumns).map(subColum => ({
           fixed: parsedFixed,
           ...subColum,
         })),
