@@ -369,7 +369,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = hasData && scroll && validateValue(scroll.y);
-  const fixColumn = scroll && validateValue(scroll.x);
+  const horizonScroll = scroll && validateValue(scroll.x);
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -382,7 +382,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  if (fixColumn) {
+  if (horizonScroll) {
     scrollXStyle = { overflowX: 'scroll' };
     // When no vertical scrollbar, should hide it
     // https://github.com/ant-design/ant-design/pull/20705
@@ -446,13 +446,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
   };
 
-  // Sync scroll bar when init or `fixColumn` changed
+  // Sync scroll bar when init or `horizonScroll` changed
   React.useEffect(() => triggerOnScroll, []);
   React.useEffect(() => {
-    if (fixColumn) {
+    if (horizonScroll) {
       triggerOnScroll();
     }
-  }, [fixColumn]);
+  }, [horizonScroll]);
 
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
@@ -501,7 +501,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const bodyTable = (
     <Body
       data={mergedData}
-      measureColumnWidth={fixHeader || fixColumn}
+      measureColumnWidth={fixHeader || horizonScroll}
       stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
@@ -625,7 +625,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         [`${prefixCls}-ping-right`]: pingedRight,
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
-        [`${prefixCls}-fixed-column`]: fixColumn,
+        [`${prefixCls}-fixed-column`]: horizonScroll,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:
           flattenColumns[flattenColumns.length - 1] &&
@@ -648,7 +648,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     </div>
   );
 
-  if (fixColumn) {
+  if (horizonScroll) {
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
@@ -670,7 +670,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedRowClassName,
       componentWidth,
       fixHeader,
-      fixColumn,
+      horizonScroll,
       expandIcon: mergedExpandIcon,
       expandableType,
       expandRowByClick,
@@ -686,7 +686,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedRowClassName,
       componentWidth,
       fixHeader,
-      fixColumn,
+      horizonScroll,
       mergedExpandIcon,
       expandableType,
       expandRowByClick,
