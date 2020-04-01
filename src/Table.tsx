@@ -474,7 +474,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       return 'fixed';
     }
     return 'auto';
-  }, [fixHeader, flattenColumns, tableLayout]);
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
 
   let groupTableNode: React.ReactNode;
 

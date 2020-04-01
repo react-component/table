@@ -158,7 +158,9 @@ describe('Table.FixedColumn', () => {
   });
 
   it('fixed column renders correctly RTL', () => {
-    const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
+    const wrapper = mount(
+      <Table columns={columns} data={data} direction="rtl" scroll={{ x: 1 }} />,
+    );
     expect(wrapper.render()).toMatchSnapshot();
   });
   it('has correct scroll classNames when table direction is RTL', () => {

@@ -186,7 +186,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
 
 exports[`Table.Basic custom components scroll content with scroll 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-fixed-column"
+  class="rc-table rc-table-fixed-header"
 >
   <div
     class="rc-table-container"
