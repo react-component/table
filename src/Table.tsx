@@ -642,7 +642,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       <MemoTableContent
         pingLeft={pingedLeft}
         pingRight={pingedRight}
-        props={{ ...props, stickyOffsets }}
+        props={{ ...props, stickyOffsets, mergedExpandedKeys }}
       >
         {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
         <div className={`${prefixCls}-container`}>{groupTableNode}</div>
