@@ -67,7 +67,7 @@ exports[`Table.Basic custom components renders correctly 1`] = `
 
 exports[`Table.Basic custom components renders fixed column and header correctly 1`] = `
 <div
-  class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-has-fix-left rc-table-has-fix-right"
+  class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
 >
   <div
     class="rc-table-container"
@@ -186,7 +186,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
 
 exports[`Table.Basic custom components scroll content with scroll 1`] = `
 <div
-  class="rc-table rc-table-fixed-header"
+  class="rc-table rc-table-fixed-header rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"

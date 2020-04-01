@@ -626,7 +626,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         [`${prefixCls}-ping-right`]: pingedRight,
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
+        /** No used but for compatible */
         [`${prefixCls}-fixed-column`]: fixColumn,
+        [`${prefixCls}-scroll-horizontal`]: horizonScroll,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:
           flattenColumns[flattenColumns.length - 1] &&
