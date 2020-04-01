@@ -38,6 +38,40 @@ describe('Table.Basic', () => {
       const wrapper = mount(createTable({ columns: [] }));
       expect(wrapper.render()).toMatchSnapshot();
     });
+
+    it('column children undefined', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+              children: [],
+            },
+            {
+              title: '年龄',
+              dataIndex: 'age',
+              key: 'age',
+              children: undefined,
+            },
+          ],
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+      expect(
+        wrapper
+          .find('th')
+          .at(0)
+          .text(),
+      ).toEqual('姓名');
+      expect(
+        wrapper
+          .find('th')
+          .at(1)
+          .text(),
+      ).toEqual('年龄');
+    });
   });
 
   describe('renders empty text correctly', () => {
