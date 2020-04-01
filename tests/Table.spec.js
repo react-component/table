@@ -47,7 +47,6 @@ describe('Table.Basic', () => {
               title: '姓名',
               dataIndex: 'name',
               key: 'name',
-              // antd传过来是[]，需要在antd/table添加undefined的用例
               children: [],
             },
             {
