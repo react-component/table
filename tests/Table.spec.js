@@ -54,6 +54,7 @@ describe('Table.Basic', () => {
               title: '年龄',
               dataIndex: 'age',
               key: 'age',
+              children: undefined,
             },
           ],
         }),
@@ -65,6 +66,12 @@ describe('Table.Basic', () => {
           .at(0)
           .text(),
       ).toEqual('姓名');
+      expect(
+        wrapper
+          .find('th')
+          .at(1)
+          .text(),
+      ).toEqual('年龄');
     });
   });
 
