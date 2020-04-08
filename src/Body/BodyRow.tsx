@@ -220,6 +220,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
           <BodyRow
             {...props}
             key={subKey}
+            rowKey={subKey}
             record={subRecord}
             recordKey={subKey}
             index={subIndex}
