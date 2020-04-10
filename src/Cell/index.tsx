@@ -138,12 +138,9 @@ function Cell<RecordType extends DefaultRecordType>(
   const isFixRight = typeof fixRight === 'number';
 
   if (isFixLeft) {
-    fixedStyle.position = 'sticky';
     fixedStyle.left = fixLeft as number;
   }
   if (isFixRight) {
-    fixedStyle.position = 'sticky';
-
     fixedStyle.right = fixRight as number;
   }
 
