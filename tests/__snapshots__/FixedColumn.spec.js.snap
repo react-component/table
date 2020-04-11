@@ -40,13 +40,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               title1
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               title2
             </th>
@@ -97,7 +97,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               title12
             </th>
@@ -154,13 +154,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               123
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               xxxxxxxx
             </td>
@@ -209,7 +209,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               xxxxxxxx
             </td>
@@ -220,13 +220,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               cdd
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               edd12221
             </td>
@@ -275,7 +275,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               edd12221
             </td>
@@ -286,13 +286,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -325,7 +325,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -334,13 +334,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -373,7 +373,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -382,13 +382,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -421,7 +421,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -430,13 +430,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -469,7 +469,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -478,13 +478,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -517,7 +517,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -526,13 +526,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -565,7 +565,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
           <tr
@@ -574,13 +574,13 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-right"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-last"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
             <td
               class="rc-table-cell"
@@ -613,7 +613,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             />
           </tr>
         </tbody>
@@ -663,13 +663,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               title1
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               title2
             </th>
@@ -720,7 +720,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               title12
             </th>
@@ -777,13 +777,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               123
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               xxxxxxxx
             </td>
@@ -832,7 +832,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               xxxxxxxx
             </td>
@@ -843,13 +843,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               cdd
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               edd12221
             </td>
@@ -898,7 +898,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               edd12221
             </td>
@@ -909,13 +909,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -948,7 +948,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -957,13 +957,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -996,7 +996,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1005,13 +1005,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1044,7 +1044,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1053,13 +1053,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1092,7 +1092,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1101,13 +1101,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1140,7 +1140,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1149,13 +1149,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1188,7 +1188,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1197,13 +1197,13 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1236,7 +1236,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
         </tbody>
@@ -1286,13 +1286,13 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               title1
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               title2
             </th>
@@ -1343,7 +1343,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               title12
             </th>
@@ -1455,13 +1455,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               title1
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               title2
             </th>
@@ -1512,13 +1512,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 15px;"
+              style="right: 15px;"
             >
               title12
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
         </thead>
@@ -1602,13 +1602,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               123
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               xxxxxxxx
             </td>
@@ -1657,7 +1657,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               xxxxxxxx
             </td>
@@ -1668,13 +1668,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               cdd
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               edd12221
             </td>
@@ -1723,7 +1723,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               edd12221
             </td>
@@ -1734,13 +1734,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1773,7 +1773,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1782,13 +1782,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1821,7 +1821,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1830,13 +1830,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1869,7 +1869,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1878,13 +1878,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1917,7 +1917,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1926,13 +1926,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -1965,7 +1965,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -1974,13 +1974,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -2013,7 +2013,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
           <tr
@@ -2022,13 +2022,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               133
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             />
             <td
               class="rc-table-cell"
@@ -2061,7 +2061,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             />
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
         </tbody>
@@ -2111,13 +2111,13 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               title1
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 93px;"
+              style="left: 93px;"
             >
               title2
             </th>
@@ -2168,7 +2168,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               title12
             </th>

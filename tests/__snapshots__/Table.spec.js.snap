@@ -97,7 +97,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               name="my-header-cell"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               Name
             </th>
@@ -110,14 +110,14 @@ exports[`Table.Basic custom components renders fixed column and header correctly
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
               name="my-header-cell"
-              style="position: sticky; right: 15px;"
+              style="right: 15px;"
             >
               Gender
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
               name="my-header-cell"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             />
           </tr>
         </thead>
@@ -159,7 +159,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
             <td
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               name="my-body-cell"
-              style="position: sticky; left: 0px;"
+              style="left: 0px;"
             >
               Lucy
             </td>
@@ -172,7 +172,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
             <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
               name="my-body-cell"
-              style="position: sticky; right: 0px;"
+              style="right: 0px;"
             >
               F
             </td>
