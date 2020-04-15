@@ -410,11 +410,13 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
 
   handleWheel: React.WheelEventHandler<HTMLDivElement> = event => {
     const { scroll = {} } = this.props;
-    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
+    const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+
+    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y && (fixedColumnsBodyLeft || fixedColumnsBodyRight)) {
+      // https://github.com/ant-design/ant-design/issues/22341
       event.preventDefault();
       const wd = event.deltaY;
       const { target } = event;
-      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
       let scrollTop = 0;
 
       if (this.lastScrollTop) {
