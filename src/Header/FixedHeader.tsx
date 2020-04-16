@@ -2,7 +2,7 @@ import * as React from 'react';
 import Header, { HeaderProps } from './Header';
 import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
-import TableContext from '../context/TableContext';
+import { TableContext } from '../context/TableContext';
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];

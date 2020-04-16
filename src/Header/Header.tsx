@@ -8,7 +8,7 @@ import {
   ColumnGroupType,
 } from '../interface';
 import HeaderRow from './HeaderRow';
-import TableContext from '../context/TableContext';
+import { TableContext } from '../context/TableContext';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,

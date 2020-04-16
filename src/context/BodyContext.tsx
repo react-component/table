@@ -33,6 +33,4 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   expandIconColumnIndex: number;
 }
 
-const BodyContext = React.createContext<BodyContextProps>(null);
-
-export default BodyContext;
+export const BodyContext = React.createContext<BodyContextProps>(null);

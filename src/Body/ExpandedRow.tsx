@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
-import TableContext from '../context/TableContext';
+import { TableContext } from '../context/TableContext';
 
 export interface ExpandedRowProps<RecordType> {
   prefixCls: string;

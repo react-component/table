@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import Cell from '../Cell';
-import TableContext from '../context/TableContext';
-import BodyContext from '../context/BodyContext';
+import { TableContext } from '../context/TableContext';
+import { BodyContext } from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import {
   ColumnType,

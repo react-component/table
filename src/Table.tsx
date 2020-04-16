@@ -53,13 +53,13 @@ import {
   ColumnType,
   CustomizeScrollBody,
 } from './interface';
-import TableContext from './context/TableContext';
-import BodyContext from './context/BodyContext';
+import { TableContext } from './context/TableContext';
+import { BodyContext } from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useFrameState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
-import ResizeContext from './context/ResizeContext';
+import { ResizeContext } from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';

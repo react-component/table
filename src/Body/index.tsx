@@ -1,12 +1,12 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import BodyRow from './BodyRow';
-import TableContext from '../context/TableContext';
+import { TableContext } from '../context/TableContext';
 import { GetRowKey, StickyOffsets, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
-import BodyContext from '../context/BodyContext';
+import { BodyContext } from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
-import ResizeContext from '../context/ResizeContext';
+import { ResizeContext } from '../context/ResizeContext';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];

@@ -7,7 +7,7 @@ import {
   CustomizeComponent,
   GetComponentProps,
 } from '../interface';
-import TableContext from '../context/TableContext';
+import { TableContext } from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
 

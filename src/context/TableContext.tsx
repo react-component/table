@@ -11,6 +11,4 @@ export interface TableContextProps {
   direction: 'ltr' | 'rtl';
 }
 
-const TableContext = React.createContext<TableContextProps>(null);
-
-export default TableContext;
+export const TableContext = React.createContext<TableContextProps>(null);
