@@ -458,16 +458,47 @@ describe('Table.Basic', () => {
     expect(wrapper.find('tbody tr').length).toBeTruthy();
   });
 
-  it('renders onRow correctly', () => {
-    const onRow = (record, index) => ({
-      id: `row-${record.key}`,
-      index,
-    });
-    const wrapper = mount(createTable({ onRow }));
+  describe('onRow', () => {
+    it('renders onRow correctly', () => {
+      const onRow = (record, index) => ({
+        id: `row-${record.key}`,
+        index,
+      });
+      const wrapper = mount(createTable({ onRow }));
 
-    expect(wrapper.find('tbody tr').length).toBeTruthy();
-    wrapper.find('tbody tr').forEach((tr, index) => {
-      expect(tr.props().id).toEqual(`row-${data[index].key}`);
+      expect(wrapper.find('tbody tr').length).toBeTruthy();
+      wrapper.find('tbody tr').forEach((tr, index) => {
+        expect(tr.props().id).toEqual(`row-${data[index].key}`);
+      });
+    });
+
+    it('onRow should keep update', () => {
+      const Test = () => {
+        const [count, setCount] = React.useState(0);
+
+        return (
+          <div>
+            <Table
+              columns={[{ dataIndex: 'key' }]}
+              data={[{ key: 0 }]}
+              onRow={() => ({
+                onClick() {
+                  setCount(count + 1);
+                },
+              })}
+            />
+            <span id="count">{count}</span>
+          </div>
+        );
+      };
+      const wrapper = mount(<Test />);
+      for (let i = 0; i < 10; i += 1) {
+        wrapper
+          .find('tbody tr td')
+          .last()
+          .simulate('click');
+        expect(wrapper.find('#count').text()).toEqual(String(i + 1));
+      }
     });
   });
 

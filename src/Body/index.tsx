@@ -110,6 +110,7 @@ function Body<RecordType>({
   }, [
     data,
     prefixCls,
+    onRow,
     measureColumnWidth,
     stickyOffsets,
     expandedKeys,
