@@ -410,13 +410,10 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
 
   handleWheel: React.WheelEventHandler<HTMLDivElement> = event => {
     const { scroll = {} } = this.props;
-    const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
-
-    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y && (fixedColumnsBodyLeft || fixedColumnsBodyRight)) {
-      // https://github.com/ant-design/ant-design/issues/22341
-      event.preventDefault();
+    if (window.navigator.userAgent.match(/Trident\/7\./) && scroll.y) {
       const wd = event.deltaY;
       const { target } = event;
+      const { bodyTable, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
       let scrollTop = 0;
 
       if (this.lastScrollTop) {
@@ -426,12 +423,16 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
       }
 
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        event.preventDefault();
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
       if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        event.preventDefault();
         fixedColumnsBodyRight.scrollTop = scrollTop;
       }
       if (bodyTable && target !== bodyTable) {
+        // https://github.com/ant-design/ant-design/issues/22341
+        event.preventDefault();
         bodyTable.scrollTop = scrollTop;
       }
     }
