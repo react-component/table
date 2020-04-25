@@ -14,7 +14,7 @@ function Footer<RecordType>({ stickyOffsets, children }: FooterProps<RecordType>
   let footer: React.ReactNode;
 
   const { flattenColumns } = React.useContext(BodyContext);
-  const { direction } = React.useContext(TableContext);
+  const { prefixCls, direction } = React.useContext(TableContext);
 
   if (React.isValidElement(children)) {
     footer = children;
@@ -34,6 +34,7 @@ function Footer<RecordType>({ stickyOffsets, children }: FooterProps<RecordType>
               <Cell
                 className={null}
                 component="td"
+                prefixCls={prefixCls}
                 key={cellIndex}
                 record={null}
                 index={index}
