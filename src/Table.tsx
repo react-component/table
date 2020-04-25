@@ -465,7 +465,6 @@ class Table<ValueType> extends React.Component<TableProps<ValueType>, TableState
 
   renderLeftFixedTable() {
     const { prefixCls } = this.props;
-
     return (
       <div className={`${prefixCls}-fixed-left`}>
         {this.renderTable({

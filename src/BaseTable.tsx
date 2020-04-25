@@ -167,6 +167,32 @@ class BaseTable<ValueType> extends React.Component<BaseTableProps<ValueType>> {
     }
 
     const columns = this.getColumns();
+    let tableWidth: number = 0;
+    let allHasNumberWidthProp = true;
+    columns.forEach((elem: any) => {
+      if ('width' in elem) {
+        const { width } = elem;
+        if (typeof width === 'number') {
+          // as number
+          tableWidth += width;
+        } else if (`${width * 1}` === width) {
+          // as number string
+          tableWidth += width * 1;
+        } else if (typeof width === 'string' && width.endsWith('px')) {
+          // as number + px string
+          tableWidth += parseInt(width, 10) * 1;
+        } else {
+          allHasNumberWidthProp = false;
+        }
+      } else {
+        allHasNumberWidthProp = false;
+      }
+    });
+
+    // 只有全部的列都有宽度设置时候，才增加计算后的宽度值。
+    if (allHasNumberWidthProp && tableWidth && !('width' in tableStyle)) {
+      tableStyle.width = tableWidth;
+    }
 
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
