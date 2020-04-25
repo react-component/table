@@ -43,6 +43,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     rowKey,
     getRowKey,
     rowExpandable,
+    expandedKeys,
     onRow,
     indent = 0,
     rowComponent: RowComponent,
@@ -68,7 +69,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   } = React.useContext(BodyContext);
   const [expandRended, setExpandRended] = React.useState(false);
 
-  const expanded = props.expandedKeys.has(props.recordKey);
+  const expanded = expandedKeys && expandedKeys.has(props.recordKey);
 
   React.useEffect(() => {
     if (expanded) {
@@ -76,7 +77,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     }
   }, [expanded]);
 
-  // Move to Body to enhance performance
+  // TODO: Move to Body to enhance performance
   const fixedInfoList = flattenColumns.map((column, colIndex) =>
     getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
   );
@@ -84,7 +85,8 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
   // Only when row is not expandable and `children` exist in record
   const nestExpandable = expandableType === 'nest';
-  const hasNestChildren = childrenColumnName in record && record[childrenColumnName];
+  const hasNestChildren =
+    childrenColumnName && childrenColumnName in record && record[childrenColumnName];
   const mergedExpandable = rowSupportExpand || nestExpandable;
 
   // =========================== onRow ===========================

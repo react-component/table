@@ -517,7 +517,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
-  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
+  const footerTable = summary && (
+    <Footer stickyOffsets={stickyOffsets}>{summary(mergedData)}</Footer>
+  );
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   if (

@@ -32,6 +32,10 @@ export type RowClassName<RecordType> = (
   indent: number,
 ) => string;
 
+export type SummaryFooterArray<RecordType> = CellType<RecordType>[][];
+
+export type SummaryFooter<RecordType> = React.ReactNode | SummaryFooterArray<RecordType>;
+
 // =================== Column ===================
 export interface CellType<RecordType> {
   key?: Key;
