@@ -4,15 +4,7 @@ import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
-import {
-  ColumnType,
-  StickyOffsets,
-  CustomizeComponent,
-  GetComponentProps,
-  Key,
-  GetRowKey,
-} from '../interface';
-import { getCellFixedInfo } from '../utils/fixUtil';
+import { ColumnType, CustomizeComponent, GetComponentProps, Key, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -20,7 +12,6 @@ export interface BodyRowProps<RecordType> {
   index: number;
   className?: string;
   style?: React.CSSProperties;
-  stickyOffsets: StickyOffsets;
   recordKey: Key;
   expandedKeys: Set<Key>;
   rowComponent: CustomizeComponent;
@@ -37,7 +28,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const {
     className,
     style,
-    stickyOffsets,
     record,
     index,
     rowKey,
@@ -50,7 +40,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     cellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, direction } = React.useContext(TableContext);
+  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
   const {
     fixHeader,
     fixColumn,
@@ -76,11 +66,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
       setExpandRended(true);
     }
   }, [expanded]);
-
-  // TODO: Move to Body to enhance performance
-  const fixedInfoList = flattenColumns.map((column, colIndex) =>
-    getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
-  );
 
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
   // Only when row is not expandable and `children` exist in record

@@ -168,13 +168,14 @@ describe('Table.Basic', () => {
             { dataIndex: 'c', width: 30 },
           ]}
           data={[{ key: 1, a: 2, b: 3, c: 4 }]}
-          summary={() => [
-            [
-              { children: 'Light', props: { colSpan: 2 } },
-              { children: 'Hidden', props: { colSpan: 0 } },
-              { children: 'Bamboo' },
-            ],
-          ]}
+          summary={() => (
+            <tr>
+              <Table.SummaryCell colSpan={2} index={0}>
+                Light
+              </Table.SummaryCell>
+              <Table.SummaryCell index={2}>Bamboo</Table.SummaryCell>
+            </tr>
+          )}
         />,
       );
 

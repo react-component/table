@@ -63,6 +63,20 @@ const Demo = () => (
       expandedRowRender={({ b, c }) => b || c}
       scroll={{ x: 1200 }}
       data={data}
+      summary={() => (
+        <>
+          <tr>
+            <Table.SummaryCell index={0} />
+            <Table.SummaryCell index={1} colSpan={2}>
+              Summary
+            </Table.SummaryCell>
+            <Table.SummaryCell index={3} colSpan={9}>
+              Content
+            </Table.SummaryCell>
+            <Table.SummaryCell index={12}>Right</Table.SummaryCell>
+          </tr>
+        </>
+      )}
     />
   </div>
 );

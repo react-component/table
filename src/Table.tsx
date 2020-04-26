@@ -32,6 +32,7 @@ import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
+import SummaryCell from './Footer/Cell';
 import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
 import {
@@ -66,6 +67,7 @@ import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
 import Panel from './Panel';
 import Footer from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
+import { getCellFixedInfo } from './utils/fixUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -517,9 +519,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
-  const footerTable = summary && (
-    <Footer stickyOffsets={stickyOffsets}>{summary(mergedData)}</Footer>
-  );
+  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   if (
@@ -663,8 +663,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       getComponent,
       scrollbarSize,
       direction,
+      fixedInfoList: flattenColumns.map((_, colIndex) =>
+        getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
+      ),
     }),
-    [prefixCls, getComponent, scrollbarSize, direction],
+    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, direction],
   );
 
   const BodyContextValue = React.useMemo(
@@ -718,6 +721,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 Table.Column = Column;
 
 Table.ColumnGroup = ColumnGroup;
+
+Table.SummaryCell = SummaryCell;
 
 Table.defaultProps = {
   rowKey: 'key',
