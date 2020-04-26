@@ -65,16 +65,16 @@ const Demo = () => (
       data={data}
       summary={() => (
         <>
-          <tr>
-            <Table.SummaryCell index={0} />
-            <Table.SummaryCell index={1} colSpan={2}>
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={0} />
+            <Table.Summary.Cell index={1} colSpan={2}>
               Summary
-            </Table.SummaryCell>
-            <Table.SummaryCell index={3} colSpan={9}>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={3} colSpan={9}>
               Content
-            </Table.SummaryCell>
-            <Table.SummaryCell index={12}>Right</Table.SummaryCell>
-          </tr>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={12}>Right</Table.Summary.Cell>
+          </Table.Summary.Row>
         </>
       )}
     />

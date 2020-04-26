@@ -32,7 +32,6 @@ import ResizeObserver from 'rc-resize-observer';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
-import SummaryCell from './Footer/Cell';
 import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
 import {
@@ -65,7 +64,7 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
 import Panel from './Panel';
-import Footer from './Footer';
+import Footer, { FooterComponents } from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 
@@ -721,7 +720,7 @@ Table.Column = Column;
 
 Table.ColumnGroup = ColumnGroup;
 
-Table.SummaryCell = SummaryCell;
+Table.Summary = FooterComponents;
 
 Table.defaultProps = {
   rowKey: 'key',

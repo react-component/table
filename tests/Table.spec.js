@@ -169,12 +169,12 @@ describe('Table.Basic', () => {
           ]}
           data={[{ key: 1, a: 2, b: 3, c: 4 }]}
           summary={() => (
-            <tr>
-              <Table.SummaryCell colSpan={2} index={0}>
+            <Table.Summary.Row>
+              <Table.Summary.Cell colSpan={2} index={0}>
                 Light
-              </Table.SummaryCell>
-              <Table.SummaryCell index={2}>Bamboo</Table.SummaryCell>
-            </tr>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
+            </Table.Summary.Row>
           )}
         />,
       );
