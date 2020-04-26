@@ -663,6 +663,27 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
 </div>
 `;
 
+exports[`Table.Basic summary support data type 1`] = `
+<tfoot
+  class="rc-table-summary"
+>
+  <tr>
+    <td
+      class="rc-table-cell rc-table-cell-fix-left"
+      colspan="2"
+      style="position: sticky; left: 0px;"
+    >
+      Light
+    </td>
+    <td
+      class="rc-table-cell"
+    >
+      Bamboo
+    </td>
+  </tr>
+</tfoot>
+`;
+
 exports[`Table.Basic syntactic sugar 1`] = `
 <div
   class="rc-table"

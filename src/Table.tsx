@@ -64,8 +64,9 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
 import Panel from './Panel';
-import Footer from './Footer';
+import Footer, { FooterComponents } from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
+import { getCellFixedInfo } from './utils/fixUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -503,7 +504,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <Body
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll}
-      stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
@@ -661,8 +661,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       getComponent,
       scrollbarSize,
       direction,
+      fixedInfoList: flattenColumns.map((_, colIndex) =>
+        getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
+      ),
     }),
-    [prefixCls, getComponent, scrollbarSize, direction],
+    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, direction],
   );
 
   const BodyContextValue = React.useMemo(
@@ -716,6 +719,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 Table.Column = Column;
 
 Table.ColumnGroup = ColumnGroup;
+
+Table.Summary = FooterComponents;
 
 Table.defaultProps = {
   rowKey: 'key',

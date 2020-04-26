@@ -144,18 +144,43 @@ describe('Table.Basic', () => {
     ).toEqual('footer');
   });
 
-  it('render summary correctly', () => {
-    const wrapper = mount(
-      createTable({
-        summary: () => (
-          <tr className="summary">
-            <td>Good</td>
-          </tr>
-        ),
-      }),
-    );
+  describe('summary', () => {
+    it('render correctly', () => {
+      const wrapper = mount(
+        createTable({
+          summary: () => (
+            <tr className="summary">
+              <td>Good</td>
+            </tr>
+          ),
+        }),
+      );
 
-    expect(wrapper.find('tfoot').text()).toEqual('Good');
+      expect(wrapper.find('tfoot').text()).toEqual('Good');
+    });
+
+    it('support data type', () => {
+      const wrapper = mount(
+        <Table
+          columns={[
+            { dataIndex: 'a', fixed: 'left', width: 10 },
+            { dataIndex: 'b', fixed: 'left', width: 20 },
+            { dataIndex: 'c', width: 30 },
+          ]}
+          data={[{ key: 1, a: 2, b: 3, c: 4 }]}
+          summary={() => (
+            <Table.Summary.Row>
+              <Table.Summary.Cell colSpan={2} index={0}>
+                Light
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
+            </Table.Summary.Row>
+          )}
+        />,
+      );
+
+      expect(wrapper.find('tfoot').render()).toMatchSnapshot();
+    });
   });
 
   it('renders with id correctly', () => {
