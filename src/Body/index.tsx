@@ -2,7 +2,7 @@ import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
-import { GetRowKey, StickyOffsets, Key, GetComponentProps } from '../interface';
+import { GetRowKey, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
@@ -12,7 +12,6 @@ export interface BodyProps<RecordType> {
   data: RecordType[];
   getRowKey: GetRowKey<RecordType>;
   measureColumnWidth: boolean;
-  stickyOffsets: StickyOffsets;
   expandedKeys: Set<Key>;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
@@ -24,7 +23,6 @@ function Body<RecordType>({
   data,
   getRowKey,
   measureColumnWidth,
-  stickyOffsets,
   expandedKeys,
   onRow,
   rowExpandable,
@@ -56,7 +54,6 @@ function Body<RecordType>({
             index={index}
             rowComponent={trComponent}
             cellComponent={tdComponent}
-            stickyOffsets={stickyOffsets}
             expandedKeys={expandedKeys}
             onRow={onRow}
             getRowKey={getRowKey}
@@ -112,7 +109,6 @@ function Body<RecordType>({
     prefixCls,
     onRow,
     measureColumnWidth,
-    stickyOffsets,
     expandedKeys,
     getRowKey,
     getComponent,

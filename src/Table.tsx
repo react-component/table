@@ -505,7 +505,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <Body
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll}
-      stickyOffsets={stickyOffsets}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
