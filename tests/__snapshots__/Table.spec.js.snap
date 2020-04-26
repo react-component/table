@@ -664,7 +664,9 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
 `;
 
 exports[`Table.Basic summary support data type 1`] = `
-<tfoot>
+<tfoot
+  class="rc-table-summary"
+>
   <tr>
     <td
       class="rc-table-cell rc-table-cell-fix-left"
