@@ -915,4 +915,14 @@ describe('Table.Basic', () => {
     wrapper.setState({ change: true });
     expect(wrapper.find('td').text()).toEqual('true');
   });
+
+  it('not crash with raw data', () => {
+    expect(() => {
+      mount(
+        createTable({
+          data: [122, null, '2333', true, undefined],
+        }),
+      );
+    }).not.toThrow();
+  });
 });

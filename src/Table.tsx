@@ -233,7 +233,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       return rowKey;
     }
     return (record: RecordType) => {
-      const key = record[rowKey];
+      const key = record && record[rowKey];
 
       if (process.env.NODE_ENV !== 'production') {
         warning(
@@ -284,7 +284,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       (props.expandable &&
         internalHooks === INTERNAL_HOOKS &&
         (props.expandable as any).__PARENT_RENDER_ICON__) ||
-      mergedData.some(record => mergedChildrenColumnName in record)
+      mergedData.some(record => record && record[mergedChildrenColumnName])
     ) {
       return 'nest';
     }
