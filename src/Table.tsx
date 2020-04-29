@@ -284,7 +284,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       (props.expandable &&
         internalHooks === INTERNAL_HOOKS &&
         (props.expandable as any).__PARENT_RENDER_ICON__) ||
-      mergedData.some(record => record && record[mergedChildrenColumnName])
+      mergedData.some(
+        record => record && typeof record === 'object' && mergedChildrenColumnName in record,
+      )
     ) {
       return 'nest';
     }
