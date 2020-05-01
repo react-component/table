@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import Table from '../src';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
 
 describe('Table.FixedHeader', () => {
   it('switch column', () => {
@@ -63,5 +63,38 @@ describe('Table.FixedHeader', () => {
     ).toEqual(100);
 
     jest.useRealTimers();
+  });
+
+  it('INTERNAL_COL_DEFINE', () => {
+    const col1 = {
+      dataIndex: 'light',
+      width: 100,
+      [INTERNAL_COL_DEFINE]: { className: 'test-internal' },
+    };
+    const col2 = { dataIndex: 'bamboo', width: 200 };
+    const wrapper = mount(
+      <Table
+        columns={[col1, col2]}
+        data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    expect(
+      wrapper
+        .find('table')
+        .last()
+        .find('colgroup col')
+        .first()
+        .props().className,
+    ).toEqual('test-internal');
+    expect(
+      wrapper
+        .find('table')
+        .first()
+        .find('colgroup col')
+        .first()
+        .props().className,
+    ).toEqual('test-internal');
   });
 });

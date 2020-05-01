@@ -58,7 +58,11 @@ function FixedHeader<RecordType>({
 
   return (
     <table style={{ tableLayout: 'fixed', visibility: columnWidthsReady ? null : 'hidden' }}>
-      <ColGroup colWidths={[...colWidths, scrollbarSize]} columCount={columCount + 1} />
+      <ColGroup
+        colWidths={[...colWidths, scrollbarSize]}
+        columCount={columCount + 1}
+        columns={flattenColumnsWithScrollbar}
+      />
       <Header
         {...props}
         stickyOffsets={headerStickyOffsets}
