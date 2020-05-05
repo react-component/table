@@ -2,16 +2,30 @@
 
 React table component with useful functions.
 
-[![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Dependencies][david-image]][david-url]
+[![DevDependencies][david-dev-image]][david-dev-url]
+[![npm download][download-image]][download-url]
+[![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-table.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-table
 [travis-image]: https://img.shields.io/travis/react-component/table.svg?style=flat-square
 [travis-url]: https://travis-ci.org/react-component/table
+[coveralls-image]: https://img.shields.io/coveralls/react-component/table.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/table?branch=master
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/react-component/table/branch/master
+[david-url]: https://david-dm.org/react-component/table
+[david-image]: https://david-dm.org/react-component/table/status.svg?style=flat-square
+[david-dev-url]: https://david-dm.org/react-component/table?type=dev
+[david-dev-image]: https://david-dm.org/react-component/table/dev-status.svg?style=flat-square
 [download-image]: https://img.shields.io/npm/dm/rc-table.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-table
+[bundlephobia-url]: https://bundlephobia.com/result?p=rc-table
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-table
 
 ## install
 
