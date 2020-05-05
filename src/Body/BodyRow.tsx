@@ -158,6 +158,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             index={index}
             dataIndex={dataIndex}
             render={render}
+            shouldCellUpdate={column.shouldCellUpdate}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}

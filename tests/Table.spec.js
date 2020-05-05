@@ -925,4 +925,48 @@ describe('Table.Basic', () => {
       );
     }).not.toThrow();
   });
+
+  it('shouldCellUpdate', () => {
+    const record = { key: 1 };
+    let shouldUpdate = false;
+    let renderTimes = 0;
+
+    const Demo = () => {
+      const [, forceUpdate] = React.useState({});
+
+      return (
+        <>
+          <Table
+            data={[record]}
+            columns={[
+              {
+                dataIndex: 'key',
+                shouldCellUpdate: () => shouldUpdate,
+                render() {
+                  renderTimes += 1;
+                  return null;
+                },
+              },
+            ]}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              forceUpdate({});
+            }}
+          />
+        </>
+      );
+    };
+
+    const wrapper = mount(<Demo />);
+    renderTimes = 0;
+
+    wrapper.find('button').simulate('click');
+    expect(renderTimes).toEqual(0);
+
+    shouldUpdate = true;
+    wrapper.find('button').simulate('click');
+    expect(renderTimes).toEqual(1);
+  });
 });
