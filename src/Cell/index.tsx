@@ -204,7 +204,7 @@ RefCell.displayName = 'Cell';
 
 const MemoCell = React.memo(RefCell, (_, next: CellProps<any>) => {
   if (next.shouldCellUpdate) {
-    return next.shouldCellUpdate(next.record);
+    return !next.shouldCellUpdate(next.record);
   }
 
   return false;

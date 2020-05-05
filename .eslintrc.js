@@ -16,5 +16,6 @@ module.exports = {
     'import/no-named-as-default-member': 0,
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/label-has-associated-control': 0,
+    'jsx-a11y/control-has-associated-label': 0,
   },
 };
