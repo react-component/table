@@ -342,7 +342,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandable: !!expandedRowRender,
       expandedKeys: mergedExpandedKeys,
       getRowKey,
-      onTriggerExpand,
+      onTriggerExpand: expandRowByClick ? () => {} : onTriggerExpand,
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex,
       direction,
