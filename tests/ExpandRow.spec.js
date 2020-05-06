@@ -368,4 +368,35 @@ describe('Table.Expand', () => {
     );
     expect(wrapper.find('tbody tr')).toHaveLength(3);
   });
+
+  // https://github.com/ant-design/ant-design/issues/23894
+  it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27, children: [{ key: 1, name: 'Jack', age: 28 }] }];
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandRowByClick: true,
+          expandIcon: ({ onExpand: onIconExpand }) => (
+            <span className="custom-expand-icon" onClick={onIconExpand} />
+          ),
+          onExpand,
+        },
+        data,
+      }),
+    );
+    wrapper
+      .find('.custom-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(1);
+    wrapper
+      .find('.custom-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(2);
+  });
 });
