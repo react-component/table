@@ -25,7 +25,6 @@ function CustomExpandIcon(props) {
     <a
       className="expand-row-icon"
       onClick={e => {
-        e.stopPropagation();
         props.onExpand(props.record, e);
       }}
       // eslint-disable-next-line react/no-danger

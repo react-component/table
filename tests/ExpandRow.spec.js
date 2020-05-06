@@ -372,13 +372,15 @@ describe('Table.Expand', () => {
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
+    const onExpand = jest.fn();
     const wrapper = mount(
       createTable({
         expandable: {
           expandedRowRender,
           expandRowByClick: true,
-          expandIcon: ({ onExpand, record }) => (
-            <span className="custom-expand-icon" onClick={() => onExpand(record)} />
+          onExpand,
+          expandIcon: ({ onExpand: onIconExpand, record }) => (
+            <span className="custom-expand-icon" onClick={() => onIconExpand(record)} />
           ),
         },
         data,
@@ -389,6 +391,8 @@ describe('Table.Expand', () => {
       .find('.custom-expand-icon')
       .first()
       .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(1);
     expect(
       wrapper
         .find('.rc-table-expanded-row')
@@ -399,6 +403,8 @@ describe('Table.Expand', () => {
       .find('.custom-expand-icon')
       .first()
       .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(2);
     expect(
       wrapper
         .find('.rc-table-expanded-row')
