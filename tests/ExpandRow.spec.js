@@ -371,17 +371,94 @@ describe('Table.Expand', () => {
 
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
-    const data = [{ key: 0, name: 'Lucy', age: 27, children: [{ key: 1, name: 'Jack', age: 28 }] }];
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
     const onExpand = jest.fn();
     const wrapper = mount(
       createTable({
         expandable: {
           expandedRowRender,
           expandRowByClick: true,
-          expandIcon: ({ onExpand: onIconExpand }) => (
-            <span className="custom-expand-icon" onClick={onIconExpand} />
-          ),
           onExpand,
+          expandIcon: ({ onExpand: onIconExpand, record }) => (
+            <span className="custom-expand-icon" onClick={() => onIconExpand(record)} />
+          ),
+        },
+        data,
+      }),
+    );
+    expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
+    wrapper
+      .find('.custom-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(1);
+    expect(
+      wrapper
+        .find('.rc-table-expanded-row')
+        .first()
+        .getDOMNode().style.display,
+    ).toBe('');
+    wrapper
+      .find('.custom-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(2);
+    expect(
+      wrapper
+        .find('.rc-table-expanded-row')
+        .first()
+        .getDOMNode().style.display,
+    ).toBe('none');
+  });
+
+  // https://github.com/ant-design/ant-design/issues/23894
+  it('should be collapsible when `expandRowByClick` without custom `expandIcon`', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandRowByClick: true,
+          onExpand,
+        },
+        data,
+      }),
+    );
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(1);
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .first()
+      .simulate('click');
+    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+    expect(onExpand).toHaveBeenCalledTimes(2);
+  });
+
+  it('should be collapsible when `expandRowByClick` with custom `expandIcon` and event.stopPropagation', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandRowByClick: true,
+          onExpand,
+          expandIcon: ({ onExpand: onIconExpand, record }) => (
+            <span
+              className="custom-expand-icon"
+              onClick={e => {
+                e.stopPropagation();
+                onIconExpand(record);
+              }}
+            />
+          ),
         },
         data,
       }),
@@ -400,9 +477,8 @@ describe('Table.Expand', () => {
     expect(onExpand).toHaveBeenCalledTimes(2);
   });
 
-  // https://github.com/ant-design/ant-design/issues/23894
-  it('should be collapsible when `expandRowByClick` without custom `expandIcon`', () => {
-    const data = [{ key: 0, name: 'Lucy', age: 27, children: [{ key: 1, name: 'Jack', age: 28 }] }];
+  it('support invalid expandIcon', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
     const onExpand = jest.fn();
     const wrapper = mount(
       createTable({
@@ -410,21 +486,11 @@ describe('Table.Expand', () => {
           expandedRowRender,
           expandRowByClick: true,
           onExpand,
+          expandIcon: () => null,
         },
         data,
       }),
     );
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(1);
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(2);
+    expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
   });
 });
