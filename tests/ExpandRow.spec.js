@@ -476,4 +476,21 @@ describe('Table.Expand', () => {
     expect(onExpand).toHaveBeenCalledWith(false, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(2);
   });
+
+  it('support invalid expandIcon', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
+    const onExpand = jest.fn();
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandRowByClick: true,
+          onExpand,
+          expandIcon: () => null,
+        },
+        data,
+      }),
+    );
+    expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
+  });
 });
