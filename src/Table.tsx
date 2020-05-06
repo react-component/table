@@ -343,7 +343,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandedKeys: mergedExpandedKeys,
       getRowKey,
       // https://github.com/ant-design/ant-design/issues/23894
-      onTriggerExpand: expandRowByClick && expandIcon ? () => {} : onTriggerExpand,
+      onTriggerExpand,
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex,
       direction,
