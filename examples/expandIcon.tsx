@@ -24,7 +24,9 @@ function CustomExpandIcon(props) {
   return (
     <a
       className="expand-row-icon"
-      onClick={e => props.onExpand(props.record, e)}
+      onClick={e => {
+        props.onExpand(props.record, e);
+      }}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: text }}
       style={{ color: 'blue', cursor: 'pointer' }}
@@ -42,6 +44,7 @@ const Demo = () => (
     columns={columns}
     data={data}
     expandable={{
+      expandRowByClick: true,
       expandedRowRender: record => <p>extra: {record.a}</p>,
       onExpand,
       expandIcon: CustomExpandIcon,

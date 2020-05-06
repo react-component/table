@@ -118,6 +118,7 @@ function useColumns<RecordType>(
     rowExpandable,
     expandIconColumnIndex,
     direction,
+    expandRowByClick,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -130,6 +131,7 @@ function useColumns<RecordType>(
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
     direction?: 'ltr' | 'rtl';
+    expandRowByClick?: boolean;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
@@ -156,13 +158,25 @@ function useColumns<RecordType>(
           const expanded = expandedKeys.has(rowKey);
           const recordExpandable = rowExpandable ? rowExpandable(record) : true;
 
-          return expandIcon({
+          const icon = expandIcon({
             prefixCls,
             expanded,
             expandable: recordExpandable,
             record,
             onExpand: onTriggerExpand,
           });
+          return React.isValidElement(icon)
+            ? React.cloneElement(icon, {
+                onClick: (e: MouseEvent) => {
+                  if (expandRowByClick) {
+                    e.stopPropagation();
+                  }
+                  if (icon && icon.props && icon.props.onClick) {
+                    icon.props.onClick(e);
+                  }
+                },
+              })
+            : icon;
         },
       };
 
