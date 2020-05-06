@@ -42,7 +42,6 @@ const Demo = () => (
     columns={columns}
     data={data}
     expandable={{
-      expandRowByClick: true,
       expandedRowRender: record => <p>extra: {record.a}</p>,
       onExpand,
       expandIcon: CustomExpandIcon,

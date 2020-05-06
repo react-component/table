@@ -342,7 +342,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       expandable: !!expandedRowRender,
       expandedKeys: mergedExpandedKeys,
       getRowKey,
-      onTriggerExpand: expandRowByClick ? () => {} : onTriggerExpand,
+      // https://github.com/ant-design/ant-design/issues/23894
+      onTriggerExpand: expandRowByClick && expandIcon ? () => {} : onTriggerExpand,
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex,
       direction,
