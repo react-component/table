@@ -82,6 +82,7 @@ interface MemoTableContentProps {
   pingRight: boolean;
   props: any;
 }
+
 const MemoTableContent = React.memo<MemoTableContentProps>(
   ({ children }) => children as React.ReactElement,
 

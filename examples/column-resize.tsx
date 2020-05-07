@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Resizable } from 'react-resizable';
 import Table from '../src';
 import '../assets/index.less';
@@ -18,11 +17,6 @@ const ResizableTitle = props => {
       <th {...restProps} />
     </Resizable>
   );
-};
-
-ResizableTitle.propTypes = {
-  onResize: PropTypes.func.isRequired,
-  width: PropTypes.number,
 };
 
 interface RecordType {
