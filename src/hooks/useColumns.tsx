@@ -165,18 +165,11 @@ function useColumns<RecordType>(
             record,
             onExpand: onTriggerExpand,
           });
-          return React.isValidElement(icon)
-            ? React.cloneElement(icon, {
-                onClick: (e: MouseEvent) => {
-                  if (expandRowByClick) {
-                    e.stopPropagation();
-                  }
-                  if (icon && icon.props && icon.props.onClick) {
-                    icon.props.onClick(e);
-                  }
-                },
-              })
-            : icon;
+
+          if (expandRowByClick) {
+            return <span onClick={e => e.stopPropagation()}>{icon}</span>;
+          }
+          return icon;
         },
       };
 
