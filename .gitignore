@@ -34,3 +34,4 @@ es/
 .doc
 !tests/__mocks__/rc-util/lib
 examples/debug.tsx
+.history

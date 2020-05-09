@@ -13,6 +13,8 @@ export interface TableContextProps {
   direction: 'ltr' | 'rtl';
 
   fixedInfoList: FixedInfo[];
+
+  showCellEllipsisHtmlTitle?: boolean;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

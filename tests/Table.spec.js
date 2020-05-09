@@ -267,6 +267,27 @@ describe('Table.Basic', () => {
     });
   });
 
+  it('not renders ellipsis origin html title', () => {
+    const columns = [
+      { title: 'title', ellipsis: true },
+      { title: 'node title', ellipsis: true, render: () => <h1>233</h1> },
+    ];
+    const wrapper = mount(
+      createTable({
+        showCellEllipsisHtmlTitle: false,
+        columns,
+      }),
+    );
+
+    wrapper.find('.rc-table-thead td').forEach(td => {
+      expect(td.getDOMNode().attributes.getNamedItem('title')).toBeTruthy();
+    });
+
+    wrapper.find('.rc-table-tbody td').forEach(td => {
+      expect(td.getDOMNode().attributes.getNamedItem('title')).toBeFalsy();
+    });
+  });
+
   it('renders column correctly', () => {
     const columns = [
       {

@@ -55,6 +55,8 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.HTMLAttributes<HTMLElement>;
+
+  showCellEllipsisHtmlTitle?: boolean;
 }
 
 function Cell<RecordType extends DefaultRecordType>(
@@ -79,6 +81,7 @@ function Cell<RecordType extends DefaultRecordType>(
     additionalProps = {},
     ellipsis,
     align,
+    showCellEllipsisHtmlTitle,
   }: CellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
@@ -157,7 +160,7 @@ function Cell<RecordType extends DefaultRecordType>(
 
   // ====================== Render ======================
   let title: string;
-  if (ellipsis) {
+  if (ellipsis && (showCellEllipsisHtmlTitle || (!showCellEllipsisHtmlTitle && !render))) {
     if (typeof childNode === 'string') {
       title = childNode;
     } else if (React.isValidElement(childNode) && typeof childNode.props.children === 'string') {

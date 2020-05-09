@@ -17,7 +17,7 @@ export default function SummaryCell({
   colSpan,
   rowSpan,
 }: SummaryCellProps) {
-  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
+  const { prefixCls, fixedInfoList, showCellEllipsisHtmlTitle } = React.useContext(TableContext);
 
   const fixedInfo = fixedInfoList[index];
 
@@ -29,6 +29,7 @@ export default function SummaryCell({
       prefixCls={prefixCls}
       record={null}
       dataIndex={null}
+      showCellEllipsisHtmlTitle={showCellEllipsisHtmlTitle}
       render={() => ({
         children,
         props: {
