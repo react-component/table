@@ -158,8 +158,8 @@ function Cell<RecordType extends DefaultRecordType>(
   // ====================== Render ======================
   let title: string;
   if (ellipsis) {
-    if (typeof childNode === 'string') {
-      title = childNode;
+    if (typeof childNode === 'string' || typeof childNode === 'number') {
+      title = childNode.toString();
     } else if (React.isValidElement(childNode) && typeof childNode.props.children === 'string') {
       title = childNode.props.children;
     }
