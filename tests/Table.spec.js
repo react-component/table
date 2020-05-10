@@ -267,19 +267,33 @@ describe('Table.Basic', () => {
     });
   });
 
+  it('renders ellipsis by showTitle option', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [
+          { title: 'title', ellipsis: { showTitle: true } },
+          { title: 'node title', ellipsis: { showTitle: true }, render: () => <h1>233</h1> },
+        ],
+      }),
+    );
+
+    wrapper.find('td').forEach(td => {
+      expect(td.hasClass('rc-table-cell-ellipsis')).toBeTruthy();
+    });
+  });
+
   it('not renders ellipsis origin html title', () => {
     const columns = [
-      { title: 'title', ellipsis: true },
-      { title: 'node title', ellipsis: true, render: () => <h1>233</h1> },
+      { title: 'title', ellipsis: { showTitle: false } },
+      { title: 'node title', ellipsis: { showTitle: false }, render: () => <h1>233</h1> },
     ];
     const wrapper = mount(
       createTable({
-        showCellEllipsisHtmlTitle: false,
         columns,
       }),
     );
 
-    wrapper.find('.rc-table-thead td').forEach(td => {
+    wrapper.find('.rc-table-thead th').forEach(td => {
       expect(td.getDOMNode().attributes.getNamedItem('title')).toBeTruthy();
     });
 

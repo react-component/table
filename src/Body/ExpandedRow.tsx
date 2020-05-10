@@ -30,7 +30,7 @@ function ExpandedRow<RecordType>({
   componentWidth,
   colSpan,
 }: ExpandedRowProps<RecordType>) {
-  const { scrollbarSize, showCellEllipsisHtmlTitle } = React.useContext(TableContext);
+  const { scrollbarSize } = React.useContext(TableContext);
 
   // Cache render node
   return React.useMemo(() => {
@@ -59,12 +59,7 @@ function ExpandedRow<RecordType>({
           display: expanded ? null : 'none',
         }}
       >
-        <Cell
-          component={cellComponent}
-          prefixCls={prefixCls}
-          colSpan={colSpan}
-          showCellEllipsisHtmlTitle={showCellEllipsisHtmlTitle}
-        >
+        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
           {contentNode}
         </Cell>
       </Component>

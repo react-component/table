@@ -106,7 +106,6 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
-  showCellEllipsisHtmlTitle?: boolean;
 
   // Fixed Columns
   scroll?: { x?: number | true | string; y?: number | string };
@@ -169,7 +168,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     scroll,
     tableLayout,
     direction,
-    showCellEllipsisHtmlTitle,
 
     // Additional Part
     title,
@@ -667,21 +665,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       getComponent,
       scrollbarSize,
       direction,
-      showCellEllipsisHtmlTitle,
       fixedInfoList: flattenColumns.map((_, colIndex) =>
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
     }),
-    [
-      prefixCls,
-      getComponent,
-      scrollbarSize,
-      direction,
-      flattenColumns,
-      stickyOffsets,
-      direction,
-      showCellEllipsisHtmlTitle,
-    ],
+    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, direction],
   );
 
   const BodyContextValue = React.useMemo(
@@ -742,7 +730,6 @@ Table.defaultProps = {
   rowKey: 'key',
   prefixCls: 'rc-table',
   emptyText: () => 'No Data',
-  showCellEllipsisHtmlTitle: true,
 };
 
 export default Table;

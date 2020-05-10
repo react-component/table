@@ -9,7 +9,9 @@ const createColumns = (length: number) => {
     title: 'description',
     dataIndex: 'description',
     key: `description ${i + 1}`,
-    ellipsis: true,
+    ellipsis: {
+      showTitle: false,
+    },
     ...(i === 0 ? { width: 50 } : null),
     render(description: string) {
       return (
@@ -26,7 +28,9 @@ const columns = [
     title: 'name',
     dataIndex: 'name',
     width: 100,
-    ellipsis: true,
+    ellipsis: {
+      showTitle: false,
+    },
     render: (name: string) => (
       <Tooltip placement="topLeft" overlay={name}>
         <span>{name}</span>
@@ -37,7 +41,9 @@ const columns = [
   {
     title: 'Operations',
     key: 'operations',
-    ellipsis: true,
+    ellipsis: {
+      showTitle: false,
+    },
     render() {
       return (
         <Tooltip placement="topLeft" overlay="Operations">
@@ -58,7 +64,7 @@ const data = [
 const Demo = () => (
   <div>
     <h2>Table ellipsis custom tooltip</h2>
-    <Table columns={columns} data={data} showCellEllipsisHtmlTitle={false} />
+    <Table columns={columns} data={data} />
   </div>
 );
 

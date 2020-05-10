@@ -40,7 +40,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     cellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList, showCellEllipsisHtmlTitle } = React.useContext(TableContext);
+  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
   const {
     fixHeader,
     fixColumn,
@@ -162,7 +162,6 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
-            showCellEllipsisHtmlTitle={showCellEllipsisHtmlTitle}
           />
         );
       })}

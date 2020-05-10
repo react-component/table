@@ -30,7 +30,7 @@ function HeaderRow<RecordType>({
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
-  const { prefixCls, direction, showCellEllipsisHtmlTitle } = React.useContext(TableContext);
+  const { prefixCls, direction } = React.useContext(TableContext);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -66,7 +66,7 @@ function HeaderRow<RecordType>({
             key={columnsKey[cellIndex]}
             {...fixedInfo}
             additionalProps={additionalProps}
-            showCellEllipsisHtmlTitle={showCellEllipsisHtmlTitle}
+            rowType="header"
           />
         );
       })}

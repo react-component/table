@@ -9,6 +9,7 @@ import {
   CellType,
   DefaultRecordType,
   AlignType,
+  CellEllipsisType,
 } from '../interface';
 import { getPathValue } from '../utils/valueUtil';
 
@@ -38,7 +39,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
-  ellipsis?: boolean;
+  ellipsis?: CellEllipsisType;
   align?: AlignType;
 
   shouldCellUpdate?: (record: RecordType) => boolean;
@@ -56,7 +57,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   appendNode?: React.ReactNode;
   additionalProps?: React.HTMLAttributes<HTMLElement>;
 
-  showCellEllipsisHtmlTitle?: boolean;
+  rowType?: 'header' | 'body' | 'footer';
 }
 
 function Cell<RecordType extends DefaultRecordType>(
@@ -81,7 +82,7 @@ function Cell<RecordType extends DefaultRecordType>(
     additionalProps = {},
     ellipsis,
     align,
-    showCellEllipsisHtmlTitle,
+    rowType,
   }: CellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
@@ -160,7 +161,8 @@ function Cell<RecordType extends DefaultRecordType>(
 
   // ====================== Render ======================
   let title: string;
-  if (ellipsis && (showCellEllipsisHtmlTitle || (!showCellEllipsisHtmlTitle && !render))) {
+  const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
+  if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
     if (typeof childNode === 'string' || typeof childNode === 'number') {
       title = childNode.toString();
     } else if (React.isValidElement(childNode) && typeof childNode.props.children === 'string') {
