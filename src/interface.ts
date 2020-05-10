@@ -55,13 +55,15 @@ export interface RenderedCell<RecordType> {
 
 export type DataIndex = string | number | (string | number)[];
 
+export type CellEllipsisType = { showTitle?: boolean } | boolean;
+
 interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
   key?: Key;
   className?: string;
   fixed?: FixedType;
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
-  ellipsis?: boolean;
+  ellipsis?: CellEllipsisType;
   align?: AlignType;
 }
 
