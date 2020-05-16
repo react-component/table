@@ -40,7 +40,7 @@ npm start
 
 ## Example
 
-http://react-component.github.io/table/examples/
+https://react-component.github.io/table/
 
 ## Usage
 
