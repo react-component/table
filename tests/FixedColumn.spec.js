@@ -188,4 +188,13 @@ describe('Table.FixedColumn', () => {
         .hasClass('rc-table-cell-fix-left'),
     ).toBeTruthy();
   });
+
+  it('not break measure count', () => {
+    const wrapper = mount(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
+    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(5);
+
+    wrapper.setProps({ columns: columns.slice(0, 4) });
+    wrapper.update();
+    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(4);
+  });
 });
