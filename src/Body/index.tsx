@@ -114,6 +114,7 @@ function Body<RecordType>({
     getComponent,
     componentWidth,
     emptyNode,
+    flattenColumns,
   ]);
 }
 
