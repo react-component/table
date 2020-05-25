@@ -81,6 +81,10 @@ export default class TableCell<ValueType> extends React.Component<TableCellProps
       text = null;
     }
 
+    if (typeof text === 'boolean' && !render) {
+      text = text.toString();
+    }
+
     const indentText = expandIcon ? (
       <span
         style={{ paddingLeft: `${indentSize * indent}px` }}
