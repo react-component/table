@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import raf from 'raf';
 
 export type Updater<State> = (prev: State) => State;
 
@@ -15,7 +14,7 @@ export function useFrameState<State>(
   function setFrameState(updater: Updater<State>) {
     if (timeoutRef.current === null) {
       updateBatchRef.current = [];
-      timeoutRef.current = raf(() => {
+      timeoutRef.current = requestAnimationFrame(() => {
         updateBatchRef.current.forEach(batchUpdater => {
           stateRef.current = batchUpdater(stateRef.current);
         });
@@ -29,7 +28,7 @@ export function useFrameState<State>(
 
   useEffect(
     () => () => {
-      raf.cancel(timeoutRef.current);
+      cancelAnimationFrame(timeoutRef.current);
     },
 
     [],
