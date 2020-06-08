@@ -27,13 +27,13 @@ export default function HeadTable(props: HeadTableProps, { table }) {
     const scrollbarWidthOfHeader = measureScrollbar({ direction: 'horizontal', prefixCls });
     // Add negative margin bottom for scroll bar overflow bug
     if (scrollbarWidthOfHeader > 0 && !fixed) {
-      // headStyle.marginBottom = `-${scrollbarWidthOfHeader}px`;
-      // headStyle.paddingBottom = '0px';
-      // // https://github.com/ant-design/ant-design/pull/19986
-      // headStyle.minWidth = `${scrollbarWidth}px`;
-      // // https://github.com/ant-design/ant-design/issues/17051
-      // headStyle.overflowX = 'auto';
-      // headStyle.overflowY = scrollbarWidth === 0 ? 'hidden' : 'auto';
+      headStyle.marginBottom = `-${scrollbarWidthOfHeader}px`;
+      headStyle.paddingBottom = '0px';
+      // https://github.com/ant-design/ant-design/pull/19986
+      headStyle.minWidth = `${scrollbarWidth}px`;
+      // https://github.com/ant-design/ant-design/issues/17051
+      headStyle.overflowX = 'auto';
+      headStyle.overflowY = scrollbarWidth === 0 ? 'hidden' : 'auto';
     }
   }
 
