@@ -81,7 +81,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
     record: RecordType,
     index: number,
   ) => React.ReactNode | RenderedCell<RecordType>;
-  shouldCellUpdate?: (record: RecordType) => boolean;
+  shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
   rowSpan?: number;
   width?: number | string;
   onCell?: GetComponentProps<RecordType>;

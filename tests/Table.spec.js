@@ -965,18 +965,24 @@ describe('Table.Basic', () => {
     const record = { key: 1 };
     let shouldUpdate = false;
     let renderTimes = 0;
+    let prev;
+    let next;
 
-    const Demo = () => {
+    const Demo = ({ records }) => {
       const [, forceUpdate] = React.useState({});
 
       return (
         <>
           <Table
-            data={[record]}
+            data={records}
             columns={[
               {
                 dataIndex: 'key',
-                shouldCellUpdate: () => shouldUpdate,
+                shouldCellUpdate: (nextRecord, prevRecord) => {
+                  next = nextRecord;
+                  prev = prevRecord;
+                  return shouldUpdate;
+                },
                 render() {
                   renderTimes += 1;
                   return null;
@@ -994,7 +1000,7 @@ describe('Table.Basic', () => {
       );
     };
 
-    const wrapper = mount(<Demo />);
+    const wrapper = mount(<Demo records={[record]} />);
     renderTimes = 0;
 
     wrapper.find('button').simulate('click');
@@ -1003,5 +1009,12 @@ describe('Table.Basic', () => {
     shouldUpdate = true;
     wrapper.find('button').simulate('click');
     expect(renderTimes).toEqual(1);
+
+    // Should update match prev & next
+    const newRecord = { ...record, next: true };
+    wrapper.setProps({ records: [newRecord] });
+    // wrapper.update();
+    expect(prev).toBe(record);
+    expect(next).toBe(newRecord);
   });
 });
