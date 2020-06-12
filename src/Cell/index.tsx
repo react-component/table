@@ -42,7 +42,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   ellipsis?: CellEllipsisType;
   align?: AlignType;
 
-  shouldCellUpdate?: (record: RecordType) => boolean;
+  shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
   // Fixed
   fixLeft?: number | false;
@@ -207,9 +207,9 @@ function Cell<RecordType extends DefaultRecordType>(
 const RefCell = React.forwardRef<any, CellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
-const MemoCell = React.memo(RefCell, (_, next: CellProps<any>) => {
+const MemoCell = React.memo(RefCell, (prev: CellProps<any>, next: CellProps<any>) => {
   if (next.shouldCellUpdate) {
-    return !next.shouldCellUpdate(next.record);
+    return !next.shouldCellUpdate(next.record, prev.record);
   }
 
   return false;
