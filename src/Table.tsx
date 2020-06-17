@@ -304,8 +304,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
     return [];
   });
+  const mergedExpandedKeysRef = React.useRef(new Set());
   const mergedExpandedKeys = React.useMemo(
-    () => new Set(expandedRowKeys || innerExpandedKeys || []),
+    () => {
+      const tempKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
+      mergedExpandedKeysRef.current = tempKeys;
+      return tempKeys;
+    },
     [expandedRowKeys, innerExpandedKeys],
   );
 
@@ -314,12 +319,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       const key = getRowKey(record, mergedData.indexOf(record));
 
       let newExpandedKeys: Key[];
-      const hasKey = mergedExpandedKeys.has(key);
+      const hasKey = mergedExpandedKeysRef.current.has(key);
       if (hasKey) {
-        mergedExpandedKeys.delete(key);
-        newExpandedKeys = [...mergedExpandedKeys];
+        mergedExpandedKeysRef.current.delete(key);
+        newExpandedKeys = [...mergedExpandedKeysRef.current];
       } else {
-        newExpandedKeys = [...mergedExpandedKeys, key];
+        newExpandedKeys = [...mergedExpandedKeysRef.current, key];
       }
 
       setInnerExpandedKeys(newExpandedKeys);
