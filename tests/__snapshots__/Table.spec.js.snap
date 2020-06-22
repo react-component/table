@@ -125,7 +125,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
     </div>
     <div
       class="rc-table-body"
-      style="overflow-x: scroll; overflow-y: scroll; max-height: 100px;"
+      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
     >
       <table
         name="my-table"
