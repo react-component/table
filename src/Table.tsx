@@ -389,7 +389,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   if (horizonScroll) {
-    scrollXStyle = { overflowX: 'scroll' };
+    scrollXStyle = { overflowX: 'auto' };
     // When no vertical scrollbar, should hide it
     // https://github.com/ant-design/ant-design/pull/20705
     // https://github.com/ant-design/ant-design/issues/21879
