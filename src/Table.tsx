@@ -475,7 +475,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (tableLayout) {
       return tableLayout;
     }
-    if (fixHeader || fixColumn || flattenColumns.some(({ ellipsis }) => ellipsis)) {
+    // https://github.com/ant-design/ant-design/issues/25227
+    // When scroll.x is max-content, no need to fix table layout
+    // it's width should stretch out to fit content
+    if (fixColumn) {
+      return scroll.x === 'max-content' ? 'auto' : 'fixed';
+    }
+    if (fixHeader || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
     }
     return 'auto';
