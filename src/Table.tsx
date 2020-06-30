@@ -304,22 +304,26 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
     return [];
   });
-  const mergedExpandedKeys = React.useMemo(
-    () => new Set(expandedRowKeys || innerExpandedKeys || []),
-    [expandedRowKeys, innerExpandedKeys],
-  );
+  const mergedExpandedKeysRef = React.useRef(new Set());
+  const mergedExpandedKeys = React.useMemo(() => {
+    const tempKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
+    mergedExpandedKeysRef.current = tempKeys;
+    return tempKeys;
+  }, [expandedRowKeys, innerExpandedKeys]);
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
       const key = getRowKey(record, mergedData.indexOf(record));
 
       let newExpandedKeys: Key[];
-      const hasKey = mergedExpandedKeys.has(key);
+      const hasKey = mergedExpandedKeysRef.current.has(key);
       if (hasKey) {
-        mergedExpandedKeys.delete(key);
-        newExpandedKeys = [...mergedExpandedKeys];
+        mergedExpandedKeysRef.current.delete(key);
+        // @ts-ignore
+        newExpandedKeys = [...mergedExpandedKeysRef.current];
       } else {
-        newExpandedKeys = [...mergedExpandedKeys, key];
+        // @ts-ignore
+        newExpandedKeys = [...mergedExpandedKeysRef.current, key];
       }
 
       setInnerExpandedKeys(newExpandedKeys);
