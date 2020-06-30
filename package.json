@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "7.8.0",
+  "version": "7.8.1",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "^3.10.5",
-    "@types/jest": "^25.1.0",
+    "@types/jest": "^26.0.3",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@umijs/fabric": "^2.0.0",
