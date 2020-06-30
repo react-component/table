@@ -305,14 +305,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     return [];
   });
   const mergedExpandedKeysRef = React.useRef(new Set());
-  const mergedExpandedKeys = React.useMemo(
-    () => {
-      const tempKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
-      mergedExpandedKeysRef.current = tempKeys;
-      return tempKeys;
-    },
-    [expandedRowKeys, innerExpandedKeys],
-  );
+  const mergedExpandedKeys = React.useMemo(() => {
+    const tempKeys = new Set(expandedRowKeys || innerExpandedKeys || []);
+    mergedExpandedKeysRef.current = tempKeys;
+    return tempKeys;
+  }, [expandedRowKeys, innerExpandedKeys]);
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
@@ -322,8 +319,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       const hasKey = mergedExpandedKeysRef.current.has(key);
       if (hasKey) {
         mergedExpandedKeysRef.current.delete(key);
+        // @ts-ignore
         newExpandedKeys = [...mergedExpandedKeysRef.current];
       } else {
+        // @ts-ignore
         newExpandedKeys = [...mergedExpandedKeysRef.current, key];
       }
 
