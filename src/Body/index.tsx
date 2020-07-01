@@ -45,7 +45,7 @@ function Body<RecordType>({
       rows = data.map((record, index) => {
         const key = getRowKey(record, index);
 
-        return [
+        return (
           <BodyRow
             key={key}
             rowKey={key}
@@ -59,8 +59,8 @@ function Body<RecordType>({
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
             childrenColumnName={childrenColumnName}
-          />,
-        ];
+          />
+        );
       });
     } else {
       rows = (
