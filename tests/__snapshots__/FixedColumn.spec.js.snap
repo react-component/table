@@ -9,7 +9,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll; overflow-y: hidden;"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
         style="width: 1px; min-width: 100%; table-layout: fixed;"
@@ -632,7 +632,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll; overflow-y: hidden;"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -1255,7 +1255,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll; overflow-y: hidden;"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -1526,7 +1526,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
     </div>
     <div
       class="rc-table-body"
-      style="overflow-x: scroll; overflow-y: scroll; max-height: 100px;"
+      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -2080,7 +2080,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
   >
     <div
       class="rc-table-content"
-      style="overflow-x: scroll; overflow-y: hidden;"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
