@@ -61,7 +61,7 @@ const Demo = () => (
     <Table
       columns={columns}
       expandedRowRender={({ b, c }) => b || c}
-      scroll={{ x: 1200 }}
+      scroll={{ x: 1200, y: 200 }}
       data={data}
       summary={() => (
         <>

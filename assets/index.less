@@ -205,19 +205,31 @@
     border-radius: 5px 0 0 0;
   }
 
-  &-body {
+  &-body,
+  &-summary {
     .tableBorder();
     border-top: 0;
   }
 
-  &-fixed-column &-body::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-right: @border;
-    z-index: 1;
+  &-fixed-column {
+    &-body,
+    &-summary {
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-right: @border;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-fixed-column &-summary {
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   // ================= Expand =================
