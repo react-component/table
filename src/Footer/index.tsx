@@ -9,7 +9,7 @@ export interface FooterProps<RecordType> {
 
 function Footer<RecordType>({ children }: FooterProps<RecordType>) {
   const { prefixCls } = React.useContext(TableContext);
-  return <tfoot className={`${prefixCls}-tfoot`}>{children}</tfoot>;
+  return <tfoot className={`${prefixCls}-tfoot ${prefixCls}-tfoot-summary`}>{children}</tfoot>;
 }
 
 export default Footer;
