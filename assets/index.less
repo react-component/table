@@ -58,6 +58,8 @@
   &-cell {
     &-fix-left,
     &-fix-right {
+      position: -webkit-sticky !important;
+      position: sticky !important;
       z-index: 1;
     }
 
@@ -88,7 +90,7 @@
       position: absolute;
       top: 0;
       bottom: -1px;
-      width: 20px;
+      width: 30px;
       right: -1px;
       transform: translateX(100%);
     }
@@ -108,7 +110,7 @@
         position: absolute;
         top: 0;
         bottom: -1px;
-        width: 20px;
+        width: 30px;
         left: -1px;
         transform: translateX(-100%);
       }
