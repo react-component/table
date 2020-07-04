@@ -148,6 +148,19 @@ describe('Table.Expand', () => {
     ).toBeTruthy();
   });
 
+  // https://github.com/ant-design/ant-design/issues/24129
+  it('should not render expand icon column when expandIconColumnIndex is negative', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandIconColumnIndex: -1,
+        },
+      }),
+    );
+    expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+  });
+
   it('renders a custom icon', () => {
     function CustomExpandIcon(props) {
       return (

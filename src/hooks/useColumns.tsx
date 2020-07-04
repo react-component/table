@@ -175,8 +175,9 @@ function useColumns<RecordType>(
 
       // Insert expand column in the target position
       const cloneColumns = baseColumns.slice();
-      cloneColumns.splice(expandColIndex, 0, expandColumn);
-
+      if (expandColIndex >= 0) {
+        cloneColumns.splice(expandColIndex, 0, expandColumn);
+      }
       return cloneColumns;
     }
     return baseColumns;
