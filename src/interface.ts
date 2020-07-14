@@ -91,7 +91,8 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
 
 export type ColumnsType<RecordType = unknown> = (
   | ColumnGroupType<RecordType>
-  | ColumnType<RecordType>)[];
+  | ColumnType<RecordType>
+)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
@@ -206,3 +207,11 @@ export type TriggerEventHandler<RecordType> = (
   record: RecordType,
   event: React.MouseEvent<HTMLElement>,
 ) => void;
+
+// =================== Sticky ===================
+export interface TableSticky {
+  isShowHeader?: boolean;
+  offsetHeader?: number;
+  isShowScroll?: boolean;
+  offsetScroll?: number;
+}
