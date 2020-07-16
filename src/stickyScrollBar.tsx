@@ -113,7 +113,6 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
     }
   }, [isHiddenScrollBar]);
 
-
   if (
     bodyScrollWidth <= bodyWidth ||
     !scrollBarWidth ||
@@ -139,7 +138,6 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
         style={{
           width: `${scrollBarWidth}px`,
           transform: `translate3d(${scrollLeft}px, 0px, 0px)`,
-          backfaceVisibility: 'hidden',
         }}
       />
     </div>
