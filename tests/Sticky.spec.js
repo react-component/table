@@ -112,13 +112,13 @@ describe('Table.Sticky', () => {
 
     expect(mockFn).toHaveBeenCalledTimes(2);
 
-    const event = new Event('mousemove');
+    const mousemoveEvent = new Event('mousemove');
 
-    event.buttons = 1;
-    event.pageX = 50;
-    event.preventDefault = mockFn;
+    mousemoveEvent.buttons = 1;
+    mousemoveEvent.pageX = 50;
+    mousemoveEvent.preventDefault = mockFn;
 
-    document.body.dispatchEvent(event);
+    document.body.dispatchEvent(mousemoveEvent);
 
     jest.runAllTimers();
     expect(mockFn).toHaveBeenCalledTimes(4);
@@ -126,6 +126,16 @@ describe('Table.Sticky', () => {
       width: '50px',
       transform: 'translate3d(50px, 0px, 0px)',
     });
+
+    const mouseupEvent = new Event('mouseup');
+
+    mouseupEvent.preventDefault = mockFn;
+
+    document.body.dispatchEvent(mouseupEvent);
+
+    expect(mockFn).toHaveBeenCalledTimes(6);
+
+    wrapper.unmount();
 
     window.pageYOffset = 0;
     mockFn.mockRestore();
