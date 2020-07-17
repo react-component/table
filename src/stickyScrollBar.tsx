@@ -22,29 +22,45 @@ function getScrollBarSizeCache() {
   return scrollBarSizeCache;
 }
 
-const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScroll, sticky }) => {
+const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
+  scrollBodyRef,
+  onScroll,
+  sticky = {},
+}) => {
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth;
   const bodyWidth = scrollBodyRef.current?.offsetWidth;
   const scrollBarWidth = bodyWidth * (bodyWidth / bodyScrollWidth);
+  const { isShowScroll, offsetScroll = 0 } = sticky;
 
-  const isScollBarDragable = React.useRef(false);
-  const [scrollLeft, setScrollLeft] = useFrameState(0);
   const scrollBarRef = React.useRef<HTMLDivElement>();
-  const delta = React.useRef(0);
-  const x = React.useRef(0);
-  const [isHiddenScrollBar, setHiddenScrollBar] = useFrameState(false);
+  const [frameState, setFrameState] = useFrameState<{
+    scrollLeft: number;
+    isHiddenScrollBar: boolean;
+  }>({
+    scrollLeft: 0,
+    isHiddenScrollBar: false,
+  });
+  const refState = React.useRef<{
+    isScollBarDragable: boolean;
+    delta: number;
+    x: number;
+  }>({
+    isScollBarDragable: false,
+    delta: 0,
+    x: 0,
+  });
 
   const onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
-    isScollBarDragable.current = false;
+    refState.current.isScollBarDragable = false;
     event.preventDefault();
   };
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
     event.persist();
-    isScollBarDragable.current = true;
-    delta.current = event.pageX - scrollLeft;
-    x.current = 0;
+    refState.current.isScollBarDragable = true;
+    refState.current.delta = event.pageX - frameState.scrollLeft;
+    refState.current.x = 0;
     event.preventDefault();
   };
 
@@ -52,10 +68,11 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
     event.preventDefault();
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
     const { buttons } = event || (window?.event as any);
-    if (!isScollBarDragable.current || buttons === 0) {
+    if (!refState.current.isScollBarDragable || buttons === 0) {
       return;
     }
-    let left: number = x.current + event.pageX - x.current - delta.current;
+    let left: number =
+      refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
     if (left <= 0) {
       left = 0;
@@ -65,27 +82,37 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
       left = bodyWidth - scrollBarWidth;
     }
 
-    setScrollLeft(() => {
+    setFrameState(state => {
       onScroll({
         scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
       });
-      return left;
+      return {
+        ...state,
+        scrollLeft: left,
+      };
     });
 
-    x.current = event.pageX;
+    refState.current.x = event.pageX;
   };
 
   const onContainerScroll = () => {
     const tableOffsetTop = getOffset(scrollBodyRef.current).top;
     const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
     const currentClientOffset = document.documentElement.scrollTop + window.innerHeight;
+
     if (
       tableBottomOffset - getScrollBarSizeCache() <= currentClientOffset ||
-      tableOffsetTop >= currentClientOffset
+      tableOffsetTop >= currentClientOffset - offsetScroll
     ) {
-      setHiddenScrollBar(() => true);
+      setFrameState(state => ({
+        ...state,
+        isHiddenScrollBar: true,
+      }));
     } else {
-      setHiddenScrollBar(() => false);
+      setFrameState(state => ({
+        ...state,
+        isHiddenScrollBar: false,
+      }));
     }
   };
 
@@ -108,16 +135,21 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
   }, []);
 
   React.useEffect(() => {
-    if (!isHiddenScrollBar) {
-      setScrollLeft(() => (scrollBodyRef.current.scrollLeft / bodyScrollWidth) * bodyWidth);
+    if (!frameState.isHiddenScrollBar) {
+      setFrameState(state => ({
+        ...state,
+        scrollLeft:
+          (scrollBodyRef.current.scrollLeft / scrollBodyRef.current?.scrollWidth) *
+          scrollBodyRef.current?.offsetWidth,
+      }));
     }
-  }, [isHiddenScrollBar]);
+  }, [frameState.isHiddenScrollBar]);
 
   if (
     bodyScrollWidth <= bodyWidth ||
     !scrollBarWidth ||
-    isHiddenScrollBar ||
-    !sticky?.isShowScroll
+    frameState.isHiddenScrollBar ||
+    !isShowScroll
   ) {
     return null;
   }
@@ -127,7 +159,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
       style={{
         height: getScrollBarSizeCache(),
         width: bodyWidth,
-        bottom: sticky?.offsetScroll || 0,
+        bottom: offsetScroll,
       }}
       className={`${prefixCls}-sticky-scroll`}
     >
@@ -137,7 +169,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
         className={`${prefixCls}-sticky-scroll-bar`}
         style={{
           width: `${scrollBarWidth}px`,
-          transform: `translate3d(${scrollLeft}px, 0px, 0px)`,
+          transform: `translate3d(${frameState.scrollLeft}px, 0px, 0px)`,
         }}
       />
     </div>

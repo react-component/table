@@ -37,9 +37,14 @@ describe('Table.Sticky', () => {
   it('Sticky scroll', () => {
     jest.useFakeTimers();
     window.pageYOffset = 900;
+    document.documentElement.scrollTop = 200;
+    let scrollLeft = 100;
     const domSpy = spyElementPrototypes(HTMLDivElement, {
       scrollLeft: {
-        get: () => 100,
+        get: () => scrollLeft,
+        set: left => {
+          scrollLeft = left;
+        },
       },
       scrollTop: {
         get: () => 100,
@@ -94,11 +99,37 @@ describe('Table.Sticky', () => {
         }}
       />,
     );
+
     jest.runAllTimers();
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
 
-    jest.useRealTimers();
+    const mockFn = jest.fn();
+
+    wrapper
+      .find('.rc-table-sticky-scroll-bar')
+      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
+
+    expect(mockFn).toHaveBeenCalledTimes(2);
+
+    const event = new Event('mousemove');
+
+    event.buttons = 1;
+    event.pageX = 50;
+    event.preventDefault = mockFn;
+
+    document.body.dispatchEvent(event);
+
+    jest.runAllTimers();
+    expect(mockFn).toHaveBeenCalledTimes(4);
+    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+      width: '50px',
+      transform: 'translate3d(50px, 0px, 0px)',
+    });
+
+    window.pageYOffset = 0;
+    mockFn.mockRestore();
     domSpy.mockRestore();
+    jest.useRealTimers();
   });
 });
