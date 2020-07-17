@@ -127,13 +127,26 @@ describe('Table.Sticky', () => {
       transform: 'translate3d(50px, 0px, 0px)',
     });
 
+    mousemoveEvent.pageX = -50;
+    mousemoveEvent.preventDefault = mockFn;
+    document.body.dispatchEvent(mousemoveEvent);
+
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(mockFn).toHaveBeenCalledTimes(6);
+    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+      width: '50px',
+      transform: 'translate3d(0px, 0px, 0px)',
+    });
+
     const mouseupEvent = new Event('mouseup');
 
     mouseupEvent.preventDefault = mockFn;
 
     document.body.dispatchEvent(mouseupEvent);
 
-    expect(mockFn).toHaveBeenCalledTimes(6);
+    expect(mockFn).toHaveBeenCalledTimes(8);
 
     wrapper.unmount();
 
