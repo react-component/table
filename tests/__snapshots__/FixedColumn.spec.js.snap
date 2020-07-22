@@ -1428,27 +1428,9 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed;"
+        style="table-layout: fixed; visibility: hidden;"
       >
-        <colgroup>
-          <col
-            style="width: 93px; min-width: 93px;"
-          />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col
-            style="width: 15px; min-width: 15px;"
-          />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -2073,38 +2055,19 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
 
 exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
 <div
-  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+  class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
 >
   <div
     class="rc-table-container"
   >
     <div
-      class="rc-table-content"
-      style="overflow-x: auto; overflow-y: hidden;"
+      class="rc-table-header"
+      style="overflow: hidden;"
     >
       <table
-        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+        style="table-layout: fixed; visibility: hidden;"
       >
-        <colgroup>
-          <col
-            style="width: 100px; min-width: 100px;"
-          />
-          <col
-            style="width: 100px; min-width: 100px;"
-          />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col
-            style="width: 100px; min-width: 100px;"
-          />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -2168,12 +2131,45 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              style="position: sticky; right: 15px;"
             >
               title12
             </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+              style="position: sticky; right: 0px;"
+            />
           </tr>
         </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body"
+      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+    >
+      <table
+        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px; min-width: 100px;"
+          />
+        </colgroup>
         <tbody
           class="rc-table-tbody"
         >
@@ -2228,7 +2224,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             >
               <div
                 class="rc-table-expanded-row-fixed"
-                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+                style="width: -15px; position: sticky; left: 0px; overflow: hidden;"
               >
                 No Data
               </div>
