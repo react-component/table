@@ -286,7 +286,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         internalHooks === INTERNAL_HOOKS &&
         (props.expandable as any).__PARENT_RENDER_ICON__) ||
       mergedData.some(
-        record => record && typeof record === 'object' && mergedChildrenColumnName in record,
+        record => record && typeof record === 'object' && record[mergedChildrenColumnName],
       )
     ) {
       return 'nest';
