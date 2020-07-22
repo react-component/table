@@ -79,14 +79,7 @@ exports[`Table.Basic custom components renders fixed column and header correctly
       <table
         style="table-layout: fixed; visibility: hidden;"
       >
-        <colgroup>
-          <col />
-          <col />
-          <col />
-          <col
-            style="width: 15px; min-width: 15px;"
-          />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
           name="my-header-wrapper"
@@ -196,19 +189,9 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed;"
+        style="table-layout: fixed; visibility: hidden;"
       >
-        <colgroup>
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 888px; min-width: 888px;"
-          />
-          <col
-            style="width: 15px; min-width: 15px;"
-          />
-        </colgroup>
+        <colgroup />
         <thead
           class="rc-table-thead"
         >
