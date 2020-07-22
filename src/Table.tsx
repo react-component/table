@@ -373,7 +373,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
-  const fixHeader = hasData && scroll && validateValue(scroll.y);
+  const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = scroll && validateValue(scroll.x);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
