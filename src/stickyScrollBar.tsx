@@ -169,7 +169,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
         className={`${prefixCls}-sticky-scroll-bar`}
         style={{
           width: `${scrollBarWidth}px`,
-          transform: `translate3d(${frameState.scrollLeft}px, 0px, 0px)`,
+          transform: `translate3d(${frameState.scrollLeft}px, 0, 0)`,
         }}
       />
     </div>
