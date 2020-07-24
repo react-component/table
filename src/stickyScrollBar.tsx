@@ -30,7 +30,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
-  const scrollBarWidth = bodyWidth * (bodyWidth / bodyScrollWidth);
+  const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
   const { isShowScroll, offsetScroll = 0 } = sticky;
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
