@@ -69,7 +69,7 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        isShowHeader: true,
+        showHeader: true,
       }}
       scroll={{
         x: 10000,
@@ -85,7 +85,7 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        isShowScroll: true,
+        showScroll: true,
       }}
       scroll={{
         x: 10000,
@@ -101,8 +101,8 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        isShowHeader: true,
-        isShowScroll: true,
+        showHeader: true,
+        showScroll: true,
       }}
       scroll={{
         x: 10000,
@@ -118,7 +118,7 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        isShowHeader: true,
+        showHeader: true,
         offsetHeader: 100,
       }}
       scroll={{
@@ -135,7 +135,7 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        isShowScroll: true,
+        showScroll: true,
         offsetScroll: 100,
       }}
       scroll={{
