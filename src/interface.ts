@@ -210,8 +210,8 @@ export type TriggerEventHandler<RecordType> = (
 
 // =================== Sticky ===================
 export interface TableSticky {
-  isShowHeader?: boolean;
+  showHeader?: boolean;
   offsetHeader?: number;
-  isShowScroll?: boolean;
+  showScroll?: boolean;
   offsetScroll?: number;
 }

@@ -31,7 +31,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
-  const { isShowScroll, offsetScroll = 0 } = sticky;
+  const { showScroll, offsetScroll = 0 } = sticky;
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
   const [frameState, setFrameState] = useFrameState<{
@@ -149,7 +149,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
     bodyScrollWidth <= bodyWidth ||
     !scrollBarWidth ||
     frameState.isHiddenScrollBar ||
-    !isShowScroll
+    !showScroll
   ) {
     return null;
   }

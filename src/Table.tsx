@@ -520,7 +520,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const bodyTable = (
     <Body
       data={mergedData}
-      measureColumnWidth={fixHeader || horizonScroll || sticky?.isShowHeader}
+      measureColumnWidth={fixHeader || horizonScroll || sticky?.showHeader}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
@@ -546,7 +546,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
-  if (fixHeader || sticky?.isShowHeader) {
+  if (fixHeader || sticky?.showHeader) {
     let bodyContent: React.ReactNode;
 
     if (typeof customizeScrollBody === 'function') {
@@ -601,7 +601,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           <div
             style={{
               overflow: 'hidden',
-              ...(sticky?.isShowHeader
+              ...(sticky?.showHeader
                 ? {
                     position: 'sticky',
                     top: sticky?.offsetHeader || 0,
