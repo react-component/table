@@ -24,7 +24,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
-  fixHeader: boolean
+  fixHeader: boolean;
 }
 
 function FixedHeader<RecordType>({
