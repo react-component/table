@@ -17,9 +17,7 @@ describe('Table.Sticky', () => {
         <Table
           columns={[col1, col2]}
           data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
-          sticky={{
-            showHeader: true,
-          }}
+          sticky
         />
       </div>,
     );
@@ -94,9 +92,7 @@ describe('Table.Sticky', () => {
         scroll={{
           x: 10000,
         }}
-        sticky={{
-          showScroll: true,
-        }}
+        sticky
       />,
     );
 

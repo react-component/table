@@ -63,47 +63,12 @@ const Demo = () => (
       height: 10000,
     }}
   >
-    <h2>Show Header</h2>
+    <h2>Sticky</h2>
     <Table<RecordType>
       columns={columns}
       data={data}
       tableLayout="auto"
-      sticky={{
-        showHeader: true,
-      }}
-      scroll={{
-        x: 10000,
-      }}
-      style={{
-        marginBottom: 100,
-      }}
-    />
-
-    <h2>Show Scroll</h2>
-    <Table<RecordType>
-      columns={columns}
-      data={data}
-      tableLayout="auto"
-      sticky={{
-        showScroll: true,
-      }}
-      scroll={{
-        x: 10000,
-      }}
-      style={{
-        marginBottom: 100,
-      }}
-    />
-
-    <h2>Show Both</h2>
-    <Table<RecordType>
-      columns={columns}
-      data={data}
-      tableLayout="auto"
-      sticky={{
-        showHeader: true,
-        showScroll: true,
-      }}
+      sticky
       scroll={{
         x: 10000,
       }}
@@ -118,7 +83,6 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        showHeader: true,
         offsetHeader: 100,
       }}
       scroll={{
@@ -135,7 +99,6 @@ const Demo = () => (
       data={data}
       tableLayout="auto"
       sticky={{
-        showScroll: true,
         offsetScroll: 100,
       }}
       scroll={{

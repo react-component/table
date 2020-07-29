@@ -158,7 +158,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
     body: React.MutableRefObject<HTMLDivElement>;
   };
 
-  sticky?: TableSticky;
+  sticky?: boolean | TableSticky;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -520,7 +520,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const bodyTable = (
     <Body
       data={mergedData}
-      measureColumnWidth={fixHeader || horizonScroll || sticky?.showHeader}
+      measureColumnWidth={fixHeader || horizonScroll || !!sticky}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
@@ -546,7 +546,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
-  if (fixHeader || sticky?.showHeader) {
+  if (fixHeader || sticky) {
     let bodyContent: React.ReactNode;
 
     if (typeof customizeScrollBody === 'function') {
@@ -601,10 +601,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           <div
             style={{
               overflow: 'hidden',
-              ...(sticky?.showHeader
+              ...(sticky
                 ? {
                     position: 'sticky',
-                    top: sticky?.offsetHeader || 0,
+                    top:
+                      typeof sticky === 'object' && sticky.offsetHeader ? sticky.offsetHeader : 0,
                     zIndex: 10,
                   }
                 : {}),

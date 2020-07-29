@@ -9,7 +9,7 @@ import { TableSticky } from './interface';
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
-  sticky?: TableSticky;
+  sticky?: boolean | TableSticky;
 }
 
 let scrollBarSizeCache = 0;
@@ -22,16 +22,12 @@ function getScrollBarSizeCache() {
   return scrollBarSizeCache;
 }
 
-const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
-  scrollBodyRef,
-  onScroll,
-  sticky = {},
-}) => {
+const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScroll, sticky }) => {
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
-  const { showScroll, offsetScroll = 0 } = sticky;
+  const offsetScroll = typeof sticky === 'object' && sticky.offsetScroll ? sticky.offsetScroll : 0;
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
   const [frameState, setFrameState] = useFrameState<{
@@ -145,12 +141,7 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({
     }
   }, [frameState.isHiddenScrollBar]);
 
-  if (
-    bodyScrollWidth <= bodyWidth ||
-    !scrollBarWidth ||
-    frameState.isHiddenScrollBar ||
-    !showScroll
-  ) {
+  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || frameState.isHiddenScrollBar || !sticky) {
     return null;
   }
 
