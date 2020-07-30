@@ -119,7 +119,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     setFrameState(state => {
       return {
         ...state,
-        scrollLeft: (left / bodyScrollWidth) * bodyWidth,
+        scrollLeft: (left / bodyScrollWidth) * bodyWidth || 0,
       };
     });
   };

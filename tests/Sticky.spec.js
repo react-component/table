@@ -120,7 +120,7 @@ describe('Table.Sticky', () => {
     expect(mockFn).toHaveBeenCalledTimes(4);
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
-      transform: 'translate3d(50px, 0, 0)',
+      transform: 'translate3d(0px, 0, 0)',
     });
 
     mousemoveEvent.pageX = -50;
