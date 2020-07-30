@@ -383,6 +383,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const horizonScroll = scroll && validateValue(scroll.x);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
+  // Sticky
+  const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
+
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
@@ -438,6 +441,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
       forceScroll(mergedScrollLeft, scrollHeaderRef.current);
       forceScroll(mergedScrollLeft, scrollBodyRef.current);
+    }
+
+    if (sticky && stickyRef.current) {
+      stickyRef.current.setScrollLeft(mergedScrollLeft);
     }
 
     if (currentTarget) {
@@ -589,7 +596,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {footerTable}
           </TableComponent>
 
-          <StickyScrollBar sticky={sticky} scrollBodyRef={scrollBodyRef} onScroll={onScroll} />
+          <StickyScrollBar
+            ref={stickyRef}
+            sticky={sticky}
+            scrollBodyRef={scrollBodyRef}
+            onScroll={onScroll}
+          />
         </div>
       );
     }
@@ -639,7 +651,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           {bodyTable}
           {footerTable}
         </TableComponent>
-        <StickyScrollBar sticky={sticky} scrollBodyRef={scrollBodyRef} onScroll={onScroll} />
+        <StickyScrollBar
+          ref={stickyRef}
+          sticky={sticky}
+          scrollBodyRef={scrollBodyRef}
+          onScroll={onScroll}
+        />
       </div>
     );
   }

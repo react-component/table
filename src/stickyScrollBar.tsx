@@ -22,7 +22,10 @@ function getScrollBarSizeCache() {
   return scrollBarSizeCache;
 }
 
-const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScroll, sticky }) => {
+const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
+  { scrollBodyRef, onScroll, sticky },
+  ref,
+) => {
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
@@ -112,6 +115,19 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
     }
   };
 
+  const setScrollLeft = (left: number) => {
+    setFrameState(state => {
+      return {
+        ...state,
+        scrollLeft: (left / bodyScrollWidth) * bodyWidth,
+      };
+    });
+  };
+
+  React.useImperativeHandle(ref, () => ({
+    setScrollLeft,
+  }));
+
   React.useEffect(() => {
     const onMouseUpListener = addEventListener(document.body, 'mouseup', onMouseUp, false);
     const onMouseMoveListener = addEventListener(document.body, 'mousemove', onMouseMove, false);
@@ -167,4 +183,4 @@ const StickyScrollBar: React.FC<StickyScrollBarProps> = ({ scrollBodyRef, onScro
   );
 };
 
-export default StickyScrollBar;
+export default React.forwardRef(StickyScrollBar);
