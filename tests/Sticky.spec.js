@@ -8,19 +8,24 @@ describe('Table.Sticky', () => {
     jest.useFakeTimers();
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
-    const wrapper = mount(
-      <div
-        style={{
-          height: 10000,
-        }}
-      >
-        <Table
-          columns={[col1, col2]}
-          data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
-          sticky
-        />
-      </div>,
-    );
+
+    const TableDemo = props => {
+      return (
+        <div
+          style={{
+            height: 10000,
+          }}
+        >
+          <Table
+            columns={[col1, col2]}
+            data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+            sticky
+            {...props}
+          />
+        </div>
+      );
+    };
+    const wrapper = mount(<TableDemo />);
 
     expect(wrapper.find('.rc-table-header').prop('style')).toEqual({
       overflow: 'hidden',
@@ -30,6 +35,17 @@ describe('Table.Sticky', () => {
     expect(wrapper.find('.rc-table-header').prop('className')).toBe(
       'rc-table-header rc-table-sticky-header',
     );
+
+    wrapper.setProps({
+      sticky: {
+        offsetHeader: 10,
+      },
+    });
+
+    expect(wrapper.find('.rc-table-header').prop('style')).toEqual({
+      overflow: 'hidden',
+      top: 10,
+    });
 
     jest.useRealTimers();
   });
