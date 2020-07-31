@@ -52,6 +52,7 @@ import {
   CustomizeComponent,
   ColumnType,
   CustomizeScrollBody,
+  TableSticky,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -67,6 +68,8 @@ import Panel from './Panel';
 import Footer, { FooterComponents } from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
+import StickyScrollBar from './stickyScrollBar';
+import useSticky from './hooks/useSticky';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -155,6 +158,8 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
+
+  sticky?: boolean | TableSticky;
 }
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
@@ -186,6 +191,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     internalHooks,
     transformColumns,
     internalRefs,
+
+    sticky,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
@@ -377,6 +384,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const horizonScroll = scroll && validateValue(scroll.x);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
+  // Sticky
+  const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
+  const { isSticky, offsetHeader, offsetScroll, stickyClassName } = useSticky(sticky, prefixCls);
+
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
@@ -412,11 +423,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
-  function forceScroll(scrollLeft: number, target: HTMLDivElement) {
+  function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
     /* eslint-disable no-param-reassign */
-    if (target && target.scrollLeft !== scrollLeft) {
-      target.scrollLeft = scrollLeft;
+    if (target) {
+      if (typeof target === 'function') {
+        target(scrollLeft);
+      } else if (target.scrollLeft !== scrollLeft) {
+        target.scrollLeft = scrollLeft;
+      }
     }
+
     /* eslint-enable */
   }
 
@@ -432,6 +448,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
       forceScroll(mergedScrollLeft, scrollHeaderRef.current);
       forceScroll(mergedScrollLeft, scrollBodyRef.current);
+      forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
     }
 
     if (currentTarget) {
@@ -495,6 +512,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     columCount: flattenColumns.length,
     stickyOffsets,
     onHeaderRow,
+    fixHeader,
   };
 
   // Empty
@@ -513,7 +531,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const bodyTable = (
     <Body
       data={mergedData}
-      measureColumnWidth={fixHeader || horizonScroll}
+      measureColumnWidth={fixHeader || horizonScroll || isSticky}
       expandedKeys={mergedExpandedKeys}
       rowExpandable={rowExpandable}
       getRowKey={getRowKey}
@@ -539,7 +557,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
-  if (fixHeader) {
+  if (fixHeader || isSticky) {
     let bodyContent: React.ReactNode;
 
     if (typeof customizeScrollBody === 'function') {
@@ -581,6 +599,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {bodyTable}
             {footerTable}
           </TableComponent>
+
+          {isSticky && (
+            <StickyScrollBar
+              ref={stickyRef}
+              offsetScroll={offsetScroll}
+              scrollBodyRef={scrollBodyRef}
+              onScroll={onScroll}
+            />
+          )}
         </div>
       );
     }
@@ -592,10 +619,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           <div
             style={{
               overflow: 'hidden',
+              ...(isSticky ? { top: offsetHeader } : {}),
             }}
             onScroll={onScroll}
             ref={scrollHeaderRef}
-            className={classNames(`${prefixCls}-header`)}
+            className={classNames(`${prefixCls}-header`, {
+              [stickyClassName]: !!stickyClassName,
+            })}
           >
             <FixedHeader {...headerProps} {...columnContext} direction={direction} />
           </div>
