@@ -650,14 +650,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           {bodyTable}
           {footerTable}
         </TableComponent>
-        {isSticky && (
-          <StickyScrollBar
-            ref={stickyRef}
-            sticky={stickyConf}
-            scrollBodyRef={scrollBodyRef}
-            onScroll={onScroll}
-          />
-        )}
       </div>
     );
   }
