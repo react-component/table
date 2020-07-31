@@ -9,17 +9,7 @@ import { TableSticky } from './interface';
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
-  sticky?: boolean | TableSticky;
-}
-
-let scrollBarSizeCache = 0;
-
-function getScrollBarSizeCache() {
-  if (scrollBarSizeCache === 0) {
-    scrollBarSizeCache = getScrollBarSize();
-  }
-
-  return scrollBarSizeCache;
+  sticky?: TableSticky;
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
@@ -100,7 +90,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     const currentClientOffset = document.documentElement.scrollTop + window.innerHeight;
 
     if (
-      tableBottomOffset - getScrollBarSizeCache() <= currentClientOffset ||
+      tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
       tableOffsetTop >= currentClientOffset - offsetScroll
     ) {
       setFrameState(state => ({
@@ -157,14 +147,14 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     }
   }, [frameState.isHiddenScrollBar]);
 
-  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || frameState.isHiddenScrollBar || !sticky) {
+  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || frameState.isHiddenScrollBar) {
     return null;
   }
 
   return (
     <div
       style={{
-        height: getScrollBarSizeCache(),
+        height: getScrollBarSize(),
         width: bodyWidth,
         bottom: offsetScroll,
       }}

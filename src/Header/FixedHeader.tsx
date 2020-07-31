@@ -48,9 +48,9 @@ function FixedHeader<RecordType>({
     }),
   };
 
-  const columnsWithScrollbar = React.useMemo<ColumnsType<RecordType>>(
+  const columnsWithScrollbar = useMemo<ColumnsType<RecordType>>(
     () => (scrollbarSize && fixHeader ? [...columns, ScrollBarColumn] : columns),
-    [scrollbarSize, columns],
+    [scrollbarSize, columns, fixHeader],
   );
 
   const flattenColumnsWithScrollbar = useMemo<ColumnType<RecordType>[]>(

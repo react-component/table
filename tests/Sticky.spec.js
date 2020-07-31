@@ -24,10 +24,12 @@ describe('Table.Sticky', () => {
 
     expect(wrapper.find('.rc-table-header').prop('style')).toEqual({
       overflow: 'hidden',
-      position: 'sticky',
       top: 0,
-      zIndex: 10,
     });
+
+    expect(wrapper.find('.rc-table-header').prop('className')).toBe(
+      'rc-table-header rc-table-sticky-header',
+    );
 
     jest.useRealTimers();
   });
