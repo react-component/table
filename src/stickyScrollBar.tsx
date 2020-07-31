@@ -4,23 +4,21 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import { getOffset } from 'rc-util/lib/Dom/css';
 import TableContext from './context/TableContext';
 import { useFrameState } from './hooks/useFrame';
-import { TableSticky } from './interface';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
-  sticky?: TableSticky;
+  offsetScroll: number;
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, sticky },
+  { scrollBodyRef, onScroll, offsetScroll },
   ref,
 ) => {
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
-  const offsetScroll = typeof sticky === 'object' && sticky.offsetScroll ? sticky.offsetScroll : 0;
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
   const [frameState, setFrameState] = useFrameState<{
@@ -71,14 +69,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       left = bodyWidth - scrollBarWidth;
     }
 
-    setFrameState(state => {
-      onScroll({
-        scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
-      });
-      return {
-        ...state,
-        scrollLeft: left,
-      };
+    onScroll({
+      scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
     });
 
     refState.current.x = event.pageX;

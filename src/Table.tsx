@@ -386,7 +386,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // Sticky
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
-  const { isSticky, stickyConf, stickyClassName } = useSticky(sticky, prefixCls);
+  const { isSticky, offsetHeader, offsetScroll, stickyClassName } = useSticky(sticky, prefixCls);
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -423,11 +423,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
-  function forceScroll(scrollLeft: number, target: HTMLDivElement) {
+  function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
     /* eslint-disable no-param-reassign */
-    if (target && target.scrollLeft !== scrollLeft) {
-      target.scrollLeft = scrollLeft;
+    if (target) {
+      if (typeof target === 'function') {
+        target(scrollLeft);
+      } else if (target.scrollLeft !== scrollLeft) {
+        target.scrollLeft = scrollLeft;
+      }
     }
+
     /* eslint-enable */
   }
 
@@ -443,10 +448,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
       forceScroll(mergedScrollLeft, scrollHeaderRef.current);
       forceScroll(mergedScrollLeft, scrollBodyRef.current);
-    }
-
-    if (sticky && stickyRef.current) {
-      stickyRef.current.setScrollLeft(mergedScrollLeft);
+      forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
     }
 
     if (currentTarget) {
@@ -601,7 +603,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           {isSticky && (
             <StickyScrollBar
               ref={stickyRef}
-              sticky={stickyConf}
+              offsetScroll={offsetScroll}
               scrollBodyRef={scrollBodyRef}
               onScroll={onScroll}
             />
@@ -617,7 +619,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           <div
             style={{
               overflow: 'hidden',
-              ...(isSticky ? { top: stickyConf.offsetHeader } : {}),
+              ...(isSticky ? { top: offsetHeader } : {}),
             }}
             onScroll={onScroll}
             ref={scrollHeaderRef}

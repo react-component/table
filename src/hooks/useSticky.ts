@@ -6,7 +6,8 @@ export default function useSticky(
   prefixCls: string,
 ): {
   isSticky: boolean;
-  stickyConf: TableSticky;
+  offsetHeader: number;
+  offsetScroll: number;
   stickyClassName: string;
 } {
   return React.useMemo(() => {
@@ -14,16 +15,8 @@ export default function useSticky(
     return {
       isSticky,
       stickyClassName: isSticky ? `${prefixCls}-sticky-header` : '',
-      stickyConf:
-        typeof sticky === 'object'
-          ? {
-              offsetHeader: sticky.offsetHeader || 0,
-              offsetScroll: sticky.offsetScroll || 0,
-            }
-          : {
-              offsetHeader: 0,
-              offsetScroll: 0,
-            },
+      offsetHeader: typeof sticky === 'object' ? sticky.offsetHeader || 0 : 0,
+      offsetScroll: typeof sticky === 'object' ? sticky.offsetScroll || 0 : 0,
     };
   }, [sticky, prefixCls]);
 }
