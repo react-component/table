@@ -71,6 +71,16 @@ describe('Table.Expand', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
+  it('not use nest when children is invalidate', () => {
+    const data = [
+      { key: 2, name: 'Jack', age: 28, children: null },
+      { key: 4, name: 'Jack', age: 28, children: undefined },
+      { key: 5, name: 'Jack', age: 28, children: false },
+    ];
+    const wrapper = mount(createTable({ data }));
+    expect(wrapper.render()).toMatchSnapshot();
+  });
+
   it('childrenColumnName', () => {
     const data = [
       {

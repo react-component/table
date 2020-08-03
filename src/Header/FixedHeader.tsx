@@ -1,13 +1,30 @@
 import * as React from 'react';
+import { useMemo } from 'react';
 import Header, { HeaderProps } from './Header';
 import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
 
+function useColumnWidth(colWidths: number[], columCount: number) {
+  return useMemo(() => {
+    const cloneColumns: number[] = [];
+    for (let i = 0; i < columCount; i += 1) {
+      const val = colWidths[i];
+      if (val) {
+        cloneColumns[i] = val;
+      } else {
+        return null;
+      }
+    }
+    return cloneColumns;
+  }, [colWidths.join('_'), columCount]);
+}
+
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   colWidths: number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
+  fixHeader: boolean;
 }
 
 function FixedHeader<RecordType>({
@@ -17,6 +34,7 @@ function FixedHeader<RecordType>({
   columCount,
   stickyOffsets,
   direction,
+  fixHeader,
   ...props
 }: FixedHeaderProps<RecordType>) {
   const { prefixCls, scrollbarSize } = React.useContext(TableContext);
@@ -30,18 +48,18 @@ function FixedHeader<RecordType>({
     }),
   };
 
-  const columnsWithScrollbar = React.useMemo<ColumnsType<RecordType>>(
-    () => (scrollbarSize ? [...columns, ScrollBarColumn] : columns),
-    [scrollbarSize, columns],
+  const columnsWithScrollbar = useMemo<ColumnsType<RecordType>>(
+    () => (scrollbarSize && fixHeader ? [...columns, ScrollBarColumn] : columns),
+    [scrollbarSize, columns, fixHeader],
   );
 
-  const flattenColumnsWithScrollbar = React.useMemo<ColumnType<RecordType>[]>(
+  const flattenColumnsWithScrollbar = useMemo<ColumnType<RecordType>[]>(
     () => (scrollbarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
     [scrollbarSize, flattenColumns],
   );
 
   // Calculate the sticky offsets
-  const headerStickyOffsets = React.useMemo(() => {
+  const headerStickyOffsets = useMemo(() => {
     const { right, left } = stickyOffsets;
     return {
       ...stickyOffsets,
@@ -50,16 +68,12 @@ function FixedHeader<RecordType>({
     };
   }, [scrollbarSize, stickyOffsets]);
 
-  const cloneWidths: number[] = [];
-  for (let i = 0; i < columCount; i += 1) {
-    cloneWidths[i] = colWidths[i];
-  }
-  const columnWidthsReady = !colWidths.every(width => !width);
+  const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
   return (
-    <table style={{ tableLayout: 'fixed', visibility: columnWidthsReady ? null : 'hidden' }}>
+    <table style={{ tableLayout: 'fixed', visibility: mergedColumnWidth ? null : 'hidden' }}>
       <ColGroup
-        colWidths={[...colWidths, scrollbarSize]}
+        colWidths={mergedColumnWidth ? [...mergedColumnWidth, scrollbarSize] : []}
         columCount={columCount + 1}
         columns={flattenColumnsWithScrollbar}
       />
