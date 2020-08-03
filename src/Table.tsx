@@ -627,7 +627,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
               [stickyClassName]: !!stickyClassName,
             })}
           >
-            <FixedHeader {...headerProps} {...columnContext} direction={direction} />
+            <FixedHeader
+              isSticky={isSticky}
+              {...headerProps}
+              {...columnContext}
+              direction={direction}
+            />
           </div>
         )}
 
