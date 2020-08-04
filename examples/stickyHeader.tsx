@@ -167,7 +167,6 @@ const Demo = () => (
         style={{
           marginBottom: 100,
         }}
-        id="table"
       />
     </div>
 
@@ -184,7 +183,6 @@ const Demo = () => (
         style={{
           marginBottom: 100,
         }}
-        id="table"
       />
     </div>
   </div>
