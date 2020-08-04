@@ -59,7 +59,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
 
   rowType?: 'header' | 'body' | 'footer';
 
-  isSticky: boolean;
+  isSticky?: boolean;
 }
 
 function Cell<RecordType extends DefaultRecordType>(
