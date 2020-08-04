@@ -91,8 +91,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
 
 export type ColumnsType<RecordType = unknown> = (
   | ColumnGroupType<RecordType>
-  | ColumnType<RecordType>
-)[];
+  | ColumnType<RecordType>)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
@@ -100,7 +99,6 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 export interface StickyOffsets {
   left: number[];
   right: number[];
-  isSticky: boolean;
 }
 
 // ================= Customized =================
