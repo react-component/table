@@ -68,7 +68,7 @@ describe('Table.Sticky', () => {
       scrollWidth: {
         get: () => 200,
       },
-      offsetWidth: {
+      clientWidth: {
         get: () => 100,
       },
       offsetHeight: {
@@ -167,6 +167,93 @@ describe('Table.Sticky', () => {
     window.pageYOffset = 0;
     mockFn.mockRestore();
     domSpy.mockRestore();
+    jest.useRealTimers();
+  });
+
+  it('Sticky Header with border classname', () => {
+    jest.useFakeTimers();
+
+    const TableDemo = props => {
+      return (
+        <div
+          style={{
+            height: 10000,
+          }}
+        >
+          <Table
+            columns={[
+              { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+              { title: 'title2', dataIndex: 'b', key: 'b' },
+              { title: 'title3', dataIndex: 'c', key: 'c' },
+              { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
+            ]}
+            data={[
+              { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
+              { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
+            ]}
+            sticky
+            scroll={{
+              x: 10000,
+            }}
+            {...props}
+          />
+        </div>
+      );
+    };
+    const wrapper = mount(<TableDemo />);
+
+    expect(
+      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
+    ).toEqual({
+      position: 'sticky',
+      right: 0,
+    });
+
+    expect(wrapper.find('.rc-table-cell-fix-sticky')).not.toBe(undefined);
+
+    jest.useRealTimers();
+  });
+
+  it('Sticky Header with scroll-y', () => {
+    jest.useFakeTimers();
+
+    const TableDemo = props => {
+      return (
+        <div
+          style={{
+            height: 10000,
+          }}
+        >
+          <Table
+            columns={[
+              { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+              { title: 'title2', dataIndex: 'b', key: 'b' },
+              { title: 'title3', dataIndex: 'c', key: 'c' },
+              { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
+            ]}
+            data={[
+              { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
+              { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
+            ]}
+            sticky
+            scroll={{
+              x: 10000,
+              y: 10,
+            }}
+            {...props}
+          />
+        </div>
+      );
+    };
+    const wrapper = mount(<TableDemo />);
+
+    expect(
+      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
+    ).toEqual({
+      position: 'sticky',
+      right: 15,
+    });
+
     jest.useRealTimers();
   });
 });

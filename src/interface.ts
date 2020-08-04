@@ -100,6 +100,7 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 export interface StickyOffsets {
   left: number[];
   right: number[];
+  isSticky: boolean;
 }
 
 // ================= Customized =================

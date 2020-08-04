@@ -1,6 +1,7 @@
 import * as React from 'react';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import classNames from 'classnames';
 import { getOffset } from 'rc-util/lib/Dom/css';
 import TableContext from './context/TableContext';
 import { useFrameState } from './hooks/useFrame';
@@ -17,7 +18,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 ) => {
   const { prefixCls } = React.useContext(TableContext);
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
-  const bodyWidth = scrollBodyRef.current?.offsetWidth || 0;
+  const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
@@ -29,25 +30,24 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     isHiddenScrollBar: false,
   });
   const refState = React.useRef<{
-    isScollBarDragable: boolean;
     delta: number;
     x: number;
   }>({
-    isScollBarDragable: false,
     delta: 0,
     x: 0,
   });
+  const [isActive, setActive] = React.useState(false);
 
   const onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
-    refState.current.isScollBarDragable = false;
+    setActive(false);
     event.preventDefault();
   };
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
     event.persist();
-    refState.current.isScollBarDragable = true;
     refState.current.delta = event.pageX - frameState.scrollLeft;
     refState.current.x = 0;
+    setActive(true);
     event.preventDefault();
   };
 
@@ -55,7 +55,11 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     event.preventDefault();
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
     const { buttons } = event || (window?.event as any);
-    if (!refState.current.isScollBarDragable || buttons === 0) {
+    if (!isActive || buttons === 0) {
+      // If out body mouse up, we can set isActive false when mouse move
+      if (isActive) {
+        setActive(false);
+      }
       return;
     }
     let left: number =
@@ -118,7 +122,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       onMouseUpListener.remove();
       onMouseMoveListener.remove();
     };
-  }, [scrollBarWidth]);
+  }, [scrollBarWidth, isActive]);
 
   React.useEffect(() => {
     const onScrollListener = addEventListener(window, 'scroll', onContainerScroll, false);
@@ -134,7 +138,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
         ...state,
         scrollLeft:
           (scrollBodyRef.current.scrollLeft / scrollBodyRef.current?.scrollWidth) *
-          scrollBodyRef.current?.offsetWidth,
+          scrollBodyRef.current?.clientWidth,
       }));
     }
   }, [frameState.isHiddenScrollBar]);
@@ -155,7 +159,9 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       <div
         onMouseDown={onMouseDown}
         ref={scrollBarRef}
-        className={`${prefixCls}-sticky-scroll-bar`}
+        className={classNames(`${prefixCls}-sticky-scroll-bar`, {
+          [`${prefixCls}-sticky-scroll-bar-active`]: isActive,
+        })}
         style={{
           width: `${scrollBarWidth}px`,
           transform: `translate3d(${frameState.scrollLeft}px, 0, 0)`,

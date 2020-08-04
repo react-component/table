@@ -25,7 +25,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   columCount: number;
   direction: 'ltr' | 'rtl';
   fixHeader: boolean;
-  isSticky: boolean;
 }
 
 function FixedHeader<RecordType>({
@@ -36,12 +35,11 @@ function FixedHeader<RecordType>({
   stickyOffsets,
   direction,
   fixHeader,
-  isSticky,
   ...props
 }: FixedHeaderProps<RecordType>) {
-  const { prefixCls, scrollbarSize } = React.useContext(TableContext);
+  const { prefixCls, scrollbarSize, isSticky } = React.useContext(TableContext);
 
-  const combinationScrollBarSize = isSticky ? 0 : scrollbarSize;
+  const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
@@ -58,8 +56,7 @@ function FixedHeader<RecordType>({
   );
 
   const flattenColumnsWithScrollbar = useMemo<ColumnType<RecordType>[]>(
-    () =>
-      combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns,
+    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
     [combinationScrollBarSize, flattenColumns],
   );
 
@@ -72,8 +69,9 @@ function FixedHeader<RecordType>({
         direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
       right:
         direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      isSticky,
     };
-  }, [combinationScrollBarSize, stickyOffsets]);
+  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
