@@ -126,9 +126,11 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   React.useEffect(() => {
     const onScrollListener = addEventListener(window, 'scroll', onContainerScroll, false);
+    const onResizeListener = addEventListener(window, 'resize', onContainerScroll, false);
 
     return () => {
       onScrollListener.remove();
+      onResizeListener.remove();
     };
   }, []);
 
