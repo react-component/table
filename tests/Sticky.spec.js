@@ -118,6 +118,22 @@ describe('Table.Sticky', () => {
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
 
+    const oldInnerHeight = global.innerHeight;
+    const resizeEvent = new Event('resize');
+
+    global.innerHeight = 10000;
+
+    global.dispatchEvent(resizeEvent);
+    jest.runAllTimers();
+    wrapper.update();
+
+    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeFalsy();
+
+    global.innerHeight = oldInnerHeight;
+    global.dispatchEvent(resizeEvent);
+    jest.runAllTimers();
+    wrapper.update();
+
     const mockFn = jest.fn();
 
     wrapper
@@ -135,12 +151,13 @@ describe('Table.Sticky', () => {
     mousemoveEvent.preventDefault = mockFn;
 
     document.body.dispatchEvent(mousemoveEvent);
-
     jest.runAllTimers();
+    wrapper.update();
+
     expect(mockFn).toHaveBeenCalledTimes(4);
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
-      transform: 'translate3d(0px, 0, 0)',
+      transform: 'translate3d(50.5px, 0, 0)',
     });
 
     mousemoveEvent.pageX = -50;
