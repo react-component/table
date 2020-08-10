@@ -40,16 +40,30 @@ const onExpand = (expanded, record) => {
 };
 
 const Demo = () => (
-  <Table
-    columns={columns}
-    data={data}
-    expandable={{
-      expandRowByClick: true,
-      expandedRowRender: record => <p>extra: {record.a}</p>,
-      onExpand,
-      expandIcon: CustomExpandIcon,
-    }}
-  />
+  <>
+    <Table
+      columns={columns}
+      data={data}
+      expandable={{
+        expandRowByClick: true,
+        expandedRowRender: record => <p>extra: {record.a}</p>,
+        onExpand,
+        expandIcon: CustomExpandIcon,
+      }}
+    />
+    <h2>expandIcon = false</h2>
+    <Table
+      columns={columns}
+      data={data}
+      expandable={{
+        // expandIconColumnIndex: -1,
+        expandRowByClick: true,
+        expandedRowRender: record => <p>extra: {record.a}</p>,
+        onExpand,
+        expandIcon: false,
+      }}
+    />
+  </>
 );
 
 export default Demo;

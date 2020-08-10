@@ -28,7 +28,7 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   expandableType: ExpandableType;
   expandRowByClick: boolean;
   expandedRowRender: ExpandedRowRender<RecordType>;
-  expandIcon: RenderExpandIcon<RecordType>;
+  expandIcon: RenderExpandIcon<RecordType> | false;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;
 }

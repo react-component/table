@@ -123,7 +123,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
 
         // ============= Used for nest expandable =============
         let appendCellNode: React.ReactNode;
-        if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
+        if (colIndex === (expandIconColumnIndex || 0) && nestExpandable && expandIcon !== false) {
           appendCellNode = (
             <>
               <span

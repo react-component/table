@@ -158,7 +158,7 @@ export interface LegacyExpandableProps<RecordType> {
   /** @deprecated Use `expandable.expandRowByClick` instead */
   expandRowByClick?: boolean;
   /** @deprecated Use `expandable.expandIcon` instead */
-  expandIcon?: RenderExpandIcon<RecordType>;
+  expandIcon?: RenderExpandIcon<RecordType> | false;
   /** @deprecated Use `expandable.onExpand` instead */
   onExpand?: (expanded: boolean, record: RecordType) => void;
   /** @deprecated Use `expandable.onExpandedRowsChange` instead */

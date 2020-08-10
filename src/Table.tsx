@@ -266,7 +266,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     indentSize,
   } = expandableConfig;
 
-  const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const mergedExpandIcon = expandIcon !== undefined ? expandIcon : renderExpandIcon;
   const mergedChildrenColumnName = childrenColumnName || 'children';
   const expandableType = React.useMemo<ExpandableType>(() => {
     if (expandedRowRender) {

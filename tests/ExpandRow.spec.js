@@ -171,6 +171,18 @@ describe('Table.Expand', () => {
     expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
   });
 
+  it('should not render expand icon column when expandIcon is false', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandIcon: false,
+        },
+      }),
+    );
+    expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+  });
+
   it('renders a custom icon', () => {
     function CustomExpandIcon(props) {
       return (

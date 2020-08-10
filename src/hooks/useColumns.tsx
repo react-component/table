@@ -127,7 +127,7 @@ function useColumns<RecordType>(
     expandedKeys: Set<Key>;
     getRowKey: GetRowKey<RecordType>;
     onTriggerExpand: TriggerEventHandler<RecordType>;
-    expandIcon?: RenderExpandIcon<RecordType>;
+    expandIcon?: RenderExpandIcon<RecordType> | false;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
     direction?: 'ltr' | 'rtl';
@@ -158,7 +158,7 @@ function useColumns<RecordType>(
           const expanded = expandedKeys.has(rowKey);
           const recordExpandable = rowExpandable ? rowExpandable(record) : true;
 
-          const icon = expandIcon({
+          const icon = (expandIcon as RenderExpandIcon<RecordType>)({
             prefixCls,
             expanded,
             expandable: recordExpandable,
@@ -175,7 +175,7 @@ function useColumns<RecordType>(
 
       // Insert expand column in the target position
       const cloneColumns = baseColumns.slice();
-      if (expandColIndex >= 0) {
+      if (expandColIndex >= 0 && expandIcon !== false) {
         cloneColumns.splice(expandColIndex, 0, expandColumn);
       }
       return cloneColumns;
