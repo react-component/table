@@ -97,4 +97,34 @@ describe('Table.FixedHeader', () => {
         .props().className,
     ).toEqual('test-internal');
   });
+
+  it('show header when data is null', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+      },
+    ];
+
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={[]}
+        scroll={{
+          x: true,
+          y: 100,
+        }}
+      />,
+    );
+
+    expect(wrapper.find('.rc-table-header table').props().style).toEqual(
+      expect.objectContaining({ visibility: null }),
+    );
+  });
 });
