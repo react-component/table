@@ -21,6 +21,7 @@ function useColumnWidth(colWidths: number[], columCount: number) {
 }
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
+  noData: boolean;
   colWidths: number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
@@ -28,6 +29,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
 }
 
 function FixedHeader<RecordType>({
+  noData,
   columns,
   flattenColumns,
   colWidths,
@@ -76,7 +78,7 @@ function FixedHeader<RecordType>({
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
   return (
-    <table style={{ tableLayout: 'fixed', visibility: mergedColumnWidth ? null : 'hidden' }}>
+    <table style={{ tableLayout: 'fixed', visibility: noData || mergedColumnWidth ? null : 'hidden' }}>
       <ColGroup
         colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
         columCount={columCount + 1}
