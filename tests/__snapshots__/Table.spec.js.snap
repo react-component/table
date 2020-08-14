@@ -531,6 +531,67 @@ exports[`Table.Basic renders correctly column children undefined 1`] = `
 </div>
 `;
 
+exports[`Table.Basic renders correctly falsy columns 1`] = `
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-content"
+    >
+      <table
+        style="table-layout: auto;"
+      >
+        <colgroup />
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-cell"
+            >
+              姓名
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table.Basic renders correctly no columns 1`] = `
 <div
   class="rc-table"

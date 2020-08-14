@@ -24,42 +24,44 @@ function parseHeaderRows<RecordType>(
     rows[rowIndex] = rows[rowIndex] || [];
 
     let currentColIndex = colIndex;
-    const colSpans: number[] = columns.map(column => {
-      const cell: CellType<RecordType> = {
-        key: column.key,
-        className: column.className || '',
-        children: column.title,
-        column,
-        colStart: currentColIndex,
-      };
+    const colSpans: number[] = columns
+      .filter(column => column)
+      .map(column => {
+        const cell: CellType<RecordType> = {
+          key: column.key,
+          className: column.className || '',
+          children: column.title,
+          column,
+          colStart: currentColIndex,
+        };
 
-      let colSpan: number = 1;
+        let colSpan: number = 1;
 
-      const subColumns = (column as ColumnGroupType<RecordType>).children;
-      if (subColumns && subColumns.length > 0) {
-        colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce(
-          (total, count) => total + count,
-          0,
-        );
-        cell.hasSubColumns = true;
-      }
+        const subColumns = (column as ColumnGroupType<RecordType>).children;
+        if (subColumns && subColumns.length > 0) {
+          colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce(
+            (total, count) => total + count,
+            0,
+          );
+          cell.hasSubColumns = true;
+        }
 
-      if ('colSpan' in column) {
-        ({ colSpan } = column);
-      }
+        if ('colSpan' in column) {
+          ({ colSpan } = column);
+        }
 
-      if ('rowSpan' in column) {
-        cell.rowSpan = column.rowSpan;
-      }
+        if ('rowSpan' in column) {
+          cell.rowSpan = column.rowSpan;
+        }
 
-      cell.colSpan = colSpan;
-      cell.colEnd = cell.colStart + colSpan - 1;
-      rows[rowIndex].push(cell);
+        cell.colSpan = colSpan;
+        cell.colEnd = cell.colStart + colSpan - 1;
+        rows[rowIndex].push(cell);
 
-      currentColIndex += colSpan;
+        currentColIndex += colSpan;
 
-      return colSpan;
-    });
+        return colSpan;
+      });
 
     return colSpans;
   }
