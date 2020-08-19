@@ -24,7 +24,7 @@ function parseHeaderRows<RecordType>(
     rows[rowIndex] = rows[rowIndex] || [];
 
     let currentColIndex = colIndex;
-    const colSpans: number[] = columns.map(column => {
+    const colSpans: number[] = columns.filter(Boolean).map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
         className: column.className || '',

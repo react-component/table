@@ -72,6 +72,23 @@ describe('Table.Basic', () => {
           .text(),
       ).toEqual('年龄');
     });
+
+    it('falsy columns', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: '姓名',
+              dataIndex: 'name',
+              key: 'name',
+              children: [],
+            },
+            false,
+          ],
+        }),
+      );
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 
   describe('renders empty text correctly', () => {
