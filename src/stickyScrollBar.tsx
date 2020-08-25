@@ -38,9 +38,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   });
   const [isActive, setActive] = React.useState(false);
 
-  const onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
+  const onMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
     setActive(false);
-    event.preventDefault();
   };
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
