@@ -52,7 +52,6 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   };
 
   const onMouseMove: React.MouseEventHandler<HTMLDivElement> = event => {
-    event.preventDefault();
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
     const { buttons } = event || (window?.event as any);
     if (!isActive || buttons === 0) {
