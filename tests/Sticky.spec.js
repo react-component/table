@@ -154,7 +154,7 @@ describe('Table.Sticky', () => {
     jest.runAllTimers();
     wrapper.update();
 
-    expect(mockFn).toHaveBeenCalledTimes(4);
+    expect(mockFn).toHaveBeenCalledTimes(2);
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
       transform: 'translate3d(50.5px, 0, 0)',
@@ -167,7 +167,7 @@ describe('Table.Sticky', () => {
     jest.runAllTimers();
     wrapper.update();
 
-    expect(mockFn).toHaveBeenCalledTimes(6);
+    expect(mockFn).toHaveBeenCalledTimes(2);
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
       transform: 'translate3d(0px, 0, 0)',
@@ -187,7 +187,7 @@ describe('Table.Sticky', () => {
 
     document.body.dispatchEvent(mouseupEvent);
 
-    expect(mockFn).toHaveBeenCalledTimes(10);
+    expect(mockFn).toHaveBeenCalledTimes(4);
 
     wrapper.unmount();
 
