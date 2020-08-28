@@ -189,9 +189,19 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; visibility: hidden;"
+        style="table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 888px; min-width: 888px;"
+          />
+          <col
+            style="width: 15px; min-width: 15px;"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
