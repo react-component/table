@@ -10,7 +10,7 @@ function useColumnWidth(colWidths: number[], columCount: number) {
     const cloneColumns: number[] = [];
     for (let i = 0; i < columCount; i += 1) {
       const val = colWidths[i];
-      if (val) {
+      if (val !== undefined) {
         cloneColumns[i] = val;
       } else {
         return null;
@@ -78,7 +78,9 @@ function FixedHeader<RecordType>({
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
   return (
-    <table style={{ tableLayout: 'fixed', visibility: noData || mergedColumnWidth ? null : 'hidden' }}>
+    <table
+      style={{ tableLayout: 'fixed', visibility: noData || mergedColumnWidth ? null : 'hidden' }}
+    >
       <ColGroup
         colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
         columCount={columCount + 1}
