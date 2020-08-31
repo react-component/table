@@ -2065,7 +2065,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; visibility: hidden;"
+        style="table-layout: fixed;"
       >
         <colgroup />
         <thead

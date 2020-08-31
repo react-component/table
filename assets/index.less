@@ -61,7 +61,7 @@
       z-index: 1;
     }
 
-    &-fix-right:last-child {
+    &-fix-right:last-child:not(&-fix-sticky) {
       border-right-color: transparent;
     }
 
@@ -302,7 +302,7 @@
   &-sticky {
     &-header {
       position: sticky;
-      z-index: 10;
+      z-index: 2;
     }
     &-scroll {
       position: fixed;
@@ -312,6 +312,7 @@
       border-top: 1px solid #f3f3f3;
       opacity: 0.6;
       transition: transform 0.1s ease-in 0s;
+      z-index: 2;
       &:hover {
         transform: scaleY(1.2);
         transform-origin: center bottom;
@@ -321,6 +322,9 @@
         border-radius: 4px;
         background-color: #bbb;
         &:hover {
+          background-color: #999;
+        }
+        &-active {
           background-color: #999;
         }
       }

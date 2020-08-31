@@ -9,6 +9,8 @@ export interface FixedInfo {
   // For Rtl Direction
   lastFixRight: boolean;
   firstFixLeft: boolean;
+
+  isSticky: boolean;
 }
 
 export function getCellFixedInfo(
@@ -62,5 +64,6 @@ export function getCellFixedInfo(
     firstFixRight,
     lastFixRight,
     firstFixLeft,
+    isSticky: stickyOffsets.isSticky,
   };
 }

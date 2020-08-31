@@ -8,9 +8,10 @@ describe('Table.FixedHeader', () => {
     jest.useFakeTimers();
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
+    const col3 = { dataIndex: 'empty', width: 0 };
     const wrapper = mount(
       <Table
-        columns={[col1, col2]}
+        columns={[col1, col2, col3]}
         data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
         scroll={{ y: 10 }}
       />,
@@ -26,24 +27,38 @@ describe('Table.FixedHeader', () => {
       .at(1)
       .props()
       .onResize({ width: 200, offsetWidth: 200 });
+    wrapper
+      .find('ResizeObserver')
+      .at(2)
+      .props()
+      .onResize({ width: 0, offsetWidth: 0 });
 
     act(() => {
       jest.runAllTimers();
       wrapper.update();
     });
 
+    expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
+
+    expect();
     expect(
       wrapper
         .find('colgroup col')
-        .first()
+        .at(0)
         .props().style.width,
     ).toEqual(100);
     expect(
       wrapper
         .find('colgroup col')
-        .last()
+        .at(1)
         .props().style.width,
     ).toEqual(200);
+    expect(
+      wrapper
+        .find('colgroup col')
+        .at(2)
+        .props().style.width,
+    ).toEqual(0);
 
     // Update columns
     wrapper.setProps({ columns: [col2, col1] });
@@ -52,13 +67,13 @@ describe('Table.FixedHeader', () => {
     expect(
       wrapper
         .find('colgroup col')
-        .first()
+        .at(0)
         .props().style.width,
     ).toEqual(200);
     expect(
       wrapper
         .find('colgroup col')
-        .last()
+        .at(1)
         .props().style.width,
     ).toEqual(100);
 
@@ -96,5 +111,35 @@ describe('Table.FixedHeader', () => {
         .first()
         .props().className,
     ).toEqual('test-internal');
+  });
+
+  it('show header when data is null', () => {
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+      },
+    ];
+
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={[]}
+        scroll={{
+          x: true,
+          y: 100,
+        }}
+      />,
+    );
+
+    expect(wrapper.find('.rc-table-header table').props().style).toEqual(
+      expect.objectContaining({ visibility: null }),
+    );
   });
 });

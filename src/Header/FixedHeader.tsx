@@ -10,7 +10,7 @@ function useColumnWidth(colWidths: number[], columCount: number) {
     const cloneColumns: number[] = [];
     for (let i = 0; i < columCount; i += 1) {
       const val = colWidths[i];
-      if (val) {
+      if (val !== undefined) {
         cloneColumns[i] = val;
       } else {
         return null;
@@ -21,6 +21,7 @@ function useColumnWidth(colWidths: number[], columCount: number) {
 }
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
+  noData: boolean;
   colWidths: number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
@@ -28,6 +29,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
 }
 
 function FixedHeader<RecordType>({
+  noData,
   columns,
   flattenColumns,
   colWidths,
@@ -37,7 +39,9 @@ function FixedHeader<RecordType>({
   fixHeader,
   ...props
 }: FixedHeaderProps<RecordType>) {
-  const { prefixCls, scrollbarSize } = React.useContext(TableContext);
+  const { prefixCls, scrollbarSize, isSticky } = React.useContext(TableContext);
+
+  const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
@@ -49,13 +53,13 @@ function FixedHeader<RecordType>({
   };
 
   const columnsWithScrollbar = useMemo<ColumnsType<RecordType>>(
-    () => (scrollbarSize && fixHeader ? [...columns, ScrollBarColumn] : columns),
-    [scrollbarSize, columns, fixHeader],
+    () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
+    [combinationScrollBarSize, columns],
   );
 
   const flattenColumnsWithScrollbar = useMemo<ColumnType<RecordType>[]>(
-    () => (scrollbarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-    [scrollbarSize, flattenColumns],
+    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
+    [combinationScrollBarSize, flattenColumns],
   );
 
   // Calculate the sticky offsets
@@ -63,17 +67,22 @@ function FixedHeader<RecordType>({
     const { right, left } = stickyOffsets;
     return {
       ...stickyOffsets,
-      left: direction === 'rtl' ? [...left.map(width => width + scrollbarSize), 0] : left,
-      right: direction === 'rtl' ? right : [...right.map(width => width + scrollbarSize), 0],
+      left:
+        direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
+      right:
+        direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      isSticky,
     };
-  }, [scrollbarSize, stickyOffsets]);
+  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
   return (
-    <table style={{ tableLayout: 'fixed', visibility: mergedColumnWidth ? null : 'hidden' }}>
+    <table
+      style={{ tableLayout: 'fixed', visibility: noData || mergedColumnWidth ? null : 'hidden' }}
+    >
       <ColGroup
-        colWidths={mergedColumnWidth ? [...mergedColumnWidth, scrollbarSize] : []}
+        colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
         columCount={columCount + 1}
         columns={flattenColumnsWithScrollbar}
       />

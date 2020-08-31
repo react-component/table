@@ -651,7 +651,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
               [stickyClassName]: !!stickyClassName,
             })}
           >
-            <FixedHeader {...headerProps} {...columnContext} direction={direction} />
+            <FixedHeader
+              noData={!mergedData.length}
+              {...headerProps}
+              {...columnContext}
+              direction={direction}
+            />
           </div>
         )}
 
@@ -728,8 +733,18 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       fixedInfoList: flattenColumns.map((_, colIndex) =>
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
+      isSticky,
     }),
-    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, direction],
+    [
+      prefixCls,
+      getComponent,
+      scrollbarSize,
+      direction,
+      flattenColumns,
+      stickyOffsets,
+      direction,
+      isSticky,
+    ],
   );
 
   const BodyContextValue = React.useMemo(
