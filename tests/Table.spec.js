@@ -198,6 +198,32 @@ describe('Table.Basic', () => {
 
       expect(wrapper.find('tfoot').render()).toMatchSnapshot();
     });
+
+    it('support data type', () => {
+      const wrapper = mount(
+        <Table
+          columns={[
+            { dataIndex: 'a', fixed: 'left', width: 10 },
+            { dataIndex: 'b', fixed: 'left', width: 20 },
+            { dataIndex: 'c', width: 30 },
+          ]}
+          data={[{ key: 1, a: 2, b: 3, c: 4 }]}
+          summary={() => (
+            <Table.Summary.Row>
+              <Table.Summary.Cell colSpan={2} index={0}>
+                Light
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
+            </Table.Summary.Row>
+          )}
+          summaryFixed
+          summaryPosition="top"
+          scroll={{ x: 1200, y: 200 }}
+        />,
+      );
+
+      expect(wrapper.find('.rc-table-summary-content').render()).toMatchSnapshot();
+    });
   });
 
   it('renders with id correctly', () => {

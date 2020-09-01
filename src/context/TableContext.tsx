@@ -15,6 +15,8 @@ export interface TableContextProps {
   fixedInfoList: FixedInfo[];
 
   isSticky: boolean;
+
+  isSummaryShowTop: boolean;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);

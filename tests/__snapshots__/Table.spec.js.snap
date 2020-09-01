@@ -719,7 +719,7 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
 
 exports[`Table.Basic summary support data type 1`] = `
 <tfoot
-  class="rc-table-tfoot rc-table-tfoot-summary"
+  class="rc-table-tfoot rc-table-summary-content"
 >
   <tr>
     <td
@@ -736,6 +736,27 @@ exports[`Table.Basic summary support data type 1`] = `
     </td>
   </tr>
 </tfoot>
+`;
+
+exports[`Table.Basic summary support data type 2`] = `
+<thead
+  class="rc-table-thead rc-table-summary-content"
+>
+  <tr>
+    <td
+      class="rc-table-cell rc-table-cell-fix-left"
+      colspan="2"
+      style="position: sticky; left: 0px;"
+    >
+      Light
+    </td>
+    <td
+      class="rc-table-cell"
+    >
+      Bamboo
+    </td>
+  </tr>
+</thead>
 `;
 
 exports[`Table.Basic syntactic sugar 1`] = `

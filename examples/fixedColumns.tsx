@@ -77,6 +77,8 @@ const Demo = () => (
           </Table.Summary.Row>
         </>
       )}
+      summaryFixed
+      summaryPosition="top"
     />
   </div>
 );

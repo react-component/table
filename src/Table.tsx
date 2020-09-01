@@ -128,6 +128,8 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
   summary?: (data: RecordType[]) => React.ReactNode;
+  summaryFixed?: boolean;
+  summaryPosition?: 'top' | 'bottom';
 
   // Customize
   id?: string;
@@ -183,6 +185,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     title,
     footer,
     summary,
+    summaryFixed,
+    summaryPosition,
 
     // Customize
     id,
@@ -555,7 +559,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
-  const getBodyContent = (type: BodyContentTypeEnum) => {
+  const isTableFixed = fixHeader || isSticky;
+
+  const isSummaryShowTop = isTableFixed && summaryPosition === 'top';
+
+  const getBodyContent = (type: BodyContentTypeEnum, mergeSummary?: boolean) => {
     const ref = {
       [BodyContentTypeEnum.body]: scrollBodyRef,
       [BodyContentTypeEnum.summary]: scrollSummaryRef,
@@ -584,6 +592,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         >
           {bodyColGroup}
           {tableContent}
+          {mergeSummary && type !== BodyContentTypeEnum.summary && footerTable}
         </TableComponent>
       </div>
     );
@@ -598,7 +607,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
-  if (fixHeader || isSticky) {
+  if (isTableFixed) {
     let bodyContent: React.ReactNode;
 
     if (typeof customizeScrollBody === 'function') {
@@ -622,8 +631,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     } else {
       bodyContent = (
         <>
-          {getBodyContent(BodyContentTypeEnum.body)}
-          {footerTable && getBodyContent(BodyContentTypeEnum.summary)}
+          {summaryFixed ? (
+            <>
+              {footerTable && isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
+              {getBodyContent(BodyContentTypeEnum.body)}
+              {footerTable && !isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
+            </>
+          ) : (
+            getBodyContent(BodyContentTypeEnum.body, true)
+          )}
+
           {isSticky && (
             <StickyScrollBar
               ref={stickyRef}
@@ -734,6 +751,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
       isSticky,
+      isSummaryShowTop,
     }),
     [
       prefixCls,
@@ -744,6 +762,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       stickyOffsets,
       direction,
       isSticky,
+      isSummaryShowTop,
     ],
   );
 
