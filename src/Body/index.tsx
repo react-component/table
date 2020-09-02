@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ResizeObserver from 'rc-resize-observer';
 import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
 import { GetRowKey, Key, GetComponentProps } from '../interface';
@@ -7,6 +6,7 @@ import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
+import MeasureCell from './MeasureCell';
 
 export interface BodyProps<RecordType> {
   data: RecordType[];
@@ -89,14 +89,7 @@ function Body<RecordType>({
         {measureColumnWidth && (
           <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }}>
             {columnsKey.map(columnKey => (
-              <ResizeObserver
-                key={columnKey}
-                onResize={({ offsetWidth }) => {
-                  onColumnResize(columnKey, offsetWidth);
-                }}
-              >
-                <td style={{ padding: 0, border: 0, height: 0 }} />
-              </ResizeObserver>
+              <MeasureCell key={columnKey} columnKey={columnKey} onColumnResize={onColumnResize} />
             ))}
           </tr>
         )}
