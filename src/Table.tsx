@@ -543,7 +543,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         onScroll,
       });
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
-        const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
+        const colWidth = index === flattenColumns.length - 1 ? (width as number) - scrollbarSize : width;
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
