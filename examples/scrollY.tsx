@@ -22,6 +22,7 @@ class Demo extends React.Component {
   };
 
   render() {
+    const { showBody } = this.state;
     const columns = [
       { title: 'title1', key: 'a', dataIndex: 'a', width: 100 },
       { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
@@ -46,7 +47,7 @@ class Demo extends React.Component {
         scroll={{ y: 300 }}
         rowKey={record => record.key}
         bodyStyle={{
-          display: this.state.showBody ? '' : 'none',
+          display: showBody ? '' : 'none',
         }}
       />
     );

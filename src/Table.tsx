@@ -407,8 +407,14 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (!fixHeader) {
       scrollYStyle = { overflowY: 'hidden' };
     }
+    let scrollTableWidth = scroll.x === true ? 'auto' : scroll.x;
+    // fix empty data columns style
+    // https://github.com/ant-design/ant-design/issues/26701
+    if (!hasData) {
+      scrollTableWidth = undefined;
+    }
     scrollTableStyle = {
-      width: scroll.x === true ? 'auto' : scroll.x,
+      width: scrollTableWidth,
       minWidth: '100%',
     };
   }
@@ -424,16 +430,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
-    /* eslint-disable no-param-reassign */
-    if (target) {
-      if (typeof target === 'function') {
-        target(scrollLeft);
-      } else if (target.scrollLeft !== scrollLeft) {
-        target.scrollLeft = scrollLeft;
-      }
+    if (!target) {
+      return;
     }
-
-    /* eslint-enable */
+    if (typeof target === 'function') {
+      target(scrollLeft);
+    } else if (target.scrollLeft !== scrollLeft) {
+      // eslint-disable-next-line no-param-reassign
+      target.scrollLeft = scrollLeft;
+    }
   }
 
   const onScroll = ({
