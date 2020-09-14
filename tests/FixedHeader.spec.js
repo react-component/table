@@ -17,21 +17,9 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper
-      .find('ResizeObserver')
-      .at(0)
-      .props()
-      .onResize({ width: 100, offsetWidth: 100 });
-    wrapper
-      .find('ResizeObserver')
-      .at(1)
-      .props()
-      .onResize({ width: 200, offsetWidth: 200 });
-    wrapper
-      .find('ResizeObserver')
-      .at(2)
-      .props()
-      .onResize({ width: 0, offsetWidth: 0 });
+    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 100, offsetWidth: 100 });
+    wrapper.find('ResizeObserver').at(1).props().onResize({ width: 200, offsetWidth: 200 });
+    wrapper.find('ResizeObserver').at(2).props().onResize({ width: 0, offsetWidth: 0 });
 
     act(() => {
       jest.runAllTimers();
@@ -41,41 +29,16 @@ describe('Table.FixedHeader', () => {
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
     expect();
-    expect(
-      wrapper
-        .find('colgroup col')
-        .at(0)
-        .props().style.width,
-    ).toEqual(100);
-    expect(
-      wrapper
-        .find('colgroup col')
-        .at(1)
-        .props().style.width,
-    ).toEqual(200);
-    expect(
-      wrapper
-        .find('colgroup col')
-        .at(2)
-        .props().style.width,
-    ).toEqual(0);
+    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(100);
+    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(200);
+    expect(wrapper.find('colgroup col').at(2).props().style.width).toEqual(0);
 
     // Update columns
     wrapper.setProps({ columns: [col2, col1] });
     wrapper.update();
 
-    expect(
-      wrapper
-        .find('colgroup col')
-        .at(0)
-        .props().style.width,
-    ).toEqual(200);
-    expect(
-      wrapper
-        .find('colgroup col')
-        .at(1)
-        .props().style.width,
-    ).toEqual(100);
+    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
+    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
 
     jest.useRealTimers();
   });
@@ -95,22 +58,12 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    expect(
-      wrapper
-        .find('table')
-        .last()
-        .find('colgroup col')
-        .first()
-        .props().className,
-    ).toEqual('test-internal');
-    expect(
-      wrapper
-        .find('table')
-        .first()
-        .find('colgroup col')
-        .first()
-        .props().className,
-    ).toEqual('test-internal');
+    expect(wrapper.find('table').last().find('colgroup col').first().props().className).toEqual(
+      'test-internal',
+    );
+    expect(wrapper.find('table').first().find('colgroup col').first().props().className).toEqual(
+      'test-internal',
+    );
   });
 
   it('show header when data is null', () => {

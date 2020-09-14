@@ -36,28 +36,29 @@ describe('Table.FixedColumn', () => {
       { scrollName: 'scrollX', scroll: { x: 1200 } },
       { scrollName: 'scrollXY', scroll: { x: 1200, y: 100 } },
     ].forEach(({ scrollName, scroll }) => {
-      [{ name: 'with data', data }, { name: 'without data', data: [] }].forEach(
-        ({ name, data: testData }) => {
-          it(`${scrollName} - ${name}`, () => {
-            jest.useFakeTimers();
-            const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
+      [
+        { name: 'with data', data },
+        { name: 'without data', data: [] },
+      ].forEach(({ name, data: testData }) => {
+        it(`${scrollName} - ${name}`, () => {
+          jest.useFakeTimers();
+          const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
-            act(() => {
-              wrapper
-                .find('table ResizeObserver')
-                .first()
-                .props()
-                .onResize({ width: 93, offsetWidth: 93 });
-            });
-            act(() => {
-              jest.runAllTimers();
-              wrapper.update();
-            });
-            expect(wrapper.render()).toMatchSnapshot();
-            jest.useRealTimers();
+          act(() => {
+            wrapper
+              .find('table ResizeObserver')
+              .first()
+              .props()
+              .onResize({ width: 93, offsetWidth: 93 });
           });
-        },
-      );
+          act(() => {
+            jest.runAllTimers();
+            wrapper.update();
+          });
+          expect(wrapper.render()).toMatchSnapshot();
+          jest.useRealTimers();
+        });
+      });
     });
   });
 

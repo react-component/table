@@ -34,7 +34,10 @@ function HeaderRow<RecordType>({
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
-    rowProps = onHeaderRow(cells.map(cell => cell.column), index);
+    rowProps = onHeaderRow(
+      cells.map(cell => cell.column),
+      index,
+    );
   }
 
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
