@@ -1258,7 +1258,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
       style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
-        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+        style="min-width: 100%; table-layout: fixed;"
       >
         <colgroup>
           <col
@@ -2228,7 +2228,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
     >
       <table
-        style="width: 1200px; min-width: 100%; table-layout: fixed;"
+        style="min-width: 100%; table-layout: fixed;"
       >
         <colgroup>
           <col
