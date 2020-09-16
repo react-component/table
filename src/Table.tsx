@@ -407,14 +407,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (!fixHeader) {
       scrollYStyle = { overflowY: 'hidden' };
     }
-    let scrollTableWidth = scroll.x === true ? 'auto' : scroll.x;
-    // fix empty data columns style
-    // https://github.com/ant-design/ant-design/issues/26701
-    if (!hasData) {
-      scrollTableWidth = undefined;
-    }
     scrollTableStyle = {
-      width: scrollTableWidth,
+      width: scroll.x === true ? 'auto' : scroll.x,
       minWidth: '100%',
     };
   }
