@@ -438,7 +438,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const onScroll = ({
     currentTarget,
     scrollLeft,
-  }: React.UIEvent<HTMLDivElement> & { scrollLeft?: number }) => {
+  }: {
+    currentTarget: HTMLElement;
+    scrollLeft?: number;
+  }) => {
     const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
     const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
@@ -615,24 +618,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       <>
         {/* Header Table */}
         {showHeader !== false && (
-          <div
-            style={{
-              overflow: 'hidden',
-              ...(isSticky ? { top: offsetHeader } : {}),
-            }}
-            onScroll={onScroll}
+          <FixedHeader
+            noData={!mergedData.length}
+            {...headerProps}
+            {...columnContext}
+            direction={direction}
+            // Fixed Props
+            offsetHeader={offsetHeader}
+            stickyClassName={stickyClassName}
             ref={scrollHeaderRef}
-            className={classNames(`${prefixCls}-header`, {
-              [stickyClassName]: !!stickyClassName,
-            })}
-          >
-            <FixedHeader
-              noData={!mergedData.length}
-              {...headerProps}
-              {...columnContext}
-              direction={direction}
-            />
-          </div>
+            onScroll={onScroll}
+          />
         )}
 
         {/* Body Table */}

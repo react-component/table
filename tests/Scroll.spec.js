@@ -5,10 +5,7 @@ import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
-  const data = [
-    { key: 'key0', name: 'Lucy' },
-    { key: 'key1', name: 'Jack' },
-  ];
+  const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
@@ -91,18 +88,17 @@ describe('Table.Scroll', () => {
     jest.runAllTimers();
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
-      wrapper
-        .find('.rc-table-header')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 10,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        });
+      const headerDiv = wrapper.find('div.rc-table-header').instance();
+
+      const wheelEvent = new WheelEvent('wheel');
+      Object.defineProperty(wheelEvent, 'deltaX', {
+        get: () => 10,
+      });
+
+      headerDiv.dispatchEvent(wheelEvent);
+      jest.runAllTimers();
     });
-    jest.runAllTimers();
+
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 10);
     setScrollLeft.mockReset();
 
