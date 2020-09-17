@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TableSticky } from '../interface';
 
+/** Sticky header hooks */
 export default function useSticky(
   sticky: boolean | TableSticky,
   prefixCls: string,
