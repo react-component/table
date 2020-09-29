@@ -1,5 +1,9 @@
 import * as React from 'react';
+import canUseDom from 'rc-util/lib/Dom/canUseDom';
 import { TableSticky } from '../interface';
+
+// fix ssr render
+const defaultContainer = canUseDom() ? window : null;
 
 /** Sticky header hooks */
 export default function useSticky(
@@ -12,10 +16,10 @@ export default function useSticky(
   stickyClassName: string;
   container: Window | HTMLElement;
 } {
-  const { offsetHeader = 0, offsetScroll = 0, getContainer = () => window } =
+  const { offsetHeader = 0, offsetScroll = 0, getContainer = () => defaultContainer } =
     typeof sticky === 'object' ? sticky : {};
 
-  const container = getContainer() || window;
+  const container = getContainer() || defaultContainer;
 
   return React.useMemo(() => {
     const isSticky = !!sticky;
