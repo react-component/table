@@ -10,10 +10,11 @@ interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
+  container: HTMLElement | Window;
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll },
+  { scrollBodyRef, onScroll, offsetScroll, container },
   ref,
 ) => {
   const { prefixCls } = React.useContext(TableContext);
@@ -81,7 +82,10 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   const onContainerScroll = () => {
     const tableOffsetTop = getOffset(scrollBodyRef.current).top;
     const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
-    const currentClientOffset = document.documentElement.scrollTop + window.innerHeight;
+    const currentClientOffset =
+      container === window
+        ? document.documentElement.scrollTop + window.innerHeight
+        : getOffset(container).top + (container as HTMLElement).clientHeight;
 
     if (
       tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
@@ -123,14 +127,14 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }, [scrollBarWidth, isActive]);
 
   React.useEffect(() => {
-    const onScrollListener = addEventListener(window, 'scroll', onContainerScroll, false);
+    const onScrollListener = addEventListener(container, 'scroll', onContainerScroll, false);
     const onResizeListener = addEventListener(window, 'resize', onContainerScroll, false);
 
     return () => {
       onScrollListener.remove();
       onResizeListener.remove();
     };
-  }, []);
+  }, [container]);
 
   React.useEffect(() => {
     if (!frameState.isHiddenScrollBar) {

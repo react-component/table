@@ -386,7 +386,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // Sticky
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
-  const { isSticky, offsetHeader, offsetScroll, stickyClassName } = useSticky(sticky, prefixCls);
+  const { isSticky, offsetHeader, offsetScroll, stickyClassName, container } = useSticky(
+    sticky,
+    prefixCls,
+  );
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -601,15 +604,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             {bodyTable}
             {footerTable}
           </TableComponent>
-
-          {isSticky && (
-            <StickyScrollBar
-              ref={stickyRef}
-              offsetScroll={offsetScroll}
-              scrollBodyRef={scrollBodyRef}
-              onScroll={onScroll}
-            />
-          )}
         </div>
       );
     }
@@ -633,6 +627,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
         {/* Body Table */}
         {bodyContent}
+
+        {isSticky && (
+          <StickyScrollBar
+            ref={stickyRef}
+            offsetScroll={offsetScroll}
+            scrollBodyRef={scrollBodyRef}
+            onScroll={onScroll}
+            container={container}
+          />
+        )}
       </>
     );
   } else {

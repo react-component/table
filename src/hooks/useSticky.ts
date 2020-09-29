@@ -10,14 +10,21 @@ export default function useSticky(
   offsetHeader: number;
   offsetScroll: number;
   stickyClassName: string;
+  container: Window | HTMLElement;
 } {
+  const { offsetHeader = 0, offsetScroll = 0, getContainer = () => window } =
+    typeof sticky === 'object' ? sticky : {};
+
+  const container = getContainer() || window;
+
   return React.useMemo(() => {
     const isSticky = !!sticky;
     return {
       isSticky,
       stickyClassName: isSticky ? `${prefixCls}-sticky-header` : '',
-      offsetHeader: typeof sticky === 'object' ? sticky.offsetHeader || 0 : 0,
-      offsetScroll: typeof sticky === 'object' ? sticky.offsetScroll || 0 : 0,
+      offsetHeader,
+      offsetScroll,
+      container,
     };
-  }, [sticky, prefixCls]);
+  }, [offsetScroll, offsetHeader, prefixCls, container]);
 }
