@@ -1,5 +1,5 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
-import React from 'react';
+import React, { useRef } from 'react';
 import Table from '../src';
 import '../assets/index.less';
 import { ColumnType } from '../src/interface';
@@ -103,89 +103,118 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '20' },
 ];
 
-const Demo = () => (
-  <div
-    style={{
-      height: 10000,
-    }}
-  >
-    <h2>Sticky</h2>
-    <Table<RecordType>
-      columns={columns}
-      data={data}
-      tableLayout="auto"
-      sticky
-      scroll={{
-        x: 10000,
-      }}
+const Demo = () => {
+  const container = useRef();
+  return (
+    <div
       style={{
-        marginBottom: 100,
+        height: 10000,
       }}
-    />
-
-    <h2>Show offset Header</h2>
-    <Table<RecordType>
-      columns={columns}
-      data={data}
-      tableLayout="auto"
-      sticky={{
-        offsetHeader: 100,
-      }}
-      scroll={{
-        x: 10000,
-      }}
-      style={{
-        marginBottom: 100,
-      }}
-    />
-
-    <h2>Show offset scroll</h2>
-    <Table<RecordType>
-      columns={columns}
-      data={data}
-      tableLayout="auto"
-      sticky={{
-        offsetScroll: 100,
-      }}
-      scroll={{
-        x: 10000,
-      }}
-      style={{
-        marginBottom: 100,
-      }}
-    />
-
-    <h2>Sticky with fixed columns</h2>
-    <div style={{ width: 800 }}>
+    >
+      <h2>Sticky</h2>
       <Table<RecordType>
-        columns={fixedColumns}
-        data={fixedData}
+        columns={columns}
+        data={data}
+        tableLayout="auto"
         sticky
         scroll={{
-          x: 1200,
+          x: 10000,
         }}
         style={{
           marginBottom: 100,
         }}
       />
-    </div>
 
-    <h2>Sticky with fixed columns and scroll.y</h2>
-    <div style={{ width: 800 }}>
+      <h2>Show offset Header</h2>
       <Table<RecordType>
-        columns={fixedColumns}
-        data={fixedData}
-        sticky
+        columns={columns}
+        data={data}
+        tableLayout="auto"
+        sticky={{
+          offsetHeader: 100,
+        }}
         scroll={{
-          x: 1200,
-          y: 300,
+          x: 10000,
         }}
         style={{
           marginBottom: 100,
         }}
       />
+
+      <h2>Show offset scroll</h2>
+      <Table<RecordType>
+        columns={columns}
+        data={data}
+        tableLayout="auto"
+        sticky={{
+          offsetScroll: 100,
+        }}
+        scroll={{
+          x: 10000,
+        }}
+        style={{
+          marginBottom: 100,
+        }}
+      />
+
+      <h2>Sticky with fixed columns</h2>
+      <div style={{ width: 800 }}>
+        <Table<RecordType>
+          columns={fixedColumns}
+          data={fixedData}
+          sticky
+          scroll={{
+            x: 1200,
+          }}
+          style={{
+            marginBottom: 100,
+          }}
+        />
+      </div>
+
+      <h2>Sticky with fixed columns and scroll.y</h2>
+      <div style={{ width: 800 }}>
+        <Table<RecordType>
+          columns={fixedColumns}
+          data={fixedData}
+          sticky
+          scroll={{
+            x: 1200,
+            y: 300,
+          }}
+          style={{
+            marginBottom: 100,
+          }}
+        />
+      </div>
+
+      <h2>Sticky with custom container</h2>
+      <div style={{ height: 500, overflow: 'scroll' }} ref={container}>
+        <div style={{ height: 700 }}>
+          {' '}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aliquid neque accusamus
+          suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
+          beatae totam aperiam. Sunt, laudantium?
+        </div>
+        <Table<RecordType>
+          columns={fixedColumns}
+          data={fixedData}
+          scroll={{
+            x: 1200,
+          }}
+          sticky={{
+            getContainer: () => container.current,
+          }}
+          style={{
+            marginBottom: 100,
+          }}
+        />
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aliquid neque accusamus
+        suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
+        beatae totam aperiam. Sunt, laudantium?
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Demo;
