@@ -188,8 +188,14 @@ const Demo = () => {
         />
       </div>
 
+      <h2>Sticky with custom container</h2>
       <div style={{ height: 500, overflow: 'scroll' }} ref={container}>
-        <div style={{ height: 700 }}>2</div>
+        <div style={{ height: 700 }}>
+          {' '}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aliquid neque accusamus
+          suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
+          beatae totam aperiam. Sunt, laudantium?
+        </div>
         <Table<RecordType>
           columns={fixedColumns}
           data={fixedData}
