@@ -25,6 +25,7 @@
  */
 
 import * as React from 'react';
+import isVisible from 'rc-util/lib/Dom/isVisible';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import warning from 'rc-util/lib/warning';
@@ -396,7 +397,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // Sticky
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
-  const { isSticky, offsetHeader, offsetScroll, stickyClassName } = useSticky(sticky, prefixCls);
+  const { isSticky, offsetHeader, offsetScroll, stickyClassName, container } = useSticky(
+    sticky,
+    prefixCls,
+  );
 
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
@@ -424,32 +428,36 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
-    updateColsWidths(widths => {
-      const newWidths = new Map(widths);
-      newWidths.set(columnKey, width);
-      return newWidths;
-    });
+    if (isVisible(fullTableRef.current)) {
+      updateColsWidths(widths => {
+        const newWidths = new Map(widths);
+        newWidths.set(columnKey, width);
+        return newWidths;
+      });
+    }
   }, []);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
-    /* eslint-disable no-param-reassign */
-    if (target) {
-      if (typeof target === 'function') {
-        target(scrollLeft);
-      } else if (target.scrollLeft !== scrollLeft) {
-        target.scrollLeft = scrollLeft;
-      }
+    if (!target) {
+      return;
     }
-
-    /* eslint-enable */
+    if (typeof target === 'function') {
+      target(scrollLeft);
+    } else if (target.scrollLeft !== scrollLeft) {
+      // eslint-disable-next-line no-param-reassign
+      target.scrollLeft = scrollLeft;
+    }
   }
 
   const onScroll = ({
     currentTarget,
     scrollLeft,
-  }: React.UIEvent<HTMLDivElement> & { scrollLeft?: number }) => {
+  }: {
+    currentTarget: HTMLElement;
+    scrollLeft?: number;
+  }) => {
     const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
     const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
@@ -629,27 +637,14 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         return 0;
       }) as number[];
     } else {
-      bodyContent = (
+      bodyContent = summaryFixed ? (
         <>
-          {summaryFixed ? (
-            <>
-              {footerTable && isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
-              {getBodyContent(BodyContentTypeEnum.body)}
-              {footerTable && !isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
-            </>
-          ) : (
-            getBodyContent(BodyContentTypeEnum.body, true)
-          )}
-
-          {isSticky && (
-            <StickyScrollBar
-              ref={stickyRef}
-              offsetScroll={offsetScroll}
-              scrollBodyRef={scrollBodyRef}
-              onScroll={onScroll}
-            />
-          )}
+          {footerTable && isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
+          {getBodyContent(BodyContentTypeEnum.body)}
+          {footerTable && !isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
         </>
+      ) : (
+        getBodyContent(BodyContentTypeEnum.body, true)
       );
     }
 
@@ -657,28 +652,31 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       <>
         {/* Header Table */}
         {showHeader !== false && (
-          <div
-            style={{
-              overflow: 'hidden',
-              ...(isSticky ? { top: offsetHeader } : {}),
-            }}
-            onScroll={onScroll}
+          <FixedHeader
+            noData={!mergedData.length}
+            {...headerProps}
+            {...columnContext}
+            direction={direction}
+            // Fixed Props
+            offsetHeader={offsetHeader}
+            stickyClassName={stickyClassName}
             ref={scrollHeaderRef}
-            className={classNames(`${prefixCls}-header`, {
-              [stickyClassName]: !!stickyClassName,
-            })}
-          >
-            <FixedHeader
-              noData={!mergedData.length}
-              {...headerProps}
-              {...columnContext}
-              direction={direction}
-            />
-          </div>
+            onScroll={onScroll}
+          />
         )}
 
         {/* Body Table */}
         {bodyContent}
+
+        {isSticky && (
+          <StickyScrollBar
+            ref={stickyRef}
+            offsetScroll={offsetScroll}
+            scrollBodyRef={scrollBodyRef}
+            onScroll={onScroll}
+            container={container}
+          />
+        )}
       </>
     );
   } else {

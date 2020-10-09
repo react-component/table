@@ -113,40 +113,112 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
@@ -736,40 +808,112 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
@@ -1359,40 +1503,112 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-placeholder"
@@ -1428,9 +1644,49 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; visibility: hidden;"
+        style="table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            style="width: 93px; min-width: 93px;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 15px; min-width: 15px;"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
@@ -1543,40 +1799,112 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
@@ -2067,7 +2395,47 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       <table
         style="table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            style="width: 93px; min-width: 93px;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 0px; min-width: 0;"
+          />
+          <col
+            style="width: 15px; min-width: 15px;"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
@@ -2180,40 +2548,112 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
             <td
               style="padding: 0px; border: 0px; height: 0px;"
-            />
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-placeholder"

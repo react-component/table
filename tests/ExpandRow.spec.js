@@ -13,7 +13,10 @@ describe('Table.Expand', () => {
     { title: 'Age', dataIndex: 'age', key: 'age' },
   ];
 
-  const sampleData = [{ key: 0, name: 'Lucy', age: 27 }, { key: 1, name: 'Jack', age: 28 }];
+  const sampleData = [
+    { key: 0, name: 'Lucy', age: 27 },
+    { key: 1, name: 'Jack', age: 28 },
+  ];
 
   const createTable = props => <Table columns={sampleColumns} data={sampleData} {...props} />;
 
@@ -130,11 +133,7 @@ describe('Table.Expand', () => {
         }),
       );
       act(() => {
-        wrapper
-          .find('ResizeObserver')
-          .first()
-          .props()
-          .onResize({ width: 1128 });
+        wrapper.find('ResizeObserver').first().props().onResize({ width: 1128 });
       });
       wrapper.update();
       expect(wrapper.render()).toMatchSnapshot();
@@ -151,10 +150,7 @@ describe('Table.Expand', () => {
       }),
     );
     expect(
-      wrapper
-        .find('tbody tr td')
-        .at(1)
-        .hasClass('rc-table-row-expand-icon-cell'),
+      wrapper.find('tbody tr td').at(1).hasClass('rc-table-row-expand-icon-cell'),
     ).toBeTruthy();
   });
 
@@ -212,12 +208,7 @@ describe('Table.Expand', () => {
       }),
     );
     expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(2)
-        .hasClass('rc-table-expanded-row'),
-    ).toBeTruthy();
+    expect(wrapper.find('tbody tr').at(2).hasClass('rc-table-expanded-row')).toBeTruthy();
   });
 
   it('controlled by expandedRowKeys', () => {
@@ -228,33 +219,13 @@ describe('Table.Expand', () => {
       }),
     );
     expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(1)
-        .hasClass('rc-table-expanded-row'),
-    ).toBeTruthy();
+    expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
 
     wrapper.setProps({ expandedRowKeys: [1] });
     expect(wrapper.find('tbody tr')).toHaveLength(4);
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(1)
-        .hasClass('rc-table-expanded-row'),
-    ).toBeTruthy();
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(1)
-        .props().style.display,
-    ).toEqual('none');
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(3)
-        .hasClass('rc-table-expanded-row'),
-    ).toBeTruthy();
+    expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
+    expect(wrapper.find('tbody tr').at(1).props().style.display).toEqual('none');
+    expect(wrapper.find('tbody tr').at(3).hasClass('rc-table-expanded-row')).toBeTruthy();
   });
 
   it('renders expend row class correctly', () => {
@@ -269,12 +240,7 @@ describe('Table.Expand', () => {
       }),
     );
 
-    expect(
-      wrapper
-        .find('tbody tr')
-        .at(1)
-        .hasClass('expand-row-test-class-name'),
-    ).toBeTruthy();
+    expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
   });
 
   it('fires expand change event', () => {
@@ -287,16 +253,10 @@ describe('Table.Expand', () => {
         },
       }),
     );
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
 
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
   });
 
@@ -308,10 +268,7 @@ describe('Table.Expand', () => {
         onExpandedRowsChange,
       }),
     );
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
     expect(onExpandedRowsChange).toHaveBeenCalledWith([0]);
   });
 
@@ -339,16 +296,10 @@ describe('Table.Expand', () => {
         },
       }),
     );
-    wrapper
-      .find('tbody tr')
-      .first()
-      .simulate('click');
+    wrapper.find('tbody tr').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
 
-    wrapper
-      .find('tbody tr')
-      .first()
-      .simulate('click');
+    wrapper.find('tbody tr').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
   });
 
@@ -410,30 +361,14 @@ describe('Table.Expand', () => {
       }),
     );
     expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
-    wrapper
-      .find('.custom-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(1);
-    expect(
-      wrapper
-        .find('.rc-table-expanded-row')
-        .first()
-        .getDOMNode().style.display,
-    ).toBe('');
-    wrapper
-      .find('.custom-expand-icon')
-      .first()
-      .simulate('click');
+    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('');
+    wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(2);
-    expect(
-      wrapper
-        .find('.rc-table-expanded-row')
-        .first()
-        .getDOMNode().style.display,
-    ).toBe('none');
+    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('none');
   });
 
   // https://github.com/ant-design/ant-design/issues/23894
@@ -450,16 +385,10 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(1);
-    wrapper
-      .find('.rc-table-row-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(2);
   });
@@ -486,16 +415,10 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    wrapper
-      .find('.custom-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(1);
-    wrapper
-      .find('.custom-expand-icon')
-      .first()
-      .simulate('click');
+    wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(2);
   });

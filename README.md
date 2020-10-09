@@ -2,13 +2,7 @@
 
 React table component with useful functions.
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![Dependencies][david-image]][david-url]
-[![DevDependencies][david-dev-image]][david-dev-url]
-[![npm download][download-image]][download-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-table.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-table
@@ -119,6 +113,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
+| sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } |  false | stick header and scroll bar |
 
 ## Column Props
 

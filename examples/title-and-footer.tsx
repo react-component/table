@@ -63,20 +63,20 @@ const Demo = () => {
         title={currentData => <div>Title: {currentData.length} items</div>}
         footer={currentData => <div>Footer: {currentData.length} items</div>}
         summary={currentData => (
-            <>
-              <tr>
-                <th colSpan={6}>Summary</th>
-              </tr>
-              <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>{currentData.reduce((total, item) => total + item.value, 0)}</td>
-                <td>{currentData.reduce((total, item) => total + item.value2, 0)}</td>
-                <td>-</td>
-              </tr>
-            </>
-          )}
+          <>
+            <tr>
+              <th colSpan={6}>Summary</th>
+            </tr>
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>{currentData.reduce((total, item) => total + item.value, 0)}</td>
+              <td>{currentData.reduce((total, item) => total + item.value2, 0)}</td>
+              <td>-</td>
+            </tr>
+          </>
+        )}
       />
     </div>
   );

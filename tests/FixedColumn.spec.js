@@ -2,9 +2,22 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { resetWarned } from 'rc-util/lib/warning';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
 describe('Table.FixedColumn', () => {
+  let domSpy;
+
+  beforeAll(() => {
+    domSpy = spyElementPrototype(HTMLElement, 'offsetParent', {
+      get: () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    domSpy.mockRestore();
+  });
+
   const columns = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
     { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
@@ -36,28 +49,29 @@ describe('Table.FixedColumn', () => {
       { scrollName: 'scrollX', scroll: { x: 1200 } },
       { scrollName: 'scrollXY', scroll: { x: 1200, y: 100 } },
     ].forEach(({ scrollName, scroll }) => {
-      [{ name: 'with data', data }, { name: 'without data', data: [] }].forEach(
-        ({ name, data: testData }) => {
-          it(`${scrollName} - ${name}`, () => {
-            jest.useFakeTimers();
-            const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
+      [
+        { name: 'with data', data },
+        { name: 'without data', data: [] },
+      ].forEach(({ name, data: testData }) => {
+        it(`${scrollName} - ${name}`, () => {
+          jest.useFakeTimers();
+          const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
-            act(() => {
-              wrapper
-                .find('table ResizeObserver')
-                .first()
-                .props()
-                .onResize({ width: 93, offsetWidth: 93 });
-            });
-            act(() => {
-              jest.runAllTimers();
-              wrapper.update();
-            });
-            expect(wrapper.render()).toMatchSnapshot();
-            jest.useRealTimers();
+          act(() => {
+            wrapper
+              .find('table ResizeObserver')
+              .first()
+              .props()
+              .onResize({ width: 93, offsetWidth: 93 });
           });
-        },
-      );
+          act(() => {
+            jest.runAllTimers();
+            wrapper.update();
+          });
+          expect(wrapper.render()).toMatchSnapshot();
+          jest.useRealTimers();
+        });
+      });
     });
   });
 

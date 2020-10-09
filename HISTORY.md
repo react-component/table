@@ -1,5 +1,6 @@
 # History
-----
+
+---
 
 ## 6.9.0 / 2019-10-18
 
@@ -104,7 +105,7 @@ Fix https://github.com/ant-design/ant-design/issues/2625
 
 ## 4.4.1 / 2016-07-24
 
--  Fix row expand of key 0 record. (ant-design/ant-design#2471)
+- Fix row expand of key 0 record. (ant-design/ant-design#2471)
 
 ## 4.4.0 / 2016-07-19
 

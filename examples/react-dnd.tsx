@@ -148,7 +148,10 @@ class Demo extends React.Component {
     this.setState(prevState =>
       update(prevState, {
         data: {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]],
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragRow],
+          ],
         },
       }),
     );
