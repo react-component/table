@@ -2,9 +2,22 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { resetWarned } from 'rc-util/lib/warning';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
 describe('Table.FixedColumn', () => {
+  let domSpy;
+
+  beforeAll(() => {
+    domSpy = spyElementPrototype(HTMLElement, 'offsetParent', {
+      get: () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    domSpy.mockRestore();
+  });
+
   const columns = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
     { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },

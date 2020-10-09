@@ -25,6 +25,7 @@
  */
 
 import * as React from 'react';
+import isVisible from 'rc-util/lib/Dom/isVisible';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import warning from 'rc-util/lib/warning';
@@ -417,11 +418,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
-    updateColsWidths(widths => {
-      const newWidths = new Map(widths);
-      newWidths.set(columnKey, width);
-      return newWidths;
-    });
+    if (isVisible(fullTableRef.current)) {
+      updateColsWidths(widths => {
+        const newWidths = new Map(widths);
+        newWidths.set(columnKey, width);
+        return newWidths;
+      });
+    }
   }, []);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
