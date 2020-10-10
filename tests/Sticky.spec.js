@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Table from '../src';
@@ -50,7 +51,7 @@ describe('Table.Sticky', () => {
     jest.useRealTimers();
   });
 
-  it('Sticky scroll', () => {
+  it('Sticky scroll', async () => {
     jest.useFakeTimers();
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
@@ -114,7 +115,10 @@ describe('Table.Sticky', () => {
       />,
     );
 
-    jest.runAllTimers();
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
 
@@ -123,16 +127,22 @@ describe('Table.Sticky', () => {
 
     global.innerHeight = 10000;
 
-    global.dispatchEvent(resizeEvent);
-    jest.runAllTimers();
-    wrapper.update();
+    await act(async () => {
+      global.dispatchEvent(resizeEvent);
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeFalsy();
 
-    global.innerHeight = oldInnerHeight;
-    global.dispatchEvent(resizeEvent);
-    jest.runAllTimers();
-    wrapper.update();
+    await act(async () => {
+      global.innerHeight = oldInnerHeight;
+      global.dispatchEvent(resizeEvent);
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     const mockFn = jest.fn();
 
@@ -149,31 +159,40 @@ describe('Table.Sticky', () => {
     mousemoveEvent.buttons = 1;
     mousemoveEvent.pageX = 50;
 
-    document.body.dispatchEvent(mousemoveEvent);
-    jest.runAllTimers();
-    wrapper.update();
+    await act(async () => {
+      document.body.dispatchEvent(mousemoveEvent);
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
       transform: 'translate3d(50.5px, 0, 0)',
     });
 
-    mousemoveEvent.pageX = -50;
-    document.body.dispatchEvent(mousemoveEvent);
+    await act(async () => {
+      mousemoveEvent.pageX = -50;
+      document.body.dispatchEvent(mousemoveEvent);
 
-    jest.runAllTimers();
-    wrapper.update();
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
       transform: 'translate3d(0px, 0, 0)',
     });
 
-    mousemoveEvent.buttons = 0;
-    document.body.dispatchEvent(mousemoveEvent);
+    await act(async () => {
+      mousemoveEvent.buttons = 0;
+      document.body.dispatchEvent(mousemoveEvent);
 
-    jest.runAllTimers();
-    wrapper.update();
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll-bar-active').length).toBe(0);
 
@@ -276,7 +295,7 @@ describe('Table.Sticky', () => {
     jest.useRealTimers();
   });
 
-  it('Sticky scroll with getContainer', () => {
+  it('Sticky scroll with getContainer', async () => {
     jest.useFakeTimers();
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
@@ -372,7 +391,10 @@ describe('Table.Sticky', () => {
       },
     );
 
-    jest.runAllTimers();
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
     expect(wrapper.find('.rc-table-sticky-scroll-bar').get(0)).toBeTruthy();
@@ -395,9 +417,12 @@ describe('Table.Sticky', () => {
     mousemoveEvent.buttons = 1;
     mousemoveEvent.pageX = 50;
 
-    document.body.dispatchEvent(mousemoveEvent);
-    jest.runAllTimers();
-    wrapper.update();
+    await act(async () => {
+      document.body.dispatchEvent(mousemoveEvent);
+      jest.runAllTimers();
+      await Promise.resolve();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
       width: '50px',
