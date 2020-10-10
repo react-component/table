@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import raf from 'raf';
 
 export type Updater<State> = (prev: State) => State;
 
