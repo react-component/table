@@ -59,7 +59,7 @@ import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
-import { useFrameState, useTimeoutLock } from './hooks/useFrame';
+import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -374,7 +374,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  const [colsWidths, updateColsWidths] = useFrameState(new Map<React.Key, number>());
+  const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
@@ -420,9 +420,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
     if (isVisible(fullTableRef.current)) {
       updateColsWidths(widths => {
-        const newWidths = new Map(widths);
-        newWidths.set(columnKey, width);
-        return newWidths;
+        if (widths.get(columnKey) !== width) {
+          const newWidths = new Map(widths);
+          newWidths.set(columnKey, width);
+          return newWidths;
+        }
+        return widths;
       });
     }
   }, []);
