@@ -87,6 +87,10 @@ interface MemoTableContentProps {
   props: any;
 }
 
+type SummaryRender<RecordType> = (data: RecordType[]) => React.ReactNode;
+
+type SummaryPosition = 'top' | 'bottom';
+
 enum BodyContentTypeEnum {
   body = 'body',
   summary = 'summary',
@@ -128,9 +132,11 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   // Additional Part
   title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
-  summary?: (data: RecordType[]) => React.ReactNode;
-  summaryFixed?: boolean;
-  summaryPosition?: 'top' | 'bottom';
+  summary?: SummaryRender<RecordType> | {
+    render: SummaryRender<RecordType>;
+    fixed?: boolean;
+    position?: SummaryPosition;
+  };
 
   // Customize
   id?: string;
@@ -186,8 +192,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     title,
     footer,
     summary,
-    summaryFixed,
-    summaryPosition,
 
     // Customize
     id,
@@ -207,6 +211,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
+
+  // ===================== Summary ======================
+  let summaryRender: SummaryRender<RecordType> = summary as any;
+  let summaryFixed: boolean = false;
+  let summaryPosition: SummaryPosition = 'bottom';
+
+  if (typeof summary === 'object') {
+    summaryRender = summary.render;
+    summary.fixed && (summaryFixed = summary.fixed);
+    summary.position && (summaryPosition = summary.position);
+  }
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
@@ -564,7 +579,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
-  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
+  const footerTable = summaryRender && <Footer>{summaryRender(mergedData)}</Footer>;
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   const isTableFixed = fixHeader || isSticky;

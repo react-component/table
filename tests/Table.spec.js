@@ -176,16 +176,18 @@ describe('Table.Basic', () => {
             { dataIndex: 'c', width: 30 },
           ]}
           data={[{ key: 1, a: 2, b: 3, c: 4 }]}
-          summary={() => (
-            <Table.Summary.Row>
-              <Table.Summary.Cell colSpan={2} index={0}>
-                Light
-              </Table.Summary.Cell>
-              <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
-            </Table.Summary.Row>
-          )}
-          summaryFixed
-          summaryPosition="top"
+          summary={{
+            render: () => (
+              <Table.Summary.Row>
+                <Table.Summary.Cell colSpan={2} index={0}>
+                  Light
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
+              </Table.Summary.Row>
+            ),
+            fixed: true,
+            position: 'top',
+          }}
           scroll={{ x: 1200, y: 200 }}
         />,
       );
