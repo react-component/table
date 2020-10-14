@@ -4,7 +4,7 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import classNames from 'classnames';
 import { getOffset } from 'rc-util/lib/Dom/css';
 import TableContext from './context/TableContext';
-import { useFrameState } from './hooks/useFrame';
+import { useLayoutState } from './hooks/useFrame';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
@@ -23,7 +23,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
   const scrollBarRef = React.useRef<HTMLDivElement>();
-  const [frameState, setFrameState] = useFrameState<{
+  const [scrollState, setScrollState] = useLayoutState<{
     scrollLeft: number;
     isHiddenScrollBar: boolean;
   }>({
@@ -45,7 +45,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
     event.persist();
-    refState.current.delta = event.pageX - frameState.scrollLeft;
+    refState.current.delta = event.pageX - scrollState.scrollLeft;
     refState.current.x = 0;
     setActive(true);
     event.preventDefault();
@@ -91,12 +91,12 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
       tableOffsetTop >= currentClientOffset - offsetScroll
     ) {
-      setFrameState(state => ({
+      setScrollState(state => ({
         ...state,
         isHiddenScrollBar: true,
       }));
     } else {
-      setFrameState(state => ({
+      setScrollState(state => ({
         ...state,
         isHiddenScrollBar: false,
       }));
@@ -104,7 +104,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   };
 
   const setScrollLeft = (left: number) => {
-    setFrameState(state => {
+    setScrollState(state => {
       return {
         ...state,
         scrollLeft: (left / bodyScrollWidth) * bodyWidth || 0,
@@ -137,17 +137,17 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }, [container]);
 
   React.useEffect(() => {
-    if (!frameState.isHiddenScrollBar) {
-      setFrameState(state => ({
+    if (!scrollState.isHiddenScrollBar) {
+      setScrollState(state => ({
         ...state,
         scrollLeft:
           (scrollBodyRef.current.scrollLeft / scrollBodyRef.current?.scrollWidth) *
           scrollBodyRef.current?.clientWidth,
       }));
     }
-  }, [frameState.isHiddenScrollBar]);
+  }, [scrollState.isHiddenScrollBar]);
 
-  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || frameState.isHiddenScrollBar) {
+  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
     return null;
   }
 
@@ -168,7 +168,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
         })}
         style={{
           width: `${scrollBarWidth}px`,
-          transform: `translate3d(${frameState.scrollLeft}px, 0, 0)`,
+          transform: `translate3d(${scrollState.scrollLeft}px, 0, 0)`,
         }}
       />
     </div>

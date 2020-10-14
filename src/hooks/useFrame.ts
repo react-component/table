@@ -1,37 +1,48 @@
 import { useRef, useState, useEffect } from 'react';
-import raf from 'raf';
 
 export type Updater<State> = (prev: State) => State;
 
-export function useFrameState<State>(
+/**
+ * Execute code before next frame but async
+ */
+export function useLayoutState<State>(
   defaultState: State,
 ): [State, (updater: Updater<State>) => void] {
   const stateRef = useRef(defaultState);
   const [, forceUpdate] = useState({});
 
-  const timeoutRef = useRef<number>(null);
+  const lastPromiseRef = useRef<Promise<void>>(null);
   const updateBatchRef = useRef<Updater<State>[]>([]);
 
   function setFrameState(updater: Updater<State>) {
-    if (timeoutRef.current === null) {
-      updateBatchRef.current = [];
-      timeoutRef.current = raf(() => {
-        updateBatchRef.current.forEach(batchUpdater => {
+    updateBatchRef.current.push(updater);
+
+    const promise = Promise.resolve();
+    lastPromiseRef.current = promise;
+
+    promise.then(() => {
+      if (lastPromiseRef.current === promise) {
+        const prevBatch = updateBatchRef.current;
+        const prevState = stateRef.current;
+        updateBatchRef.current = [];
+
+        prevBatch.forEach(batchUpdater => {
           stateRef.current = batchUpdater(stateRef.current);
         });
-        timeoutRef.current = null;
-        forceUpdate({});
-      });
-    }
 
-    updateBatchRef.current.push(updater);
+        lastPromiseRef.current = null;
+
+        if (prevState !== stateRef.current) {
+          forceUpdate({});
+        }
+      }
+    });
   }
 
   useEffect(
     () => () => {
-      raf.cancel(timeoutRef.current);
+      lastPromiseRef.current = null;
     },
-
     [],
   );
 
