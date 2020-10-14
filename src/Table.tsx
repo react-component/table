@@ -132,11 +132,13 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   // Additional Part
   title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
-  summary?: SummaryRender<RecordType> | {
-    render: SummaryRender<RecordType>;
-    fixed?: boolean;
-    position?: SummaryPosition;
-  };
+  summary?:
+    | SummaryRender<RecordType>
+    | {
+        render: SummaryRender<RecordType>;
+        fixed?: boolean;
+        position?: SummaryPosition;
+      };
 
   // Customize
   id?: string;
@@ -219,8 +221,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   if (typeof summary === 'object') {
     summaryRender = summary.render;
-    summary.fixed && (summaryFixed = summary.fixed);
-    summary.position && (summaryPosition = summary.position);
+    summaryFixed = summary.fixed || summaryFixed;
+    summaryPosition = summary.position || summaryPosition;
   }
 
   // ===================== Effects ======================
