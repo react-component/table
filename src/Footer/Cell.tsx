@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
+import { AlignType } from '../interface';
 
 export interface SummaryCellProps {
   className?: string;
@@ -8,6 +9,7 @@ export interface SummaryCellProps {
   index: number;
   colSpan?: number;
   rowSpan?: number;
+  align?: AlignType;
 }
 
 export default function SummaryCell({
@@ -16,6 +18,7 @@ export default function SummaryCell({
   children,
   colSpan,
   rowSpan,
+  align,
 }: SummaryCellProps) {
   const { prefixCls, fixedInfoList } = React.useContext(TableContext);
 
@@ -29,6 +32,7 @@ export default function SummaryCell({
       prefixCls={prefixCls}
       record={null}
       dataIndex={null}
+      align={align}
       render={() => ({
         children,
         props: {
