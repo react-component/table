@@ -17,19 +17,21 @@ export interface ExpandedRowProps<RecordType> {
   colSpan: number;
 }
 
-function ExpandedRow<RecordType>({
-  prefixCls,
-  children,
-  component: Component,
-  cellComponent,
-  fixHeader,
-  fixColumn,
-  horizonScroll,
-  className,
-  expanded,
-  componentWidth,
-  colSpan,
-}: ExpandedRowProps<RecordType>) {
+const ExpandedRow: React.ForwardRefRenderFunction<any, ExpandedRowProps<any>>  = ((props, ref) => {
+
+  const {
+    prefixCls,
+    children,
+    component: Component,
+    cellComponent,
+    fixHeader,
+    fixColumn,
+    horizonScroll,
+    className,
+    expanded,
+    componentWidth,
+    colSpan,
+  } = props;
   const { scrollbarSize } = React.useContext(TableContext);
 
   // Cache render node
@@ -39,6 +41,7 @@ function ExpandedRow<RecordType>({
     if (fixColumn) {
       contentNode = (
         <div
+          ref={ref}
           style={{
             width: componentWidth - (fixHeader ? scrollbarSize : 0),
             position: 'sticky',
@@ -54,6 +57,7 @@ function ExpandedRow<RecordType>({
 
     return (
       <Component
+        ref={ref}
         className={className}
         style={{
           display: expanded ? null : 'none',
@@ -75,6 +79,6 @@ function ExpandedRow<RecordType>({
     colSpan,
     scrollbarSize,
   ]);
-}
+})
 
-export default ExpandedRow;
+export default React.forwardRef(ExpandedRow);

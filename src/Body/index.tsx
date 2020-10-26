@@ -17,6 +17,9 @@ export interface BodyProps<RecordType> {
   rowExpandable: (record: RecordType) => boolean;
   emptyNode: React.ReactNode;
   childrenColumnName: string;
+  scrollTop: number;
+  start: number;
+  end: number;
 }
 
 function Body<RecordType>({
@@ -28,8 +31,10 @@ function Body<RecordType>({
   rowExpandable,
   emptyNode,
   childrenColumnName,
+  start,
+  end,
 }: BodyProps<RecordType>) {
-  const { onColumnResize } = React.useContext(ResizeContext);
+  const { onColumnResize, onRowResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { fixHeader, horizonScroll, flattenColumns, componentWidth } = React.useContext(
     BodyContext,
@@ -42,26 +47,29 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      rows = data.map((record, index) => {
+      rows = [];
+      for (let index = start; index <= end; index++) {
+        const record = data[index]
         const key = getRowKey(record, index);
-
-        return (
+        (rows as any[]).push((
           <BodyRow
             key={key}
             rowKey={key}
             record={record}
             recordKey={key}
             index={index}
+            data={data}
             rowComponent={trComponent}
             cellComponent={tdComponent}
             expandedKeys={expandedKeys}
+            onRowResize={(...p) =>onRowResize(...p, end)}
             onRow={onRow}
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
             childrenColumnName={childrenColumnName}
           />
-        );
-      });
+        ));
+      };
     } else {
       rows = (
         <ExpandedRow
@@ -84,18 +92,18 @@ function Body<RecordType>({
     const columnsKey = getColumnsKey(flattenColumns);
 
     return (
-      <WrapperComponent className={`${prefixCls}-tbody`}>
-        {/* Measure body column width with additional hidden col */}
-        {measureColumnWidth && (
-          <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }}>
-            {columnsKey.map(columnKey => (
-              <MeasureCell key={columnKey} columnKey={columnKey} onColumnResize={onColumnResize} />
-            ))}
-          </tr>
-        )}
+        <WrapperComponent className={`${prefixCls}-tbody`}>
+          {/* Measure body column width with additional hidden col */}
+          {measureColumnWidth && (
+            <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }}>
+              {columnsKey.map(columnKey => (
+                <MeasureCell key={columnKey} columnKey={columnKey} onColumnResize={onColumnResize} />
+              ))}
+            </tr>
+          )}
 
-        {rows}
-      </WrapperComponent>
+          {rows}
+        </WrapperComponent>
     );
   }, [
     data,
@@ -108,6 +116,8 @@ function Body<RecordType>({
     componentWidth,
     emptyNode,
     flattenColumns,
+    start,
+    end,
   ]);
 }
 

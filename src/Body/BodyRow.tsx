@@ -22,7 +22,11 @@ export interface BodyRowProps<RecordType> {
   rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
+  onRowResize: (idx: number, height: number) => void;
+  data: RecordType[];
 }
+
+console.log(ExpandedRow, 111)
 
 function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowProps<RecordType>) {
   const {
@@ -35,12 +39,16 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     rowExpandable,
     expandedKeys,
     onRow,
+    onRowResize,
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
     childrenColumnName,
+    data
   } = props;
   const { prefixCls, fixedInfoList } = React.useContext(TableContext);
+  const rowRef = React.useRef<HTMLTableRowElement>()
+  const expandedRowRef = React.useRef<HTMLTableRowElement>()
   const {
     fixHeader,
     fixColumn,
@@ -62,8 +70,18 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const expanded = expandedKeys && expandedKeys.has(props.recordKey);
 
   React.useEffect(() => {
+    if (rowRef.current) {
+      const rowHeight = rowRef.current ? rowRef.current.offsetHeight : 0
+      onRowResize(index, rowRef.current.offsetHeight);
+    }
+  }, [data, expanded])
+
+  React.useEffect(() => {
     if (expanded) {
       setExpandRended(true);
+      const rowHeight = rowRef.current ? rowRef.current.offsetHeight : 0
+      const expandedRowHeight = expandedRowRef.current ? expandedRowRef.current.offsetHeight : 0
+      onRowResize(index, rowHeight + expandedRowHeight);
     }
   }, [expanded]);
 
@@ -100,6 +118,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const columnsKey = getColumnsKey(flattenColumns);
   const baseRowNode = (
     <RowComponent
+      ref={rowRef}
       {...additionalProps}
       data-row-key={rowKey}
       className={classNames(
@@ -176,6 +195,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
       expandedRowClassName && expandedRowClassName(record, index, indent);
     expandRowNode = (
       <ExpandedRow
+        ref={expandedRowRef}
         expanded={expanded}
         className={classNames(
           `${prefixCls}-expanded-row`,
