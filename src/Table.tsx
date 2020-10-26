@@ -60,7 +60,13 @@ import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
-import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
+import {
+  getPathValue,
+  mergeObject,
+  validateValue,
+  getColumnsKey,
+  isPlainObject,
+} from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -78,6 +84,12 @@ const EMPTY_DATA = [];
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
 
+// Used for body content render
+const BODY_CONTENT_TYPE = {
+  body: 'body',
+  summary: 'summary',
+};
+
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
 interface MemoTableContentProps {
@@ -90,11 +102,6 @@ interface MemoTableContentProps {
 type SummaryRender<RecordType> = (data: RecordType[]) => React.ReactNode;
 
 type SummaryPosition = 'top' | 'bottom';
-
-enum BodyContentTypeEnum {
-  body = 'body',
-  summary = 'summary',
-}
 
 const MemoTableContent = React.memo<MemoTableContentProps>(
   ({ children }) => children as React.ReactElement,
@@ -219,7 +226,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let summaryFixed: boolean = false;
   let summaryPosition: SummaryPosition = 'bottom';
 
-  if (typeof summary === 'object') {
+  if (typeof summary === 'object' && isPlainObject(summary)) {
     summaryRender = summary.render;
     summaryFixed = summary.fixed || summaryFixed;
     summaryPosition = summary.position || summaryPosition;
@@ -591,23 +598,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const isSummaryShowTop = isTableFixed && summaryPosition === 'top';
 
-  const getBodyContent = (type: BodyContentTypeEnum, mergeSummary?: boolean) => {
-    const ref = {
-      [BodyContentTypeEnum.body]: scrollBodyRef,
-      [BodyContentTypeEnum.summary]: scrollSummaryRef,
-    }[type];
-
-    const tableContent = {
-      [BodyContentTypeEnum.body]: bodyTable,
-      [BodyContentTypeEnum.summary]: footerTable,
-    }[type];
+  const getBodyContent = (type: string, mergeSummary?: boolean) => {
+    const ref = type === BODY_CONTENT_TYPE.body ? scrollBodyRef : scrollSummaryRef;
+    const tableContent = type === BODY_CONTENT_TYPE.body ? bodyTable : footerTable;
 
     return (
       <div
         ref={ref}
         style={{
           ...scrollXStyle,
-          ...(type === BodyContentTypeEnum.body ? scrollYStyle : {}),
+          ...(type === BODY_CONTENT_TYPE.body ? scrollYStyle : {}),
         }}
         onScroll={onScroll}
         className={classNames(`${prefixCls}-${type}`)}
@@ -620,7 +620,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         >
           {bodyColGroup}
           {tableContent}
-          {mergeSummary && type !== BodyContentTypeEnum.summary && footerTable}
+          {mergeSummary && type !== BODY_CONTENT_TYPE.summary && footerTable}
         </TableComponent>
       </div>
     );
@@ -659,12 +659,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     } else {
       bodyContent = summaryFixed ? (
         <>
-          {footerTable && isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
-          {getBodyContent(BodyContentTypeEnum.body)}
-          {footerTable && !isSummaryShowTop && getBodyContent(BodyContentTypeEnum.summary)}
+          {footerTable && isSummaryShowTop && getBodyContent(BODY_CONTENT_TYPE.summary)}
+          {getBodyContent(BODY_CONTENT_TYPE.body)}
+          {footerTable && !isSummaryShowTop && getBodyContent(BODY_CONTENT_TYPE.summary)}
         </>
       ) : (
-        getBodyContent(BodyContentTypeEnum.body, true)
+        getBodyContent(BODY_CONTENT_TYPE.body, true)
       );
     }
 
