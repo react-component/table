@@ -71,7 +71,6 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 import StickyScrollBar from './stickyScrollBar';
 import useSticky from './hooks/useSticky';
-import useDidUpdate from './hooks/useDidUpdate';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -527,11 +526,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         const str = String(v)
         if (isNumber(str)) {
           size = Number(v)
-        } else if (str.indexOf('px') === str.length - 2) {
-          const n = str.replace('px', '')
-          size = isNumber(n) ? Number('n') : 'auto'
+        } else {
+          const idx = str.indexOf('px')
+          if (idx !== -1 && idx === str.length - 2) {
+            const n = str.replace('px', '')
+            size = isNumber(n) ? Number(n) : 'auto'
+          }
         }
-        size = isNumber(size as string) ? Number(size) : 'auto'
       }
       return size
     }

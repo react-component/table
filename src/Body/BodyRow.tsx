@@ -72,7 +72,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   React.useEffect(() => {
     if (rowRef.current) {
       const rowHeight = rowRef.current ? rowRef.current.offsetHeight : 0
-      onRowResize(index, rowRef.current.offsetHeight);
+      onRowResize(index, rowHeight);
     }
   }, [data, expanded])
 
