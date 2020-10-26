@@ -405,6 +405,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
 
+    // reset start end and rowsHeights when data change
   if (recordPrevDatas.current !== data) {
     recordEnd.current = 0
     recordRowsHeights.current = []
@@ -452,8 +453,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       forceUpdate({});
     }
   }, [])
-
-  //  recordRowsHeights.current ? recordRowsHeights.current.reduce((a, b) => a + b, 0) : 'auto'
   
   const bodyHeight = React.useMemo(() => {
     const rowsHeights = recordRowsHeights.current
@@ -484,7 +483,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
     const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
-    // 当不存在 或者 存在和 target 相等的时候
+
     if (!getScrollTarget() || getScrollTarget() === compareTarget) {
       setScrollTarget(compareTarget);
 
@@ -519,8 +518,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       triggerOnScroll();
     }
   }, [horizonScroll]);
-  
-  // reset start end and when data change
 
   const bodyBoxSize: [number | 'auto', number | 'auto'] = React.useMemo(() => {
 
