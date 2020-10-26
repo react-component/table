@@ -127,7 +127,7 @@ class Demo extends React.Component {
       <Table
         columns={columns}
         data={data}
-        scroll={{ y: 300 }}
+        scroll={{ y: 300, virtualY: true }}
         rowKey={record => record.key}
         bodyStyle={{
           display: showBody ? '' : 'none',
