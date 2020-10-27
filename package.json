@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "7.10.2",
+  "version": "7.11.0",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -47,8 +47,8 @@
     "coverage": "father test --coverage"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",

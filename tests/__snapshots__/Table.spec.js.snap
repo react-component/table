@@ -752,6 +752,12 @@ exports[`Table.Basic summary support data type 1`] = `
     >
       Bamboo
     </td>
+    <td
+      class="rc-table-cell"
+      style="text-align: right;"
+    >
+      112.5
+    </td>
   </tr>
 </tfoot>
 `;
