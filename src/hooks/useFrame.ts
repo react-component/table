@@ -50,9 +50,9 @@ export function useLayoutState<State>(
 }
 
 /** Lock frame, when frame pass reset the lock. */
-export function useTimeoutLock<State>(defaultState?: State): [(state: State) => void, () => State] {
-  const frameRef = useRef<State | null>(defaultState);
-  const timeoutRef = useRef<number>(null);
+export function useTimeoutLock<State>(defaultState?: State): [(state: State) => void, () => State | null] {
+  const frameRef = useRef<State | null>(defaultState || null);
+  const timeoutRef = useRef<number>();
 
   function cleanUp() {
     window.clearTimeout(timeoutRef.current);
@@ -64,7 +64,7 @@ export function useTimeoutLock<State>(defaultState?: State): [(state: State) => 
 
     timeoutRef.current = window.setTimeout(() => {
       frameRef.current = null;
-      timeoutRef.current = null;
+      timeoutRef.current = undefined;
     }, 100);
   }
 
