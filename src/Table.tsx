@@ -701,7 +701,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     </div>
   );
 
-  if (horizonScroll &&  props?.data?.length) {
+  if (horizonScroll) {
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
