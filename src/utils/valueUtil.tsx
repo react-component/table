@@ -1,9 +1,5 @@
 import { Key, DataIndex } from '../interface';
 
-const { toString, hasOwnProperty } = Object.prototype;
-const { toString: fnToString } = Function.prototype;
-const objectCtorString = fnToString.call(Object);
-
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
 function toArray<T>(arr: T | T[]): T[] {
@@ -12,10 +8,6 @@ function toArray<T>(arr: T | T[]): T[] {
   }
 
   return Array.isArray(arr) ? arr : [arr];
-}
-
-function isObjectLike(value) {
-  return typeof value === 'object' && value !== null;
 }
 
 export function getPathValue<ValueType, ObjectType extends object>(
@@ -97,18 +89,4 @@ export function mergeObject<ReturnObject extends object>(
 
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
-}
-
-export function isPlainObject(value) {
-  if (!isObjectLike(value) || toString.call(value) !== '[object Object]') {
-    return false;
-  }
-
-  const proto = Object.getPrototypeOf(value);
-  if (proto === null) {
-    return true;
-  }
-
-  const Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor === 'function' && fnToString.call(Ctor) === objectCtorString;
 }
