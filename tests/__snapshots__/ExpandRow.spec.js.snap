@@ -240,7 +240,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px;"
+            style="height: 0px; font-size: 0;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
