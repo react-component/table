@@ -3,7 +3,7 @@ import { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 
-export interface ExpandedRowProps<RecordType> {
+export interface ExpandedRowProps {
   prefixCls: string;
   component: CustomizeComponent;
   cellComponent: CustomizeComponent;
@@ -17,7 +17,7 @@ export interface ExpandedRowProps<RecordType> {
   colSpan: number;
 }
 
-function ExpandedRow<RecordType>({
+function ExpandedRow({
   prefixCls,
   children,
   component: Component,
@@ -29,7 +29,7 @@ function ExpandedRow<RecordType>({
   expanded,
   componentWidth,
   colSpan,
-}: ExpandedRowProps<RecordType>) {
+}: ExpandedRowProps) {
   const { scrollbarSize } = React.useContext(TableContext);
 
   // Cache render node
