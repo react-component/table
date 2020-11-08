@@ -54,6 +54,7 @@ import {
   ColumnType,
   CustomizeScrollBody,
   TableSticky,
+  TableDirection,
 } from './interface';
 import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
@@ -71,6 +72,8 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 import StickyScrollBar from './stickyScrollBar';
 import useSticky from './hooks/useSticky';
+import useScrollBarColumns from './hooks/useScrollBarColumns';
+import useCalcStickyOffsets from './hooks/useCalcStickyOffsets';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -147,7 +150,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
-  direction?: 'ltr' | 'rtl';
+  direction?: TableDirection;
 
   // =================================== Internal ===================================
   /**
@@ -422,6 +425,16 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
 
+  const { combinationScrollBarSize, columnsWithScrollbar } = useScrollBarColumns<
+    ColumnType<unknown>[]
+  >({
+    columns: flattenColumns,
+    prefixCls,
+    scrollbarSize,
+    isSticky,
+    fixHeader,
+  });
+
   if (fixHeader) {
     scrollYStyle = {
       overflowY: 'scroll',
@@ -579,8 +592,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     />
   );
 
-  const bodyColGroup = (
-    <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
+  const flattenColWidths = flattenColumns.map(({ width }) => width);
+
+  const BodyColGroup = () => (
+    <ColGroup colWidths={flattenColWidths} columns={flattenColumns} />
+  );
+
+  const BodyColGroupWithScrollBar = () => (
+    <ColGroup
+      colWidths={[...flattenColWidths, combinationScrollBarSize]}
+      columns={columnsWithScrollbar}
+    />
   );
 
   const footerTable = summaryRender && <Footer>{summaryRender(mergedData)}</Footer>;
@@ -589,6 +611,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const isTableFixed = fixHeader || isSticky;
 
   const isSummaryShowTop = isTableFixed && summaryPosition === 'top';
+  const isSummaryFixed = isTableFixed && summaryFixed;
 
   const getBodyContent = (type: string, mergeSummary?: boolean) => {
     const isBody = type === BODY_CONTENT_TBODY;
@@ -611,7 +634,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             tableLayout: mergedTableLayout,
           }}
         >
-          {bodyColGroup}
+          {!isBody && summaryFixed ? <BodyColGroupWithScrollBar /> : <BodyColGroup />}
           {tableContent}
           {mergeSummary && type !== BODY_CONTENT_TSUMMARY && footerTable}
         </TableComponent>
@@ -704,7 +727,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         ref={scrollBodyRef}
       >
         <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
-          {bodyColGroup}
+          <BodyColGroup />
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
           {footerTable}
@@ -752,6 +775,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
+  const headerStickyOffsets = useCalcStickyOffsets({
+    stickyOffsets,
+    combinationScrollBarSize,
+    direction,
+    isSticky,
+  });
+
   const TableContextValue = React.useMemo(
     () => ({
       prefixCls,
@@ -761,8 +791,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       fixedInfoList: flattenColumns.map((_, colIndex) =>
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
+      summaryFixedInfoList: columnsWithScrollbar.map((_, colIndex) =>
+        getCellFixedInfo(colIndex, colIndex, columnsWithScrollbar, headerStickyOffsets, direction),
+      ),
+      columnsWithScrollbar,
       isSticky,
       isSummaryShowTop,
+      isSummaryFixed,
     }),
     [
       prefixCls,
@@ -770,10 +805,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       scrollbarSize,
       direction,
       flattenColumns,
+      columnsWithScrollbar,
       stickyOffsets,
       direction,
       isSticky,
       isSummaryShowTop,
+      isSummaryFixed,
     ],
   );
 

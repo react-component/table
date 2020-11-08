@@ -25,6 +25,8 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+export type TableDirection = 'ltr' | 'rtl';
+
 // ==================== Row =====================
 export type RowClassName<RecordType> = (
   record: RecordType,

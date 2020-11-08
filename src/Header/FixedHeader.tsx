@@ -6,6 +6,8 @@ import Header, { HeaderProps } from './Header';
 import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
+import useScrollBarColumns from '../hooks/useScrollBarColumns';
+import useCalcStickyOffsets from '../hooks/useCalcStickyOffsets';
 
 function useColumnWidth(colWidths: number[], columCount: number) {
   return useMemo(() => {
@@ -53,8 +55,6 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
   ) => {
     const { prefixCls, scrollbarSize, isSticky } = React.useContext(TableContext);
 
-    const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
-
     // Pass wheel to scroll event
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
@@ -79,38 +79,31 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
     }, []);
 
     // Add scrollbar column
-    const lastColumn = flattenColumns[flattenColumns.length - 1];
-    const ScrollBarColumn: ColumnType<unknown> = {
-      fixed: lastColumn ? lastColumn.fixed : null,
-      onHeaderCell: () => ({
-        className: `${prefixCls}-cell-scrollbar`,
-      }),
-    };
-
-    const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
-      () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
-      [combinationScrollBarSize, columns],
-    );
-
-    const flattenColumnsWithScrollbar = useMemo<ColumnType<unknown>[]>(
-      () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-      [combinationScrollBarSize, flattenColumns],
-    );
+    const { combinationScrollBarSize, columnsWithScrollbar } = useScrollBarColumns<ColumnsType<unknown>>({
+      columns,
+      prefixCls,
+      scrollbarSize,
+      isSticky,
+      fixHeader,
+    });
+    
+    const { columnsWithScrollbar: flattenColumnsWithScrollbar } = useScrollBarColumns<
+      ColumnType<unknown>[]
+    >({
+      columns: flattenColumns,
+      prefixCls,
+      scrollbarSize,
+      isSticky,
+      fixHeader,
+    });
 
     // Calculate the sticky offsets
-    const headerStickyOffsets = useMemo(() => {
-      const { right, left } = stickyOffsets;
-      return {
-        ...stickyOffsets,
-        left:
-          direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
-        right:
-          direction === 'rtl'
-            ? right
-            : [...right.map(width => width + combinationScrollBarSize), 0],
-        isSticky,
-      };
-    }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+    const headerStickyOffsets = useCalcStickyOffsets({
+      stickyOffsets,
+      combinationScrollBarSize,
+      direction,
+      isSticky,
+    });
 
     const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 

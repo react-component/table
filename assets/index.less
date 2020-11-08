@@ -18,6 +18,23 @@
   border-bottom: 0;
 }
 
+.cellScrollBar(@bgColor: #fff) {
+  .@{tablePrefixCls}-cell-scrollbar::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    width: 1px;
+    background: @bgColor;
+
+    .@{tablePrefixCls}-rtl& {
+      right: -1px;
+      left: auto;
+    }
+  }
+}
+
 .@{tablePrefixCls} {
   font-size: @font-size-base;
   color: @text-color;
@@ -165,20 +182,7 @@
       text-align: center;
     }
 
-    .@{tablePrefixCls}-cell-scrollbar::after {
-      position: absolute;
-      content: '';
-      top: 0;
-      bottom: 0;
-      left: -1px;
-      width: 1px;
-      background: @table-head-background-color;
-
-      .@{tablePrefixCls}-rtl& {
-        right: -1px;
-        left: auto;
-      }
-    }
+    .cellScrollBar(@table-head-background-color);
   }
 
   &-header {
@@ -298,6 +302,7 @@
     td {
       background: #fff;
     }
+    .cellScrollBar();
   }
   &-sticky {
     &-header {

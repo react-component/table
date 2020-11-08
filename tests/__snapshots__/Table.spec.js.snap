@@ -779,6 +779,9 @@ exports[`Table.Basic summary support data type 2`] = `
     >
       Bamboo
     </td>
+    <td
+      class="rc-table-cell rc-table-cell-scrollbar"
+    />
   </tr>
 </thead>
 `;

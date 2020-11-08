@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GetComponent } from '../interface';
+import { ColumnType, GetComponent } from '../interface';
 import { FixedInfo } from '../utils/fixUtil';
 
 export interface TableContextProps {
@@ -14,9 +14,15 @@ export interface TableContextProps {
 
   fixedInfoList: FixedInfo[];
 
+  summaryFixedInfoList: FixedInfo[];
+
+  columnsWithScrollbar: ColumnType<unknown>[];
+
   isSticky: boolean;
 
   isSummaryShowTop: boolean;
+
+  isSummaryFixed: boolean;
 }
 
 const TableContext = React.createContext<TableContextProps>(null);
