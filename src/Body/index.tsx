@@ -17,6 +17,8 @@ export interface BodyProps<RecordType> {
   rowExpandable: (record: RecordType) => boolean;
   emptyNode: React.ReactNode;
   childrenColumnName: string;
+  start: number;
+  end: number;
 }
 
 function Body<RecordType>({
@@ -28,40 +30,43 @@ function Body<RecordType>({
   rowExpandable,
   emptyNode,
   childrenColumnName,
+  start,
+  end,
 }: BodyProps<RecordType>) {
-  const { onColumnResize } = React.useContext(ResizeContext);
+  const { onColumnResize, onRowResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { fixHeader, horizonScroll, flattenColumns, componentWidth } = React.useContext(
     BodyContext,
   );
 
-  return React.useMemo(() => {
-    const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
+  const allRows = React.useMemo(() => {
     const trComponent = getComponent(['body', 'row'], 'tr');
     const tdComponent = getComponent(['body', 'cell'], 'td');
+    let rows: React.ReactNode | React.ReactNodeArray = [];
 
-    let rows: React.ReactNode;
     if (data.length) {
-      rows = data.map((record, index) => {
+      for (let index = start; index <= end; index += 1) {
+        const record = data[index];
         const key = getRowKey(record, index);
-
-        return (
+        (rows as React.ReactElement[]).push(
           <BodyRow
             key={key}
             rowKey={key}
             record={record}
             recordKey={key}
             index={index}
+            data={data}
             rowComponent={trComponent}
             cellComponent={tdComponent}
             expandedKeys={expandedKeys}
+            onRowResize={onRowResize}
             onRow={onRow}
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
             childrenColumnName={childrenColumnName}
-          />
+          />,
         );
-      });
+      }
     } else {
       rows = (
         <ExpandedRow
@@ -80,6 +85,25 @@ function Body<RecordType>({
         </ExpandedRow>
       );
     }
+    return rows;
+  }, [
+    emptyNode,
+    getComponent,
+    data,
+    flattenColumns,
+    componentWidth,
+    horizonScroll,
+    fixHeader,
+    prefixCls,
+    expandedKeys,
+    getRowKey,
+    start,
+    end,
+    onRowResize,
+  ]);
+
+  return React.useMemo(() => {
+    const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
 
     const columnsKey = getColumnsKey(flattenColumns);
 
@@ -98,21 +122,10 @@ function Body<RecordType>({
           </tr>
         )}
 
-        {rows}
+        {allRows}
       </WrapperComponent>
     );
-  }, [
-    data,
-    prefixCls,
-    onRow,
-    measureColumnWidth,
-    expandedKeys,
-    getRowKey,
-    getComponent,
-    componentWidth,
-    emptyNode,
-    flattenColumns,
-  ]);
+  }, [prefixCls, onRow, measureColumnWidth, getComponent, emptyNode, flattenColumns, allRows]);
 }
 
 const MemoBody = React.memo(Body);

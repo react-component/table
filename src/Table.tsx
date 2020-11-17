@@ -60,7 +60,7 @@ import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
-import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
+import { getPathValue, mergeObject, validateValue, isNumber, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -101,6 +101,26 @@ const MemoTableContent = React.memo<MemoTableContentProps>(
   },
 );
 
+interface VirtaulBoxProps {
+  children: React.ReactElement;
+  positionTop: number;
+  prefixCls: string;
+  bodyHeight: number | 'auto';
+  isVirtualListAtYAxis: boolean;
+}
+
+function VirtaulBox({children, ...props} : VirtaulBoxProps) {
+  const { isVirtualListAtYAxis, prefixCls, positionTop, bodyHeight } = props
+  if (isVirtualListAtYAxis)  return (
+    <div className={`${prefixCls}-virtual-box`} style={{height: bodyHeight, position: 'relative'}}>
+      <div style={{position: 'absolute', top: positionTop}}>
+        {children}
+      </div>
+    </div>
+  )
+  return children
+}
+
 export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<RecordType> {
   prefixCls?: string;
   className?: string;
@@ -112,7 +132,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   tableLayout?: TableLayout;
 
   // Fixed Columns
-  scroll?: { x?: number | true | string; y?: number | string };
+  scroll?: { x?: number | true | string; y?: number | string; virtualY?: boolean };
 
   // Expandable
   /** Config expand rows */
@@ -195,7 +215,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
     sticky,
   } = props;
-
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
 
@@ -372,9 +391,14 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const recordEnd = React.useRef<number>(0)
+  const recordRowsHeights = React.useRef<number[]>([])
+  const recordPrevDatas = React.useRef<RecordType[]>(mergedData)
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
+  const [scrollTop, setScrollTop] = React.useState(0);
   const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
+  const [, forceUpdate] = React.useState({});
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
@@ -383,6 +407,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = scroll && validateValue(scroll.x);
+  const isVirtualListAtYAxis = scroll && validateValue(scroll.virtualY) && scroll.virtualY !== false
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
@@ -395,6 +420,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
+
+    // reset start end and rowsHeights when data change
+  if (recordPrevDatas.current !== mergedData) {
+    recordEnd.current = 0
+    recordRowsHeights.current = []
+    recordPrevDatas.current = mergedData
+  }
 
   if (fixHeader) {
     scrollYStyle = {
@@ -430,6 +462,19 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
   }, []);
 
+  const onRowResize = React.useCallback((idx: number, height: number) => {
+    if (isVisible(fullTableRef.current)) {
+      recordRowsHeights.current[idx] = height
+      recordRowsHeights.current = [...recordRowsHeights.current]
+      forceUpdate({});
+    }
+  }, [])
+  
+  const bodyHeight = React.useMemo(() => {
+    const rowsHeights = recordRowsHeights.current
+    return rowsHeights.length ? rowsHeights.reduce((a, b) => a + b) : 'auto'
+  }, [recordRowsHeights.current])
+
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
@@ -454,6 +499,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
     const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+
     if (!getScrollTarget() || getScrollTarget() === compareTarget) {
       setScrollTarget(compareTarget);
 
@@ -463,7 +509,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
 
     if (currentTarget) {
-      const { scrollWidth, clientWidth } = currentTarget;
+      const { scrollWidth, clientWidth, scrollTop } = currentTarget;
+      setScrollTop(scrollTop)
       setPingedLeft(mergedScrollLeft > 0);
       setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
     }
@@ -487,6 +534,71 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       triggerOnScroll();
     }
   }, [horizonScroll]);
+
+  const bodyBoxSize: [number | 'auto', number | 'auto'] = React.useMemo(() => {
+
+    function getSize(v: any): number | 'auto' {
+      let size: number | 'auto' = 'auto'
+      if (v) {
+        const str = String(v)
+        if (isNumber(str)) {
+          size = Number(v)
+        } else {
+          const idx = str.indexOf('px')
+          if (idx !== -1 && idx === str.length - 2) {
+            const n = str.replace('px', '')
+            size = isNumber(n) ? Number(n) : 'auto'
+          }
+        }
+      }
+      return size
+    }
+    
+    return [getSize(style && style.width), getSize(scroll && scroll.y)]
+  }, [scroll, style])
+
+
+  const start = React.useMemo(() => {
+    let start = 0
+    if (!fixHeader || !isVirtualListAtYAxis) return start
+    const rowsHeights = recordRowsHeights.current
+    let height = rowsHeights[0] || 0
+    while(height < scrollTop) {
+      height += rowsHeights[++start]
+    }
+    return start
+  }, [fixHeader, recordRowsHeights.current, scrollTop, isVirtualListAtYAxis])
+  
+  const fullEnd = React.useMemo(() => mergedData.length - 1, [mergedData.length])
+
+
+  const end = React.useMemo<number>(() => {
+    if (!fixHeader || !isVirtualListAtYAxis) return fullEnd
+    let newEnd = Math.min(recordEnd.current, fullEnd)
+    const rowsHeights = recordRowsHeights.current
+    const fixRowEnd = Math.min(newEnd, rowsHeights.length - 1)
+    const [, boxHeight] = bodyBoxSize
+
+    if (boxHeight !== 'auto' && boxHeight) {
+      let currentRowsHeight = 0
+      
+      for (let i = 0; i <= fixRowEnd; i++) {
+        currentRowsHeight += rowsHeights[i]
+      }
+      if (currentRowsHeight - scrollTop <= boxHeight) {
+        newEnd += 1
+        newEnd = newEnd > fullEnd ? fullEnd : newEnd
+      } else {
+        if (currentRowsHeight - scrollTop - boxHeight > (rowsHeights[fixRowEnd])) {
+          newEnd -= 1
+          newEnd = newEnd < 0 ? 0 : newEnd
+        }
+      }
+    }
+    recordEnd.current = newEnd
+    return newEnd
+  }, [scrollTop, recordRowsHeights.current, bodyBoxSize, fixHeader, fullEnd, isVirtualListAtYAxis])
+
 
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
@@ -516,7 +628,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
 
   let groupTableNode: React.ReactNode;
-
+    
   // Header props
   const headerProps = {
     colWidths,
@@ -548,9 +660,20 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       getRowKey={getRowKey}
       onRow={onRow}
       emptyNode={emptyNode}
+      start={start}
+      end={end}
       childrenColumnName={mergedChildrenColumnName}
     />
   );
+
+  const positionTop = React.useMemo(() => {
+    let t = 0
+    const rowsHeights = recordRowsHeights.current
+    for (let i = 0; i < start; i++) {
+      t += rowsHeights[i]
+    }
+    return t
+  }, [recordRowsHeights.current, start])
 
   const bodyColGroup = (
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
@@ -600,16 +723,23 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
-          <TableComponent
-            style={{
-              ...scrollTableStyle,
-              tableLayout: mergedTableLayout,
-            }}
+          <VirtaulBox
+            isVirtualListAtYAxis={fixHeader && isVirtualListAtYAxis}
+            bodyHeight={bodyHeight}
+            positionTop={positionTop}
+            prefixCls={prefixCls}
           >
-            {bodyColGroup}
-            {bodyTable}
-            {footerTable}
-          </TableComponent>
+            <TableComponent
+                style={{
+                  ...scrollTableStyle,
+                  tableLayout: mergedTableLayout,
+                }}
+              >
+                {bodyColGroup}
+                {bodyTable}
+                {footerTable}
+              </TableComponent>
+          </VirtaulBox>
         </div>
       );
     }
@@ -692,7 +822,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       <MemoTableContent
         pingLeft={pingedLeft}
         pingRight={pingedRight}
-        props={{ ...props, stickyOffsets, mergedExpandedKeys }}
+        props={{ ...props, stickyOffsets, mergedExpandedKeys, start, end }}
       >
         {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
         <div className={`${prefixCls}-container`}>{groupTableNode}</div>
@@ -765,7 +895,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     ],
   );
 
-  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
+  const ResizeContextValue = React.useMemo(() => ({ onColumnResize, onRowResize }), [onColumnResize, onRowResize]);
 
   return (
     <TableContext.Provider value={TableContextValue}>

@@ -22,6 +22,8 @@ export interface BodyRowProps<RecordType> {
   rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
+  onRowResize: (idx: number, height: number) => void;
+  data: RecordType[];
 }
 
 function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowProps<RecordType>) {
@@ -35,12 +37,16 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
     rowExpandable,
     expandedKeys,
     onRow,
+    onRowResize,
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
     childrenColumnName,
+    data
   } = props;
   const { prefixCls, fixedInfoList } = React.useContext(TableContext);
+  const rowRef = React.useRef<HTMLTableRowElement>()
+  const expandedRowRef = React.useRef<HTMLTableRowElement>()
   const {
     fixHeader,
     fixColumn,
@@ -62,7 +68,17 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const expanded = expandedKeys && expandedKeys.has(props.recordKey);
 
   React.useEffect(() => {
+    if (rowRef.current) {
+      const rowHeight = rowRef.current.offsetHeight 
+      onRowResize(index, rowHeight);
+    }
+  }, [data, expanded])
+
+  React.useEffect(() => {
     if (expanded) {
+      if (rowRef.current && expandedRowRef.current) {
+        onRowResize(index, rowRef.current.offsetHeight + expandedRowRef.current.offsetHeight);
+      }
       setExpandRended(true);
     }
   }, [expanded]);
@@ -100,6 +116,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
   const columnsKey = getColumnsKey(flattenColumns);
   const baseRowNode = (
     <RowComponent
+      ref={rowRef}
       {...additionalProps}
       data-row-key={rowKey}
       className={classNames(
@@ -176,6 +193,7 @@ function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowP
       expandedRowClassName && expandedRowClassName(record, index, indent);
     expandRowNode = (
       <ExpandedRow
+        ref={expandedRowRef}
         expanded={expanded}
         className={classNames(
           `${prefixCls}-expanded-row`,

@@ -90,3 +90,7 @@ export function mergeObject<ReturnObject extends object>(
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
 }
+
+export function isNumber(str: string) {
+  return /^\d+(\.)?\d*?$/.test(str);
+}

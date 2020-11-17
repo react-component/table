@@ -29,6 +29,30 @@ describe('Table.Scroll', () => {
     expect(wrapper.find('.rc-table-body').props().style.maxHeight).toEqual(200);
   });
 
+  it('renders scroll.virtualY is true', () => {
+    const wrapper = mount(createTable({ scroll: { virtualY: true } }));
+    expect(wrapper.find('.rc-table-content').props().style.overflowX).toEqual(undefined);
+    expect(wrapper.find('.rc-table-content').props().style.overflowY).toEqual(undefined);
+    expect(wrapper.find('.rc-table-virtual-box')).toHaveLength(0);
+  });
+
+  it('renders scroll.x and scroll.virtualY are both true', () => {
+    const wrapper = mount(createTable({ scroll: { x: true, virtualY: true } }));
+    expect(wrapper.find('.rc-table-content').props().style.overflowX).toEqual('auto');
+    expect(wrapper.find('.rc-table-content').props().style.overflowY).toEqual('hidden');
+    expect(wrapper.find('.rc-table-virtual-box')).toHaveLength(0);
+  });
+
+  it('renders scroll.y and scroll.virtualY are both true', () => {
+    const wrapper = mount(createTable({ scroll: { y: 200, virtualY: true } }));
+    expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual(undefined);
+    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
+    expect(wrapper.find('.rc-table-virtual-box').props().style.position).toEqual('relative');
+    expect(wrapper.find('.rc-table-virtual-box').props().children.props.style.position).toEqual(
+      'absolute',
+    );
+  });
+
   it('renders scroll.x and scroll.y are both true', () => {
     const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
     expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('auto');
@@ -108,6 +132,7 @@ describe('Table.Scroll', () => {
         .props()
         .onScroll({
           currentTarget: {
+            scrollTop: 0,
             scrollLeft: 33,
             scrollWidth: 200,
             clientWidth: 100,

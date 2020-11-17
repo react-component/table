@@ -93,7 +93,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | className | String |  | additional className |
 | id | String |  | identifier of the container div |
 | useFixedHeader | Boolean | false | whether use separator table for header. better set width for columns |
-| scroll | Object | {x: false, y: false} | whether table can be scroll in x/y direction, `x` or `y` can be a number that indicated the width and height of table body |
+| scroll | Object | {x: false, y: false, virtualY: false } | whether table can be scroll in x/y direction, `x` or `y` can be a number that indicated the width and height of table body, when the `virtualY` set to be true and `y` set to be number or true, the component will generate a virtual list in y direction |
 | expandable | Object |  | Config expand props |
 | expandable.defaultExpandAllRows | Boolean | false | Expand All Rows initially |
 | expandable.defaultExpandedRowKeys | String[] | [] | initial expanded rows keys |
