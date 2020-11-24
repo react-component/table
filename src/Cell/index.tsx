@@ -200,12 +200,22 @@ function Cell<RecordType extends DefaultRecordType>(
     ref: isRefComponent(Component) ? ref : null,
   };
 
-  return (
-    <Component {...componentProps}>
-      {appendNode}
-      {childNode}
-    </Component>
-  );
+  if (appendNode) {
+    return (
+      <Component {...componentProps}>
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          {appendNode}
+          {childNode}
+        </div>
+      </Component>
+    );
+  }
+
+  return <Component {...componentProps}>{childNode}</Component>;
 }
 
 const RefCell = React.forwardRef<any, CellProps<any>>(Cell);
