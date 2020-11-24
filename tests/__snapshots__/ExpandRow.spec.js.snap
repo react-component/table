@@ -40,13 +40,17 @@ exports[`Table.Expand childrenColumnName 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-expanded"
-              />
-              Lucy
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-expanded"
+                />
+                Lucy
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -61,13 +65,17 @@ exports[`Table.Expand childrenColumnName 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-1"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jim
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-1"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jim
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -82,13 +90,17 @@ exports[`Table.Expand childrenColumnName 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -420,13 +432,17 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-expanded"
-              />
-              Lucy
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-expanded"
+                />
+                Lucy
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -441,13 +457,17 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-1"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jim
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-1"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jim
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -462,13 +482,17 @@ exports[`Table.Expand renders tree row correctly 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -523,13 +547,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed"
-              />
-              Lucy
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+                Lucy
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -544,13 +572,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -565,13 +597,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -586,13 +622,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-collapsed"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -607,13 +647,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
@@ -628,13 +672,17 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
             <td
               class="rc-table-cell rc-table-cell-with-append"
             >
-              <span
-                class="rc-table-row-indent indent-level-0"
-              />
-              <span
-                class="rc-table-row-expand-icon rc-table-row-spaced"
-              />
-              Jack
+              <div
+                style="display: flex;"
+              >
+                <span
+                  class="rc-table-row-indent indent-level-0"
+                />
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-spaced"
+                />
+                Jack
+              </div>
             </td>
             <td
               class="rc-table-cell"
