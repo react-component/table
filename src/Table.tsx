@@ -451,6 +451,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     currentTarget: HTMLElement;
     scrollLeft?: number;
   }) => {
+    const isRTL = direction === 'rtl';
     const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
     const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
@@ -464,8 +465,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
     if (currentTarget) {
       const { scrollWidth, clientWidth } = currentTarget;
-      setPingedLeft(mergedScrollLeft > 0);
-      setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+      if (isRTL) {
+        setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
+        setPingedRight(-mergedScrollLeft > 0);
+      } else {
+        setPingedLeft(mergedScrollLeft > 0);
+        setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+      }
     }
   };
 
