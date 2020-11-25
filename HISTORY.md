@@ -1,4 +1,14 @@
-# History
+# Changelog
+
+## 7.11.3
+
+`2020-11-25`
+
+- fix: ping left right in rtl. [#556](https://github.com/react-component/table/pull/556)
+
+---
+
+Middle check in [releases](https://github.com/react-component/table/releases).
 
 ---
 
