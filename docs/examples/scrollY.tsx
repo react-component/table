@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 const data = [];
 for (let i = 0; i < 10; i += 1) {

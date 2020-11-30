@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 const columns = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },

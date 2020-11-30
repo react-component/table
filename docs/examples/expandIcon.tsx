@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 const data = [
   { key: 0, a: '123' },

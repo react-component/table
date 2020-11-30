@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { VariableSizeGrid as Grid } from 'react-window';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 import './virtual-list.less';
 
 const columns = [

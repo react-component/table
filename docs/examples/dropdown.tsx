@@ -4,7 +4,7 @@ import DropDown from 'rc-dropdown';
 import 'rc-dropdown/assets/index.css';
 import 'rc-menu/assets/index.css';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 const data = [];
 for (let i = 0; i < 10; i += 1) {

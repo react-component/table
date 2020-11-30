@@ -2,7 +2,7 @@
 import React from 'react';
 import Table from 'rc-table';
 import { useCheckbox } from './utils/useInput';
-import 'assets/index.less';
+import '../../assets/index.less';
 import { ColumnType } from '@/interface';
 
 interface RecordType {

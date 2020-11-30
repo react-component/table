@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 const onRowClick = (record, index, event) => {
   console.log(`Click nth(${index}) row of parent, record.name: ${record.name}`);

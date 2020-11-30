@@ -1,7 +1,7 @@
 import React from 'react';
 import { Resizable } from 'react-resizable';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 import 'react-resizable/css/styles.css';
 import { ColumnType } from '@/interface';
 

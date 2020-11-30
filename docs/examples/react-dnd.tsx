@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 createGlobalStyle`
   tr.drop-over-downward td {

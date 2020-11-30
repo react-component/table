@@ -1,7 +1,7 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import Table from 'rc-table';
-import 'assets/index.less';
+import '../../assets/index.less';
 
 interface RecordType {
   a?: string;
