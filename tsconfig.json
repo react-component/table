@@ -13,9 +13,5 @@
       "rc-table": ["src/index.ts"],
       "assets/*": ["assets/*"]
     }
-  },
-  "include": [
-    "assets/*",
-    "src/*"
-  ]
+  }
 }
