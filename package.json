@@ -69,7 +69,7 @@
     "@umijs/fabric": "^2.0.0",
     "@umijs/test": "^3.2.27",
     "cross-env": "^7.0.0",
-    "dumi": "^1.1.0-rc.5",
+    "dumi": "^1.0.37",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
