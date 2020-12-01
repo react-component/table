@@ -10,7 +10,7 @@ export default defineConfig({
   outputPath: '.doc',
   exportStatic: {},
   styles: [
-    `a svg {
+    `a img + svg {
       display: none;
     }`
   ]
