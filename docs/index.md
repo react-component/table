@@ -34,7 +34,7 @@ npm start
 
 ## Example
 
-https://react-component.github.io/table/
+https://table.react-component.now.sh/
 
 ## Usage
 
