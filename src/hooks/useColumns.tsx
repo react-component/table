@@ -119,6 +119,7 @@ function useColumns<RecordType>(
     expandIconColumnIndex,
     direction,
     expandRowByClick,
+    columnWidth,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -132,6 +133,7 @@ function useColumns<RecordType>(
     expandIconColumnIndex?: number;
     direction?: 'ltr' | 'rtl';
     expandRowByClick?: boolean;
+    columnWidth?: number | string;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
@@ -153,6 +155,7 @@ function useColumns<RecordType>(
         title: '',
         fixed: prevColumn ? prevColumn.fixed : null,
         className: `${prefixCls}-row-expand-icon-cell`,
+        width: columnWidth,
         render: (_, record, index) => {
           const rowKey = getRowKey(record, index);
           const expanded = expandedKeys.has(rowKey);

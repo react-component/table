@@ -210,6 +210,7 @@ export interface ExpandableConfig<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;
+  columnWidth?: number | string;
 }
 
 // =================== Render ===================
