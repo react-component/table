@@ -198,8 +198,21 @@ export type RenderExpandIcon<RecordType> = (
   props: RenderExpandIconProps<RecordType>,
 ) => React.ReactNode;
 
-export interface ExpandableConfig<RecordType> extends LegacyExpandableProps<RecordType> {
+export interface ExpandableConfig<RecordType> {
+  expandedRowKeys?: Key[];
+  defaultExpandedRowKeys?: Key[];
+  expandedRowRender?: ExpandedRowRender<RecordType>;
+  expandRowByClick?: boolean;
+  expandIcon?: RenderExpandIcon<RecordType>;
+  onExpand?: (expanded: boolean, record: RecordType) => void;
+  onExpandedRowsChange?: (expandedKeys: Key[]) => void;
+  defaultExpandAllRows?: boolean;
+  indentSize?: number;
+  expandIconColumnIndex?: number;
+  expandedRowClassName?: RowClassName<RecordType>;
+  childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;
+  columnWidth?: number | string;
 }
 
 // =================== Render ===================
