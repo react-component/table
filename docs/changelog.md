@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.12.0
+
+`2020-12-08`
+
+- docs: use dumi. [#558](https://github.com/react-component/table/pull/558)
+
 ## 7.11.3
 
 `2020-11-25`
