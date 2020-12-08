@@ -38,7 +38,7 @@
     "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d .doc",
-    "compile": "father-build",
+    "compile": "father build && lessc assets/index.less assets/index.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "father test",
