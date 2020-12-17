@@ -474,6 +474,26 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       }
     }
   };
+                  
+  React.useEffect(() => {
+    function onWheel(e: WheelEvent) {
+      const { currentTarget, deltaX } = (e as unknown) as React.WheelEvent<HTMLDivElement>;
+      if (deltaX) {
+        onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
+        e.preventDefault();
+      }
+    }
+    if (scrollBodyRef.current instanceof HTMLElement) {
+      scrollBodyRef.current?.addEventListener('wheel', onWheel, {
+        passive: false,
+      });
+    }
+    return () => {
+      if (scrollBodyRef.current instanceof HTMLElement) {
+        scrollBodyRef.current?.removeEventListener('wheel', onWheel);
+      }
+    };
+  }, []);
 
   const triggerOnScroll = () => {
     if (scrollBodyRef.current) {
