@@ -53,7 +53,7 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
-export type DataIndex = string | number | (string | number)[];
+export type DataIndex<RecordType> = keyof RecordType | number | (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -75,7 +75,7 @@ export type AlignType = 'left' | 'center' | 'right';
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
   render?: (
     value: any,
     record: RecordType,
@@ -91,8 +91,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
 
 export type ColumnsType<RecordType = unknown> = (
   | ColumnGroupType<RecordType>
-  | ColumnType<RecordType>
-)[];
+  | ColumnType<RecordType>)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
