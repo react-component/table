@@ -590,7 +590,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         }
         warning(
           false,
-          'When use `components.body` with render props. Each column should have a fixed value.',
+          'When use `components.body` with render props. Each column should have a fixed `width` value.',
         );
 
         return 0;
