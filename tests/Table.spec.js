@@ -708,7 +708,7 @@ describe('Table.Basic', () => {
         expect(wrapper.render()).toMatchSnapshot();
 
         expect(errSpy).toHaveBeenCalledWith(
-          'Warning: When use `components.body` with render props. Each column should have a fixed value.',
+          'Warning: When use `components.body` with render props. Each column should have a fixed `width` value.',
         );
         errSpy.mockRestore();
       });

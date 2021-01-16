@@ -555,11 +555,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (fixColumn) {
       return scroll.x === 'max-content' ? 'auto' : 'fixed';
     }
-    if (fixHeader || flattenColumns.some(({ ellipsis }) => ellipsis)) {
+    if (fixHeader || isSticky || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
     }
     return 'auto';
-  }, [fixHeader, fixColumn, flattenColumns, tableLayout]);
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout, isSticky]);
 
   let groupTableNode: React.ReactNode;
 
@@ -673,7 +673,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         }
         warning(
           false,
-          'When use `components.body` with render props. Each column should have a fixed value.',
+          'When use `components.body` with render props. Each column should have a fixed `width` value.',
         );
 
         return 0;
