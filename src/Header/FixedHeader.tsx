@@ -86,7 +86,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       isSticky,
       fixHeader,
     });
-    
+
     const { columnsWithScrollbar: flattenColumnsWithScrollbar } = useScrollBarColumns<
       ColumnType<unknown>[]
     >({
