@@ -211,12 +211,13 @@ function Cell<RecordType extends DefaultRecordType>(
 const RefCell = React.forwardRef<any, CellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
+const memoPropNames = ['fixLeft', 'fixRight'];
 const MemoCell = React.memo(RefCell, (prev: CellProps<any>, next: CellProps<any>) => {
-  if (next.shouldCellUpdate) {
-    return !next.shouldCellUpdate(next.record, prev.record);
+  const memoResult = memoPropNames.some(name => prev[name] !== next[name]);
+  if(memoResult || !next.shouldCellUpdate){
+    return false;
   }
-
-  return false;
+  return !next.shouldCellUpdate(next.record, prev.record);
 });
 
 export default MemoCell;
