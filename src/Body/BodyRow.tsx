@@ -24,7 +24,9 @@ export interface BodyRowProps<RecordType> {
   childrenColumnName: string;
 }
 
-function BodyRow<RecordType extends { children?: RecordType[] }>(props: BodyRowProps<RecordType>) {
+function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
+  props: BodyRowProps<RecordType>,
+) {
   const {
     className,
     style,

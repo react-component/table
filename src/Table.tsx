@@ -106,7 +106,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  data?: RecordType[];
+  data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
@@ -123,14 +123,14 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   // Additional Part
   title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
-  summary?: (data: RecordType[]) => React.ReactNode;
+  summary?: (data: readonly RecordType[]) => React.ReactNode;
 
   // Customize
   id?: string;
   showHeader?: boolean;
   components?: TableComponents<RecordType>;
   onRow?: GetComponentProps<RecordType>;
-  onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
+  onHeaderRow?: GetComponentProps<readonly ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
   direction?: 'ltr' | 'rtl';
@@ -303,7 +303,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     return false;
   }, [!!expandedRowRender, mergedData]);
 
-  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
+  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(() => {
     if (defaultExpandedRowKeys) {
       return defaultExpandedRowKeys;
     }

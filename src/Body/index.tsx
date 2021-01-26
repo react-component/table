@@ -9,7 +9,7 @@ import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
 
 export interface BodyProps<RecordType> {
-  data: RecordType[];
+  data: readonly RecordType[];
   getRowKey: GetRowKey<RecordType>;
   measureColumnWidth: boolean;
   expandedKeys: Set<Key>;

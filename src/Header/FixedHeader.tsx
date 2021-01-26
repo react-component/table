@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
 
-function useColumnWidth(colWidths: number[], columCount: number) {
+function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
     const cloneColumns: number[] = [];
     for (let i = 0; i < columCount; i += 1) {
@@ -24,7 +24,7 @@ function useColumnWidth(colWidths: number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   noData: boolean;
-  colWidths: number[];
+  colWidths: readonly number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
   fixHeader: boolean;
@@ -92,7 +92,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       [combinationScrollBarSize, columns],
     );
 
-    const flattenColumnsWithScrollbar = useMemo<ColumnType<unknown>[]>(
+    const flattenColumnsWithScrollbar = useMemo(
       () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
       [combinationScrollBarSize, flattenColumns],
     );

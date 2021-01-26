@@ -53,7 +53,7 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
-export type DataIndex = string | number | (string | number)[];
+export type DataIndex = string | number | readonly (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -89,17 +89,14 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export type ColumnsType<RecordType = unknown> = (
-  | ColumnGroupType<RecordType>
-  | ColumnType<RecordType>
-)[];
+export type ColumnsType<RecordType = unknown> = readonly (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 // ================= Fix Column =================
 export interface StickyOffsets {
-  left: number[];
-  right: number[];
+  left: readonly number[];
+  right: readonly number[];
   isSticky?: boolean;
 }
 
@@ -118,7 +115,7 @@ type Component<P> =
 export type CustomizeComponent = Component<any>;
 
 export type CustomizeScrollBody<RecordType> = (
-  data: RecordType[],
+  data: readonly RecordType[],
   info: {
     scrollbarSize: number;
     ref: React.Ref<{ scrollLeft: number }>;
@@ -143,7 +140,7 @@ export interface TableComponents<RecordType> {
 }
 
 export type GetComponent = (
-  path: string[],
+  path: readonly string[],
   defaultComponent?: CustomizeComponent,
 ) => CustomizeComponent;
 
@@ -197,13 +194,13 @@ export type RenderExpandIcon<RecordType> = (
 ) => React.ReactNode;
 
 export interface ExpandableConfig<RecordType> {
-  expandedRowKeys?: Key[];
-  defaultExpandedRowKeys?: Key[];
+  expandedRowKeys?: readonly Key[];
+  defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
   expandRowByClick?: boolean;
   expandIcon?: RenderExpandIcon<RecordType>;
   onExpand?: (expanded: boolean, record: RecordType) => void;
-  onExpandedRowsChange?: (expandedKeys: Key[]) => void;
+  onExpandedRowsChange?: (expandedKeys: readonly Key[]) => void;
   defaultExpandAllRows?: boolean;
   indentSize?: number;
   expandIconColumnIndex?: number;
@@ -214,7 +211,7 @@ export interface ExpandableConfig<RecordType> {
 }
 
 // =================== Render ===================
-export type PanelRender<RecordType> = (data: RecordType[]) => React.ReactNode;
+export type PanelRender<RecordType> = (data: readonly RecordType[]) => React.ReactNode;
 
 // =================== Events ===================
 export type TriggerEventHandler<RecordType> = (

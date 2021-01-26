@@ -12,12 +12,12 @@ import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
 
 export interface RowProps<RecordType> {
-  cells: CellType<RecordType>[];
+  cells: readonly CellType<RecordType>[];
   stickyOffsets: StickyOffsets;
-  flattenColumns: ColumnType<RecordType>[];
+  flattenColumns: readonly ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
-  onHeaderRow: GetComponentProps<ColumnType<RecordType>[]>;
+  onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
 }
 

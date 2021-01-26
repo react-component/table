@@ -60,7 +60,7 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
   }, []);
 }
 
-function warningFixed(flattenColumns: { fixed?: FixedType }[]) {
+function warningFixed(flattenColumns: readonly { fixed?: FixedType }[]) {
   let allFixLeft = true;
   for (let i = 0; i < flattenColumns.length; i += 1) {
     const col = flattenColumns[i];
@@ -136,7 +136,7 @@ function useColumns<RecordType>(
     columnWidth?: number | string;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
-): [ColumnsType<RecordType>, ColumnType<RecordType>[]] {
+): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
   const baseColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
     [columns, children],
