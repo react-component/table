@@ -16,7 +16,7 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   expandedRowClassName: RowClassName<RecordType>;
 
   columns: ColumnsType<RecordType>;
-  flattenColumns: ColumnType<RecordType>[];
+  flattenColumns: readonly ColumnType<RecordType>[];
 
   componentWidth: number;
   tableLayout: TableLayout;

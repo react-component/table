@@ -32,13 +32,13 @@ export function renderExpandIcon<RecordType>({
 }
 
 export function findAllChildrenKeys<RecordType>(
-  data: RecordType[],
+  data: readonly RecordType[],
   getRowKey: GetRowKey<RecordType>,
   childrenColumnName: string,
 ): Key[] {
   const keys: Key[] = [];
 
-  function dig(list: RecordType[]) {
+  function dig(list: readonly RecordType[]) {
     (list || []).forEach((item, index) => {
       keys.push(getRowKey(item, index));
 
