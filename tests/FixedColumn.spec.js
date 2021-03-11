@@ -49,29 +49,45 @@ describe('Table.FixedColumn', () => {
       { scrollName: 'scrollX', scroll: { x: 1200 } },
       { scrollName: 'scrollXY', scroll: { x: 1200, y: 100 } },
     ].forEach(({ scrollName, scroll }) => {
-      [{ name: 'with data', data }, { name: 'without data', data: [] }].forEach(
-        ({ name, data: testData }) => {
-          it(`${scrollName} - ${name}`, async () => {
-            jest.useFakeTimers();
-            const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
+      [
+        { name: 'with data', data },
+        { name: 'without data', data: [] },
+      ].forEach(({ name, data: testData }) => {
+        it(`${scrollName} - ${name}`, async () => {
+          jest.useFakeTimers();
+          const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
-            act(() => {
-              wrapper
-                .find('table ResizeObserver')
-                .first()
-                .props()
-                .onResize({ width: 93, offsetWidth: 93 });
-            });
-            await act(async () => {
-              jest.runAllTimers();
-              await Promise.resolve();
-              wrapper.update();
-            });
-            expect(wrapper.render()).toMatchSnapshot();
-            jest.useRealTimers();
+          act(() => {
+            wrapper
+              .find('table ResizeObserver')
+              .first()
+              .props()
+              .onResize({ width: 93, offsetWidth: 93 });
           });
-        },
+          await act(async () => {
+            jest.runAllTimers();
+            await Promise.resolve();
+            wrapper.update();
+          });
+          expect(wrapper.render()).toMatchSnapshot();
+          jest.useRealTimers();
+        });
+      });
+    });
+
+    it('all column has width should use it', () => {
+      const wrapper = mount(
+        <Table
+          columns={[
+            { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
+            { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+          ]}
+          data={[]}
+          scroll={{ x: 'max-content' }}
+        />,
       );
+
+      expect(wrapper.find('colgroup').render()).toMatchSnapshot();
     });
   });
 

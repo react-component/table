@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
-import Header, { HeaderProps } from './Header';
+import type { HeaderProps } from './Header';
+import Header from './Header';
 import ColGroup from '../ColGroup';
-import { ColumnsType, ColumnType } from '../interface';
+import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
@@ -78,6 +79,12 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       };
     }, []);
 
+    // Check if all flattenColumns has width
+    const allFlattenColumnsWithWidth = React.useMemo(
+      () => flattenColumns.every(column => column.width >= 0),
+      [flattenColumns],
+    );
+
     // Add scrollbar column
     const lastColumn = flattenColumns[flattenColumns.length - 1];
     const ScrollBarColumn: ColumnType<unknown> = {
@@ -131,11 +138,13 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
             visibility: noData || mergedColumnWidth ? null : 'hidden',
           }}
         >
-          <ColGroup
-            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
-            columCount={columCount + 1}
-            columns={flattenColumnsWithScrollbar}
-          />
+          {(!noData || allFlattenColumnsWithWidth) && (
+            <ColGroup
+              colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
+              columCount={columCount + 1}
+              columns={flattenColumnsWithScrollbar}
+            />
+          )}
           <Header
             {...props}
             stickyOffsets={headerStickyOffsets}
