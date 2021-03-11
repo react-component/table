@@ -695,6 +695,17 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
 </div>
 `;
 
+exports[`Table.FixedColumn renders correctly all column has width should use it 1`] = `
+<colgroup>
+  <col
+    style="width: 100px; min-width: 100px;"
+  />
+  <col
+    style="width: 100px; min-width: 100px;"
+  />
+</colgroup>
+`;
+
 exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
 <div
   class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
@@ -2395,47 +2406,6 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       <table
         style="table-layout: fixed;"
       >
-        <colgroup>
-          <col
-            style="width: 93px; min-width: 93px;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 0px; min-width: 0;"
-          />
-          <col
-            style="width: 15px; min-width: 15px;"
-          />
-        </colgroup>
         <thead
           class="rc-table-thead"
         >
