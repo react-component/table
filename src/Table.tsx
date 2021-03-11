@@ -35,7 +35,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
 import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
-import {
+import type {
   GetRowKey,
   ColumnsType,
   TableComponents,
@@ -583,6 +583,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         ref: scrollBodyRef,
         onScroll,
       });
+
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
         const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
