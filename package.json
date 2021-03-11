@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "7.13.1",
+  "version": "7.13.2",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
