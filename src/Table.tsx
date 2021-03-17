@@ -530,6 +530,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     stickyOffsets,
     onHeaderRow,
     fixHeader,
+    scroll
   };
 
   // Empty
@@ -627,6 +628,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {showHeader !== false && (
           <FixedHeader
             noData={!mergedData.length}
+            maxContentScroll={horizonScroll && scroll.x === 'max-content'}
             {...headerProps}
             {...columnContext}
             direction={direction}
