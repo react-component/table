@@ -25,6 +25,7 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   noData: boolean;
+  maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
@@ -48,6 +49,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       offsetHeader,
       stickyClassName,
       onScroll,
+      maxContentScroll,
       ...props
     },
     ref,
@@ -138,7 +140,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
             visibility: noData || mergedColumnWidth ? null : 'hidden',
           }}
         >
-          {(!noData || allFlattenColumnsWithWidth) && (
+          {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
             <ColGroup
               colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
               columCount={columCount + 1}
