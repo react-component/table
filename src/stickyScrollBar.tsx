@@ -138,12 +138,16 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   React.useEffect(() => {
     if (!scrollState.isHiddenScrollBar) {
-      setScrollState(state => ({
-        ...state,
-        scrollLeft:
-          (scrollBodyRef.current.scrollLeft / scrollBodyRef.current?.scrollWidth) *
-          scrollBodyRef.current?.clientWidth,
-      }));
+      setScrollState(state => {
+        const bodyNode = scrollBodyRef.current;
+        if (!bodyNode) {
+          return state;
+        }
+        return {
+          ...state,
+          scrollLeft: (bodyNode.scrollLeft / bodyNode.scrollWidth) * bodyNode.clientWidth,
+        };
+      });
     }
   }, [scrollState.isHiddenScrollBar]);
 

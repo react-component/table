@@ -3,8 +3,8 @@ import { ColumnType } from './interface';
 import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
 
 export interface ColGroupProps<RecordType> {
-  colWidths: (number | string)[];
-  columns?: ColumnType<RecordType>[];
+  colWidths: readonly (number | string)[];
+  columns?: readonly ColumnType<RecordType>[];
   columCount?: number;
 }
 

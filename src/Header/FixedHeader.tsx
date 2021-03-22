@@ -2,14 +2,15 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
-import Header, { HeaderProps } from './Header';
+import type { HeaderProps } from './Header';
+import Header from './Header';
 import ColGroup from '../ColGroup';
-import { ColumnsType, ColumnType } from '../interface';
+import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
 import useScrollBarColumns from '../hooks/useScrollBarColumns';
 import useCalcStickyOffsets from '../hooks/useCalcStickyOffsets';
 
-function useColumnWidth(colWidths: number[], columCount: number) {
+function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
     const cloneColumns: number[] = [];
     for (let i = 0; i < columCount; i += 1) {
@@ -26,7 +27,8 @@ function useColumnWidth(colWidths: number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   noData: boolean;
-  colWidths: number[];
+  maxContentScroll: boolean;
+  colWidths: readonly number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
   fixHeader: boolean;
@@ -49,6 +51,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       offsetHeader,
       stickyClassName,
       onScroll,
+      maxContentScroll,
       ...props
     },
     ref,
@@ -77,6 +80,12 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
         scrollRef.current?.removeEventListener('wheel', onWheel);
       };
     }, []);
+
+    // Check if all flattenColumns has width
+    const allFlattenColumnsWithWidth = React.useMemo(
+      () => flattenColumns.every(column => column.width >= 0),
+      [flattenColumns],
+    );
 
     // Add scrollbar column
     const { combinationScrollBarSize, columnsWithScrollbar } = useScrollBarColumns<ColumnsType<unknown>>({
@@ -124,11 +133,13 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
             visibility: noData || mergedColumnWidth ? null : 'hidden',
           }}
         >
-          <ColGroup
-            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
-            columCount={columCount + 1}
-            columns={flattenColumnsWithScrollbar}
-          />
+          {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
+            <ColGroup
+              colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
+              columCount={columCount + 1}
+              columns={flattenColumnsWithScrollbar}
+            />
+          )}
           <Header
             {...props}
             stickyOffsets={headerStickyOffsets}

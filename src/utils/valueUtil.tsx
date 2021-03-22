@@ -2,12 +2,11 @@ import { Key, DataIndex } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
-function toArray<T>(arr: T | T[]): T[] {
+function toArray<T>(arr: T | readonly T[]): T[] {
   if (arr === undefined || arr === null) {
     return [];
   }
-
-  return Array.isArray(arr) ? arr : [arr];
+  return (Array.isArray(arr) ? arr : [arr]) as T[];
 }
 
 export function getPathValue<ValueType, ObjectType extends object>(
@@ -40,7 +39,7 @@ interface GetColumnKeyColumn {
   dataIndex?: DataIndex;
 }
 
-export function getColumnsKey(columns: GetColumnKeyColumn[]) {
+export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
   const columnKeys: React.Key[] = [];
   const keys: Record<React.Key, boolean> = {};
 

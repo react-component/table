@@ -35,7 +35,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
 import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
-import {
+import type {
   GetRowKey,
   ColumnsType,
   TableComponents,
@@ -94,7 +94,7 @@ interface MemoTableContentProps {
   props: any;
 }
 
-type SummaryRender<RecordType> = (data: RecordType[]) => React.ReactNode;
+type SummaryRender<RecordType> = (data: readonly RecordType[]) => React.ReactNode;
 
 type SummaryPosition = 'top' | 'bottom';
 
@@ -117,7 +117,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  data?: RecordType[];
+  data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
   rowKey?: string | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
@@ -147,7 +147,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   showHeader?: boolean;
   components?: TableComponents<RecordType>;
   onRow?: GetComponentProps<RecordType>;
-  onHeaderRow?: GetComponentProps<ColumnType<RecordType>[]>;
+  onHeaderRow?: GetComponentProps<readonly ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
   direction?: TableDirection;
@@ -331,7 +331,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     return false;
   }, [!!expandedRowRender, mergedData]);
 
-  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState<Key[]>(() => {
+  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(() => {
     if (defaultExpandedRowKeys) {
       return defaultExpandedRowKeys;
     }
@@ -570,6 +570,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     stickyOffsets,
     onHeaderRow,
     fixHeader,
+    scroll
   };
 
   // Empty
@@ -666,6 +667,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         ref: scrollBodyRef,
         onScroll,
       });
+
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
         const colWidth = index === columns.length - 1 ? (width as number) - scrollbarSize : width;
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
@@ -696,6 +698,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {showHeader !== false && (
           <FixedHeader
             noData={!mergedData.length}
+            maxContentScroll={horizonScroll && scroll.x === 'max-content'}
             {...headerProps}
             {...columnContext}
             direction={direction}

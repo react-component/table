@@ -16,7 +16,7 @@ export interface FixedInfo {
 export function getCellFixedInfo(
   colStart: number,
   colEnd: number,
-  columns: { fixed?: FixedType }[],
+  columns: readonly { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
   direction: 'ltr' | 'rtl',
 ): FixedInfo {

@@ -83,9 +83,9 @@ function parseHeaderRows<RecordType>(
 
 export interface HeaderProps<RecordType> {
   columns: ColumnsType<RecordType>;
-  flattenColumns: ColumnType<RecordType>[];
+  flattenColumns: readonly ColumnType<RecordType>[];
   stickyOffsets: StickyOffsets;
-  onHeaderRow: GetComponentProps<ColumnType<RecordType>[]>;
+  onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
 }
 
 function Header<RecordType>({

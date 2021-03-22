@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "7.12.3",
+  "version": "7.13.3",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -67,7 +67,7 @@
     "@types/react-dom": "^16.9.0",
     "@umijs/fabric": "^2.0.0",
     "cross-env": "^7.0.0",
-    "dumi": "^1.1.0-rc.6",
+    "dumi": "^1.1.9",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
