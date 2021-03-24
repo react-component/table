@@ -482,8 +482,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   const onFullTableResize = ({ width }) => {
-    triggerOnScroll();
-    setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+    // fix chrome throw ResizeObserver loop limit exceeded
+    window.requestAnimationFrame(() => {
+      triggerOnScroll();
+      setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+    })
   };
 
   // Sync scroll bar when init or `horizonScroll` changed
