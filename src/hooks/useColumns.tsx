@@ -153,7 +153,7 @@ function useColumns<RecordType>(
       let fixedColumn: FixedType | null;
       if ((fixed === 'left' || fixed) && !expandIconColumnIndex) {
         fixedColumn = 'left';
-      } else if (fixed === 'right' && expandIconColumnIndex === baseColumns.length) {
+      } else if ((fixed === 'right' || fixed) && expandIconColumnIndex === baseColumns.length) {
         fixedColumn = 'right';
       } else {
         fixedColumn = prevColumn ? prevColumn.fixed : null;
