@@ -481,12 +481,26 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
   };
 
+  const requestAnimationFrameIdRef = React.useRef<number>();
+  const cancelRequestAnimationFrame = () => {
+    if (requestAnimationFrameIdRef.current) {
+      window.cancelAnimationFrame(requestAnimationFrameIdRef.current);
+      requestAnimationFrameIdRef.current = null;
+    }
+  };
+  React.useEffect(() => {
+    return () => {
+      cancelRequestAnimationFrame();
+    };
+  }, []);
+
   const onFullTableResize = ({ width }) => {
     // fix chrome throw ResizeObserver loop limit exceeded
-    window.requestAnimationFrame(() => {
+    cancelRequestAnimationFrame();
+    requestAnimationFrameIdRef.current = window.requestAnimationFrame(() => {
       triggerOnScroll();
       setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
-    })
+    });
   };
 
   // Sync scroll bar when init or `horizonScroll` changed
@@ -533,7 +547,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     stickyOffsets,
     onHeaderRow,
     fixHeader,
-    scroll
+    scroll,
   };
 
   // Empty
