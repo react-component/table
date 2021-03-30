@@ -38,6 +38,7 @@ const Demo = () => {
   const [scrollX, scrollXProps] = useCheckbox(false);
   const [fixHeader, fixHeaderProps] = useCheckbox(false);
   const [expandIconPosition, expandIconPositionProps] = useCheckbox(false);
+  const [fixExpand, setFixExpand] = useCheckbox(false);
 
   const remove = (index: number) => {
     const newData = data.slice();
@@ -62,6 +63,13 @@ const Demo = () => {
     columns.unshift({ title: 'fix left 2', dataIndex: 'a', width: 100, fixed: 'left' });
     columns.unshift({ title: 'fix left 1', dataIndex: 'a', width: 100, fixed: true });
     columns.push({ title: 'fix right', dataIndex: 'a', width: 100, fixed: 'right' });
+  }
+
+  if (fixExpand) {
+    columns.unshift({ title: 'test ', dataIndex: 'a', width: 200 });
+    columns.unshift({ title: 'test ', dataIndex: 'a', width: 200 });
+    columns.unshift({ title: 'test ', dataIndex: 'a', width: 200 });
+    columns.unshift({ title: 'test ', dataIndex: 'a', width: 200 });
   }
 
   const onExpand = (expanded, record) => {
@@ -116,6 +124,10 @@ const Demo = () => {
         <input {...expandIconPositionProps} />
         Change Expand Icon Position
       </label>
+      <label>
+        <input {...setFixExpand} />
+        Change Expand Icon Fixed
+      </label>
       <Table<RecordType>
         columns={columns}
         expandable={{
@@ -127,6 +139,7 @@ const Demo = () => {
           onExpand,
           rowExpandable,
           expandIconColumnIndex: expandIconPosition ? 1 : null,
+          fixed: fixExpand,
         }}
         scroll={{ x: fixColumns || scrollX ? 2000 : null, y: fixHeader ? 300 : null }}
         data={data}
