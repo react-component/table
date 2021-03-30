@@ -140,6 +140,66 @@ describe('Table.Expand', () => {
     });
   });
 
+  it('work in expandable fix', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age' },
+      { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    ];
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      { key: 1, name: 'Jack', age: 28, gender: 'M' },
+    ];
+    const wrapper = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true },
+      }),
+    );
+    const wrapper2 = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true, expandIconColumnIndex: 3 },
+      }),
+    );
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper2.render()).toMatchSnapshot();
+  });
+
+  it('expandable fix not when expandIconColumnIndex', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age' },
+      { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    ];
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      { key: 1, name: 'Jack', age: 28, gender: 'M' },
+    ];
+    const wrapper = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: 'left', expandIconColumnIndex: 1 },
+      }),
+    );
+    const wrapper2 = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: 'right', expandIconColumnIndex: 2 },
+      }),
+    );
+    expect(wrapper.find('.rc-table-has-fix-left').length).toBe(0);
+    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(0);
+  });
+
   it('renders expand icon to the specify column', () => {
     const wrapper = mount(
       createTable({

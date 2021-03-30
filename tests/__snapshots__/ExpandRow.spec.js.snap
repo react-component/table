@@ -648,3 +648,310 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
   </div>
 </div>
 `;
+
+exports[`Table.Expand work in expandable fix 1`] = `
+<div
+  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
+    >
+      <table
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 0px;"
+            />
+            <th
+              class="rc-table-cell"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              Gender
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px; font-size: 0;"
+          >
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 0px;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              27
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              F
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              style="position: sticky; left: 0px;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table.Expand work in expandable fix 2`] = `
+<div
+  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-right"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
+    >
+      <table
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-cell"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+            >
+              Gender
+            </th>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            />
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px; font-size: 0;"
+          >
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              27
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              F
+            </td>
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              style="position: sticky; right: 0px;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
