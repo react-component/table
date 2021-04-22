@@ -482,8 +482,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   const onFullTableResize = ({ width }) => {
-    triggerOnScroll();
-    setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+    if (width !== componentWidth) {
+      triggerOnScroll();
+      setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+    }
   };
 
   // Sync scroll bar when init or `horizonScroll` changed
