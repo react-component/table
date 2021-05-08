@@ -382,7 +382,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = scroll && validateValue(scroll.y);
-  const horizonScroll = scroll && validateValue(scroll.x);
+  const horizonScroll = (scroll && validateValue(scroll.x)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
@@ -498,8 +498,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     // fix chrome throw ResizeObserver loop limit exceeded
     cancelRequestAnimationFrame();
     requestAnimationFrameIdRef.current = window.requestAnimationFrame(() => {
-      triggerOnScroll();
-      setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+      if (width !== componentWidth) {
+        triggerOnScroll();
+        setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+      }
     });
   };
 

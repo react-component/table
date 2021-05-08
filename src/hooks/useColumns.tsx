@@ -1,7 +1,7 @@
 import * as React from 'react';
 import warning from 'rc-util/lib/warning';
 import toArray from 'rc-util/lib/Children/toArray';
-import {
+import type {
   ColumnsType,
   ColumnType,
   FixedType,
@@ -120,6 +120,7 @@ function useColumns<RecordType>(
     direction,
     expandRowByClick,
     columnWidth,
+    fixed,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -134,6 +135,7 @@ function useColumns<RecordType>(
     direction?: 'ltr' | 'rtl';
     expandRowByClick?: boolean;
     columnWidth?: number | string;
+    fixed?: FixedType;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
@@ -148,12 +150,21 @@ function useColumns<RecordType>(
       const expandColIndex = expandIconColumnIndex || 0;
       const prevColumn = baseColumns[expandColIndex];
 
+      let fixedColumn: FixedType | null;
+      if ((fixed === 'left' || fixed) && !expandIconColumnIndex) {
+        fixedColumn = 'left';
+      } else if ((fixed === 'right' || fixed) && expandIconColumnIndex === baseColumns.length) {
+        fixedColumn = 'right';
+      } else {
+        fixedColumn = prevColumn ? prevColumn.fixed : null;
+      }
+
       const expandColumn = {
         [INTERNAL_COL_DEFINE]: {
           className: `${prefixCls}-expand-icon-col`,
         },
         title: '',
-        fixed: prevColumn ? prevColumn.fixed : null,
+        fixed: fixedColumn,
         className: `${prefixCls}-row-expand-icon-cell`,
         width: columnWidth,
         render: (_, record, index) => {

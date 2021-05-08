@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 /**
  * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
@@ -89,7 +89,10 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export type ColumnsType<RecordType = unknown> = readonly (ColumnGroupType<RecordType> | ColumnType<RecordType>)[];
+export type ColumnsType<RecordType = unknown> = readonly (
+  | ColumnGroupType<RecordType>
+  | ColumnType<RecordType>
+)[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
@@ -208,6 +211,7 @@ export interface ExpandableConfig<RecordType> {
   childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;
   columnWidth?: number | string;
+  fixed?: FixedType;
 }
 
 // =================== Render ===================
