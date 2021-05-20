@@ -1,7 +1,6 @@
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import Cell from './Cell';
-import Row from './Row';
+import Summary from './Summary';
 
 export interface FooterProps {
   children: React.ReactNode;
@@ -14,7 +13,4 @@ function Footer({ children }: FooterProps) {
 
 export default Footer;
 
-export const FooterComponents = {
-  Cell,
-  Row,
-};
+export const FooterComponents = Summary;
