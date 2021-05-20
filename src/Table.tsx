@@ -30,7 +30,7 @@ import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import warning from 'rc-util/lib/warning';
 import ResizeObserver from 'rc-resize-observer';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
 import FixedHeader from './Header/FixedHeader';
@@ -198,13 +198,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
-
-  // ===================== Effects ======================
-  const [scrollbarSize, setScrollbarSize] = React.useState(0);
-
-  React.useEffect(() => {
-    setScrollbarSize(getScrollBarSize());
-  });
 
   // ===================== Warning ======================
   if (process.env.NODE_ENV !== 'production') {
@@ -495,6 +488,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       triggerOnScroll();
     }
   }, [horizonScroll]);
+
+  // ===================== Effects ======================
+  const [scrollbarSize, setScrollbarSize] = React.useState(0);
+
+  React.useEffect(() => {
+    setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+  }, []);
 
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
