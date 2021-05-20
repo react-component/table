@@ -70,7 +70,7 @@ const Demo = () => {
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
         data={data}
         summary={() => (
-          <>
+          <Table.Summary fixed={scrollY}>
             <Table.Summary.Row>
               <Table.Summary.Cell index={0} />
               <Table.Summary.Cell index={1} colSpan={2}>
@@ -81,7 +81,7 @@ const Demo = () => {
               </Table.Summary.Cell>
               <Table.Summary.Cell index={12}>Right</Table.Summary.Cell>
             </Table.Summary.Row>
-          </>
+          </Table.Summary>
         )}
       />
     </div>
