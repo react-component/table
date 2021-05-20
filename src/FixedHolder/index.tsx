@@ -2,8 +2,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
-import type { HeaderProps } from './Header';
-import Header from './Header';
+import type { HeaderProps } from '../Header/Header';
 import ColGroup from '../ColGroup';
 import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
@@ -33,9 +32,10 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   offsetHeader: number;
   stickyClassName?: string;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
+  children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
 
-const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
+const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
   (
     {
       noData,
@@ -50,6 +50,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       stickyClassName,
       onScroll,
       maxContentScroll,
+      children,
       ...props
     },
     ref,
@@ -68,7 +69,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
 
     React.useEffect(() => {
       function onWheel(e: WheelEvent) {
-        const { currentTarget, deltaX } = (e as unknown) as React.WheelEvent<HTMLDivElement>;
+        const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
         if (deltaX) {
           onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
           e.preventDefault();
@@ -147,18 +148,18 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
               columns={flattenColumnsWithScrollbar}
             />
           )}
-          <Header
-            {...props}
-            stickyOffsets={headerStickyOffsets}
-            columns={columnsWithScrollbar}
-            flattenColumns={flattenColumnsWithScrollbar}
-          />
+          {children({
+            ...props,
+            stickyOffsets: headerStickyOffsets,
+            columns: columnsWithScrollbar,
+            flattenColumns: flattenColumnsWithScrollbar,
+          })}
         </table>
       </div>
     );
   },
 );
 
-FixedHeader.displayName = 'FixedHeader';
+FixedHolder.displayName = 'FixedHolder';
 
-export default FixedHeader;
+export default FixedHolder;

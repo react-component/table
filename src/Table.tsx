@@ -33,7 +33,6 @@ import ResizeObserver from 'rc-resize-observer';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
 import ColumnGroup from './sugar/ColumnGroup';
 import Column from './sugar/Column';
-import FixedHeader from './Header/FixedHeader';
 import Header from './Header/Header';
 import type {
   GetRowKey,
@@ -71,6 +70,7 @@ import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 import StickyScrollBar from './stickyScrollBar';
 import useSticky from './hooks/useSticky';
+import FixedHolder from './FixedHolder';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -365,6 +365,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
   const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
@@ -377,6 +378,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = (scroll && validateValue(scroll.x)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
+
+  // Footer (Fix footer must fixed header)
+  const summaryNode = summary?.(mergedData);
+  const fixFooter = fixHeader && React.isValidElement(summaryNode) && summaryNode.props.fixed;
 
   // Sticky
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
@@ -565,7 +570,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
-  const footerTable = summary && <Footer>{summary(mergedData)}</Footer>;
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   if (
@@ -578,6 +582,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   if (fixHeader || isSticky) {
+    // >>>>>> Fixed Header
     let bodyContent: React.ReactNode;
 
     if (typeof customizeScrollBody === 'function') {
@@ -618,32 +623,43 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           >
             {bodyColGroup}
             {bodyTable}
-            {footerTable}
+            {!fixFooter && summaryNode && <Footer>{summaryNode}</Footer>}
           </TableComponent>
         </div>
       );
     }
 
+    // Fixed holder share the props
+    const fixedHolderProps = {
+      noData: !mergedData.length,
+      maxContentScroll: horizonScroll && scroll.x === 'max-content',
+      ...headerProps,
+      ...columnContext,
+      direction,
+      // Fixed Props
+      offsetHeader,
+      stickyClassName,
+      onScroll,
+    };
+
     groupTableNode = (
       <>
         {/* Header Table */}
         {showHeader !== false && (
-          <FixedHeader
-            noData={!mergedData.length}
-            maxContentScroll={horizonScroll && scroll.x === 'max-content'}
-            {...headerProps}
-            {...columnContext}
-            direction={direction}
-            // Fixed Props
-            offsetHeader={offsetHeader}
-            stickyClassName={stickyClassName}
-            ref={scrollHeaderRef}
-            onScroll={onScroll}
-          />
+          <FixedHolder {...fixedHolderProps} ref={scrollHeaderRef}>
+            {fixedHeaderProps => <Header {...fixedHeaderProps} />}
+          </FixedHolder>
         )}
 
         {/* Body Table */}
         {bodyContent}
+
+        {/* Summary Table */}
+        {fixFooter && (
+          <FixedHolder {...fixedHolderProps} ref={scrollHeaderRef}>
+            {fixedHeaderProps => <Header {...fixedHeaderProps} />}
+          </FixedHolder>
+        )}
 
         {isSticky && (
           <StickyScrollBar
@@ -657,6 +673,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       </>
     );
   } else {
+    // >>>>>> Unique table
     groupTableNode = (
       <div
         style={{
@@ -671,7 +688,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           {bodyColGroup}
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
-          {footerTable}
+          {summaryNode && <Footer>{summaryNode}</Footer>}
         </TableComponent>
       </div>
     );
