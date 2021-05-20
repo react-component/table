@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
-import { AlignType } from '../interface';
+import type { AlignType } from '../interface';
 
 export interface SummaryCellProps {
   className?: string;
