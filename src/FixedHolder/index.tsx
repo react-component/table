@@ -23,6 +23,7 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 }
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
+  className: string;
   noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
@@ -38,6 +39,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
   (
     {
+      className,
       noData,
       columns,
       flattenColumns,
@@ -131,7 +133,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
           ...(isSticky ? { top: offsetHeader } : {}),
         }}
         ref={setScrollRef}
-        className={classNames(`${prefixCls}-header`, {
+        className={classNames(className, {
           [stickyClassName]: !!stickyClassName,
         })}
       >

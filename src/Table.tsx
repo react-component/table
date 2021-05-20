@@ -458,6 +458,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
       forceScroll(mergedScrollLeft, scrollHeaderRef.current);
       forceScroll(mergedScrollLeft, scrollBodyRef.current);
+      forceScroll(mergedScrollLeft, scrollSummaryRef.current);
       forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
     }
 
@@ -646,8 +647,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       <>
         {/* Header Table */}
         {showHeader !== false && (
-          <FixedHolder {...fixedHolderProps} ref={scrollHeaderRef}>
-            {fixedHeaderProps => <Header {...fixedHeaderProps} />}
+          <FixedHolder
+            {...fixedHolderProps}
+            className={`${prefixCls}-header`}
+            ref={scrollHeaderRef}
+          >
+            {fixedHolderPassProps => <Header {...fixedHolderPassProps} />}
           </FixedHolder>
         )}
 
@@ -656,8 +661,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
         {/* Summary Table */}
         {fixFooter && (
-          <FixedHolder {...fixedHolderProps} ref={scrollHeaderRef}>
-            {fixedHeaderProps => <Header {...fixedHeaderProps} />}
+          <FixedHolder
+            {...fixedHolderProps}
+            className={`${prefixCls}-summary`}
+            ref={scrollSummaryRef}
+          >
+            {fixedHolderPassProps => <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
           </FixedHolder>
         )}
 
