@@ -55,30 +55,37 @@ const data: RecordType[] = [
   { a: '133', c: 'edd12221', d: 2, key: '9' },
 ];
 
-const Demo = () => (
-  <div style={{ width: 800 }}>
-    <h2>Fixed columns</h2>
-    <Table
-      columns={columns}
-      expandedRowRender={({ b, c }) => b || c}
-      scroll={{ x: 1200 }}
-      data={data}
-      summary={() => (
-        <>
-          <Table.Summary.Row>
-            <Table.Summary.Cell index={0} />
-            <Table.Summary.Cell index={1} colSpan={2}>
-              Summary
-            </Table.Summary.Cell>
-            <Table.Summary.Cell index={3} colSpan={9}>
-              Content
-            </Table.Summary.Cell>
-            <Table.Summary.Cell index={12}>Right</Table.Summary.Cell>
-          </Table.Summary.Row>
-        </>
-      )}
-    />
-  </div>
-);
+const Demo = () => {
+  const [scrollY, setScrollY] = React.useState(true);
+
+  return (
+    <div style={{ width: 800 }}>
+      <label>
+        <input type="checkbox" checked={scrollY} onChange={() => setScrollY(!scrollY)} />
+        Scroll Y
+      </label>
+      <Table
+        columns={columns}
+        expandedRowRender={({ b, c }) => b || c}
+        scroll={{ x: 1200, y: scrollY ? 200 : null }}
+        data={data}
+        summary={() => (
+          <>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={0} />
+              <Table.Summary.Cell index={1} colSpan={2}>
+                Summary
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={3} colSpan={9}>
+                Content
+              </Table.Summary.Cell>
+              <Table.Summary.Cell index={12}>Right</Table.Summary.Cell>
+            </Table.Summary.Row>
+          </>
+        )}
+      />
+    </div>
+  );
+};
 
 export default Demo;
