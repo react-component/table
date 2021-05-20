@@ -92,8 +92,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
 
     // Add scrollbar column
     const lastColumn = flattenColumns[flattenColumns.length - 1];
-    const ScrollBarColumn: ColumnType<unknown> = {
+    const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
       fixed: lastColumn ? lastColumn.fixed : null,
+      scrollbar: true,
       onHeaderCell: () => ({
         className: `${prefixCls}-cell-scrollbar`,
       }),
