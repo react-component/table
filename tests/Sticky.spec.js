@@ -28,12 +28,12 @@ describe('Table.Sticky', () => {
     };
     const wrapper = mount(<TableDemo />);
 
-    expect(wrapper.find('.rc-table-header').prop('style')).toEqual({
+    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
       overflow: 'hidden',
       top: 0,
     });
 
-    expect(wrapper.find('.rc-table-header').prop('className')).toBe(
+    expect(wrapper.find('.rc-table-header').last().prop('className')).toBe(
       'rc-table-header rc-table-sticky-header',
     );
 
@@ -43,7 +43,7 @@ describe('Table.Sticky', () => {
       },
     });
 
-    expect(wrapper.find('.rc-table-header').prop('style')).toEqual({
+    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
       overflow: 'hidden',
       top: 10,
     });
