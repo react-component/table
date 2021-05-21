@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { SummaryContext } from '.';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import type { AlignType } from '../interface';
+import { getCellFixedInfo } from '../utils/fixUtil';
+import { SummaryScrollIndexContext } from './Row';
 
 export interface SummaryCellProps {
   className?: string;
@@ -16,13 +19,18 @@ export default function SummaryCell({
   className,
   index,
   children,
-  colSpan,
+  colSpan = 1,
   rowSpan,
   align,
 }: SummaryCellProps) {
-  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
+  const { prefixCls, direction } = React.useContext(TableContext);
+  const { scrollColumnIndex, stickyOffsets, flattenColumns } = React.useContext(SummaryContext);
+  const lastIndex = index + colSpan - 1;
+  const mergedColSpan = lastIndex + 1 === scrollColumnIndex ? colSpan + 1 : colSpan;
 
-  const fixedInfo = fixedInfoList[index];
+  const fixedInfo = stickyOffsets
+    ? getCellFixedInfo(index, index + mergedColSpan - 1, flattenColumns, stickyOffsets, direction)
+    : null;
 
   return (
     <Cell
@@ -36,7 +44,7 @@ export default function SummaryCell({
       render={() => ({
         children,
         props: {
-          colSpan,
+          colSpan: mergedColSpan,
           rowSpan,
         },
       })}

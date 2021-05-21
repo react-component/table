@@ -2,10 +2,16 @@ import * as React from 'react';
 import TableContext from '../context/TableContext';
 import Summary from './Summary';
 import type { ColumnType, StickyOffsets } from '../interface';
-import { SummaryScrollIndexContext } from './Row';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
 type FlattenColumns<RecordType> = readonly (ColumnType<RecordType> & { scrollbar?: boolean })[];
+
+export const SummaryContext =
+  React.createContext<{
+    stickyOffsets?: StickyOffsets;
+    scrollColumnIndex?: number;
+    flattenColumns?: FlattenColumns<any>;
+  }>({});
 
 export interface FooterProps<RecordType> {
   children: React.ReactNode;
@@ -39,11 +45,20 @@ function Footer<RecordType>({
     [tableContext, stickyOffsets, flattenColumns, direction],
   );
 
+  const summaryContext = React.useMemo(
+    () => ({
+      stickyOffsets,
+      flattenColumns,
+      scrollColumnIndex: scrollColumn?.scrollbar ? lastColumnIndex : null,
+    }),
+    [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets],
+  );
+
   return (
     <TableContext.Provider value={mergedTableContext}>
-      <SummaryScrollIndexContext.Provider value={scrollColumn.scrollbar ? lastColumnIndex : null}>
+      <SummaryContext.Provider value={summaryContext}>
         <tfoot className={`${prefixCls}-summary`}>{children}</tfoot>
-      </SummaryScrollIndexContext.Provider>
+      </SummaryContext.Provider>
     </TableContext.Provider>
   );
 }

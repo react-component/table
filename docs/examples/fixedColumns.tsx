@@ -34,7 +34,7 @@ const columns: ColumnType<RecordType>[] = [
   { title: 'title8', dataIndex: 'b', key: 'h' },
   { title: 'title9', dataIndex: 'b', key: 'i' },
   { title: 'title10', dataIndex: 'b', key: 'j' },
-  { title: 'title11', dataIndex: 'b', key: 'k' },
+  { title: 'title11', dataIndex: 'b', key: 'k', width: 50, fixed: 'right' },
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
@@ -76,10 +76,12 @@ const Demo = () => {
               <Table.Summary.Cell index={1} colSpan={2}>
                 Summary
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={3} colSpan={9}>
+              <Table.Summary.Cell index={3} colSpan={8}>
                 Content
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={12}>Right</Table.Summary.Cell>
+              <Table.Summary.Cell index={11} colSpan={2}>
+                Right
+              </Table.Summary.Cell>
             </Table.Summary.Row>
           </Table.Summary>
         )}
