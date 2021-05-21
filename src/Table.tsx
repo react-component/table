@@ -624,7 +624,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           >
             {bodyColGroup}
             {bodyTable}
-            {!fixFooter && summaryNode && <Footer>{summaryNode}</Footer>}
+            {!fixFooter && summaryNode && (
+              <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
+                {summaryNode}
+              </Footer>
+            )}
           </TableComponent>
         </div>
       );
@@ -697,7 +701,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
           {bodyColGroup}
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
-          {summaryNode && <Footer>{summaryNode}</Footer>}
+          {summaryNode && (
+            <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
+              {summaryNode}
+            </Footer>
+          )}
         </TableComponent>
       </div>
     );

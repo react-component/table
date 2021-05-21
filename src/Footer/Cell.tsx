@@ -4,7 +4,6 @@ import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import type { AlignType } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
-import { SummaryScrollIndexContext } from './Row';
 
 export interface SummaryCellProps {
   className?: string;
@@ -28,9 +27,13 @@ export default function SummaryCell({
   const lastIndex = index + colSpan - 1;
   const mergedColSpan = lastIndex + 1 === scrollColumnIndex ? colSpan + 1 : colSpan;
 
-  const fixedInfo = stickyOffsets
-    ? getCellFixedInfo(index, index + mergedColSpan - 1, flattenColumns, stickyOffsets, direction)
-    : null;
+  const fixedInfo = getCellFixedInfo(
+    index,
+    index + mergedColSpan - 1,
+    flattenColumns,
+    stickyOffsets,
+    direction,
+  );
 
   return (
     <Cell
