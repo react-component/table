@@ -30,7 +30,8 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   columCount: number;
   direction: 'ltr' | 'rtl';
   fixHeader: boolean;
-  offsetHeader: number;
+  stickyTopOffset?: number;
+  stickyBottomOffset?: number;
   stickyClassName?: string;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
@@ -48,7 +49,8 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       stickyOffsets,
       direction,
       fixHeader,
-      offsetHeader,
+      stickyTopOffset,
+      stickyBottomOffset,
       stickyClassName,
       onScroll,
       maxContentScroll,
@@ -131,7 +133,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       <div
         style={{
           overflow: 'hidden',
-          ...(isSticky ? { top: offsetHeader } : {}),
+          ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
         }}
         ref={setScrollRef}
         className={classNames(className, {

@@ -379,17 +379,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const horizonScroll = (scroll && validateValue(scroll.x)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
-  // Footer (Fix footer must fixed header)
-  const summaryNode = summary?.(mergedData);
-  const fixFooter = fixHeader && React.isValidElement(summaryNode) && summaryNode.props.fixed;
-
   // Sticky
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
-  const { isSticky, offsetHeader, offsetScroll, stickyClassName, container } = useSticky(
-    sticky,
-    prefixCls,
-  );
+  const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
+    useSticky(sticky, prefixCls);
 
+  // Footer (Fix footer must fixed header)
+  const summaryNode = summary?.(mergedData);
+  const fixFooter =
+    (fixHeader || isSticky) && React.isValidElement(summaryNode) && summaryNode.props.fixed;
+
+  // Scroll
   let scrollXStyle: React.CSSProperties;
   let scrollYStyle: React.CSSProperties;
   let scrollTableStyle: React.CSSProperties;
@@ -641,8 +641,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ...headerProps,
       ...columnContext,
       direction,
-      // Fixed Props
-      offsetHeader,
       stickyClassName,
       onScroll,
     };
@@ -653,6 +651,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {showHeader !== false && (
           <FixedHolder
             {...fixedHolderProps}
+            stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
           >
@@ -667,6 +666,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {fixFooter && (
           <FixedHolder
             {...fixedHolderProps}
+            stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
           >
