@@ -53,28 +53,39 @@ describe('Table.Summary', () => {
     expect(wrapper.find('tfoot').render()).toMatchSnapshot();
   });
 
-  it('fixed summary', () => {
-    const wrapper = mount(
-      <Table
-        columns={[
-          { dataIndex: 'a', fixed: 'left', width: 10 },
-          { dataIndex: 'b', width: 20 },
-          { dataIndex: 'c', fixed: 'right', width: 30 },
-        ]}
-        data={[{ key: 1, a: 2, b: 3, c: 4 }]}
-        scroll={{ x: 100, y: 100 }}
-        summary={() => (
-          <Table.Summary fixed>
-            <Table.Summary.Row>
-              <Table.Summary.Cell index={0}>Light</Table.Summary.Cell>
-              <Table.Summary.Cell index={1}>Bamboo</Table.Summary.Cell>
-              <Table.Summary.Cell index={2}>Little</Table.Summary.Cell>
-            </Table.Summary.Row>
-          </Table.Summary>
-        )}
-      />,
-    );
+  describe('fixed summary', () => {
+    const getSummaryTable = (fixed: boolean) =>
+      mount(
+        <Table
+          columns={[
+            { dataIndex: 'a', fixed: 'left', width: 10 },
+            { dataIndex: 'b', width: 20 },
+            { dataIndex: 'c', fixed: 'right', width: 30 },
+          ]}
+          data={[{ key: 1, a: 2, b: 3, c: 4 }]}
+          scroll={{ x: 100, y: 100 }}
+          summary={() => (
+            <Table.Summary fixed={fixed}>
+              <Table.Summary.Row>
+                <Table.Summary.Cell index={0}>Light</Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>Bamboo</Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>Little</Table.Summary.Cell>
+              </Table.Summary.Row>
+            </Table.Summary>
+          )}
+        />,
+      );
 
-    expect(wrapper.exists('div.rc-table-summary')).toBeTruthy();
+    it('fixed', () => {
+      const wrapper = getSummaryTable(false);
+
+      expect(wrapper.exists('tfoot.rc-table-summary')).toBeTruthy();
+    });
+
+    it('sticky', () => {
+      const wrapper = getSummaryTable(true);
+
+      expect(wrapper.exists('div.rc-table-summary')).toBeTruthy();
+    });
   });
 });
