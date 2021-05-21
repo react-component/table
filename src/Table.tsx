@@ -71,6 +71,7 @@ import { getCellFixedInfo } from './utils/fixUtil';
 import StickyScrollBar from './stickyScrollBar';
 import useSticky from './hooks/useSticky';
 import FixedHolder from './FixedHolder';
+import Summary from './Footer/Summary';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -387,7 +388,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   // Footer (Fix footer must fixed header)
   const summaryNode = summary?.(mergedData);
   const fixFooter =
-    (fixHeader || isSticky) && React.isValidElement(summaryNode) && summaryNode.props.fixed;
+    (fixHeader || isSticky) &&
+    React.isValidElement(summaryNode) &&
+    summaryNode.type === Summary &&
+    summaryNode.props.fixed;
 
   // Scroll
   let scrollXStyle: React.CSSProperties;
