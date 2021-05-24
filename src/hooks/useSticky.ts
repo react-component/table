@@ -30,7 +30,7 @@ export default function useSticky(
     const isSticky = !!sticky;
     return {
       isSticky,
-      stickyClassName: isSticky ? `${prefixCls}-sticky-header` : '',
+      stickyClassName: isSticky ? `${prefixCls}-sticky-holder` : '',
       offsetHeader,
       offsetSummary,
       offsetScroll,

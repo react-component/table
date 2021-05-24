@@ -34,7 +34,7 @@ describe('Table.Sticky', () => {
     });
 
     expect(wrapper.find('.rc-table-header').last().prop('className')).toBe(
-      'rc-table-header rc-table-sticky-header',
+      'rc-table-header rc-table-sticky-holder',
     );
 
     wrapper.setProps({
