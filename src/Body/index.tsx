@@ -1,5 +1,5 @@
 import * as React from 'react';
-import BodyRow from './BodyRow';
+// import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
 import { GetRowKey, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
@@ -7,6 +7,7 @@ import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
+import NewBodyRow from './NewBodyRow';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -35,6 +36,24 @@ function Body<RecordType>({
     BodyContext,
   );
 
+  // 递归 (扁平化树形结构)
+  const flatChildren = React.useCallback((record, temp: any[], indent: number) => {
+    temp.push({
+      record: record,
+      indent: indent,
+    })
+
+    const key = getRowKey(record)
+
+    const expanded = expandedKeys && expandedKeys.has(key);
+
+    if (Array.isArray(record[childrenColumnName]) && record[childrenColumnName].length && expanded) {
+      for (let i = 0; i < record[childrenColumnName].length; i++) {
+        flatChildren(record[childrenColumnName][i], temp, indent + 1)
+      }
+    }
+  }, [expandedKeys])
+
   return React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
     const trComponent = getComponent(['body', 'row'], 'tr');
@@ -42,11 +61,22 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      rows = data.map((record, index) => {
-        const key = getRowKey(record, index);
+      const temp: Array<{ record: any, indent: number }> = []
+
+      for (let i = 0; i < data?.length; i++) {
+        const record = data[i]
+
+        flatChildren(record, temp, 0)
+      }
+
+      rows = temp.map((item, index) => {
+
+        const { record, indent } = item
+
+        const key = getRowKey(record, index)
 
         return (
-          <BodyRow
+          <NewBodyRow
             key={key}
             rowKey={key}
             record={record}
@@ -59,9 +89,10 @@ function Body<RecordType>({
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
             childrenColumnName={childrenColumnName}
+            indent={indent}
           />
-        );
-      });
+        )
+      })
     } else {
       rows = (
         <ExpandedRow
