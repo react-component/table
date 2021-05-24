@@ -1,7 +1,8 @@
+/* eslint-disable no-console,func-names,react/no-multi-comp */
 import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import { ColumnType } from '@/interface';
+import type { ColumnType } from '@/interface';
 
 interface RecordType {
   a: string;
@@ -55,22 +56,34 @@ const data: RecordType[] = [
   { a: '133', c: 'edd12221', d: 2, key: '9' },
 ];
 
+for (let i = 0; i < 20; i += 1) {
+  const str = `str_${i}`;
+
+  data.push({
+    a: str,
+    b: str,
+    d: i,
+    key: str,
+  });
+}
+
 const Demo = () => {
-  const [scrollY, setScrollY] = React.useState(true);
+  const [stickySummary, setStickySummary] = React.useState(true);
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, height: '200vh' }}>
       <label>
-        <input type="checkbox" checked={scrollY} onChange={() => setScrollY(!scrollY)} />
-        Scroll Y
+        <input type="checkbox" checked={stickySummary} onChange={() => setStickySummary(!stickySummary)} />
+        Sticky Summary
       </label>
       <Table
+        sticky
         columns={columns}
         expandedRowRender={({ b, c }) => b || c}
-        scroll={{ x: 1200, y: scrollY ? 200 : null }}
+        scroll={{ x: 1200 }}
         data={data}
         summary={() => (
-          <Table.Summary fixed={scrollY}>
+          <Table.Summary fixed={stickySummary}>
             <Table.Summary.Row>
               <Table.Summary.Cell index={0} />
               <Table.Summary.Cell index={1} colSpan={2}>

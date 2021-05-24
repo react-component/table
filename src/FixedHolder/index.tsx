@@ -2,8 +2,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
-import type { HeaderProps } from './Header';
-import Header from './Header';
+import type { HeaderProps } from '../Header/Header';
 import ColGroup from '../ColGroup';
 import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
@@ -24,20 +23,24 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 }
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
+  className: string;
   noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
   direction: 'ltr' | 'rtl';
   fixHeader: boolean;
-  offsetHeader: number;
+  stickyTopOffset?: number;
+  stickyBottomOffset?: number;
   stickyClassName?: string;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
+  children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
 
-const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
+const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
   (
     {
+      className,
       noData,
       columns,
       flattenColumns,
@@ -46,10 +49,12 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       stickyOffsets,
       direction,
       fixHeader,
-      offsetHeader,
+      stickyTopOffset,
+      stickyBottomOffset,
       stickyClassName,
       onScroll,
       maxContentScroll,
+      children,
       ...props
     },
     ref,
@@ -68,7 +73,7 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
 
     React.useEffect(() => {
       function onWheel(e: WheelEvent) {
-        const { currentTarget, deltaX } = (e as unknown) as React.WheelEvent<HTMLDivElement>;
+        const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
         if (deltaX) {
           onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
           e.preventDefault();
@@ -89,8 +94,9 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
 
     // Add scrollbar column
     const lastColumn = flattenColumns[flattenColumns.length - 1];
-    const ScrollBarColumn: ColumnType<unknown> = {
+    const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
       fixed: lastColumn ? lastColumn.fixed : null,
+      scrollbar: true,
       onHeaderCell: () => ({
         className: `${prefixCls}-cell-scrollbar`,
       }),
@@ -127,10 +133,10 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       <div
         style={{
           overflow: 'hidden',
-          ...(isSticky ? { top: offsetHeader } : {}),
+          ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
         }}
         ref={setScrollRef}
-        className={classNames(`${prefixCls}-header`, {
+        className={classNames(className, {
           [stickyClassName]: !!stickyClassName,
         })}
       >
@@ -147,18 +153,18 @@ const FixedHeader = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
               columns={flattenColumnsWithScrollbar}
             />
           )}
-          <Header
-            {...props}
-            stickyOffsets={headerStickyOffsets}
-            columns={columnsWithScrollbar}
-            flattenColumns={flattenColumnsWithScrollbar}
-          />
+          {children({
+            ...props,
+            stickyOffsets: headerStickyOffsets,
+            columns: columnsWithScrollbar,
+            flattenColumns: flattenColumnsWithScrollbar,
+          })}
         </table>
       </div>
     );
   },
 );
 
-FixedHeader.displayName = 'FixedHeader';
+FixedHolder.displayName = 'FixedHolder';
 
-export default FixedHeader;
+export default FixedHolder;
