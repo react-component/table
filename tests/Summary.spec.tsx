@@ -54,7 +54,7 @@ describe('Table.Summary', () => {
   });
 
   describe('fixed summary', () => {
-    const getSummaryTable = (fixed: boolean) =>
+    const getSummaryTable = (fixed: boolean | 'top') =>
       mount(
         <Table
           columns={[
@@ -86,6 +86,11 @@ describe('Table.Summary', () => {
       const wrapper = getSummaryTable(true);
 
       expect(wrapper.exists('div.rc-table-summary')).toBeTruthy();
+    });
+
+    it('fixed top', () => {
+      const wrapper = getSummaryTable('top');
+      expect(wrapper.exists('.rc-table-header tfoot.rc-table-summary')).toBeTruthy();
     });
   });
 });

@@ -1,4 +1,4 @@
-/* eslint-disable no-console,func-names,react/no-multi-comp */
+/* eslint-disable no-console,func-names,react/no-multi-comp, no-nested-ternary */
 import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
@@ -68,22 +68,28 @@ for (let i = 0; i < 20; i += 1) {
 }
 
 const Demo = () => {
-  const [stickySummary, setStickySummary] = React.useState(true);
+  const [sticky, setSticky] = React.useState(true);
+  const [stickyTop, setStickyTop] = React.useState(true);
 
   return (
-    <div style={{ width: 800, height: '200vh' }}>
+    <div style={{ width: 800 }}>
       <label>
-        <input type="checkbox" checked={stickySummary} onChange={() => setStickySummary(!stickySummary)} />
+        <input type="checkbox" checked={sticky} onChange={() => setSticky(!sticky)} />
         Sticky Summary
       </label>
+      <label>
+        <input type="checkbox" checked={stickyTop} onChange={() => setStickyTop(!stickyTop)} />
+        Sticky Top
+      </label>
+
       <Table
-        sticky
+        sticky={sticky}
         columns={columns}
         expandedRowRender={({ b, c }) => b || c}
-        scroll={{ x: 1200 }}
+        scroll={{ x: 1200, y: sticky ? null : 800 }}
         data={data}
         summary={() => (
-          <Table.Summary fixed={stickySummary}>
+          <Table.Summary fixed={stickyTop ? 'top' : 'bottom'}>
             <Table.Summary.Row>
               <Table.Summary.Cell index={0} />
               <Table.Summary.Cell index={1} colSpan={2}>

@@ -71,6 +71,7 @@ import { getCellFixedInfo } from './utils/fixUtil';
 import StickyScrollBar from './stickyScrollBar';
 import useSticky from './hooks/useSticky';
 import FixedHolder from './FixedHolder';
+import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 
 // Used for conditions cache
@@ -391,7 +392,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     (fixHeader || isSticky) &&
     React.isValidElement(summaryNode) &&
     summaryNode.type === Summary &&
-    summaryNode.props.fixed;
+    (summaryNode.props as SummaryProps).fixed;
 
   // Scroll
   let scrollXStyle: React.CSSProperties;
@@ -659,7 +660,12 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
           >
-            {fixedHolderPassProps => <Header {...fixedHolderPassProps} />}
+            {fixedHolderPassProps => (
+              <>
+                <Header {...fixedHolderPassProps} />
+                {fixFooter === 'top' && <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
+              </>
+            )}
           </FixedHolder>
         )}
 
@@ -667,7 +673,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         {bodyContent}
 
         {/* Summary Table */}
-        {fixFooter && (
+        {fixFooter && fixFooter !== 'top' && (
           <FixedHolder
             {...fixedHolderProps}
             stickyBottomOffset={offsetSummary}
