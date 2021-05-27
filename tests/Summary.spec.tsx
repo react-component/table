@@ -54,7 +54,7 @@ describe('Table.Summary', () => {
   });
 
   describe('fixed summary', () => {
-    const getSummaryTable = (fixed: boolean | 'top') =>
+    const getSummaryTable = (fixed: boolean | 'top' | 'bottom') =>
       mount(
         <Table
           columns={[
@@ -78,6 +78,12 @@ describe('Table.Summary', () => {
 
     it('fixed', () => {
       const wrapper = getSummaryTable(false);
+
+      expect(wrapper.exists('tfoot.rc-table-summary')).toBeTruthy();
+    });
+
+    it('fixed bottom', () => {
+      const wrapper = getSummaryTable('bottom');
 
       expect(wrapper.exists('tfoot.rc-table-summary')).toBeTruthy();
     });
