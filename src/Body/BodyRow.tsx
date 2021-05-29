@@ -4,7 +4,7 @@ import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
-import { ColumnType, CustomizeComponent, GetComponentProps, Key, GetRowKey } from '../interface';
+import type { ColumnType, CustomizeComponent, GetComponentProps, Key, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -75,6 +75,14 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
   const mergedExpandable = rowSupportExpand || nestExpandable;
 
+  // ======================== Expandable =========================
+  const onExpandRef = React.useRef(onTriggerExpand);
+  onExpandRef.current = onTriggerExpand;
+
+  const onInternalTriggerExpand = (...args: Parameters<typeof onTriggerExpand>) => {
+    onExpandRef.current(...args);
+  };
+
   // =========================== onRow ===========================
   let additionalProps: React.HTMLAttributes<HTMLElement>;
   if (onRow) {
@@ -83,7 +91,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
     if (expandRowByClick && mergedExpandable) {
-      onTriggerExpand(record, event);
+      onInternalTriggerExpand(record, event);
     }
 
     if (additionalProps && additionalProps.onClick) {
@@ -137,7 +145,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
                 expanded,
                 expandable: hasNestChildren,
                 record,
-                onExpand: onTriggerExpand,
+                onExpand: onInternalTriggerExpand,
               })}
             </>
           );
@@ -161,6 +169,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
+            expanded={expanded}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
