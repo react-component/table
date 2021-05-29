@@ -833,60 +833,102 @@ describe('Table.Basic', () => {
     }).not.toThrow();
   });
 
-  it('shouldCellUpdate', () => {
-    const record = { key: 1 };
-    let shouldUpdate = false;
-    let renderTimes = 0;
-    let prev;
-    let next;
+  describe('shouldCellUpdate', () => {
+    it('basic', () => {
+      const record = { key: 1 };
+      let shouldUpdate = false;
+      let renderTimes = 0;
+      let prev;
+      let next;
 
-    const Demo = ({ records }) => {
-      const [, forceUpdate] = React.useState({});
+      const Demo = ({ records }) => {
+        const [, forceUpdate] = React.useState({});
 
-      return (
-        <>
-          <Table
-            data={records}
-            columns={[
-              {
-                dataIndex: 'key',
-                shouldCellUpdate: (nextRecord, prevRecord) => {
-                  next = nextRecord;
-                  prev = prevRecord;
-                  return shouldUpdate;
+        return (
+          <>
+            <Table
+              data={records}
+              columns={[
+                {
+                  dataIndex: 'key',
+                  shouldCellUpdate: (nextRecord, prevRecord) => {
+                    next = nextRecord;
+                    prev = prevRecord;
+                    return shouldUpdate;
+                  },
+                  render() {
+                    renderTimes += 1;
+                    return null;
+                  },
                 },
-                render() {
-                  renderTimes += 1;
-                  return null;
-                },
-              },
-            ]}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              forceUpdate({});
-            }}
-          />
-        </>
+              ]}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                forceUpdate({});
+              }}
+            />
+          </>
+        );
+      };
+
+      const wrapper = mount(<Demo records={[record]} />);
+      renderTimes = 0;
+
+      wrapper.find('button').simulate('click');
+      expect(renderTimes).toEqual(0);
+
+      shouldUpdate = true;
+      wrapper.find('button').simulate('click');
+      expect(renderTimes).toEqual(1);
+
+      // Should update match prev & next
+      const newRecord = { ...record, next: true };
+      wrapper.setProps({ records: [newRecord] });
+      // wrapper.update();
+      expect(prev).toBe(record);
+      expect(next).toBe(newRecord);
+    });
+
+    it('not block nest children', () => {
+      const onExpandedRowsChange = jest.fn();
+
+      const wrapper = mount(
+        <Table
+          columns={[{ dataIndex: 'key', shouldCellUpdate: () => false }]}
+          expandable={{ onExpandedRowsChange }}
+          data={[
+            {
+              key: 'parent',
+              children: [
+                { key: 'light', children: [] },
+                { key: 'bamboo', children: [{ key: 'little' }] },
+              ],
+            },
+          ]}
+        />,
       );
-    };
 
-    const wrapper = mount(<Demo records={[record]} />);
-    renderTimes = 0;
+      // First Level - parent
+      wrapper.find('span.rc-table-row-expand-icon').first().simulate('click');
+      expect(
+        wrapper.find('span.rc-table-row-expand-icon').first().hasClass('rc-table-row-expanded'),
+      ).toBeTruthy();
 
-    wrapper.find('button').simulate('click');
-    expect(renderTimes).toEqual(0);
+      // Second Level - light twice
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'light']);
 
-    shouldUpdate = true;
-    wrapper.find('button').simulate('click');
-    expect(renderTimes).toEqual(1);
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent']);
 
-    // Should update match prev & next
-    const newRecord = { ...record, next: true };
-    wrapper.setProps({ records: [newRecord] });
-    // wrapper.update();
-    expect(prev).toBe(record);
-    expect(next).toBe(newRecord);
+      // Second Level - bamboo
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').last().simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
+    });
   });
 });
