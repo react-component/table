@@ -4,7 +4,13 @@ import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
-import type { ColumnType, CustomizeComponent, GetComponentProps, Key, GetRowKey } from '../interface';
+import type {
+  ColumnType,
+  CustomizeComponent,
+  GetComponentProps,
+  Key,
+  GetRowKey,
+} from '../interface';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -169,7 +175,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
-            expanded={expanded}
+            expanded={appendCellNode && expanded}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
