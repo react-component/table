@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
-import { GetRowKey, Key, GetComponentProps } from '../interface';
+import type { GetRowKey, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
@@ -32,27 +32,33 @@ function Body<RecordType>({
 }: BodyProps<RecordType>) {
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { fixHeader, horizonScroll, flattenColumns, componentWidth } = React.useContext(
-    BodyContext,
-  );
+  const { fixHeader, horizonScroll, flattenColumns, componentWidth } =
+    React.useContext(BodyContext);
 
   // 递归 (扁平化树形结构)
-  const flatChildren = React.useCallback((record, temp: any[], indent: number) => {
-    temp.push({
-      record: record,
-      indent: indent,
-    })
+  const flatChildren = React.useCallback(
+    (record, temp: Record<string, unknown>[], indent: number) => {
+      temp.push({
+        record,
+        indent,
+      });
 
-    const key = getRowKey(record)
+      const key = getRowKey(record);
 
-    const expanded = expandedKeys && expandedKeys.has(key);
+      const expanded = expandedKeys && expandedKeys.has(key);
 
-    if (Array.isArray(record[childrenColumnName]) && record[childrenColumnName].length && expanded) {
-      for (let i = 0; i < record[childrenColumnName].length; i++) {
-        flatChildren(record[childrenColumnName][i], temp, indent + 1)
+      if (
+        Array.isArray(record[childrenColumnName]) &&
+        record[childrenColumnName].length &&
+        expanded
+      ) {
+        for (let i = 0; i < record[childrenColumnName].length; i += 1) {
+          flatChildren(record[childrenColumnName][i], temp, indent + 1);
+        }
       }
-    }
-  }, [expandedKeys])
+    },
+    [expandedKeys, childrenColumnName, getRowKey],
+  );
 
   return React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -61,19 +67,18 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      const temp: Array<{ record: any, indent: number }> = []
+      const temp: { record; indent: number }[] = [];
 
-      for (let i = 0; i < data?.length; i++) {
-        const record = data[i]
+      for (let i = 0; i < data?.length; i += 1) {
+        const record = data[i];
 
-        flatChildren(record, temp, 0)
+        flatChildren(record, temp, 0);
       }
 
       rows = temp.map((item, index) => {
+        const { record, indent } = item;
 
-        const { record, indent } = item
-
-        const key = getRowKey(record, index)
+        const key = getRowKey(record, index);
 
         return (
           <NewBodyRow
@@ -91,8 +96,8 @@ function Body<RecordType>({
             childrenColumnName={childrenColumnName}
             indent={indent}
           />
-        )
-      })
+        );
+      });
     } else {
       rows = (
         <ExpandedRow
@@ -143,6 +148,12 @@ function Body<RecordType>({
     componentWidth,
     emptyNode,
     flattenColumns,
+    flatChildren,
+    childrenColumnName,
+    fixHeader,
+    horizonScroll,
+    onColumnResize,
+    rowExpandable,
   ]);
 }
 

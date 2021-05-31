@@ -1,12 +1,11 @@
 import React from 'react';
 import Table from 'rc-table';
-import { VList } from 'virtuallist-antd'
 import '../../assets/index.less';
 
 const generateData = () => {
-  const temp = []
+  const temp = [];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i += 1) {
     temp.push({
       a: i,
       b: 'bbbb'.repeat(Math.floor(Math.random() * 10)),
@@ -17,26 +16,26 @@ const generateData = () => {
           children: [
             {
               a: `${i}_${i}_${i}`,
-              b: 'testtest'
+              b: 'testtest',
             },
             {
               a: `${i}_${i}_${i}_${i}`,
-              b: 'testtest'
+              b: 'testtest',
             },
             {
               a: `${i}_${i}_${i}_${i}_${i}`,
-              b: 'testtest'
+              b: 'testtest',
             },
-          ]
-        }
-      ]
-    })
+          ],
+        },
+      ],
+    });
   }
 
-  return temp
-}
+  return temp;
+};
 
-const data = generateData()
+const data = generateData();
 
 class Demo extends React.Component {
   handleClick = (record, e) => {
@@ -63,7 +62,7 @@ class Demo extends React.Component {
     return (
       <div>
         <h2>sub table</h2>
-        <Table columns={columns} data={data} rowKey={record => record.a} scroll={{ y: 500 }} components={VList({ height: 500 })} />
+        <Table columns={columns} data={data} rowKey={record => record.a} scroll={{ y: 500 }} />
       </div>
     );
   }
