@@ -48,6 +48,7 @@ function Body<RecordType>({
       const expanded = expandedKeys && expandedKeys.has(key);
 
       if (
+        record &&
         Array.isArray(record[childrenColumnName]) &&
         record[childrenColumnName].length &&
         expanded
