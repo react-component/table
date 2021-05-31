@@ -30,7 +30,7 @@ export interface BodyRowProps<RecordType> {
   childrenColumnName: string;
 }
 
-function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
+function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
   const {
@@ -80,6 +80,14 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
   const mergedExpandable = rowSupportExpand || nestExpandable;
 
+  // ======================== Expandable =========================
+  const onExpandRef = React.useRef(onTriggerExpand);
+  onExpandRef.current = onTriggerExpand;
+
+  const onInternalTriggerExpand = (...args: Parameters<typeof onTriggerExpand>) => {
+    onExpandRef.current(...args);
+  };
+
   // =========================== onRow ===========================
   let additionalProps: React.HTMLAttributes<HTMLElement>;
   if (onRow) {
@@ -88,7 +96,7 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
     if (expandRowByClick && mergedExpandable) {
-      onTriggerExpand(record, event);
+      onInternalTriggerExpand(record, event);
     }
 
     if (additionalProps && additionalProps.onClick) {
@@ -142,7 +150,7 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
                 expanded,
                 expandable: hasNestChildren,
                 record,
-                onExpand: onTriggerExpand,
+                onExpand: onInternalTriggerExpand,
               })}
             </>
           );
@@ -166,6 +174,7 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
+            expanded={appendCellNode && expanded}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
@@ -211,7 +220,7 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
   //       const subKey = getRowKey(subRecord, subIndex);
 
   //       return (
-  //         <NewBodyRow
+  //         <BodyRow
   //           {...props}
   //           key={subKey}
   //           rowKey={subKey}
@@ -234,6 +243,6 @@ function NewBodyRow<RecordType extends { children?: readonly RecordType[] }>(
   );
 }
 
-NewBodyRow.displayName = 'BodyRow';
+BodyRow.displayName = 'BodyRow';
 
-export default NewBodyRow;
+export default BodyRow;
