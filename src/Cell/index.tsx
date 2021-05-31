@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { supportRef } from 'rc-util/lib/ref';
-import {
+import type {
   DataIndex,
   ColumnType,
   RenderedCell,
@@ -56,6 +56,8 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.HTMLAttributes<HTMLElement>;
+  /** @private Fixed for user use `shouldCellUpdate` which block the render */
+  expanded?: boolean;
 
   rowType?: 'header' | 'body' | 'footer';
 
@@ -213,7 +215,12 @@ RefCell.displayName = 'Cell';
 
 const MemoCell = React.memo(RefCell, (prev: CellProps<any>, next: CellProps<any>) => {
   if (next.shouldCellUpdate) {
-    return !next.shouldCellUpdate(next.record, prev.record);
+    return (
+      // Additional handle of expanded logic
+      prev.expanded === next.expanded &&
+      // User control update logic
+      !next.shouldCellUpdate(next.record, prev.record)
+    );
   }
 
   return false;

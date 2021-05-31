@@ -33,6 +33,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 400,
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Age',
@@ -130,6 +131,7 @@ const Demo = () => (
     data={data}
     indentSize={30}
     onExpand={onExpand}
+    onExpandedRowsChange={keys => console.log('Expanded Keys:', keys)}
     expandIcon={CustomExpandIcon}
   />
 );

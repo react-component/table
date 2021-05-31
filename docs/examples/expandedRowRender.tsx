@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import { useCheckbox } from './utils/useInput';
-import { ColumnsType } from '@/interface';
+import type { ColumnType } from '@/interface';
 
 interface RecordType {
   key: React.Key;
@@ -52,7 +52,7 @@ const Demo = () => {
     </a>
   );
 
-  const columns: ColumnsType<RecordType> = [
+  const columns: ColumnType<RecordType>[] = [
     { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
     { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
     { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },

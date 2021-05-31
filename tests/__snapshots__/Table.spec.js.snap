@@ -211,13 +211,13 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
       >
         <colgroup>
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 888px; min-width: 888px;"
+            style="width: 888px;"
           />
           <col
-            style="width: 15px; min-width: 15px;"
+            style="width: 15px;"
           />
         </colgroup>
         <thead

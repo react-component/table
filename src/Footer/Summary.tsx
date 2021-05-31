@@ -3,7 +3,7 @@ import Cell from './Cell';
 import Row from './Row';
 
 export interface SummaryProps {
-  fixed?: boolean;
+  fixed?: boolean | 'top' | 'bottom';
   children?: React.ReactNode;
 }
 
