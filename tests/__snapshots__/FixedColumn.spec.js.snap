@@ -16,10 +16,10 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col />
           <col />
@@ -31,7 +31,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           <col />
           <col />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
         </colgroup>
         <thead
@@ -698,10 +698,10 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
 exports[`Table.FixedColumn renders correctly all column has width should use it 1`] = `
 <colgroup>
   <col
-    style="width: 100px; min-width: 100px;"
+    style="width: 100px;"
   />
   <col
-    style="width: 100px; min-width: 100px;"
+    style="width: 100px;"
   />
 </colgroup>
 `;
@@ -722,10 +722,10 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col />
           <col />
@@ -737,7 +737,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           <col />
           <col />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
         </colgroup>
         <thead
@@ -1417,10 +1417,10 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col />
           <col />
@@ -1432,7 +1432,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
           <col />
           <col />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
         </colgroup>
         <thead
@@ -1659,43 +1659,43 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 93px; min-width: 93px;"
+            style="width: 93px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 15px; min-width: 15px;"
+            style="width: 15px;"
           />
         </colgroup>
         <thead
@@ -1782,10 +1782,10 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col />
           <col />
@@ -1797,7 +1797,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           <col />
           <col />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
         </colgroup>
         <tbody
@@ -2408,43 +2408,43 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 93px; min-width: 93px;"
+            style="width: 93px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 0px; min-width: 0;"
+            style="width: 0px;"
           />
           <col
-            style="width: 15px; min-width: 15px;"
+            style="width: 15px;"
           />
         </colgroup>
         <thead
@@ -2531,10 +2531,10 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
           <col />
           <col />
@@ -2546,7 +2546,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
           <col />
           <col />
           <col
-            style="width: 100px; min-width: 100px;"
+            style="width: 100px;"
           />
         </colgroup>
         <tbody

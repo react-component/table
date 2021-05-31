@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnType } from './interface';
+import type { ColumnType } from './interface';
 import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
 
 export interface ColGroupProps<RecordType> {
@@ -21,7 +21,7 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
     const additionalProps = column && column[INTERNAL_COL_DEFINE];
 
     if (width || additionalProps || mustInsert) {
-      cols.unshift(<col key={i} style={{ width, minWidth: width }} {...additionalProps} />);
+      cols.unshift(<col key={i} style={{ width }} {...additionalProps} />);
       mustInsert = true;
     }
   }
