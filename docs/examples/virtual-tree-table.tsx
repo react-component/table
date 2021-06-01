@@ -2,9 +2,8 @@ import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-/**
- * 实现树形表格的虚拟滚动 可以参考例子virtual-tree-table.
- */
+// 使用参考 virtuallist-antd
+import { VList } from 'virtuallist-antd';
 
 const generateData = () => {
   const temp = [];
@@ -66,7 +65,13 @@ class Demo extends React.Component {
     return (
       <div>
         <h2>sub table</h2>
-        <Table columns={columns} data={data} rowKey={record => record.a} scroll={{ y: 500 }} />
+        <Table
+          columns={columns}
+          data={data}
+          rowKey={record => record.a}
+          scroll={{ y: 500 }}
+          components={VList({ height: 500 })}
+        />
       </div>
     );
   }

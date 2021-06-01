@@ -37,8 +37,10 @@ function Body<RecordType>({
 
   // 递归 (扁平化树形结构)
   const flatChildren = React.useCallback(
-    (record, temp: Record<string, unknown>[], indent: number) => {
-      temp.push({
+    (record, indent: number) => {
+      const arr = [];
+
+      arr.push({
         record,
         indent,
       });
@@ -47,16 +49,22 @@ function Body<RecordType>({
 
       const expanded = expandedKeys && expandedKeys.has(key);
 
+      // 是否有childrenColumnName && 是否展开状态.
       if (
         record &&
         Array.isArray(record[childrenColumnName]) &&
         record[childrenColumnName].length &&
         expanded
       ) {
+        // 展开状态 扁平化record.
         for (let i = 0; i < record[childrenColumnName].length; i += 1) {
-          flatChildren(record[childrenColumnName][i], temp, indent + 1);
+          const tempArr = flatChildren(record[childrenColumnName][i], indent + 1);
+
+          arr.push(...tempArr);
         }
       }
+
+      return arr;
     },
     [expandedKeys, childrenColumnName, getRowKey],
   );
@@ -70,10 +78,11 @@ function Body<RecordType>({
     if (data.length) {
       const temp: { record; indent: number }[] = [];
 
+      // 将各个record扁平完的数据放入temp.
       for (let i = 0; i < data?.length; i += 1) {
         const record = data[i];
 
-        flatChildren(record, temp, 0);
+        temp.push(...flatChildren(record, 0));
       }
 
       rows = temp.map((item, index) => {
