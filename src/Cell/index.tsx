@@ -11,7 +11,7 @@ import type {
   AlignType,
   CellEllipsisType,
 } from '../interface';
-import { getPathValue } from '../utils/valueUtil';
+import { getPathValue, validateValue } from '../utils/valueUtil';
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
@@ -97,7 +97,7 @@ function Cell<RecordType extends DefaultRecordType>(
   let cellProps: CellType<RecordType>;
   let childNode: React.ReactNode;
 
-  if (children) {
+  if (validateValue(children)) {
     childNode = children;
   } else {
     const value = getPathValue<object | React.ReactNode, RecordType>(record, dataIndex);
