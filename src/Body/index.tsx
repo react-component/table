@@ -7,7 +7,7 @@ import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
-import NewBodyRow from './NewBodyRow';
+import BodyRow from './BodyRow';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 
 export interface BodyProps<RecordType> {
@@ -58,7 +58,7 @@ function Body<RecordType>({
         const key = getRowKey(record, index);
 
         return (
-          <NewBodyRow
+          <BodyRow
             key={key}
             rowKey={key}
             record={record}

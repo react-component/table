@@ -19,12 +19,7 @@ function flatRecord<T>(
 
   const expanded = expandedKeys && expandedKeys.has(key);
 
-  if (
-    record &&
-    Array.isArray(record[childrenColumnName]) &&
-    record[childrenColumnName].length &&
-    expanded
-  ) {
+  if (record && Array.isArray(record[childrenColumnName]) && expanded) {
     // expanded state, flat record
     for (let i = 0; i < record[childrenColumnName].length; i += 1) {
       const tempArr = flatRecord(record[childrenColumnName][i], indent + 1, options);
