@@ -8,6 +8,7 @@ import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
 import NewBodyRow from './NewBodyRow';
+import useFlattenRecords from '../hooks/useFlattenRecords';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -35,38 +36,13 @@ function Body<RecordType>({
   const { fixHeader, horizonScroll, flattenColumns, componentWidth } =
     React.useContext(BodyContext);
 
-  // 递归 (扁平化树形结构)
-  const flatChildren = React.useCallback(
-    (record, indent: number) => {
-      const arr = [];
-
-      arr.push({
-        record,
-        indent,
-      });
-
-      const key = getRowKey(record);
-
-      const expanded = expandedKeys && expandedKeys.has(key);
-
-      // 是否有childrenColumnName && 是否展开状态.
-      if (
-        record &&
-        Array.isArray(record[childrenColumnName]) &&
-        record[childrenColumnName].length &&
-        expanded
-      ) {
-        // 展开状态 扁平化record.
-        for (let i = 0; i < record[childrenColumnName].length; i += 1) {
-          const tempArr = flatChildren(record[childrenColumnName][i], indent + 1);
-
-          arr.push(...tempArr);
-        }
-      }
-
-      return arr;
+  const flattenData: { record: RecordType; indent: number }[] = useFlattenRecords<RecordType>(
+    data,
+    {
+      childrenColumnName,
+      expandedKeys,
+      getRowKey,
     },
-    [expandedKeys, childrenColumnName, getRowKey],
   );
 
   return React.useMemo(() => {
@@ -76,16 +52,7 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      const temp: { record; indent: number }[] = [];
-
-      // 将各个record扁平完的数据放入temp.
-      for (let i = 0; i < data?.length; i += 1) {
-        const record = data[i];
-
-        temp.push(...flatChildren(record, 0));
-      }
-
-      rows = temp.map((item, index) => {
+      rows = flattenData.map((item, index) => {
         const { record, indent } = item;
 
         const key = getRowKey(record, index);
@@ -158,12 +125,12 @@ function Body<RecordType>({
     componentWidth,
     emptyNode,
     flattenColumns,
-    flatChildren,
     childrenColumnName,
     fixHeader,
     horizonScroll,
     onColumnResize,
     rowExpandable,
+    flattenData,
   ]);
 }
 

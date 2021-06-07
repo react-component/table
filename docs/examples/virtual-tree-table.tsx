@@ -11,7 +11,7 @@ const generateData = () => {
   for (let i = 0; i < 100; i += 1) {
     temp.push({
       a: i,
-      b: 'bbbb'.repeat(Math.floor(Math.random() * 10)),
+      b: 'b'.repeat(Math.floor(Math.random() * 10)),
       children: [
         {
           a: `${i}_${i}`,
@@ -23,10 +23,6 @@ const generateData = () => {
             },
             {
               a: `${i}_${i}_${i}_${i}`,
-              b: 'testtest',
-            },
-            {
-              a: `${i}_${i}_${i}_${i}_${i}`,
               b: 'testtest',
             },
           ],
@@ -48,8 +44,8 @@ class Demo extends React.Component {
 
   render() {
     const columns = [
-      { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-      { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 200 },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 200 },
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       {
         title: 'Operations',
