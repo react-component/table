@@ -2,10 +2,6 @@ import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-/**
- * 实现树形表格的虚拟滚动 可以参考例子virtual-tree-table.
- */
-
 const generateData = () => {
   const temp = [];
 
