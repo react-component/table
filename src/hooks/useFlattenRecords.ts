@@ -1,4 +1,5 @@
 import type { GetRowKey, Key } from '@/interface';
+import * as React from 'react';
 
 // recursion (flat tree structure)
 function flatRecord<T>(
@@ -43,14 +44,18 @@ export default function useFlattenRecords<T>(
   data,
   options: { childrenColumnName: string; expandedKeys: Set<Key>; getRowKey: GetRowKey<T> },
 ) {
-  const arr: { record: T; indent: number }[] = [];
+  const arr: { record: T; indent: number }[] = React.useMemo(() => {
+    const temp: { record: T; indent: number }[] = [];
 
-  // collect flattened record
-  for (let i = 0; i < data?.length; i += 1) {
-    const record = data[i];
+    // collect flattened record
+    for (let i = 0; i < data?.length; i += 1) {
+      const record = data[i];
 
-    arr.push(...flatRecord<T>(record, 0, options));
-  }
+      temp.push(...flatRecord<T>(record, 0, options));
+    }
+
+    return temp;
+  }, [data, options]);
 
   return arr;
 }
