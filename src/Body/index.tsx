@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
 import type { GetRowKey, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
@@ -38,11 +37,9 @@ function Body<RecordType>({
 
   const flattenData: { record: RecordType; indent: number }[] = useFlattenRecords<RecordType>(
     data,
-    {
-      childrenColumnName,
-      expandedKeys,
-      getRowKey,
-    },
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
   );
 
   return React.useMemo(() => {

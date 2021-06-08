@@ -5,10 +5,10 @@ import * as React from 'react';
 function flatRecord<T>(
   record: T,
   indent: number,
-  options: { childrenColumnName: string; expandedKeys: Set<Key>; getRowKey: GetRowKey<T> },
+  childrenColumnName: string,
+  expandedKeys: Set<Key>,
+  getRowKey: GetRowKey<T>,
 ) {
-  const { childrenColumnName, expandedKeys, getRowKey } = options;
-
   const arr = [];
 
   arr.push({
@@ -23,7 +23,13 @@ function flatRecord<T>(
   if (record && Array.isArray(record[childrenColumnName]) && expanded) {
     // expanded state, flat record
     for (let i = 0; i < record[childrenColumnName].length; i += 1) {
-      const tempArr = flatRecord(record[childrenColumnName][i], indent + 1, options);
+      const tempArr = flatRecord(
+        record[childrenColumnName][i],
+        indent + 1,
+        childrenColumnName,
+        expandedKeys,
+        getRowKey,
+      );
 
       arr.push(...tempArr);
     }
@@ -35,14 +41,19 @@ function flatRecord<T>(
 /**
  * flat tree data on expanded state
  *
+ * @export
  * @template T
  * @param {*} data : table data
- * @param {{ childrenColumnName: string, expandedKeys: Set<Key>, getRowKey: GetRowKey<T> }} options : { childrenColumnName : 指定树形结构的列名, expandedKeys : 展开的行对应的keys, getRowKeys: 获取当前rowKey的方法 }
+ * @param {string} childrenColumnName : 指定树形结构的列名
+ * @param {Set<Key>} expandedKeys : 展开的行对应的keys
+ * @param {GetRowKey<T>} getRowKey  : 获取当前rowKey的方法
  * @returns flattened data
  */
 export default function useFlattenRecords<T>(
   data,
-  options: { childrenColumnName: string; expandedKeys: Set<Key>; getRowKey: GetRowKey<T> },
+  childrenColumnName: string,
+  expandedKeys: Set<Key>,
+  getRowKey: GetRowKey<T>,
 ) {
   const arr: { record: T; indent: number }[] = React.useMemo(() => {
     const temp: { record: T; indent: number }[] = [];
@@ -51,11 +62,11 @@ export default function useFlattenRecords<T>(
     for (let i = 0; i < data?.length; i += 1) {
       const record = data[i];
 
-      temp.push(...flatRecord<T>(record, 0, options));
+      temp.push(...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey));
     }
 
     return temp;
-  }, [data, options]);
+  }, [data, childrenColumnName, expandedKeys, getRowKey]);
 
   return arr;
 }
