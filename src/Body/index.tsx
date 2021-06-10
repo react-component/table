@@ -1,12 +1,13 @@
 import * as React from 'react';
-import BodyRow from './BodyRow';
 import TableContext from '../context/TableContext';
-import { GetRowKey, Key, GetComponentProps } from '../interface';
+import type { GetRowKey, Key, GetComponentProps } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
+import BodyRow from './BodyRow';
+import useFlattenRecords from '../hooks/useFlattenRecords';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -31,8 +32,14 @@ function Body<RecordType>({
 }: BodyProps<RecordType>) {
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { fixHeader, horizonScroll, flattenColumns, componentWidth } = React.useContext(
-    BodyContext,
+  const { fixHeader, horizonScroll, flattenColumns, componentWidth } =
+    React.useContext(BodyContext);
+
+  const flattenData: { record: RecordType; indent: number }[] = useFlattenRecords<RecordType>(
+    data,
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
   );
 
   return React.useMemo(() => {
@@ -42,7 +49,9 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      rows = data.map((record, index) => {
+      rows = flattenData.map((item, index) => {
+        const { record, indent } = item;
+
         const key = getRowKey(record, index);
 
         return (
@@ -59,6 +68,7 @@ function Body<RecordType>({
             getRowKey={getRowKey}
             rowExpandable={rowExpandable}
             childrenColumnName={childrenColumnName}
+            indent={indent}
           />
         );
       });
@@ -112,6 +122,12 @@ function Body<RecordType>({
     componentWidth,
     emptyNode,
     flattenColumns,
+    childrenColumnName,
+    fixHeader,
+    horizonScroll,
+    onColumnResize,
+    rowExpandable,
+    flattenData,
   ]);
 }
 

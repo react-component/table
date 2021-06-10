@@ -39,7 +39,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     record,
     index,
     rowKey,
-    getRowKey,
     rowExpandable,
     expandedKeys,
     onRow,
@@ -213,33 +212,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     );
   }
 
-  // ========================= Nest Row ==========================
-  let nestRowNode: React.ReactElement[];
-  if (hasNestChildren && expanded) {
-    nestRowNode = (record[childrenColumnName] || []).map(
-      (subRecord: RecordType, subIndex: number): React.ReactElement => {
-        const subKey = getRowKey(subRecord, subIndex);
-
-        return (
-          <BodyRow
-            {...props}
-            key={subKey}
-            rowKey={subKey}
-            record={subRecord}
-            recordKey={subKey}
-            index={subIndex}
-            indent={indent + 1}
-          />
-        );
-      },
-    );
-  }
-
   return (
     <>
       {baseRowNode}
       {expandRowNode}
-      {nestRowNode}
     </>
   );
 }

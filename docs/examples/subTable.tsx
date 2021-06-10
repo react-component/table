@@ -2,30 +2,40 @@ import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const data = [
-  {
-    a: 'a1',
-  },
-  {
-    a: 'a2',
-    b: 'b2',
-    children: [
-      {
-        a: 'a2-1',
-        b: 'b2-1',
-      },
-      {
-        a: 'a2-2',
-        b: 'b2-2',
-      },
-    ],
-  },
-  {
-    a: 'a3',
-    c: 'c3',
-    d: 'd3',
-  },
-];
+const generateData = () => {
+  const temp = [];
+
+  for (let i = 0; i < 100; i += 1) {
+    temp.push({
+      a: i,
+      b: 'bbbb'.repeat(Math.floor(Math.random() * 10)),
+      children: [
+        {
+          a: `${i}_${i}`,
+          b: 'test',
+          children: [
+            {
+              a: `${i}_${i}_${i}`,
+              b: 'testtest',
+            },
+            {
+              a: `${i}_${i}_${i}_${i}`,
+              b: 'testtest',
+            },
+            {
+              a: `${i}_${i}_${i}_${i}_${i}`,
+              b: 'testtest',
+            },
+          ],
+        },
+      ],
+    });
+  }
+
+  return temp;
+};
+
+const data = generateData();
 
 class Demo extends React.Component {
   handleClick = (record, e) => {
@@ -52,7 +62,7 @@ class Demo extends React.Component {
     return (
       <div>
         <h2>sub table</h2>
-        <Table columns={columns} data={data} rowKey={record => record.a} />
+        <Table columns={columns} data={data} rowKey={record => record.a} scroll={{ y: 500 }} />
       </div>
     );
   }
