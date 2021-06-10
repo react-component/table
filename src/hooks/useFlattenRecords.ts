@@ -18,7 +18,7 @@ function flatRecord<T>(
 
   const key = getRowKey(record);
 
-  const expanded = expandedKeys && expandedKeys.has(key);
+  const expanded = expandedKeys?.has(key);
 
   if (record && Array.isArray(record[childrenColumnName]) && expanded) {
     // expanded state, flat record
@@ -56,16 +56,25 @@ export default function useFlattenRecords<T>(
   getRowKey: GetRowKey<T>,
 ) {
   const arr: { record: T; indent: number }[] = React.useMemo(() => {
-    const temp: { record: T; indent: number }[] = [];
+    if (expandedKeys?.size) {
+      const temp: { record: T; indent: number }[] = [];
 
-    // collect flattened record
-    for (let i = 0; i < data?.length; i += 1) {
-      const record = data[i];
+      // collect flattened record
+      for (let i = 0; i < data?.length; i += 1) {
+        const record = data[i];
 
-      temp.push(...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey));
+        temp.push(...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey));
+      }
+
+      return temp;
     }
 
-    return temp;
+    return data?.map(item => {
+      return {
+        record: item,
+        indent: 0,
+      };
+    });
   }, [data, childrenColumnName, expandedKeys, getRowKey]);
 
   return arr;
