@@ -492,13 +492,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
   };
 
-  // Sync scroll bar when init or `horizonScroll` changed
+  // Sync scroll bar when init or `horizonScroll` & `data` changed
   React.useEffect(() => triggerOnScroll, []);
   React.useEffect(() => {
     if (horizonScroll) {
       triggerOnScroll();
     }
-  }, [horizonScroll]);
+  }, [horizonScroll, data]);
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
