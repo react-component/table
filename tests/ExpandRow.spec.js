@@ -5,6 +5,8 @@ import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
+jest.useFakeTimers();
+
 describe('Table.Expand', () => {
   const expandedRowRender = () => <p>extra data</p>;
 
@@ -135,6 +137,7 @@ describe('Table.Expand', () => {
       act(() => {
         wrapper.find('ResizeObserver').first().props().onResize({ width: 1128 });
       });
+      jest.advanceTimersByTime(1);
       wrapper.update();
       expect(wrapper.render()).toMatchSnapshot();
     });

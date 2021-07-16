@@ -485,11 +485,28 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     }
   };
 
-  const onFullTableResize = ({ width }) => {
-    if (width !== componentWidth) {
-      triggerOnScroll();
-      setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+  const requestAnimationFrameIdRef = React.useRef<number>();
+  const cancelRequestAnimationFrame = () => {
+    if (requestAnimationFrameIdRef.current) {
+      window.cancelAnimationFrame(requestAnimationFrameIdRef.current);
+      requestAnimationFrameIdRef.current = null;
     }
+  };
+  React.useEffect(() => {
+    return () => {
+      cancelRequestAnimationFrame();
+    };
+  }, []);
+
+  const onFullTableResize = ({ width }) => {
+    // fix chrome throw ResizeObserver loop limit exceeded
+    cancelRequestAnimationFrame();
+    requestAnimationFrameIdRef.current = window.requestAnimationFrame(() => {
+      if (width !== componentWidth) {
+        triggerOnScroll();
+        setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+      }
+    });
   };
 
   // Sync scroll bar when init or `horizonScroll` & `data` changed
