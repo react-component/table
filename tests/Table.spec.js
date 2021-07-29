@@ -5,7 +5,10 @@ import Table from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
-  const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
+  const data = [
+    { key: 'key0', name: 'Lucy' },
+    { key: 'key1', name: 'Jack' },
+  ];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
@@ -59,18 +62,8 @@ describe('Table.Basic', () => {
         }),
       );
       expect(wrapper.render()).toMatchSnapshot();
-      expect(
-        wrapper
-          .find('th')
-          .at(0)
-          .text(),
-      ).toEqual('姓名');
-      expect(
-        wrapper
-          .find('th')
-          .at(1)
-          .text(),
-      ).toEqual('年龄');
+      expect(wrapper.find('th').at(0).text()).toEqual('姓名');
+      expect(wrapper.find('th').at(1).text()).toEqual('年龄');
     });
 
     it('falsy columns', () => {
@@ -94,22 +87,12 @@ describe('Table.Basic', () => {
   describe('renders empty text correctly', () => {
     it('ReactNode', () => {
       const wrapper = mount(createTable({ data: [], emptyText: 'No data' }));
-      expect(
-        wrapper
-          .find('.rc-table-placeholder')
-          .hostNodes()
-          .text(),
-      ).toEqual('No data');
+      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('No data');
     });
 
     it('renderProps', () => {
       const wrapper = mount(createTable({ data: [], emptyText: () => 'No data' }));
-      expect(
-        wrapper
-          .find('.rc-table-placeholder')
-          .hostNodes()
-          .text(),
-      ).toEqual('No data');
+      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('No data');
     });
 
     it('effect update', () => {
@@ -122,12 +105,7 @@ describe('Table.Basic', () => {
       };
       const wrapper = mount(<App />);
       wrapper.update();
-      expect(
-        wrapper
-          .find('.rc-table-placeholder')
-          .hostNodes()
-          .text(),
-      ).toEqual('bamboo');
+      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('bamboo');
     });
   });
 
@@ -143,64 +121,12 @@ describe('Table.Basic', () => {
 
   it('renders title correctly', () => {
     const wrapper = mount(createTable({ title: () => <p>title</p> }));
-    expect(
-      wrapper
-        .find('.rc-table-title')
-        .hostNodes()
-        .text(),
-    ).toEqual('title');
+    expect(wrapper.find('.rc-table-title').hostNodes().text()).toEqual('title');
   });
 
   it('renders footer correctly', () => {
     const wrapper = mount(createTable({ footer: () => <p>footer</p> }));
-    expect(
-      wrapper
-        .find('.rc-table-footer')
-        .hostNodes()
-        .text(),
-    ).toEqual('footer');
-  });
-
-  describe('summary', () => {
-    it('render correctly', () => {
-      const wrapper = mount(
-        createTable({
-          summary: () => (
-            <tr className="summary">
-              <td>Good</td>
-            </tr>
-          ),
-        }),
-      );
-
-      expect(wrapper.find('tfoot').text()).toEqual('Good');
-    });
-
-    it('support data type', () => {
-      const wrapper = mount(
-        <Table
-          columns={[
-            { dataIndex: 'a', fixed: 'left', width: 10 },
-            { dataIndex: 'b', fixed: 'left', width: 20 },
-            { dataIndex: 'c', width: 30 },
-          ]}
-          data={[{ key: 1, a: 2, b: 3, c: 4 }]}
-          summary={() => (
-            <Table.Summary.Row>
-              <Table.Summary.Cell colSpan={2} index={0}>
-                Light
-              </Table.Summary.Cell>
-              <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
-              <Table.Summary.Cell index={3} align="right">
-                112.5
-              </Table.Summary.Cell>
-            </Table.Summary.Row>
-          )}
-        />,
-      );
-
-      expect(wrapper.find('tfoot').render()).toMatchSnapshot();
-    });
+    expect(wrapper.find('.rc-table-footer').hostNodes().text()).toEqual('footer');
   });
 
   it('renders with id correctly', () => {
@@ -219,50 +145,20 @@ describe('Table.Basic', () => {
   describe('rowKey', () => {
     it('uses record.key', () => {
       const wrapper = mount(createTable());
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(0)
-          .key(),
-      ).toBe('key0');
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(1)
-          .key(),
-      ).toBe('key1');
+      expect(wrapper.find('BodyRow').at(0).key()).toBe('key0');
+      expect(wrapper.find('BodyRow').at(1).key()).toBe('key1');
     });
 
     it('sets by rowKey', () => {
       const wrapper = mount(createTable({ rowKey: 'name' }));
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(0)
-          .key(),
-      ).toBe('Lucy');
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(1)
-          .key(),
-      ).toBe('Jack');
+      expect(wrapper.find('BodyRow').at(0).key()).toBe('Lucy');
+      expect(wrapper.find('BodyRow').at(1).key()).toBe('Jack');
     });
 
     it('sets by rowKey function', () => {
       const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(0)
-          .key(),
-      ).toBe('key01');
-      expect(
-        wrapper
-          .find('BodyRow')
-          .at(1)
-          .key(),
-      ).toBe('key11');
+      expect(wrapper.find('BodyRow').at(0).key()).toBe('key01');
+      expect(wrapper.find('BodyRow').at(1).key()).toBe('key11');
     });
   });
 
@@ -383,7 +279,10 @@ describe('Table.Basic', () => {
       ];
       const wrapper = mount(createTable({ columns, data: localData }));
 
-      const targetData = [['John', 'Doe'], ['Terry', 'Garner']];
+      const targetData = [
+        ['John', 'Doe'],
+        ['Terry', 'Garner'],
+      ];
 
       wrapper.find('tbody tr').forEach((tr, ri) => {
         tr.find('td').forEach((td, di) => {
@@ -394,14 +293,12 @@ describe('Table.Basic', () => {
   });
 
   it('render empty cell if text is empty object', () => {
-    const localData = [{ key: 'key0', name: {} }, { key: 'key1', name: 'Jack' }];
+    const localData = [
+      { key: 'key0', name: {} },
+      { key: 'key1', name: 'Jack' },
+    ];
     const wrapper = mount(createTable({ data: localData }));
-    expect(
-      wrapper
-        .find('table td')
-        .first()
-        .text(),
-    ).toBe('');
+    expect(wrapper.find('table td').first().text()).toBe('');
   });
 
   it('renders colSpan correctly', () => {
@@ -573,10 +470,7 @@ describe('Table.Basic', () => {
       };
       const wrapper = mount(<Test />);
       for (let i = 0; i < 10; i += 1) {
-        wrapper
-          .find('tbody tr td')
-          .last()
-          .simulate('click');
+        wrapper.find('tbody tr td').last().simulate('click');
         expect(wrapper.find('#count').text()).toEqual(String(i + 1));
       }
     });
@@ -709,34 +603,12 @@ describe('Table.Basic', () => {
       { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
     ];
     const wrapper = mount(createTable({ columns }));
-    expect(
-      wrapper
-        .find('th')
-        .at(0)
-        .props().style.textAlign,
-    ).toBeFalsy();
-    expect(
-      wrapper
-        .find('th')
-        .at(1)
-        .props().style.textAlign,
-    ).toEqual('center');
-    expect(
-      wrapper
-        .find('tbody tr')
-        .first()
-        .find('td')
-        .at(0)
-        .props().style.textAlign,
-    ).toBeFalsy();
-    expect(
-      wrapper
-        .find('tbody tr')
-        .first()
-        .find('td')
-        .at(1)
-        .props().style.textAlign,
-    ).toEqual('center');
+    expect(wrapper.find('th').at(0).props().style.textAlign).toBeFalsy();
+    expect(wrapper.find('th').at(1).props().style.textAlign).toEqual('center');
+    expect(wrapper.find('tbody tr').first().find('td').at(0).props().style.textAlign).toBeFalsy();
+    expect(wrapper.find('tbody tr').first().find('td').at(1).props().style.textAlign).toEqual(
+      'center',
+    );
   });
 
   it('align column should not override cell style', () => {
@@ -751,21 +623,11 @@ describe('Table.Basic', () => {
       },
     ];
     const wrapper = mount(createTable({ columns }));
-    expect(
-      wrapper
-        .find('th')
-        .first()
-        .props().style,
-    ).toEqual({
+    expect(wrapper.find('th').first().props().style).toEqual({
       color: 'green',
       textAlign: 'center',
     });
-    expect(
-      wrapper
-        .find('td')
-        .first()
-        .props().style,
-    ).toEqual({
+    expect(wrapper.find('td').first().props().style).toEqual({
       color: 'red',
       textAlign: 'center',
     });
@@ -869,12 +731,7 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(
-      wrapper
-        .find('tbody Cell')
-        .first()
-        .key(),
-    ).toBeTruthy();
+    expect(wrapper.find('tbody Cell').first().key()).toBeTruthy();
   });
 
   it('syntactic sugar', () => {
@@ -940,12 +797,7 @@ describe('Table.Basic', () => {
       />,
     );
 
-    expect(
-      wrapper
-        .find('tr')
-        .last()
-        .props()['data-row-key'],
-    ).toEqual('light');
+    expect(wrapper.find('tr').last().props()['data-row-key']).toEqual('light');
   });
 
   it('render with state change', () => {
@@ -981,60 +833,102 @@ describe('Table.Basic', () => {
     }).not.toThrow();
   });
 
-  it('shouldCellUpdate', () => {
-    const record = { key: 1 };
-    let shouldUpdate = false;
-    let renderTimes = 0;
-    let prev;
-    let next;
+  describe('shouldCellUpdate', () => {
+    it('basic', () => {
+      const record = { key: 1 };
+      let shouldUpdate = false;
+      let renderTimes = 0;
+      let prev;
+      let next;
 
-    const Demo = ({ records }) => {
-      const [, forceUpdate] = React.useState({});
+      const Demo = ({ records }) => {
+        const [, forceUpdate] = React.useState({});
 
-      return (
-        <>
-          <Table
-            data={records}
-            columns={[
-              {
-                dataIndex: 'key',
-                shouldCellUpdate: (nextRecord, prevRecord) => {
-                  next = nextRecord;
-                  prev = prevRecord;
-                  return shouldUpdate;
+        return (
+          <>
+            <Table
+              data={records}
+              columns={[
+                {
+                  dataIndex: 'key',
+                  shouldCellUpdate: (nextRecord, prevRecord) => {
+                    next = nextRecord;
+                    prev = prevRecord;
+                    return shouldUpdate;
+                  },
+                  render() {
+                    renderTimes += 1;
+                    return null;
+                  },
                 },
-                render() {
-                  renderTimes += 1;
-                  return null;
-                },
-              },
-            ]}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              forceUpdate({});
-            }}
-          />
-        </>
+              ]}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                forceUpdate({});
+              }}
+            />
+          </>
+        );
+      };
+
+      const wrapper = mount(<Demo records={[record]} />);
+      renderTimes = 0;
+
+      wrapper.find('button').simulate('click');
+      expect(renderTimes).toEqual(0);
+
+      shouldUpdate = true;
+      wrapper.find('button').simulate('click');
+      expect(renderTimes).toEqual(1);
+
+      // Should update match prev & next
+      const newRecord = { ...record, next: true };
+      wrapper.setProps({ records: [newRecord] });
+      // wrapper.update();
+      expect(prev).toBe(record);
+      expect(next).toBe(newRecord);
+    });
+
+    it('not block nest children', () => {
+      const onExpandedRowsChange = jest.fn();
+
+      const wrapper = mount(
+        <Table
+          columns={[{ dataIndex: 'key', shouldCellUpdate: () => false }]}
+          expandable={{ onExpandedRowsChange }}
+          data={[
+            {
+              key: 'parent',
+              children: [
+                { key: 'light', children: [] },
+                { key: 'bamboo', children: [{ key: 'little' }] },
+              ],
+            },
+          ]}
+        />,
       );
-    };
 
-    const wrapper = mount(<Demo records={[record]} />);
-    renderTimes = 0;
+      // First Level - parent
+      wrapper.find('span.rc-table-row-expand-icon').first().simulate('click');
+      expect(
+        wrapper.find('span.rc-table-row-expand-icon').first().hasClass('rc-table-row-expanded'),
+      ).toBeTruthy();
 
-    wrapper.find('button').simulate('click');
-    expect(renderTimes).toEqual(0);
+      // Second Level - light twice
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'light']);
 
-    shouldUpdate = true;
-    wrapper.find('button').simulate('click');
-    expect(renderTimes).toEqual(1);
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent']);
 
-    // Should update match prev & next
-    const newRecord = { ...record, next: true };
-    wrapper.setProps({ records: [newRecord] });
-    // wrapper.update();
-    expect(prev).toBe(record);
-    expect(next).toBe(newRecord);
+      // Second Level - bamboo
+      onExpandedRowsChange.mockReset();
+      wrapper.find('span.rc-table-row-expand-icon').last().simulate('click');
+      expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
+    });
   });
 });

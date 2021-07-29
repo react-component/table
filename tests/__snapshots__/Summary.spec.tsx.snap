@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table.Summary support data type 1`] = `
+<tfoot
+  class="rc-table-summary"
+>
+  <tr>
+    <td
+      class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+      colspan="2"
+      style="position: sticky; left: 0px;"
+    >
+      Light
+    </td>
+    <td
+      class="rc-table-cell"
+    >
+      Bamboo
+    </td>
+    <td
+      class="rc-table-cell"
+      style="text-align: right;"
+    >
+      112.5
+    </td>
+  </tr>
+</tfoot>
+`;

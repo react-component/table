@@ -226,6 +226,7 @@ export type TriggerEventHandler<RecordType> = (
 // =================== Sticky ===================
 export interface TableSticky {
   offsetHeader?: number;
+  offsetSummary?: number;
   offsetScroll?: number;
   getContainer?: () => Window | HTMLElement;
 }

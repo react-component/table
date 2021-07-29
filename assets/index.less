@@ -19,38 +19,37 @@
 }
 
 .@{tablePrefixCls} {
-  font-size: @font-size-base;
-  color: @text-color;
-  line-height: @line-height;
-  box-sizing: border-box;
   position: relative;
+  box-sizing: border-box;
+  color: @text-color;
+  font-size: @font-size-base;
+  line-height: @line-height;
 
   &-rtl {
     direction: rtl;
   }
   // ================= Global =================
   table {
-    border-spacing: 0px;
     width: 100%;
+    border-spacing: 0px;
   }
 
   th,
   td {
+    position: relative;
+    box-sizing: border-box;
     padding: 0;
 
-    position: relative;
+    padding: @cell-padding;
+    white-space: normal;
+    word-break: break-word;
     border: @border;
     border-top: 0;
     border-left: 0;
     transition: box-shadow 0.3s;
-
-    padding: @cell-padding;
-    box-sizing: border-box;
-    white-space: normal;
-    word-break: break-word;
     .@{tablePrefixCls}-rtl& {
-      border-left: @border;
       border-right: 0;
+      border-left: @border;
     }
   }
 
@@ -82,15 +81,15 @@
 
     &-fix-left-first::after,
     &-fix-left-last::after {
-      pointer-events: none;
-      content: '';
-      transition: box-shadow 0.3s;
       position: absolute;
       top: 0;
+      right: -1px;
       bottom: -1px;
       width: 20px;
-      right: -1px;
       transform: translateX(100%);
+      transition: box-shadow 0.3s;
+      content: '';
+      pointer-events: none;
     }
 
     &-fix-right-first,
@@ -102,21 +101,21 @@
       }
 
       &::after {
-        pointer-events: none;
-        content: '';
-        transition: box-shadow 0.3s;
         position: absolute;
         top: 0;
         bottom: -1px;
-        width: 20px;
         left: -1px;
+        width: 20px;
         transform: translateX(-100%);
+        transition: box-shadow 0.3s;
+        content: '';
+        pointer-events: none;
       }
     }
 
     &&-ellipsis {
-      white-space: nowrap;
       overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
 
       // Fixed first or last should special process
@@ -126,9 +125,9 @@
         overflow: visible;
 
         .@{tablePrefixCls}-cell-content {
+          display: block;
           overflow: hidden;
           text-overflow: ellipsis;
-          display: block;
         }
       }
     }
@@ -161,18 +160,18 @@
   thead {
     td,
     th {
-      background: @table-head-background-color;
       text-align: center;
+      background: @table-head-background-color;
     }
 
     .@{tablePrefixCls}-cell-scrollbar::after {
       position: absolute;
-      content: '';
       top: 0;
       bottom: 0;
       left: -1px;
       width: 1px;
       background: @table-head-background-color;
+      content: '';
 
       .@{tablePrefixCls}-rtl& {
         right: -1px;
@@ -211,13 +210,13 @@
   }
 
   &-fixed-column &-body::after {
-    content: '';
     position: absolute;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
-    border-right: @border;
     z-index: 1;
+    border-right: @border;
+    content: '';
   }
 
   // ================= Expand =================
@@ -229,17 +228,17 @@
     &-fixed {
       box-sizing: border-box;
       margin: @cell-margin;
-      padding: @cell-padding;
       margin-right: -@horizontal-padding - 2 * @border-width;
+      padding: @cell-padding;
 
       &::after {
-        content: '';
         position: absolute;
-        width: 0;
         top: 0;
-        bottom: 0;
         right: 1px;
+        bottom: 0;
+        width: 0;
         border-right: @border;
+        content: '';
       }
     }
   }
@@ -248,12 +247,12 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 1px solid currentColor;
     color: #aaa;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
     line-height: 16px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid currentColor;
+    cursor: pointer;
 
     &.@{tablePrefixCls}-row-expanded::after {
       content: '-';
@@ -270,16 +269,16 @@
 
   // ================= Title ==================
   &-title {
+    padding: @cell-padding;
     border: @border;
     border-bottom: 0;
-    padding: @cell-padding;
   }
 
   // ================= Footer =================
   &-footer {
+    padding: @cell-padding;
     border: @border;
     border-top: 0;
-    padding: @cell-padding;
   }
 
   tfoot {
@@ -287,28 +286,34 @@
       background: #fff;
     }
   }
+
+  &-summary {
+    border-top: @border;
+    border-left: @border;
+  }
+
   &-sticky {
-    &-header {
+    &-holder {
       position: sticky;
       z-index: 2;
     }
     &-scroll {
       position: sticky;
       bottom: 0;
+      z-index: 2;
       display: flex;
       align-items: center;
       border-top: 1px solid #f3f3f3;
       opacity: 0.6;
       transition: transform 0.1s ease-in 0s;
-      z-index: 2;
       &:hover {
         transform: scaleY(1.2);
         transform-origin: center bottom;
       }
       &-bar {
         height: 8px;
-        border-radius: 4px;
         background-color: #bbb;
+        border-radius: 4px;
         &:hover {
           background-color: #999;
         }

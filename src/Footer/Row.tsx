@@ -6,6 +6,6 @@ export interface FooterRowProps {
   style?: React.CSSProperties;
 }
 
-export default function FooterRow(props: FooterRowProps) {
-  return <tr {...props} />;
+export default function FooterRow({ children, ...props }: FooterRowProps) {
+  return <tr {...props}>{children}</tr>;
 }
