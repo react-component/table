@@ -105,7 +105,7 @@ function Cell<RecordType extends DefaultRecordType>(
     // Customize render node
     childNode = value;
     if (render) {
-      const renderData = render(value, record, index);
+      const renderData = render(value, record, index, dataIndex);
 
       if (isRenderCell(renderData)) {
         childNode = renderData.children;

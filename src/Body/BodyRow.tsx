@@ -158,7 +158,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
         let additionalCellProps: React.HTMLAttributes<HTMLElement>;
         if (column.onCell) {
-          additionalCellProps = column.onCell(record, index);
+          additionalCellProps = column.onCell(record, index, dataIndex);
         }
 
         return (
