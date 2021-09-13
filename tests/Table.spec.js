@@ -931,4 +931,24 @@ describe('Table.Basic', () => {
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
     });
   });
+
+  it('should support custom ref', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    const columns = [
+      {
+        title: 'Name',
+        key: 'name',
+        dataIndex: 'name',
+      },
+    ];
+    const Wrapper = () => {
+      const ref = React.useRef();
+      return <Table ref={ref} columns={columns} />;
+    };
+    mount(<Wrapper />);
+    expect(spy).not.toBeCalled();
+
+    spy.mockRestore();
+  });
 });

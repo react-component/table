@@ -165,7 +165,10 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   sticky?: boolean | TableSticky;
 }
 
-function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+function InternalTable<RecordType extends DefaultRecordType>(
+  props: TableProps<RecordType>,
+  ref: React.MutableRefObject<HTMLDivElement>,
+) {
   const {
     prefixCls,
     className,
@@ -364,7 +367,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   // ====================== Scroll ======================
-  const fullTableRef = React.useRef<HTMLDivElement>();
+  let fullTableRef = React.useRef<HTMLDivElement>();
+  fullTableRef = ref || fullTableRef;
+
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
@@ -830,6 +835,18 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     </TableContext.Provider>
   );
 }
+
+const TableRef = React.forwardRef(InternalTable);
+
+type InternalTableType = typeof TableRef;
+
+interface TableInterface extends InternalTableType {
+  Column: typeof Column;
+  ColumnGroup: typeof ColumnGroup;
+  Summary: typeof Summary;
+}
+
+const Table = TableRef as TableInterface;
 
 Table.Column = Column;
 
