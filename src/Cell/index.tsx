@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { supportRef } from 'rc-util/lib/ref';
+import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import type {
   DataIndex,
   ColumnType,
@@ -12,6 +13,8 @@ import type {
   CellEllipsisType,
 } from '../interface';
 import { getPathValue, validateValue } from '../utils/valueUtil';
+
+const supportSticky = isStyleSupport('position', 'sticky');
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
@@ -145,8 +148,8 @@ function Cell<RecordType extends DefaultRecordType>(
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  const isFixLeft = typeof fixLeft === 'number';
-  const isFixRight = typeof fixRight === 'number';
+  const isFixLeft = typeof fixLeft === 'number' && supportSticky;
+  const isFixRight = typeof fixRight === 'number' && supportSticky;
 
   if (isFixLeft) {
     fixedStyle.position = 'sticky';
@@ -185,15 +188,15 @@ function Cell<RecordType extends DefaultRecordType>(
       cellPrefixCls,
       className,
       {
-        [`${cellPrefixCls}-fix-left`]: isFixLeft,
-        [`${cellPrefixCls}-fix-left-first`]: firstFixLeft,
-        [`${cellPrefixCls}-fix-left-last`]: lastFixLeft,
-        [`${cellPrefixCls}-fix-right`]: isFixRight,
-        [`${cellPrefixCls}-fix-right-first`]: firstFixRight,
-        [`${cellPrefixCls}-fix-right-last`]: lastFixRight,
+        [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
+        [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
+        [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
+        [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
+        [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
+        [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
-        [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky,
+        [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
       },
       additionalProps.className,
       cellClassName,
