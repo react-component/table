@@ -216,11 +216,13 @@ function Cell<RecordType extends DefaultRecordType>(
 const RefCell = React.forwardRef<any, CellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
+const comparePropList: (keyof CellProps<any>)[] = ['expanded', 'className'];
+
 const MemoCell = React.memo(RefCell, (prev: CellProps<any>, next: CellProps<any>) => {
   if (next.shouldCellUpdate) {
     return (
       // Additional handle of expanded logic
-      prev.expanded === next.expanded &&
+      comparePropList.every(propName => prev[propName] === next[propName]) &&
       // User control update logic
       !next.shouldCellUpdate(next.record, prev.record)
     );

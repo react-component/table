@@ -42,4 +42,32 @@ describe('Table.Cell', () => {
       expect(reRenderTime).toEqual(0);
     }
   });
+
+  it('shouldCellUpdate not block className', () => {
+    let reRenderTime = 0;
+
+    const getColumns = (props?: object) => [
+      {
+        shouldCellUpdate: (record, prevRecord) => prevRecord.key !== record.key,
+        dataIndex: 'key',
+        render: value => {
+          reRenderTime += 1;
+          return value;
+        },
+        ...props,
+      },
+    ];
+
+    const wrapper = mount(<Table data={[{ key: 'light' }]} columns={getColumns()} />);
+
+    // Update className should re-render
+    reRenderTime = 0;
+    for (let i = 0; i < 10; i += 1) {
+      wrapper.setProps({
+        columns: getColumns({ className: 'test' }),
+      });
+    }
+
+    expect(reRenderTime).toEqual(1);
+  });
 });
