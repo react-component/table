@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { supportRef } from 'rc-util/lib/ref';
-import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import type {
   DataIndex,
   ColumnType,
@@ -13,8 +12,7 @@ import type {
   CellEllipsisType,
 } from '../interface';
 import { getPathValue, validateValue } from '../utils/valueUtil';
-
-const supportSticky = isStyleSupport('position', 'sticky');
+import StickyContext from '../context/StickyContext';
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
@@ -95,6 +93,8 @@ function Cell<RecordType extends DefaultRecordType>(
   ref: React.Ref<any>,
 ): React.ReactElement {
   const cellPrefixCls = `${prefixCls}-cell`;
+
+  const supportSticky = React.useContext(StickyContext);
 
   // ==================== Child Node ====================
   let cellProps: CellType<RecordType>;

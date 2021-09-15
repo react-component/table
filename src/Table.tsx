@@ -26,6 +26,7 @@
 
 import * as React from 'react';
 import isVisible from 'rc-util/lib/Dom/isVisible';
+import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import warning from 'rc-util/lib/warning';
@@ -73,6 +74,7 @@ import useSticky from './hooks/useSticky';
 import FixedHolder from './FixedHolder';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
+import StickyContext from './context/StickyContext';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -502,9 +504,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
+  const [supportSticky, setSupportSticky] = React.useState(false);
 
   React.useEffect(() => {
     setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+    setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
   // ================== INTERNAL HOOKS ==================
@@ -823,11 +827,13 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
 
   return (
-    <TableContext.Provider value={TableContextValue}>
-      <BodyContext.Provider value={BodyContextValue}>
-        <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
-      </BodyContext.Provider>
-    </TableContext.Provider>
+    <StickyContext.Provider value={supportSticky}>
+      <TableContext.Provider value={TableContextValue}>
+        <BodyContext.Provider value={BodyContextValue}>
+          <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+        </BodyContext.Provider>
+      </TableContext.Provider>
+    </StickyContext.Provider>
   );
 }
 
