@@ -504,7 +504,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
-  const [supportSticky, setSupportSticky] = React.useState(false);
+  const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
     setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
