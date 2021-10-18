@@ -731,7 +731,7 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(wrapper.find('tbody Cell').first().key()).toBeTruthy();
+    expect(wrapper.find('tbody WrappedCell').first().key()).toBeTruthy();
   });
 
   it('syntactic sugar', () => {
@@ -930,5 +930,11 @@ describe('Table.Basic', () => {
       wrapper.find('span.rc-table-row-expand-icon').last().simulate('click');
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
     });
+  });
+
+  it('hover', () => {
+    const wrapper = mount(createTable());
+    wrapper.find('tbody td').first().simulate('mouseEnter');
+    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
   });
 });
