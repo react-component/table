@@ -8,6 +8,7 @@ import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
 import BodyRow from './BodyRow';
 import useFlattenRecords from '../hooks/useFlattenRecords';
+import HoverContext from '../context/HoverContext';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -30,6 +31,8 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
+  const [startRow, setStartRow] = React.useState(-1);
+  const [endRow, setEndRow] = React.useState(-1);
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { fixHeader, horizonScroll, flattenColumns, componentWidth } =
@@ -40,6 +43,16 @@ function Body<RecordType>({
     childrenColumnName,
     expandedKeys,
     getRowKey,
+  );
+
+  const onHover = React.useCallback((start: number, end: number) => {
+    setStartRow(start);
+    setEndRow(end);
+  }, []);
+
+  const hoverContext = React.useMemo(
+    () => ({ startRow, endRow, onHover }),
+    [onHover, startRow, endRow],
   );
 
   return React.useMemo(() => {
@@ -94,22 +107,28 @@ function Body<RecordType>({
     const columnsKey = getColumnsKey(flattenColumns);
 
     return (
-      <WrapperComponent className={`${prefixCls}-tbody`}>
-        {/* Measure body column width with additional hidden col */}
-        {measureColumnWidth && (
-          <tr
-            aria-hidden="true"
-            className={`${prefixCls}-measure-row`}
-            style={{ height: 0, fontSize: 0 }}
-          >
-            {columnsKey.map(columnKey => (
-              <MeasureCell key={columnKey} columnKey={columnKey} onColumnResize={onColumnResize} />
-            ))}
-          </tr>
-        )}
+      <HoverContext.Provider value={hoverContext}>
+        <WrapperComponent className={`${prefixCls}-tbody`}>
+          {/* Measure body column width with additional hidden col */}
+          {measureColumnWidth && (
+            <tr
+              aria-hidden="true"
+              className={`${prefixCls}-measure-row`}
+              style={{ height: 0, fontSize: 0 }}
+            >
+              {columnsKey.map(columnKey => (
+                <MeasureCell
+                  key={columnKey}
+                  columnKey={columnKey}
+                  onColumnResize={onColumnResize}
+                />
+              ))}
+            </tr>
+          )}
 
-        {rows}
-      </WrapperComponent>
+          {rows}
+        </WrapperComponent>
+      </HoverContext.Provider>
     );
   }, [
     data,
@@ -128,6 +147,7 @@ function Body<RecordType>({
     onColumnResize,
     rowExpandable,
     flattenData,
+    hoverContext,
   ]);
 }
 

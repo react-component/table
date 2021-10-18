@@ -13,6 +13,14 @@ import type {
 } from '../interface';
 import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
+import HoverContext from '../context/HoverContext';
+import type { HoverContextProps } from '../context/HoverContext';
+
+/** Check if cell is in hover range */
+function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
+  const cellEndRow = cellStartRow + cellRowSpan - 1;
+  return cellStartRow <= endRow && cellEndRow >= startRow;
+}
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,
@@ -28,7 +36,7 @@ function isRefComponent(component: CustomizeComponent) {
   return supportRef(component);
 }
 
-export interface CellProps<RecordType extends DefaultRecordType> {
+interface InternalCellProps<RecordType extends DefaultRecordType> extends HoverContextProps {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -53,7 +61,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   firstFixRight?: boolean;
   lastFixRight?: boolean;
 
-  // Additional
+  // ====================== Private Props ======================
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.HTMLAttributes<HTMLElement>;
@@ -64,6 +72,11 @@ export interface CellProps<RecordType extends DefaultRecordType> {
 
   isSticky?: boolean;
 }
+
+export type CellProps<RecordType extends DefaultRecordType> = Omit<
+  InternalCellProps<RecordType>,
+  'expanded' | 'appendNode' | 'additionalProps' | 'rowType' | 'isSticky' | keyof HoverContextProps
+>;
 
 function Cell<RecordType extends DefaultRecordType>(
   {
@@ -76,7 +89,7 @@ function Cell<RecordType extends DefaultRecordType>(
     children,
     component: Component = 'td',
     colSpan,
-    rowSpan,
+    rowSpan, // This is already merged on WrapperCell
     fixLeft,
     fixRight,
     firstFixLeft,
@@ -89,7 +102,12 @@ function Cell<RecordType extends DefaultRecordType>(
     align,
     rowType,
     isSticky,
-  }: CellProps<RecordType>,
+
+    // Hover
+    startRow,
+    endRow,
+    onHover,
+  }: InternalCellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
   const cellPrefixCls = `${prefixCls}-cell`;
@@ -139,8 +157,8 @@ function Cell<RecordType extends DefaultRecordType>(
     className: cellClassName,
     ...restCellProps
   } = cellProps || {};
-  const mergedColSpan = cellColSpan !== undefined ? cellColSpan : colSpan;
-  const mergedRowSpan = cellRowSpan !== undefined ? cellRowSpan : rowSpan;
+  const mergedColSpan = (cellColSpan !== undefined ? cellColSpan : colSpan) ?? 1;
+  const mergedRowSpan = (cellRowSpan !== undefined ? cellRowSpan : rowSpan) ?? 1;
 
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
     return null;
@@ -167,6 +185,25 @@ function Cell<RecordType extends DefaultRecordType>(
     alignStyle.textAlign = align;
   }
 
+  // ====================== Hover =======================
+  const hovering = inHoverRange(index, mergedRowSpan, startRow, endRow);
+
+  const onMouseEnter: React.MouseEventHandler<HTMLElement> = event => {
+    if (record) {
+      onHover(index, index + mergedRowSpan - 1);
+    }
+
+    additionalProps?.onMouseEnter?.(event);
+  };
+
+  const onMouseLeave: React.MouseEventHandler<HTMLElement> = event => {
+    if (record) {
+      onHover(-1, -1);
+    }
+
+    additionalProps?.onMouseLeave?.(event);
+  };
+
   // ====================== Render ======================
   let title: string;
   const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
@@ -178,12 +215,14 @@ function Cell<RecordType extends DefaultRecordType>(
     }
   }
 
-  const componentProps = {
+  const componentProps: React.TdHTMLAttributes<HTMLTableCellElement> & {
+    ref: React.Ref<any>;
+  } = {
     title,
     ...restCellProps,
     ...additionalProps,
-    colSpan: mergedColSpan && mergedColSpan !== 1 ? mergedColSpan : null,
-    rowSpan: mergedRowSpan && mergedRowSpan !== 1 ? mergedRowSpan : null,
+    colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
+    rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null,
     className: classNames(
       cellPrefixCls,
       className,
@@ -197,11 +236,14 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
         [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
+        [`${cellPrefixCls}-row-hover`]: hovering,
       },
       additionalProps.className,
       cellClassName,
     ),
     style: { ...additionalProps.style, ...alignStyle, ...fixedStyle, ...cellStyle },
+    onMouseEnter,
+    onMouseLeave,
     ref: isRefComponent(Component) ? ref : null,
   };
 
@@ -213,22 +255,33 @@ function Cell<RecordType extends DefaultRecordType>(
   );
 }
 
-const RefCell = React.forwardRef<any, CellProps<any>>(Cell);
+const RefCell = React.forwardRef<any, InternalCellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
-const comparePropList: (keyof CellProps<any>)[] = ['expanded', 'className'];
+const comparePropList: (keyof InternalCellProps<any>)[] = ['expanded', 'className'];
 
-const MemoCell = React.memo(RefCell, (prev: CellProps<any>, next: CellProps<any>) => {
-  if (next.shouldCellUpdate) {
-    return (
-      // Additional handle of expanded logic
-      comparePropList.every(propName => prev[propName] === next[propName]) &&
-      // User control update logic
-      !next.shouldCellUpdate(next.record, prev.record)
-    );
-  }
+const MemoCell = React.memo(
+  RefCell,
+  (prev: InternalCellProps<any>, next: InternalCellProps<any>) => {
+    if (next.shouldCellUpdate) {
+      return (
+        // Additional handle of expanded logic
+        comparePropList.every(propName => prev[propName] === next[propName]) &&
+        // User control update logic
+        !next.shouldCellUpdate(next.record, prev.record)
+      );
+    }
 
-  return false;
+    return false;
+  },
+);
+
+/** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
+const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
+  const { onHover, startRow, endRow } = React.useContext(HoverContext);
+
+  return <MemoCell {...props} ref={ref} onHover={onHover} startRow={startRow} endRow={endRow} />;
 });
+WrappedCell.displayName = 'WrappedCell';
 
-export default MemoCell;
+export default WrappedCell;

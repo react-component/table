@@ -91,6 +91,10 @@ const columns: ColumnsType<RecordType> = [
         obj.props.rowSpan = 0;
       }
 
+      if (index === 5) {
+        obj.props.colSpan = 0;
+      }
+
       return obj;
     },
   },
