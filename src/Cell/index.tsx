@@ -75,7 +75,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType> extends HoverC
 
 export type CellProps<RecordType extends DefaultRecordType> = Omit<
   InternalCellProps<RecordType>,
-  'expanded' | 'appendNode' | 'additionalProps' | 'rowType' | 'isSticky' | keyof HoverContextProps
+  keyof HoverContextProps
 >;
 
 function Cell<RecordType extends DefaultRecordType>(
