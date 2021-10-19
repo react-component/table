@@ -99,9 +99,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       onInternalTriggerExpand(record, event);
     }
 
-    if (additionalProps && additionalProps.onClick) {
-      additionalProps.onClick(event, ...args);
-    }
+    additionalProps?.onClick(event, ...args);
   };
 
   // ======================== Base tr row ========================
