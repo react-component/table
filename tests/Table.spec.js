@@ -932,9 +932,24 @@ describe('Table.Basic', () => {
     });
   });
 
-  it('hover', () => {
-    const wrapper = mount(createTable());
-    wrapper.find('tbody td').first().simulate('mouseEnter');
-    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+  describe('hover', () => {
+    it('basic', () => {
+      const wrapper = mount(createTable());
+      wrapper.find('tbody td').first().simulate('mouseEnter');
+      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+    });
+
+    it('skip when config should cell update', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            { title: 'Name', dataIndex: 'name', key: 'name', shouldCellUpdate: () => false },
+          ],
+        }),
+      );
+
+      wrapper.find('tbody td').first().simulate('mouseEnter');
+      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    });
   });
 });

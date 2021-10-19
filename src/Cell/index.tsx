@@ -107,6 +107,9 @@ function Cell<RecordType extends DefaultRecordType>(
     startRow,
     endRow,
     onHover,
+
+    // MISC
+    shouldCellUpdate,
   }: InternalCellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
@@ -236,7 +239,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
         [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-        [`${cellPrefixCls}-row-hover`]: hovering,
+        [`${cellPrefixCls}-row-hover`]: !shouldCellUpdate && hovering, // Not patch style if using shouldCellUpdate
       },
       additionalProps.className,
       cellClassName,
