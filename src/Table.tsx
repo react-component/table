@@ -112,7 +112,7 @@ export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
-  rowKey?: string | GetRowKey<RecordType>;
+  rowKey?: string | symbol | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
 
   // Fixed Columns
