@@ -499,4 +499,14 @@ describe('Table.Expand', () => {
     );
     expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
   });
+
+  it('warning for use `expandedRowRender` and nested table in the same time', () => {
+    resetWarned();
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    mount(createTable({ expandedRowRender, data: [{ children: [] }] }));
+    expect(errorSpy).toHaveBeenCalledWith(
+      'Warning: `expandedRowRender` should not use with nested Table',
+    );
+    errorSpy.mockRestore();
+  });
 });

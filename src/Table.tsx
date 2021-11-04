@@ -26,6 +26,7 @@
 
 import * as React from 'react';
 import isVisible from 'rc-util/lib/Dom/isVisible';
+import pickAttrs from 'rc-util/lib/pickAttrs';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
@@ -64,7 +65,7 @@ import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
-import { getExpandableProps, getDataAndAriaProps } from './utils/legacyUtil';
+import { getExpandableProps } from './utils/legacyUtil';
 import Panel from './Panel';
 import Footer, { FooterComponents } from './Footer';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
@@ -337,6 +338,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     },
     [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
   );
+
+  // Warning if use `expandedRowRender` and nest children in the same time
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    expandedRowRender &&
+    mergedData.some((record: RecordType) => {
+      return Array.isArray(record?.[mergedChildrenColumnName]);
+    })
+  ) {
+    warning(false, '`expandedRowRender` should not use with nested Table');
+  }
 
   // ====================== Column ======================
   const [componentWidth, setComponentWidth] = React.useState(0);
@@ -725,7 +737,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     );
   }
 
-  const ariaProps = getDataAndAriaProps(props);
+  const ariaProps = pickAttrs(props, { aria: true, data: true });
 
   let fullTable = (
     <div
