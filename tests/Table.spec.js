@@ -446,6 +446,7 @@ describe('Table.Basic', () => {
       expect(wrapper.find('tbody tr').length).toBeTruthy();
       wrapper.find('tbody tr').forEach((tr, index) => {
         expect(tr.props().id).toEqual(`row-${data[index].key}`);
+        expect(tr.simulate.bind(tr, 'click')).not.toThrowError();
       });
     });
 
