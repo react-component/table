@@ -60,7 +60,7 @@ import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
-import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
+import { useDelayState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -76,6 +76,7 @@ import FixedHolder from './FixedHolder';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
+import ExpandedRowContext from './context/ExpandedRowContext';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -384,7 +385,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
+  const [colsWidths, updateColsWidths] = useDelayState(new Map<React.Key, number>());
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
@@ -805,10 +806,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       tableLayout: mergedTableLayout,
       rowClassName,
       expandedRowClassName,
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
       expandIcon: mergedExpandIcon,
       expandableType,
       expandRowByClick,
@@ -822,10 +819,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       mergedTableLayout,
       rowClassName,
       expandedRowClassName,
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
       mergedExpandIcon,
       expandableType,
       expandRowByClick,
@@ -836,13 +829,25 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     ],
   );
 
+  const ExpandedRowContextValue = React.useMemo(
+    () => ({
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+    }),
+    [componentWidth, fixHeader, fixColumn, horizonScroll],
+  );
+
   const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
 
   return (
     <StickyContext.Provider value={supportSticky}>
       <TableContext.Provider value={TableContextValue}>
         <BodyContext.Provider value={BodyContextValue}>
-          <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+          <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
+            <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+          </ExpandedRowContext.Provider>
         </BodyContext.Provider>
       </TableContext.Provider>
     </StickyContext.Provider>

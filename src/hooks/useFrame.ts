@@ -49,8 +49,51 @@ export function useLayoutState<State>(
   return [stateRef.current, setFrameState];
 }
 
+// append state update to the tail of macro task queue
+export function useDelayState<State>(
+  defaultState: State,
+): [State, (updater: Updater<State>) => void] {
+  const stateRef = useRef(defaultState);
+  const [, forceUpdate] = useState({});
+
+  const timeoutRef = useRef<number>(null);
+  const updateBatchRef = useRef<Updater<State>[]>([]);
+
+  function cleanUp() {
+    window.clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+  }
+
+  function setDelayState(updater: Updater<State>) {
+    if (timeoutRef.current) {
+      cleanUp();
+    }
+    updateBatchRef.current.push(updater);
+    timeoutRef.current = window.setTimeout(() => {
+      const prevBatch = updateBatchRef.current;
+      const prevState = stateRef.current;
+      updateBatchRef.current = [];
+
+      prevBatch.forEach(batchUpdater => {
+        stateRef.current = batchUpdater(stateRef.current);
+      });
+
+      cleanUp();
+      if (prevState !== stateRef.current) {
+        forceUpdate({});
+      }
+    });
+  }
+
+  useEffect(() => cleanUp(), []);
+
+  return [stateRef.current, setDelayState];
+}
+
 /** Lock frame, when frame pass reset the lock. */
-export function useTimeoutLock<State>(defaultState?: State): [(state: State) => void, () => State | null] {
+export function useTimeoutLock<State>(
+  defaultState?: State,
+): [(state: State) => void, () => State | null] {
   const frameRef = useRef<State | null>(defaultState || null);
   const timeoutRef = useRef<number>();
 
