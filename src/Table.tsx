@@ -834,9 +834,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       componentWidth,
       fixHeader,
       fixColumn,
-      horizonScroll,
     }),
-    [componentWidth, fixHeader, fixColumn, horizonScroll],
+    [componentWidth, fixHeader, fixColumn],
   );
 
   const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
