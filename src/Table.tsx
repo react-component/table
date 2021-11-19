@@ -436,8 +436,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  const onColumnResize = React.useCallback(({ offsetWidth }, { columnKey }) => {
-    if (isVisible(fullTableRef.current)) {
+  const onColumnResize = React.useCallback(({ offsetWidth }, { columnKey } = {}) => {
+    if (isVisible(fullTableRef.current) && columnKey) {
       updateColsWidths(widths => {
         if (widths.get(columnKey) !== offsetWidth) {
           const newWidths = new Map(widths);

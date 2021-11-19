@@ -51,9 +51,7 @@ const Demo = () => {
     setIsShown(v => !v);
 
     setTimeout(() => {
-      setTimeout(() => {
-        setRenderTime(+(window.performance.now() - s).toFixed(2));
-      });
+      setRenderTime(+(window.performance.now() - s).toFixed(2));
     });
   }, []);
 
@@ -110,7 +108,7 @@ const Demo = () => {
         <div style={{ flex: 1, overflow: 'hidden' }}>
           <Table
             columns={columns}
-            scroll={isFixed ? { x: 800 } : null}
+            scroll={isFixed ? { x: 1200 } : null}
             data={data}
             expandedRowRender={expandedRowRender}
           />
