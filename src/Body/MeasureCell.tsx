@@ -1,29 +1,40 @@
 import * as React from 'react';
-import ResizeObserver from 'rc-resize-observer';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
-  onColumnResize: (key: React.Key, width: number) => void;
+  columnResizeObserver;
 }
 
-export default function MeasureCell({ columnKey, onColumnResize }: MeasureCellProps) {
+export default function MeasureCell({ columnKey, columnResizeObserver }: MeasureCellProps) {
   const cellRef = React.useRef<HTMLTableDataCellElement>();
+  const lastCellRef = React.useRef<HTMLTableDataCellElement>();
 
   React.useEffect(() => {
-    if (cellRef.current) {
-      onColumnResize(columnKey, cellRef.current.offsetWidth);
+    if (lastCellRef.current !== cellRef.current) {
+      if (lastCellRef.current) {
+        columnResizeObserver.unobserve(lastCellRef.current);
+      }
+      if (cellRef.current) {
+        columnResizeObserver.observe(cellRef.current, {
+          columnKey,
+        });
+      }
+
+      lastCellRef.current = cellRef.current;
     }
+  });
+
+  React.useEffect(() => {
+    return () => {
+      if (lastCellRef.current) {
+        columnResizeObserver.unobserve(lastCellRef.current);
+      }
+    };
   }, []);
 
   return (
-    <ResizeObserver
-      onResize={({ offsetWidth }) => {
-        onColumnResize(columnKey, offsetWidth);
-      }}
-    >
-      <td ref={cellRef} style={{ padding: 0, border: 0, height: 0 }}>
-        <div style={{ height: 0, overflow: 'hidden' }}>&nbsp;</div>
-      </td>
-    </ResizeObserver>
+    <td ref={cellRef} style={{ padding: 0, border: 0, height: 0 }}>
+      <div style={{ height: 0, overflow: 'hidden' }}>&nbsp;</div>
+    </td>
   );
 }

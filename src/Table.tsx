@@ -60,7 +60,7 @@ import TableContext from './context/TableContext';
 import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
-import { useDelayState, useTimeoutLock } from './hooks/useFrame';
+import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -77,6 +77,7 @@ import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
 import ExpandedRowContext from './context/ExpandedRowContext';
+import useColumnResizeObserver from './hooks/useColumnResizeObserver';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -385,7 +386,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
-  const [colsWidths, updateColsWidths] = useDelayState(new Map<React.Key, number>());
+  const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
@@ -435,18 +436,21 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
+  const onColumnResize = React.useCallback(({ offsetWidth }, { columnKey }) => {
     if (isVisible(fullTableRef.current)) {
       updateColsWidths(widths => {
-        if (widths.get(columnKey) !== width) {
+        if (widths.get(columnKey) !== offsetWidth) {
           const newWidths = new Map(widths);
-          newWidths.set(columnKey, width);
+          newWidths.set(columnKey, offsetWidth);
           return newWidths;
         }
         return widths;
       });
     }
   }, []);
+  const columnResizeObserver = useColumnResizeObserver<{
+    columnKey: React.Key;
+  }>(onColumnResize);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
@@ -838,7 +842,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     [componentWidth, fixHeader, fixColumn],
   );
 
-  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
+  const ResizeContextValue = React.useMemo(() => {
+    return { columnResizeObserver };
+  }, [columnResizeObserver]);
 
   return (
     <StickyContext.Provider value={supportSticky}>

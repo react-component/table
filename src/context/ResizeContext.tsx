@@ -1,7 +1,8 @@
 import * as React from 'react';
+import type useColumnResizeObserver from '../hooks/useColumnResizeObserver';
 
 interface ResizeContextProps {
-  onColumnResize: (columnKey: React.Key, width: number) => void;
+  columnResizeObserver: ReturnType<typeof useColumnResizeObserver>;
 }
 
 const ResizeContext = React.createContext<ResizeContextProps>(null);

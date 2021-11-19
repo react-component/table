@@ -33,7 +33,7 @@ function Body<RecordType>({
 }: BodyProps<RecordType>) {
   const [startRow, setStartRow] = React.useState(-1);
   const [endRow, setEndRow] = React.useState(-1);
-  const { onColumnResize } = React.useContext(ResizeContext);
+  const { columnResizeObserver } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { flattenColumns } = React.useContext(BodyContext);
 
@@ -115,7 +115,7 @@ function Body<RecordType>({
                 <MeasureCell
                   key={columnKey}
                   columnKey={columnKey}
-                  onColumnResize={onColumnResize}
+                  columnResizeObserver={columnResizeObserver}
                 />
               ))}
             </tr>
@@ -136,7 +136,7 @@ function Body<RecordType>({
     emptyNode,
     flattenColumns,
     childrenColumnName,
-    onColumnResize,
+    columnResizeObserver,
     rowExpandable,
     flattenData,
     hoverContext,

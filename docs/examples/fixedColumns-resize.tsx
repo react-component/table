@@ -11,7 +11,7 @@ interface RecordType {
   key: string;
 }
 
-const columns: ColumnType<RecordType>[] = [
+const defaultColumns: ColumnType<RecordType>[] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
   { title: 'title3', dataIndex: 'c', key: 'c' },
@@ -45,17 +45,43 @@ const Demo = () => {
   const [isShown, setIsShown] = useState(false);
   const [renderTime, setRenderTime] = useState(0);
   const [isFixed, setIsFixed] = useState(true);
+  const [columns, setColumns] = useState(defaultColumns);
   const onToggleSideBar = useCallback(() => {
     const s = window.performance.now();
     setIsShown(v => !v);
 
     setTimeout(() => {
-      setRenderTime(+(window.performance.now() - s).toFixed(2));
+      setTimeout(() => {
+        setRenderTime(+(window.performance.now() - s).toFixed(2));
+      });
     });
   }, []);
 
   const onToggleFixed = useCallback(() => {
     setIsFixed(v => !v);
+  }, []);
+
+  const onRemoveColumn = useCallback(() => {
+    setColumns(state => {
+      const newState = [...state];
+      newState.splice(
+        state.findIndex(({ fixed }) => !fixed),
+        1,
+      );
+      return newState;
+    });
+  }, []);
+
+  const onAddColumn = useCallback(() => {
+    setColumns(state => {
+      const newState = [...state];
+      newState.splice(
+        state.findIndex(({ fixed }) => !fixed),
+        0,
+        { title: 'new title', dataIndex: 'b', key: Math.random().toString(16).slice(2) },
+      );
+      return newState;
+    });
   }, []);
 
   const expandedRowRender = useCallback(({ b, c }) => b || c, []);
@@ -65,6 +91,8 @@ const Demo = () => {
       <div>
         <button onClick={onToggleSideBar}>切换侧边栏展开状态</button>
         <button onClick={onToggleFixed}>切换固定列</button>
+        <button onClick={onRemoveColumn}>删除列</button>
+        <button onClick={onAddColumn}>增加列</button>
         <p>更新用时：{renderTime} ms</p>
       </div>
       <div
@@ -82,7 +110,7 @@ const Demo = () => {
         <div style={{ flex: 1, overflow: 'hidden' }}>
           <Table
             columns={columns}
-            scroll={isFixed ? { x: 1200 } : null}
+            scroll={isFixed ? { x: 800 } : null}
             data={data}
             expandedRowRender={expandedRowRender}
           />
