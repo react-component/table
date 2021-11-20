@@ -4,6 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table from '../src';
+import resizeColumn from './helpers/resizeColumn';
 
 describe('Table.FixedColumn', () => {
   let domSpy;
@@ -58,15 +59,11 @@ describe('Table.FixedColumn', () => {
           const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
           act(() => {
-            wrapper
-              .find('table ResizeObserver')
-              .first()
-              .props()
-              .onResize({ width: 93, offsetWidth: 93 });
+            resizeColumn(wrapper, 0, { width: 93, offsetWidth: 93 });
           });
           await act(async () => {
             jest.runAllTimers();
-            await Promise.resolve();
+            await Promise.resolve().then(Promise.resolve());
             wrapper.update();
           });
           expect(wrapper.render()).toMatchSnapshot();

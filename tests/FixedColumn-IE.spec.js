@@ -5,6 +5,7 @@ import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import Table from '../src';
+import resizeColumn from './helpers/resizeColumn';
 
 jest.mock('rc-util/lib/Dom/styleChecker', () => {
   return {
@@ -46,7 +47,7 @@ describe('Table.FixedColumn', () => {
     const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
 
     act(() => {
-      wrapper.find('table ResizeObserver').first().props().onResize({ width: 93, offsetWidth: 93 });
+      resizeColumn(wrapper, 0, { width: 93, offsetWidth: 93 });
     });
 
     await act(async () => {

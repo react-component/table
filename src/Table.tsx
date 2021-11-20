@@ -436,7 +436,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     };
   }
 
-  const onColumnResize = React.useCallback(({ offsetWidth }, { columnKey } = {}) => {
+  const onColumnResize = React.useCallback(({ offsetWidth }, columnKey) => {
     if (isVisible(fullTableRef.current) && columnKey) {
       updateColsWidths(widths => {
         if (widths.get(columnKey) !== offsetWidth) {
@@ -448,9 +448,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       });
     }
   }, []);
-  const columnResizeObserver = useColumnResizeObserver<{
-    columnKey: React.Key;
-  }>(onColumnResize);
+  const columnResizeObserver = useColumnResizeObserver<React.Key>(onColumnResize);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
