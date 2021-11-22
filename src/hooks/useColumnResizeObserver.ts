@@ -1,6 +1,6 @@
 import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 
 interface ISize {
   width: number;
