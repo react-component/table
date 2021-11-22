@@ -80,6 +80,14 @@ export default function useColumnResizeObserver<T>(
     });
   }
 
+  React.useEffect(() => {
+    return () => {
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
+    };
+  }, []);
+
   return React.useMemo(() => {
     return {
       observe: (el: HTMLElement, info) => {
