@@ -227,6 +227,18 @@ describe('Table.Expand', () => {
     expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
   });
 
+  it('showExpandColumn = false', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          showExpandColumn: false,
+        },
+      }),
+    );
+    expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+  });
+
   it('renders a custom icon', () => {
     function CustomExpandIcon(props) {
       return (

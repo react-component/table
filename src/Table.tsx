@@ -107,7 +107,8 @@ const MemoTableContent = React.memo<MemoTableContentProps>(
   },
 );
 
-export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<RecordType> {
+export interface TableProps<RecordType = unknown>
+  extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
