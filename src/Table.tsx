@@ -76,6 +76,7 @@ import FixedHolder from './FixedHolder';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
+import { EXPAND_COLUMN } from './constant';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -848,6 +849,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     </StickyContext.Provider>
   );
 }
+
+Table.EXPAND_COLUMN = EXPAND_COLUMN;
 
 Table.Column = Column;
 

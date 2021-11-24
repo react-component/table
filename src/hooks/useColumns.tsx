@@ -12,6 +12,7 @@ import type {
   ColumnGroupType,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
+import { EXPAND_COLUMN } from '../constant';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -144,11 +145,41 @@ function useColumns<RecordType>(
     [columns, children],
   );
 
-  // Add expand column
+  // ========================== Expand ==========================
   const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     if (expandable) {
-      const expandColIndex = expandIconColumnIndex || 0;
-      const prevColumn = baseColumns[expandColIndex];
+      let cloneColumns = baseColumns.slice();
+
+      // >>> Warning if use `expandIconColumnIndex`
+      if (process.env.NODE_ENV !== 'production' && expandIconColumnIndex >= 0) {
+        warning(
+          false,
+          '`expandIconColumnIndex` is deprecated. Please use `Table.EXPAND_COLUMN` in `columns` instead.',
+        );
+      }
+
+      // >>> Insert expand column if not exist
+      if (!cloneColumns.includes(EXPAND_COLUMN)) {
+        const expandColIndex = expandIconColumnIndex || 0;
+        if (expandColIndex >= 0) {
+          cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
+        }
+      }
+
+      // >>> Deduplicate additional expand column
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        cloneColumns.filter(c => c === EXPAND_COLUMN).length > 1
+      ) {
+        warning(false, 'There exist more than one `EXPAND_COLUMN` in `columns`.');
+      }
+      const expandColumnIndex = cloneColumns.indexOf(EXPAND_COLUMN);
+      cloneColumns = cloneColumns.filter(
+        (column, index) => column !== EXPAND_COLUMN || index === expandColumnIndex,
+      );
+
+      // >>> Check if expand column need to fixed
+      const prevColumn = baseColumns[expandColumnIndex];
 
       let fixedColumn: FixedType | null;
       if ((fixed === 'left' || fixed) && !expandIconColumnIndex) {
@@ -159,6 +190,7 @@ function useColumns<RecordType>(
         fixedColumn = prevColumn ? prevColumn.fixed : null;
       }
 
+      // >>> Create expandable column
       const expandColumn = {
         [INTERNAL_COL_DEFINE]: {
           className: `${prefixCls}-expand-icon-col`,
@@ -187,16 +219,12 @@ function useColumns<RecordType>(
         },
       };
 
-      // Insert expand column in the target position
-      const cloneColumns = baseColumns.slice();
-      if (expandColIndex >= 0) {
-        cloneColumns.splice(expandColIndex, 0, expandColumn);
-      }
-      return cloneColumns;
+      return cloneColumns.map(col => (col === EXPAND_COLUMN ? expandColumn : col));
     }
     return baseColumns;
   }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
 
+  // ========================= Transform ========================
   const mergedColumns = React.useMemo(() => {
     let finalColumns = withExpandColumns;
     if (transformColumns) {
@@ -214,6 +242,7 @@ function useColumns<RecordType>(
     return finalColumns;
   }, [transformColumns, withExpandColumns, direction]);
 
+  // ========================== Flatten =========================
   const flattenColumns = React.useMemo(() => {
     if (direction === 'rtl') {
       return revertForRtl(flatColumns(mergedColumns));
