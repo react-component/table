@@ -200,43 +200,62 @@ describe('Table.Expand', () => {
     expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(0);
   });
 
-  it('renders expand icon to the specify column', () => {
-    const wrapper = mount(
-      createTable({
-        expandable: {
-          expandedRowRender,
-          expandIconColumnIndex: 1,
-        },
-      }),
-    );
-    expect(
-      wrapper.find('tbody tr td').at(1).hasClass('rc-table-row-expand-icon-cell'),
-    ).toBeTruthy();
+  describe('config expand column index', () => {
+    it('renders expand icon to the specify column', () => {
+      const wrapper = mount(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            expandIconColumnIndex: 1,
+          },
+        }),
+      );
+      expect(
+        wrapper.find('tbody tr td').at(1).hasClass('rc-table-row-expand-icon-cell'),
+      ).toBeTruthy();
+    });
+
+    it('order with EXPAND_COLUMN', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [...sampleColumns, Table.EXPAND_COLUMN],
+          expandable: {
+            expandedRowRender,
+          },
+        }),
+      );
+
+      expect(
+        wrapper.find('tbody tr td').at(2).hasClass('rc-table-row-expand-icon-cell'),
+      ).toBeTruthy();
+    });
   });
 
-  // https://github.com/ant-design/ant-design/issues/24129
-  it('should not render expand icon column when expandIconColumnIndex is negative', () => {
-    const wrapper = mount(
-      createTable({
-        expandable: {
-          expandedRowRender,
-          expandIconColumnIndex: -1,
-        },
-      }),
-    );
-    expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
-  });
+  describe('hide expandColumn', () => {
+    // https://github.com/ant-design/ant-design/issues/24129
+    it('should not render expand icon column when expandIconColumnIndex is negative', () => {
+      const wrapper = mount(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            expandIconColumnIndex: -1,
+          },
+        }),
+      );
+      expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+    });
 
-  it('showExpandColumn = false', () => {
-    const wrapper = mount(
-      createTable({
-        expandable: {
-          expandedRowRender,
-          showExpandColumn: false,
-        },
-      }),
-    );
-    expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+    it('showExpandColumn = false', () => {
+      const wrapper = mount(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandColumn: false,
+          },
+        }),
+      );
+      expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+    });
   });
 
   it('renders a custom icon', () => {
