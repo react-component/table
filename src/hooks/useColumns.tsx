@@ -221,7 +221,12 @@ function useColumns<RecordType>(
 
       return cloneColumns.map(col => (col === EXPAND_COLUMN ? expandColumn : col));
     }
-    return baseColumns;
+
+    if (process.env.NODE_ENV !== 'production' && baseColumns.includes(EXPAND_COLUMN)) {
+      warning(false, '`expandable` is not config but there exist `EXPAND_COLUMN` in `columns`.');
+    }
+
+    return baseColumns.filter(col => col !== EXPAND_COLUMN);
   }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
 
   // ========================= Transform ========================

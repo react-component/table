@@ -201,6 +201,24 @@ describe('Table.Expand', () => {
   });
 
   describe('config expand column index', () => {
+    it('not show EXPAND_COLUMN if expandable is false', () => {
+      resetWarned();
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      const wrapper = mount(
+        createTable({
+          columns: [...sampleColumns, Table.EXPAND_COLUMN],
+        }),
+      );
+
+      expect(wrapper.exists('.rc-table-row-expand-icon-cell')).toBeFalsy();
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        'Warning: `expandable` is not config but there exist `EXPAND_COLUMN` in `columns`.',
+      );
+      errorSpy.mockRestore();
+    });
+
     it('renders expand icon to the specify column', () => {
       resetWarned();
       const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
