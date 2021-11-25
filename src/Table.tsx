@@ -76,6 +76,7 @@ import FixedHolder from './FixedHolder';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
+import { EXPAND_COLUMN } from './constant';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -106,7 +107,8 @@ const MemoTableContent = React.memo<MemoTableContentProps>(
   },
 );
 
-export interface TableProps<RecordType = unknown> extends LegacyExpandableProps<RecordType> {
+export interface TableProps<RecordType = unknown>
+  extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -848,6 +850,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     </StickyContext.Provider>
   );
 }
+
+Table.EXPAND_COLUMN = EXPAND_COLUMN;
 
 Table.Column = Column;
 
