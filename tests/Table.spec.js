@@ -938,6 +938,9 @@ describe('Table.Basic', () => {
       const wrapper = mount(createTable());
       wrapper.find('tbody td').first().simulate('mouseEnter');
       expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+
+      wrapper.find('tbody td').first().simulate('mouseLeave');
+      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
     });
 
     it('skip when config should cell update', () => {
