@@ -202,6 +202,9 @@ describe('Table.Expand', () => {
 
   describe('config expand column index', () => {
     it('renders expand icon to the specify column', () => {
+      resetWarned();
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
       const wrapper = mount(
         createTable({
           expandable: {
@@ -213,6 +216,11 @@ describe('Table.Expand', () => {
       expect(
         wrapper.find('tbody tr td').at(1).hasClass('rc-table-row-expand-icon-cell'),
       ).toBeTruthy();
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        'Warning: `expandIconColumnIndex` is deprecated. Please use `Table.EXPAND_COLUMN` in `columns` instead.',
+      );
+      errorSpy.mockRestore();
     });
 
     it('order with EXPAND_COLUMN', () => {
@@ -228,6 +236,31 @@ describe('Table.Expand', () => {
       expect(
         wrapper.find('tbody tr td').at(2).hasClass('rc-table-row-expand-icon-cell'),
       ).toBeTruthy();
+    });
+
+    it('de-duplicate of EXPAND_COLUMN', () => {
+      resetWarned();
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      const wrapper = mount(
+        createTable({
+          columns: [Table.EXPAND_COLUMN, ...sampleColumns, Table.EXPAND_COLUMN],
+          expandable: {
+            expandedRowRender,
+          },
+        }),
+      );
+
+      expect(
+        wrapper.find('tbody tr td').at(0).hasClass('rc-table-row-expand-icon-cell'),
+      ).toBeTruthy();
+      expect(wrapper.find('tbody tr').first().find('td')).toHaveLength(3);
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        'Warning: There exist more than one `EXPAND_COLUMN` in `columns`.',
+      );
+
+      errorSpy.mockRestore();
     });
   });
 
