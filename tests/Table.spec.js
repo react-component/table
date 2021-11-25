@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
-import Table from '../src';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
@@ -750,15 +750,41 @@ describe('Table.Basic', () => {
   });
 
   describe('internal api', () => {
-    it('transformColumns', () => {
-      const wrapper = mount(
-        createTable({
-          internalHooks: INTERNAL_HOOKS,
-          transformColumns: columns => [{ title: 'before' }, ...columns, { title: 'after' }],
-        }),
-      );
+    describe('transformColumns', () => {
+      it('basic', () => {
+        const wrapper = mount(
+          createTable({
+            internalHooks: INTERNAL_HOOKS,
+            transformColumns: columns => [{ title: 'before' }, ...columns, { title: 'after' }],
+          }),
+        );
 
-      expect(wrapper.render()).toMatchSnapshot();
+        expect(wrapper.render()).toMatchSnapshot();
+      });
+
+      // Used for antd to check if is expand column
+      // We'd better to move selection into rc-table also
+      it('internal columnType', () => {
+        let existExpandColumn = false;
+
+        mount(
+          createTable({
+            expandable: {
+              expandedRowRender: () => null,
+            },
+            internalHooks: INTERNAL_HOOKS,
+            transformColumns: columns => {
+              console.log(columns);
+              existExpandColumn = columns.some(
+                col => col[INTERNAL_COL_DEFINE]?.columnType === 'EXPAND_COLUMN',
+              );
+              return columns;
+            },
+          }),
+        );
+
+        expect(existExpandColumn).toBeTruthy();
+      });
     });
 
     it('internalRefs', () => {

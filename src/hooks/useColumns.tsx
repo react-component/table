@@ -194,6 +194,7 @@ function useColumns<RecordType>(
       const expandColumn = {
         [INTERNAL_COL_DEFINE]: {
           className: `${prefixCls}-expand-icon-col`,
+          columnType: 'EXPAND_COLUMN',
         },
         title: '',
         fixed: fixedColumn,
