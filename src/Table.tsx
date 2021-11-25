@@ -76,6 +76,7 @@ import FixedHolder from './FixedHolder';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
+import ExpandedRowContext from './context/ExpandedRowContext';
 import { EXPAND_COLUMN } from './constant';
 
 // Used for conditions cache
@@ -807,10 +808,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       tableLayout: mergedTableLayout,
       rowClassName,
       expandedRowClassName,
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
       expandIcon: mergedExpandIcon,
       expandableType,
       expandRowByClick,
@@ -824,10 +821,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       mergedTableLayout,
       rowClassName,
       expandedRowClassName,
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
       mergedExpandIcon,
       expandableType,
       expandRowByClick,
@@ -838,13 +831,24 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     ],
   );
 
+  const ExpandedRowContextValue = React.useMemo(
+    () => ({
+      componentWidth,
+      fixHeader,
+      fixColumn,
+    }),
+    [componentWidth, fixHeader, fixColumn],
+  );
+
   const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
 
   return (
     <StickyContext.Provider value={supportSticky}>
       <TableContext.Provider value={TableContextValue}>
         <BodyContext.Provider value={BodyContextValue}>
-          <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+          <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
+            <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+          </ExpandedRowContext.Provider>
         </BodyContext.Provider>
       </TableContext.Provider>
     </StickyContext.Provider>
