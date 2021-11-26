@@ -35,8 +35,7 @@ function Body<RecordType>({
   const [endRow, setEndRow] = React.useState(-1);
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { fixHeader, horizonScroll, flattenColumns, componentWidth } =
-    React.useContext(BodyContext);
+  const { flattenColumns } = React.useContext(BodyContext);
 
   const flattenData: { record: RecordType; indent: number }[] = useFlattenRecords<RecordType>(
     data,
@@ -91,11 +90,7 @@ function Body<RecordType>({
           expanded
           className={`${prefixCls}-placeholder`}
           prefixCls={prefixCls}
-          fixHeader={fixHeader}
-          fixColumn={horizonScroll}
-          horizonScroll={horizonScroll}
           component={trComponent}
-          componentWidth={componentWidth}
           cellComponent={tdComponent}
           colSpan={flattenColumns.length}
         >
@@ -138,12 +133,9 @@ function Body<RecordType>({
     expandedKeys,
     getRowKey,
     getComponent,
-    componentWidth,
     emptyNode,
     flattenColumns,
     childrenColumnName,
-    fixHeader,
-    horizonScroll,
     onColumnResize,
     rowExpandable,
     flattenData,

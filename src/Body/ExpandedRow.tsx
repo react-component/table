@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { CustomizeComponent } from '../interface';
+import type { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
+import ExpandedRowContext from '../context/ExpandedRowContext';
 
 export interface ExpandedRowProps {
   prefixCls: string;
   component: CustomizeComponent;
   cellComponent: CustomizeComponent;
-  fixHeader: boolean;
-  fixColumn: boolean;
-  horizonScroll: boolean;
-  componentWidth: number;
   className: string;
   expanded: boolean;
   children: React.ReactNode;
@@ -22,15 +19,12 @@ function ExpandedRow({
   children,
   component: Component,
   cellComponent,
-  fixHeader,
-  fixColumn,
-  horizonScroll,
   className,
   expanded,
-  componentWidth,
   colSpan,
 }: ExpandedRowProps) {
   const { scrollbarSize } = React.useContext(TableContext);
+  const { fixHeader, fixColumn, componentWidth } = React.useContext(ExpandedRowContext);
 
   // Cache render node
   return React.useMemo(() => {
@@ -67,13 +61,13 @@ function ExpandedRow({
   }, [
     children,
     Component,
-    fixHeader,
-    horizonScroll,
     className,
     expanded,
-    componentWidth,
     colSpan,
     scrollbarSize,
+    componentWidth,
+    fixColumn,
+    fixHeader,
   ]);
 }
 
