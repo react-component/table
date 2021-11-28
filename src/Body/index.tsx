@@ -37,12 +37,8 @@ function Body<RecordType>({
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { flattenColumns } = React.useContext(BodyContext);
 
-  const flattenData: { record: RecordType; indent: number }[] = useFlattenRecords<RecordType>(
-    data,
-    childrenColumnName,
-    expandedKeys,
-    getRowKey,
-  );
+  const flattenData: { record: RecordType; indent: number; index: number }[] =
+    useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
 
   const onHover = React.useCallback((start: number, end: number) => {
     setStartRow(start);
@@ -61,10 +57,10 @@ function Body<RecordType>({
 
     let rows: React.ReactNode;
     if (data.length) {
-      rows = flattenData.map((item, index) => {
-        const { record, indent } = item;
+      rows = flattenData.map((item, idx) => {
+        const { record, indent, index: renderIndex } = item;
 
-        const key = getRowKey(record, index);
+        const key = getRowKey(record, idx);
 
         return (
           <BodyRow
@@ -72,7 +68,7 @@ function Body<RecordType>({
             rowKey={key}
             record={record}
             recordKey={key}
-            index={index}
+            index={renderIndex}
             rowComponent={trComponent}
             cellComponent={tdComponent}
             expandedKeys={expandedKeys}
