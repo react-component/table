@@ -982,4 +982,35 @@ describe('Table.Basic', () => {
       expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
     });
   });
+
+  it('render index in tree table', () => {
+    const tColumns = [
+      {
+        title: 'Key',
+        dataIndex: 'key',
+      },
+      {
+        title: '行索引',
+        key: 'xxx',
+        render: (value, record, index) => index,
+      },
+    ];
+
+    const tData = [
+      { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
+      { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
+    ];
+    const wrapper = mount(
+      <Table columns={tColumns} expandable={{ defaultExpandAllRows: true }} data={tData} />,
+    );
+
+    const trs = wrapper.find('BodyRow');
+
+    expect(trs.at(0).find('Cell').at(1).text()).toEqual('0');
+    expect(trs.at(1).find('Cell').at(1).text()).toEqual('0');
+    expect(trs.at(2).find('Cell').at(1).text()).toEqual('1');
+    expect(trs.at(3).find('Cell').at(1).text()).toEqual('1');
+    expect(trs.at(4).find('Cell').at(1).text()).toEqual('0');
+    expect(trs.at(5).find('Cell').at(1).text()).toEqual('1');
+  });
 });
