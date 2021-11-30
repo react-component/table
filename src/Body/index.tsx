@@ -5,10 +5,10 @@ import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import ResizeContext from '../context/ResizeContext';
-import MeasureCell from './MeasureCell';
 import BodyRow from './BodyRow';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import HoverContext from '../context/HoverContext';
+import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -102,19 +102,11 @@ function Body<RecordType>({
         <WrapperComponent className={`${prefixCls}-tbody`}>
           {/* Measure body column width with additional hidden col */}
           {measureColumnWidth && (
-            <tr
-              aria-hidden="true"
-              className={`${prefixCls}-measure-row`}
-              style={{ height: 0, fontSize: 0 }}
-            >
-              {columnsKey.map(columnKey => (
-                <MeasureCell
-                  key={columnKey}
-                  columnKey={columnKey}
-                  onColumnResize={onColumnResize}
-                />
-              ))}
-            </tr>
+            <MeasureRow
+              prefixCls={prefixCls}
+              columnsKey={columnsKey}
+              onColumnResize={onColumnResize}
+            />
           )}
 
           {rows}

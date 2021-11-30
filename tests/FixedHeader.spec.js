@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
+import RcResizeObserver from 'rc-resize-observer';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -35,9 +36,24 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 100, offsetWidth: 100 });
-    wrapper.find('ResizeObserver').at(1).props().onResize({ width: 200, offsetWidth: 200 });
-    wrapper.find('ResizeObserver').at(2).props().onResize({ width: 0, offsetWidth: 0 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 100, offsetWidth: 100 },
+        },
+        {
+          data: wrapper.find('ResizeObserver').at(1).props().data,
+          size: { width: 200, offsetWidth: 200 },
+        },
+        {
+          data: wrapper.find('ResizeObserver').at(2).props().data,
+          size: { width: 0, offsetWidth: 0 },
+        },
+      ]);
 
     await act(async () => {
       jest.runAllTimers();
@@ -147,7 +163,16 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 93, offsetWidth: 93 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 93, offsetWidth: 93 },
+        },
+      ]);
     await act(async () => {
       jest.runAllTimers();
       await Promise.resolve();
@@ -161,7 +186,17 @@ describe('Table.FixedHeader', () => {
     // Hide Table should not modify column width
     visible = false;
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 0, offsetWidth: 0 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 0, offsetWidth: 0 },
+        },
+      ]);
+
     act(() => {
       jest.runAllTimers();
       wrapper.update();
