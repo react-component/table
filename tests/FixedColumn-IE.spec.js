@@ -60,7 +60,7 @@ describe('Table.FixedColumn', () => {
     });
 
     await act(async () => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });

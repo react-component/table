@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
-import { debounce } from 'lodash';
 import MeasureCell from './MeasureCell';
+import raf from 'rc-util/lib/raf';
 
 export interface MeasureCellProps {
   prefixCls: string;
@@ -10,30 +10,25 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
-  // debounce the continuous resize, e.g. window resize
+  // delay state update while resize continuously, e.g. window resize
   const resizedColumnsRef = React.useRef(new Map());
-  const onColumnResizeRef = React.useRef(onColumnResize);
-  onColumnResizeRef.current = onColumnResize;
-  const debounceColumnResize = React.useMemo(
-    () =>
-      debounce(
-        () => {
-          resizedColumnsRef.current.forEach((width, columnKey) => {
-            onColumnResizeRef.current(columnKey, width);
-          });
-          resizedColumnsRef.current.clear();
-        },
-        1200,
-        {
-          leading: true,
-          trailing: true,
-        },
-      ),
-    [],
-  );
+  const rafIdRef = React.useRef(null);
+
+  const delayOnColumnResize = () => {
+    if (rafIdRef.current === null) {
+      rafIdRef.current = raf(() => {
+        resizedColumnsRef.current.forEach((width, columnKey) => {
+          onColumnResize(columnKey, width);
+        });
+        resizedColumnsRef.current.clear();
+        rafIdRef.current = null;
+      }, 2);
+    }
+  };
+
   React.useEffect(() => {
     return () => {
-      debounceColumnResize.cancel();
+      raf.cancel(rafIdRef.current);
     };
   }, []);
   return (
@@ -47,7 +42,7 @@ export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: Me
           infoList.forEach(({ data: columnKey, size }) => {
             resizedColumnsRef.current.set(columnKey, size.offsetWidth);
           });
-          debounceColumnResize();
+          delayOnColumnResize();
         }}
       >
         {columnsKey.map(columnKey => (

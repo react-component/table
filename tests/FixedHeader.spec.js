@@ -24,6 +24,7 @@ describe('Table.FixedHeader', () => {
   });
 
   it('should work', async () => {
+    jest.useFakeTimers();
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
     const col3 = { dataIndex: 'empty', width: 0 };
@@ -55,7 +56,7 @@ describe('Table.FixedHeader', () => {
       ]);
 
     await act(async () => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -173,7 +174,7 @@ describe('Table.FixedHeader', () => {
         },
       ]);
     await act(async () => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -197,7 +198,7 @@ describe('Table.FixedHeader', () => {
       ]);
 
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
       wrapper.update();
     });
 
