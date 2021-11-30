@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
+import RcResizeObserver from 'rc-resize-observer';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -23,7 +24,6 @@ describe('Table.FixedHeader', () => {
   });
 
   it('should work', async () => {
-    jest.useFakeTimers();
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
     const col3 = { dataIndex: 'empty', width: 0 };
@@ -35,12 +35,27 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 100, offsetWidth: 100 });
-    wrapper.find('ResizeObserver').at(1).props().onResize({ width: 200, offsetWidth: 200 });
-    wrapper.find('ResizeObserver').at(2).props().onResize({ width: 0, offsetWidth: 0 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 100, offsetWidth: 100 },
+        },
+        {
+          data: wrapper.find('ResizeObserver').at(1).props().data,
+          size: { width: 200, offsetWidth: 200 },
+        },
+        {
+          data: wrapper.find('ResizeObserver').at(2).props().data,
+          size: { width: 0, offsetWidth: 0 },
+        },
+      ]);
 
     await act(async () => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -147,9 +162,18 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 93, offsetWidth: 93 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 93, offsetWidth: 93 },
+        },
+      ]);
     await act(async () => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -161,9 +185,19 @@ describe('Table.FixedHeader', () => {
     // Hide Table should not modify column width
     visible = false;
 
-    wrapper.find('ResizeObserver').at(0).props().onResize({ width: 0, offsetWidth: 0 });
+    wrapper
+      .find(RcResizeObserver.Collection)
+      .first()
+      .props()
+      .onBatchResize([
+        {
+          data: wrapper.find('ResizeObserver').at(0).props().data,
+          size: { width: 0, offsetWidth: 0 },
+        },
+      ]);
+
     act(() => {
-      jest.runAllTimers();
+      jest.runOnlyPendingTimers();
       wrapper.update();
     });
 
