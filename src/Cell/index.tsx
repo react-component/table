@@ -15,6 +15,7 @@ import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
+import { warning } from 'rc-util/lib/warning';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -132,6 +133,12 @@ function Cell<RecordType extends DefaultRecordType>(
       const renderData = render(value, record, index);
 
       if (isRenderCell(renderData)) {
+        if (process.env.NODE_ENV !== 'production') {
+          warning(
+            false,
+            '`columns.render` return cell props is deprecated, please use `onCell` instead.',
+          );
+        }
         childNode = renderData.children;
         cellProps = renderData.props;
       } else {

@@ -20,21 +20,23 @@ const columns: ColumnsType<RecordType> = [
     width: 100,
     key: 'a',
     render(o, row, index) {
-      return index === 0 ? <a href="#">{o}</a> : o;
-    },
-    onCell: (_, index) => {
-      const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-
+      const obj: RenderedCell<RecordType> = {
+        children: o,
+        props: {},
+      };
+      // 设置第一行为链接
+      if (index === 0) {
+        obj.children = <a href="#">{o}</a>;
+      }
       // 第5行合并两列
       if (index === 4) {
-        props.colSpan = 2;
+        obj.props.colSpan = 2;
       }
 
       if (index === 5) {
-        props.colSpan = 6;
+        obj.props.colSpan = 6;
       }
-
-      return props;
+      return obj;
     },
   },
   {
@@ -43,12 +45,16 @@ const columns: ColumnsType<RecordType> = [
     colSpan: 0,
     width: 100,
     key: 'b',
-    onCell(_, index) {
+    render(o, row, index) {
+      const obj: RenderedCell<RecordType> = {
+        children: o,
+        props: {},
+      };
       // 列合并掉的表格设置colSpan=0，不会去渲染
       if (index === 4 || index === 5) {
-        return { colSpan: 0 };
+        obj.props.colSpan = 0;
       }
-      return {};
+      return obj;
     },
   },
   {
@@ -56,11 +62,16 @@ const columns: ColumnsType<RecordType> = [
     dataIndex: 'c',
     width: 100,
     key: 'c',
-    onCell(_, index) {
+    render(o, row, index) {
+      const obj: RenderedCell<RecordType> = {
+        children: o,
+        props: {},
+      };
+
       if (index === 5) {
-        return { colSpan: 0 };
+        obj.props.colSpan = 0;
       }
-      return {};
+      return obj;
     },
   },
   {
@@ -68,19 +79,23 @@ const columns: ColumnsType<RecordType> = [
     dataIndex: 'd',
     width: 200,
     key: 'd',
-    onCell(_, index) {
-      const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
+    render(o, row, index) {
+      const obj: RenderedCell<RecordType> = {
+        children: o,
+        props: {},
+      };
       if (index === 0) {
-        props.rowSpan = 2;
+        obj.props.rowSpan = 2;
       }
       if (index === 1 || index === 5) {
-        props.rowSpan = 0;
+        obj.props.rowSpan = 0;
       }
 
       if (index === 5) {
-        props.colSpan = 0;
+        obj.props.colSpan = 0;
       }
-      return props;
+
+      return obj;
     },
   },
   {
@@ -88,27 +103,30 @@ const columns: ColumnsType<RecordType> = [
     dataIndex: 'e',
     width: 200,
     key: 'e',
-    onCell(_, index) {
+    render(o, row, index) {
+      const obj: RenderedCell<RecordType> = {
+        children: o,
+        props: {},
+      };
       if (index === 5) {
-        return { colSpan: 0 };
+        obj.props.colSpan = 0;
       }
-      return {};
+      return obj;
     },
   },
   {
     title: 'Operations',
     dataIndex: '',
     key: 'f',
-    render() {
-      return <a href="#">Operations</a>;
-    },
-    onCell(_, index) {
+    render(o, row, index) {
       if (index === 5) {
         return {
-          colSpan: 0,
+          props: {
+            colSpan: 0,
+          },
         };
       }
-      return {};
+      return <a href="#">Operations</a>;
     },
   },
 ];
