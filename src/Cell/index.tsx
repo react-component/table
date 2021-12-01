@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import shallowEqual from 'shallowequal';
 import { supportRef } from 'rc-util/lib/ref';
 import type {
   DataIndex,
@@ -15,7 +16,7 @@ import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import { warning } from 'rc-util/lib/warning';
+import warning from 'rc-util/lib/warning';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -37,7 +38,8 @@ function isRefComponent(component: CustomizeComponent) {
   return supportRef(component);
 }
 
-interface InternalCellProps<RecordType extends DefaultRecordType> extends HoverContextProps {
+interface InternalCellProps<RecordType extends DefaultRecordType>
+  extends Pick<HoverContextProps, 'onHover'> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -72,6 +74,8 @@ interface InternalCellProps<RecordType extends DefaultRecordType> extends HoverC
   rowType?: 'header' | 'body' | 'footer';
 
   isSticky?: boolean;
+
+  hovering?: boolean;
 }
 
 export type CellProps<RecordType extends DefaultRecordType> = Omit<
@@ -105,8 +109,7 @@ function Cell<RecordType extends DefaultRecordType>(
     isSticky,
 
     // Hover
-    startRow,
-    endRow,
+    hovering,
     onHover,
 
     // MISC
@@ -196,9 +199,7 @@ function Cell<RecordType extends DefaultRecordType>(
   }
 
   // ====================== Hover =======================
-  const hovering = inHoverRange(index, mergedRowSpan, startRow, endRow);
-
-  const onMouseEnter: React.MouseEventHandler<HTMLElement> = event => {
+  const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = event => {
     if (record) {
       onHover(index, index + mergedRowSpan - 1);
     }
@@ -206,7 +207,7 @@ function Cell<RecordType extends DefaultRecordType>(
     additionalProps?.onMouseEnter?.(event);
   };
 
-  const onMouseLeave: React.MouseEventHandler<HTMLElement> = event => {
+  const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = event => {
     if (record) {
       onHover(-1, -1);
     }
@@ -268,42 +269,43 @@ function Cell<RecordType extends DefaultRecordType>(
 const RefCell = React.forwardRef<any, InternalCellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
-const comparePropList: (keyof InternalCellProps<any>)[] = ['expanded', 'className'];
-
 const MemoCell = React.memo(
   RefCell,
   (prev: InternalCellProps<any>, next: InternalCellProps<any>) => {
+    const sameProps = shallowEqual(prev, next);
+
     if (next.shouldCellUpdate) {
       return (
         // Additional handle of expanded logic
-        comparePropList.every(propName => prev[propName] === next[propName]) &&
+        sameProps &&
         // User control update logic
         !next.shouldCellUpdate(next.record, prev.record)
       );
     }
 
-    return false;
+    return sameProps;
   },
 );
 
 /** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
 const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
   const { onHover, startRow, endRow } = React.useContext(HoverContext);
-  const { additionalProps = {}, colSpan, rowSpan } = props;
+  const { index, additionalProps = {}, colSpan, rowSpan } = props;
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
 
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
+
+  const hovering = inHoverRange(index, mergedRowSpan || 1, startRow, endRow);
 
   return (
     <MemoCell
       {...props}
       colSpan={mergedColSpan}
       rowSpan={mergedRowSpan}
+      hovering={hovering}
       ref={ref}
       onHover={onHover}
-      startRow={startRow}
-      endRow={endRow}
     />
   );
 });
