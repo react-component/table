@@ -111,10 +111,8 @@ function Cell<RecordType extends DefaultRecordType>(
     // Hover
     hovering,
     onHover,
-
-    // MISC
-    shouldCellUpdate,
-  }: InternalCellProps<RecordType>,
+  }: // MISC
+  InternalCellProps<RecordType>,
   ref: React.Ref<any>,
 ): React.ReactElement {
   const cellPrefixCls = `${prefixCls}-cell`;
@@ -139,7 +137,7 @@ function Cell<RecordType extends DefaultRecordType>(
         if (process.env.NODE_ENV !== 'production') {
           warning(
             false,
-            '`columns.render` return cell props is deprecated, please use `onCell` instead.',
+            '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
           );
         }
         childNode = renderData.children;
@@ -247,7 +245,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
         [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-        [`${cellPrefixCls}-row-hover`]: !shouldCellUpdate && hovering, // Not patch style if using shouldCellUpdate
+        [`${cellPrefixCls}-row-hover`]: !cellProps && hovering,
       },
       additionalProps.className,
       cellClassName,
@@ -269,21 +267,21 @@ function Cell<RecordType extends DefaultRecordType>(
 const RefCell = React.forwardRef<any, InternalCellProps<any>>(Cell);
 RefCell.displayName = 'Cell';
 
+const comparePropList: (keyof InternalCellProps<any>)[] = ['expanded', 'className', 'hovering'];
+
 const MemoCell = React.memo(
   RefCell,
   (prev: InternalCellProps<any>, next: InternalCellProps<any>) => {
-    const sameProps = shallowEqual(prev, next);
-
     if (next.shouldCellUpdate) {
       return (
         // Additional handle of expanded logic
-        sameProps &&
+        comparePropList.every(propName => prev[propName] === next[propName]) &&
         // User control update logic
         !next.shouldCellUpdate(next.record, prev.record)
       );
     }
 
-    return sameProps;
+    return shallowEqual(prev, next);
   },
 );
 
