@@ -65,7 +65,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType> extends HoverC
   // ====================== Private Props ======================
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
-  additionalProps?: React.HTMLAttributes<HTMLElement>;
+  additionalProps?: React.TdHTMLAttributes<HTMLTableCellElement>;
   /** @private Fixed for user use `shouldCellUpdate` which block the render */
   expanded?: boolean;
 
@@ -289,8 +289,23 @@ const MemoCell = React.memo(
 /** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
 const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
   const { onHover, startRow, endRow } = React.useContext(HoverContext);
+  const { additionalProps = {}, colSpan, rowSpan } = props;
+  const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
 
-  return <MemoCell {...props} ref={ref} onHover={onHover} startRow={startRow} endRow={endRow} />;
+  const mergedColSpan = colSpan ?? cellColSpan;
+  const mergedRowSpan = rowSpan ?? cellRowSpan;
+
+  return (
+    <MemoCell
+      {...props}
+      colSpan={mergedColSpan}
+      rowSpan={mergedRowSpan}
+      ref={ref}
+      onHover={onHover}
+      startRow={startRow}
+      endRow={endRow}
+    />
+  );
 });
 WrappedCell.displayName = 'WrappedCell';
 
