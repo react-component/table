@@ -31,14 +31,16 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
-  const [startRow, setStartRow] = React.useState(-1);
-  const [endRow, setEndRow] = React.useState(-1);
   const { onColumnResize } = React.useContext(ResizeContext);
   const { prefixCls, getComponent } = React.useContext(TableContext);
   const { flattenColumns } = React.useContext(BodyContext);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
+
+  // ====================== Hover =======================
+  const [startRow, setStartRow] = React.useState(-1);
+  const [endRow, setEndRow] = React.useState(-1);
 
   const onHover = React.useCallback((start: number, end: number) => {
     setStartRow(start);
@@ -50,7 +52,8 @@ function Body<RecordType>({
     [onHover, startRow, endRow],
   );
 
-  return React.useMemo(() => {
+  // ====================== Render ======================
+  const bodyNode = React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
     const trComponent = getComponent(['body', 'row'], 'tr');
     const tdComponent = getComponent(['body', 'cell'], 'td');
@@ -98,20 +101,18 @@ function Body<RecordType>({
     const columnsKey = getColumnsKey(flattenColumns);
 
     return (
-      <HoverContext.Provider value={hoverContext}>
-        <WrapperComponent className={`${prefixCls}-tbody`}>
-          {/* Measure body column width with additional hidden col */}
-          {measureColumnWidth && (
-            <MeasureRow
-              prefixCls={prefixCls}
-              columnsKey={columnsKey}
-              onColumnResize={onColumnResize}
-            />
-          )}
+      <WrapperComponent className={`${prefixCls}-tbody`}>
+        {/* Measure body column width with additional hidden col */}
+        {measureColumnWidth && (
+          <MeasureRow
+            prefixCls={prefixCls}
+            columnsKey={columnsKey}
+            onColumnResize={onColumnResize}
+          />
+        )}
 
-          {rows}
-        </WrapperComponent>
-      </HoverContext.Provider>
+        {rows}
+      </WrapperComponent>
     );
   }, [
     data,
@@ -127,8 +128,9 @@ function Body<RecordType>({
     onColumnResize,
     rowExpandable,
     flattenData,
-    hoverContext,
   ]);
+
+  return <HoverContext.Provider value={hoverContext}>{bodyNode}</HoverContext.Provider>;
 }
 
 const MemoBody = React.memo(Body);

@@ -774,7 +774,6 @@ describe('Table.Basic', () => {
             },
             internalHooks: INTERNAL_HOOKS,
             transformColumns: columns => {
-              console.log(columns);
               existExpandColumn = columns.some(
                 col => col[INTERNAL_COL_DEFINE]?.columnType === 'EXPAND_COLUMN',
               );
@@ -956,30 +955,6 @@ describe('Table.Basic', () => {
       onExpandedRowsChange.mockReset();
       wrapper.find('span.rc-table-row-expand-icon').last().simulate('click');
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
-    });
-  });
-
-  describe('hover', () => {
-    it('basic', () => {
-      const wrapper = mount(createTable());
-      wrapper.find('tbody td').first().simulate('mouseEnter');
-      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
-
-      wrapper.find('tbody td').first().simulate('mouseLeave');
-      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
-    });
-
-    it('skip when config should cell update', () => {
-      const wrapper = mount(
-        createTable({
-          columns: [
-            { title: 'Name', dataIndex: 'name', key: 'name', shouldCellUpdate: () => false },
-          ],
-        }),
-      );
-
-      wrapper.find('tbody td').first().simulate('mouseEnter');
-      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
     });
   });
 
