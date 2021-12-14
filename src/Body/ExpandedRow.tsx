@@ -25,13 +25,13 @@ function ExpandedRow({
 }: ExpandedRowProps) {
   const { scrollbarSize } = React.useContext(TableContext);
   const { fixHeader, fixColumn, componentWidth } = React.useContext(ExpandedRowContext);
-  
-  if (!expanded) {
-    return null;
-  }
 
   // Cache render node
-  return React.useMemo(() => {
+  return React.useMemo(() => {  
+    if (!expanded) {
+     return null;
+    }
+    
     let contentNode = children;
 
     if (fixColumn) {
