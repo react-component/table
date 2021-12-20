@@ -45,7 +45,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   record?: RecordType;
   /** `record` index. Not `column` index. */
   index?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
   render?: ColumnType<RecordType>['render'];
   component?: CustomizeComponent;
   children?: React.ReactNode;

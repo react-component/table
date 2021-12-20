@@ -37,7 +37,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
 
-const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
+const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>(
   (
     {
       className,

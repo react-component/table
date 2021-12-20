@@ -1,4 +1,4 @@
-import { Key, DataIndex } from '../interface';
+import type { Key, DataIndex } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -11,16 +11,16 @@ function toArray<T>(arr: T | readonly T[]): T[] {
 
 export function getPathValue<ValueType, ObjectType extends object>(
   record: ObjectType,
-  path: DataIndex,
+  path: DataIndex<ObjectType>,
 ): ValueType {
   // Skip if path is empty
   if (!path && typeof path !== 'number') {
-    return (record as unknown) as ValueType;
+    return record as unknown as ValueType;
   }
 
   const pathList = toArray(path);
 
-  let current: ValueType | ObjectType = record;
+  let current: any = record;
 
   for (let i = 0; i < pathList.length; i += 1) {
     if (!current) {
@@ -34,12 +34,12 @@ export function getPathValue<ValueType, ObjectType extends object>(
   return current as ValueType;
 }
 
-interface GetColumnKeyColumn {
+interface GetColumnKeyColumn<RecordType> {
   key?: Key;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
 }
 
-export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
+export function getColumnsKey<RecordType>(columns: readonly GetColumnKeyColumn<RecordType>[]) {
   const columnKeys: React.Key[] = [];
   const keys: Record<React.Key, boolean> = {};
 
