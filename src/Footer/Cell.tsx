@@ -44,13 +44,11 @@ export default function SummaryCell({
       record={null}
       dataIndex={null}
       align={align}
-      render={() => ({
-        children,
-        props: {
-          colSpan: mergedColSpan,
-          rowSpan,
-        },
-      })}
+      additionalProps={{
+        colSpan: mergedColSpan,
+        rowSpan
+      }}
+      render={() => children}
       {...fixedInfo}
     />
   );
