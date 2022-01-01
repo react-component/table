@@ -46,11 +46,9 @@ export default function SummaryCell({
       align={align}
       render={() => ({
         children,
-        props: {
-          colSpan: mergedColSpan,
-          rowSpan,
-        },
       })}
+      colSpan={mergedColSpan}
+      rowSpan
       {...fixedInfo}
     />
   );

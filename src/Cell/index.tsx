@@ -134,7 +134,7 @@ function Cell<RecordType extends DefaultRecordType>(
       const renderData = render(value, record, index);
 
       if (isRenderCell(renderData)) {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'production' && renderData.props) {
           warning(
             false,
             '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
