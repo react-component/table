@@ -1,4 +1,4 @@
-import { StickyOffsets, FixedType } from '../interface';
+import type { StickyOffsets, FixedType } from '../interface';
 
 export interface FixedInfo {
   fixLeft: number | false;

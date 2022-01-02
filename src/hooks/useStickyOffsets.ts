@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { StickyOffsets } from '../interface';
+import type { StickyOffsets } from '../interface';
 
 /**
  * Get sticky column offset width

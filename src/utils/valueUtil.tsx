@@ -1,4 +1,4 @@
-import { Key, DataIndex } from '../interface';
+import type { Key, DataIndex } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -15,7 +15,7 @@ export function getPathValue<ValueType, ObjectType extends object>(
 ): ValueType {
   // Skip if path is empty
   if (!path && typeof path !== 'number') {
-    return (record as unknown) as ValueType;
+    return record as unknown as ValueType;
   }
 
   const pathList = toArray(path);
