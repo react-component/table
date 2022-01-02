@@ -515,7 +515,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     if (horizonScroll) {
       triggerOnScroll();
     }
-  }, [horizonScroll, data, columns.length]);
+  }, [data, columns.length]);
+  React.useEffect(() => {
+    if (horizonScroll) {
+      triggerOnScroll();
+    } else {
+      setPingedLeft(false);
+      setPingedRight(false);
+    }
+  }, [horizonScroll]);
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
