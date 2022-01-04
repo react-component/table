@@ -80,6 +80,9 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   };
 
   const onContainerScroll = () => {
+    if (!scrollBodyRef.current) {
+      return;
+    }
     const tableOffsetTop = getOffset(scrollBodyRef.current).top;
     const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
     const currentClientOffset =
