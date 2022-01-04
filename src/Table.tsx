@@ -497,8 +497,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   const triggerOnScroll = () => {
-    if (scrollBodyRef.current) {
+    if (horizonScroll && scrollBodyRef.current) {
       onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+    } else {
+      setPingedLeft(false);
+      setPingedRight(false);
     }
   };
 
@@ -510,20 +513,17 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   };
 
   // Sync scroll bar when init or `horizonScroll`, `data` and `columns.length` changed
-  React.useEffect(() => triggerOnScroll, []);
+  const mounted = React.useRef(false);
   React.useEffect(() => {
-    if (horizonScroll) {
+    // onFullTableResize will be trigger once when ResizeObserver is mounted
+    // This will reduce one duplicated triggerOnScroll time
+    if (mounted.current) {
       triggerOnScroll();
     }
-  }, [data, columns.length]);
+  }, [horizonScroll, data, columns.length]);
   React.useEffect(() => {
-    if (horizonScroll) {
-      triggerOnScroll();
-    } else {
-      setPingedLeft(false);
-      setPingedRight(false);
-    }
-  }, [horizonScroll]);
+    mounted.current = true;
+  }, []);
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
