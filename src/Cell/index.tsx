@@ -43,8 +43,10 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   prefixCls?: string;
   className?: string;
   record?: RecordType;
-  /** `record` index. Not `column` index. */
+  /** `column` index is the real show rowIndex */
   index?: number;
+  /** the index of the record. For the render(value, record, renderIndex) */
+  renderIndex?: number;
   dataIndex?: DataIndex;
   render?: ColumnType<RecordType>['render'];
   component?: CustomizeComponent;
@@ -89,6 +91,7 @@ function Cell<RecordType extends DefaultRecordType>(
     className,
     record,
     index,
+    renderIndex,
     dataIndex,
     render,
     children,
@@ -131,7 +134,7 @@ function Cell<RecordType extends DefaultRecordType>(
     // Customize render node
     childNode = value;
     if (render) {
-      const renderData = render(value, record, index);
+      const renderData = render(value, record, renderIndex);
 
       if (isRenderCell(renderData)) {
         if (process.env.NODE_ENV !== 'production') {

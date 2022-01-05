@@ -71,7 +71,8 @@ function Body<RecordType>({
             rowKey={key}
             record={record}
             recordKey={key}
-            index={renderIndex}
+            index={idx}
+            renderIndex={renderIndex}
             rowComponent={trComponent}
             cellComponent={tdComponent}
             expandedKeys={expandedKeys}
