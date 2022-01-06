@@ -196,6 +196,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         component={RowComponent}
         cellComponent={cellComponent}
         colSpan={flattenColumns.length}
+        isEmpty={false}
       >
         {expandContent}
       </ExpandedRow>
