@@ -93,6 +93,7 @@ function Body<RecordType>({
           component={trComponent}
           cellComponent={tdComponent}
           colSpan={flattenColumns.length}
+          isEmpty
         >
           {emptyNode}
         </ExpandedRow>
