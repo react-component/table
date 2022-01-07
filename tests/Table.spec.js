@@ -988,4 +988,36 @@ describe('Table.Basic', () => {
     expect(trs.at(4).find('Cell').at(1).text()).toEqual('0');
     expect(trs.at(5).find('Cell').at(1).text()).toEqual('1');
   });
+
+  it('hover the tree table', () => {
+    const tColumns = [
+      {
+        title: 'Key',
+        dataIndex: 'key',
+      },
+    ];
+
+    const tData = [
+      { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
+      { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
+    ];
+    const wrapper = mount(
+      <Table columns={tColumns} expandable={{ defaultExpandAllRows: true }} data={tData} />,
+    );
+
+    const trs = wrapper.find('tr.rc-table-row');
+
+    trs.forEach((tr, index) => {
+      tr.find('td.rc-table-cell').at(0).simulate('mouseEnter');
+      const currentClassName = wrapper
+        .find('tr.rc-table-row')
+        .at(index)
+        .find('td.rc-table-cell')
+        .at(0)
+        .getElement().props.className;
+
+      expect(currentClassName.includes('rc-table-cell-row-hover')).toEqual(true);
+      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
+    });
+  });
 });

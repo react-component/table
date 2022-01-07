@@ -16,6 +16,7 @@ import ExpandedRow from './ExpandedRow';
 export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
+  renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
   recordKey: Key;
@@ -38,6 +39,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     style,
     record,
     index,
+    renderIndex,
     rowKey,
     rowExpandable,
     expandedKeys,
@@ -165,6 +167,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             key={key}
             record={record}
             index={index}
+            renderIndex={renderIndex}
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
