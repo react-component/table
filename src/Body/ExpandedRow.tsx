@@ -12,6 +12,7 @@ export interface ExpandedRowProps {
   expanded: boolean;
   children: React.ReactNode;
   colSpan: number;
+  isEmpty: boolean;
 }
 
 function ExpandedRow({
@@ -22,15 +23,17 @@ function ExpandedRow({
   className,
   expanded,
   colSpan,
+  isEmpty,
 }: ExpandedRowProps) {
   const { scrollbarSize } = React.useContext(TableContext);
-  const { fixHeader, fixColumn, componentWidth } = React.useContext(ExpandedRowContext);
+  const { fixHeader, fixColumn, componentWidth, horizonScroll } =
+    React.useContext(ExpandedRowContext);
 
   // Cache render node
   return React.useMemo(() => {
     let contentNode = children;
 
-    if (fixColumn) {
+    if (isEmpty ? horizonScroll : fixColumn) {
       contentNode = (
         <div
           style={{
@@ -64,10 +67,12 @@ function ExpandedRow({
     className,
     expanded,
     colSpan,
+    isEmpty,
     scrollbarSize,
     componentWidth,
     fixColumn,
     fixHeader,
+    horizonScroll,
   ]);
 }
 
