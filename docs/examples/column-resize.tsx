@@ -31,6 +31,7 @@ interface DemoState {
   columns: ColumnType<RecordType>[];
 }
 
+
 class Demo extends React.Component<{}, DemoState> {
   state: DemoState = {
     columns: [
