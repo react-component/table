@@ -104,7 +104,7 @@ const Demo = () => {
           overflow: 'auto',
         }}
       >
-        <div style={{ flex: `0 0 ${isShown ? '10px' : '80px'}` }} />
+        <div style={{ flex: `0 0 ${isShown ? '10px' : '80px'}`, transition: "all 0.2s" }} />
         <div style={{ flex: 1, overflow: 'hidden' }}>
           <Table
             columns={columns}
