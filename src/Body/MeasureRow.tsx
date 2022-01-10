@@ -9,16 +9,6 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
-  // delay state update while resize continuously, e.g. window resize
-  const resizedColumnsRef = React.useRef(new Map());
-
-  const batchOnColumnResize = () => {
-    resizedColumnsRef.current.forEach((width, columnKey) => {
-      onColumnResize(columnKey, width);
-    });
-    resizedColumnsRef.current.clear();
-  };
-
   return (
     <tr
       aria-hidden="true"
@@ -28,9 +18,8 @@ export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: Me
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           infoList.forEach(({ data: columnKey, size }) => {
-            resizedColumnsRef.current.set(columnKey, size.offsetWidth);
+            onColumnResize(columnKey, size.offsetWidth);
           });
-          batchOnColumnResize();
         }}
       >
         {columnsKey.map(columnKey => (
