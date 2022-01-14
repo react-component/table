@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SummaryContext } from '.';
+import { SummaryContext } from './Summary';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import type { AlignType } from '../interface';

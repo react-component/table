@@ -1,15 +1,9 @@
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import Summary from './Summary';
+import Summary, { SummaryContext } from './Summary';
 import type { ColumnType, StickyOffsets } from '../interface';
 
 type FlattenColumns<RecordType> = readonly (ColumnType<RecordType> & { scrollbar?: boolean })[];
-
-export const SummaryContext = React.createContext<{
-  stickyOffsets?: StickyOffsets;
-  scrollColumnIndex?: number;
-  flattenColumns?: FlattenColumns<any>;
-}>({});
 
 export interface FooterProps<RecordType> {
   children: React.ReactNode;
