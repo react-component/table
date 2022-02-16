@@ -17,6 +17,7 @@ import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
 import warning from 'rc-util/lib/warning';
+import PerfContext from '../context/PerfContext';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -120,19 +121,23 @@ function Cell<RecordType extends DefaultRecordType>(
 ): React.ReactElement {
   const cellPrefixCls = `${prefixCls}-cell`;
 
+  const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
 
   // ==================== Child Node ====================
-  let cellProps: CellType<RecordType>;
-  let childNode: React.ReactNode;
+  const [childNode, legacyCellProps] = React.useMemo<
+    [React.ReactNode, CellType<RecordType>] | [React.ReactNode]
+  >(() => {
+    if (validateValue(children)) {
+      return [children];
+    }
 
-  if (validateValue(children)) {
-    childNode = children;
-  } else {
     const value = getPathValue<object | React.ReactNode, RecordType>(record, dataIndex);
 
     // Customize render node
-    childNode = value;
+    let returnChildNode = value;
+    let returnCellProps: CellType<RecordType> | undefined = undefined;
+
     if (render) {
       const renderData = render(value, record, renderIndex);
 
@@ -143,25 +148,41 @@ function Cell<RecordType extends DefaultRecordType>(
             '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
           );
         }
-        childNode = renderData.children;
-        cellProps = renderData.props;
+        returnChildNode = renderData.children;
+        returnCellProps = renderData.props;
+        perfRecord.renderWithProps = true;
       } else {
-        childNode = renderData;
+        returnChildNode = renderData;
       }
     }
-  }
+
+    return [returnChildNode, returnCellProps];
+  }, [
+    /* eslint-disable react-hooks/exhaustive-deps */
+    // Always re-render if `renderWithProps`
+    perfRecord.renderWithProps ? Math.random() : 0,
+    /* eslint-enable */
+    children,
+    dataIndex,
+    perfRecord,
+    record,
+    render,
+    renderIndex,
+  ]);
+
+  let mergedChildNode = childNode;
 
   // Not crash if final `childNode` is not validate ReactNode
   if (
-    typeof childNode === 'object' &&
-    !Array.isArray(childNode) &&
-    !React.isValidElement(childNode)
+    typeof mergedChildNode === 'object' &&
+    !Array.isArray(mergedChildNode) &&
+    !React.isValidElement(mergedChildNode)
   ) {
-    childNode = null;
+    mergedChildNode = null;
   }
 
   if (ellipsis && (lastFixLeft || firstFixRight)) {
-    childNode = <span className={`${cellPrefixCls}-content`}>{childNode}</span>;
+    mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
   }
 
   const {
@@ -170,7 +191,7 @@ function Cell<RecordType extends DefaultRecordType>(
     style: cellStyle,
     className: cellClassName,
     ...restCellProps
-  } = cellProps || {};
+  } = legacyCellProps || {};
   const mergedColSpan = (cellColSpan !== undefined ? cellColSpan : colSpan) ?? 1;
   const mergedRowSpan = (cellRowSpan !== undefined ? cellRowSpan : rowSpan) ?? 1;
 
@@ -220,10 +241,13 @@ function Cell<RecordType extends DefaultRecordType>(
   let title: string;
   const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
-    if (typeof childNode === 'string' || typeof childNode === 'number') {
-      title = childNode.toString();
-    } else if (React.isValidElement(childNode) && typeof childNode.props.children === 'string') {
-      title = childNode.props.children;
+    if (typeof mergedChildNode === 'string' || typeof mergedChildNode === 'number') {
+      title = mergedChildNode.toString();
+    } else if (
+      React.isValidElement(mergedChildNode) &&
+      typeof mergedChildNode.props.children === 'string'
+    ) {
+      title = mergedChildNode.props.children;
     }
   }
 
@@ -248,7 +272,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
         [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-        [`${cellPrefixCls}-row-hover`]: !cellProps && hovering,
+        [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
       },
       additionalProps.className,
       cellClassName,
@@ -262,7 +286,7 @@ function Cell<RecordType extends DefaultRecordType>(
   return (
     <Component {...componentProps}>
       {appendNode}
-      {childNode}
+      {mergedChildNode}
     </Component>
   );
 }
