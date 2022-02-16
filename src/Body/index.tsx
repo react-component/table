@@ -8,6 +8,7 @@ import ResizeContext from '../context/ResizeContext';
 import BodyRow from './BodyRow';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import HoverContext from '../context/HoverContext';
+import PerfContext, { PerfRecord } from '../context/PerfContext';
 import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
@@ -37,6 +38,11 @@ function Body<RecordType>({
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
+
+  // =================== Performance ====================
+  const perfRef = React.useRef<PerfRecord>({
+    renderWithProps: false,
+  });
 
   // ====================== Hover =======================
   const [startRow, setStartRow] = React.useState(-1);
@@ -132,7 +138,11 @@ function Body<RecordType>({
     flattenData,
   ]);
 
-  return <HoverContext.Provider value={hoverContext}>{bodyNode}</HoverContext.Provider>;
+  return (
+    <PerfContext.Provider value={perfRef.current}>
+      <HoverContext.Provider value={hoverContext}>{bodyNode}</HoverContext.Provider>
+    </PerfContext.Provider>
+  );
 }
 
 const MemoBody = React.memo(Body);
