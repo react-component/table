@@ -77,17 +77,17 @@ export type AlignType = 'left' | 'center' | 'right';
 
 type ExtractIndex<RecordType> = { [key in keyof RecordType]: [key, ...DataIndexArrayType<RecordType[key]>] }[keyof RecordType];
 
-type Unwrap<TArr extends Array<any>> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? readonly [TArr[0]] : TArr extends [...infer U, infer Last] ? Unwrap<U> : never);
+type Unwrap<TArr extends Array<any>> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? readonly [TArr[0]] : TArr extends readonly [...infer U, infer Last] ? Unwrap<U> : never);
 
 export type DataIndexArrayType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, any> | string | Array<any> ?
     [keyof RecordType] extends DataIndexArray ?
     Extract<RecordType[keyof RecordType], string | Array<any> | Record<string | number, any>> extends never ?
     readonly [keyof RecordType] :
-    RecordType[keyof RecordType] extends string ? readonly [keyof RecordType, number] :
+    RecordType[keyof RecordType] extends string ? readonly [keyof RecordType, number] | readonly [keyof RecordType] :
     readonly [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
 
 export type DataIndexType<RecordType = DefaultRecordType> = DataIndexArrayType<RecordType> extends { length: 0 } ?
-    DataIndex : DataIndexArrayType<RecordType> extends { length: 1 } ? (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>) : DataIndexArrayType<RecordType>;
+    DataIndex : (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>);
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
