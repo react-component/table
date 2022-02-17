@@ -77,11 +77,11 @@ export type AlignType = 'left' | 'center' | 'right';
 
 type ExtractIndex<RecordType> = { [key in keyof RecordType]: [key, ...DataIndexArrayType<RecordType[key]>] }[keyof RecordType];
 
-type Unwrap<TArr extends Array<any>> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? [TArr[0]] : TArr extends [...infer U, infer Last] ? Unwrap<U> : never);
+type Unwrap<TArr extends any[]> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? [TArr[0]] : TArr extends [...infer U, infer Last] ? Unwrap<U> : never);
 
-type DataIndexArrayType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, any> | string | Array<any> ?
+type DataIndexArrayType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, any> | string | any[] ?
     [keyof RecordType] extends DataIndexArray ?
-    Extract<RecordType[keyof RecordType], string | Array<any> | Record<string | number, any>> extends never ?
+    Extract<RecordType[keyof RecordType], string | any[] | Record<string | number, any>> extends never ?
     [keyof RecordType] :
     RecordType[keyof RecordType] extends string ? [keyof RecordType, number] :
     [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
