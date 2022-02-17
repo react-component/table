@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import Cell from './Cell';
 import Row from './Row';
 
