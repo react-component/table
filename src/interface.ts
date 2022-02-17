@@ -55,6 +55,8 @@ export interface RenderedCell<RecordType> {
 
 export type DataIndex = string | number | readonly (string | number)[];
 
+type DataIndexArray = [string] | [number] | readonly (string | number)[];
+
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
 interface ColumnSharedType<RecordType> {
@@ -73,12 +75,15 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
 
 export type AlignType = 'left' | 'center' | 'right';
 
-export type DataIndexType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, unknown> ?
-    keyof RecordType extends DataIndex ?
+export type DataIndexArrayType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, unknown> | string | number ?
+    [keyof RecordType] extends DataIndexArray ?
     Extract<RecordType[keyof RecordType], string | Array<any> | Record<string | number, unknown>> extends never ?
-    keyof RecordType :
-    RecordType[keyof RecordType] extends string ? keyof RecordType | readonly [keyof RecordType, number] :
-    keyof RecordType | readonly (string | number)[] : DataIndex : DataIndex;
+    [keyof RecordType] :
+    RecordType[keyof RecordType] extends string ? [keyof RecordType] | readonly [keyof RecordType, number] :
+    [keyof RecordType] | [keyof RecordType, ...DataIndexArrayType<RecordType[keyof RecordType]>] : DataIndexArray : [];
+
+export type DataIndexType<RecordType = DefaultRecordType> = DataIndexArrayType<RecordType> extends { length: 0 } ?
+    DataIndex : DataIndexArrayType<RecordType> extends { length: 1 } ? DataIndexArrayType<RecordType>[0] : DataIndexArrayType<RecordType>;
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
