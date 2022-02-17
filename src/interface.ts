@@ -87,7 +87,7 @@ type DataIndexArrayType<RecordType = DefaultRecordType> = RecordType extends Rec
     [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
 
 export type DataIndexType<RecordType = DefaultRecordType> = DataIndexArrayType<RecordType> extends { length: 0 } ?
-    DataIndex : DataIndexArrayType<RecordType> extends { length: 1 } ? DataIndexArrayType<RecordType>[0] : DataIndexArrayType<RecordType>;
+    DataIndex : DataIndexArrayType<RecordType> extends { length: 1 } ? (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>) : DataIndexArrayType<RecordType>;
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
