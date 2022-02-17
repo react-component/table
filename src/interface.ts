@@ -75,7 +75,7 @@ export type AlignType = 'left' | 'center' | 'right';
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: keyof RecordType extends DataIndex ? keyof RecordType : DataIndex;
+  dataIndex?: RecordType extends Record<string | number, unknown> ? keyof RecordType extends DataIndex ? keyof RecordType | readonly (string | number)[] : DataIndex : DataIndex;;
   render?: (
     value: any,
     record: RecordType,
