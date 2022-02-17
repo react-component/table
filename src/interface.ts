@@ -73,7 +73,12 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
 
 export type AlignType = 'left' | 'center' | 'right';
 
-export type DataIndexType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, unknown> ? keyof RecordType extends DataIndex ? Extract<RecordType[keyof RecordType], Record<string | number, unknown>> extends never ? keyof RecordType : keyof RecordType | readonly (string | number)[] : DataIndex : DataIndex;
+export type DataIndexType<RecordType = DefaultRecordType> = RecordType extends Record<string | number, unknown> ?
+    keyof RecordType extends DataIndex ?
+    Extract<RecordType[keyof RecordType], string | Array<any> | Record<string | number, unknown>> extends never ?
+    keyof RecordType :
+    RecordType[keyof RecordType] extends string ? keyof RecordType | readonly [keyof RecordType, number] :
+    keyof RecordType | readonly (string | number)[] : DataIndex : DataIndex;
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
