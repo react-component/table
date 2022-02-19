@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import Summary, { SummaryContext } from './Summary';
+import Summary from './Summary';
+import SummaryContext from './SummaryContext';
 import type { ColumnType, StickyOffsets } from '../interface';
 
 type FlattenColumns<RecordType> = readonly (ColumnType<RecordType> & { scrollbar?: boolean })[];
