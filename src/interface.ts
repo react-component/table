@@ -79,48 +79,37 @@ type IsExactlyAny<T> = boolean extends (T extends never ? true : false) ? true :
 
 type ExtractIndex<RecordType> = Extract<
     {
-        [key in keyof RecordType]: Exclude<RecordType[key], string> extends never
-        ? [key, number]
-        : [key, ...DataIndexArrayType<RecordType[key]>];
-    }[keyof RecordType],
+        [key in Extract<keyof RecordType, string | number>]: key extends never ? [] : IsExactlyAny<RecordType[key]> extends true ? [key, ...DataIndexArray] : [key, ...DataIndexArrayType<RecordType[key]>];
+    }[Extract<keyof RecordType, string | number>],
     readonly (string | number)[]
 >;
 
-type Unwrap<TArr extends any[]> = TArr extends { length: 0 }
+type Unwrap<TArr extends readonly (string | number)[]> = TArr extends { length: 0 }
     ? []
     : number extends TArr['length']
     ? TArr
-    :
-    | TArr
+    : (string | number)[] extends TArr ? TArr :
+    TArr
     | (TArr extends { length: 1 }
         ? TArr
         : TArr extends { length: 2 }
         ? [TArr[0]]
         : TArr extends [...infer U, unknown]
-        ? Unwrap<U>
-        : never);
+        ? U extends readonly (string | number)[] ? Unwrap<U> : []
+        : []);
 
 type DataIndexArrayType<RecordType> = IsExactlyAny<RecordType> extends true
-    ? DataIndexArray
-    : Exclude<RecordType, any[] | string> extends never
+    ? []
+    : RecordType extends string
     ? [number]
-    : Exclude<RecordType[keyof RecordType], Record<string | number, any>> extends never
-    ? [keyof RecordType]
-    : [keyof RecordType] | Unwrap<ExtractIndex<RecordType>>;
+    : RecordType extends Record<string | number, any>
+    ? Unwrap<ExtractIndex<RecordType>>
+    : RecordType extends any[]
+    ? [number, ...Unwrap<ExtractIndex<RecordType[number]>>]
+    : [];
 
-type MutableDataIndexType<RecordType> = Exclude<
-    DataIndexArrayType<RecordType> extends [never]
-    ? DataIndex
-    : DataIndexArrayType<RecordType> extends { length: 0 }
-    ? DataIndex
-    : number extends DataIndexArrayType<RecordType> ? DataIndex :
-    DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>,
-    [] | undefined
->;
+type DataIndexType<RecordType> = Readonly<DataIndexArrayType<RecordType>> extends { length: 0 } ? DataIndex : Readonly<DataIndexArrayType<RecordType>> | Readonly<DataIndexArrayType<RecordType>>[0]
 
-type DataIndexType<RecordType> = Extract<MutableDataIndexType<RecordType>, { pop: any }> extends never ? DataIndex :
-    | Readonly<Extract<MutableDataIndexType<RecordType>, { pop: any }>>
-    | Extract<keyof RecordType, string | number>;
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
   dataIndex?: DataIndexType<RecordType>;
