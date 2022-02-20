@@ -86,8 +86,8 @@ export type DataIndexArrayType<RecordType> = RecordType extends Record<string | 
     RecordType[keyof RecordType] extends string ? readonly [keyof RecordType, number] | readonly [keyof RecordType] :
     readonly [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
 
-export type DataIndexType<RecordType> = DataIndexArrayType<RecordType> extends { length: 0 } ?
-    DataIndex : (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>);
+export type DataIndexType<RecordType> = Exclude<DataIndexArrayType<RecordType> extends { length: 0 } ?
+    DataIndex : (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>), [] | undefined>;
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
