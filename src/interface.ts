@@ -77,17 +77,20 @@ export type AlignType = 'left' | 'center' | 'right';
 
 type ExtractIndex<RecordType> = { [key in keyof RecordType]: [key, ...DataIndexArrayType<RecordType[key]>] }[keyof RecordType];
 
-type Unwrap<TArr extends Array<any>> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? readonly [TArr[0]] : TArr extends readonly [...infer U, infer Last] ? Unwrap<U> : never);
+type Unwrap<TArr extends Array<any>> = TArr | (TArr extends { length: 1 } ? TArr : TArr extends { length: 2 } ? [TArr[0]] : TArr extends [...infer U, infer Last] ? Unwrap<U> : never);
 
-export type DataIndexArrayType<RecordType> = RecordType extends Record<string | number, any> | string | Array<any> ?
+type DataIndexArrayType<RecordType> = RecordType extends Record<string | number, any> | string | Array<any> ?
     [keyof RecordType] extends DataIndexArray ?
     Extract<RecordType[keyof RecordType], string | Array<any> | Record<string | number, any>> extends never ?
-    readonly [keyof RecordType] :
-    RecordType[keyof RecordType] extends string ? readonly [keyof RecordType, number] | readonly [keyof RecordType] :
-    readonly [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
+    [keyof RecordType] :
+    RecordType[keyof RecordType] extends string ? [keyof RecordType, number] | [keyof RecordType] :
+    [keyof RecordType] | Unwrap<ExtractIndex<RecordType>> : DataIndexArray : [];
 
-export type DataIndexType<RecordType> = Exclude<DataIndexArrayType<RecordType> extends { length: 0 } ?
+type MutableDataIndexType<RecordType> = Exclude<DataIndexArrayType<RecordType> extends { length: 0 } ?
     DataIndex : (DataIndexArrayType<RecordType>[0] | DataIndexArrayType<RecordType>), [] | undefined>;
+
+
+type DataIndexType<RecordType> = Readonly<Extract<MutableDataIndexType<RecordType>, { pop: Function }>> | Exclude<MutableDataIndexType<RecordType>, { pop: Function }>;
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
