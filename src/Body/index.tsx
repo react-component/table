@@ -8,7 +8,8 @@ import ResizeContext from '../context/ResizeContext';
 import BodyRow from './BodyRow';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import HoverContext from '../context/HoverContext';
-import PerfContext, { PerfRecord } from '../context/PerfContext';
+import type { PerfRecord } from '../context/PerfContext';
+import PerfContext from '../context/PerfContext';
 import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {

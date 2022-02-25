@@ -21,7 +21,15 @@ describe('Table.FixedColumn', () => {
 
   const columns = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-    { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left' },
+    {
+      title: 'title2',
+      dataIndex: 'b',
+      key: 'b',
+      width: 100,
+      fixed: 'left',
+      ellipsis: true,
+      render: () => <span>1111</span>,
+    },
     { title: 'title3', dataIndex: 'c', key: 'c' },
     { title: 'title4', dataIndex: 'b', key: 'd' },
     { title: 'title5', dataIndex: 'b', key: 'e' },

@@ -86,6 +86,23 @@ export type CellProps<RecordType extends DefaultRecordType> = Omit<
   keyof HoverContextProps
 >;
 
+const getTitleFromCellRenderChildren = ({
+  ellipsis,
+  rowType,
+  children,
+}: Pick<InternalCellProps<any>, 'ellipsis' | 'rowType' | 'children'>) => {
+  let title: string;
+  const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
+  if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
+    if (typeof children === 'string' || typeof children === 'number') {
+      title = children.toString();
+    } else if (React.isValidElement(children) && typeof children.props.children === 'string') {
+      title = children.props.children;
+    }
+  }
+  return title;
+};
+
 function Cell<RecordType extends DefaultRecordType>(
   {
     prefixCls,
@@ -132,7 +149,10 @@ function Cell<RecordType extends DefaultRecordType>(
       return [children];
     }
 
-    const value = getPathValue<object | React.ReactNode, RecordType>(record, dataIndex);
+    const value = getPathValue<Record<string, unknown> | React.ReactNode, RecordType>(
+      record,
+      dataIndex,
+    );
 
     // Customize render node
     let returnChildNode = value;
@@ -238,18 +258,11 @@ function Cell<RecordType extends DefaultRecordType>(
   };
 
   // ====================== Render ======================
-  let title: string;
-  const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
-  if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
-    if (typeof mergedChildNode === 'string' || typeof mergedChildNode === 'number') {
-      title = mergedChildNode.toString();
-    } else if (
-      React.isValidElement(mergedChildNode) &&
-      typeof mergedChildNode.props.children === 'string'
-    ) {
-      title = mergedChildNode.props.children;
-    }
-  }
+  const title = getTitleFromCellRenderChildren({
+    rowType,
+    ellipsis,
+    children: childNode,
+  });
 
   const componentProps: React.TdHTMLAttributes<HTMLTableCellElement> & {
     ref: React.Ref<any>;
