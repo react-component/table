@@ -149,7 +149,10 @@ function Cell<RecordType extends DefaultRecordType>(
       return [children];
     }
 
-    const value = getPathValue<object | React.ReactNode, RecordType>(record, dataIndex);
+    const value = getPathValue<Record<string, unknown> | React.ReactNode, RecordType>(
+      record,
+      dataIndex,
+    );
 
     // Customize render node
     let returnChildNode = value;
