@@ -106,7 +106,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | rowClassName | string or Function(record, index, indent):string |  | get row's className |
 | rowRef | Function(record, index, indent):string |  | get row's ref key |
 | data | Object[] |  | data record array to be rendered |
-| onRow | Function(record, index) |  | Set custom props per each row. |
+| onRow | Function(record, index, levelIndex) |  | Set custom props per each row. |
 | onHeaderRow | Function(record, index) |  | Set custom props per each header row. |
 | showHeader | Boolean | true | whether table head is shown |
 | title | Function(currentData) |  | table title render function |
