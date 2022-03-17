@@ -170,6 +170,35 @@ describe('Table.Expand', () => {
     expect(wrapper2.render()).toMatchSnapshot();
   });
 
+  it('does not crash if scroll is not set', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age' },
+      { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    ];
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      { key: 1, name: 'Jack', age: 28, gender: 'M' },
+    ];
+    const wrapper = mount(
+      createTable({
+        columns,
+        data,
+        scroll: {},
+        expandable: { expandedRowRender, fixed: true },
+      }),
+    );
+    const wrapper2 = mount(
+      createTable({
+        columns,
+        data,
+        expandable: { expandedRowRender, fixed: true },
+      }),
+    );
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper2.render()).toMatchSnapshot();
+  });
+
   it('expandable fix not when expandIconColumnIndex', () => {
     const columns = [
       { title: 'Name', dataIndex: 'name', key: 'name' },
