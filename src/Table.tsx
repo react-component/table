@@ -432,7 +432,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       scrollYStyle = { overflowY: 'hidden' };
     }
     scrollTableStyle = {
-      width: scroll ? (scroll.x === true ? 'auto' : scroll.x) : undefined,
+      width: scroll?.x === true ? 'auto' : scroll?.x,
       minWidth: '100%',
     };
   }
