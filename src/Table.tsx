@@ -432,7 +432,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       scrollYStyle = { overflowY: 'hidden' };
     }
     scrollTableStyle = {
-      width: scroll.x === true ? 'auto' : scroll.x,
+      width: scroll?.x === true ? 'auto' : scroll?.x,
       minWidth: '100%',
     };
   }
@@ -553,7 +553,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     // When scroll.x is max-content, no need to fix table layout
     // it's width should stretch out to fit content
     if (fixColumn) {
-      return scroll.x === 'max-content' ? 'auto' : 'fixed';
+      return scroll?.x === 'max-content' ? 'auto' : 'fixed';
     }
     if (fixHeader || isSticky || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
@@ -844,7 +844,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       componentWidth,
       fixHeader,
       fixColumn,
-      horizonScroll
+      horizonScroll,
     }),
     [componentWidth, fixHeader, fixColumn, horizonScroll],
   );
