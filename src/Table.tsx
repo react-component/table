@@ -553,7 +553,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     // When scroll.x is max-content, no need to fix table layout
     // it's width should stretch out to fit content
     if (fixColumn) {
-      return scroll && scroll.x === 'max-content' ? 'auto' : 'fixed';
+      return scroll?.x === 'max-content' ? 'auto' : 'fixed';
     }
     if (fixHeader || isSticky || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
