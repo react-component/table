@@ -32,9 +32,39 @@ npm install
 npm start
 ```
 
-## Example
+## Examples
 
-https://table.react-component.now.sh/
+* [colspan-rowspan](https://table-react-component.vercel.app/demo/colspan-rowspan)
+* [colspan-rowspan-legacy](https://table-react-component.vercel.app/demo/colspan-rowspan-legacy)
+* [column-resize](https://table-react-component.vercel.app/demo/column-resize)
+* [dropdown](https://table-react-component.vercel.app/demo/dropdown)
+* [ellipsis](https://table-react-component.vercel.app/demo/ellipsis)
+* [ellipsis-custom-tooltip](https://table-react-component.vercel.app/demo/ellipsis-custom-tooltip)
+* [expand-icon](https://table-react-component.vercel.app/demo/expand-icon)
+* [expanded-row-render](https://table-react-component.vercel.app/demo/expanded-row-render)
+* [fixed-columns](https://table-react-component.vercel.app/demo/fixed-columns)
+* [fixed-columns-and-header](https://table-react-component.vercel.app/demo/fixed-columns-and-header)
+* [fixed-columns-and-header](https://table-react-component.vercel.app/demo/fixed-columns-and-header)
+* [fixed-columns-auto-height](https://table-react-component.vercel.app/demo/fixed-columns-auto-height)
+* [fixed-columns-resize](https://table-react-component.vercel.app/demo/fixed-columns-resize)
+* [grouping-columns](https://table-react-component.vercel.app/demo/grouping-columns)
+* [hide-header](https://table-react-component.vercel.app/demo/hide-header)
+* [jsx](https://table-react-component.vercel.app/demo/jsx)
+* [key](https://table-react-component.vercel.app/demo/key)
+* [nested](https://table-react-component.vercel.app/demo/nested)
+* [no-data](https://table-react-component.vercel.app/demo/no-data)
+* [react-dnd](https://table-react-component.vercel.app/demo/react-dnd)
+* [row-and-cell-click](https://table-react-component.vercel.app/demo/row-and-cell-click)
+* [scroll-x](https://table-react-component.vercel.app/demo/scroll-x)
+* [scroll-x](https://table-react-component.vercel.app/demo/scroll-x)
+* [simple](https://table-react-component.vercel.app/demo/simple)
+* [sticky-header](https://table-react-component.vercel.app/demo/sticky-header)
+* [sticky-header-and-summary](https://table-react-component.vercel.app/demo/sticky-header-and-summary)
+* [styled-components](https://table-react-component.vercel.app/demo/styled-components)
+* [sub-table](https://table-react-component.vercel.app/demo/sub-table)
+* [title-and-footer](https://table-react-component.vercel.app/demo/title-and-footer)
+* [virtual-list](https://table-react-component.vercel.app/demo/virtual-list)
+* [virtual-list-grid](https://table-react-component.vercel.app/demo/virtual-list-grid)
 
 ## Usage
 
