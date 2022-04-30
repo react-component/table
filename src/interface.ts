@@ -53,7 +53,13 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
-export type DataIndex = string | number | readonly (string | number)[];
+type NestedKeyOfDataIndex<RecordType> = {
+  [RecordTypeKey in keyof RecordType]: RecordType[RecordTypeKey] extends object
+    ? RecordTypeKey | NestedKeyOfDataIndex<RecordType[RecordTypeKey]>
+    : RecordTypeKey;
+}[keyof RecordType];
+
+export type DataIndex<RecordType = object> = NestedKeyOfDataIndex<RecordType>[] | keyof RecordType;
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -75,7 +81,7 @@ export type AlignType = 'left' | 'center' | 'right';
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
   render?: (
     value: any,
     record: RecordType,
