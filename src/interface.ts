@@ -21,7 +21,7 @@ export type Key = React.Key;
 
 export type FixedType = 'left' | 'right' | boolean;
 
-export type DefaultRecordType = Record<string, any>;
+export type DefaultRecordType = Record<string | number | symbol, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
@@ -54,12 +54,16 @@ export interface RenderedCell<RecordType> {
 }
 
 type NestedKeyOfDataIndex<RecordType> = {
-  [RecordTypeKey in keyof RecordType]: RecordType[RecordTypeKey] extends object
-    ? RecordTypeKey | NestedKeyOfDataIndex<RecordType[RecordTypeKey]>
+  [RecordTypeKey in keyof RecordType]: RecordType[RecordTypeKey] extends DefaultRecordType
+    ? RecordType extends DefaultRecordType
+      ? NestedKeyOfDataIndex<RecordType[RecordTypeKey]> | RecordTypeKey
+      : RecordTypeKey
     : RecordTypeKey;
 }[keyof RecordType];
 
-export type DataIndex<RecordType = object> = NestedKeyOfDataIndex<RecordType>[] | keyof RecordType;
+export type DataIndex<RecordType = DefaultRecordType> =
+  | Readonly<NestedKeyOfDataIndex<RecordType>[]>
+  | keyof RecordType;
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
