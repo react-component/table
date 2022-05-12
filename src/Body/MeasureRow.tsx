@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import MeasureCell from './MeasureCell';
-import raf from 'rc-util/lib/raf';
 
 export interface MeasureCellProps {
   prefixCls: string;
@@ -10,27 +9,6 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
-  // delay state update while resize continuously, e.g. window resize
-  const resizedColumnsRef = React.useRef(new Map());
-  const rafIdRef = React.useRef(null);
-
-  const delayOnColumnResize = () => {
-    if (rafIdRef.current === null) {
-      rafIdRef.current = raf(() => {
-        resizedColumnsRef.current.forEach((width, columnKey) => {
-          onColumnResize(columnKey, width);
-        });
-        resizedColumnsRef.current.clear();
-        rafIdRef.current = null;
-      }, 2);
-    }
-  };
-
-  React.useEffect(() => {
-    return () => {
-      raf.cancel(rafIdRef.current);
-    };
-  }, []);
   return (
     <tr
       aria-hidden="true"
@@ -40,9 +18,8 @@ export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: Me
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           infoList.forEach(({ data: columnKey, size }) => {
-            resizedColumnsRef.current.set(columnKey, size.offsetWidth);
+            onColumnResize(columnKey, size.offsetWidth);
           });
-          delayOnColumnResize();
         }}
       >
         {columnsKey.map(columnKey => (
