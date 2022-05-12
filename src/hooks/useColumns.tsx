@@ -257,7 +257,7 @@ function useColumns<RecordType>(
   }, [mergedColumns, direction]);
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
-    warningFixed(flattenColumns);
+    warningFixed(direction === 'rtl' ? flattenColumns.slice().reverse() : flattenColumns);
   }
   return [mergedColumns, flattenColumns];
 }

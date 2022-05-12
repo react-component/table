@@ -191,6 +191,11 @@ describe('Table.FixedColumn', () => {
         "Warning: Index 2 of `columns` missing `fixed='right'` prop.",
       );
     });
+
+    it('RTL', () => {
+      mount(<Table columns={[{}, { fixed: 'right' }]} direction="rtl" />);
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
   });
 
   it('ellipsis will wrap additional dom', () => {
@@ -207,6 +212,7 @@ describe('Table.FixedColumn', () => {
     );
     expect(wrapper.render()).toMatchSnapshot();
   });
+
   it('has correct scroll classNames when table direction is RTL', () => {
     const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
 
