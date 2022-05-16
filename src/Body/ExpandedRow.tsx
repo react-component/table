@@ -33,7 +33,7 @@ function ExpandedRow({
   return React.useMemo(() => {
     let contentNode = children;
 
-    if (isEmpty ? horizonScroll : fixColumn) {
+    if (componentWidth !== 0 && (isEmpty ? horizonScroll : fixColumn)) {
       contentNode = (
         <div
           style={{
