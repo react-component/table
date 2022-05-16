@@ -1760,9 +1760,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
               <div
                 class="rc-table-expanded-row-fixed"
                 style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
-              >
-                No Data
-              </div>
+              />
             </td>
           </tr>
         </tbody>
@@ -2892,9 +2890,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
               <div
                 class="rc-table-expanded-row-fixed"
                 style="width: -15px; position: sticky; left: 0px; overflow: hidden;"
-              >
-                No Data
-              </div>
+              />
             </td>
           </tr>
         </tbody>

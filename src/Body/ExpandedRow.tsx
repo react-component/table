@@ -44,7 +44,7 @@ function ExpandedRow({
           }}
           className={`${prefixCls}-expanded-row-fixed`}
         >
-          {contentNode}
+          {componentWidth !== 0 && contentNode}
         </div>
       );
     }
