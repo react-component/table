@@ -384,6 +384,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
+  const scrollBodyConainerRef = React.useRef<HTMLDivElement>();
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
@@ -534,7 +535,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
-    setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+    if (scrollBodyRef.current instanceof Element) {
+      setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+    } else {
+      setScrollbarSize(getTargetScrollBarSize(scrollBodyConainerRef.current).width);
+    }
     setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
@@ -781,7 +786,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         props={{ ...props, stickyOffsets, mergedExpandedKeys }}
       >
         {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-        <div className={`${prefixCls}-container`}>{groupTableNode}</div>
+        <div ref={scrollBodyConainerRef} className={`${prefixCls}-container`}>
+          {groupTableNode}
+        </div>
         {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
       </MemoTableContent>
     </div>
