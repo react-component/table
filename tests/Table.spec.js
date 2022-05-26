@@ -1021,10 +1021,6 @@ describe('Table.Basic', () => {
     });
   });
   it('should get scrollbar size', () => {
-    const tData = [
-      { key: 'key0', name: 'Lucy' },
-      { key: 'key1', name: 'Jack' },
-    ];
     const tColumns = [{ title: 'Name', dataIndex: 'name', key: 'name', width: 100 }];
     const wrapper = mount(
       createTable({
