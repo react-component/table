@@ -735,6 +735,48 @@ exports[`Table.Basic renders rowSpan correctly 1`] = `
 </div>
 `;
 
+exports[`Table.Basic should get scrollbar size 1`] = `
+<div
+  class="rc-table rc-table-fixed-header"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-header"
+      style="overflow: hidden;"
+    >
+      <table
+        style="table-layout: fixed;"
+      >
+        <colgroup>
+          <col
+            style="width: 85px;"
+          />
+          <col
+            style="width: 15px;"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-cell"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-scrollbar"
+            />
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Table.Basic syntactic sugar 1`] = `
 <div
   class="rc-table"
