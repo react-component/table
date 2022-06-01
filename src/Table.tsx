@@ -116,7 +116,7 @@ export interface TableProps<RecordType = unknown>
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
-  rowKey?: string | GetRowKey<RecordType>;
+  rowKey?: keyof RecordType | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
 
   // Fixed Columns
