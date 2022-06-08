@@ -488,6 +488,8 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       const { scrollWidth, clientWidth } = currentTarget;
       // There is no space to scroll
       if (scrollWidth === clientWidth) {
+        setPingedLeft(false);
+        setPingedRight(false);
         return;
       }
       if (isRTL) {
