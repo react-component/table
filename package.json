@@ -62,7 +62,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
     "@types/jest": "^28.1.2",
-    "@types/react": "^17.0.35",
+    "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/shallowequal": "^1.1.1",
     "@umijs/fabric": "^2.0.0",
