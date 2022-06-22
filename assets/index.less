@@ -15,6 +15,7 @@
 .tableBorder() {
   border: @border;
   border-right: 0;
+  border-left: 0;
   border-bottom: 0;
 }
 
@@ -45,10 +46,14 @@
     word-break: break-word;
     border: @border;
     border-top: 0;
-    border-left: 0;
+    &:not(:first-child) {
+      border-left: 0;
+    }
     transition: box-shadow 0.3s;
     .@{tablePrefixCls}-rtl& {
-      border-right: 0;
+      &:not(:first-child) {
+        border-right: 0;
+      }
       border-left: @border;
     }
   }
