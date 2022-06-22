@@ -102,7 +102,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | expandable.onExpand | Function(expanded, record) |  | function to call when click expand icon |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | function to call when the expanded rows change |
 | expandable.fixed | String \| Boolean | - | this expand icon will be fixed when table scroll horizontally: true or `left` or `right` and `expandIconColumnIndex` need to stay first or last |
-| rowKey | string or Function(record):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record)` will be use as key. |
+| rowKey | string or Function(record, index):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record, index)` will be use as key. |
 | rowClassName | string or Function(record, index, indent):string |  | get row's className |
 | rowRef | Function(record, index, indent):string |  | get row's ref key |
 | data | Object[] |  | data record array to be rendered |
