@@ -27,7 +27,12 @@ const Demo = () => {
   const [connectObject] = React.useState<any>(() => {
     const obj = {};
     Object.defineProperty(obj, 'scrollLeft', {
-      get: () => null,
+      get: () => {
+        if (gridRef.current) {
+          return gridRef.current?.state?.scrollLeft;
+        }
+        return null;
+      },
       set: (scrollLeft: number) => {
         if (gridRef.current) {
           gridRef.current.scrollTo({ scrollLeft });
