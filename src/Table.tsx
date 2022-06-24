@@ -809,7 +809,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       direction,
       flattenColumns,
       stickyOffsets,
-      direction,
       isSticky,
     ],
   );
