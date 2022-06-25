@@ -1020,4 +1020,18 @@ describe('Table.Basic', () => {
       expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
     });
   });
+  it('should get scrollbar size', () => {
+    const tColumns = [{ title: 'Name', dataIndex: 'name', key: 'name', width: 100 }];
+    const wrapper = mount(
+      createTable({
+        columns: tColumns,
+        scroll: { y: 100 },
+        components: {
+          body: () => <React.Fragment />,
+        },
+      }),
+    );
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('col')).toHaveLength(tColumns.length + 1);
+  });
 });
