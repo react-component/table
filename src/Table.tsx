@@ -61,7 +61,7 @@ import BodyContext from './context/BodyContext';
 import Body from './Body';
 import useColumns from './hooks/useColumns';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
-import { getPathValue, mergeObject, validateValue, getColumnsKey } from './utils/valueUtil';
+import { getPathValue, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
@@ -226,16 +226,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   }
 
   // ==================== Customize =====================
-  const mergedComponents = React.useMemo(
-    () => mergeObject<TableComponents<RecordType>>(components, {}),
-    [components],
-  );
-
   const getComponent = React.useCallback<GetComponent>(
     (path, defaultComponent) =>
-      getPathValue<CustomizeComponent, TableComponents<RecordType>>(mergedComponents, path) ||
+      getPathValue<CustomizeComponent, TableComponents<RecordType>>(components || {}, path) ||
       defaultComponent,
-    [mergedComponents],
+    [components],
   );
 
   const getRowKey = React.useMemo<GetRowKey<RecordType>>(() => {
@@ -811,15 +806,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ),
       isSticky,
     }),
-    [
-      prefixCls,
-      getComponent,
-      scrollbarSize,
-      direction,
-      flattenColumns,
-      stickyOffsets,
-      isSticky,
-    ],
+    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, isSticky],
   );
 
   const BodyContextValue = React.useMemo(
