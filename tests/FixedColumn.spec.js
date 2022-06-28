@@ -1,10 +1,9 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { resetWarned } from 'rc-util/lib/warning';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
-import Table from '../src';
 import RcResizeObserver from 'rc-resize-observer';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { resetWarned } from 'rc-util/lib/warning';
+import { act } from 'react-dom/test-utils';
+import Table from '../src';
 
 describe('Table.FixedColumn', () => {
   let domSpy;
@@ -159,6 +158,23 @@ describe('Table.FixedColumn', () => {
     });
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
+    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
+
+    // Fullscreen
+    act(() => {
+      wrapper
+        .find('.rc-table-content')
+        .props()
+        .onScroll({
+          currentTarget: {
+            scrollLeft: 0,
+            scrollWidth: 100,
+            clientWidth: 100,
+          },
+        });
+    });
+    wrapper.update();
+    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeFalsy();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
   });
 
