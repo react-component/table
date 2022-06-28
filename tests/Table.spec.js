@@ -596,6 +596,21 @@ describe('Table.Basic', () => {
         errSpy.mockRestore();
       });
     });
+
+    it('not crash', () => {
+      const Looper = React.forwardRef(() => <td />);
+      Looper.looper = Looper;
+
+      mount(
+        createTable({
+          components: {
+            body: {
+              cell: Looper,
+            },
+          },
+        }),
+      );
+    });
   });
 
   it('align column', () => {
