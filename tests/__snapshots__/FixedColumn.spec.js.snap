@@ -1759,8 +1759,10 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
             >
               <div
                 class="rc-table-expanded-row-fixed"
-                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
-              />
+                style="width: 1000px; position: sticky; left: 0px; overflow: hidden;"
+              >
+                No Data
+              </div>
             </td>
           </tr>
         </tbody>
@@ -1789,37 +1791,37 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             style="width: 93px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
             style="width: 15px;"
@@ -2620,37 +2622,37 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             style="width: 93px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 0px;"
+            style="width: 1000px;"
           />
           <col
             style="width: 15px;"
@@ -2889,8 +2891,10 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             >
               <div
                 class="rc-table-expanded-row-fixed"
-                style="width: -15px; position: sticky; left: 0px; overflow: hidden;"
-              />
+                style="width: 985px; position: sticky; left: 0px; overflow: hidden;"
+              >
+                No Data
+              </div>
             </td>
           </tr>
         </tbody>

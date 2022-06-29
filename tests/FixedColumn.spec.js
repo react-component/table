@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import RcResizeObserver from 'rc-resize-observer';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import { act } from 'react-dom/test-utils';
 import Table from '../src';
@@ -9,8 +9,13 @@ describe('Table.FixedColumn', () => {
   let domSpy;
 
   beforeAll(() => {
-    domSpy = spyElementPrototype(HTMLElement, 'offsetParent', {
-      get: () => ({}),
+    domSpy = spyElementPrototypes(HTMLElement, {
+      offsetParent: {
+        get: () => ({}),
+      },
+      offsetWidth: {
+        get: () => 1000,
+      },
     });
   });
 
@@ -64,6 +69,10 @@ describe('Table.FixedColumn', () => {
         it(`${scrollName} - ${name}`, async () => {
           jest.useFakeTimers();
           const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
+
+          act(() => {
+            wrapper.find(RcResizeObserver).first().props().onResize({ width: 100 });
+          });
 
           act(() => {
             wrapper
