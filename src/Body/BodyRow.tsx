@@ -17,6 +17,7 @@ export interface BodyRowProps<RecordType> {
   record: RecordType;
   index: number;
   renderIndex: number;
+  levelIndex: number;
   className?: string;
   style?: React.CSSProperties;
   recordKey: Key;
@@ -40,6 +41,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     record,
     index,
     renderIndex,
+    levelIndex,
     rowKey,
     rowExpandable,
     expandedKeys,
@@ -89,7 +91,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   // =========================== onRow ===========================
   let additionalProps: React.HTMLAttributes<HTMLElement>;
   if (onRow) {
-    additionalProps = onRow(record, index);
+    additionalProps = onRow(record, index, levelIndex);
   }
 
   const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {

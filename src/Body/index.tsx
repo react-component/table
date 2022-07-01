@@ -66,10 +66,16 @@ function Body<RecordType>({
     const tdComponent = getComponent(['body', 'cell'], 'td');
 
     let rows: React.ReactNode;
+    let lastIndent = -1;
+    let indexWithLevel = -1;
     if (data.length) {
       rows = flattenData.map((item, idx) => {
         const { record, indent, index: renderIndex } = item;
-
+        if (lastIndent !== indent) {
+          lastIndent = indent;
+          indexWithLevel = 0;
+        }
+        const levelIndex = indexWithLevel++;
         const key = getRowKey(record, idx);
 
         return (
@@ -80,6 +86,7 @@ function Body<RecordType>({
             recordKey={key}
             index={idx}
             renderIndex={renderIndex}
+            levelIndex={levelIndex}
             rowComponent={trComponent}
             cellComponent={tdComponent}
             expandedKeys={expandedKeys}
