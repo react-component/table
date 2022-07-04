@@ -5,9 +5,7 @@ import { supportRef } from 'rc-util/lib/ref';
 import type {
   DataIndex,
   ColumnType,
-  RenderedCell,
   CustomizeComponent,
-  CellType,
   DefaultRecordType,
   AlignType,
   CellEllipsisType,
@@ -16,19 +14,11 @@ import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import warning from 'rc-util/lib/warning';
-import PerfContext from '../context/PerfContext';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
   const cellEndRow = cellStartRow + cellRowSpan - 1;
   return cellStartRow <= endRow && cellEndRow >= startRow;
-}
-
-function isRenderCell<RecordType>(
-  data: React.ReactNode | RenderedCell<RecordType>,
-): data is RenderedCell<RecordType> {
-  return data && typeof data === 'object' && !Array.isArray(data) && !React.isValidElement(data);
 }
 
 function isRefComponent(component: CustomizeComponent) {
@@ -138,53 +128,28 @@ function Cell<RecordType extends DefaultRecordType>(
 ): React.ReactElement {
   const cellPrefixCls = `${prefixCls}-cell`;
 
-  const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
 
   // ==================== Child Node ====================
-  const [childNode, legacyCellProps] = React.useMemo<
-    [React.ReactNode, CellType<RecordType>] | [React.ReactNode]
-  >(() => {
+  const childNode = React.useMemo<React.ReactNode>(() => {
     if (validateValue(children)) {
-      return [children];
+      return children;
     }
 
-    const value = getPathValue<Record<string, unknown> | React.ReactNode, RecordType>(
-      record,
-      dataIndex,
-    );
+    const value = getPathValue<React.ReactNode, RecordType>(record, dataIndex);
 
     // Customize render node
-    let returnChildNode = value;
-    let returnCellProps: CellType<RecordType> | undefined = undefined;
-
     if (render) {
-      const renderData = render(value, record, renderIndex);
-
-      if (isRenderCell(renderData)) {
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            false,
-            '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
-          );
-        }
-        returnChildNode = renderData.children;
-        returnCellProps = renderData.props;
-        perfRecord.renderWithProps = true;
-      } else {
-        returnChildNode = renderData;
-      }
+      return render(value, record, renderIndex);
     }
 
-    return [returnChildNode, returnCellProps];
+    return value;
   }, [
     /* eslint-disable react-hooks/exhaustive-deps */
     // Always re-render if `renderWithProps`
-    perfRecord.renderWithProps ? Math.random() : 0,
     /* eslint-enable */
     children,
     dataIndex,
-    perfRecord,
     record,
     render,
     renderIndex,
@@ -205,15 +170,8 @@ function Cell<RecordType extends DefaultRecordType>(
     mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
   }
 
-  const {
-    colSpan: cellColSpan,
-    rowSpan: cellRowSpan,
-    style: cellStyle,
-    className: cellClassName,
-    ...restCellProps
-  } = legacyCellProps || {};
-  const mergedColSpan = (cellColSpan !== undefined ? cellColSpan : colSpan) ?? 1;
-  const mergedRowSpan = (cellRowSpan !== undefined ? cellRowSpan : rowSpan) ?? 1;
+  const mergedColSpan = colSpan ?? 1;
+  const mergedRowSpan = rowSpan ?? 1;
 
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
     return null;
@@ -268,7 +226,6 @@ function Cell<RecordType extends DefaultRecordType>(
     ref: React.Ref<any>;
   } = {
     title,
-    ...restCellProps,
     ...additionalProps,
     colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
     rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null,
@@ -285,12 +242,11 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-ellipsis`]: ellipsis,
         [`${cellPrefixCls}-with-append`]: appendNode,
         [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-        [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
+        [`${cellPrefixCls}-row-hover`]: hovering,
       },
       additionalProps.className,
-      cellClassName,
     ),
-    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle, ...cellStyle },
+    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle },
     onMouseEnter,
     onMouseLeave,
     ref: isRefComponent(Component) ? ref : null,
