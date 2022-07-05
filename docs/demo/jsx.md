@@ -1,3 +1,3 @@
-## jsx
+## Hover Perf
 
-<code src="../examples/jsx.tsx">
+<code src="../examples/hover-perf.tsx">

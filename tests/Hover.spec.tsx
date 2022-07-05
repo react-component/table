@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import toArray from 'rc-util/lib/Children/toArray';
 import Table from '../src';
 import type { TableProps } from '../src/Table';
 
@@ -201,5 +202,38 @@ describe('Table.Hover', () => {
       expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
       expect(renderTimes).toBe(0);
     });
+  });
+
+  it('perf', () => {
+    const renderTimes = {};
+
+    const TD = (props: any) => {
+      const children = toArray(props.children);
+      const first = children[0] as unknown as string;
+
+      renderTimes[first] = (renderTimes[first] || 0) + 1;
+      return <td {...props} />;
+    };
+
+    const wrapper = mount(
+      createTable({
+        components: {
+          body: {
+            cell: TD,
+          },
+        },
+      }),
+    );
+
+    const firstMountTimes = renderTimes.Jack;
+
+    wrapper.find('tbody td').first().simulate('mouseEnter');
+    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+
+    wrapper.find('tbody td').first().simulate('mouseLeave');
+    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+
+    expect(firstMountTimes).toEqual(renderTimes.Jack);
+    expect(renderTimes.Lucy).toBeGreaterThan(renderTimes.Jack);
   });
 });
