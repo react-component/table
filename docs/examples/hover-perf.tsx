@@ -7,8 +7,8 @@ const CellExample = ({ data, count }) => {
   return <>{count + ' ' + data.index}</>;
 };
 
-const dataSource = Array.from({ length: 10000 }).map((_, index) => ({ index }));
-// const dataSource = Array.from({ length: 100 }).map((_, index) => ({ index, key: index }));
+// const dataSource = Array.from({ length: 10000 }).map((_, index) => ({ index }));
+const dataSource = Array.from({ length: 100 }).map((_, index) => ({ index, key: index }));
 
 const ProblemTable = () => {
   const columns = [

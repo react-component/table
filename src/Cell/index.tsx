@@ -324,4 +324,4 @@ const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>
 });
 WrappedCell.displayName = 'WrappedCell';
 
-export default React.memo(WrappedCell, () => true);
+export default WrappedCell;
