@@ -61,14 +61,10 @@ const columns = [
   },
 ];
 
-const Demo = () => {
-  return (
-    <React.StrictMode>
-      <div>
-        <Table columns={columns as any} data={[]} scroll={{ x: 'max-content' }} sticky />
-      </div>
-    </React.StrictMode>
-  );
-};
+const Demo = () => (
+  <React.StrictMode>
+    <Table columns={columns as any} data={[]} scroll={{ x: 'max-content' }} sticky />
+  </React.StrictMode>
+);
 
 export default Demo;
