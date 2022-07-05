@@ -14,11 +14,16 @@ import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
+import { warning } from 'rc-util/lib/warning';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
   const cellEndRow = cellStartRow + cellRowSpan - 1;
   return cellStartRow <= endRow && cellEndRow >= startRow;
+}
+
+function isRenderCell(data: any) {
+  return data && typeof data === 'object' && !Array.isArray(data) && !React.isValidElement(data);
 }
 
 function isRefComponent(component: CustomizeComponent) {
@@ -140,7 +145,14 @@ function Cell<RecordType extends DefaultRecordType>(
 
     // Customize render node
     if (render) {
-      return render(value, record, renderIndex);
+      const renderNode = render(value, record, renderIndex);
+      if (process.env.NODE_ENV !== 'production' && isRenderCell(renderNode)) {
+        warning(
+          false,
+          '`column.render` do not support cell props any more, please use `onCell` instead.',
+        );
+      }
+      return renderNode;
     }
 
     return value;

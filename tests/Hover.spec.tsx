@@ -42,7 +42,7 @@ describe('Table.Hover', () => {
     resetWarned();
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    const wrapper = mount(
+    mount(
       createTable({
         columns: [
           {
@@ -66,23 +66,8 @@ describe('Table.Hover', () => {
       }),
     );
 
-    // Merge row check
-    expect(wrapper.find('tbody td')).toHaveLength(3);
-
-    // Hover 0-0
-    wrapper.find('tbody td').at(0).simulate('mouseEnter');
-    expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(2);
-
-    // Hover 0-1
-    wrapper.find('tbody td').at(1).simulate('mouseEnter');
-    expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
-
-    // Mouse leave
-    wrapper.find('tbody td').at(1).simulate('mouseLeave');
-    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
-
     expect(errorSpy).toHaveBeenCalledWith(
-      'Warning: `columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
+      'Warning: `column.render` do not support cell props any more, please use `onCell` instead.',
     );
     errorSpy.mockRestore();
   });
@@ -126,45 +111,6 @@ describe('Table.Hover', () => {
   });
 
   describe('perf', () => {
-    it('legacy mode should render every time', () => {
-      let renderTimes = 0;
-
-      const wrapper = mount(
-        createTable({
-          columns: [
-            {
-              render: () => {
-                renderTimes += 1;
-                return {
-                  children: null,
-                };
-              },
-            },
-          ],
-        }),
-      );
-
-      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
-
-      // Hover 0-0
-      renderTimes = 0;
-      wrapper.find('tbody td').at(0).simulate('mouseEnter');
-      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
-      expect(renderTimes).toBe(1);
-
-      // Hover 0-1
-      renderTimes = 0;
-      wrapper.find('tbody td').at(1).simulate('mouseEnter');
-      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
-      expect(renderTimes).toBe(2);
-
-      // Mouse leave
-      renderTimes = 0;
-      wrapper.find('tbody td').at(1).simulate('mouseLeave');
-      expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
-      expect(renderTimes).toBe(1);
-    });
-
     it('perf mode to save render times', () => {
       let renderTimes = 0;
 

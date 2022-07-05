@@ -308,32 +308,18 @@ describe('Table.Basic', () => {
         dataIndex: 'firstName',
         key: 'firstName',
         colSpan: 2,
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
-          };
-          if (index === 0) {
-            obj.props.colSpan = 2;
-          }
-          return obj;
-        },
+        onCell: (_, index) => ({
+          colSpan: index === 0 ? 2 : null,
+        }),
       },
       {
         title: '',
         dataIndex: 'lastName',
         key: 'lastName',
         colSpan: 0,
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
-          };
-          if (index === 0) {
-            obj.props.colSpan = 0;
-          }
-          return obj;
-        },
+        onCell: (_, index) => ({
+          colSpan: index === 0 ? 0 : null,
+        }),
       },
     ];
     const localData = [
