@@ -78,6 +78,7 @@ import Summary from './Footer/Summary';
 import StickyContext from './context/StickyContext';
 import ExpandedRowContext from './context/ExpandedRowContext';
 import { EXPAND_COLUMN } from './constant';
+import RenderContext from './context/RenderContext';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -171,7 +172,7 @@ export interface TableProps<RecordType = unknown>
   sticky?: boolean | TableSticky;
 }
 
-function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+function InternalTable<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
   const {
     prefixCls,
     className,
@@ -860,6 +861,15 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         </BodyContext.Provider>
       </TableContext.Provider>
     </StickyContext.Provider>
+  );
+}
+
+function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+  // Tell cell that update is from parent
+  return (
+    <RenderContext.Provider value={Math.random()}>
+      <InternalTable {...props} />
+    </RenderContext.Provider>
   );
 }
 

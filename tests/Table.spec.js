@@ -348,13 +348,10 @@ describe('Table.Basic', () => {
     const columns = [
       {
         dataIndex: 'key',
-        render: text => ({
-          props: {
-            style: { background: 'red' },
-            className: 'customize-render',
-            'data-light': 'bamboo',
-          },
-          children: text,
+        onCell: () => ({
+          style: { background: 'red' },
+          className: 'customize-render',
+          'data-light': 'bamboo',
         }),
       },
     ];
@@ -377,17 +374,10 @@ describe('Table.Basic', () => {
         title: 'Last Name',
         dataIndex: 'lastName',
         key: 'lastName',
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
+        onCell: (_, index) => {
+          return {
+            rowSpan: index === 0 ? 2 : 0,
           };
-          if (index === 0) {
-            obj.props.rowSpan = 2;
-          } else {
-            obj.props.rowSpan = 0;
-          }
-          return obj;
         },
       },
     ];
