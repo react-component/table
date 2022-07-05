@@ -46,9 +46,7 @@ class Demo extends React.Component {
         data={data}
         scroll={{ y: 300 }}
         rowKey={record => record.key}
-        bodyStyle={{
-          display: showBody ? '' : 'none',
-        }}
+        onRow={(record, index) => ({ style: { backgroundColor: "red" } })}
       />
     );
   }
