@@ -54,11 +54,6 @@ function Body<RecordType>({
     setEndRow(end);
   }, []);
 
-  const hoverContext = React.useMemo(
-    () => ({ startRow, endRow, onHover }),
-    [onHover, startRow, endRow],
-  );
-
   // ====================== Render ======================
   const bodyNode = React.useMemo(() => {
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -141,7 +136,9 @@ function Body<RecordType>({
 
   return (
     <PerfContext.Provider value={perfRef.current}>
-      <HoverContext.Provider value={hoverContext}>{bodyNode}</HoverContext.Provider>
+      <HoverContext.Provider value={{ startRow, endRow, onHover }}>
+        {bodyNode}
+      </HoverContext.Provider>
     </PerfContext.Provider>
   );
 }
