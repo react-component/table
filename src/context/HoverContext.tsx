@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from '../ContextSelector';
 
 export interface HoverContextProps {
   startRow: number;
@@ -6,6 +6,6 @@ export interface HoverContextProps {
   onHover: (start: number, end: number) => void;
 }
 
-const HoverContext = React.createContext<HoverContextProps>({} as any);
+const HoverContext = createContext<HoverContextProps>();
 
 export default HoverContext;

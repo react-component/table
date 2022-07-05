@@ -18,6 +18,7 @@ import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
 import warning from 'rc-util/lib/warning';
 import PerfContext from '../context/PerfContext';
+import { useContextSelector } from '../ContextSelector';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -327,14 +328,20 @@ const MemoCell = React.memo(
 
 /** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
 const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
-  const { onHover, startRow, endRow } = React.useContext(HoverContext);
   const { index, additionalProps = {}, colSpan, rowSpan } = props;
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
 
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
 
-  const hovering = inHoverRange(index, mergedRowSpan || 1, startRow, endRow);
+  const { onHover, hovering } = useContextSelector(HoverContext, cxt => {
+    const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
+
+    return {
+      onHover: cxt?.onHover,
+      hovering: isHovering,
+    };
+  });
 
   return (
     <MemoCell
