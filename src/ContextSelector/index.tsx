@@ -1,5 +1,6 @@
 import * as React from 'react';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import useEvent from 'rc-util/lib/hooks/useEvent';
 import shallowEqual from 'shallowequal';
 
 export type Selector<T, O = T> = (value: T) => O;
@@ -48,9 +49,11 @@ export function createContext<T>(): ReturnCreateContext<T> {
 }
 
 export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selector: Selector<T, O>) {
+  const eventSelector = useEvent(selector);
   const context = React.useContext(holder?.Context);
   const { listeners, getValue } = context || {};
-  const [value, setValue] = React.useState(() => selector(context ? getValue() : null));
+
+  const [value, setValue] = React.useState(() => eventSelector(context ? getValue() : null));
 
   React.useLayoutEffect(() => {
     if (!context) {
@@ -59,7 +62,7 @@ export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selecto
 
     function trigger(nextValue: T) {
       setValue(prev => {
-        const selectedValue = selector(nextValue);
+        const selectedValue = eventSelector(nextValue);
         return shallowEqual(prev, selectedValue) ? prev : selectedValue;
       });
     }

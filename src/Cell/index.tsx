@@ -296,18 +296,20 @@ const MemoCell = React.memo(
 
 /** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
 const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
-  const { onHover, startRow, endRow } = useContextSelector(HoverContext, cxt => ({
-    onHover: cxt?.onHover,
-    startRow: cxt?.startRow,
-    endRow: cxt?.endRow,
-  }));
   const { index, additionalProps = {}, colSpan, rowSpan } = props;
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
 
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
 
-  const hovering = inHoverRange(index, mergedRowSpan || 1, startRow, endRow);
+  const { onHover, hovering } = useContextSelector(HoverContext, cxt => {
+    const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
+
+    return {
+      onHover: cxt?.onHover,
+      hovering: isHovering,
+    };
+  });
 
   return (
     <MemoCell
