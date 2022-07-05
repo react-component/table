@@ -87,10 +87,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   };
 
   // =========================== onRow ===========================
-  let additionalProps: React.HTMLAttributes<HTMLElement>;
-  if (onRow) {
-    additionalProps = onRow(record, index);
-  }
+  const additionalProps = onRow?.(record, index);
 
   const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
     if (expandRowByClick && mergedExpandable) {

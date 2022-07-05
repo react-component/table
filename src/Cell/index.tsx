@@ -14,7 +14,7 @@ import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import { warning } from 'rc-util/lib/warning';
+import warning from 'rc-util/lib/warning';
 import { useContextSelector } from '../ContextSelector';
 
 /** Check if cell is in hover range */
