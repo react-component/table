@@ -69,6 +69,7 @@ const Demo = () => {
         expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
         data={data}
+        onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
         summary={() => (
           <Table.Summary fixed={scrollY}>
             <Table.Summary.Row>
