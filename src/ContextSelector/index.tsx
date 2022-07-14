@@ -55,7 +55,7 @@ export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selecto
 
   const [value, setValue] = React.useState(() => eventSelector(context ? getValue() : null));
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!context) {
       return;
     }
