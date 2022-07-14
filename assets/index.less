@@ -79,7 +79,8 @@
       }
     }
 
-    &-fix-left-first::after {
+    &-fix-left-first::after,
+    &-fix-left-last::after {
       position: absolute;
       top: 0;
       right: -1px;
@@ -89,6 +90,10 @@
       transition: box-shadow 0.3s;
       content: '';
       pointer-events: none;
+    }
+
+    &-all-fix-left::after {
+      display: none;
     }
 
     &-fix-right-first,
