@@ -272,4 +272,9 @@ describe('Table.FixedColumn', () => {
     wrapper.update();
     expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(4);
   });
+
+  it('when all columns fixed left,cell should has classname rc-table-cell-all-fix-left', () => {
+    const wrapper = mount(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
+    expect(wrapper.find('.rc-table-cell-all-fix-left')).toHaveLength(10);
+  });
 });
