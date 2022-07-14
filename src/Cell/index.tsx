@@ -283,7 +283,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
         [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
         [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
-        [`${cellPrefixCls}-all-fix-left`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
+        [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
         [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
         [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
         [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
