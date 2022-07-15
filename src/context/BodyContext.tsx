@@ -27,6 +27,7 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   expandIcon: RenderExpandIcon<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;
+  allColumnsFixedLeft: boolean;
 }
 
 const BodyContext = React.createContext<BodyContextProps>(null);

@@ -822,6 +822,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       onTriggerExpand,
       expandIconColumnIndex,
       indentSize,
+      allColumnsFixedLeft: columnContext.flattenColumns.every(col => col.fixed === 'left'),
     }),
     [
       columnContext,

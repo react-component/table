@@ -15,6 +15,7 @@ import type {
 import { getPathValue, validateValue } from '../utils/valueUtil';
 import StickyContext from '../context/StickyContext';
 import HoverContext from '../context/HoverContext';
+import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
 import warning from 'rc-util/lib/warning';
 import PerfContext from '../context/PerfContext';
@@ -67,6 +68,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   lastFixLeft?: boolean;
   firstFixRight?: boolean;
   lastFixRight?: boolean;
+  allColsFixedLeft?: boolean;
 
   // ====================== Private Props ======================
   /** @private Used for `expandable` with nest tree */
@@ -141,6 +143,7 @@ function Cell<RecordType extends DefaultRecordType>(
 
   const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
+  const { allColumnsFixedLeft } = React.useContext(BodyContext);
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<
@@ -280,6 +283,7 @@ function Cell<RecordType extends DefaultRecordType>(
         [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
         [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
         [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
+        [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
         [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
         [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
         [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
