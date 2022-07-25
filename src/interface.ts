@@ -73,11 +73,11 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
 
 export type AlignType = 'left' | 'center' | 'right';
 
-export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
+export interface ColumnType<RecordType, GDataIndex extends DataIndex = DataIndex> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: GDataIndex;
   render?: (
-    value: any,
+    value: RecordType[GDataIndex],
     record: RecordType,
     index: number,
   ) => React.ReactNode | RenderedCell<RecordType>;
