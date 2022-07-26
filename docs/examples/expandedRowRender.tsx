@@ -15,17 +15,17 @@ interface RecordType {
 const tableData: RecordType[] = [
   { key: 0, a: '123' },
   { key: 1, a: 'cdd', b: 'edd' },
-  { key: 2, a: '1333', c: 'eee', d: 2 },
+  { key: 2, a: '1333', c: 'eee', d: 2 }
 ];
 
 for (let i = 0; i < 10; i += 1) {
-  const str = `${i}`;
+  const str = `${ i }`;
   const item: RecordType = {
     key: i * 10 + 99,
     a: str.repeat(3),
     b: str.repeat(5),
     c: str.repeat(7),
-    d: i,
+    d: i
   };
   tableData.push(item);
 }
@@ -33,6 +33,7 @@ for (let i = 0; i < 10; i += 1) {
 const Demo = () => {
   const [data, setData] = React.useState(tableData);
   const [expandedRowKeys, setExpandedRowKeys] = React.useState([]);
+  const [expandedColumnTitle, expandedColumnTitleProps] = useCheckbox(false);
   const [expandRowByClick, expandRowByClickProps] = useCheckbox(false);
   const [fixColumns, fixColumnsProps] = useCheckbox(false);
   const [scrollX, scrollXProps] = useCheckbox(false);
@@ -47,7 +48,7 @@ const Demo = () => {
   };
 
   const renderAction = (o: any, row: RecordType, index: number) => (
-    <a href="#" onClick={() => remove(index)}>
+    <a href="#" onClick={ () => remove(index) }>
       Delete
     </a>
   );
@@ -56,7 +57,7 @@ const Demo = () => {
     { title: 'title 1', dataIndex: 'a', key: 'a', width: 100 },
     { title: 'title 2', dataIndex: 'b', key: 'b', width: 100 },
     { title: 'title 3', dataIndex: 'c', key: 'c', width: 200 },
-    { title: 'Operation', dataIndex: '', key: 'x', render: renderAction },
+    { title: 'Operation', dataIndex: '', key: 'x', render: renderAction }
   ];
 
   if (fixColumns) {
@@ -87,14 +88,18 @@ const Demo = () => {
   if (expandedRowKeys.length) {
     const closeAll = () => setExpandedRowKeys([]);
     toggleButton = (
-      <button type="button" onClick={closeAll}>
+      <button type="button" onClick={ closeAll }>
         Close All
       </button>
     );
   } else {
-    const openAll = () => setExpandedRowKeys([0, 1, 2]);
+    const openAll = () => setExpandedRowKeys([
+      0,
+      1,
+      2
+    ]);
     toggleButton = (
-      <button type="button" onClick={openAll}>
+      <button type="button" onClick={ openAll }>
         Expand All
       </button>
     );
@@ -103,46 +108,51 @@ const Demo = () => {
   // Render
   return (
     <div>
-      {toggleButton}
+      { toggleButton }
       <label>
-        <input {...expandRowByClickProps} />
+        <input { ...expandedColumnTitleProps } />
+        Expand Column Title
+      </label>
+      <label>
+        <input { ...expandRowByClickProps } />
         Expand Row by Click
       </label>
       <label>
-        <input {...fixColumnsProps} />
+        <input { ...fixColumnsProps } />
         Fix Columns
       </label>
       <label>
-        <input {...scrollXProps} />
+        <input { ...scrollXProps } />
         ScrollX
       </label>
       <label>
-        <input {...fixHeaderProps} />
+        <input { ...fixHeaderProps } />
         Fix Header
       </label>
       <label>
-        <input {...expandIconPositionProps} />
+        <input { ...expandIconPositionProps } />
         Change Expand Icon Position
       </label>
       <label>
-        <input {...setFixExpand} />
+        <input { ...setFixExpand } />
         Change Expand Icon Fixed
       </label>
       <Table<RecordType>
-        columns={columns}
-        expandable={{
+        columns={ columns }
+        expandable={ {
+          expandedColumnTitle: expandedColumnTitle ? (<span>title</span>) : '',
           expandRowByClick,
           expandedRowRender: (record, index, indent, expanded) =>
-            expanded ? <p>extra: {record.a}</p> : null,
+            expanded ? <p>extra: { record.a }</p> : null,
           expandedRowKeys,
           onExpandedRowsChange,
           onExpand,
           rowExpandable,
           expandIconColumnIndex: expandIconPosition ? 1 : null,
-          fixed: fixExpand,
-        }}
-        scroll={{ x: fixColumns || scrollX ? 2000 : null, y: fixHeader ? 300 : null }}
-        data={data}
+          fixed: fixExpand
+        } }
+        scroll={ { x: fixColumns || scrollX ? 2000 : null, y: fixHeader ? 300 : null } }
+        data={ data }
       />
     </div>
   );

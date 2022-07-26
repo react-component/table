@@ -113,6 +113,7 @@ function useColumns<RecordType>(
     children,
     expandable,
     expandedKeys,
+    expandedColumnTitle,
     getRowKey,
     onTriggerExpand,
     expandIcon,
@@ -128,6 +129,7 @@ function useColumns<RecordType>(
     children?: React.ReactNode;
     expandable: boolean;
     expandedKeys: Set<Key>;
+    expandedColumnTitle?: React.ReactNode;
     getRowKey: GetRowKey<RecordType>;
     onTriggerExpand: TriggerEventHandler<RecordType>;
     expandIcon?: RenderExpandIcon<RecordType>;
@@ -196,7 +198,7 @@ function useColumns<RecordType>(
           className: `${prefixCls}-expand-icon-col`,
           columnType: 'EXPAND_COLUMN',
         },
-        title: '',
+        title: expandedColumnTitle,
         fixed: fixedColumn,
         className: `${prefixCls}-row-expand-icon-cell`,
         width: columnWidth,
