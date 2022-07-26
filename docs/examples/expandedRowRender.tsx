@@ -33,7 +33,7 @@ for (let i = 0; i < 10; i += 1) {
 const Demo = () => {
   const [data, setData] = React.useState(tableData);
   const [expandedRowKeys, setExpandedRowKeys] = React.useState([]);
-  const [expandedColumnTitle, expandedColumnTitleProps] = useCheckbox(false);
+  const [columnTitle, columnTitleProps] = useCheckbox(false);
   const [expandRowByClick, expandRowByClickProps] = useCheckbox(false);
   const [fixColumns, fixColumnsProps] = useCheckbox(false);
   const [scrollX, scrollXProps] = useCheckbox(false);
@@ -110,7 +110,7 @@ const Demo = () => {
     <div>
       { toggleButton }
       <label>
-        <input { ...expandedColumnTitleProps } />
+        <input { ...columnTitleProps } />
         Expand Column Title
       </label>
       <label>
@@ -140,7 +140,7 @@ const Demo = () => {
       <Table<RecordType>
         columns={ columns }
         expandable={ {
-          expandedColumnTitle: expandedColumnTitle ? (<span>title</span>) : '',
+          columnTitle: columnTitle ? (<span>title</span>) : '',
           expandRowByClick,
           expandedRowRender: (record, index, indent, expanded) =>
             expanded ? <p>extra: { record.a }</p> : null,

@@ -200,7 +200,7 @@ export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
   defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
-  expandedColumnTitle?: React.ReactNode;
+  columnTitle?: React.ReactNode;
   expandRowByClick?: boolean;
   expandIcon?: RenderExpandIcon<RecordType>;
   onExpand?: (expanded: boolean, record: RecordType) => void;
