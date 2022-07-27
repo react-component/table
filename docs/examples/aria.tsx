@@ -28,8 +28,10 @@ const data = [
 
 const Demo = () => (
   <div>
-    <Table columns={columns} data={data} aria-label="Users" />
+    <h2>Table with aria-label</h2>
+    <Table columns={columns} data={data} aria-label="Users" data-testid="blah" />
     <br />
+    <h2>Table with aria-labelledby</h2>
     <label id="lblPeopleTable">People</label>
     <Table columns={columns} data={data} aria-labelledby="lblPeopleTable" />
   </div>
