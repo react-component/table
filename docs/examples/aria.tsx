@@ -28,7 +28,7 @@ const data = [
 
 const Demo = () => (
   <div>
-    <Table columns={columns} data={data} aria-label="Users" data-testid="blah" />
+    <Table columns={columns} data={data} aria-label="Users" />
     <br />
     <label id="lblPeopleTable">People</label>
     <Table columns={columns} data={data} aria-labelledby="lblPeopleTable" />
