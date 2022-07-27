@@ -620,6 +620,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
+  const dataProps = pickAttrs(props, { data: true });
+  const ariaProps = pickAttrs(props, { aria: true });
+
   if (fixHeader || isSticky) {
     // >>>>>> Fixed Header
     let bodyContent: React.ReactNode;
@@ -659,6 +662,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
               ...scrollTableStyle,
               tableLayout: mergedTableLayout,
             }}
+            {...ariaProps}
           >
             {bodyColGroup}
             {bodyTable}
@@ -740,7 +744,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         onScroll={onScroll}
         ref={scrollBodyRef}
       >
-        <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
+        <TableComponent
+          style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}
+          {...ariaProps}
+        >
           {bodyColGroup}
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
@@ -753,8 +760,6 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       </div>
     );
   }
-
-  const ariaProps = pickAttrs(props, { aria: true, data: true });
 
   let fullTable = (
     <div
@@ -775,7 +780,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       style={style}
       id={id}
       ref={fullTableRef}
-      {...ariaProps}
+      {...dataProps}
     >
       <MemoTableContent
         pingLeft={pingedLeft}

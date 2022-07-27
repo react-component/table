@@ -135,10 +135,17 @@ describe('Table.Basic', () => {
     expect(wrapper.find(`div#${testId}`).length).toBeTruthy();
   });
 
-  it('renders data- &  aria- attributes', () => {
-    const miscProps = { 'data-test': 'names-table', 'aria-label': 'names-table-aria' };
+  it('renders data- attributes', () => {
+    const miscProps = { 'data-test': 'names-table' };
     const wrapper = mount(createTable(miscProps));
     const props = wrapper.find('div.rc-table').props();
+    expect(props).toEqual(expect.objectContaining(miscProps));
+  });
+
+  it('renders aria- attributes', () => {
+    const miscProps = { 'aria-label': 'names-table-aria' };
+    const wrapper = mount(createTable(miscProps));
+    const props = wrapper.find('table').props();
     expect(props).toEqual(expect.objectContaining(miscProps));
   });
 
