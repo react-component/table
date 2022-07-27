@@ -162,6 +162,26 @@ describe('Table.Basic', () => {
     });
   });
 
+  describe('caption', () => {
+    it('renders string caption', () => {
+      const miscProps = { caption: 'test_caption' };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption')).toBeTruthy();
+    });
+
+    it('renders React.Node caption', () => {
+      const miscProps = { caption: <div className="caption_inner" /> };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption .caption_inner')).toBeTruthy();
+    });
+
+    it('renders without caption', () => {
+      const miscProps = {};
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption').length).toBeFalsy();
+    });
+  });
+
   it('renders tableLayout', () => {
     const wrapper = mount(createTable({ tableLayout: 'fixed' }));
     expect(wrapper.find('table').props().style.tableLayout).toEqual('fixed');
