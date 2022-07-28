@@ -65,7 +65,7 @@
     "@types/react": "^17.0.35",
     "@types/react-dom": "^18.0.5",
     "@types/shallowequal": "^1.1.1",
-    "@umijs/fabric": "^2.0.0",
+    "@umijs/fabric": "^3.0.0",
     "cross-env": "^7.0.0",
     "dumi": "^1.1.9",
     "enzyme": "^3.1.0",
