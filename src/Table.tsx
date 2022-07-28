@@ -260,6 +260,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     defaultExpandedRowKeys,
     defaultExpandAllRows,
     expandedRowRender,
+    columnTitle,
     onExpand,
     onExpandedRowsChange,
     expandRowByClick,
@@ -356,6 +357,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       ...props,
       ...expandableConfig,
       expandable: !!expandedRowRender,
+      columnTitle: columnTitle,
       expandedKeys: mergedExpandedKeys,
       getRowKey,
       // https://github.com/ant-design/ant-design/issues/23894
