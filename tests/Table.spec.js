@@ -308,32 +308,18 @@ describe('Table.Basic', () => {
         dataIndex: 'firstName',
         key: 'firstName',
         colSpan: 2,
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
-          };
-          if (index === 0) {
-            obj.props.colSpan = 2;
-          }
-          return obj;
-        },
+        onCell: (_, index) => ({
+          colSpan: index === 0 ? 2 : null,
+        }),
       },
       {
         title: '',
         dataIndex: 'lastName',
         key: 'lastName',
         colSpan: 0,
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
-          };
-          if (index === 0) {
-            obj.props.colSpan = 0;
-          }
-          return obj;
-        },
+        onCell: (_, index) => ({
+          colSpan: index === 0 ? 0 : null,
+        }),
       },
     ];
     const localData = [
@@ -348,13 +334,10 @@ describe('Table.Basic', () => {
     const columns = [
       {
         dataIndex: 'key',
-        render: text => ({
-          props: {
-            style: { background: 'red' },
-            className: 'customize-render',
-            'data-light': 'bamboo',
-          },
-          children: text,
+        onCell: () => ({
+          style: { background: 'red' },
+          className: 'customize-render',
+          'data-light': 'bamboo',
         }),
       },
     ];
@@ -377,17 +360,10 @@ describe('Table.Basic', () => {
         title: 'Last Name',
         dataIndex: 'lastName',
         key: 'lastName',
-        render: (text, record, index) => {
-          const obj = {
-            children: text,
-            props: {},
+        onCell: (_, index) => {
+          return {
+            rowSpan: index === 0 ? 2 : 0,
           };
-          if (index === 0) {
-            obj.props.rowSpan = 2;
-          } else {
-            obj.props.rowSpan = 0;
-          }
-          return obj;
         },
       },
     ];
