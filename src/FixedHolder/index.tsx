@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
 import type { HeaderProps } from '../Header/Header';
 import ColGroup from '../ColGroup';
-import type { ColumnsType, ColumnType } from '../interface';
+import type { ColumnsType, ColumnType, DefaultRecordType } from '../interface';
 import TableContext from '../context/TableContext';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
@@ -37,7 +37,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
 
-const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
+const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<DefaultRecordType>>(
   (
     {
       className,
@@ -102,7 +102,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       }),
     };
 
-    const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
+    const columnsWithScrollbar = useMemo<ColumnsType<DefaultRecordType>>(
       () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
       [combinationScrollBarSize, columns],
     );

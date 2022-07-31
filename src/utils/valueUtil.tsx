@@ -1,4 +1,4 @@
-import type { Key, DataIndex } from '../interface';
+import type { Key, DataIndex, DefaultRecordType } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -11,7 +11,7 @@ function toArray<T>(arr: T | readonly T[]): T[] {
 
 export function getPathValue<ValueType, ObjectType extends object>(
   record: ObjectType,
-  path: DataIndex,
+  path: DataIndex<DefaultRecordType>,
 ): ValueType {
   // Skip if path is empty
   if (!path && typeof path !== 'number') {
@@ -27,7 +27,7 @@ export function getPathValue<ValueType, ObjectType extends object>(
       return null;
     }
 
-    const prop = pathList[i];
+    const prop = pathList[i] as string | number;
     current = current[prop];
   }
 
