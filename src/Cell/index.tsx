@@ -1,25 +1,26 @@
-import * as React from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
 import { supportRef } from 'rc-util/lib/ref';
-import type {
-  DataIndex,
-  ColumnType,
-  RenderedCell,
-  CustomizeComponent,
-  CellType,
-  DefaultRecordType,
-  AlignType,
-  CellEllipsisType,
-} from '../interface';
-import { getPathValue, validateValue } from '../utils/valueUtil';
-import StickyContext from '../context/StickyContext';
-import HoverContext from '../context/HoverContext';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import shallowEqual from 'shallowequal';
 import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import warning from 'rc-util/lib/warning';
+import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
+import StickyContext from '../context/StickyContext';
 import { useContextSelector } from '../ContextSelector';
+import type {
+  AlignType,
+  CellEllipsisType,
+  CellType,
+  ColumnType,
+  CustomizeComponent,
+  DataIndex,
+  DefaultRecordType,
+  RenderedCell,
+  ScopeType,
+} from '../interface';
+import { getPathValue, validateValue } from '../utils/valueUtil';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -56,6 +57,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
 
@@ -119,6 +121,7 @@ function Cell<RecordType extends DefaultRecordType>(
     component: Component = 'td',
     colSpan,
     rowSpan, // This is already merged on WrapperCell
+    scope,
     fixLeft,
     fixRight,
     firstFixLeft,
@@ -276,6 +279,7 @@ function Cell<RecordType extends DefaultRecordType>(
     ...additionalProps,
     colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
     rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null,
+    scope,
     className: classNames(
       cellPrefixCls,
       className,

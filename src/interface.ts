@@ -57,6 +57,8 @@ export type DataIndex = string | number | readonly (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
+export type ScopeType = 'col' | 'colgroup';
+
 interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
   key?: Key;
@@ -65,6 +67,7 @@ interface ColumnSharedType<RecordType> {
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  scope?: ScopeType;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
