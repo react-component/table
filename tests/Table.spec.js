@@ -1,6 +1,6 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
@@ -216,6 +216,38 @@ describe('Table.Basic', () => {
     wrapper.find('.rc-table-tbody td').forEach(td => {
       expect(td.getDOMNode().attributes.getNamedItem('title')).toBeFalsy();
     });
+  });
+
+  it('renders scope', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            title: 'Name',
+            scope: 'col',
+          },
+          {
+            title: 'Contact',
+            scope: 'colgroup',
+            children: [
+              {
+                title: 'Email',
+                scope: 'col',
+              },
+              {
+                title: 'Phone Number',
+                scope: 'col',
+              },
+            ],
+          },
+        ],
+      }),
+    );
+
+    expect(wrapper.find('thead th').at(0).prop('scope')).toEqual('col');
+    expect(wrapper.find('thead th').at(1).prop('scope')).toEqual('colgroup');
+    expect(wrapper.find('thead th').at(2).prop('scope')).toEqual('col');
+    expect(wrapper.find('thead th').at(3).prop('scope')).toEqual('col');
   });
 
   it('renders column correctly', () => {
