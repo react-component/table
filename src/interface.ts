@@ -175,6 +175,8 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   /** @deprecated Use `expandable.childrenColumnName` instead */
   childrenColumnName?: string;
+  /** @deprecated Use `caption` instead */
+  title?: PanelRender<RecordType>;
 }
 
 export type ExpandedRowRender<ValueType> = (

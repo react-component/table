@@ -129,7 +129,6 @@ export interface TableProps<RecordType = unknown>
   rowClassName?: string | RowClassName<RecordType>;
 
   // Additional Part
-  title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
   summary?: (data: readonly RecordType[]) => React.ReactNode;
   caption?: string | React.ReactNode;
