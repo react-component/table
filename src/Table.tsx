@@ -611,7 +611,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
   );
 
   const captionElement =
-    caption != null ? <caption className={`${prefixCls}-caption`}>{caption}</caption> : undefined;
+    caption !== null && caption !== undefined ? <caption className={`${prefixCls}-caption`}>{caption}</caption> : undefined;
 
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
