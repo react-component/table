@@ -5,7 +5,10 @@ import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
-  const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
+  const data = [
+    { key: 'key0', name: 'Lucy' },
+    { key: 'key1', name: 'Jack' },
+  ];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
@@ -32,7 +35,7 @@ describe('Table.Scroll', () => {
   it('renders scroll.x and scroll.y are both true', () => {
     const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
     expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
+    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('auto');
   });
 
   it('fire scroll event', () => {

@@ -1909,7 +1909,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
     </div>
     <div
       class="rc-table-body"
-      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+      style="overflow-x: auto; overflow-y: auto; max-height: 100px;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -2740,7 +2740,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
     </div>
     <div
       class="rc-table-body"
-      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+      style="overflow-x: auto; overflow-y: auto; max-height: 100px;"
     >
       <table
         style="width: 1200px; min-width: 100%; table-layout: fixed;"
