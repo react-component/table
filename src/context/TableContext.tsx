@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from '../ContextSelector';
 import type { GetComponent } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
 
@@ -17,6 +17,6 @@ export interface TableContextProps {
   isSticky: boolean;
 }
 
-const TableContext = React.createContext<TableContextProps>(null);
+const TableContext = createContext<TableContextProps>();
 
 export default TableContext;

@@ -1,14 +1,15 @@
 import * as React from 'react';
+import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
 import type {
-  ColumnsType,
   CellType,
-  StickyOffsets,
+  ColumnGroupType,
+  ColumnsType,
   ColumnType,
   GetComponentProps,
-  ColumnGroupType,
+  StickyOffsets,
 } from '../interface';
 import HeaderRow from './HeaderRow';
-import TableContext from '../context/TableContext';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
@@ -94,7 +95,10 @@ function Header<RecordType>({
   flattenColumns,
   onHeaderRow,
 }: HeaderProps<RecordType>): React.ReactElement {
-  const { prefixCls, getComponent } = React.useContext(TableContext);
+  const { prefixCls, getComponent } = useContextSelector(TableContext, [
+    'prefixCls',
+    'getComponent',
+  ]);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
