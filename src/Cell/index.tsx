@@ -1,25 +1,25 @@
-import * as React from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
 import { supportRef } from 'rc-util/lib/ref';
-import type {
-  DataIndex,
-  ColumnType,
-  RenderedCell,
-  CustomizeComponent,
-  CellType,
-  DefaultRecordType,
-  AlignType,
-  CellEllipsisType,
-} from '../interface';
-import { getPathValue, validateValue } from '../utils/valueUtil';
-import StickyContext from '../context/StickyContext';
-import HoverContext from '../context/HoverContext';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import shallowEqual from 'shallowequal';
 import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import warning from 'rc-util/lib/warning';
+import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
+import StickyContext from '../context/StickyContext';
 import { useContextSelector } from '../ContextSelector';
+import type {
+  AlignType,
+  CellEllipsisType,
+  CellType,
+  ColumnType,
+  CustomizeComponent,
+  DataIndex,
+  DefaultRecordType,
+  RenderedCell,
+} from '../interface';
+import { getPathValue, validateValue } from '../utils/valueUtil';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -143,7 +143,7 @@ function Cell<RecordType extends DefaultRecordType>(
 
   const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
-  const { allColumnsFixedLeft } = React.useContext(BodyContext);
+  const allColumnsFixedLeft = useContextSelector(BodyContext, 'allColumnsFixedLeft');
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<

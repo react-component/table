@@ -1,6 +1,7 @@
-import * as React from 'react';
-import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import useEvent from 'rc-util/lib/hooks/useEvent';
+import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import * as React from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
 import shallowEqual from 'shallowequal';
 
 export type Selector<T, O = T> = (value: T) => O;
@@ -24,8 +25,8 @@ export interface ReturnCreateContext<T> {
   Provider: React.ComponentType<ContextSelectorProviderProps<T>>;
 }
 
-export function createContext<T>(): ReturnCreateContext<T> {
-  const Context = React.createContext<Context<T>>(null as any);
+export function createContext<T>(defaultContext?: T): ReturnCreateContext<T> {
+  const Context = React.createContext<Context<T>>(defaultContext as any);
 
   const Provider = ({ value, children }: ContextSelectorProviderProps<T>) => {
     const valueRef = React.useRef(value);
@@ -37,8 +38,10 @@ export function createContext<T>(): ReturnCreateContext<T> {
     }));
 
     useLayoutEffect(() => {
-      context.listeners.forEach(listener => {
-        listener(value);
+      unstable_batchedUpdates(() => {
+        context.listeners.forEach(listener => {
+          listener(value);
+        });
       });
     }, [value]);
 
@@ -48,12 +51,44 @@ export function createContext<T>(): ReturnCreateContext<T> {
   return { Context, Provider };
 }
 
-export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selector: Selector<T, O>) {
-  const eventSelector = useEvent(selector);
+export function useContextSelector<T, O>(
+  holder: ReturnCreateContext<T>,
+  selector: Selector<T, O>,
+): O;
+export function useContextSelector<T, O extends Partial<T>>(
+  holder: ReturnCreateContext<T>,
+  selector: (keyof T)[],
+): O;
+export function useContextSelector<T, S extends keyof T>(
+  holder: ReturnCreateContext<T>,
+  selector: S,
+): T[S];
+
+export function useContextSelector<T, O>(
+  holder: ReturnCreateContext<T>,
+  selector: Selector<T, any> | (keyof T)[] | keyof T,
+) {
+  const eventSelector = useEvent<Selector<T, O>>(
+    typeof selector === 'function'
+      ? selector
+      : ctx => {
+          if (!Array.isArray(selector)) {
+            return ctx[selector];
+          }
+
+          const obj = {} as O;
+          selector.forEach(key => {
+            (obj as any)[key] = ctx[key];
+          });
+          return obj;
+        },
+  );
   const context = React.useContext(holder?.Context);
   const { listeners, getValue } = context || {};
 
-  const [value, setValue] = React.useState(() => eventSelector(context ? getValue() : null));
+  const valueRef = React.useRef<O>();
+  valueRef.current = eventSelector(context ? getValue() : null);
+  const [, forceUpdate] = React.useState({});
 
   useLayoutEffect(() => {
     if (!context) {
@@ -61,10 +96,10 @@ export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selecto
     }
 
     function trigger(nextValue: T) {
-      setValue(prev => {
-        const selectedValue = eventSelector(nextValue);
-        return shallowEqual(prev, selectedValue) ? prev : selectedValue;
-      });
+      const nextSelectorValue = eventSelector(nextValue);
+      if (!shallowEqual(valueRef.current, nextSelectorValue)) {
+        forceUpdate({});
+      }
     }
 
     listeners.add(trigger);
@@ -74,5 +109,5 @@ export function useContextSelector<T, O>(holder: ReturnCreateContext<T>, selecto
     };
   }, [context]);
 
-  return value;
+  return valueRef.current;
 }

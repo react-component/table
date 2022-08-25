@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { useMemo } from 'react';
 import classNames from 'classnames';
 import { fillRef } from 'rc-util/lib/ref';
-import type { HeaderProps } from '../Header/Header';
+import * as React from 'react';
+import { useMemo } from 'react';
 import ColGroup from '../ColGroup';
-import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
+import type { HeaderProps } from '../Header/Header';
+import type { ColumnsType, ColumnType } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -59,7 +60,11 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
     },
     ref,
   ) => {
-    const { prefixCls, scrollbarSize, isSticky } = React.useContext(TableContext);
+    const { prefixCls, scrollbarSize, isSticky } = useContextSelector(TableContext, [
+      'prefixCls',
+      'scrollbarSize',
+      'isSticky',
+    ]);
 
     const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
 

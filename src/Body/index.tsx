@@ -1,15 +1,16 @@
 import * as React from 'react';
-import TableContext from '../context/TableContext';
-import type { GetRowKey, Key, GetComponentProps } from '../interface';
-import ExpandedRow from './ExpandedRow';
 import BodyContext from '../context/BodyContext';
-import { getColumnsKey } from '../utils/valueUtil';
-import ResizeContext from '../context/ResizeContext';
-import BodyRow from './BodyRow';
-import useFlattenRecords from '../hooks/useFlattenRecords';
 import HoverContext from '../context/HoverContext';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
+import ResizeContext from '../context/ResizeContext';
+import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
+import useFlattenRecords from '../hooks/useFlattenRecords';
+import type { GetComponentProps, GetRowKey, Key } from '../interface';
+import { getColumnsKey } from '../utils/valueUtil';
+import BodyRow from './BodyRow';
+import ExpandedRow from './ExpandedRow';
 import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
@@ -33,9 +34,12 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
-  const { onColumnResize } = React.useContext(ResizeContext);
-  const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { flattenColumns } = React.useContext(BodyContext);
+  const onColumnResize = useContextSelector(ResizeContext, 'onColumnResize');
+  const { prefixCls, getComponent } = useContextSelector(TableContext, [
+    'prefixCls',
+    'getComponent',
+  ]);
+  const flattenColumns = useContextSelector(BodyContext, 'flattenColumns');
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);

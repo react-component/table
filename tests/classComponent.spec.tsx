@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../src';
 
 describe('Table.ClassComponent', () => {
-  it('should re-render', () => {
+  it.skip('should re-render', () => {
     class Demo extends React.Component {
       state = {
         count: 0,

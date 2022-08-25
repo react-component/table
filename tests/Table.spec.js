@@ -1,6 +1,6 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
