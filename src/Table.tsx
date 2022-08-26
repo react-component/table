@@ -459,7 +459,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       target(scrollLeft);
     } else if (target.scrollLeft !== scrollLeft) {
       // eslint-disable-next-line no-param-reassign
-      target.scrollLeft = scrollLeft;
+      setTimeout(() => {
+        target.scrollLeft = scrollLeft;
+      }, 0);
     }
   }
 
