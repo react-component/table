@@ -129,9 +129,9 @@ export interface TableProps<RecordType = unknown>
   rowClassName?: string | RowClassName<RecordType>;
 
   // Additional Part
-  title?: PanelRender<RecordType>;
   footer?: PanelRender<RecordType>;
   summary?: (data: readonly RecordType[]) => React.ReactNode;
+  caption?: string | React.ReactNode;
 
   // Customize
   id?: string;
@@ -187,6 +187,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     title,
     footer,
     summary,
+    caption,
 
     // Customize
     id,
@@ -611,6 +612,9 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
+  const captionElement =
+    caption !== null && caption !== undefined ? <caption className={`${prefixCls}-caption`}>{caption}</caption> : undefined;
+
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   if (
@@ -662,6 +666,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
               tableLayout: mergedTableLayout,
             }}
           >
+            {captionElement}
             {bodyColGroup}
             {bodyTable}
             {!fixFooter && summaryNode && (
@@ -743,6 +748,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
         ref={scrollBodyRef}
       >
         <TableComponent style={{ ...scrollTableStyle, tableLayout: mergedTableLayout }}>
+          {captionElement}
           {bodyColGroup}
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}

@@ -1,16 +1,17 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import * as React from 'react';
 import Cell from '../Cell';
-import TableContext from '../context/TableContext';
 import BodyContext from '../context/BodyContext';
-import { getColumnsKey } from '../utils/valueUtil';
+import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
 import type {
   ColumnType,
   CustomizeComponent,
   GetComponentProps,
-  Key,
   GetRowKey,
+  Key,
 } from '../interface';
+import { getColumnsKey } from '../utils/valueUtil';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -49,7 +50,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     cellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
+  const { prefixCls, fixedInfoList } = useContextSelector(TableContext, [
+    'prefixCls',
+    'fixedInfoList',
+  ]);
   const {
     flattenColumns,
     expandableType,
@@ -61,7 +65,18 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandIcon,
     expandedRowRender,
     expandIconColumnIndex,
-  } = React.useContext(BodyContext);
+  } = useContextSelector(BodyContext, [
+    'flattenColumns',
+    'expandableType',
+    'expandRowByClick',
+    'onTriggerExpand',
+    'rowClassName',
+    'expandedRowClassName',
+    'indentSize',
+    'expandIcon',
+    'expandedRowRender',
+    'expandIconColumnIndex',
+  ]);
   const [expandRended, setExpandRended] = React.useState(false);
 
   const expanded = expandedKeys && expandedKeys.has(props.recordKey);

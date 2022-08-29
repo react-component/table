@@ -4,6 +4,6 @@ export default {
   runtimeHelpers: true,
   preCommit: {
     eslint: true,
-    prettier: true,
+    prettier: false,
   },
 };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from '../ContextSelector';
 
 export interface ExpandedRowProps {
   componentWidth: number;
@@ -7,6 +7,6 @@ export interface ExpandedRowProps {
   horizonScroll: boolean;
 }
 
-const ExpandedRowContext = React.createContext<ExpandedRowProps>(null);
+const ExpandedRowContext = createContext<ExpandedRowProps>(null);
 
 export default ExpandedRowContext;
