@@ -63,7 +63,7 @@ import useColumns from './hooks/useColumns';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
 import { getPathValue, validateValue, getColumnsKey } from './utils/valueUtil';
 import ResizeContext from './context/ResizeContext';
-import useStickyOffsets from './hooks/useStickyOffsets';
+import useStickyOffsets, { stickyOffsetCalculator } from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
 import { getExpandableProps } from './utils/legacyUtil';
 import Panel from './Panel';
@@ -649,6 +649,11 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
 
         return 0;
       }) as number[];
+      headerProps.stickyOffsets = stickyOffsetCalculator(
+        headerProps.colWidths,
+        flattenColumns.length,
+        direction,
+      );
     } else {
       bodyContent = (
         <div
