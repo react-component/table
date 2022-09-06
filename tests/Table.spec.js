@@ -1,6 +1,6 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 
@@ -166,6 +166,26 @@ describe('Table.Basic', () => {
       const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
       expect(wrapper.find('BodyRow').at(0).key()).toBe('key01');
       expect(wrapper.find('BodyRow').at(1).key()).toBe('key11');
+    });
+  });
+
+  describe('caption', () => {
+    it('renders string caption', () => {
+      const miscProps = { caption: 'test_caption' };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption')).toBeTruthy();
+    });
+
+    it('renders React.Node caption', () => {
+      const miscProps = { caption: <div className="caption_inner" /> };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption .caption_inner')).toBeTruthy();
+    });
+
+    it('renders without caption', () => {
+      const miscProps = {};
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption').length).toBeFalsy();
     });
   });
 

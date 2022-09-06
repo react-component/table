@@ -114,6 +114,7 @@ describe('Table.Scroll', () => {
           },
         });
     });
+    jest.runAllTimers();
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 33);
     setScrollLeft.mockReset();
 

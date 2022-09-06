@@ -414,6 +414,22 @@ describe('Table.Expand', () => {
     expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
   });
 
+  it('renders expend column title', () => {
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          columnTitle: 'column title',
+        },
+      }),
+    );
+
+    expect(
+      wrapper.find('thead tr th').first().hasClass('rc-table-row-expand-icon-cell'),
+    ).toBeTruthy();
+    expect(wrapper.find('thead tr th').first().html()).toContain('column title');
+  });
+
   it('fires expand change event', () => {
     const onExpand = jest.fn();
     const wrapper = mount(

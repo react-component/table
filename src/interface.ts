@@ -175,6 +175,8 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   /** @deprecated Use `expandable.childrenColumnName` instead */
   childrenColumnName?: string;
+  /** @deprecated Use `caption` instead */
+  title?: PanelRender<RecordType>;
 }
 
 export type ExpandedRowRender<ValueType> = (
@@ -200,6 +202,7 @@ export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
   defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
+  columnTitle?: React.ReactNode;
   expandRowByClick?: boolean;
   expandIcon?: RenderExpandIcon<RecordType>;
   onExpand?: (expanded: boolean, record: RecordType) => void;
