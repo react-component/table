@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { createContext } from '../ContextSelector';
 import type {
+  ColumnsType,
   ColumnType,
   DefaultRecordType,
-  ColumnsType,
-  TableLayout,
-  RenderExpandIcon,
   ExpandableType,
-  RowClassName,
-  TriggerEventHandler,
   ExpandedRowRender,
+  RenderExpandIcon,
+  RowClassName,
+  TableLayout,
+  TriggerEventHandler,
 } from '../interface';
 
 export interface BodyContextProps<RecordType = DefaultRecordType> {
@@ -30,6 +30,7 @@ export interface BodyContextProps<RecordType = DefaultRecordType> {
   allColumnsFixedLeft: boolean;
 }
 
-const BodyContext = React.createContext<BodyContextProps>(null);
+// const BodyContext = React.createContext<BodyContextProps>(null);
+const BodyContext = createContext<BodyContextProps>();
 
 export default BodyContext;

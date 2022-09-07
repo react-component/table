@@ -146,7 +146,7 @@ function Cell<RecordType extends DefaultRecordType>(
 
   const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
-  const { allColumnsFixedLeft } = React.useContext(BodyContext);
+  const allColumnsFixedLeft = useContextSelector(BodyContext, 'allColumnsFixedLeft');
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<

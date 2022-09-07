@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
 import type {
   CellType,
   ColumnType,
@@ -30,7 +31,7 @@ function HeaderRow<RecordType>({
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
-  const { prefixCls, direction } = React.useContext(TableContext);
+  const { prefixCls, direction } = useContextSelector(TableContext, ['prefixCls', 'direction']);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {

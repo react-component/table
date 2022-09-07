@@ -1,8 +1,9 @@
 import * as React from 'react';
-import type { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
-import TableContext from '../context/TableContext';
 import ExpandedRowContext from '../context/ExpandedRowContext';
+import TableContext from '../context/TableContext';
+import { useContextSelector } from '../ContextSelector';
+import type { CustomizeComponent } from '../interface';
 
 export interface ExpandedRowProps {
   prefixCls: string;
@@ -25,9 +26,11 @@ function ExpandedRow({
   colSpan,
   isEmpty,
 }: ExpandedRowProps) {
-  const { scrollbarSize } = React.useContext(TableContext);
-  const { fixHeader, fixColumn, componentWidth, horizonScroll } =
-    React.useContext(ExpandedRowContext);
+  const scrollbarSize = useContextSelector(TableContext, 'scrollbarSize');
+  const { fixHeader, fixColumn, componentWidth, horizonScroll } = useContextSelector(
+    ExpandedRowContext,
+    ['fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
+  );
 
   // Cache render node
   return React.useMemo(() => {
