@@ -1899,7 +1899,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
             >
               title12
             </th>
-            <th
+            <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
               style="position: sticky; right: 0px;"
             />
@@ -2730,7 +2730,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
             >
               title12
             </th>
-            <th
+            <td
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
               style="position: sticky; right: 0px;"
             />

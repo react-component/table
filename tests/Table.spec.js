@@ -238,36 +238,83 @@ describe('Table.Basic', () => {
     });
   });
 
-  it('renders scope', () => {
+  describe('scope', () => {
+    it('renders columns scope correctly', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: 'Name',
+              colScope: 'col',
+            },
+            {
+              title: 'Contact',
+              colScope: 'colgroup',
+              children: [
+                {
+                  title: 'Email',
+                  colScope: 'col',
+                },
+                {
+                  title: 'Phone Number',
+                  colScope: 'col',
+                },
+              ],
+            },
+          ],
+        }),
+      );
+
+      expect(wrapper.find('thead th').at(0).prop('scope')).toEqual('col');
+      expect(wrapper.find('thead th').at(1).prop('scope')).toEqual('colgroup');
+      expect(wrapper.find('thead th').at(2).prop('scope')).toEqual('col');
+      expect(wrapper.find('thead th').at(3).prop('scope')).toEqual('col');
+    });
+
+    it('renders rows scope correctly', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: 'Time',
+              dataIndex: 'time',
+              key: 'time',
+              rowScope: 'row',
+            },
+          ],
+          data: [
+            { time: '09:00 - 11:00', key: '1' },
+            { time: '11:00 - 13:00', key: '2' },
+          ],
+        }),
+      );
+
+      expect(wrapper.find('tbody th').at(0).prop('scope')).toEqual('row');
+      expect(wrapper.find('tbody th').at(1).prop('scope')).toEqual('row');
+    });
+  });
+
+  it('renders td instead of th if header title is empty', () => {
     const wrapper = mount(
       createTable({
         columns: [
           {
-            title: 'Name',
-            scope: 'col',
+            title: '',
+            dataIndex: 'firstName',
+            key: 'firstName',
           },
           {
-            title: 'Contact',
-            scope: 'colgroup',
-            children: [
-              {
-                title: 'Email',
-                scope: 'col',
-              },
-              {
-                title: 'Phone Number',
-                scope: 'col',
-              },
-            ],
+            title: 'Last Name',
+            dataIndex: 'lastName',
+            key: 'lastName',
           },
         ],
+        data: [{ firstName: 'John', lastName: 'Doe', key: '1' }],
       }),
     );
 
-    expect(wrapper.find('thead th').at(0).prop('scope')).toEqual('col');
-    expect(wrapper.find('thead th').at(1).prop('scope')).toEqual('colgroup');
-    expect(wrapper.find('thead th').at(2).prop('scope')).toEqual('col');
-    expect(wrapper.find('thead th').at(3).prop('scope')).toEqual('col');
+    expect(wrapper.find('thead td')).toHaveLength(1);
+    expect(wrapper.find('thead th')).toHaveLength(1);
   });
 
   it('renders column correctly', () => {
@@ -412,7 +459,7 @@ describe('Table.Basic', () => {
     ];
 
     const wrapper = mount(<Table columns={columns} data={[{ key: '' }]} />);
-    const props = wrapper.find('td').props();
+    const props = wrapper.find('tbody td').props();
     expect(props.style).toEqual(expect.objectContaining({ background: 'red' }));
     expect(props.className.includes('customize-render')).toBeTruthy();
     expect(props['data-light']).toEqual('bamboo');
@@ -910,10 +957,10 @@ describe('Table.Basic', () => {
     }
 
     const wrapper = mount(<Test />);
-    expect(wrapper.find('td').text()).toEqual('false');
+    expect(wrapper.find('tbody td').text()).toEqual('false');
 
     wrapper.setState({ change: true });
-    expect(wrapper.find('td').text()).toEqual('true');
+    expect(wrapper.find('tbody td').text()).toEqual('true');
   });
 
   it('not crash with raw data', () => {

@@ -10,9 +10,9 @@ interface FirstTableRecordType {
 }
 
 const firstTableColumns: ColumnsType<FirstTableRecordType> = [
-  { title: 'Last Name', dataIndex: 'lastName', key: 'lastName', scope: 'col' },
-  { title: 'First Name', dataIndex: 'firstName', key: 'firstName', scope: 'col' },
-  { title: 'City', dataIndex: 'city', key: 'city', scope: 'col' },
+  { title: 'Last Name', dataIndex: 'lastName', key: 'lastName', colScope: 'col' },
+  { title: 'First Name', dataIndex: 'firstName', key: 'firstName', colScope: 'col' },
+  { title: 'City', dataIndex: 'city', key: 'city', colScope: 'col' },
 ];
 
 const firstTableData: FirstTableRecordType[] = [
@@ -22,6 +22,7 @@ const firstTableData: FirstTableRecordType[] = [
 ];
 
 interface SecondTableRecordType {
+  productType?: string;
   producedMars?: string;
   soldMars?: string;
   producedVenus?: string;
@@ -31,29 +32,37 @@ interface SecondTableRecordType {
 
 const secondTableColumns: ColumnsType<SecondTableRecordType> = [
   {
+    title: '',
+    dataIndex: 'productType',
+    key: 'productType',
+    rowSpan: 2,
+    rowScope: 'row',
+  },
+  {
     title: 'Mars',
     dataIndex: 'mars',
     key: 'mars',
-    scope: 'colgroup',
+    colScope: 'colgroup',
     children: [
-      { title: 'Produced', dataIndex: 'producedMars', key: 'producedMars', scope: 'col' },
-      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars', scope: 'col' },
+      { title: 'Produced', dataIndex: 'producedMars', key: 'producedMars', colScope: 'col' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars', colScope: 'col' },
     ],
   },
   {
     title: 'Venus',
     dataIndex: 'venus',
     key: 'venus',
-    scope: 'colgroup',
+    colScope: 'colgroup',
     children: [
-      { title: 'Produced', dataIndex: 'producedVenus', key: 'producedVenus', scope: 'col' },
-      { title: 'Sold', dataIndex: 'soldVenus', key: 'soldVenus', scope: 'col' },
+      { title: 'Produced', dataIndex: 'producedVenus', key: 'producedVenus', colScope: 'col' },
+      { title: 'Sold', dataIndex: 'soldVenus', key: 'soldVenus', colScope: 'col' },
     ],
   },
 ];
 
 const secondTableData: SecondTableRecordType[] = [
   {
+    productType: 'Teddy Bears',
     producedMars: '50,000',
     soldMars: '30,000',
     producedVenus: '100,000',
@@ -61,6 +70,7 @@ const secondTableData: SecondTableRecordType[] = [
     key: '1',
   },
   {
+    productType: 'Board Games',
     producedMars: '10,000',
     soldMars: '5,000',
     producedVenus: '12,000',
@@ -73,7 +83,7 @@ const Demo = () => (
   <div>
     <h2>Scope col</h2>
     <Table<FirstTableRecordType> columns={firstTableColumns} data={firstTableData} />
-    <br/>
+    <br />
     <h2>Scope colgroup</h2>
     <Table<SecondTableRecordType> columns={secondTableColumns} data={secondTableData} />
   </div>

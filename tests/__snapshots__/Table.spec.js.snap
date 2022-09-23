@@ -224,13 +224,13 @@ exports[`Table.Basic custom components scroll content with scroll 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell"
             />
-            <th
+            <td
               class="rc-table-cell"
             />
-            <th
+            <td
               class="rc-table-cell rc-table-cell-scrollbar"
             />
           </tr>
@@ -638,7 +638,7 @@ exports[`Table.Basic renders correctly no columns 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell"
             />
           </tr>
@@ -766,7 +766,7 @@ exports[`Table.Basic should get scrollbar size 1`] = `
             >
               Name
             </th>
-            <th
+            <td
               class="rc-table-cell rc-table-cell-scrollbar"
             />
           </tr>

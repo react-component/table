@@ -31,7 +31,11 @@ function HeaderRow<RecordType>({
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
-  const { prefixCls, direction } = useContextSelector(TableContext, ['prefixCls', 'direction']);
+  const { prefixCls, direction, getComponent } = useContextSelector(TableContext, [
+    'prefixCls',
+    'direction',
+    'getComponent',
+  ]);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -60,13 +64,15 @@ function HeaderRow<RecordType>({
           additionalProps = cell.column.onHeaderCell(column);
         }
 
+        const tdComponent = getComponent(['header', 'cell'], 'td');
+
         return (
           <Cell
             {...cell}
-            scope={column.scope}
+            scope={column.colScope}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={CellComponent}
+            component={column.title ? CellComponent : tdComponent}
             prefixCls={prefixCls}
             key={columnsKey[cellIndex]}
             {...fixedInfo}

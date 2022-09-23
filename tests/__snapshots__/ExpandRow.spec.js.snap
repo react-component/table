@@ -126,7 +126,7 @@ exports[`Table.Expand does not crash if scroll is not set 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
@@ -278,7 +278,7 @@ exports[`Table.Expand does not crash if scroll is not set 2`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
@@ -515,7 +515,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
               style="position: sticky; left: 0px;"
             />
@@ -976,7 +976,7 @@ exports[`Table.Expand work in expandable fix 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
@@ -1146,7 +1146,7 @@ exports[`Table.Expand work in expandable fix 2`] = `
             >
               Gender
             </th>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
               style="position: sticky; right: 0px;"
             />

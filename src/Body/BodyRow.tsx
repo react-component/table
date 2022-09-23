@@ -50,9 +50,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     cellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList } = useContextSelector(TableContext, [
+  const { prefixCls, fixedInfoList, getComponent } = useContextSelector(TableContext, [
     'prefixCls',
     'fixedInfoList',
+    'getComponent',
   ]);
   const {
     flattenColumns,
@@ -169,12 +170,15 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           additionalCellProps = column.onCell(record, index);
         }
 
+        const thComponent = getComponent(['body', 'cell'], 'th');
+
         return (
           <Cell
             className={columnClassName}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={cellComponent}
+            scope={column.rowScope}
+            component={column.rowScope ? thComponent : cellComponent}
             prefixCls={prefixCls}
             key={key}
             record={record}
