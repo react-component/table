@@ -71,7 +71,6 @@ interface ColumnSharedType<RecordType> {
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
-  colScope?: ColScopeType;
   rowScope?: RowScopeType;
 }
 

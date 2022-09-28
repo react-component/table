@@ -10,9 +10,9 @@ interface FirstTableRecordType {
 }
 
 const firstTableColumns: ColumnsType<FirstTableRecordType> = [
-  { title: 'Last Name', dataIndex: 'lastName', key: 'lastName', colScope: 'col' },
-  { title: 'First Name', dataIndex: 'firstName', key: 'firstName', colScope: 'col' },
-  { title: 'City', dataIndex: 'city', key: 'city', colScope: 'col' },
+  { title: 'Last Name', dataIndex: 'lastName', key: 'lastName' },
+  { title: 'First Name', dataIndex: 'firstName', key: 'firstName' },
+  { title: 'City', dataIndex: 'city', key: 'city' },
 ];
 
 const firstTableData: FirstTableRecordType[] = [
@@ -42,20 +42,18 @@ const secondTableColumns: ColumnsType<SecondTableRecordType> = [
     title: 'Mars',
     dataIndex: 'mars',
     key: 'mars',
-    colScope: 'colgroup',
     children: [
-      { title: 'Produced', dataIndex: 'producedMars', key: 'producedMars', colScope: 'col' },
-      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars', colScope: 'col' },
+      { title: 'Produced', dataIndex: 'producedMars', key: 'producedMars' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars' },
     ],
   },
   {
     title: 'Venus',
     dataIndex: 'venus',
     key: 'venus',
-    colScope: 'colgroup',
     children: [
-      { title: 'Produced', dataIndex: 'producedVenus', key: 'producedVenus', colScope: 'col' },
-      { title: 'Sold', dataIndex: 'soldVenus', key: 'soldVenus', colScope: 'col' },
+      { title: 'Produced', dataIndex: 'producedVenus', key: 'producedVenus' },
+      { title: 'Sold', dataIndex: 'soldVenus', key: 'soldVenus' },
     ],
   },
 ];

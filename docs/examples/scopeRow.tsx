@@ -14,11 +14,11 @@ interface FirstTableRecordType {
 
 const firstTableColumns: ColumnsType<FirstTableRecordType> = [
   { title: '', dataIndex: 'time', key: 'time', rowScope: 'row' },
-  { title: 'Monday', dataIndex: 'monday', key: 'monday', colScope: 'col' },
-  { title: 'Tuesday', dataIndex: 'tuesday', key: 'tuesday', colScope: 'col' },
-  { title: 'Wednesday', dataIndex: 'wednesday', key: 'wednesday', colScope: 'col' },
-  { title: 'Thursday', dataIndex: 'thursday', key: 'thursday', colScope: 'col' },
-  { title: 'Friday', dataIndex: 'friday', key: 'friday', colScope: 'col' },
+  { title: 'Monday', dataIndex: 'monday', key: 'monday' },
+  { title: 'Tuesday', dataIndex: 'tuesday', key: 'tuesday' },
+  { title: 'Wednesday', dataIndex: 'wednesday', key: 'wednesday' },
+  { title: 'Thursday', dataIndex: 'thursday', key: 'thursday' },
+  { title: 'Friday', dataIndex: 'friday', key: 'friday' },
 ];
 
 const firstTableData: FirstTableRecordType[] = [
@@ -74,7 +74,6 @@ const secondTableColumns: ColumnsType<SecondTableRecordType> = [
     title: 'Poster name',
     dataIndex: 'posterName',
     key: 'posterName',
-    colScope: 'col',
     rowScope: 'rowgroup',
     onCell: (_, index) => {
       const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
@@ -98,7 +97,6 @@ const secondTableColumns: ColumnsType<SecondTableRecordType> = [
     title: 'Color',
     dataIndex: 'color',
     key: 'color',
-    colScope: 'col',
     rowScope: 'row',
   },
   {
@@ -106,7 +104,6 @@ const secondTableColumns: ColumnsType<SecondTableRecordType> = [
     dataIndex: 'sizesAvailable1',
     colSpan: 3,
     key: 'sizesAvailable1',
-    colScope: 'colgroup',
   },
   {
     dataIndex: 'sizesAvailable2',

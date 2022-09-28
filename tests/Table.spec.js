@@ -245,19 +245,15 @@ describe('Table.Basic', () => {
           columns: [
             {
               title: 'Name',
-              colScope: 'col',
             },
             {
               title: 'Contact',
-              colScope: 'colgroup',
               children: [
                 {
                   title: 'Email',
-                  colScope: 'col',
                 },
                 {
                   title: 'Phone Number',
-                  colScope: 'col',
                 },
               ],
             },

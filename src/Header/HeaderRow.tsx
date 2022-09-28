@@ -69,7 +69,7 @@ function HeaderRow<RecordType>({
         return (
           <Cell
             {...cell}
-            scope={column.colScope}
+            scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
             component={column.title ? CellComponent : tdComponent}

@@ -20,11 +20,13 @@ exports[`Table.Expand childrenColumnName 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -132,16 +134,19 @@ exports[`Table.Expand does not crash if scroll is not set 1`] = `
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -284,16 +289,19 @@ exports[`Table.Expand does not crash if scroll is not set 2`] = `
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -427,11 +435,13 @@ exports[`Table.Expand not use nest when children is invalidate 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -521,17 +531,20 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
             />
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              scope="col"
               style="position: sticky; left: 0px;"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              scope="col"
               style="position: sticky; right: 0px;"
             >
               Gender
@@ -704,11 +717,13 @@ exports[`Table.Expand renders tree row correctly 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -807,11 +822,13 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -982,16 +999,19 @@ exports[`Table.Expand work in expandable fix 1`] = `
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -1133,16 +1153,19 @@ exports[`Table.Expand work in expandable fix 2`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
