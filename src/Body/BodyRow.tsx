@@ -24,6 +24,7 @@ export interface BodyRowProps<RecordType> {
   expandedKeys: Set<Key>;
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
+  thComponent: CustomizeComponent;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   indent?: number;
@@ -48,12 +49,12 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
+    thComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList, getComponent } = useContextSelector(TableContext, [
+  const { prefixCls, fixedInfoList } = useContextSelector(TableContext, [
     'prefixCls',
     'fixedInfoList',
-    'getComponent',
   ]);
   const {
     flattenColumns,
@@ -169,8 +170,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         if (column.onCell) {
           additionalCellProps = column.onCell(record, index);
         }
-
-        const thComponent = getComponent(['body', 'cell'], 'th');
 
         return (
           <Cell
