@@ -18,6 +18,7 @@ export interface RowProps<RecordType> {
   flattenColumns: readonly ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
+  tdCellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
 }
@@ -31,11 +32,7 @@ function HeaderRow<RecordType>({
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
-  const { prefixCls, direction, getComponent } = useContextSelector(TableContext, [
-    'prefixCls',
-    'direction',
-    'getComponent',
-  ]);
+  const { prefixCls, direction } = useContextSelector(TableContext, ['prefixCls', 'direction']);
 
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -64,15 +61,13 @@ function HeaderRow<RecordType>({
           additionalProps = cell.column.onHeaderCell(column);
         }
 
-        const tdComponent = getComponent(['header', 'cell'], 'td');
-
         return (
           <Cell
             {...cell}
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={column.title ? CellComponent : tdComponent}
+            component={column.title ? CellComponent : tdCellComponent}
             prefixCls={prefixCls}
             key={columnsKey[cellIndex]}
             {...fixedInfo}
