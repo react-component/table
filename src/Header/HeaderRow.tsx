@@ -29,6 +29,7 @@ function HeaderRow<RecordType>({
   flattenColumns,
   rowComponent: RowComponent,
   cellComponent: CellComponent,
+  tdCellComponent,
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
