@@ -110,7 +110,7 @@ exports[`Table.FixedColumn fixed column renders correctly RTL 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -862,7 +862,7 @@ exports[`Table.FixedColumn renders correctly scrollX - with data 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -1639,7 +1639,7 @@ exports[`Table.FixedColumn renders correctly scrollX - without data 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -1940,7 +1940,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - with data 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -2771,7 +2771,7 @@ exports[`Table.FixedColumn renders correctly scrollXY - without data 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
