@@ -153,7 +153,7 @@ exports[`Table.Expand does not crash if scroll is not set 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -305,7 +305,7 @@ exports[`Table.Expand does not crash if scroll is not set 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -544,7 +544,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -1003,7 +1003,7 @@ exports[`Table.Expand work in expandable fix 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -1158,7 +1158,7 @@ exports[`Table.Expand work in expandable fix 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
