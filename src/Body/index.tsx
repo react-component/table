@@ -63,6 +63,7 @@ function Body<RecordType>({
     const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
     const trComponent = getComponent(['body', 'row'], 'tr');
     const tdComponent = getComponent(['body', 'cell'], 'td');
+    const thComponent = getComponent(['body', 'cell'], 'th');
 
     let rows: React.ReactNode;
     if (data.length) {
@@ -81,6 +82,7 @@ function Body<RecordType>({
             renderIndex={renderIndex}
             rowComponent={trComponent}
             cellComponent={tdComponent}
+            scopeCellComponent={thComponent}
             expandedKeys={expandedKeys}
             onRow={onRow}
             getRowKey={getRowKey}

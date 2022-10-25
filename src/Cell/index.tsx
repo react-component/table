@@ -18,6 +18,7 @@ import type {
   DataIndex,
   DefaultRecordType,
   RenderedCell,
+  ScopeType,
 } from '../interface';
 import { getPathValue, validateValue } from '../utils/valueUtil';
 
@@ -56,6 +57,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
 
@@ -119,6 +121,7 @@ function Cell<RecordType extends DefaultRecordType>(
     component: Component = 'td',
     colSpan,
     rowSpan, // This is already merged on WrapperCell
+    scope,
     fixLeft,
     fixRight,
     firstFixLeft,
@@ -276,6 +279,7 @@ function Cell<RecordType extends DefaultRecordType>(
     ...additionalProps,
     colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
     rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null,
+    scope,
     className: classNames(
       cellPrefixCls,
       className,

@@ -18,6 +18,7 @@ export interface RowProps<RecordType> {
   flattenColumns: readonly ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
+  tdCellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
 }
@@ -28,6 +29,7 @@ function HeaderRow<RecordType>({
   flattenColumns,
   rowComponent: RowComponent,
   cellComponent: CellComponent,
+  tdCellComponent,
   onHeaderRow,
   index,
 }: RowProps<RecordType>) {
@@ -63,9 +65,10 @@ function HeaderRow<RecordType>({
         return (
           <Cell
             {...cell}
+            scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={CellComponent}
+            component={column.title ? CellComponent : tdCellComponent}
             prefixCls={prefixCls}
             key={columnsKey[cellIndex]}
             {...fixedInfo}

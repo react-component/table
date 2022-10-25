@@ -129,6 +129,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | fixed | String \| Boolean |  | this column will be fixed when table scroll horizontally: true or 'left' or 'right' |
 | align | String |  | specify how cell content is aligned |
 | ellipsis | Boolean |  | specify whether cell content be ellipsized |
+| rowScope | 'row' \| 'rowgroup' |  | 	Set scope attribute for all cells in this column |
 | onCell | Function(record, index) |  | Set custom props per each cell. |
 | onHeaderCell | Function(record) |  | Set custom props per each header cell. |
 | render | Function(value, row, index) |  | The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan |

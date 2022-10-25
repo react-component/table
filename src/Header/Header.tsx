@@ -104,6 +104,7 @@ function Header<RecordType>({
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
   const thComponent = getComponent(['header', 'cell'], 'th');
+  const tdComponent = getComponent(['header', 'cell'], 'td');
 
   return (
     <WrapperComponent className={`${prefixCls}-thead`}>
@@ -116,6 +117,7 @@ function Header<RecordType>({
             stickyOffsets={stickyOffsets}
             rowComponent={trComponent}
             cellComponent={thComponent}
+            tdCellComponent={tdComponent}
             onHeaderRow={onHeaderRow}
             index={rowIndex}
           />
