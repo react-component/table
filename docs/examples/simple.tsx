@@ -1,6 +1,5 @@
-/* eslint-disable no-console,func-names,react/no-multi-comp */
 import Table from 'rc-table';
-import React from 'react';
+import React, { useState } from 'react';
 import '../../assets/index.less';
 
 interface RecordType {
@@ -15,44 +14,29 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '3' },
 ];
 
-class Demo extends React.Component {
-  constructor(props) {
-    super(props);
+const Demo = () => {
+  const [count, setCount] = useState(0);
 
-    this.state = {
-      count: 0,
-    };
+  const columns = [
+    {
+      title: 'title',
+      dataIndex: 'a',
+      render: () => count,
+    },
+  ];
 
-    this.columns = [
-      {
-        title: 'title1',
-        dataIndex: 'a',
-        render: this.renderColumn,
-      },
-    ];
-  }
-
-  renderColumn = () => {
-    return this.state.count;
-  };
-
-  render() {
-    return (
-      <>
-        <button
-          onClick={() => {
-            this.setState({
-              count: this.state.count + 1,
-            });
-          }}
-        >
-          Click {this.state.count} times
-        </button>
-        <Table<RecordType> columns={this.columns} data={data} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <button
+        onClick={() => {
+          setCount(count => count + 1);
+        }}
+      >
+        Click {count} times
+      </button>
+      <Table<RecordType> columns={columns} data={data} />
+    </>
+  );
+};
 
 export default Demo;
-/* eslint-enable */
