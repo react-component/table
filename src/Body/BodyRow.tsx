@@ -88,10 +88,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       setExpandRended(true);
     }
   }, [expanded]);
-
-  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
-  // Only when row is not expandable and `children` exist in record
-  const nestExpandable = expandableType === 'nest';
+  const notExpandable = !rowExpandable || rowExpandable(record)
+  const rowSupportExpand = expandableType === 'row' && notExpandable;
+  //  when `children` exist in record
+  const nestExpandable = expandableType === 'nest' && notExpandable;
   const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
   const mergedExpandable = rowSupportExpand || nestExpandable;
 

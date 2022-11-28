@@ -636,4 +636,31 @@ describe('Table.Expand', () => {
     );
     errorSpy.mockRestore();
   });
+
+  it('nest with `rowExpandable`', () => {
+    const data = [
+      {
+        key: 0,
+        children: [
+          {
+            key: 1,
+            children: [],
+          },
+        ],
+      },
+      {
+        key: 2,
+        children: [],
+      },
+    ];
+    const wrapper = mount(
+      createTable({
+        data, expandable: {
+          rowExpandable: ({ children }) => !!children.length,
+          defaultExpandAllRows: true
+        }
+      }),
+    );
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+  })
 });
