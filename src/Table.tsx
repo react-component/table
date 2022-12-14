@@ -173,12 +173,12 @@ export interface TableProps<RecordType = unknown>
 
 function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
   const {
-    prefixCls,
+    prefixCls = 'rc-table',
     className,
     rowClassName,
     style,
     data,
-    rowKey,
+    rowKey = 'key',
     scroll,
     tableLayout,
     direction,
@@ -193,7 +193,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     id,
     showHeader,
     components,
-    emptyText,
+    emptyText = () => 'No Data',
     onRow,
     onHeaderRow,
 
@@ -888,11 +888,5 @@ Table.Column = Column;
 Table.ColumnGroup = ColumnGroup;
 
 Table.Summary = FooterComponents;
-
-Table.defaultProps = {
-  rowKey: 'key',
-  prefixCls: 'rc-table',
-  emptyText: () => 'No Data',
-};
 
 export default Table;
