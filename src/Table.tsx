@@ -171,7 +171,14 @@ export interface TableProps<RecordType = unknown>
   sticky?: boolean | TableSticky;
 }
 
-function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
+  const props = {
+    rowKey: 'key',
+    prefixCls: 'rc-table',
+    emptyText: () => 'No Data',
+    ...tableProps,
+  };
+
   const {
     prefixCls,
     className,
@@ -888,11 +895,5 @@ Table.Column = Column;
 Table.ColumnGroup = ColumnGroup;
 
 Table.Summary = FooterComponents;
-
-Table.defaultProps = {
-  rowKey: 'key',
-  prefixCls: 'rc-table',
-  emptyText: () => 'No Data',
-};
 
 export default Table;
