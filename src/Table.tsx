@@ -171,14 +171,21 @@ export interface TableProps<RecordType = unknown>
   sticky?: boolean | TableSticky;
 }
 
-function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordType>) {
+function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
+  const props = {
+    rowKey: 'key',
+    prefixCls: 'rc-table',
+    emptyText: () => 'No Data',
+    ...tableProps,
+  };
+
   const {
-    prefixCls = 'rc-table',
+    prefixCls,
     className,
     rowClassName,
     style,
     data,
-    rowKey = 'key',
+    rowKey,
     scroll,
     tableLayout,
     direction,
@@ -193,7 +200,7 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     id,
     showHeader,
     components,
-    emptyText = () => 'No Data',
+    emptyText,
     onRow,
     onHeaderRow,
 
