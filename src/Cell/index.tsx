@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { supportRef } from 'rc-util/lib/ref';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
+import isEqual from 'rc-util/lib/isEqual';
 import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
 import HoverContext from '../context/HoverContext';
@@ -330,7 +330,7 @@ const MemoCell = React.memo(
       );
     }
 
-    return shallowEqual(prev, next);
+    return isEqual(prev, next, true);
   },
 );
 

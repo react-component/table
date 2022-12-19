@@ -2,7 +2,7 @@ import useEvent from 'rc-util/lib/hooks/useEvent';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
 import * as React from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
-import shallowEqual from 'shallowequal';
+import isEqual from 'rc-util/lib/isEqual';
 
 export type Selector<T, O = T> = (value: T) => O;
 
@@ -97,7 +97,7 @@ export function useContextSelector<T, O>(
 
     function trigger(nextValue: T) {
       const nextSelectorValue = eventSelector(nextValue);
-      if (!shallowEqual(valueRef.current, nextSelectorValue)) {
+      if (!isEqual(valueRef.current, nextSelectorValue, true)) {
         forceUpdate({});
       }
     }
