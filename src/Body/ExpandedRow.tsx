@@ -33,7 +33,11 @@ function ExpandedRow({
   );
 
   // Cache render node
-  return React.useMemo(() => {
+  return React.useMemo(() => {  
+    if (!expanded) {
+     return null;
+    }
+    
     let contentNode = children;
 
     if (isEmpty ? horizonScroll : fixColumn) {
@@ -53,12 +57,7 @@ function ExpandedRow({
     }
 
     return (
-      <Component
-        className={className}
-        style={{
-          display: expanded ? null : 'none',
-        }}
-      >
+      <Component className={className}>
         <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
           {contentNode}
         </Cell>
