@@ -1,4 +1,4 @@
-import { createContext } from '../ContextSelector';
+import { createContext } from '@rc-component/context';
 import type {
   ColumnsType,
   ColumnType,

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type { HeaderProps } from '../Header/Header';
 import type { ColumnsType, ColumnType } from '../interface';
 
@@ -60,7 +60,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
     },
     ref,
   ) => {
-    const { prefixCls, scrollbarSize, isSticky } = useContextSelector(TableContext, [
+    const { prefixCls, scrollbarSize, isSticky } = useContext(TableContext, [
       'prefixCls',
       'scrollbarSize',
       'isSticky',

@@ -1,4 +1,4 @@
-import { createContext } from '../ContextSelector';
+import { createContext } from '@rc-component/context';
 
 export interface ExpandedRowProps {
   componentWidth: number;

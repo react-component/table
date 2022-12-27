@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type { ColumnType, StickyOffsets } from '../interface';
 import Summary from './Summary';
 import SummaryContext from './SummaryContext';
@@ -14,7 +14,7 @@ export interface FooterProps<RecordType> {
 }
 
 function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterProps<RecordType>) {
-  const prefixCls = useContextSelector(TableContext, 'prefixCls');
+  const prefixCls = useContext(TableContext, 'prefixCls');
 
   const lastColumnIndex = flattenColumns.length - 1;
   const scrollColumn = flattenColumns[lastColumnIndex];

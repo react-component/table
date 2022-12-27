@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type {
   CellType,
   ColumnGroupType,
@@ -95,7 +95,7 @@ function Header<RecordType>({
   flattenColumns,
   onHeaderRow,
 }: HeaderProps<RecordType>): React.ReactElement {
-  const { prefixCls, getComponent } = useContextSelector(TableContext, [
+  const { prefixCls, getComponent } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
   ]);

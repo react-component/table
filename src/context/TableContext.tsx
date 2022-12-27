@@ -1,4 +1,4 @@
-import { createContext } from '../ContextSelector';
+import { createContext } from '@rc-component/context';
 import type { GetComponent } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
 
