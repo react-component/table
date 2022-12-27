@@ -1,3 +1,8 @@
-## aria-label
+---
+title: aria-label
+nav:
+  title: Demo
+  path: /demo
+---
 
-<code src="../examples/aria.tsx">
+<code src="../examples/aria.tsx"></code>
