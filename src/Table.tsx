@@ -32,7 +32,7 @@ import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
+import isEqual from 'rc-util/lib/isEqual';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
@@ -98,7 +98,7 @@ const MemoTableContent = React.memo<MemoTableContentProps>(
   ({ children }) => children as React.ReactElement,
 
   (prev, next) => {
-    if (!shallowEqual(prev.props, next.props)) {
+    if (!isEqual(prev.props, next.props, true)) {
       return false;
     }
 
