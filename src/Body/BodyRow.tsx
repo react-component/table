@@ -3,7 +3,7 @@ import * as React from 'react';
 import Cell from '../Cell';
 import BodyContext from '../context/BodyContext';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type {
   ColumnType,
   CustomizeComponent,
@@ -52,7 +52,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     scopeCellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList } = useContextSelector(TableContext, [
+  const { prefixCls, fixedInfoList } = useContext(TableContext, [
     'prefixCls',
     'fixedInfoList',
   ]);
@@ -67,7 +67,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandIcon,
     expandedRowRender,
     expandIconColumnIndex,
-  } = useContextSelector(BodyContext, [
+  } = useContext(BodyContext, [
     'flattenColumns',
     'expandableType',
     'expandRowByClick',

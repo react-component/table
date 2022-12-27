@@ -5,7 +5,7 @@ import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
 import ResizeContext from '../context/ResizeContext';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import type { GetComponentProps, GetRowKey, Key } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
@@ -34,12 +34,12 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
-  const onColumnResize = useContextSelector(ResizeContext, 'onColumnResize');
-  const { prefixCls, getComponent } = useContextSelector(TableContext, [
+  const onColumnResize = useContext(ResizeContext, 'onColumnResize');
+  const { prefixCls, getComponent } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
   ]);
-  const flattenColumns = useContextSelector(BodyContext, 'flattenColumns');
+  const flattenColumns = useContext(BodyContext, 'flattenColumns');
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);

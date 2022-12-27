@@ -2,7 +2,7 @@ import * as React from 'react';
 import Cell from '../Cell';
 import ExpandedRowContext from '../context/ExpandedRowContext';
 import TableContext from '../context/TableContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type { CustomizeComponent } from '../interface';
 
 export interface ExpandedRowProps {
@@ -26,8 +26,8 @@ function ExpandedRow({
   colSpan,
   isEmpty,
 }: ExpandedRowProps) {
-  const scrollbarSize = useContextSelector(TableContext, 'scrollbarSize');
-  const { fixHeader, fixColumn, componentWidth, horizonScroll } = useContextSelector(
+  const scrollbarSize = useContext(TableContext, 'scrollbarSize');
+  const { fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
     ExpandedRowContext,
     ['fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
   );

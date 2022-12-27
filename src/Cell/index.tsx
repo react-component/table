@@ -8,7 +8,7 @@ import type { HoverContextProps } from '../context/HoverContext';
 import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
 import StickyContext from '../context/StickyContext';
-import { useContextSelector } from '../ContextSelector';
+import { useContext } from '@rc-component/context';
 import type {
   AlignType,
   CellEllipsisType,
@@ -146,7 +146,7 @@ function Cell<RecordType extends DefaultRecordType>(
 
   const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
-  const allColumnsFixedLeft = useContextSelector(BodyContext, 'allColumnsFixedLeft');
+  const allColumnsFixedLeft = useContext(BodyContext, 'allColumnsFixedLeft');
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<
@@ -342,7 +342,7 @@ const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
 
-  const { onHover, hovering } = useContextSelector(HoverContext, cxt => {
+  const { onHover, hovering } = useContext(HoverContext, cxt => {
     const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
 
     return {
