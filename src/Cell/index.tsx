@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { supportRef } from 'rc-util/lib/ref';
 import warning from 'rc-util/lib/warning';
+import getValue from 'rc-util/lib/utils/get';
 import * as React from 'react';
 import isEqual from 'rc-util/lib/isEqual';
 import BodyContext from '../context/BodyContext';

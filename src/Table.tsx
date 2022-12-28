@@ -173,7 +173,7 @@ export interface TableProps<RecordType = unknown>
 }
 
 function defaultEmpty() {
-  return () => 'No Data';
+  return 'No Data';
 }
 
 function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
