@@ -24,15 +24,16 @@
  *  - All expanded props, move into expandable
  */
 
+import { makeImmutable } from '@rc-component/context';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import isVisible from 'rc-util/lib/Dom/isVisible';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
+import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import isEqual from 'rc-util/lib/isEqual';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
@@ -893,12 +894,20 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   );
 }
 
-Table.EXPAND_COLUMN = EXPAND_COLUMN;
+const ImmutableTable = makeImmutable(Table);
+type ImmutableTableType = typeof ImmutableTable & {
+  EXPAND_COLUMN: typeof EXPAND_COLUMN;
+  Column: typeof Column;
+  ColumnGroup: typeof ColumnGroup;
+  Summary: typeof FooterComponents;
+};
 
-Table.Column = Column;
+(ImmutableTable as ImmutableTableType).EXPAND_COLUMN = EXPAND_COLUMN;
 
-Table.ColumnGroup = ColumnGroup;
+(ImmutableTable as ImmutableTableType).Column = Column;
 
-Table.Summary = FooterComponents;
+(ImmutableTable as ImmutableTableType).ColumnGroup = ColumnGroup;
 
-export default Table;
+(ImmutableTable as ImmutableTableType).Summary = FooterComponents;
+
+export default ImmutableTable as ImmutableTableType;
