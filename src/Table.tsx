@@ -32,6 +32,7 @@ import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
 import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import Body from './Body';
@@ -54,7 +55,6 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 import type {
   ColumnsType,
   ColumnType,
-  CustomizeComponent,
   CustomizeScrollBody,
   DefaultRecordType,
   ExpandableConfig,
@@ -78,7 +78,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 import { getExpandableProps } from './utils/legacyUtil';
-import { getColumnsKey, getPathValue, validateValue } from './utils/valueUtil';
+import { getColumnsKey, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -240,9 +240,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   // ==================== Customize =====================
   const getComponent = React.useCallback<GetComponent>(
-    (path, defaultComponent) =>
-      getPathValue<CustomizeComponent, TableComponents<RecordType>>(components || {}, path) ||
-      defaultComponent,
+    (path, defaultComponent) => getValue(components, path) || defaultComponent,
     [components],
   );
 
