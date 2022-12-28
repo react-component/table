@@ -1,14 +1,15 @@
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
+import isEqual from 'rc-util/lib/isEqual';
 import { supportRef } from 'rc-util/lib/ref';
+import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import isEqual from 'rc-util/lib/isEqual';
 import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
 import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
 import StickyContext from '../context/StickyContext';
-import { useContext } from '@rc-component/context';
 import type {
   AlignType,
   CellEllipsisType,
@@ -20,7 +21,7 @@ import type {
   RenderedCell,
   ScopeType,
 } from '../interface';
-import { getPathValue, validateValue } from '../utils/valueUtil';
+import { validateValue } from '../utils/valueUtil';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -156,10 +157,14 @@ function Cell<RecordType extends DefaultRecordType>(
       return [children];
     }
 
-    const value = getPathValue<Record<string, unknown> | React.ReactNode, RecordType>(
-      record,
-      dataIndex,
-    );
+    const path =
+      dataIndex === null || dataIndex === undefined || dataIndex === ''
+        ? []
+        : Array.isArray(dataIndex)
+        ? dataIndex
+        : [dataIndex];
+
+    const value: Record<string, unknown> | React.ReactNode = getValue(record, path);
 
     // Customize render node
     let returnChildNode = value;

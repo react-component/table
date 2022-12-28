@@ -24,15 +24,17 @@
  *  - All expanded props, move into expandable
  */
 
+import { makeImmutable } from '@rc-component/context';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import isVisible from 'rc-util/lib/Dom/isVisible';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
+import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
+import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import isEqual from 'rc-util/lib/isEqual';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
@@ -53,7 +55,6 @@ import useStickyOffsets from './hooks/useStickyOffsets';
 import type {
   ColumnsType,
   ColumnType,
-  CustomizeComponent,
   CustomizeScrollBody,
   DefaultRecordType,
   ExpandableConfig,
@@ -77,7 +78,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
 import { getExpandableProps } from './utils/legacyUtil';
-import { getColumnsKey, getPathValue, validateValue } from './utils/valueUtil';
+import { getColumnsKey, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -171,11 +172,15 @@ export interface TableProps<RecordType = unknown>
   sticky?: boolean | TableSticky;
 }
 
+function defaultEmpty() {
+  return 'No Data';
+}
+
 function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
   const props = {
     rowKey: 'key',
     prefixCls: 'rc-table',
-    emptyText: () => 'No Data',
+    emptyText: defaultEmpty,
     ...tableProps,
   };
 
@@ -235,9 +240,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   // ==================== Customize =====================
   const getComponent = React.useCallback<GetComponent>(
-    (path, defaultComponent) =>
-      getPathValue<CustomizeComponent, TableComponents<RecordType>>(components || {}, path) ||
-      defaultComponent,
+    (path, defaultComponent) => getValue(components, path) || defaultComponent,
     [components],
   );
 
@@ -893,12 +896,20 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   );
 }
 
-Table.EXPAND_COLUMN = EXPAND_COLUMN;
+const ImmutableTable = makeImmutable(Table);
+type ImmutableTableType = typeof ImmutableTable & {
+  EXPAND_COLUMN: typeof EXPAND_COLUMN;
+  Column: typeof Column;
+  ColumnGroup: typeof ColumnGroup;
+  Summary: typeof FooterComponents;
+};
 
-Table.Column = Column;
+(ImmutableTable as ImmutableTableType).EXPAND_COLUMN = EXPAND_COLUMN;
 
-Table.ColumnGroup = ColumnGroup;
+(ImmutableTable as ImmutableTableType).Column = Column;
 
-Table.Summary = FooterComponents;
+(ImmutableTable as ImmutableTableType).ColumnGroup = ColumnGroup;
 
-export default Table;
+(ImmutableTable as ImmutableTableType).Summary = FooterComponents;
+
+export default ImmutableTable as ImmutableTableType;
