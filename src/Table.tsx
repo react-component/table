@@ -172,11 +172,15 @@ export interface TableProps<RecordType = unknown>
   sticky?: boolean | TableSticky;
 }
 
+function defaultEmpty() {
+  return () => 'No Data';
+}
+
 function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
   const props = {
     rowKey: 'key',
     prefixCls: 'rc-table',
-    emptyText: () => 'No Data',
+    emptyText: defaultEmpty,
     ...tableProps,
   };
 
