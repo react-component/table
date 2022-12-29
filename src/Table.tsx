@@ -40,7 +40,7 @@ import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
 import TableContext from './context/TableContext';
-import FixedHolder from './FixedHolder';
+import FixedHolder, { FixedHeaderProps } from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
@@ -322,7 +322,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     useSticky(sticky, prefixCls);
 
   // Footer (Fix footer must fixed header)
-  const summaryNode = summary?.(mergedData);
+  const summaryNode = React.useMemo(() => summary?.(mergedData), [summary, mergedData]);
   const fixFooter =
     (fixHeader || isSticky) &&
     React.isValidElement(summaryNode) &&
@@ -473,7 +473,26 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     }
   });
 
-  // ====================== Render ======================
+  // ========================================================================
+  // ==                               Render                               ==
+  // ========================================================================
+  // =================== Render: Func ===================
+  const renderFixedHeaderTable = React.useCallback<FixedHeaderProps<RecordType>['children']>(
+    fixedHolderPassProps => (
+      <>
+        <Header {...fixedHolderPassProps} />
+        {fixFooter === 'top' && <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
+      </>
+    ),
+    [fixFooter, summaryNode],
+  );
+
+  const renderFixedFooterTable = React.useCallback<FixedHeaderProps<RecordType>['children']>(
+    fixedHolderPassProps => <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>,
+    [summaryNode],
+  );
+
+  // =================== Render: Node ===================
   const TableComponent = getComponent(['table'], 'table');
 
   // Table layout
@@ -629,12 +648,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
           >
-            {fixedHolderPassProps => (
-              <>
-                <Header {...fixedHolderPassProps} />
-                {fixFooter === 'top' && <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
-              </>
-            )}
+            {renderFixedHeaderTable}
           </FixedHolder>
         )}
 
@@ -649,7 +663,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
           >
-            {fixedHolderPassProps => <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
+            {renderFixedFooterTable}
           </FixedHolder>
         )}
 

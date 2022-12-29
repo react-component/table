@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import * as React from 'react';
 
-function useRenderTimes<T extends object>(props?: T) {
+function useRenderTimes<T extends object>(props?: T, debug?: string) {
   // Render times
   const timesRef = React.useRef(0);
   timesRef.current += 1;
@@ -24,6 +24,10 @@ function useRenderTimes<T extends object>(props?: T) {
 
   React.useDebugValue(timesRef.current);
   React.useDebugValue(keysRef.current.join(', '));
+
+  if (debug) {
+    console.log(`${debug}:`, timesRef.current, keysRef.current);
+  }
 
   return timesRef.current;
 }
