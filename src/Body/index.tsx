@@ -1,9 +1,10 @@
-import { useContext } from '@rc-component/context';
+import { responseImmutable, useContext } from '@rc-component/context';
 import * as React from 'react';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
 import TableContext from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type { GetComponentProps, GetRowKey, Key } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
@@ -21,16 +22,22 @@ export interface BodyProps<RecordType> {
   childrenColumnName: string;
 }
 
-function Body<RecordType>({
-  data,
-  getRowKey,
-  measureColumnWidth,
-  expandedKeys,
-  onRow,
-  rowExpandable,
-  emptyNode,
-  childrenColumnName,
-}: BodyProps<RecordType>) {
+function Body<RecordType>(props: BodyProps<RecordType>) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const {
+    data,
+    getRowKey,
+    measureColumnWidth,
+    expandedKeys,
+    onRow,
+    rowExpandable,
+    emptyNode,
+    childrenColumnName,
+  } = props;
+
   const { prefixCls, getComponent, onColumnResize, flattenColumns } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -131,7 +138,6 @@ function Body<RecordType>({
   return <PerfContext.Provider value={perfRef.current}>{bodyNode}</PerfContext.Provider>;
 }
 
-const MemoBody = React.memo(Body);
-MemoBody.displayName = 'Body';
+Body.displayName = 'Body';
 
-export default MemoBody;
+export default responseImmutable(Body);
