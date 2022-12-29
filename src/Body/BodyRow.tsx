@@ -1,9 +1,8 @@
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
-import BodyContext from '../context/BodyContext';
 import TableContext from '../context/TableContext';
-import { useContext } from '@rc-component/context';
 import type {
   ColumnType,
   CustomizeComponent,
@@ -52,11 +51,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     scopeCellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList } = useContext(TableContext, [
-    'prefixCls',
-    'fixedInfoList',
-  ]);
   const {
+    prefixCls,
+    fixedInfoList,
     flattenColumns,
     expandableType,
     expandRowByClick,
@@ -67,7 +64,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandIcon,
     expandedRowRender,
     expandIconColumnIndex,
-  } = useContext(BodyContext, [
+  } = useContext(TableContext, [
+    'prefixCls',
+    'fixedInfoList',
     'flattenColumns',
     'expandableType',
     'expandRowByClick',

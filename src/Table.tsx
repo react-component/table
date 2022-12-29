@@ -38,7 +38,6 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
-import BodyContext from './context/BodyContext';
 import ExpandedRowContext from './context/ExpandedRowContext';
 import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
@@ -847,7 +846,23 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       isSticky,
       supportSticky,
 
+      // Body
+
+      tableLayout: mergedTableLayout,
+      rowClassName,
+      expandedRowClassName,
+      expandIcon: mergedExpandIcon,
+      expandableType,
+      expandRowByClick,
+      expandedRowRender,
+      onTriggerExpand,
+      expandIconColumnIndex,
+      indentSize,
+      allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
+
       // Column
+      columns,
+      flattenColumns,
       onColumnResize,
 
       // Row
@@ -861,38 +876,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       getComponent,
       scrollbarSize,
       direction,
-      flattenColumns,
       stickyOffsets,
       isSticky,
       supportSticky,
 
-      // Column
-      onColumnResize,
-
-      // Row
-      startRow,
-      endRow,
-      onHover,
-    ],
-  );
-
-  const BodyContextValue = React.useMemo(
-    () => ({
-      ...columnContext,
-      tableLayout: mergedTableLayout,
-      rowClassName,
-      expandedRowClassName,
-      expandIcon: mergedExpandIcon,
-      expandableType,
-      expandRowByClick,
-      expandedRowRender,
-      onTriggerExpand,
-      expandIconColumnIndex,
-      indentSize,
-      allColumnsFixedLeft: columnContext.flattenColumns.every(col => col.fixed === 'left'),
-    }),
-    [
-      columnContext,
+      // Body
       mergedTableLayout,
       rowClassName,
       expandedRowClassName,
@@ -903,6 +891,16 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onTriggerExpand,
       expandIconColumnIndex,
       indentSize,
+
+      // Column
+      columns,
+      flattenColumns,
+      onColumnResize,
+
+      // Row
+      startRow,
+      endRow,
+      onHover,
     ],
   );
 
@@ -918,11 +916,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   return (
     <TableContext.Provider value={TableContextValue}>
-      <BodyContext.Provider value={BodyContextValue}>
-        <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
-          {fullTable}
-        </ExpandedRowContext.Provider>
-      </BodyContext.Provider>
+      <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
+        {fullTable}
+      </ExpandedRowContext.Provider>
     </TableContext.Provider>
   );
 }

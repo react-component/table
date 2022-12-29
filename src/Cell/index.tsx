@@ -5,7 +5,6 @@ import { supportRef } from 'rc-util/lib/ref';
 import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import BodyContext from '../context/BodyContext';
 import PerfContext from '../context/PerfContext';
 import type { TableContextProps } from '../context/TableContext';
 import TableContext from '../context/TableContext';
@@ -88,7 +87,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
 
 export type CellProps<RecordType extends DefaultRecordType> = Omit<
   InternalCellProps<RecordType>,
-  keyof TableContextProps
+  keyof Omit<TableContextProps, 'prefixCls'>
 >;
 
 const getTitleFromCellRenderChildren = ({
@@ -145,8 +144,10 @@ function Cell<RecordType extends DefaultRecordType>(
   const cellPrefixCls = `${prefixCls}-cell`;
 
   const perfRecord = React.useContext(PerfContext);
-  const supportSticky = useContext(TableContext, 'supportSticky');
-  const allColumnsFixedLeft = useContext(BodyContext, 'allColumnsFixedLeft');
+  const { supportSticky, allColumnsFixedLeft } = useContext(TableContext, [
+    'supportSticky',
+    'allColumnsFixedLeft',
+  ]);
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<

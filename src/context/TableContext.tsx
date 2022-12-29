@@ -1,23 +1,45 @@
 import { createContext } from '@rc-component/context';
-import type { GetComponent } from '../interface';
+import type {
+  ColumnsType,
+  ColumnType,
+  ExpandableType,
+  ExpandedRowRender,
+  GetComponent,
+  RenderExpandIcon,
+  RowClassName,
+  TableLayout,
+  TriggerEventHandler,
+} from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
 
-export interface TableContextProps {
+export interface TableContextProps<RecordType = any> {
   // Table
   prefixCls: string;
-
   getComponent: GetComponent;
-
   scrollbarSize: number;
-
   direction: 'ltr' | 'rtl';
-
   fixedInfoList: readonly FixedInfo[];
-
   isSticky: boolean;
   supportSticky: boolean;
 
+  // Body
+  rowClassName: string | RowClassName<RecordType>;
+  expandedRowClassName: RowClassName<RecordType>;
+
+  tableLayout: TableLayout;
+
+  indentSize: number;
+  expandableType: ExpandableType;
+  expandRowByClick: boolean;
+  expandedRowRender: ExpandedRowRender<RecordType>;
+  expandIcon: RenderExpandIcon<RecordType>;
+  onTriggerExpand: TriggerEventHandler<RecordType>;
+  expandIconColumnIndex: number;
+  allColumnsFixedLeft: boolean;
+
   // Column
+  columns: ColumnsType<RecordType>;
+  flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
 
   // Row

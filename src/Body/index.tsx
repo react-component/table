@@ -1,6 +1,5 @@
 import { useContext } from '@rc-component/context';
 import * as React from 'react';
-import BodyContext from '../context/BodyContext';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
 import TableContext from '../context/TableContext';
@@ -32,12 +31,12 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
-  const { prefixCls, getComponent, onColumnResize } = useContext(TableContext, [
+  const { prefixCls, getComponent, onColumnResize, flattenColumns } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
     'onColumnResize',
+    'flattenColumns',
   ]);
-  const flattenColumns = useContext(BodyContext, 'flattenColumns');
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
