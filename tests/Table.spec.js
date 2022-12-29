@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
+import BodyRow from '../src/Body/BodyRow';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
@@ -152,20 +153,20 @@ describe('Table.Basic', () => {
   describe('rowKey', () => {
     it('uses record.key', () => {
       const wrapper = mount(createTable());
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('key0');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('key1');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('key0');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('key1');
     });
 
     it('sets by rowKey', () => {
       const wrapper = mount(createTable({ rowKey: 'name' }));
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('Lucy');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('Jack');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('Lucy');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('Jack');
     });
 
     it('sets by rowKey function', () => {
       const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('key01');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('key11');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('key01');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('key11');
     });
   });
 

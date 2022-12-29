@@ -47,6 +47,7 @@ import Summary from './Footer/Summary';
 import Header from './Header/Header';
 import useColumns from './hooks/useColumns';
 import useExpand from './hooks/useExpand';
+import useFixedInfo from './hooks/useFixedInfo';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
 import useHover from './hooks/useHover';
 import useSticky from './hooks/useSticky';
@@ -56,6 +57,7 @@ import type {
   ColumnType,
   CustomizeScrollBody,
   DefaultRecordType,
+  Direction,
   ExpandableConfig,
   GetComponent,
   GetComponentProps,
@@ -71,7 +73,6 @@ import Panel from './Panel';
 import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import { getCellFixedInfo } from './utils/fixUtil';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
@@ -136,7 +137,7 @@ export interface TableProps<RecordType = unknown>
   onHeaderRow?: GetComponentProps<readonly ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
 
-  direction?: 'ltr' | 'rtl';
+  direction?: Direction;
 
   // =================================== Internal ===================================
   /**
@@ -747,6 +748,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
+  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
+
   const TableContextValue = React.useMemo(
     () => ({
       // Table
@@ -754,9 +757,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       getComponent,
       scrollbarSize,
       direction,
-      fixedInfoList: flattenColumns.map((_, colIndex) =>
-        getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
-      ),
+      fixedInfoList,
       isSticky,
       supportSticky,
 
@@ -795,7 +796,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       getComponent,
       scrollbarSize,
       direction,
-      stickyOffsets,
+      fixedInfoList,
       isSticky,
       supportSticky,
 
