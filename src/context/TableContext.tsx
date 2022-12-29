@@ -18,6 +18,11 @@ export interface TableContextProps {
 
   // Column
   onColumnResize: (columnKey: React.Key, width: number) => void;
+
+  // Row
+  hoverStartRow: number;
+  hoverEndRow: number;
+  onHover: (start: number, end: number) => void;
 }
 
 const TableContext = createContext<TableContextProps>();

@@ -1,7 +1,6 @@
 import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import BodyContext from '../context/BodyContext';
-import HoverContext from '../context/HoverContext';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
 import TableContext from '../context/TableContext';
@@ -47,15 +46,6 @@ function Body<RecordType>({
   const perfRef = React.useRef<PerfRecord>({
     renderWithProps: false,
   });
-
-  // ====================== Hover =======================
-  const [startRow, setStartRow] = React.useState(-1);
-  const [endRow, setEndRow] = React.useState(-1);
-
-  const onHover = React.useCallback((start: number, end: number) => {
-    setStartRow(start);
-    setEndRow(end);
-  }, []);
 
   // ====================== Render ======================
   const bodyNode = React.useMemo(() => {
@@ -139,13 +129,7 @@ function Body<RecordType>({
     flattenData,
   ]);
 
-  return (
-    <PerfContext.Provider value={perfRef.current}>
-      <HoverContext.Provider value={{ startRow, endRow, onHover }}>
-        {bodyNode}
-      </HoverContext.Provider>
-    </PerfContext.Provider>
-  );
+  return <PerfContext.Provider value={perfRef.current}>{bodyNode}</PerfContext.Provider>;
 }
 
 const MemoBody = React.memo(Body);

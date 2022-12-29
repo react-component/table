@@ -261,6 +261,15 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     };
   }, [rowKey]);
 
+  // ====================== Hover =======================
+  const [startRow, setStartRow] = React.useState(-1);
+  const [endRow, setEndRow] = React.useState(-1);
+
+  const onHover = React.useCallback((start: number, end: number) => {
+    setStartRow(start);
+    setEndRow(end);
+  }, []);
+
   // ====================== Expand ======================
   const expandableConfig = getExpandableProps(props);
 
@@ -840,6 +849,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
       // Column
       onColumnResize,
+
+      // Row
+      hoverStartRow: startRow,
+      hoverEndRow: endRow,
+      onHover,
     }),
     [
       // Table
@@ -853,6 +867,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
       // Column
       onColumnResize,
+
+      // Row
+      startRow,
+      endRow,
+      onHover,
     ],
   );
 
