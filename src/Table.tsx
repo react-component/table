@@ -30,6 +30,7 @@ import ResizeObserver from 'rc-resize-observer';
 import isVisible from 'rc-util/lib/Dom/isVisible';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
+import useEvent from 'rc-util/lib/hooks/useEvent';
 import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import getValue from 'rc-util/lib/utils/get';
@@ -46,6 +47,7 @@ import Summary from './Footer/Summary';
 import Header from './Header/Header';
 import useColumns from './hooks/useColumns';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
+import useHover from './hooks/useHover';
 import useSticky from './hooks/useSticky';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import type {
@@ -259,13 +261,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   }, [rowKey]);
 
   // ====================== Hover =======================
-  const [startRow, setStartRow] = React.useState(-1);
-  const [endRow, setEndRow] = React.useState(-1);
-
-  const onHover = React.useCallback((start: number, end: number) => {
-    setStartRow(start);
-    setEndRow(end);
-  }, []);
+  const [startRow, endRow, onHover] = useHover();
 
   // ====================== Expand ======================
   const expandableConfig = getExpandableProps(props);
@@ -485,43 +481,40 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     }
   }
 
-  const onScroll = ({
-    currentTarget,
-    scrollLeft,
-  }: {
-    currentTarget: HTMLElement;
-    scrollLeft?: number;
-  }) => {
-    const isRTL = direction === 'rtl';
-    const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
+  const onScroll = useEvent(
+    ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
+      const isRTL = direction === 'rtl';
+      const mergedScrollLeft =
+        typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
-    const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
-    if (!getScrollTarget() || getScrollTarget() === compareTarget) {
-      setScrollTarget(compareTarget);
+      const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+      if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+        setScrollTarget(compareTarget);
 
-      forceScroll(mergedScrollLeft, scrollHeaderRef.current);
-      forceScroll(mergedScrollLeft, scrollBodyRef.current);
-      forceScroll(mergedScrollLeft, scrollSummaryRef.current);
-      forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
-    }
-
-    if (currentTarget) {
-      const { scrollWidth, clientWidth } = currentTarget;
-      // There is no space to scroll
-      if (scrollWidth === clientWidth) {
-        setPingedLeft(false);
-        setPingedRight(false);
-        return;
+        forceScroll(mergedScrollLeft, scrollHeaderRef.current);
+        forceScroll(mergedScrollLeft, scrollBodyRef.current);
+        forceScroll(mergedScrollLeft, scrollSummaryRef.current);
+        forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
-      if (isRTL) {
-        setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
-        setPingedRight(-mergedScrollLeft > 0);
-      } else {
-        setPingedLeft(mergedScrollLeft > 0);
-        setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+
+      if (currentTarget) {
+        const { scrollWidth, clientWidth } = currentTarget;
+        // There is no space to scroll
+        if (scrollWidth === clientWidth) {
+          setPingedLeft(false);
+          setPingedRight(false);
+          return;
+        }
+        if (isRTL) {
+          setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
+          setPingedRight(-mergedScrollLeft > 0);
+        } else {
+          setPingedLeft(mergedScrollLeft > 0);
+          setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+        }
       }
-    }
-  };
+    },
+  );
 
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
