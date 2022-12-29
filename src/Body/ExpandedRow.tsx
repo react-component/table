@@ -38,50 +38,36 @@ function ExpandedRow(props: ExpandedRowProps) {
   );
 
   // Cache render node
-  return React.useMemo(() => {
-    let contentNode = children;
+  let contentNode = children;
 
-    if (isEmpty ? horizonScroll : fixColumn) {
-      contentNode = (
-        <div
-          style={{
-            width: componentWidth - (fixHeader ? scrollbarSize : 0),
-            position: 'sticky',
-            left: 0,
-            overflow: 'hidden',
-          }}
-          className={`${prefixCls}-expanded-row-fixed`}
-        >
-          {componentWidth !== 0 && contentNode}
-        </div>
-      );
-    }
-
-    return (
-      <Component
-        className={className}
+  if (isEmpty ? horizonScroll : fixColumn) {
+    contentNode = (
+      <div
         style={{
-          display: expanded ? null : 'none',
+          width: componentWidth - (fixHeader ? scrollbarSize : 0),
+          position: 'sticky',
+          left: 0,
+          overflow: 'hidden',
         }}
+        className={`${prefixCls}-expanded-row-fixed`}
       >
-        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
-          {contentNode}
-        </Cell>
-      </Component>
+        {componentWidth !== 0 && contentNode}
+      </div>
     );
-  }, [
-    children,
-    Component,
-    className,
-    expanded,
-    colSpan,
-    isEmpty,
-    scrollbarSize,
-    componentWidth,
-    fixColumn,
-    fixHeader,
-    horizonScroll,
-  ]);
+  }
+
+  return (
+    <Component
+      className={className}
+      style={{
+        display: expanded ? null : 'none',
+      }}
+    >
+      <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
+        {contentNode}
+      </Cell>
+    </Component>
+  );
 }
 
 export default ExpandedRow;
