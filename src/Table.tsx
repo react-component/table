@@ -477,7 +477,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   // ==                               Render                               ==
   // ========================================================================
   // =================== Render: Func ===================
-  const renderHeaderTable = React.useCallback<FixedHeaderProps<RecordType>['children']>(
+  const renderFixedHeaderTable = React.useCallback<FixedHeaderProps<RecordType>['children']>(
     fixedHolderPassProps => (
       <>
         <Header {...fixedHolderPassProps} />
@@ -485,6 +485,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       </>
     ),
     [fixFooter, summaryNode],
+  );
+
+  const renderFixedFooterTable = React.useCallback<FixedHeaderProps<RecordType>['children']>(
+    fixedHolderPassProps => <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>,
+    [summaryNode],
   );
 
   // =================== Render: Node ===================
@@ -643,7 +648,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
           >
-            {renderHeaderTable}
+            {renderFixedHeaderTable}
           </FixedHolder>
         )}
 
@@ -658,7 +663,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
           >
-            {fixedHolderPassProps => <Footer {...fixedHolderPassProps}>{summaryNode}</Footer>}
+            {renderFixedFooterTable}
           </FixedHolder>
         )}
 
