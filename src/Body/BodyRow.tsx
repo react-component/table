@@ -20,7 +20,6 @@ export interface BodyRowProps<RecordType> {
   renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
-  recordKey: Key;
   expandedKeys: Set<Key>;
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
@@ -102,7 +101,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     });
   }
 
-  const expanded = expandedKeys && expandedKeys.has(props.recordKey);
+  const expanded = expandedKeys && expandedKeys.has(rowKey);
 
   React.useEffect(() => {
     if (expanded) {

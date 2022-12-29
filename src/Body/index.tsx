@@ -71,7 +71,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           key={key}
           rowKey={key}
           record={record}
-          recordKey={key}
           index={idx}
           renderIndex={renderIndex}
           rowComponent={trComponent}
