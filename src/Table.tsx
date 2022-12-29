@@ -30,6 +30,7 @@ import ResizeObserver from 'rc-resize-observer';
 import isVisible from 'rc-util/lib/Dom/isVisible';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
+import useEvent from 'rc-util/lib/hooks/useEvent';
 import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import getValue from 'rc-util/lib/utils/get';
@@ -45,7 +46,9 @@ import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
 import Header from './Header/Header';
 import useColumns from './hooks/useColumns';
+import useExpand from './hooks/useExpand';
 import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
+import useHover from './hooks/useHover';
 import useSticky from './hooks/useSticky';
 import useStickyOffsets from './hooks/useStickyOffsets';
 import type {
@@ -54,26 +57,21 @@ import type {
   CustomizeScrollBody,
   DefaultRecordType,
   ExpandableConfig,
-  ExpandableType,
   GetComponent,
   GetComponentProps,
   GetRowKey,
-  Key,
   LegacyExpandableProps,
   PanelRender,
   RowClassName,
   TableComponents,
   TableLayout,
   TableSticky,
-  TriggerEventHandler,
 } from './interface';
 import Panel from './Panel';
 import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
 import { getCellFixedInfo } from './utils/fixUtil';
-import { getExpandableProps } from './utils/legacyUtil';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
@@ -259,111 +257,17 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   }, [rowKey]);
 
   // ====================== Hover =======================
-  const [startRow, setStartRow] = React.useState(-1);
-  const [endRow, setEndRow] = React.useState(-1);
-
-  const onHover = React.useCallback((start: number, end: number) => {
-    setStartRow(start);
-    setEndRow(end);
-  }, []);
+  const [startRow, endRow, onHover] = useHover();
 
   // ====================== Expand ======================
-  const expandableConfig = getExpandableProps(props);
-
-  const {
-    expandIcon,
-    expandedRowKeys,
-    defaultExpandedRowKeys,
-    defaultExpandAllRows,
-    expandedRowRender,
-    columnTitle,
-    onExpand,
-    onExpandedRowsChange,
-    expandRowByClick,
-    rowExpandable,
-    expandIconColumnIndex,
-    expandedRowClassName,
-    childrenColumnName,
-    indentSize,
-  } = expandableConfig;
-
-  const mergedExpandIcon = expandIcon || renderExpandIcon;
-  const mergedChildrenColumnName = childrenColumnName || 'children';
-  const expandableType = React.useMemo<ExpandableType>(() => {
-    if (expandedRowRender) {
-      return 'row';
-    }
-    /* eslint-disable no-underscore-dangle */
-    /**
-     * Fix https://github.com/ant-design/ant-design/issues/21154
-     * This is a workaround to not to break current behavior.
-     * We can remove follow code after final release.
-     *
-     * To other developer:
-     *  Do not use `__PARENT_RENDER_ICON__` in prod since we will remove this when refactor
-     */
-    if (
-      (props.expandable &&
-        internalHooks === INTERNAL_HOOKS &&
-        (props.expandable as any).__PARENT_RENDER_ICON__) ||
-      mergedData.some(
-        record => record && typeof record === 'object' && record[mergedChildrenColumnName],
-      )
-    ) {
-      return 'nest';
-    }
-    /* eslint-enable */
-    return false;
-  }, [!!expandedRowRender, mergedData]);
-
-  const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(() => {
-    if (defaultExpandedRowKeys) {
-      return defaultExpandedRowKeys;
-    }
-    if (defaultExpandAllRows) {
-      return findAllChildrenKeys<RecordType>(mergedData, getRowKey, mergedChildrenColumnName);
-    }
-    return [];
-  });
-  const mergedExpandedKeys = React.useMemo(
-    () => new Set(expandedRowKeys || innerExpandedKeys || []),
-    [expandedRowKeys, innerExpandedKeys],
-  );
-
-  const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
-    (record: RecordType) => {
-      const key = getRowKey(record, mergedData.indexOf(record));
-
-      let newExpandedKeys: Key[];
-      const hasKey = mergedExpandedKeys.has(key);
-      if (hasKey) {
-        mergedExpandedKeys.delete(key);
-        newExpandedKeys = [...mergedExpandedKeys];
-      } else {
-        newExpandedKeys = [...mergedExpandedKeys, key];
-      }
-
-      setInnerExpandedKeys(newExpandedKeys);
-      if (onExpand) {
-        onExpand(!hasKey, record);
-      }
-      if (onExpandedRowsChange) {
-        onExpandedRowsChange(newExpandedKeys);
-      }
-    },
-    [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
-  );
-
-  // Warning if use `expandedRowRender` and nest children in the same time
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    expandedRowRender &&
-    mergedData.some((record: RecordType) => {
-      return Array.isArray(record?.[mergedChildrenColumnName]);
-    })
-  ) {
-    warning(false, '`expandedRowRender` should not use with nested Table');
-  }
+  const [
+    expandableConfig,
+    expandableType,
+    mergedExpandedKeys,
+    mergedExpandIcon,
+    mergedChildrenColumnName,
+    onTriggerExpand,
+  ] = useExpand(props, mergedData, getRowKey);
 
   // ====================== Column ======================
   const [componentWidth, setComponentWidth] = React.useState(0);
@@ -372,14 +276,14 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     {
       ...props,
       ...expandableConfig,
-      expandable: !!expandedRowRender,
-      columnTitle: columnTitle,
+      expandable: !!expandableConfig.expandedRowRender,
+      columnTitle: expandableConfig.columnTitle,
       expandedKeys: mergedExpandedKeys,
       getRowKey,
       // https://github.com/ant-design/ant-design/issues/23894
       onTriggerExpand,
       expandIcon: mergedExpandIcon,
-      expandIconColumnIndex,
+      expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
     },
     internalHooks === INTERNAL_HOOKS ? transformColumns : null,
@@ -485,43 +389,40 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     }
   }
 
-  const onScroll = ({
-    currentTarget,
-    scrollLeft,
-  }: {
-    currentTarget: HTMLElement;
-    scrollLeft?: number;
-  }) => {
-    const isRTL = direction === 'rtl';
-    const mergedScrollLeft = typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
+  const onScroll = useEvent(
+    ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
+      const isRTL = direction === 'rtl';
+      const mergedScrollLeft =
+        typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
-    const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
-    if (!getScrollTarget() || getScrollTarget() === compareTarget) {
-      setScrollTarget(compareTarget);
+      const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+      if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+        setScrollTarget(compareTarget);
 
-      forceScroll(mergedScrollLeft, scrollHeaderRef.current);
-      forceScroll(mergedScrollLeft, scrollBodyRef.current);
-      forceScroll(mergedScrollLeft, scrollSummaryRef.current);
-      forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
-    }
-
-    if (currentTarget) {
-      const { scrollWidth, clientWidth } = currentTarget;
-      // There is no space to scroll
-      if (scrollWidth === clientWidth) {
-        setPingedLeft(false);
-        setPingedRight(false);
-        return;
+        forceScroll(mergedScrollLeft, scrollHeaderRef.current);
+        forceScroll(mergedScrollLeft, scrollBodyRef.current);
+        forceScroll(mergedScrollLeft, scrollSummaryRef.current);
+        forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
-      if (isRTL) {
-        setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
-        setPingedRight(-mergedScrollLeft > 0);
-      } else {
-        setPingedLeft(mergedScrollLeft > 0);
-        setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+
+      if (currentTarget) {
+        const { scrollWidth, clientWidth } = currentTarget;
+        // There is no space to scroll
+        if (scrollWidth === clientWidth) {
+          setPingedLeft(false);
+          setPingedRight(false);
+          return;
+        }
+        if (isRTL) {
+          setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
+          setPingedRight(-mergedScrollLeft > 0);
+        } else {
+          setPingedLeft(mergedScrollLeft > 0);
+          setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+        }
       }
-    }
-  };
+    },
+  );
 
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
@@ -622,7 +523,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll || isSticky}
       expandedKeys={mergedExpandedKeys}
-      rowExpandable={rowExpandable}
+      rowExpandable={expandableConfig.rowExpandable}
       getRowKey={getRowKey}
       onRow={onRow}
       emptyNode={emptyNode}
@@ -854,14 +755,14 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
       tableLayout: mergedTableLayout,
       rowClassName,
-      expandedRowClassName,
+      expandedRowClassName: expandableConfig.expandedRowClassName,
       expandIcon: mergedExpandIcon,
       expandableType,
-      expandRowByClick,
-      expandedRowRender,
+      expandRowByClick: expandableConfig.expandRowByClick,
+      expandedRowRender: expandableConfig.expandedRowRender,
       onTriggerExpand,
-      expandIconColumnIndex,
-      indentSize,
+      expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
+      indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
 
       // Column
@@ -892,14 +793,14 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       // Body
       mergedTableLayout,
       rowClassName,
-      expandedRowClassName,
+      expandableConfig.expandedRowClassName,
       mergedExpandIcon,
       expandableType,
-      expandRowByClick,
-      expandedRowRender,
+      expandableConfig.expandRowByClick,
+      expandableConfig.expandedRowRender,
       onTriggerExpand,
-      expandIconColumnIndex,
-      indentSize,
+      expandableConfig.expandIconColumnIndex,
+      expandableConfig.indentSize,
 
       // Column
       columns,
