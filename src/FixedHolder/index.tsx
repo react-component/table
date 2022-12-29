@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
-import useRenderTimes from '../hooks/useRenderTimes';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type { ColumnsType, ColumnType } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
@@ -40,7 +40,9 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>((props, ref) => {
-  useRenderTimes(props);
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
 
   const {
     className,
