@@ -2,6 +2,7 @@ import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type { CustomizeComponent } from '../interface';
 
 export interface ExpandedRowProps {
@@ -15,16 +16,22 @@ export interface ExpandedRowProps {
   isEmpty: boolean;
 }
 
-function ExpandedRow({
-  prefixCls,
-  children,
-  component: Component,
-  cellComponent,
-  className,
-  expanded,
-  colSpan,
-  isEmpty,
-}: ExpandedRowProps) {
+function ExpandedRow(props: ExpandedRowProps) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const {
+    prefixCls,
+    children,
+    component: Component,
+    cellComponent,
+    className,
+    expanded,
+    colSpan,
+    isEmpty,
+  } = props;
+
   const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
     TableContext,
     ['scrollbarSize', 'fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
