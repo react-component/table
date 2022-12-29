@@ -38,7 +38,6 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
-import ExpandedRowContext from './context/ExpandedRowContext';
 import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -846,6 +845,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       isSticky,
       supportSticky,
 
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+
       // Body
 
       tableLayout: mergedTableLayout,
@@ -880,6 +884,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       isSticky,
       supportSticky,
 
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+
       // Body
       mergedTableLayout,
       rowClassName,
@@ -904,23 +913,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     ],
   );
 
-  const ExpandedRowContextValue = React.useMemo(
-    () => ({
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
-    }),
-    [componentWidth, fixHeader, fixColumn, horizonScroll],
-  );
-
-  return (
-    <TableContext.Provider value={TableContextValue}>
-      <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
-        {fullTable}
-      </ExpandedRowContext.Provider>
-    </TableContext.Provider>
-  );
+  return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
 const ImmutableTable = makeImmutable(Table);

@@ -21,6 +21,10 @@ export interface TableContextProps<RecordType = any> {
   fixedInfoList: readonly FixedInfo[];
   isSticky: boolean;
   supportSticky: boolean;
+  componentWidth: number;
+  fixHeader: boolean;
+  fixColumn: boolean;
+  horizonScroll: boolean;
 
   // Body
   rowClassName: string | RowClassName<RecordType>;
