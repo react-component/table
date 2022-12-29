@@ -1,8 +1,9 @@
-import { useContext } from '@rc-component/context';
+import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   ColumnType,
   CustomizeComponent,
@@ -35,6 +36,10 @@ export interface BodyRowProps<RecordType> {
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
   const {
     className,
     style,
@@ -79,6 +84,23 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     'expandIconColumnIndex',
   ]);
   const [expandRended, setExpandRended] = React.useState(false);
+
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes({
+      prefixCls,
+      fixedInfoList,
+      flattenColumns,
+      expandableType,
+      expandRowByClick,
+      onTriggerExpand,
+      rowClassName,
+      expandedRowClassName,
+      indentSize,
+      expandIcon,
+      expandedRowRender,
+      expandIconColumnIndex,
+    });
+  }
 
   const expanded = expandedKeys && expandedKeys.has(props.recordKey);
 
@@ -230,4 +252,4 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
 BodyRow.displayName = 'BodyRow';
 
-export default BodyRow;
+export default responseImmutable(BodyRow);

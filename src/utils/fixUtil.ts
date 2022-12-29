@@ -1,4 +1,4 @@
-import type { StickyOffsets, FixedType } from '../interface';
+import type { StickyOffsets, FixedType, Direction } from '../interface';
 
 export interface FixedInfo {
   fixLeft: number | false;
@@ -18,7 +18,7 @@ export function getCellFixedInfo(
   colEnd: number,
   columns: readonly { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
-  direction: 'ltr' | 'rtl',
+  direction: Direction,
 ): FixedInfo {
   const startColumn = columns[colStart] || {};
   const endColumn = columns[colEnd] || {};

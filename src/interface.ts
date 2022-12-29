@@ -53,6 +53,8 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
+export type Direction = 'ltr' | 'rtl';
+
 export type DataIndex = string | number | readonly (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;

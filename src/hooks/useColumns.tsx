@@ -10,6 +10,7 @@ import type {
   TriggerEventHandler,
   RenderExpandIcon,
   ColumnGroupType,
+  Direction,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
 import { EXPAND_COLUMN } from '../constant';
@@ -135,7 +136,7 @@ function useColumns<RecordType>(
     expandIcon?: RenderExpandIcon<RecordType>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
-    direction?: 'ltr' | 'rtl';
+    direction?: Direction;
     expandRowByClick?: boolean;
     columnWidth?: number | string;
     fixed?: FixedType;

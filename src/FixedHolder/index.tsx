@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType } from '../interface';
+import type { ColumnsType, ColumnType, Direction } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -30,7 +30,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
-  direction: 'ltr' | 'rtl';
+  direction: Direction;
   fixHeader: boolean;
   stickyTopOffset?: number;
   stickyBottomOffset?: number;

@@ -2,6 +2,7 @@ import { createContext } from '@rc-component/context';
 import type {
   ColumnsType,
   ColumnType,
+  Direction,
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
@@ -17,7 +18,7 @@ export interface TableContextProps<RecordType = any> {
   prefixCls: string;
   getComponent: GetComponent;
   scrollbarSize: number;
-  direction: 'ltr' | 'rtl';
+  direction: Direction;
   fixedInfoList: readonly FixedInfo[];
   isSticky: boolean;
   supportSticky: boolean;
