@@ -40,7 +40,6 @@ import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
 import BodyContext from './context/BodyContext';
 import ExpandedRowContext from './context/ExpandedRowContext';
-import ResizeContext from './context/ResizeContext';
 import StickyContext from './context/StickyContext';
 import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
@@ -829,6 +828,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   const TableContextValue = React.useMemo(
     () => ({
+      // Table
       prefixCls,
       getComponent,
       scrollbarSize,
@@ -837,8 +837,23 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
       isSticky,
+
+      // Column
+      onColumnResize,
     }),
-    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, isSticky],
+    [
+      // Table
+      prefixCls,
+      getComponent,
+      scrollbarSize,
+      direction,
+      flattenColumns,
+      stickyOffsets,
+      isSticky,
+
+      // Column
+      onColumnResize,
+    ],
   );
 
   const BodyContextValue = React.useMemo(
@@ -881,14 +896,12 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     [componentWidth, fixHeader, fixColumn, horizonScroll],
   );
 
-  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
-
   return (
     <StickyContext.Provider value={supportSticky}>
       <TableContext.Provider value={TableContextValue}>
         <BodyContext.Provider value={BodyContextValue}>
           <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
-            <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
+            {fullTable}
           </ExpandedRowContext.Provider>
         </BodyContext.Provider>
       </TableContext.Provider>

@@ -3,7 +3,7 @@ import type { GetComponent } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
 
 export interface TableContextProps {
-  // Table context
+  // Table
   prefixCls: string;
 
   getComponent: GetComponent;
@@ -15,6 +15,9 @@ export interface TableContextProps {
   fixedInfoList: readonly FixedInfo[];
 
   isSticky: boolean;
+
+  // Column
+  onColumnResize: (columnKey: React.Key, width: number) => void;
 }
 
 const TableContext = createContext<TableContextProps>();

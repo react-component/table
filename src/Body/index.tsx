@@ -1,11 +1,10 @@
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import BodyContext from '../context/BodyContext';
 import HoverContext from '../context/HoverContext';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
-import ResizeContext from '../context/ResizeContext';
 import TableContext from '../context/TableContext';
-import { useContext } from '@rc-component/context';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import type { GetComponentProps, GetRowKey, Key } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
@@ -34,10 +33,10 @@ function Body<RecordType>({
   emptyNode,
   childrenColumnName,
 }: BodyProps<RecordType>) {
-  const onColumnResize = useContext(ResizeContext, 'onColumnResize');
-  const { prefixCls, getComponent } = useContext(TableContext, [
+  const { prefixCls, getComponent, onColumnResize } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
+    'onColumnResize',
   ]);
   const flattenColumns = useContext(BodyContext, 'flattenColumns');
 
