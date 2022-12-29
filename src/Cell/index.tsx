@@ -5,11 +5,9 @@ import { supportRef } from 'rc-util/lib/ref';
 import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import BodyContext from '../context/BodyContext';
-import type { HoverContextProps } from '../context/HoverContext';
-import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
-import StickyContext from '../context/StickyContext';
+import type { TableContextProps } from '../context/TableContext';
+import TableContext from '../context/TableContext';
 import type {
   AlignType,
   CellEllipsisType,
@@ -44,7 +42,7 @@ function isRefComponent(component: CustomizeComponent) {
 }
 
 interface InternalCellProps<RecordType extends DefaultRecordType>
-  extends Pick<HoverContextProps, 'onHover'> {
+  extends Pick<TableContextProps, 'onHover'> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -89,7 +87,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
 
 export type CellProps<RecordType extends DefaultRecordType> = Omit<
   InternalCellProps<RecordType>,
-  keyof HoverContextProps
+  keyof Omit<TableContextProps, 'prefixCls'>
 >;
 
 const getTitleFromCellRenderChildren = ({
@@ -146,8 +144,10 @@ function Cell<RecordType extends DefaultRecordType>(
   const cellPrefixCls = `${prefixCls}-cell`;
 
   const perfRecord = React.useContext(PerfContext);
-  const supportSticky = React.useContext(StickyContext);
-  const allColumnsFixedLeft = useContext(BodyContext, 'allColumnsFixedLeft');
+  const { supportSticky, allColumnsFixedLeft } = useContext(TableContext, [
+    'supportSticky',
+    'allColumnsFixedLeft',
+  ]);
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<
@@ -347,8 +347,13 @@ const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
 
-  const { onHover, hovering } = useContext(HoverContext, cxt => {
-    const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
+  const { onHover, hovering } = useContext(TableContext, cxt => {
+    const isHovering = inHoverRange(
+      index,
+      mergedRowSpan || 1,
+      cxt?.hoverStartRow,
+      cxt?.hoverEndRow,
+    );
 
     return {
       onHover: cxt?.onHover,

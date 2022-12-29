@@ -1,8 +1,7 @@
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import Cell from '../Cell';
-import ExpandedRowContext from '../context/ExpandedRowContext';
 import TableContext from '../context/TableContext';
-import { useContext } from '@rc-component/context';
 import type { CustomizeComponent } from '../interface';
 
 export interface ExpandedRowProps {
@@ -26,10 +25,9 @@ function ExpandedRow({
   colSpan,
   isEmpty,
 }: ExpandedRowProps) {
-  const scrollbarSize = useContext(TableContext, 'scrollbarSize');
-  const { fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
-    ExpandedRowContext,
-    ['fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
+  const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
+    TableContext,
+    ['scrollbarSize', 'fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
   );
 
   // Cache render node

@@ -38,10 +38,6 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
-import BodyContext from './context/BodyContext';
-import ExpandedRowContext from './context/ExpandedRowContext';
-import ResizeContext from './context/ResizeContext';
-import StickyContext from './context/StickyContext';
 import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -261,6 +257,15 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       return key;
     };
   }, [rowKey]);
+
+  // ====================== Hover =======================
+  const [startRow, setStartRow] = React.useState(-1);
+  const [endRow, setEndRow] = React.useState(-1);
+
+  const onHover = React.useCallback((start: number, end: number) => {
+    setStartRow(start);
+    setEndRow(end);
+  }, []);
 
   // ====================== Expand ======================
   const expandableConfig = getExpandableProps(props);
@@ -829,6 +834,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   const TableContextValue = React.useMemo(
     () => ({
+      // Table
       prefixCls,
       getComponent,
       scrollbarSize,
@@ -837,13 +843,15 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
       isSticky,
-    }),
-    [prefixCls, getComponent, scrollbarSize, direction, flattenColumns, stickyOffsets, isSticky],
-  );
+      supportSticky,
 
-  const BodyContextValue = React.useMemo(
-    () => ({
-      ...columnContext,
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+
+      // Body
+
       tableLayout: mergedTableLayout,
       rowClassName,
       expandedRowClassName,
@@ -854,10 +862,34 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onTriggerExpand,
       expandIconColumnIndex,
       indentSize,
-      allColumnsFixedLeft: columnContext.flattenColumns.every(col => col.fixed === 'left'),
+      allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
+
+      // Column
+      columns,
+      flattenColumns,
+      onColumnResize,
+
+      // Row
+      hoverStartRow: startRow,
+      hoverEndRow: endRow,
+      onHover,
     }),
     [
-      columnContext,
+      // Table
+      prefixCls,
+      getComponent,
+      scrollbarSize,
+      direction,
+      stickyOffsets,
+      isSticky,
+      supportSticky,
+
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+
+      // Body
       mergedTableLayout,
       rowClassName,
       expandedRowClassName,
@@ -868,32 +900,20 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onTriggerExpand,
       expandIconColumnIndex,
       indentSize,
+
+      // Column
+      columns,
+      flattenColumns,
+      onColumnResize,
+
+      // Row
+      startRow,
+      endRow,
+      onHover,
     ],
   );
 
-  const ExpandedRowContextValue = React.useMemo(
-    () => ({
-      componentWidth,
-      fixHeader,
-      fixColumn,
-      horizonScroll,
-    }),
-    [componentWidth, fixHeader, fixColumn, horizonScroll],
-  );
-
-  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
-
-  return (
-    <StickyContext.Provider value={supportSticky}>
-      <TableContext.Provider value={TableContextValue}>
-        <BodyContext.Provider value={BodyContextValue}>
-          <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
-            <ResizeContext.Provider value={ResizeContextValue}>{fullTable}</ResizeContext.Provider>
-          </ExpandedRowContext.Provider>
-        </BodyContext.Provider>
-      </TableContext.Provider>
-    </StickyContext.Provider>
-  );
+  return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
 const ImmutableTable = makeImmutable(Table);
