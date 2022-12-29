@@ -7,7 +7,6 @@ import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import BodyContext from '../context/BodyContext';
 import PerfContext from '../context/PerfContext';
-import StickyContext from '../context/StickyContext';
 import type { TableContextProps } from '../context/TableContext';
 import TableContext from '../context/TableContext';
 import type {
@@ -146,7 +145,7 @@ function Cell<RecordType extends DefaultRecordType>(
   const cellPrefixCls = `${prefixCls}-cell`;
 
   const perfRecord = React.useContext(PerfContext);
-  const supportSticky = React.useContext(StickyContext);
+  const supportSticky = useContext(TableContext, 'supportSticky');
   const allColumnsFixedLeft = useContext(BodyContext, 'allColumnsFixedLeft');
 
   // ==================== Child Node ====================

@@ -40,7 +40,6 @@ import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
 import BodyContext from './context/BodyContext';
 import ExpandedRowContext from './context/ExpandedRowContext';
-import StickyContext from './context/StickyContext';
 import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -846,6 +845,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
       ),
       isSticky,
+      supportSticky,
 
       // Column
       onColumnResize,
@@ -864,6 +864,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       flattenColumns,
       stickyOffsets,
       isSticky,
+      supportSticky,
 
       // Column
       onColumnResize,
@@ -916,15 +917,13 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   );
 
   return (
-    <StickyContext.Provider value={supportSticky}>
-      <TableContext.Provider value={TableContextValue}>
-        <BodyContext.Provider value={BodyContextValue}>
-          <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
-            {fullTable}
-          </ExpandedRowContext.Provider>
-        </BodyContext.Provider>
-      </TableContext.Provider>
-    </StickyContext.Provider>
+    <TableContext.Provider value={TableContextValue}>
+      <BodyContext.Provider value={BodyContextValue}>
+        <ExpandedRowContext.Provider value={ExpandedRowContextValue}>
+          {fullTable}
+        </ExpandedRowContext.Provider>
+      </BodyContext.Provider>
+    </TableContext.Provider>
   );
 }
 

@@ -15,6 +15,7 @@ export interface TableContextProps {
   fixedInfoList: readonly FixedInfo[];
 
   isSticky: boolean;
+  supportSticky: boolean;
 
   // Column
   onColumnResize: (columnKey: React.Key, width: number) => void;
