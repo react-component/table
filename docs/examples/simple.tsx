@@ -29,7 +29,7 @@ const Demo = () => {
     <>
       <button
         onClick={() => {
-          setCount(count => count + 1);
+          setCount(val => val + 1);
         }}
       >
         Click {count} times
