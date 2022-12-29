@@ -73,7 +73,6 @@ import Panel from './Panel';
 import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import { getCellFixedInfo } from './utils/fixUtil';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
