@@ -1,6 +1,7 @@
+import { responseImmutable, useContext } from '@rc-component/context';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import { useContext } from '@rc-component/context';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type { ColumnType, StickyOffsets } from '../interface';
 import Summary from './Summary';
 import SummaryContext from './SummaryContext';
@@ -13,7 +14,13 @@ export interface FooterProps<RecordType> {
   flattenColumns: FlattenColumns<RecordType>;
 }
 
-function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterProps<RecordType>) {
+function Footer<RecordType>(props: FooterProps<RecordType>) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const { children, stickyOffsets, flattenColumns } = props;
+
   const prefixCls = useContext(TableContext, 'prefixCls');
 
   const lastColumnIndex = flattenColumns.length - 1;
@@ -35,6 +42,6 @@ function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterP
   );
 }
 
-export default Footer;
+export default responseImmutable(Footer);
 
 export const FooterComponents = Summary;

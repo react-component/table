@@ -322,7 +322,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     useSticky(sticky, prefixCls);
 
   // Footer (Fix footer must fixed header)
-  const summaryNode = summary?.(mergedData);
+  const summaryNode = React.useMemo(() => summary?.(mergedData), [summary, mergedData]);
   const fixFooter =
     (fixHeader || isSticky) &&
     React.isValidElement(summaryNode) &&
