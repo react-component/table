@@ -34,7 +34,6 @@ function HeaderRow<RecordType>({
   index,
 }: RowProps<RecordType>) {
   const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
-
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -49,12 +48,13 @@ function HeaderRow<RecordType>({
     <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
-        const fixedInfo = getCellFixedInfo(
+        const fixedInfo = getCellFixedInfo<RecordType>(
           cell.colStart,
           cell.colEnd,
           flattenColumns,
           stickyOffsets,
           direction,
+          column
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;

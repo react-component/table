@@ -1,9 +1,9 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
-import Table, { INTERNAL_COL_DEFINE } from '../src';
 import RcResizeObserver from 'rc-resize-observer';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -207,5 +207,63 @@ describe('Table.FixedHeader', () => {
     );
 
     jest.useRealTimers();
+  });
+
+  it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', () => {
+    const columns = [
+      {
+        title: '父表头右侧的阴影导致整个表格最右侧有空隙',
+        children: [
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'left',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'left',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'right',
+            dataIndex: 'name',
+          },
+        ],
+      },
+    ];
+
+    const data = [
+      {
+        key: 0,
+        name: 'Jack',
+      },
+      {
+        key: 1,
+        name: 'Jack1',
+      },
+      {
+        key: 2,
+        name: 'Jack1',
+      },
+    ];
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={data}
+        scroll={{ x: true }}
+      />,
+    );
+    expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
+    expect(wrapper.find('th').first().props().className).not.toContain('rc-table-cell-fix-left-last');
+    
   });
 });
