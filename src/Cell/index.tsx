@@ -1,4 +1,4 @@
-import { validateValue } from '@/utils/valueUtil';
+import { validateValue } from '../utils/valueUtil';
 import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import getValue from 'rc-util/lib/utils/get';
