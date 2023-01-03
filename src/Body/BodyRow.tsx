@@ -85,20 +85,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const [expandRended, setExpandRended] = React.useState(false);
 
   if (process.env.NODE_ENV !== 'production') {
-    devRenderTimes({
-      prefixCls,
-      fixedInfoList,
-      flattenColumns,
-      expandableType,
-      expandRowByClick,
-      onTriggerExpand,
-      rowClassName,
-      expandedRowClassName,
-      indentSize,
-      expandIcon,
-      expandedRowRender,
-      expandIconColumnIndex,
-    });
+    devRenderTimes(props);
   }
 
   const expanded = expandedKeys && expandedKeys.has(rowKey);
