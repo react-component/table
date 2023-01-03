@@ -195,8 +195,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = event => {
     if (record) {
-      // onHover(index, index + mergedRowSpan - 1);
-      onHover(index, index);
+      onHover(index, index + mergedRowSpan - 1);
     }
 
     additionalProps?.onMouseEnter?.(event);
