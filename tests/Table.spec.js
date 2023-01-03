@@ -3,6 +3,7 @@ import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
+import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
@@ -850,7 +851,7 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(wrapper.find('tbody WrappedCell').first().key()).toBeTruthy();
+    expect(wrapper.find('tbody').find(Cell).first().key()).toBeTruthy();
   });
 
   it('syntactic sugar', () => {

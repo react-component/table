@@ -274,6 +274,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   return (
     <Component
+      {...legacyCellProps}
+      {...additionalProps}
       className={mergedClassName}
       style={mergedStyle}
       // A11y
