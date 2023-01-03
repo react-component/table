@@ -18,11 +18,8 @@ const Demo = () => {
   const [count, setCount] = useState(0);
 
   const columns = [
-    {
-      title: 'title',
-      dataIndex: 'a',
-      render: () => count,
-    },
+    { title: 'title', ellipsis: { showTitle: false } },
+      { title: 'node title', ellipsis: { showTitle: false }, render: () => <h1>233</h1> },
   ];
 
   return (

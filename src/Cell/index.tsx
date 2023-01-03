@@ -1,4 +1,3 @@
-import { validateValue } from '../utils/valueUtil';
 import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import getValue from 'rc-util/lib/utils/get';
@@ -17,6 +16,7 @@ import type {
   RenderedCell,
   ScopeType,
 } from '../interface';
+import { validateValue } from '../utils/valueUtil';
 import useHoverState from './useHoverState';
 
 function isRenderCell<RecordType>(
@@ -283,11 +283,11 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       //Span
-      rowSpan={mergedRowSpan}
-      colSpan={mergedColSpan}
+      colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
+      rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
     >
       {appendNode}
-      {childNode}
+      {mergedChildNode}
     </Component>
   );
 }
