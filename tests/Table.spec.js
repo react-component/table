@@ -1100,12 +1100,12 @@ describe('Table.Basic', () => {
 
     const trs = wrapper.find('BodyRow');
 
-    expect(trs.at(0).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(1).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(2).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(3).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(4).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(5).find('Cell').at(1).text()).toEqual('1');
+    expect(trs.at(0).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(1).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(2).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(3).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(4).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(5).find(Cell).at(1).text()).toEqual('1');
   });
 
   it('hover the tree table', () => {
