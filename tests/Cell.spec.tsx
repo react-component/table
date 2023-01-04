@@ -101,4 +101,25 @@ describe('Table.Cell', () => {
     wrapper.find('button').simulate('click');
     expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('2');
   });
+
+  it('onHeaderCell', () => {
+    const wrapper = mount(
+      <Table
+        columns={[
+          {
+            title: (
+              <div>
+                <p>NotYet</p>
+              </div>
+            ),
+            onHeaderCell: () => ({
+              title: 'Bamboo',
+            }),
+          },
+        ]}
+      />,
+    );
+
+    expect(wrapper.find('thead th').prop('title')).toEqual('Bamboo');
+  });
 });
