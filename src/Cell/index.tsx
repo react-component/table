@@ -48,8 +48,6 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.TdHTMLAttributes<HTMLTableCellElement>;
-  /** @private Fixed for user use `shouldCellUpdate` which block the render */
-  // expanded?: boolean;
 
   rowType?: 'header' | 'body' | 'footer';
 
