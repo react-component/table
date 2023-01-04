@@ -176,11 +176,13 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
 
   // >>>>> Title
-  const title = getTitleFromCellRenderChildren({
-    rowType,
-    ellipsis,
-    children: childNode,
-  });
+  const title =
+    additionalProps.title ??
+    getTitleFromCellRenderChildren({
+      rowType,
+      ellipsis,
+      children: childNode,
+    });
 
   // >>>>> ClassName
   const mergedClassName = classNames(
