@@ -1,3 +1,4 @@
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import React, { useState } from 'react';
 import '../../assets/index.less';
@@ -17,9 +18,13 @@ const data = [
 const Demo = () => {
   const [count, setCount] = useState(0);
 
-  const columns = [
-    { title: 'title', ellipsis: { showTitle: false } },
-      { title: 'node title', ellipsis: { showTitle: false }, render: () => <h1>233</h1> },
+  const columns: TableProps<any>['columns'] = [
+    {
+      title: 'title',
+      dataIndex: 'a',
+      render: () => count,
+      // shouldCellUpdate: () => false,
+    },
   ];
 
   return (

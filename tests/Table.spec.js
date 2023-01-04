@@ -979,7 +979,7 @@ describe('Table.Basic', () => {
   });
 
   describe('shouldCellUpdate', () => {
-    it('basic', () => {
+    it('basic1', () => {
       const record = { key: 1 };
       let shouldUpdate = false;
       let renderTimes = 0;

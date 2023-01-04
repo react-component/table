@@ -1,4 +1,6 @@
 import { useImmutableMark } from '@rc-component/context';
+import useMemo from 'rc-util/lib/hooks/useMemo';
+import isEqual from 'rc-util/lib/isEqual';
 import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
@@ -18,60 +20,78 @@ export default function useCellRender<RecordType>(
   renderIndex: number,
   children?: React.ReactNode,
   render?: ColumnType<RecordType>['render'],
+  shouldCellUpdate?: ColumnType<RecordType>['shouldCellUpdate'],
 ) {
-  const mark = useImmutableMark();
-
   // TODO: Remove this after next major version
   const perfRecord = React.useContext(PerfContext);
+  const mark = useImmutableMark();
 
-  return React.useMemo<[React.ReactNode, CellType<RecordType>] | [React.ReactNode]>(() => {
-    if (validateValue(children)) {
-      return [children];
-    }
-
-    const path =
-      dataIndex === null || dataIndex === undefined || dataIndex === ''
-        ? []
-        : Array.isArray(dataIndex)
-        ? dataIndex
-        : [dataIndex];
-
-    const value: Record<string, unknown> | React.ReactNode = getValue(record, path);
-
-    // Customize render node
-    let returnChildNode = value;
-    let returnCellProps: CellType<RecordType> | undefined = undefined;
-
-    if (render) {
-      const renderData = render(value, record, renderIndex);
-
-      if (isRenderCell(renderData)) {
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            false,
-            '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
-          );
-        }
-        returnChildNode = renderData.children;
-        returnCellProps = renderData.props;
-        perfRecord.renderWithProps = true;
-      } else {
-        returnChildNode = renderData;
+  // ======================== Render ========================
+  const retData = useMemo<[React.ReactNode, CellType<RecordType>] | [React.ReactNode]>(
+    () => {
+      if (validateValue(children)) {
+        return [children];
       }
-    }
 
-    return [returnChildNode, returnCellProps];
-  }, [
-    // Force update deps
-    perfRecord.renderWithProps ? Math.random() : 0,
-    perfRecord,
-    mark,
+      const path =
+        dataIndex === null || dataIndex === undefined || dataIndex === ''
+          ? []
+          : Array.isArray(dataIndex)
+          ? dataIndex
+          : [dataIndex];
 
-    // Normal deps
-    children,
-    dataIndex,
-    record,
-    render,
-    renderIndex,
-  ]);
+      const value: Record<string, unknown> | React.ReactNode = getValue(record, path);
+
+      // Customize render node
+      let returnChildNode = value;
+      let returnCellProps: CellType<RecordType> | undefined = undefined;
+
+      if (render) {
+        const renderData = render(value, record, renderIndex);
+
+        if (isRenderCell(renderData)) {
+          if (process.env.NODE_ENV !== 'production') {
+            warning(
+              false,
+              '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
+            );
+          }
+          returnChildNode = renderData.children;
+          returnCellProps = renderData.props;
+          perfRecord.renderWithProps = true;
+        } else {
+          returnChildNode = renderData;
+        }
+      }
+
+      return [returnChildNode, returnCellProps];
+    },
+    [
+      // Force update deps
+      mark,
+
+      // Normal deps
+      record,
+      children,
+      dataIndex,
+      render,
+      renderIndex,
+    ],
+    (prev, next) => {
+      if (shouldCellUpdate) {
+        const [, prevRecord] = prev;
+        const [, nextRecord] = next;
+        return shouldCellUpdate(nextRecord, prevRecord);
+      }
+
+      // Legacy mode should always update
+      if (perfRecord.renderWithProps) {
+        return true;
+      }
+
+      return !isEqual(prev, next, true);
+    },
+  );
+
+  return retData;
 }

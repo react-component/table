@@ -15,7 +15,7 @@ import type {
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
 
-interface CellProps<RecordType extends DefaultRecordType> {
+export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -33,7 +33,7 @@ interface CellProps<RecordType extends DefaultRecordType> {
   ellipsis?: CellEllipsisType;
   align?: AlignType;
 
-  // shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
+  shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
   // Fixed
   fixLeft?: number | false;
@@ -94,6 +94,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     render,
     dataIndex,
     renderIndex,
+    shouldCellUpdate,
 
     // Row
     index,
@@ -130,6 +131,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     renderIndex,
     children,
     render,
+    shouldCellUpdate,
   );
 
   // ====================== Fixed =======================
