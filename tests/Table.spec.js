@@ -3,6 +3,7 @@ import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
+import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
@@ -850,7 +851,7 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(wrapper.find('tbody WrappedCell').first().key()).toBeTruthy();
+    expect(wrapper.find('tbody').find(Cell).first().key()).toBeTruthy();
   });
 
   it('syntactic sugar', () => {
@@ -978,7 +979,7 @@ describe('Table.Basic', () => {
   });
 
   describe('shouldCellUpdate', () => {
-    it('basic', () => {
+    it('basic1', () => {
       const record = { key: 1 };
       let shouldUpdate = false;
       let renderTimes = 0;
@@ -1099,12 +1100,12 @@ describe('Table.Basic', () => {
 
     const trs = wrapper.find('BodyRow');
 
-    expect(trs.at(0).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(1).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(2).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(3).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(4).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(5).find('Cell').at(1).text()).toEqual('1');
+    expect(trs.at(0).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(1).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(2).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(3).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(4).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(5).find(Cell).at(1).text()).toEqual('1');
   });
 
   it('hover the tree table', () => {
