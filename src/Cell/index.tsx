@@ -1,29 +1,19 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import getValue from 'rc-util/lib/utils/get';
-import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   AlignType,
   CellEllipsisType,
-  CellType,
   ColumnType,
   CustomizeComponent,
   DataIndex,
   DefaultRecordType,
-  RenderedCell,
   ScopeType,
 } from '../interface';
-import { validateValue } from '../utils/valueUtil';
+import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
-
-function isRenderCell<RecordType>(
-  data: React.ReactNode | RenderedCell<RecordType>,
-): data is RenderedCell<RecordType> {
-  return data && typeof data === 'object' && !Array.isArray(data) && !React.isValidElement(data);
-}
 
 interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
@@ -134,42 +124,13 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   ]);
 
   // ====================== Value =======================
-
-  let childNode: React.ReactNode;
-  let legacyCellProps: CellType<RecordType> | undefined = undefined;
-
-  if (validateValue(children)) {
-    childNode = children;
-  } else {
-    const path =
-      dataIndex === null || dataIndex === undefined || dataIndex === ''
-        ? []
-        : Array.isArray(dataIndex)
-        ? dataIndex
-        : [dataIndex];
-
-    const value: Record<string, unknown> | React.ReactNode = getValue(record, path);
-
-    // Customize render node
-    if (render) {
-      const renderData = render(value, record, renderIndex);
-
-      if (isRenderCell(renderData)) {
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            false,
-            '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
-          );
-        }
-        childNode = renderData.children;
-        legacyCellProps = renderData.props;
-      } else {
-        childNode = renderData;
-      }
-    } else {
-      childNode = value;
-    }
-  }
+  const [childNode, legacyCellProps] = useCellRender(
+    record,
+    dataIndex,
+    renderIndex,
+    children,
+    render,
+  );
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
@@ -293,4 +254,4 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   );
 }
 
-export default responseImmutable(Cell);
+export default React.memo(Cell);
