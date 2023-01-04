@@ -64,4 +64,41 @@ describe('Table.Cell', () => {
     });
     expect(wrapper.find('.rc-table-tbody .rc-table-cell').hasClass('test')).toBeTruthy();
   });
+
+  it('closure should work on render', () => {
+    class Demo extends React.Component {
+      state = {
+        value: 1,
+      };
+
+      columns = [
+        {
+          render: () => this.state.value,
+        },
+      ];
+
+      data = [{ key: 0 }];
+
+      render() {
+        return (
+          <>
+            <Table columns={this.columns} data={this.data} />
+            <button
+              onClick={() => {
+                this.setState({
+                  value: 2,
+                });
+              }}
+            />
+          </>
+        );
+      }
+    }
+
+    const wrapper = mount(<Demo />);
+    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('1');
+
+    wrapper.find('button').simulate('click');
+    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('2');
+  });
 });
