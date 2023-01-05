@@ -25,6 +25,7 @@
  */
 
 import { makeImmutable } from '@rc-component/context';
+import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import isVisible from 'rc-util/lib/Dom/isVisible';
@@ -832,7 +833,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
-const ImmutableTable = makeImmutable(Table);
+export function genTable(shouldTriggerRender?: CompareProps<typeof Table>): typeof Table {
+  return makeImmutable(Table, shouldTriggerRender);
+}
+
+const ImmutableTable = genTable();
 type ImmutableTableType = typeof ImmutableTable & {
   EXPAND_COLUMN: typeof EXPAND_COLUMN;
   Column: typeof Column;
