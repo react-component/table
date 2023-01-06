@@ -32,7 +32,6 @@ import isVisible from 'rc-util/lib/Dom/isVisible';
 import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
 import useEvent from 'rc-util/lib/hooks/useEvent';
-import isEqual from 'rc-util/lib/isEqual';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 import getValue from 'rc-util/lib/utils/get';
 import warning from 'rc-util/lib/warning';
@@ -41,7 +40,8 @@ import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN } from './constant';
 import TableContext from './context/TableContext';
-import FixedHolder, { FixedHeaderProps } from './FixedHolder';
+import type { FixedHeaderProps } from './FixedHolder';
+import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
@@ -83,27 +83,6 @@ const EMPTY_DATA = [];
 const EMPTY_SCROLL_TARGET = {};
 
 export const INTERNAL_HOOKS = 'rc-table-internal-hook';
-
-interface MemoTableContentProps {
-  children: React.ReactNode;
-  pingLeft: boolean;
-  pingRight: boolean;
-  props: any;
-}
-
-const MemoTableContent = React.memo<MemoTableContentProps>(
-  ({ children }) => children as React.ReactElement,
-
-  (prev, next) => {
-    if (!isEqual(prev.props, next.props, true)) {
-      return false;
-    }
-
-    // No additional render when pinged status change.
-    // This is not a bug.
-    return prev.pingLeft !== next.pingLeft || prev.pingRight !== next.pingRight;
-  },
-);
 
 export interface TableProps<RecordType = unknown>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
@@ -731,17 +710,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       ref={fullTableRef}
       {...dataProps}
     >
-      <MemoTableContent
-        pingLeft={pingedLeft}
-        pingRight={pingedRight}
-        props={{ ...props, stickyOffsets, mergedExpandedKeys }}
-      >
-        {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-        <div ref={scrollBodyContainerRef} className={`${prefixCls}-container`}>
-          {groupTableNode}
-        </div>
-        {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
-      </MemoTableContent>
+      {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
+      <div ref={scrollBodyContainerRef} className={`${prefixCls}-container`}>
+        {groupTableNode}
+      </div>
+      {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
     </div>
   );
 
