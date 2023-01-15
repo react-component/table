@@ -3,10 +3,13 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Table from '../src';
+import { safeAct } from './utils';
 
 describe('Table.Sticky', () => {
-  it('Sticky Header', () => {
+  beforeEach(() => {
     jest.useFakeTimers();
+  });
+  it('Sticky Header', async () => {
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
 
@@ -37,10 +40,12 @@ describe('Table.Sticky', () => {
       'rc-table-header rc-table-sticky-holder',
     );
 
-    wrapper.setProps({
-      sticky: {
-        offsetHeader: 10,
-      },
+    await safeAct(wrapper, () => {
+      wrapper.setProps({
+        sticky: {
+          offsetHeader: 10,
+        },
+      });
     });
 
     expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
@@ -52,7 +57,6 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky scroll', async () => {
-    jest.useFakeTimers();
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     let scrollLeft = 100;
@@ -208,8 +212,7 @@ describe('Table.Sticky', () => {
     jest.useRealTimers();
   });
 
-  it('Sticky Header with border classname', () => {
-    jest.useFakeTimers();
+  it('Sticky Header with border classname', async () => {
 
     const TableDemo = props => {
       return (
@@ -239,21 +242,19 @@ describe('Table.Sticky', () => {
       );
     };
     const wrapper = mount(<TableDemo />);
-
+    await safeAct(wrapper);
     expect(
       wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
     ).toEqual({
       position: 'sticky',
       right: 0,
     });
-
     expect(wrapper.find('.rc-table-cell-fix-sticky')).not.toBe(undefined);
 
     jest.useRealTimers();
   });
 
-  it('Sticky Header with scroll-y', () => {
-    jest.useFakeTimers();
+  it('Sticky Header with scroll-y', async () => {
 
     const TableDemo = props => {
       return (
@@ -284,7 +285,7 @@ describe('Table.Sticky', () => {
       );
     };
     const wrapper = mount(<TableDemo />);
-
+    await safeAct(wrapper);
     expect(
       wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
     ).toEqual({
@@ -296,10 +297,10 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky scroll with getContainer', async () => {
-    jest.useFakeTimers();
+    
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
-    const container = document.createElement('p');
+    const container = document.createElement('ol');
     container.style = 'height: 500px;overflow: scroll';
     document.body.appendChild(container);
     let scrollLeft = 100;
@@ -324,7 +325,7 @@ describe('Table.Sticky', () => {
       },
     });
 
-    const sectionSpy = spyElementPrototypes(HTMLParagraphElement, {
+    const sectionSpy = spyElementPrototypes(HTMLOListElement, {
       scrollLeft: {
         get: () => scrollLeft,
         set: left => {
