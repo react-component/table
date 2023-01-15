@@ -3,11 +3,14 @@ import RcResizeObserver from 'rc-resize-observer';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import { act } from 'react-dom/test-utils';
+import { safeAct } from './utils';
 import Table from '../src';
 
 describe('Table.FixedColumn', () => {
   let domSpy;
-
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   beforeAll(() => {
     domSpy = spyElementPrototypes(HTMLElement, {
       offsetParent: {
@@ -86,18 +89,14 @@ describe('Table.FixedColumn', () => {
                 },
               ]);
           });
-          await act(async () => {
-            jest.runAllTimers();
-            await Promise.resolve();
-            wrapper.update();
-          });
+          await safeAct(wrapper);
           expect(wrapper.render()).toMatchSnapshot();
           jest.useRealTimers();
         });
       });
     });
 
-    it('all column has width should use it', () => {
+    it('all column has width should use it', async () => {
       const wrapper = mount(
         <Table
           columns={[
@@ -108,16 +107,19 @@ describe('Table.FixedColumn', () => {
           scroll={{ x: 'max-content' }}
         />,
       );
+      
+      await safeAct(wrapper);
 
       expect(wrapper.find('colgroup').render()).toMatchSnapshot();
     });
   });
 
-  it('has correct scroll classNames when table resize', () => {
+  it('has correct scroll classNames when table resize', async () => {
     const wrapper = mount(
       <Table columns={columns} data={data} scroll={{ x: true }} style={{ width: 2000 }} />,
     );
 
+    await safeAct(wrapper);
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
       wrapper
@@ -203,7 +205,7 @@ describe('Table.FixedColumn', () => {
       errorSpy.mockRestore();
     });
 
-    it('left', () => {
+    it('left', async () => {
       mount(<Table columns={[{}, { fixed: 'left' }, {}]} />);
       expect(errorSpy).toHaveBeenCalledWith(
         "Warning: Index 0 of `columns` missing `fixed='left'` prop.",
@@ -231,11 +233,12 @@ describe('Table.FixedColumn', () => {
     expect(wrapper.find('tr td').find('.rc-table-cell-content')).toHaveLength(data.length);
   });
 
-  it('fixed column renders correctly RTL', () => {
+  it('fixed column renders correctly RTL', async () => {
     const wrapper = mount(
       <Table columns={columns} data={data} direction="rtl" scroll={{ x: 1 }} />,
     );
     expect(wrapper.render()).toMatchSnapshot();
+    await safeAct(wrapper);
   });
 
   it('has correct scroll classNames when table direction is RTL', () => {
@@ -264,8 +267,9 @@ describe('Table.FixedColumn', () => {
     ).toBeTruthy();
   });
 
-  it('not break measure count', () => {
+  it('not break measure count', async () => {
     const wrapper = mount(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
+    await safeAct(wrapper);
     expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(5);
 
     wrapper.setProps({ columns: columns.slice(0, 4) });
@@ -273,8 +277,9 @@ describe('Table.FixedColumn', () => {
     expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(4);
   });
 
-  it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', () => {
+  it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
     const wrapper = mount(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
+    await safeAct(wrapper);
     expect(wrapper.find('.rc-table-cell-fix-left-all')).toHaveLength(10);
   });
 });
