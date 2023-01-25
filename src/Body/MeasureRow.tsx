@@ -1,5 +1,6 @@
-import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
+import * as React from 'react';
+import ResizeContext from '../context/ResizeContext';
 import MeasureCell from './MeasureCell';
 
 export interface MeasureCellProps {
@@ -9,6 +10,7 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
+  const { resizeLimtMap } = React.useContext(ResizeContext);
   return (
     <tr
       aria-hidden="true"
@@ -18,7 +20,12 @@ export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: Me
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           infoList.forEach(({ data: columnKey, size }) => {
-            onColumnResize(columnKey, size.offsetWidth);
+            const limtWidth = resizeLimtMap.has(columnKey) ? resizeLimtMap.get(columnKey) : 0;
+            if (limtWidth > size.offsetWidth) {
+              onColumnResize(columnKey, limtWidth);
+            } else {
+              onColumnResize(columnKey, size.offsetWidth);
+            }
           });
         }}
       >

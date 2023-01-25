@@ -1,25 +1,26 @@
-import * as React from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
 import { supportRef } from 'rc-util/lib/ref';
-import type {
-  DataIndex,
-  ColumnType,
-  RenderedCell,
-  CustomizeComponent,
-  CellType,
-  DefaultRecordType,
-  AlignType,
-  CellEllipsisType,
-} from '../interface';
-import { getPathValue, validateValue } from '../utils/valueUtil';
-import StickyContext from '../context/StickyContext';
-import HoverContext from '../context/HoverContext';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import shallowEqual from 'shallowequal';
 import BodyContext from '../context/BodyContext';
 import type { HoverContextProps } from '../context/HoverContext';
-import warning from 'rc-util/lib/warning';
+import HoverContext from '../context/HoverContext';
 import PerfContext from '../context/PerfContext';
+import ResizeContext from '../context/ResizeContext';
+import StickyContext from '../context/StickyContext';
 import { useContextSelector } from '../ContextSelector';
+import type {
+  AlignType,
+  CellEllipsisType,
+  CellType,
+  ColumnType,
+  CustomizeComponent,
+  DataIndex,
+  DefaultRecordType,
+  RenderedCell,
+} from '../interface';
+import { getHeaderCellNodeWidth, getPathValue, validateValue } from '../utils/valueUtil';
 
 /** Check if cell is in hover range */
 function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
@@ -58,6 +59,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   rowSpan?: number;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  columnKey?: React.Key;
 
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
@@ -135,6 +137,7 @@ function Cell<RecordType extends DefaultRecordType>(
     // Hover
     hovering,
     onHover,
+    columnKey,
   }: // MISC
   InternalCellProps<RecordType>,
   ref: React.Ref<any>,
@@ -144,6 +147,7 @@ function Cell<RecordType extends DefaultRecordType>(
   const perfRecord = React.useContext(PerfContext);
   const supportSticky = React.useContext(StickyContext);
   const { allColumnsFixedLeft } = React.useContext(BodyContext);
+  const { setResizeLimt } = React.useContext(ResizeContext);
 
   // ==================== Child Node ====================
   const [childNode, legacyCellProps] = React.useMemo<
@@ -193,6 +197,14 @@ function Cell<RecordType extends DefaultRecordType>(
     render,
     renderIndex,
   ]);
+
+  React.useEffect(() => {
+    const node: HTMLElement | null = (ref as React.MutableRefObject<any>)?.current;
+    if (node instanceof HTMLElement && node?.localName === 'th' && isSticky) {
+      const w = getHeaderCellNodeWidth(node);
+      setResizeLimt(columnKey, w);
+    }
+  }, [ref, appendNode, childNode, columnKey]);
 
   let mergedChildNode = childNode;
 
@@ -332,11 +344,14 @@ const MemoCell = React.memo(
 
 /** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
 const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
+  const cellBaseRef = React.useRef(null);
   const { index, additionalProps = {}, colSpan, rowSpan } = props;
   const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
 
   const mergedColSpan = colSpan ?? cellColSpan;
   const mergedRowSpan = rowSpan ?? cellRowSpan;
+
+  const cellRef = ref ? ref : cellBaseRef;
 
   const { onHover, hovering } = useContextSelector(HoverContext, cxt => {
     const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
@@ -353,7 +368,7 @@ const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>
       colSpan={mergedColSpan}
       rowSpan={mergedRowSpan}
       hovering={hovering}
-      ref={ref}
+      ref={cellRef}
       onHover={onHover}
     />
   );

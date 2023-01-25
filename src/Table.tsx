@@ -24,60 +24,60 @@
  *  - All expanded props, move into expandable
  */
 
-import * as React from 'react';
-import isVisible from 'rc-util/lib/Dom/isVisible';
-import pickAttrs from 'rc-util/lib/pickAttrs';
-import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
-import warning from 'rc-util/lib/warning';
 import ResizeObserver from 'rc-resize-observer';
+import isVisible from 'rc-util/lib/Dom/isVisible';
+import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
-import ColumnGroup from './sugar/ColumnGroup';
-import Column from './sugar/Column';
-import Header from './Header/Header';
-import type {
-  GetRowKey,
-  ColumnsType,
-  TableComponents,
-  Key,
-  DefaultRecordType,
-  TriggerEventHandler,
-  GetComponentProps,
-  ExpandableConfig,
-  LegacyExpandableProps,
-  GetComponent,
-  PanelRender,
-  TableLayout,
-  ExpandableType,
-  RowClassName,
-  CustomizeComponent,
-  ColumnType,
-  CustomizeScrollBody,
-  TableSticky,
-} from './interface';
-import TableContext from './context/TableContext';
-import BodyContext from './context/BodyContext';
+import pickAttrs from 'rc-util/lib/pickAttrs';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import shallowEqual from 'shallowequal';
 import Body from './Body';
-import useColumns from './hooks/useColumns';
-import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
-import { getPathValue, validateValue, getColumnsKey } from './utils/valueUtil';
-import ResizeContext from './context/ResizeContext';
-import useStickyOffsets from './hooks/useStickyOffsets';
 import ColGroup from './ColGroup';
-import { getExpandableProps } from './utils/legacyUtil';
-import Panel from './Panel';
-import Footer, { FooterComponents } from './Footer';
-import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
-import { getCellFixedInfo } from './utils/fixUtil';
-import StickyScrollBar from './stickyScrollBar';
-import useSticky from './hooks/useSticky';
+import { EXPAND_COLUMN } from './constant';
+import BodyContext from './context/BodyContext';
+import ExpandedRowContext from './context/ExpandedRowContext';
+import ResizeContext from './context/ResizeContext';
+import StickyContext from './context/StickyContext';
+import TableContext from './context/TableContext';
 import FixedHolder from './FixedHolder';
+import Footer, { FooterComponents } from './Footer';
 import type { SummaryProps } from './Footer/Summary';
 import Summary from './Footer/Summary';
-import StickyContext from './context/StickyContext';
-import ExpandedRowContext from './context/ExpandedRowContext';
-import { EXPAND_COLUMN } from './constant';
+import Header from './Header/Header';
+import useColumns from './hooks/useColumns';
+import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
+import useSticky from './hooks/useSticky';
+import useStickyOffsets from './hooks/useStickyOffsets';
+import type {
+  ColumnsType,
+  ColumnType,
+  CustomizeComponent,
+  CustomizeScrollBody,
+  DefaultRecordType,
+  ExpandableConfig,
+  ExpandableType,
+  GetComponent,
+  GetComponentProps,
+  GetRowKey,
+  Key,
+  LegacyExpandableProps,
+  PanelRender,
+  RowClassName,
+  TableComponents,
+  TableLayout,
+  TableSticky,
+  TriggerEventHandler,
+} from './interface';
+import Panel from './Panel';
+import StickyScrollBar from './stickyScrollBar';
+import Column from './sugar/Column';
+import ColumnGroup from './sugar/ColumnGroup';
+import { findAllChildrenKeys, renderExpandIcon } from './utils/expandUtil';
+import { getCellFixedInfo } from './utils/fixUtil';
+import { getExpandableProps } from './utils/legacyUtil';
+import { getColumnsKey, getPathValue, validateValue } from './utils/valueUtil';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -447,6 +447,18 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
       });
     }
   }, []);
+
+  const [resizeLimtMap, setResizeLimtMap] = React.useState<Map<React.Key, number>>(new Map());
+
+  const setResizeLimt = React.useCallback(
+    (key: React.Key, value: number) => {
+      resizeLimtMap.set(key, value);
+      const updatedMap = new Map() as Map<React.Key, number>;
+      resizeLimtMap.forEach((mapVal, mapKey) => updatedMap.set(mapKey, mapVal));
+      setResizeLimtMap(updatedMap);
+    },
+    [setResizeLimtMap, resizeLimtMap],
+  );
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
@@ -851,7 +863,10 @@ function Table<RecordType extends DefaultRecordType>(props: TableProps<RecordTyp
     [componentWidth, fixHeader, fixColumn, horizonScroll],
   );
 
-  const ResizeContextValue = React.useMemo(() => ({ onColumnResize }), [onColumnResize]);
+  const ResizeContextValue = React.useMemo(
+    () => ({ onColumnResize, resizeLimtMap, setResizeLimt }),
+    [onColumnResize, resizeLimtMap, setResizeLimt],
+  );
 
   return (
     <StickyContext.Provider value={supportSticky}>

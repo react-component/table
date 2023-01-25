@@ -1,7 +1,6 @@
-import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Sticky', () => {
@@ -436,5 +435,30 @@ describe('Table.Sticky', () => {
     sectionSpy.mockRestore();
     mockFn.mockRestore();
     jest.useRealTimers();
+  });
+
+  it('Sticy table resize should not break column title', async () => {
+    const SticyTable = () => {
+      return (
+        <Table
+          columns={[
+            { title: 'title1', dataIndex: 'a', key: 'a' },
+            { title: 'title2', dataIndex: 'b', key: 'b' },
+            { title: 'title3', dataIndex: 'c', key: 'c' },
+            { title: 'title4', dataIndex: 'd', key: 'd' },
+          ]}
+          data={[
+            { a: 'aaa', b: 'bbb', c: 'ccc', d: 'ddd', key: '1' },
+            { a: 'aaa', b: 'bbb', c: 'ccc', d: 'ddd', key: '2' },
+          ]}
+          scroll={{
+            x: 'max-content',
+          }}
+          sticky
+        />
+      );
+    };
+    const wrapper = mount(<SticyTable />);
+    expect(wrapper.render()).toMatchSnapshot();
   });
 });

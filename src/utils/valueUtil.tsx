@@ -1,4 +1,4 @@
-import type { Key, DataIndex } from '../interface';
+import type { DataIndex, Key } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -60,4 +60,25 @@ export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
 
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
+}
+
+export function getHeaderCellNodeWidth(node: HTMLElement) {
+  const container = document.createElement('div');
+  const { padding, borderWidth, fontSize, fontWeight, boxSizing } = getComputedStyle(node);
+  let nodeWidth = 0;
+  container.style.whiteSpace = 'nowrap';
+  container.style.opacity = '0';
+  container.innerHTML = node.innerHTML;
+  container.style.display = 'inline-block';
+  container.style.padding = padding;
+  container.style.borderWidth = borderWidth;
+  container.style.fontSize = fontSize;
+  container.style.fontWeight = fontWeight;
+  container.style.boxSizing = boxSizing;
+  document.body.appendChild(container);
+  nodeWidth = Math.ceil(parseFloat(getComputedStyle(container).width || '100')) + 1;
+  setTimeout(() => {
+    document.body.removeChild(container);
+  }, 0);
+  return nodeWidth;
 }
