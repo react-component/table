@@ -294,6 +294,7 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky scroll with getContainer', async () => {
+    
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     const container = document.createElement('ol');

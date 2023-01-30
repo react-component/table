@@ -32,7 +32,7 @@ function Footer<RecordType>(props: FooterProps<RecordType>) {
       stickyOffsets,
       flattenColumns,
       scrollColumnIndex: scrollColumn?.scrollbar ? lastColumnIndex : null,
-      columns,
+      columns
     }),
     [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets, columns],
   );
