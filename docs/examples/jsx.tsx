@@ -1,6 +1,6 @@
 /* eslint-disable import/no-named-as-default-member */
-import Table from 'rc-table';
 import React from 'react';
+import Table from 'rc-table';
 import '../../assets/index.less';
 
 const { ColumnGroup, Column } = Table;

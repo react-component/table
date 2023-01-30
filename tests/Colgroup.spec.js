@@ -1,5 +1,5 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { mount } from 'enzyme';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 
 describe('Table.ColGroup', () => {

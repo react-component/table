@@ -1,5 +1,5 @@
-import Table from 'rc-table';
 import React from 'react';
+import Table from 'rc-table';
 import '../../assets/index.less';
 
 const columns = [
@@ -43,7 +43,12 @@ const Demo = () => {
         Trigger Visible
       </button>
       <div style={{ display: visible ? undefined : 'none' }}>
-        <Table style={{ width: 800 }} scroll={{ x: 1500, y: 300 }} columns={columns} data={data} />
+        <Table
+          style={{ width: 800 }}
+          scroll={{ x: 1500, y: 300 }}
+          columns={columns}
+          data={data}
+        />
       </div>
     </div>
   );

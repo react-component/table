@@ -3,8 +3,8 @@ import RcResizeObserver from 'rc-resize-observer';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { safeAct } from './utils';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -121,7 +121,7 @@ describe('Table.FixedHeader', () => {
         }}
       />,
     );
-
+    
     await safeAct(wrapper);
     expect(wrapper.find('.rc-table-header table').props().style).toEqual(
       expect.objectContaining({ visibility: null }),
@@ -247,11 +247,16 @@ describe('Table.FixedHeader', () => {
         name: 'Jack1',
       },
     ];
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={data}
+        scroll={{ x: true }}
+      />,
+    );
     await safeAct(wrapper);
     expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
-    expect(wrapper.find('th').first().props().className).not.toContain(
-      'rc-table-cell-fix-left-last',
-    );
+    expect(wrapper.find('th').first().props().className).not.toContain('rc-table-cell-fix-left-last');
+    
   });
 });

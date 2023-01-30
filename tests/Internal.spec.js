@@ -1,5 +1,5 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { mount } from 'enzyme';
 import Table from '../src';
 import { INTERNAL_HOOKS } from '../src/Table';
 

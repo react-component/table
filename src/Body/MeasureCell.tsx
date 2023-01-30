@@ -1,5 +1,5 @@
-import ResizeObserver from 'rc-resize-observer';
 import * as React from 'react';
+import ResizeObserver from 'rc-resize-observer';
 
 export interface MeasureCellProps {
   columnKey: React.Key;

@@ -1,7 +1,7 @@
-import type { ColumnType } from '@/interface';
+import React, { useState, useCallback } from 'react';
 import Table from 'rc-table';
-import React, { useCallback, useState } from 'react';
 import '../../assets/index.less';
+import type { ColumnType } from '@/interface';
 
 interface RecordType {
   a: string;

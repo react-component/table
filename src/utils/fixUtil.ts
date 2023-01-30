@@ -1,10 +1,4 @@
-import type {
-  ColumnGroupType,
-  ColumnType,
-  Direction,
-  FixedType,
-  StickyOffsets,
-} from '../interface';
+import type { StickyOffsets, FixedType, Direction, ColumnType, ColumnGroupType } from '../interface';
 
 export interface FixedInfo {
   fixLeft: number | false;
@@ -25,7 +19,7 @@ export function getCellFixedInfo<RecordType = any>(
   columns: readonly { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
   direction: Direction,
-  curColumns?: ColumnType<RecordType> | ColumnGroupType<RecordType>,
+  curColumns?: ColumnType<RecordType> | ColumnGroupType<RecordType>
 ): FixedInfo {
   const startColumn = columns[colStart] || {};
   const endColumn = columns[colEnd] || {};

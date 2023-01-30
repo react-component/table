@@ -1,8 +1,8 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
-import { ColumnType } from '@/interface';
-import Table from 'rc-table';
 import React, { useRef } from 'react';
+import Table from 'rc-table';
 import '../../assets/index.less';
+import { ColumnType } from '@/interface';
 
 interface RecordType {
   a?: string;

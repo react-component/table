@@ -1,8 +1,8 @@
-import classNames from 'classnames';
-import CSSMotionList from 'rc-animate/lib/CSSMotionList';
-import Table from 'rc-table';
-import toArray from 'rc-util/lib/Children/toArray';
 import React from 'react';
+import CSSMotionList from 'rc-animate/lib/CSSMotionList';
+import classNames from 'classnames';
+import toArray from 'rc-util/lib/Children/toArray';
+import Table from 'rc-table';
 import '../../assets/index.less';
 import './animation.less';
 

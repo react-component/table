@@ -1,7 +1,7 @@
-import { mount } from 'enzyme';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { mount } from 'enzyme';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import Table from '../src';
 import { safeAct } from './utils';
 
@@ -213,6 +213,7 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky Header with border classname', async () => {
+
     const TableDemo = props => {
       return (
         <div
@@ -254,6 +255,7 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky Header with scroll-y', async () => {
+
     const TableDemo = props => {
       return (
         <div
@@ -295,6 +297,7 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky scroll with getContainer', async () => {
+    
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     const container = document.createElement('ol');

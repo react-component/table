@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, useState } from 'react';
+import { useState, AllHTMLAttributes } from 'react';
 
 export function useCheckbox(
   defaultChecked: boolean = false,

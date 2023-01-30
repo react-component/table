@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { ColumnType } from '@/interface';
-import Table from 'rc-table';
 import React from 'react';
-import '../../assets/index.less';
+import Table from 'rc-table';
 import { useCheckbox } from './utils/useInput';
+import '../../assets/index.less';
+import { ColumnType } from '@/interface';
 
 interface RecordType {
   a: string;

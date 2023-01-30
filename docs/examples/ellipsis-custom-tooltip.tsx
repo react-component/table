@@ -1,8 +1,8 @@
-import Table from 'rc-table';
-import Tooltip from 'rc-tooltip';
-import 'rc-tooltip/assets/bootstrap.css';
 import React from 'react';
+import Tooltip from 'rc-tooltip';
+import Table from 'rc-table';
 import '../../assets/index.less';
+import 'rc-tooltip/assets/bootstrap.css';
 
 const createColumns = (length: number) => {
   return Array.from({ length }, (_, i) => ({

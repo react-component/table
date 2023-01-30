@@ -599,11 +599,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             {bodyColGroup}
             {bodyTable}
             {!fixFooter && summaryNode && (
-              <Footer
-                stickyOffsets={stickyOffsets}
-                flattenColumns={flattenColumns}
-                columns={columns}
-              >
+              <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns} columns={columns}>
                 {summaryNode}
               </Footer>
             )}

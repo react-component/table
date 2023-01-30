@@ -1,19 +1,19 @@
-import toArray from 'rc-util/lib/Children/toArray';
-import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import { EXPAND_COLUMN } from '../constant';
+import warning from 'rc-util/lib/warning';
+import toArray from 'rc-util/lib/Children/toArray';
 import type {
-  ColumnGroupType,
   ColumnsType,
   ColumnType,
-  Direction,
   FixedType,
-  GetRowKey,
   Key,
-  RenderExpandIcon,
+  GetRowKey,
   TriggerEventHandler,
+  RenderExpandIcon,
+  ColumnGroupType,
+  Direction,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
+import { EXPAND_COLUMN } from '../constant';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,

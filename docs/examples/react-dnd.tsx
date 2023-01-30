@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
-import update from 'immutability-helper';
-import Table from 'rc-table';
 import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { createGlobalStyle } from 'styled-components';
+import Table from 'rc-table';
 import '../../assets/index.less';
 
 createGlobalStyle`
