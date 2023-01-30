@@ -1,8 +1,6 @@
-import React from 'react';
 import Table from 'rc-table';
+import React from 'react';
 import '../../assets/index.less';
-import { ColumnsType } from '@/interface';
-import { useCheckbox } from './utils/useInput';
 
 const columns = [
   {

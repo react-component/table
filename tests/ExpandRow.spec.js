@@ -1,8 +1,8 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Expand', () => {

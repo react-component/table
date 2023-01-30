@@ -1,5 +1,5 @@
-import React from 'react';
 import Table from 'rc-table';
+import React from 'react';
 import '../../assets/index.less';
 
 const data = [];
@@ -46,7 +46,7 @@ class Demo extends React.Component {
         data={data}
         scroll={{ y: 300 }}
         rowKey={record => record.key}
-        onRow={(record, index) => ({ style: { backgroundColor: "red" } })}
+        onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
       />
     );
   }

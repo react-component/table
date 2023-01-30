@@ -3,8 +3,8 @@ import RcResizeObserver from 'rc-resize-observer';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import { act } from 'react-dom/test-utils';
-import { safeAct } from './utils';
 import Table from '../src';
+import { safeAct } from './utils';
 
 describe('Table.FixedColumn', () => {
   let domSpy;
@@ -107,7 +107,7 @@ describe('Table.FixedColumn', () => {
           scroll={{ x: 'max-content' }}
         />,
       );
-      
+
       await safeAct(wrapper);
 
       expect(wrapper.find('colgroup').render()).toMatchSnapshot();

@@ -1,9 +1,9 @@
 .move {
   opacity: 0;
-  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   animation-duration: 0.3s;
-  animation-fill-mode: both;
   animation-play-state: paused;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: both;
 
   &-appear-active {
     animation-name: move-in;
@@ -22,22 +22,22 @@
 
 @keyframes move-in {
   0% {
-    opacity: 0;
     transform: translateX(20px);
+    opacity: 0;
   }
   100% {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
 @keyframes move-out {
   0% {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
   100% {
-    opacity: 0;
     transform: translateX(-20px);
+    opacity: 0;
   }
 }

@@ -1,9 +1,9 @@
-import React from 'react';
-import Menu, { Item, Divider } from 'rc-menu';
 import DropDown from 'rc-dropdown';
 import 'rc-dropdown/assets/index.css';
+import Menu, { Divider, Item } from 'rc-menu';
 import 'rc-menu/assets/index.css';
 import Table from 'rc-table';
+import React from 'react';
 import '../../assets/index.less';
 
 const data = [];

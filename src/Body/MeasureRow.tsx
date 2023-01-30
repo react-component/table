@@ -1,5 +1,5 @@
-import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
+import * as React from 'react';
 import MeasureCell from './MeasureCell';
 
 export interface MeasureCellProps {

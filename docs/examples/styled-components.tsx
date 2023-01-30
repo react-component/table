@@ -1,6 +1,6 @@
+import Table from 'rc-table';
 import React from 'react';
 import styled from 'styled-components';
-import Table from 'rc-table';
 import '../../assets/index.less';
 
 const columns = [

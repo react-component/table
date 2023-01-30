@@ -1,7 +1,7 @@
-import React from 'react';
 import classNames from 'classnames';
-import { VariableSizeGrid as Grid } from 'react-window';
 import Table from 'rc-table';
+import React from 'react';
+import { VariableSizeGrid as Grid } from 'react-window';
 import '../../assets/index.less';
 import './virtual-list.less';
 

@@ -1,11 +1,14 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
-  const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
+  const data = [
+    { key: 'key0', name: 'Lucy' },
+    { key: 'key1', name: 'Jack' },
+  ];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
