@@ -45,7 +45,9 @@
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish",
     "lint": "eslint src/ --ext .tsx,.ts",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
-    "now-build": "npm run docs:build"
+    "now-build": "npm run docs:build",
+    "husky-hook": "husky add .husky/pre-commit 'npx --no-install lint-staged'",
+    "prepare": "husky install"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
@@ -74,8 +76,10 @@
     "father": "^4.0.0",
     "gh-pages": "^3.1.0",
     "glob": "^7.1.6",
+    "husky": "^8.0.3",
     "immutability-helper": "^3.0.0",
     "less": "^3.10.3",
+    "lint-staged": "^13.1.0",
     "np": "^7.0.0",
     "prettier": "^2.0.1",
     "rc-animate": "^3.0.0",
@@ -93,5 +97,9 @@
     "regenerator-runtime": "^0.13.7",
     "styled-components": "^5.0.1",
     "typescript": "^4.8.4"
+  },
+  "lint-staged": {
+    "src/*.{ts,tsx}": "eslint --ext",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": "prettier --write"
   }
 }
