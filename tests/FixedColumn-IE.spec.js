@@ -1,11 +1,10 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
-import Table from '../src';
 import RcResizeObserver from 'rc-resize-observer';
+import Table from '../src';
 
 jest.mock('rc-util/lib/Dom/styleChecker', () => {
   return {

@@ -1,7 +1,7 @@
-import React from 'react';
-import Table from 'rc-table';
-import '../../assets/index.less';
 import { ColumnsType, RenderedCell } from '@/interface';
+import Table from 'rc-table';
+import React from 'react';
+import '../../assets/index.less';
 
 interface RecordType {
   a?: string;

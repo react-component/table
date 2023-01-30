@@ -1,5 +1,7 @@
+import { responseImmutable, useContext } from '@rc-component/context';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   CellType,
   ColumnGroupType,
@@ -88,18 +90,20 @@ export interface HeaderProps<RecordType> {
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
 }
 
-function Header<RecordType>({
-  stickyOffsets,
-  columns,
-  flattenColumns,
-  onHeaderRow,
-}: HeaderProps<RecordType>): React.ReactElement {
-  const { prefixCls, getComponent } = React.useContext(TableContext);
+function Header<RecordType>(props: HeaderProps<RecordType>): React.ReactElement {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const { stickyOffsets, columns, flattenColumns, onHeaderRow } = props;
+
+  const { prefixCls, getComponent } = useContext(TableContext, ['prefixCls', 'getComponent']);
   const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
   const thComponent = getComponent(['header', 'cell'], 'th');
+  const tdComponent = getComponent(['header', 'cell'], 'td');
 
   return (
     <WrapperComponent className={`${prefixCls}-thead`}>
@@ -112,6 +116,7 @@ function Header<RecordType>({
             stickyOffsets={stickyOffsets}
             rowComponent={trComponent}
             cellComponent={thComponent}
+            tdCellComponent={tdComponent}
             onHeaderRow={onHeaderRow}
             index={rowIndex}
           />
@@ -123,4 +128,4 @@ function Header<RecordType>({
   );
 }
 
-export default Header;
+export default responseImmutable(Header);

@@ -1,15 +1,14 @@
+import { responseImmutable, useContext } from '@rc-component/context';
 import * as React from 'react';
-import TableContext from '../context/TableContext';
-import type { GetRowKey, Key, GetComponentProps } from '../interface';
-import ExpandedRow from './ExpandedRow';
-import BodyContext from '../context/BodyContext';
-import { getColumnsKey } from '../utils/valueUtil';
-import ResizeContext from '../context/ResizeContext';
-import BodyRow from './BodyRow';
-import useFlattenRecords from '../hooks/useFlattenRecords';
-import HoverContext from '../context/HoverContext';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
+import TableContext from '../context/TableContext';
+import useFlattenRecords from '../hooks/useFlattenRecords';
+import devRenderTimes from '../hooks/useRenderTimes';
+import type { GetComponentProps, GetRowKey, Key } from '../interface';
+import { getColumnsKey } from '../utils/valueUtil';
+import BodyRow from './BodyRow';
+import ExpandedRow from './ExpandedRow';
 import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
@@ -23,19 +22,28 @@ export interface BodyProps<RecordType> {
   childrenColumnName: string;
 }
 
-function Body<RecordType>({
-  data,
-  getRowKey,
-  measureColumnWidth,
-  expandedKeys,
-  onRow,
-  rowExpandable,
-  emptyNode,
-  childrenColumnName,
-}: BodyProps<RecordType>) {
-  const { onColumnResize } = React.useContext(ResizeContext);
-  const { prefixCls, getComponent } = React.useContext(TableContext);
-  const { flattenColumns } = React.useContext(BodyContext);
+function Body<RecordType>(props: BodyProps<RecordType>) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const {
+    data,
+    getRowKey,
+    measureColumnWidth,
+    expandedKeys,
+    onRow,
+    rowExpandable,
+    emptyNode,
+    childrenColumnName,
+  } = props;
+
+  const { prefixCls, getComponent, onColumnResize, flattenColumns } = useContext(TableContext, [
+    'prefixCls',
+    'getComponent',
+    'onColumnResize',
+    'flattenColumns',
+  ]);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
@@ -45,66 +53,58 @@ function Body<RecordType>({
     renderWithProps: false,
   });
 
-  // ====================== Hover =======================
-  const [startRow, setStartRow] = React.useState(-1);
-  const [endRow, setEndRow] = React.useState(-1);
-
-  const onHover = React.useCallback((start: number, end: number) => {
-    setStartRow(start);
-    setEndRow(end);
-  }, []);
-
   // ====================== Render ======================
-  const bodyNode = React.useMemo(() => {
-    const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
-    const trComponent = getComponent(['body', 'row'], 'tr');
-    const tdComponent = getComponent(['body', 'cell'], 'td');
+  const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
+  const trComponent = getComponent(['body', 'row'], 'tr');
+  const tdComponent = getComponent(['body', 'cell'], 'td');
+  const thComponent = getComponent(['body', 'cell'], 'th');
 
-    let rows: React.ReactNode;
-    if (data.length) {
-      rows = flattenData.map((item, idx) => {
-        const { record, indent, index: renderIndex } = item;
+  let rows: React.ReactNode;
+  if (data.length) {
+    rows = flattenData.map((item, idx) => {
+      const { record, indent, index: renderIndex } = item;
 
-        const key = getRowKey(record, idx);
+      const key = getRowKey(record, idx);
 
-        return (
-          <BodyRow
-            key={key}
-            rowKey={key}
-            record={record}
-            recordKey={key}
-            index={idx}
-            renderIndex={renderIndex}
-            rowComponent={trComponent}
-            cellComponent={tdComponent}
-            expandedKeys={expandedKeys}
-            onRow={onRow}
-            getRowKey={getRowKey}
-            rowExpandable={rowExpandable}
-            childrenColumnName={childrenColumnName}
-            indent={indent}
-          />
-        );
-      });
-    } else {
-      rows = (
-        <ExpandedRow
-          expanded
-          className={`${prefixCls}-placeholder`}
-          prefixCls={prefixCls}
-          component={trComponent}
+      return (
+        <BodyRow
+          key={key}
+          rowKey={key}
+          record={record}
+          index={idx}
+          renderIndex={renderIndex}
+          rowComponent={trComponent}
           cellComponent={tdComponent}
-          colSpan={flattenColumns.length}
-          isEmpty
-        >
-          {emptyNode}
-        </ExpandedRow>
+          scopeCellComponent={thComponent}
+          expandedKeys={expandedKeys}
+          onRow={onRow}
+          getRowKey={getRowKey}
+          rowExpandable={rowExpandable}
+          childrenColumnName={childrenColumnName}
+          indent={indent}
+        />
       );
-    }
+    });
+  } else {
+    rows = (
+      <ExpandedRow
+        expanded
+        className={`${prefixCls}-placeholder`}
+        prefixCls={prefixCls}
+        component={trComponent}
+        cellComponent={tdComponent}
+        colSpan={flattenColumns.length}
+        isEmpty
+      >
+        {emptyNode}
+      </ExpandedRow>
+    );
+  }
 
-    const columnsKey = getColumnsKey(flattenColumns);
+  const columnsKey = getColumnsKey(flattenColumns);
 
-    return (
+  return (
+    <PerfContext.Provider value={perfRef.current}>
       <WrapperComponent className={`${prefixCls}-tbody`}>
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (
@@ -117,33 +117,10 @@ function Body<RecordType>({
 
         {rows}
       </WrapperComponent>
-    );
-  }, [
-    data,
-    prefixCls,
-    onRow,
-    measureColumnWidth,
-    expandedKeys,
-    getRowKey,
-    getComponent,
-    emptyNode,
-    flattenColumns,
-    childrenColumnName,
-    onColumnResize,
-    rowExpandable,
-    flattenData,
-  ]);
-
-  return (
-    <PerfContext.Provider value={perfRef.current}>
-      <HoverContext.Provider value={{ startRow, endRow, onHover }}>
-        {bodyNode}
-      </HoverContext.Provider>
     </PerfContext.Provider>
   );
 }
 
-const MemoBody = React.memo(Body);
-MemoBody.displayName = 'Body';
+Body.displayName = 'Body';
 
-export default MemoBody;
+export default responseImmutable(Body);

@@ -1,7 +1,9 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
+import BodyRow from '../src/Body/BodyRow';
+import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/Table';
 
 describe('Table.Basic', () => {
@@ -135,30 +137,57 @@ describe('Table.Basic', () => {
     expect(wrapper.find(`div#${testId}`).length).toBeTruthy();
   });
 
-  it('renders data- &  aria- attributes', () => {
-    const miscProps = { 'data-test': 'names-table', 'aria-label': 'names-table-aria' };
+  it('renders data- attributes', () => {
+    const miscProps = { 'data-test': 'names-table' };
     const wrapper = mount(createTable(miscProps));
     const props = wrapper.find('div.rc-table').props();
+    expect(props).toEqual(expect.objectContaining(miscProps));
+  });
+
+  it('renders aria- attributes', () => {
+    const miscProps = { 'aria-label': 'names-table-aria' };
+    const wrapper = mount(createTable(miscProps));
+    const props = wrapper.find('table').props();
     expect(props).toEqual(expect.objectContaining(miscProps));
   });
 
   describe('rowKey', () => {
     it('uses record.key', () => {
       const wrapper = mount(createTable());
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('key0');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('key1');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('key0');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('key1');
     });
 
     it('sets by rowKey', () => {
       const wrapper = mount(createTable({ rowKey: 'name' }));
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('Lucy');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('Jack');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('Lucy');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('Jack');
     });
 
     it('sets by rowKey function', () => {
       const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
-      expect(wrapper.find('BodyRow').at(0).key()).toBe('key01');
-      expect(wrapper.find('BodyRow').at(1).key()).toBe('key11');
+      expect(wrapper.find(BodyRow).at(0).key()).toBe('key01');
+      expect(wrapper.find(BodyRow).at(1).key()).toBe('key11');
+    });
+  });
+
+  describe('caption', () => {
+    it('renders string caption', () => {
+      const miscProps = { caption: 'test_caption' };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption')).toBeTruthy();
+    });
+
+    it('renders React.Node caption', () => {
+      const miscProps = { caption: <div className="caption_inner" /> };
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption .caption_inner')).toBeTruthy();
+    });
+
+    it('renders without caption', () => {
+      const miscProps = {};
+      const wrapper = mount(createTable(miscProps));
+      expect(wrapper.find('.rc-table-caption').length).toBeFalsy();
     });
   });
 
@@ -216,6 +245,81 @@ describe('Table.Basic', () => {
     wrapper.find('.rc-table-tbody td').forEach(td => {
       expect(td.getDOMNode().attributes.getNamedItem('title')).toBeFalsy();
     });
+  });
+
+  describe('scope', () => {
+    it('renders columns scope correctly', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: 'Name',
+            },
+            {
+              title: 'Contact',
+              children: [
+                {
+                  title: 'Email',
+                },
+                {
+                  title: 'Phone Number',
+                },
+              ],
+            },
+          ],
+        }),
+      );
+
+      expect(wrapper.find('thead th').at(0).prop('scope')).toEqual('col');
+      expect(wrapper.find('thead th').at(1).prop('scope')).toEqual('colgroup');
+      expect(wrapper.find('thead th').at(2).prop('scope')).toEqual('col');
+      expect(wrapper.find('thead th').at(3).prop('scope')).toEqual('col');
+    });
+
+    it('renders rows scope correctly', () => {
+      const wrapper = mount(
+        createTable({
+          columns: [
+            {
+              title: 'Time',
+              dataIndex: 'time',
+              key: 'time',
+              rowScope: 'row',
+            },
+          ],
+          data: [
+            { time: '09:00 - 11:00', key: '1' },
+            { time: '11:00 - 13:00', key: '2' },
+          ],
+        }),
+      );
+
+      expect(wrapper.find('tbody th').at(0).prop('scope')).toEqual('row');
+      expect(wrapper.find('tbody th').at(1).prop('scope')).toEqual('row');
+    });
+  });
+
+  it('renders td instead of th if header title is empty', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            title: '',
+            dataIndex: 'firstName',
+            key: 'firstName',
+          },
+          {
+            title: 'Last Name',
+            dataIndex: 'lastName',
+            key: 'lastName',
+          },
+        ],
+        data: [{ firstName: 'John', lastName: 'Doe', key: '1' }],
+      }),
+    );
+
+    expect(wrapper.find('thead td')).toHaveLength(1);
+    expect(wrapper.find('thead th')).toHaveLength(1);
   });
 
   it('renders column correctly', () => {
@@ -360,7 +464,7 @@ describe('Table.Basic', () => {
     ];
 
     const wrapper = mount(<Table columns={columns} data={[{ key: '' }]} />);
-    const props = wrapper.find('td').props();
+    const props = wrapper.find('tbody td').props();
     expect(props.style).toEqual(expect.objectContaining({ background: 'red' }));
     expect(props.className.includes('customize-render')).toBeTruthy();
     expect(props['data-light']).toEqual('bamboo');
@@ -747,7 +851,7 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(wrapper.find('tbody WrappedCell').first().key()).toBeTruthy();
+    expect(wrapper.find('tbody').find(Cell).first().key()).toBeTruthy();
   });
 
   it('syntactic sugar', () => {
@@ -858,10 +962,10 @@ describe('Table.Basic', () => {
     }
 
     const wrapper = mount(<Test />);
-    expect(wrapper.find('td').text()).toEqual('false');
+    expect(wrapper.find('tbody td').text()).toEqual('false');
 
     wrapper.setState({ change: true });
-    expect(wrapper.find('td').text()).toEqual('true');
+    expect(wrapper.find('tbody td').text()).toEqual('true');
   });
 
   it('not crash with raw data', () => {
@@ -875,7 +979,7 @@ describe('Table.Basic', () => {
   });
 
   describe('shouldCellUpdate', () => {
-    it('basic', () => {
+    it('basic1', () => {
       const record = { key: 1 };
       let shouldUpdate = false;
       let renderTimes = 0;
@@ -996,12 +1100,12 @@ describe('Table.Basic', () => {
 
     const trs = wrapper.find('BodyRow');
 
-    expect(trs.at(0).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(1).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(2).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(3).find('Cell').at(1).text()).toEqual('1');
-    expect(trs.at(4).find('Cell').at(1).text()).toEqual('0');
-    expect(trs.at(5).find('Cell').at(1).text()).toEqual('1');
+    expect(trs.at(0).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(1).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(2).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(3).find(Cell).at(1).text()).toEqual('1');
+    expect(trs.at(4).find(Cell).at(1).text()).toEqual('0');
+    expect(trs.at(5).find(Cell).at(1).text()).toEqual('1');
   });
 
   it('hover the tree table', () => {

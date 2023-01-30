@@ -1,8 +1,9 @@
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
-import type { CustomizeComponent } from '../interface';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
-import ExpandedRowContext from '../context/ExpandedRowContext';
+import devRenderTimes from '../hooks/useRenderTimes';
+import type { CustomizeComponent } from '../interface';
 
 export interface ExpandedRowProps {
   prefixCls: string;
@@ -15,65 +16,58 @@ export interface ExpandedRowProps {
   isEmpty: boolean;
 }
 
-function ExpandedRow({
-  prefixCls,
-  children,
-  component: Component,
-  cellComponent,
-  className,
-  expanded,
-  colSpan,
-  isEmpty,
-}: ExpandedRowProps) {
-  const { scrollbarSize } = React.useContext(TableContext);
-  const { fixHeader, fixColumn, componentWidth, horizonScroll } =
-    React.useContext(ExpandedRowContext);
+function ExpandedRow(props: ExpandedRowProps) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
 
-  // Cache render node
-  return React.useMemo(() => {
-    let contentNode = children;
-
-    if (isEmpty ? horizonScroll : fixColumn) {
-      contentNode = (
-        <div
-          style={{
-            width: componentWidth - (fixHeader ? scrollbarSize : 0),
-            position: 'sticky',
-            left: 0,
-            overflow: 'hidden',
-          }}
-          className={`${prefixCls}-expanded-row-fixed`}
-        >
-          {componentWidth !== 0 && contentNode}
-        </div>
-      );
-    }
-
-    return (
-      <Component
-        className={className}
-        style={{
-          display: expanded ? null : 'none',
-        }}
-      >
-        <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
-          {contentNode}
-        </Cell>
-      </Component>
-    );
-  }, [
+  const {
+    prefixCls,
     children,
-    Component,
+    component: Component,
+    cellComponent,
     className,
     expanded,
     colSpan,
     isEmpty,
-    scrollbarSize,
-    componentWidth,
-    fixColumn,
-    fixHeader,
-    horizonScroll,
-  ]);
+  } = props;
+
+  const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
+    TableContext,
+    ['scrollbarSize', 'fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
+  );
+
+  // Cache render node
+  let contentNode = children;
+
+  if (isEmpty ? horizonScroll : fixColumn) {
+    contentNode = (
+      <div
+        style={{
+          width: componentWidth - (fixHeader ? scrollbarSize : 0),
+          position: 'sticky',
+          left: 0,
+          overflow: 'hidden',
+        }}
+        className={`${prefixCls}-expanded-row-fixed`}
+      >
+        {componentWidth !== 0 && contentNode}
+      </div>
+    );
+  }
+
+  return (
+    <Component
+      className={className}
+      style={{
+        display: expanded ? null : 'none',
+      }}
+    >
+      <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
+        {contentNode}
+      </Cell>
+    </Component>
+  );
 }
 
 export default ExpandedRow;

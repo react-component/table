@@ -1,8 +1,8 @@
-import React from 'react';
+import type { ColumnType } from '@/interface';
 import Table from 'rc-table';
+import React from 'react';
 import '../../assets/index.less';
 import { useCheckbox } from './utils/useInput';
-import type { ColumnType } from '@/interface';
 
 interface RecordType {
   key: React.Key;

@@ -1,6 +1,6 @@
-import * as React from 'react';
 import classNames from 'classnames';
-import type { RenderExpandIconProps, Key, GetRowKey } from '../interface';
+import * as React from 'react';
+import type { GetRowKey, Key, RenderExpandIconProps } from '../interface';
 
 export function renderExpandIcon<RecordType>({
   prefixCls,

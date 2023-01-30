@@ -1,49 +1,22 @@
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import { supportRef } from 'rc-util/lib/ref';
-import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
-import BodyContext from '../context/BodyContext';
-import type { HoverContextProps } from '../context/HoverContext';
-import HoverContext from '../context/HoverContext';
-import PerfContext from '../context/PerfContext';
-import ResizeContext from '../context/ResizeContext';
-import StickyContext from '../context/StickyContext';
-import { useContextSelector } from '../ContextSelector';
+import TableContext from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   AlignType,
   CellEllipsisType,
-  CellType,
   ColumnType,
   CustomizeComponent,
   DataIndex,
   DefaultRecordType,
-  RenderedCell,
+  ScopeType,
 } from '../interface';
-import { getHeaderCellNodeWidth, getPathValue, validateValue } from '../utils/valueUtil';
+import { getHeaderCellNodeWidth } from '../utils/valueUtil';
+import useCellRender from './useCellRender';
+import useHoverState from './useHoverState';
 
-/** Check if cell is in hover range */
-function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: number, endRow: number) {
-  const cellEndRow = cellStartRow + cellRowSpan - 1;
-  return cellStartRow <= endRow && cellEndRow >= startRow;
-}
-
-function isRenderCell<RecordType>(
-  data: React.ReactNode | RenderedCell<RecordType>,
-): data is RenderedCell<RecordType> {
-  return data && typeof data === 'object' && !Array.isArray(data) && !React.isValidElement(data);
-}
-
-function isRefComponent(component: CustomizeComponent) {
-  // String tag component also support ref
-  if (typeof component === 'string') {
-    return true;
-  }
-  return supportRef(component);
-}
-
-interface InternalCellProps<RecordType extends DefaultRecordType>
-  extends Pick<HoverContextProps, 'onHover'> {
+export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
@@ -57,6 +30,7 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   children?: React.ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
   columnKey?: React.Key;
@@ -76,26 +50,17 @@ interface InternalCellProps<RecordType extends DefaultRecordType>
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.TdHTMLAttributes<HTMLTableCellElement>;
-  /** @private Fixed for user use `shouldCellUpdate` which block the render */
-  expanded?: boolean;
 
   rowType?: 'header' | 'body' | 'footer';
 
   isSticky?: boolean;
-
-  hovering?: boolean;
 }
-
-export type CellProps<RecordType extends DefaultRecordType> = Omit<
-  InternalCellProps<RecordType>,
-  keyof HoverContextProps
->;
 
 const getTitleFromCellRenderChildren = ({
   ellipsis,
   rowType,
   children,
-}: Pick<InternalCellProps<any>, 'ellipsis' | 'rowType' | 'children'>) => {
+}: Pick<CellProps<any>, 'ellipsis' | 'rowType' | 'children'>) => {
   let title: string;
   const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
@@ -108,132 +73,78 @@ const getTitleFromCellRenderChildren = ({
   return title;
 };
 
-function Cell<RecordType extends DefaultRecordType>(
-  {
+function Cell<RecordType>(props: CellProps<RecordType>) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const {
+    component: Component,
+    children,
+    ellipsis,
+    scope,
+
+    // Style
     prefixCls,
     className,
+    align,
+
+    // Value
     record,
-    index,
-    renderIndex,
-    dataIndex,
     render,
-    children,
-    component: Component = 'td',
+    dataIndex,
+    renderIndex,
+    shouldCellUpdate,
+
+    // Row
+    index,
+    rowType,
+
+    // Span
     colSpan,
-    rowSpan, // This is already merged on WrapperCell
+    rowSpan,
+
+    // Fixed
     fixLeft,
     fixRight,
     firstFixLeft,
     lastFixLeft,
     firstFixRight,
     lastFixRight,
+
+    // Private
     appendNode,
     additionalProps = {},
-    ellipsis,
-    align,
-    rowType,
     isSticky,
-
-    // Hover
-    hovering,
-    onHover,
     columnKey,
-  }: // MISC
-  InternalCellProps<RecordType>,
-  ref: React.Ref<any>,
-): React.ReactElement {
+  } = props;
+
   const cellPrefixCls = `${prefixCls}-cell`;
-
-  const perfRecord = React.useContext(PerfContext);
-  const supportSticky = React.useContext(StickyContext);
-  const { allColumnsFixedLeft } = React.useContext(BodyContext);
-  const { setResizeLimt } = React.useContext(ResizeContext);
-
-  // ==================== Child Node ====================
-  const [childNode, legacyCellProps] = React.useMemo<
-    [React.ReactNode, CellType<RecordType>] | [React.ReactNode]
-  >(() => {
-    if (validateValue(children)) {
-      return [children];
-    }
-
-    const value = getPathValue<Record<string, unknown> | React.ReactNode, RecordType>(
-      record,
-      dataIndex,
-    );
-
-    // Customize render node
-    let returnChildNode = value;
-    let returnCellProps: CellType<RecordType> | undefined = undefined;
-
-    if (render) {
-      const renderData = render(value, record, renderIndex);
-
-      if (isRenderCell(renderData)) {
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            false,
-            '`columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.',
-          );
-        }
-        returnChildNode = renderData.children;
-        returnCellProps = renderData.props;
-        perfRecord.renderWithProps = true;
-      } else {
-        returnChildNode = renderData;
-      }
-    }
-
-    return [returnChildNode, returnCellProps];
-  }, [
-    /* eslint-disable react-hooks/exhaustive-deps */
-    // Always re-render if `renderWithProps`
-    perfRecord.renderWithProps ? Math.random() : 0,
-    /* eslint-enable */
-    children,
-    dataIndex,
-    perfRecord,
-    record,
-    render,
-    renderIndex,
+  const { supportSticky, allColumnsFixedLeft, setResizeLimt } = useContext(TableContext, [
+    'supportSticky',
+    'allColumnsFixedLeft',
+    'setResizeLimt',
   ]);
+  const cellBaseRef = React.useRef(null);
 
+  // ====================== Value =======================
+  const [childNode, legacyCellProps] = useCellRender(
+    record,
+    dataIndex,
+    renderIndex,
+    children,
+    render,
+    shouldCellUpdate,
+  );
+
+  // Fix the title breaking caused by resize on sticky mode
   React.useEffect(() => {
-    const node: HTMLElement | null = (ref as React.MutableRefObject<any>)?.current;
+    const node: HTMLElement | null = (cellBaseRef as React.MutableRefObject<any>)?.current;
     if (node instanceof HTMLElement && node?.localName === 'th' && isSticky) {
       const w = getHeaderCellNodeWidth(node);
       setResizeLimt(columnKey, w);
     }
-  }, [ref, appendNode, childNode, columnKey]);
-
-  let mergedChildNode = childNode;
-
-  // Not crash if final `childNode` is not validate ReactNode
-  if (
-    typeof mergedChildNode === 'object' &&
-    !Array.isArray(mergedChildNode) &&
-    !React.isValidElement(mergedChildNode)
-  ) {
-    mergedChildNode = null;
-  }
-
-  if (ellipsis && (lastFixLeft || firstFixRight)) {
-    mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
-  }
-
-  const {
-    colSpan: cellColSpan,
-    rowSpan: cellRowSpan,
-    style: cellStyle,
-    className: cellClassName,
-    ...restCellProps
-  } = legacyCellProps || {};
-  const mergedColSpan = (cellColSpan !== undefined ? cellColSpan : colSpan) ?? 1;
-  const mergedRowSpan = (cellRowSpan !== undefined ? cellRowSpan : rowSpan) ?? 1;
-
-  if (mergedColSpan === 0 || mergedRowSpan === 0) {
-    return null;
-  }
+  }, [cellBaseRef, appendNode, childNode, columnKey]);
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
@@ -250,13 +161,13 @@ function Cell<RecordType extends DefaultRecordType>(
     fixedStyle.right = fixRight as number;
   }
 
-  // ====================== Align =======================
-  const alignStyle: React.CSSProperties = {};
-  if (align) {
-    alignStyle.textAlign = align;
-  }
+  // ================ RowSpan & ColSpan =================
+  const mergedColSpan = legacyCellProps?.colSpan ?? colSpan ?? additionalProps.colSpan ?? 1;
+  const mergedRowSpan = legacyCellProps?.rowSpan ?? rowSpan ?? additionalProps.rowSpan ?? 1;
 
   // ====================== Hover =======================
+  const [hovering, onHover] = useHoverState(index, mergedRowSpan);
+
   const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = event => {
     if (record) {
       onHover(index, index + mergedRowSpan - 1);
@@ -274,105 +185,90 @@ function Cell<RecordType extends DefaultRecordType>(
   };
 
   // ====================== Render ======================
-  const title = getTitleFromCellRenderChildren({
-    rowType,
-    ellipsis,
-    children: childNode,
-  });
+  if (mergedColSpan === 0 || mergedRowSpan === 0) {
+    return null;
+  }
 
-  const componentProps: React.TdHTMLAttributes<HTMLTableCellElement> & {
-    ref: React.Ref<any>;
-  } = {
-    title,
-    ...restCellProps,
-    ...additionalProps,
-    colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
-    rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null,
-    className: classNames(
-      cellPrefixCls,
-      className,
-      {
-        [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
-        [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
-        [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
-        [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
-        [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
-        [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
-        [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
-        [`${cellPrefixCls}-ellipsis`]: ellipsis,
-        [`${cellPrefixCls}-with-append`]: appendNode,
-        [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-        [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
-      },
-      additionalProps.className,
-      cellClassName,
-    ),
-    style: { ...additionalProps.style, ...alignStyle, ...fixedStyle, ...cellStyle },
-    onMouseEnter,
-    onMouseLeave,
-    ref: isRefComponent(Component) ? ref : null,
+  // >>>>> Title
+  const title =
+    additionalProps.title ??
+    getTitleFromCellRenderChildren({
+      rowType,
+      ellipsis,
+      children: childNode,
+    });
+
+  // >>>>> ClassName
+  const mergedClassName = classNames(
+    cellPrefixCls,
+    className,
+    {
+      [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
+      [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
+      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
+      [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
+      [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
+      [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
+      [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
+      [`${cellPrefixCls}-ellipsis`]: ellipsis,
+      [`${cellPrefixCls}-with-append`]: appendNode,
+      [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
+      [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
+    },
+    additionalProps.className,
+    legacyCellProps?.className,
+  );
+
+  // >>>>> Style
+  const alignStyle: React.CSSProperties = {};
+  if (align) {
+    alignStyle.textAlign = align;
+  }
+
+  const mergedStyle = {
+    ...additionalProps.style,
+    ...alignStyle,
+    ...fixedStyle,
+    ...legacyCellProps?.style,
   };
 
+  // >>>>> Children Node
+  let mergedChildNode = childNode;
+
+  // Not crash if final `childNode` is not validate ReactNode
+  if (
+    typeof mergedChildNode === 'object' &&
+    !Array.isArray(mergedChildNode) &&
+    !React.isValidElement(mergedChildNode)
+  ) {
+    mergedChildNode = null;
+  }
+
+  if (ellipsis && (lastFixLeft || firstFixRight)) {
+    mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
+  }
+
   return (
-    <Component {...componentProps}>
+    <Component
+      {...legacyCellProps}
+      {...additionalProps}
+      className={mergedClassName}
+      style={mergedStyle}
+      ref={cellBaseRef}
+      // A11y
+      title={title}
+      scope={scope}
+      // Hover
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      //Span
+      colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
+      rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
+    >
       {appendNode}
       {mergedChildNode}
     </Component>
   );
 }
 
-const RefCell = React.forwardRef<any, InternalCellProps<any>>(Cell);
-RefCell.displayName = 'Cell';
-
-const comparePropList: (keyof InternalCellProps<any>)[] = ['expanded', 'className', 'hovering'];
-
-const MemoCell = React.memo(
-  RefCell,
-  (prev: InternalCellProps<any>, next: InternalCellProps<any>) => {
-    if (next.shouldCellUpdate) {
-      return (
-        // Additional handle of expanded logic
-        comparePropList.every(propName => prev[propName] === next[propName]) &&
-        // User control update logic
-        !next.shouldCellUpdate(next.record, prev.record)
-      );
-    }
-
-    return shallowEqual(prev, next);
-  },
-);
-
-/** Inject hover data here, we still wish MemoCell keep simple `shouldCellUpdate` logic */
-const WrappedCell = React.forwardRef((props: CellProps<any>, ref: React.Ref<any>) => {
-  const cellBaseRef = React.useRef(null);
-  const { index, additionalProps = {}, colSpan, rowSpan } = props;
-  const { colSpan: cellColSpan, rowSpan: cellRowSpan } = additionalProps;
-
-  const mergedColSpan = colSpan ?? cellColSpan;
-  const mergedRowSpan = rowSpan ?? cellRowSpan;
-
-  const cellRef = ref ? ref : cellBaseRef;
-
-  const { onHover, hovering } = useContextSelector(HoverContext, cxt => {
-    const isHovering = inHoverRange(index, mergedRowSpan || 1, cxt?.startRow, cxt?.endRow);
-
-    return {
-      onHover: cxt?.onHover,
-      hovering: isHovering,
-    };
-  });
-
-  return (
-    <MemoCell
-      {...props}
-      colSpan={mergedColSpan}
-      rowSpan={mergedRowSpan}
-      hovering={hovering}
-      ref={cellRef}
-      onHover={onHover}
-    />
-  );
-});
-WrappedCell.displayName = 'WrappedCell';
-
-export default WrappedCell;
+export default React.memo(Cell);

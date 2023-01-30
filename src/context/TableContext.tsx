@@ -1,22 +1,60 @@
-import * as React from 'react';
-import type { GetComponent } from '../interface';
+import { createContext } from '@rc-component/context';
+import type {
+  ColumnsType,
+  ColumnType,
+  Direction,
+  ExpandableType,
+  ExpandedRowRender,
+  GetComponent,
+  RenderExpandIcon,
+  RowClassName,
+  TableLayout,
+  TriggerEventHandler,
+} from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
 
-export interface TableContextProps {
-  // Table context
+export interface TableContextProps<RecordType = any> {
+  // Table
   prefixCls: string;
-
   getComponent: GetComponent;
-
   scrollbarSize: number;
-
-  direction: 'ltr' | 'rtl';
-
+  direction: Direction;
   fixedInfoList: readonly FixedInfo[];
-
   isSticky: boolean;
+  supportSticky: boolean;
+  componentWidth: number;
+  fixHeader: boolean;
+  fixColumn: boolean;
+  horizonScroll: boolean;
+
+  // Body
+  rowClassName: string | RowClassName<RecordType>;
+  expandedRowClassName: RowClassName<RecordType>;
+
+  tableLayout: TableLayout;
+
+  indentSize: number;
+  expandableType: ExpandableType;
+  expandRowByClick: boolean;
+  expandedRowRender: ExpandedRowRender<RecordType>;
+  expandIcon: RenderExpandIcon<RecordType>;
+  onTriggerExpand: TriggerEventHandler<RecordType>;
+  expandIconColumnIndex: number;
+  allColumnsFixedLeft: boolean;
+
+  // Column
+  columns: ColumnsType<RecordType>;
+  flattenColumns: readonly ColumnType<RecordType>[];
+  onColumnResize: (columnKey: React.Key, width: number) => void;
+  resizeLimtMap: Map<React.Key, number>;
+  setResizeLimt: (key: React.Key, value: number) => void;
+
+  // Row
+  hoverStartRow: number;
+  hoverEndRow: number;
+  onHover: (start: number, end: number) => void;
 }
 
-const TableContext = React.createContext<TableContextProps>(null);
+const TableContext = createContext<TableContextProps>();
 
 export default TableContext;

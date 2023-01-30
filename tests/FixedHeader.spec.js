@@ -1,9 +1,10 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
-import Table, { INTERNAL_COL_DEFINE } from '../src';
 import RcResizeObserver from 'rc-resize-observer';
+import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import Table, { INTERNAL_COL_DEFINE } from '../src';
+import { safeAct } from './utils';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -16,6 +17,7 @@ describe('Table.FixedHeader', () => {
   });
 
   beforeEach(() => {
+    jest.useFakeTimers();
     visible = true;
   });
 
@@ -24,7 +26,6 @@ describe('Table.FixedHeader', () => {
   });
 
   it('should work', async () => {
-    jest.useFakeTimers();
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
     const col3 = { dataIndex: 'empty', width: 0 };
@@ -35,7 +36,6 @@ describe('Table.FixedHeader', () => {
         scroll={{ y: 10 }}
       />,
     );
-
     wrapper
       .find(RcResizeObserver.Collection)
       .first()
@@ -54,12 +54,7 @@ describe('Table.FixedHeader', () => {
           size: { width: 0, offsetWidth: 0 },
         },
       ]);
-
-    await act(async () => {
-      jest.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
-    });
+    await safeAct(wrapper);
 
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
@@ -78,7 +73,7 @@ describe('Table.FixedHeader', () => {
     jest.useRealTimers();
   });
 
-  it('INTERNAL_COL_DEFINE', () => {
+  it('INTERNAL_COL_DEFINE', async () => {
     const col1 = {
       dataIndex: 'light',
       width: 100,
@@ -92,6 +87,7 @@ describe('Table.FixedHeader', () => {
         scroll={{ y: 10 }}
       />,
     );
+    await safeAct(wrapper);
 
     expect(wrapper.find('table').last().find('colgroup col').first().props().className).toEqual(
       'test-internal',
@@ -101,7 +97,7 @@ describe('Table.FixedHeader', () => {
     );
   });
 
-  it('show header when data is null', () => {
+  it('show header when data is null', async () => {
     const columns = [
       {
         title: 'Name',
@@ -126,12 +122,13 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
+    await safeAct(wrapper);
     expect(wrapper.find('.rc-table-header table').props().style).toEqual(
       expect.objectContaining({ visibility: null }),
     );
   });
 
-  it('rtl', () => {
+  it('rtl', async () => {
     const wrapper = mount(
       <Table
         columns={[{ dataIndex: 'light', width: 100 }]}
@@ -142,6 +139,7 @@ describe('Table.FixedHeader', () => {
         }}
       />,
     );
+    await safeAct(wrapper);
 
     expect(wrapper.find('Header').props().stickyOffsets).toEqual(
       expect.objectContaining({
@@ -152,8 +150,6 @@ describe('Table.FixedHeader', () => {
   });
 
   it('invisible should not change width', async () => {
-    jest.useFakeTimers();
-
     const col1 = { dataIndex: 'light', width: 93 };
     const wrapper = mount(
       <Table
@@ -173,11 +169,7 @@ describe('Table.FixedHeader', () => {
           size: { width: 93, offsetWidth: 93 },
         },
       ]);
-    await act(async () => {
-      jest.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
-    });
+    await safeAct(wrapper);
 
     expect(wrapper.find('FixedHolder col').first().props().style).toEqual(
       expect.objectContaining({ width: 93 }),
@@ -207,5 +199,59 @@ describe('Table.FixedHeader', () => {
     );
 
     jest.useRealTimers();
+  });
+
+  it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', async () => {
+    const columns = [
+      {
+        title: '父表头右侧的阴影导致整个表格最右侧有空隙',
+        children: [
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'left',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'left',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            dataIndex: 'name',
+          },
+          {
+            key: 'name',
+            title: 'Name',
+            fixed: 'right',
+            dataIndex: 'name',
+          },
+        ],
+      },
+    ];
+
+    const data = [
+      {
+        key: 0,
+        name: 'Jack',
+      },
+      {
+        key: 1,
+        name: 'Jack1',
+      },
+      {
+        key: 2,
+        name: 'Jack1',
+      },
+    ];
+    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
+    await safeAct(wrapper);
+    expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
+    expect(wrapper.find('th').first().props().className).not.toContain(
+      'rc-table-cell-fix-left-last',
+    );
   });
 });

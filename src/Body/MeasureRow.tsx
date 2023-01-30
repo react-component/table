@@ -1,6 +1,7 @@
+import { useContext } from '@rc-component/context';
 import ResizeObserver from 'rc-resize-observer';
 import * as React from 'react';
-import ResizeContext from '../context/ResizeContext';
+import TableContext from '../context/TableContext';
 import MeasureCell from './MeasureCell';
 
 export interface MeasureCellProps {
@@ -10,7 +11,7 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
-  const { resizeLimtMap } = React.useContext(ResizeContext);
+  const { resizeLimtMap } = useContext(TableContext, ['resizeLimtMap']);
   return (
     <tr
       aria-hidden="true"

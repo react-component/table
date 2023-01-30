@@ -166,7 +166,6 @@
 
   // ================= Header =================
   thead {
-    td,
     th {
       text-align: center;
       background: @table-head-background-color;
@@ -200,9 +199,12 @@
   // ================== Body ==================
   tbody {
     tr {
-      td,
-      th {
+      td {
         background: #fff;
+      }
+
+      th {
+        background: @table-head-background-color;
       }
     }
   }

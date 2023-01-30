@@ -1,8 +1,9 @@
-import * as React from 'react';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
+import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import { getOffset } from 'rc-util/lib/Dom/css';
+import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import * as React from 'react';
 import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
 
@@ -17,7 +18,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   { scrollBodyRef, onScroll, offsetScroll, container },
   ref,
 ) => {
-  const { prefixCls } = React.useContext(TableContext);
+  const prefixCls = useContext(TableContext, 'prefixCls');
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);

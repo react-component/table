@@ -1,5 +1,5 @@
-import type { GetRowKey, Key } from '@/interface';
 import * as React from 'react';
+import type { GetRowKey, Key } from '../interface';
 
 // recursion (flat tree structure)
 function flatRecord<T>(

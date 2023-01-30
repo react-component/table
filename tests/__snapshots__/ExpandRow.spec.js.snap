@@ -20,11 +20,13 @@ exports[`Table.Expand childrenColumnName 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -126,22 +128,25 @@ exports[`Table.Expand does not crash if scroll is not set 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -153,7 +158,7 @@ exports[`Table.Expand does not crash if scroll is not set 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -278,22 +283,25 @@ exports[`Table.Expand does not crash if scroll is not set 2`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -305,7 +313,7 @@ exports[`Table.Expand does not crash if scroll is not set 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -427,11 +435,13 @@ exports[`Table.Expand not use nest when children is invalidate 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -515,23 +525,26 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
               style="position: sticky; left: 0px;"
             />
             <th
               class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              scope="col"
               style="position: sticky; left: 0px;"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              scope="col"
               style="position: sticky; right: 0px;"
             >
               Gender
@@ -544,7 +557,7 @@ exports[`Table.Expand renders fixed column correctly work 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -704,11 +717,13 @@ exports[`Table.Expand renders tree row correctly 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -807,11 +822,13 @@ exports[`Table.Expand renders tree row correctly with different children 1`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
@@ -976,22 +993,25 @@ exports[`Table.Expand work in expandable fix 1`] = `
           class="rc-table-thead"
         >
           <tr>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
               style="position: sticky; left: 0px;"
             />
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
@@ -1003,7 +1023,7 @@ exports[`Table.Expand work in expandable fix 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"
@@ -1133,20 +1153,23 @@ exports[`Table.Expand work in expandable fix 2`] = `
           <tr>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Name
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Age
             </th>
             <th
               class="rc-table-cell"
+              scope="col"
             >
               Gender
             </th>
-            <th
+            <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
               style="position: sticky; right: 0px;"
             />
@@ -1158,7 +1181,7 @@ exports[`Table.Expand work in expandable fix 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0;"
+            style="height: 0px; font-size: 0px;"
           >
             <td
               style="padding: 0px; border: 0px; height: 0px;"

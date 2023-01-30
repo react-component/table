@@ -1,8 +1,10 @@
+import { responseImmutable, useContext } from '@rc-component/context';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
+import type { ColumnsType, ColumnType, StickyOffsets } from '../interface';
 import Summary from './Summary';
 import SummaryContext from './SummaryContext';
-import type { ColumnType, StickyOffsets } from '../interface';
 
 type FlattenColumns<RecordType> = readonly (ColumnType<RecordType> & { scrollbar?: boolean })[];
 
@@ -10,11 +12,17 @@ export interface FooterProps<RecordType> {
   children: React.ReactNode;
   stickyOffsets: StickyOffsets;
   flattenColumns: FlattenColumns<RecordType>;
+  columns: ColumnsType<RecordType>;
 }
 
-function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterProps<RecordType>) {
-  const tableContext = React.useContext(TableContext);
-  const { prefixCls } = tableContext;
+function Footer<RecordType>(props: FooterProps<RecordType>) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const { children, stickyOffsets, flattenColumns, columns } = props;
+
+  const prefixCls = useContext(TableContext, 'prefixCls');
 
   const lastColumnIndex = flattenColumns.length - 1;
   const scrollColumn = flattenColumns[lastColumnIndex];
@@ -24,8 +32,9 @@ function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterP
       stickyOffsets,
       flattenColumns,
       scrollColumnIndex: scrollColumn?.scrollbar ? lastColumnIndex : null,
+      columns,
     }),
-    [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets],
+    [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets, columns],
   );
 
   return (
@@ -35,6 +44,6 @@ function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterP
   );
 }
 
-export default Footer;
+export default responseImmutable(Footer);
 
 export const FooterComponents = Summary;

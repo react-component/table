@@ -1,5 +1,5 @@
-import * as React from 'react';
 import canUseDom from 'rc-util/lib/Dom/canUseDom';
+import * as React from 'react';
 import type { TableSticky } from '../interface';
 
 // fix ssr render

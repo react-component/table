@@ -1,18 +1,19 @@
-import * as React from 'react';
-import warning from 'rc-util/lib/warning';
 import toArray from 'rc-util/lib/Children/toArray';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import { EXPAND_COLUMN } from '../constant';
 import type {
+  ColumnGroupType,
   ColumnsType,
   ColumnType,
+  Direction,
   FixedType,
-  Key,
   GetRowKey,
-  TriggerEventHandler,
+  Key,
   RenderExpandIcon,
-  ColumnGroupType,
+  TriggerEventHandler,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
-import { EXPAND_COLUMN } from '../constant';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -135,7 +136,7 @@ function useColumns<RecordType>(
     expandIcon?: RenderExpandIcon<RecordType>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
-    direction?: 'ltr' | 'rtl';
+    direction?: Direction;
     expandRowByClick?: boolean;
     columnWidth?: number | string;
     fixed?: FixedType;

@@ -53,9 +53,17 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
+export type Direction = 'ltr' | 'rtl';
+
 export type DataIndex = string | number | readonly (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
+
+export type ColScopeType = 'col' | 'colgroup';
+
+export type RowScopeType = 'row' | 'rowgroup';
+
+export type ScopeType = ColScopeType | RowScopeType;
 
 interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
@@ -65,6 +73,7 @@ interface ColumnSharedType<RecordType> {
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  rowScope?: RowScopeType;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
@@ -175,6 +184,8 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   /** @deprecated Use `expandable.childrenColumnName` instead */
   childrenColumnName?: string;
+  /** @deprecated Use `caption` instead */
+  title?: PanelRender<RecordType>;
 }
 
 export type ExpandedRowRender<ValueType> = (

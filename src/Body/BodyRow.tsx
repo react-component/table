@@ -1,16 +1,17 @@
-import * as React from 'react';
+import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
+import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
-import BodyContext from '../context/BodyContext';
-import { getColumnsKey } from '../utils/valueUtil';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   ColumnType,
   CustomizeComponent,
   GetComponentProps,
-  Key,
   GetRowKey,
+  Key,
 } from '../interface';
+import { getColumnsKey } from '../utils/valueUtil';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -19,10 +20,10 @@ export interface BodyRowProps<RecordType> {
   renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
-  recordKey: Key;
   expandedKeys: Set<Key>;
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
+  scopeCellComponent: CustomizeComponent;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   indent?: number;
@@ -34,6 +35,10 @@ export interface BodyRowProps<RecordType> {
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
   const {
     className,
     style,
@@ -47,10 +52,12 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
+    scopeCellComponent,
     childrenColumnName,
   } = props;
-  const { prefixCls, fixedInfoList } = React.useContext(TableContext);
   const {
+    prefixCls,
+    fixedInfoList,
     flattenColumns,
     expandableType,
     expandRowByClick,
@@ -61,10 +68,27 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandIcon,
     expandedRowRender,
     expandIconColumnIndex,
-  } = React.useContext(BodyContext);
+  } = useContext(TableContext, [
+    'prefixCls',
+    'fixedInfoList',
+    'flattenColumns',
+    'expandableType',
+    'expandRowByClick',
+    'onTriggerExpand',
+    'rowClassName',
+    'expandedRowClassName',
+    'indentSize',
+    'expandIcon',
+    'expandedRowRender',
+    'expandIconColumnIndex',
+  ]);
   const [expandRended, setExpandRended] = React.useState(false);
 
-  const expanded = expandedKeys && expandedKeys.has(props.recordKey);
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const expanded = expandedKeys && expandedKeys.has(rowKey);
 
   React.useEffect(() => {
     if (expanded) {
@@ -159,7 +183,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             className={columnClassName}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={cellComponent}
+            scope={column.rowScope}
+            component={column.rowScope ? scopeCellComponent : cellComponent}
             prefixCls={prefixCls}
             key={key}
             record={record}
@@ -213,4 +238,4 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
 BodyRow.displayName = 'BodyRow';
 
-export default BodyRow;
+export default responseImmutable(BodyRow);

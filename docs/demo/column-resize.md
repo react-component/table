@@ -1,3 +1,8 @@
-## column-resize
+---
+title: column-resize
+nav:
+  title: Demo
+  path: /demo
+---
 
-<code src="../examples/column-resize.tsx">
+<code src="../examples/column-resize.tsx"></code>
