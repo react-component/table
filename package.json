@@ -46,7 +46,6 @@
     "lint": "eslint src/ --ext .tsx,.ts",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
     "now-build": "npm run docs:build",
-    "husky-hook": "husky add .husky/pre-commit 'npx --no-install lint-staged'",
     "prepare": "husky install"
   },
   "peerDependencies": {
