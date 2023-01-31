@@ -12,6 +12,7 @@ import type {
   DefaultRecordType,
   ScopeType,
 } from '../interface';
+import { getHeaderCellNodeWidth } from '../utils/valueUtil';
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
 
@@ -32,6 +33,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  columnKey?: React.Key;
 
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
@@ -114,13 +116,17 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     appendNode,
     additionalProps = {},
     isSticky,
+    columnKey,
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft } = useContext(TableContext, [
+  const { supportSticky, allColumnsFixedLeft, setResizeLimt, columns } = useContext(TableContext, [
     'supportSticky',
     'allColumnsFixedLeft',
+    'setResizeLimt',
+    'columns',
   ]);
+  const cellBaseRef = React.useRef(null);
 
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
@@ -131,6 +137,18 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     render,
     shouldCellUpdate,
   );
+
+  // Fix the title breaking caused by resize on sticky mode
+  React.useEffect(() => {
+    const node: HTMLElement | null = (cellBaseRef as React.MutableRefObject<any>)?.current;
+    if (node instanceof HTMLElement && node?.localName === 'th' && isSticky) {
+      const w = getHeaderCellNodeWidth(node);
+      if (!isNaN(w)) {
+        const target = columns.find(colum => colum.key === columnKey) as ColumnType<RecordType>;
+        setResizeLimt(columnKey, (target?.width as number) ?? w);
+      }
+    }
+  }, [cellBaseRef, appendNode, childNode, columns, columnKey]);
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
@@ -240,6 +258,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       {...additionalProps}
       className={mergedClassName}
       style={mergedStyle}
+      ref={cellBaseRef}
       // A11y
       title={title}
       scope={scope}

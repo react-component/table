@@ -1,5 +1,7 @@
-import * as React from 'react';
+import { useContext } from '@rc-component/context';
 import ResizeObserver from 'rc-resize-observer';
+import * as React from 'react';
+import TableContext from '../context/TableContext';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
@@ -8,12 +10,20 @@ export interface MeasureCellProps {
 
 export default function MeasureCell({ columnKey, onColumnResize }: MeasureCellProps) {
   const cellRef = React.useRef<HTMLTableCellElement>();
+  const { resizeLimtMap } = useContext(TableContext, ['resizeLimtMap']);
 
   React.useEffect(() => {
-    if (cellRef.current) {
-      onColumnResize(columnKey, cellRef.current.offsetWidth);
+    const cell = cellRef.current;
+    if (cell instanceof HTMLElement) {
+      const limtWidth = resizeLimtMap.has(columnKey) ? resizeLimtMap.get(columnKey) : 0;
+      if (!isNaN(limtWidth) && limtWidth !== 0) {
+        onColumnResize(columnKey, limtWidth);
+        cell.style.minWidth = `${limtWidth}px`;
+      } else {
+        onColumnResize(columnKey, cell.offsetWidth);
+      }
     }
-  }, []);
+  }, [resizeLimtMap, columnKey]);
 
   return (
     <ResizeObserver data={columnKey}>

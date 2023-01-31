@@ -349,6 +349,18 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     }
   }, []);
 
+  const [resizeLimtMap, setResizeLimtMap] = React.useState<Map<React.Key, number>>(new Map());
+
+  const setResizeLimt = React.useCallback(
+    (key: React.Key, value: number) => {
+      resizeLimtMap.set(key, value);
+      const updatedMap = new Map() as Map<React.Key, number>;
+      resizeLimtMap.forEach((mapVal, mapKey) => updatedMap.set(mapKey, mapVal));
+      setResizeLimtMap(updatedMap);
+    },
+    [setResizeLimtMap, resizeLimtMap],
+  );
+
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
@@ -599,7 +611,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             {bodyColGroup}
             {bodyTable}
             {!fixFooter && summaryNode && (
-              <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns} columns={columns}>
+              <Footer
+                stickyOffsets={stickyOffsets}
+                flattenColumns={flattenColumns}
+                columns={columns}
+              >
                 {summaryNode}
               </Footer>
             )}
@@ -758,6 +774,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       columns,
       flattenColumns,
       onColumnResize,
+      resizeLimtMap,
+      setResizeLimt,
 
       // Row
       hoverStartRow: startRow,
@@ -795,6 +813,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       columns,
       flattenColumns,
       onColumnResize,
+      resizeLimtMap,
+      setResizeLimt,
 
       // Row
       startRow,

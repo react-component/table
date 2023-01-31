@@ -46,6 +46,8 @@ export interface TableContextProps<RecordType = any> {
   columns: ColumnsType<RecordType>;
   flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
+  resizeLimtMap: Map<React.Key, number>;
+  setResizeLimt: (key: React.Key, value: number) => void;
 
   // Row
   hoverStartRow: number;

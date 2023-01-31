@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table.Sticky Sticy table resize should not break column title 1`] = `
+<div
+  class="rc-table rc-table-scroll-horizontal"
+>
+  <div
+    class="rc-table-container"
+  >
+    <div
+      class="rc-table-header rc-table-sticky-holder"
+      style="overflow: hidden; top: 0px;"
+    >
+      <table
+        style="table-layout: fixed; visibility: hidden;"
+      >
+        <colgroup />
+        <thead
+          class="rc-table-thead"
+        >
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              title1
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              title2
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              title3
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              title4
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body"
+      style="overflow-x: auto; overflow-y: hidden;"
+    >
+      <table
+        style="min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup />
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px; font-size: 0px;"
+          >
+            <td
+              style="padding: 0px; border: 0px; height: 0px; min-width: 50px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px; min-width: 60px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px; min-width: 80px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px; min-width: 40px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              aaa
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              bbb
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              ccc
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              ddd
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              aaa
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              bbb
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              ccc
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              ddd
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

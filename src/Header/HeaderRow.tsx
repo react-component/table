@@ -1,7 +1,7 @@
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
-import { useContext } from '@rc-component/context';
 import type {
   CellType,
   ColumnType,
@@ -54,7 +54,7 @@ function HeaderRow<RecordType>({
           flattenColumns,
           stickyOffsets,
           direction,
-          column
+          column,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;
@@ -74,6 +74,7 @@ function HeaderRow<RecordType>({
             {...fixedInfo}
             additionalProps={additionalProps}
             rowType="header"
+            columnKey={column.key}
           />
         );
       })}

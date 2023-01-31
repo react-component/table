@@ -1,7 +1,7 @@
-import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 import { safeAct } from './utils';
 
@@ -213,7 +213,6 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky Header with border classname', async () => {
-
     const TableDemo = props => {
       return (
         <div
@@ -255,7 +254,6 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky Header with scroll-y', async () => {
-
     const TableDemo = props => {
       return (
         <div
@@ -297,7 +295,6 @@ describe('Table.Sticky', () => {
   });
 
   it('Sticky scroll with getContainer', async () => {
-    
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     const container = document.createElement('ol');
@@ -437,5 +434,49 @@ describe('Table.Sticky', () => {
     sectionSpy.mockRestore();
     mockFn.mockRestore();
     jest.useRealTimers();
+  });
+
+  it('Sticy table resize should not break column title', async () => {
+    const SticyTable = () => {
+      return (
+        <Table
+          columns={[
+            { title: 'title1', dataIndex: 'a', key: 'a' },
+            { title: 'title2', dataIndex: 'b', key: 'b' },
+            { title: 'title3', dataIndex: 'c', key: 'c' },
+            { title: 'title4', dataIndex: 'd', key: 'd' },
+          ]}
+          data={[
+            { a: 'aaa', b: 'bbb', c: 'ccc', d: 'ddd', key: '1' },
+            { a: 'aaa', b: 'bbb', c: 'ccc', d: 'ddd', key: '2' },
+          ]}
+          scroll={{
+            x: 'max-content',
+          }}
+          sticky
+        />
+      );
+    };
+    const wrapper = mount(<SticyTable />);
+
+    act(() => {
+      const setResizeLimt = wrapper.find('Provider').first().props().value['setResizeLimt'];
+      setResizeLimt('a', 50);
+      setResizeLimt('b', 60);
+      setResizeLimt('c', 80);
+      setResizeLimt('d', 40);
+      wrapper
+        .find('Collection')
+        .first()
+        .props()
+        .onBatchResize([
+          { data: 'a', size: { offsetWidth: 60 } },
+          { data: 'b', size: { offsetWidth: 60 } },
+          { data: 'c', size: { offsetWidth: 60 } },
+          { data: 'd', size: { offsetWidth: 60 } },
+        ]);
+    });
+    wrapper.update();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 });
