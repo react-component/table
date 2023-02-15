@@ -36,8 +36,9 @@ export function convertChildrenToColumns<RecordType>(
 }
 
 function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
-  return columns.reduce((list, column) => {
-    if (column) {
+  return columns
+    .filter(column => column && typeof column === 'object')
+    .reduce((list, column) => {
       const { fixed } = column;
       // Convert `fixed='true'` to `fixed='left'` instead
       const parsedFixed = fixed === true ? 'left' : fixed;
@@ -59,10 +60,7 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
           fixed: parsedFixed,
         },
       ];
-    } else {
-      return [...list];
-    }
-  }, []);
+    }, []);
 }
 
 function warningFixed(flattenColumns: readonly { fixed?: FixedType }[]) {
