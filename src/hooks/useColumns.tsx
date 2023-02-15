@@ -1,19 +1,19 @@
-import * as React from 'react';
-import warning from 'rc-util/lib/warning';
 import toArray from 'rc-util/lib/Children/toArray';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import { EXPAND_COLUMN } from '../constant';
 import type {
+  ColumnGroupType,
   ColumnsType,
   ColumnType,
-  FixedType,
-  Key,
-  GetRowKey,
-  TriggerEventHandler,
-  RenderExpandIcon,
-  ColumnGroupType,
   Direction,
+  FixedType,
+  GetRowKey,
+  Key,
+  RenderExpandIcon,
+  TriggerEventHandler,
 } from '../interface';
 import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
-import { EXPAND_COLUMN } from '../constant';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -36,30 +36,31 @@ export function convertChildrenToColumns<RecordType>(
 }
 
 function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
-  return columns.reduce((list, column) => {
-    const { fixed } = column;
+  return columns
+    .filter(column => column && typeof column === 'object')
+    .reduce((list, column) => {
+      const { fixed } = column;
+      // Convert `fixed='true'` to `fixed='left'` instead
+      const parsedFixed = fixed === true ? 'left' : fixed;
 
-    // Convert `fixed='true'` to `fixed='left'` instead
-    const parsedFixed = fixed === true ? 'left' : fixed;
-
-    const subColumns = (column as ColumnGroupType<RecordType>).children;
-    if (subColumns && subColumns.length > 0) {
+      const subColumns = (column as ColumnGroupType<RecordType>).children;
+      if (subColumns && subColumns.length > 0) {
+        return [
+          ...list,
+          ...flatColumns(subColumns).map(subColum => ({
+            fixed: parsedFixed,
+            ...subColum,
+          })),
+        ];
+      }
       return [
         ...list,
-        ...flatColumns(subColumns).map(subColum => ({
+        {
+          ...column,
           fixed: parsedFixed,
-          ...subColum,
-        })),
+        },
       ];
-    }
-    return [
-      ...list,
-      {
-        ...column,
-        fixed: parsedFixed,
-      },
-    ];
-  }, []);
+    }, []);
 }
 
 function warningFixed(flattenColumns: readonly { fixed?: FixedType }[]) {

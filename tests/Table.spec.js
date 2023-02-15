@@ -1153,4 +1153,49 @@ describe('Table.Basic', () => {
     expect(wrapper.render()).toMatchSnapshot();
     expect(wrapper.find('col')).toHaveLength(tColumns.length + 1);
   });
+  it('columns support JSX condition', () => {
+    const Example = () => {
+      const [count, setCount] = React.useState(0);
+      const columns = [
+        {
+          title: 'title',
+          dataIndex: 'a',
+          render: () => count,
+        },
+        count === 1 && {
+          title: 'title2',
+          dataIndex: 'b',
+          render: () => count + 1,
+        },
+        count === 2
+          ? {
+              title: 'title3',
+              dataIndex: 'c',
+              render: () => count + 1,
+            }
+          : null,
+      ];
+      return (
+        <>
+          <button
+            onClick={() => {
+              setCount(val => val + 1);
+            }}
+          >
+            Click {count} times
+          </button>
+          <Table columns={columns} data={data} />
+        </>
+      );
+    };
+    const wrapper = mount(<Example />);
+
+    wrapper.find('button').simulate('click');
+    expect(wrapper.find('.rc-table-cell').at(1).text()).toEqual('title2');
+
+    wrapper.find('button').simulate('click');
+    expect(wrapper.find('.rc-table-cell').at(1).text()).toEqual('title3');
+
+    expect(wrapper.render()).toMatchSnapshot();
+  });
 });
