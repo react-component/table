@@ -30,7 +30,7 @@ class Demo extends React.Component {
       {
         title: (
           <a onClick={this.toggleBody} href="#">
-            {this.state.showBody ? '隐藏' : '显示'}体
+            {showBody ? '隐藏' : '显示'}体
           </a>
         ),
         key: 'x',
