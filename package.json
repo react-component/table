@@ -60,6 +60,8 @@
     "rc-util": "^5.27.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
     "@types/enzyme": "^3.10.5",
     "@types/jest": "^28.1.2",
     "@types/react": "^17.0.35",
@@ -84,7 +86,7 @@
     "rc-animate": "^3.0.0",
     "rc-dropdown": "~4.0.1",
     "rc-menu": "~9.6.0",
-    "rc-test": "^7.0.2",
+    "rc-test": "^7.0.14",
     "rc-tooltip": "^5.2.1",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
