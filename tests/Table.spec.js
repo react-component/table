@@ -701,7 +701,7 @@ describe('Table.Basic', () => {
       });
     });
 
-    it('without warning - columns is emplty', () => {
+    it('without warning - columns is empty', () => {
       resetWarned();
       const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       mount(
