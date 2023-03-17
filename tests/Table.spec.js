@@ -701,6 +701,24 @@ describe('Table.Basic', () => {
       });
     });
 
+    it('without warning - columns is emplty', () => {
+      resetWarned();
+      const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      mount(
+        createTable({
+          columns: [],
+          components: {
+            body: () => <h1>Bamboo</h1>,
+          },
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+      expect(errSpy).not.toHaveBeenCalledWith(
+        'Warning: When use `components.body` with render props. Each column should have a fixed `width` value.',
+      );
+      errSpy.mockRestore();
+    });
+
     it('not crash', () => {
       const Looper = React.forwardRef(() => <td />);
       Looper.looper = Looper;

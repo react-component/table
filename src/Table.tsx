@@ -570,11 +570,12 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
-        warning(
-          false,
-          'When use `components.body` with render props. Each column should have a fixed `width` value.',
-        );
-
+        if (props.columns.length > 0) {
+          warning(
+            false,
+            'When use `components.body` with render props. Each column should have a fixed `width` value.',
+          );
+        }
         return 0;
       }) as number[];
     } else {
@@ -599,7 +600,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
             {bodyColGroup}
             {bodyTable}
             {!fixFooter && summaryNode && (
-              <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns} columns={columns}>
+              <Footer
+                stickyOffsets={stickyOffsets}
+                flattenColumns={flattenColumns}
+                columns={columns}
+              >
                 {summaryNode}
               </Footer>
             )}
