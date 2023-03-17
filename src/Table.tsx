@@ -570,9 +570,10 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
-        if (props.columns.length > 0) {
+
+        if (process.env.NODE_ENV !== 'production') {
           warning(
-            false,
+            props.columns.length === 0,
             'When use `components.body` with render props. Each column should have a fixed `width` value.',
           );
         }
