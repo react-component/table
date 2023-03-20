@@ -315,7 +315,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   if (fixHeader) {
     scrollYStyle = {
-      overflowY: 'scroll',
+      overflowY: 'auto',
       maxHeight: scroll.y,
     };
   }
