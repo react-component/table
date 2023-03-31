@@ -92,7 +92,7 @@ export interface TableProps<RecordType = unknown>
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
-  rowKey?: string | GetRowKey<RecordType>;
+  rowKey?: (string & {}) | keyof RecordType | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
 
   // Fixed Columns
@@ -107,7 +107,7 @@ export interface TableProps<RecordType = unknown>
   // Additional Part
   footer?: PanelRender<RecordType>;
   summary?: (data: readonly RecordType[]) => React.ReactNode;
-  caption?: string | React.ReactNode;
+  caption?: React.ReactNode;
 
   // Customize
   id?: string;
