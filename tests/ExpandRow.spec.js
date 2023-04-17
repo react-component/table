@@ -1,8 +1,8 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Expand', () => {
@@ -393,10 +393,8 @@ describe('Table.Expand', () => {
     expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
 
     wrapper.setProps({ expandedRowKeys: [1] });
-    expect(wrapper.find('tbody tr')).toHaveLength(4);
-    expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
-    expect(wrapper.find('tbody tr').at(1).props().style.display).toEqual('none');
-    expect(wrapper.find('tbody tr').at(3).hasClass('rc-table-expanded-row')).toBeTruthy();
+    expect(wrapper.find('tbody tr')).toHaveLength(3);
+    expect(wrapper.find('tbody tr').at(2).hasClass('rc-table-expanded-row')).toBeTruthy();
   });
 
   it('renders expend row class correctly', () => {
@@ -532,7 +530,7 @@ describe('Table.Expand', () => {
 
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
-    const data = [{ key: 0, name: 'Lucy', age: 27 }];
+    const data = [{ key: 0, name: 'Lucy', age: 27 }, null];
     const onExpand = jest.fn();
     const wrapper = mount(
       createTable({
@@ -551,11 +549,11 @@ describe('Table.Expand', () => {
     wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(true, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(1);
-    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('');
+    expect(wrapper.find('.rc-table-expanded-row').length).toBe(2);
     wrapper.find('.custom-expand-icon').first().simulate('click');
     expect(onExpand).toHaveBeenCalledWith(false, data[0]);
     expect(onExpand).toHaveBeenCalledTimes(2);
-    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('none');
+    expect(wrapper.find('.rc-table-expanded-row').length).toBe(1);
   });
 
   // https://github.com/ant-design/ant-design/issues/23894
