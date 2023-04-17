@@ -530,7 +530,7 @@ describe('Table.Expand', () => {
 
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
-    const data = [{ key: 0, name: 'Lucy', age: 27 }, null];
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
     const onExpand = jest.fn();
     const wrapper = mount(
       createTable({
