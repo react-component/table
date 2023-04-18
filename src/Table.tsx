@@ -38,7 +38,7 @@ import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
-import { EXPAND_COLUMN } from './constant';
+import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
 import TableContext from './context/TableContext';
 import type { FixedHeaderProps } from './FixedHolder';
 import FixedHolder from './FixedHolder';
@@ -81,8 +81,6 @@ const EMPTY_DATA = [];
 
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
-
-export const INTERNAL_HOOKS = 'rc-table-internal-hook';
 
 export interface TableProps<RecordType = unknown>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
