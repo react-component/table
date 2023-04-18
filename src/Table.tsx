@@ -233,7 +233,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         );
       }
 
-      return key?.toString();
+      return key;
     };
   }, [rowKey]);
 
