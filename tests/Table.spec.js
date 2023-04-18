@@ -4,7 +4,7 @@ import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
-import { INTERNAL_HOOKS } from '../src/Table';
+import { INTERNAL_HOOKS } from '../src/constant';
 
 describe('Table.Basic', () => {
   const data = [

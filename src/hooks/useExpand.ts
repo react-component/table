@@ -1,5 +1,6 @@
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
+import { INTERNAL_HOOKS } from '../constant';
 import type {
   ExpandableConfig,
   ExpandableType,
@@ -9,7 +10,6 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { TableProps } from '../Table';
-import { INTERNAL_HOOKS } from '../Table';
 import { findAllChildrenKeys, renderExpandIcon } from '../utils/expandUtil';
 import { getExpandableProps } from '../utils/legacyUtil';
 
