@@ -103,7 +103,7 @@ export type ColumnsType<RecordType = unknown> = readonly (
   | ColumnType<RecordType>
 )[];
 
-export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
+export type GetRowKey<RecordType> = (record: RecordType, index?: number) => string;
 
 // ================= Fix Column =================
 export interface StickyOffsets {

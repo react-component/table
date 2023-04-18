@@ -14,7 +14,7 @@ import { findAllChildrenKeys, renderExpandIcon } from '../utils/expandUtil';
 import { getExpandableProps } from '../utils/legacyUtil';
 
 export default function useExpand<RecordType>(
-  props: TableProps,
+  props: TableProps<RecordType>,
   mergedData: readonly RecordType[],
   getRowKey: GetRowKey<RecordType>,
 ): [

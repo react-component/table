@@ -92,7 +92,7 @@ export interface TableProps<RecordType = unknown>
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
-  rowKey?: (string & {}) | keyof RecordType | GetRowKey<RecordType>;
+  rowKey?: string | keyof RecordType | GetRowKey<RecordType>;
   tableLayout?: TableLayout;
 
   // Fixed Columns
@@ -233,7 +233,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         );
       }
 
-      return key;
+      return key?.toString();
     };
   }, [rowKey]);
 
