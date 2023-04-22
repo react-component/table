@@ -66,6 +66,7 @@ export default function useFlattenRecords<T>(
       for (let i = 0; i < data?.length; i += 1) {
         const record = data[i];
 
+        // using array.push or spread operator may cause "Maximum call stack size exceeded" exception if array size is big enough.
         temp = temp.concat(
           ...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey, i),
         );
