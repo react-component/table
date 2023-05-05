@@ -1,5 +1,5 @@
-import React from 'react';
 import { mount } from 'enzyme';
+import React from 'react';
 import Table from '../src';
 
 describe('Table.Summary', () => {
@@ -51,6 +51,35 @@ describe('Table.Summary', () => {
     );
 
     expect(wrapper.find('tfoot').render()).toMatchSnapshot();
+  });
+
+  it('summary row click', async () => {
+    const onClick = jest.fn();
+    const wrapper = mount(
+      <Table
+        columns={[
+          { dataIndex: 'a', fixed: 'left', width: 10 },
+          { dataIndex: 'b', fixed: 'left', width: 20 },
+          { dataIndex: 'c', width: 30 },
+        ]}
+        data={[{ key: 1, a: 2, b: 3, c: 4 }]}
+        summary={() => (
+          <Table.Summary.Row onClick={onClick}>
+            <Table.Summary.Cell colSpan={2} index={0}>
+              Light
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={2}>Bamboo</Table.Summary.Cell>
+            <Table.Summary.Cell index={3} align="right">
+              112.5
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        )}
+      />,
+    );
+
+    const tr = wrapper.find('tfoot tr').first();
+    tr.simulate('click');
+    expect(onClick).toHaveBeenCalled();
   });
 
   describe('fixed summary', () => {
