@@ -817,12 +817,15 @@ export function genTable(shouldTriggerRender?: CompareProps<typeof Table>): type
 const ImmutableTable = genTable();
 type ImmutableTableType = typeof ImmutableTable & {
   EXPAND_COLUMN: typeof EXPAND_COLUMN;
+  INTERNAL_HOOKS: typeof INTERNAL_HOOKS;
   Column: typeof Column;
   ColumnGroup: typeof ColumnGroup;
   Summary: typeof FooterComponents;
 };
 
 (ImmutableTable as ImmutableTableType).EXPAND_COLUMN = EXPAND_COLUMN;
+
+(ImmutableTable as ImmutableTableType).INTERNAL_HOOKS = INTERNAL_HOOKS;
 
 (ImmutableTable as ImmutableTableType).Column = Column;
 
