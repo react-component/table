@@ -1,13 +1,13 @@
-import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 import { safeAct } from './utils';
 
 describe('Table.Sticky', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   it('Sticky Header', async () => {
     const col1 = { dataIndex: 'light', width: 100 };
@@ -53,7 +53,7 @@ describe('Table.Sticky', () => {
       top: 10,
     });
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky scroll', async () => {
@@ -120,10 +120,11 @@ describe('Table.Sticky', () => {
     );
 
     await act(async () => {
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
     });
 
+    console.log(wrapper.find('.rc-table-sticky-scroll').get(0), 'shouldUndefined');
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
 
     const oldInnerHeight = global.innerHeight;
@@ -133,7 +134,7 @@ describe('Table.Sticky', () => {
 
     await act(async () => {
       global.dispatchEvent(resizeEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -143,12 +144,12 @@ describe('Table.Sticky', () => {
     await act(async () => {
       global.innerHeight = oldInnerHeight;
       global.dispatchEvent(resizeEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
 
-    const mockFn = jest.fn();
+    const mockFn = vi.fn();
 
     wrapper
       .find('.rc-table-sticky-scroll-bar')
@@ -165,7 +166,7 @@ describe('Table.Sticky', () => {
 
     await act(async () => {
       document.body.dispatchEvent(mousemoveEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -179,7 +180,7 @@ describe('Table.Sticky', () => {
       mousemoveEvent.pageX = -50;
       document.body.dispatchEvent(mousemoveEvent);
 
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -193,7 +194,7 @@ describe('Table.Sticky', () => {
       mousemoveEvent.buttons = 0;
       document.body.dispatchEvent(mousemoveEvent);
 
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -209,11 +210,10 @@ describe('Table.Sticky', () => {
     window.pageYOffset = 0;
     mockFn.mockRestore();
     domSpy.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky Header with border classname', async () => {
-
     const TableDemo = props => {
       return (
         <div
@@ -251,11 +251,10 @@ describe('Table.Sticky', () => {
     });
     expect(wrapper.find('.rc-table-cell-fix-sticky')).not.toBe(undefined);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky Header with scroll-y', async () => {
-
     const TableDemo = props => {
       return (
         <div
@@ -293,11 +292,10 @@ describe('Table.Sticky', () => {
       right: 15,
     });
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky scroll with getContainer', async () => {
-    
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     const container = document.createElement('ol');
@@ -393,7 +391,7 @@ describe('Table.Sticky', () => {
     );
 
     await act(async () => {
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
     });
 
@@ -405,7 +403,7 @@ describe('Table.Sticky', () => {
       transform: 'translate3d(0px, 0, 0)',
     });
 
-    const mockFn = jest.fn();
+    const mockFn = vi.fn();
 
     wrapper
       .find('.rc-table-sticky-scroll-bar')
@@ -420,7 +418,7 @@ describe('Table.Sticky', () => {
 
     await act(async () => {
       document.body.dispatchEvent(mousemoveEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });
@@ -436,6 +434,6 @@ describe('Table.Sticky', () => {
     domSpy.mockRestore();
     sectionSpy.mockRestore();
     mockFn.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });

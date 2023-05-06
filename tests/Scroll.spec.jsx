@@ -1,11 +1,14 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
-  const data = [{ key: 'key0', name: 'Lucy' }, { key: 'key1', name: 'Jack' }];
+  const data = [
+    { key: 'key0', name: 'Lucy' },
+    { key: 'key1', name: 'Jack' },
+  ];
   const createTable = props => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
@@ -36,14 +39,14 @@ describe('Table.Scroll', () => {
   });
 
   it('fire scroll event', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     let scrollLeft = 0;
     let scrollTop = 0;
 
-    const setScrollLeft = jest.fn((_, val) => {
+    const setScrollLeft = vi.fn((_, val) => {
       scrollLeft = val;
     });
-    const setScrollTop = jest.fn((_, val) => {
+    const setScrollTop = vi.fn((_, val) => {
       scrollTop = val;
     });
 
@@ -85,7 +88,7 @@ describe('Table.Scroll', () => {
       />,
     );
 
-    jest.runAllTimers();
+    vi.runAllTimers();
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
       const headerDiv = wrapper.find('div.rc-table-header').instance();
@@ -96,7 +99,7 @@ describe('Table.Scroll', () => {
       });
 
       headerDiv.dispatchEvent(wheelEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 10);
@@ -114,11 +117,11 @@ describe('Table.Scroll', () => {
           },
         });
     });
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 33);
     setScrollLeft.mockReset();
 
     domSpy.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });
