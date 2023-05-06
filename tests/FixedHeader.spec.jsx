@@ -58,17 +58,17 @@ describe('Table.FixedHeader', () => {
 
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
-    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(100);
-    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(200);
-    console.log(wrapper.find('colgroup col').at(1).props());
-    expect(wrapper.find('colgroup col').at(2).props().style.width).toEqual(0);
+    expect(wrapper.find('.rc-table-body colgroup col').at(0).props().style.width).toEqual(100);
+    expect(wrapper.find('.rc-table-body colgroup col').at(1).props().style.width).toEqual(200);
+    expect(wrapper.find('.rc-table-body colgroup col')).toHaveLength(2);
 
     // Update columns
-    wrapper.setProps({ columns: [col2, col1] });
+    wrapper.setProps({ columns: [col2, col1, { ...col3, width: 300 }] });
     wrapper.update();
 
-    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
-    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
+    expect(wrapper.find('.rc-table-body colgroup col').at(0).props().style.width).toEqual(200);
+    expect(wrapper.find('.rc-table-body colgroup col').at(1).props().style.width).toEqual(100);
+    expect(wrapper.find('.rc-table-body colgroup col').at(2).props().style.width).toEqual(300);
 
     vi.useRealTimers();
   });
