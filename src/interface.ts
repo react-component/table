@@ -80,7 +80,7 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
   children: ColumnsType<RecordType>;
 }
 
-export type AlignType = 'left' | 'center' | 'right';
+export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
