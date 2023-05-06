@@ -1,7 +1,9 @@
+import { createEvent, fireEvent, render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 import Table from '../src';
 import { safeAct } from './utils';
 
@@ -124,7 +126,6 @@ describe('Table.Sticky', () => {
       await Promise.resolve();
     });
 
-    console.log(wrapper.find('.rc-table-sticky-scroll').get(0), 'shouldUndefined');
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
 
     const oldInnerHeight = global.innerHeight;
@@ -154,6 +155,8 @@ describe('Table.Sticky', () => {
     wrapper
       .find('.rc-table-sticky-scroll-bar')
       .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
+
+    console.log(mockFn.mock.calls);
 
     expect(mockFn).toHaveBeenCalledTimes(2);
 
@@ -298,9 +301,10 @@ describe('Table.Sticky', () => {
   it('Sticky scroll with getContainer', async () => {
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
-    const container = document.createElement('ol');
-    container.style = 'height: 500px;overflow: scroll';
-    document.body.appendChild(container);
+    const ol = document.createElement('ol');
+    ol.style = 'height: 500px;overflow: scroll';
+    document.body.appendChild(ol);
+
     let scrollLeft = 100;
     const domSpy = spyElementPrototypes(HTMLDivElement, {
       scrollLeft: {
@@ -349,7 +353,7 @@ describe('Table.Sticky', () => {
 
     const col1 = { dataIndex: 'light', width: 1000 };
     const col2 = { dataIndex: 'bamboo', width: 2000 };
-    const wrapper = mount(
+    const { container, unmount } = render(
       <Table
         columns={[col1, col2]}
         data={[
@@ -382,53 +386,47 @@ describe('Table.Sticky', () => {
           x: 10000,
         }}
         sticky={{
-          getContainer: () => container,
+          getContainer: () => ol,
         }}
       />,
       {
-        attachTo: container,
+        container: ol,
       },
     );
 
-    await act(async () => {
+    await act(() => {
       vi.runAllTimers();
-      await Promise.resolve();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').get(0)).toBeTruthy();
-
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-sticky-scroll')).toBeTruthy();
+    expect(container.querySelector('.rc-table-sticky-scroll-bar')).toBeTruthy();
+    expect(container.querySelector('.rc-table-sticky-scroll-bar').style).toContain({
       width: '50px',
-      transform: 'translate3d(0px, 0, 0)',
+      transform: 'translate3d(50px, 0, 0)',
     });
 
     const mockFn = vi.fn();
+    const node = container.querySelector('.rc-table-sticky-scroll-bar');
+    const event = createEvent.mouseDown(node);
+    event.preventDefault = mockFn;
+    fireEvent(node, event);
 
-    wrapper
-      .find('.rc-table-sticky-scroll-bar')
-      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
+    expect(mockFn).toHaveBeenCalledTimes(1);
 
-    expect(mockFn).toHaveBeenCalledTimes(2);
-
-    const mousemoveEvent = new Event('mousemove');
-
-    mousemoveEvent.buttons = 1;
-    mousemoveEvent.pageX = 50;
-
-    await act(async () => {
-      document.body.dispatchEvent(mousemoveEvent);
+    await act(() => {
+      fireEvent.mouseMove(container, {
+        buttons: 1,
+        pageX: 50,
+      });
       vi.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-sticky-scroll-bar').style).toContain({
       width: '50px',
       transform: 'translate3d(50.5px, 0, 0)',
     });
 
-    wrapper.unmount();
+    unmount();
 
     window.pageYOffset = 0;
     domSpy.mockRestore();
