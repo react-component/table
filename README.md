@@ -115,7 +115,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
-| summary | (data: readonly RecordType[]) => React.ReactNode | - | "summary" attribute in Ant Design's "Table" component is used to define the summary row of the table. The summary row is a special row that is usually used to display summary information of all rows in the table, such as total, average, etc. |
+| summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
 
 ## Column Props
 
@@ -142,9 +142,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | key | String |  | key of this summary |
-| fixed | boolean \| 'top' \| 'bottom' | - | "true" fixes the summary row at the bottom of the table. |
-
-"top" fixes the summary row at the top of the table, while "bottom" fixes it at the bottom. "undefined" or "false" makes the summary row scrollable along with the table. |
+| fixed | boolean \| 'top' \| 'bottom' | - | `true` fixes the summary row at the bottom of the table. `top` fixes the summary row at the top of the table, while `bottom` fixes it at the bottom. `undefined` or `false` makes the summary row scrollable along with the table. |
 
 ### Table.Summary.Row
 
@@ -152,7 +150,8 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | --- | --- | --- | --- |
 | key | String |  | key of this summary |
 | className | String | - | className of this summary row |
-| onClick | (e?: React.MouseEvent<HTMLElement>) => void | - | The onClick attribute in Ant Design's Table.Summary.Row component can be used to set a click event handler for the summary row. |
+| style | React.CSSProperties | - | style of this summary row |
+| onClick | (e?: React.MouseEvent<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
 ## License
 
