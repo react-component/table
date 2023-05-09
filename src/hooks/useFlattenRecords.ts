@@ -60,13 +60,16 @@ export default function useFlattenRecords<T>(
 ) {
   const arr: { record: T; indent: number; index: number }[] = React.useMemo(() => {
     if (expandedKeys?.size) {
-      const temp: { record: T; indent: number; index: number }[] = [];
+      let temp: { record: T; indent: number; index: number }[] = [];
 
       // collect flattened record
       for (let i = 0; i < data?.length; i += 1) {
         const record = data[i];
 
-        temp.push(...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey, i));
+        // using array.push or spread operator may cause "Maximum call stack size exceeded" exception if array size is big enough.
+        temp = temp.concat(
+          ...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey, i),
+        );
       }
 
       return temp;
