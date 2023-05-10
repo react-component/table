@@ -1171,7 +1171,7 @@ describe('Table.Basic', () => {
       }),
     );
     expect(container).toMatchSnapshot();
-    expect(container.getElementsByTagName('col')).toHaveLength(tColumns.length);
+    expect(container.getElementsByTagName('col')).toHaveLength(tColumns.length + 1);
   });
   it('columns support JSX condition', () => {
     const Example = () => {

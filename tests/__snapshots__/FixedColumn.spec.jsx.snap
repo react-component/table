@@ -1981,7 +1981,7 @@ LoadedCheerio {
               style="width: 1000px;"
             />
             <col
-              style="width: 1000px;"
+              style="width: 15px;"
             />
           </colgroup>
           <thead
@@ -2064,7 +2064,7 @@ LoadedCheerio {
               <th
                 class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
-                style="position: sticky; right: 1000px;"
+                style="position: sticky; right: 15px;"
               >
                 title12
               </th>
@@ -2854,7 +2854,7 @@ LoadedCheerio {
               style="width: 1000px;"
             />
             <col
-              style="width: 1000px;"
+              style="width: 15px;"
             />
           </colgroup>
           <thead
@@ -2937,7 +2937,7 @@ LoadedCheerio {
               <th
                 class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
-                style="position: sticky; right: 1000px;"
+                style="position: sticky; right: 15px;"
               >
                 title12
               </th>
@@ -3102,7 +3102,7 @@ LoadedCheerio {
               >
                 <div
                   class="rc-table-expanded-row-fixed"
-                  style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+                  style="width: 985px; position: sticky; left: 0px; overflow: hidden;"
                 >
                   No Data
                 </div>

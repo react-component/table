@@ -281,7 +281,7 @@ describe('Table.Sticky', () => {
       container.querySelector('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').style,
     ).toContain({
       position: 'sticky',
-      right: '0px',
+      right: '15px',
     });
 
     vi.useRealTimers();

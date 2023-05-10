@@ -243,10 +243,15 @@ LoadedCheerio {
                 class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 name="my-header-cell"
                 scope="col"
-                style="position: sticky; right: 0px;"
+                style="position: sticky; right: 15px;"
               >
                 Gender
               </th>
+              <th
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+                name="my-header-cell"
+                style="position: sticky; right: 0px;"
+              />
             </tr>
           </thead>
         </table>
@@ -379,7 +384,10 @@ LoadedCheerio {
               style="width: 0px;"
             />
             <col
-              style="width: 903px;"
+              style="width: 888px;"
+            />
+            <col
+              style="width: 15px;"
             />
           </colgroup>
           <thead
@@ -391,6 +399,9 @@ LoadedCheerio {
               />
               <td
                 class="rc-table-cell"
+              />
+              <td
+                class="rc-table-cell rc-table-cell-scrollbar"
               />
             </tr>
           </thead>
@@ -1185,7 +1196,10 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
         >
           <colgroup>
             <col
-              style="width: 100px;"
+              style="width: 85px;"
+            />
+            <col
+              style="width: 15px;"
             />
           </colgroup>
           <thead
@@ -1198,6 +1212,9 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
               >
                 Name
               </th>
+              <td
+                class="rc-table-cell rc-table-cell-scrollbar"
+              />
             </tr>
           </thead>
         </table>
