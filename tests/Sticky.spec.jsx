@@ -127,7 +127,6 @@ describe('Table.Sticky', () => {
 
     expect(container.querySelector('.rc-table-sticky-scroll')).toBeTruthy();
 
-    // const oldInnerHeight = document.body.innerHeight;
     const oldInnerHeight = global.innerHeight;
     const resizeEvent = new Event('resize');
 
