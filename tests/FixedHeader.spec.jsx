@@ -58,17 +58,16 @@ describe('Table.FixedHeader', () => {
 
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
-    expect(wrapper.find('.rc-table-body colgroup col').at(0).props().style.width).toEqual(100);
-    expect(wrapper.find('.rc-table-body colgroup col').at(1).props().style.width).toEqual(200);
-    expect(wrapper.find('.rc-table-body colgroup col')).toHaveLength(2);
+    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(100);
+    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(200);
+    expect(wrapper.find('colgroup col').at(2).props().style.width).toEqual(0);
 
     // Update columns
-    wrapper.setProps({ columns: [col2, col1, { ...col3, width: 300 }] });
+    wrapper.setProps({ columns: [col2, col1] });
     wrapper.update();
 
-    expect(wrapper.find('.rc-table-body colgroup col').at(0).props().style.width).toEqual(200);
-    expect(wrapper.find('.rc-table-body colgroup col').at(1).props().style.width).toEqual(100);
-    expect(wrapper.find('.rc-table-body colgroup col').at(2).props().style.width).toEqual(300);
+    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
+    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
 
     vi.useRealTimers();
   });

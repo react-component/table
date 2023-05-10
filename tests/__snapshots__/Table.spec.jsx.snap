@@ -1180,8 +1180,8 @@ LoadedCheerio {
 `;
 
 exports[`Table.Basic > should get scrollbar size 1`] = `
-<div>
-  <div
+LoadedCheerio {
+  "0": <div
     class="rc-table rc-table-fixed-header"
   >
     <div
@@ -1220,8 +1220,36 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
         </table>
       </div>
     </div>
-  </div>
-</div>
+  </div>,
+  "_root": LoadedCheerio {
+    "0": Document {
+      "children": [
+        <html>
+          <head />
+          <body />
+        </html>,
+      ],
+      "endIndex": null,
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "startIndex": null,
+      "type": "root",
+      "x-mode": "quirks",
+    },
+    "_root": [Circular],
+    "length": 1,
+    "options": {
+      "decodeEntities": true,
+      "xml": false,
+    },
+  },
+  "length": 1,
+  "options": {
+    "decodeEntities": true,
+    "xml": false,
+  },
+}
 `;
 
 exports[`Table.Basic > syntactic sugar 1`] = `

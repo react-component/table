@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
@@ -1160,8 +1159,7 @@ describe('Table.Basic', () => {
   });
   it('should get scrollbar size', () => {
     const tColumns = [{ title: 'Name', dataIndex: 'name', key: 'name', width: 100 }];
-
-    const { container } = render(
+    const wrapper = mount(
       createTable({
         columns: tColumns,
         scroll: { y: 100 },
@@ -1170,8 +1168,8 @@ describe('Table.Basic', () => {
         },
       }),
     );
-    expect(container).toMatchSnapshot();
-    expect(container.getElementsByTagName('col')).toHaveLength(tColumns.length + 1);
+    expect(wrapper.render()).toMatchSnapshot();
+    expect(wrapper.find('col')).toHaveLength(tColumns.length + 1);
   });
   it('columns support JSX condition', () => {
     const Example = () => {
