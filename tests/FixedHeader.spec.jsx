@@ -3,8 +3,8 @@ import RcResizeObserver from 'rc-resize-observer';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { safeAct } from './utils';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
+import { safeAct } from './utils';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -17,7 +17,7 @@ describe('Table.FixedHeader', () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     visible = true;
   });
 
@@ -58,7 +58,6 @@ describe('Table.FixedHeader', () => {
 
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
-    expect();
     expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(100);
     expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(200);
     expect(wrapper.find('colgroup col').at(2).props().style.width).toEqual(0);
@@ -70,7 +69,7 @@ describe('Table.FixedHeader', () => {
     expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
     expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('INTERNAL_COL_DEFINE', async () => {
@@ -121,7 +120,7 @@ describe('Table.FixedHeader', () => {
         }}
       />,
     );
-    
+
     await safeAct(wrapper);
     expect(wrapper.find('.rc-table-header table').props().style).toEqual(
       expect.objectContaining({ visibility: null }),
@@ -190,7 +189,7 @@ describe('Table.FixedHeader', () => {
       ]);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
       wrapper.update();
     });
 
@@ -198,7 +197,7 @@ describe('Table.FixedHeader', () => {
       expect.objectContaining({ width: 93 }),
     );
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', async () => {
@@ -247,16 +246,11 @@ describe('Table.FixedHeader', () => {
         name: 'Jack1',
       },
     ];
-    const wrapper = mount(
-      <Table
-        columns={columns}
-        data={data}
-        scroll={{ x: true }}
-      />,
-    );
+    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
     await safeAct(wrapper);
     expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
-    expect(wrapper.find('th').first().props().className).not.toContain('rc-table-cell-fix-left-last');
-    
+    expect(wrapper.find('th').first().props().className).not.toContain(
+      'rc-table-cell-fix-left-last',
+    );
   });
 });

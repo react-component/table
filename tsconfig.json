@@ -11,7 +11,8 @@
       "@/*": ["src/*"],
       "@@/*": [".dumi/tmp/*"],
       "rc-table": ["src/index.ts"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": [".dumi/**/*", ".dumirc.ts", "**/*.ts", "**/*.tsx"]
 }

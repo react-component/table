@@ -1,13 +1,13 @@
-import React from 'react';
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
 import Table from '../src';
 
 describe('Table.Deprecated', () => {
   let errorSpy;
 
   beforeAll(() => {
-    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Table.Deprecated', () => {
       removedProp => {
         it(`warning for '${removedProp}'`, () => {
           const props = {
-            [removedProp]: jest.fn(),
+            [removedProp]: vi.fn(),
           };
           mount(<Table {...props} />);
 

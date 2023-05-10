@@ -1,5 +1,5 @@
-import React from 'react';
 import { mount } from 'enzyme';
+import React from 'react';
 import Table from '../src';
 
 describe('Table with grouping columns', () => {
