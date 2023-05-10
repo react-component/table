@@ -46,7 +46,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
     event.persist();
-    refState.current.delta = event.clientX - scrollState.scrollLeft;
+    refState.current.delta = event.pageX - scrollState.scrollLeft;
     refState.current.x = 0;
     setActive(true);
     event.preventDefault();
@@ -63,7 +63,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       return;
     }
     let left: number =
-      refState.current.x + event.clientX - refState.current.x - refState.current.delta;
+      refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
     if (left <= 0) {
       left = 0;
@@ -77,7 +77,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
     });
 
-    refState.current.x = event.clientX;
+    refState.current.x = event.pageX;
   };
 
   const onContainerScroll = () => {
