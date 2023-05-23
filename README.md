@@ -151,7 +151,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | key | String |  | key of this summary |
 | className | String | - | className of this summary row |
 | style | React.CSSProperties | - | style of this summary row |
-| onClick | (e?: React.MouseEvent<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
+| onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
 ## License
 
