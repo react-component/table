@@ -1217,6 +1217,7 @@ describe('Table.Basic', () => {
 
     expect(wrapper.render()).toMatchSnapshot();
   });
+
   it('using both column children and component body simultaneously', () => {
     const width = 150;
     const noChildColLen = 4;
