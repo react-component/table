@@ -90,7 +90,7 @@ export interface ColumnType<
   colSpan?: number;
   dataIndex?: T1;
   render?: (
-    value: T1 extends readonly any[] ? Demo<RecordType, T1> : Demo<RecordType, [T1]>,
+    value: GetNameType<RecordType, T1 extends readonly any[] ? T1 : [T1]>,
     record: RecordType,
     index: number,
   ) => React.ReactNode | RenderedCell<RecordType>;
@@ -249,25 +249,8 @@ export interface TableSticky {
   getContainer?: () => Window | HTMLElement;
 }
 
-export type Demo<
+export type GetNameType<
   T = any,
   T1 extends readonly any[] = [],
   T2 extends readonly any[] = [],
-> = T2['length'] extends T1['length'] ? T : Demo<T[T1[T2['length']]], T1, [...T2, true]>;
-
-function func<T = any, const T1 extends DeepNamePath<T> = DeepNamePath<T>>(
-  data: T,
-  params: T1,
-): T1 extends readonly any[] ? Demo<T, T1> : Demo<T, [T1]>;
-
-function func(...e: any[]) {
-  return e;
-}
-
-export const d = func({ a: 1, b: '' }, ['a']);
-
-export const d1 = func({ a: 1, b: '' }, 'a');
-
-export const d2 = func({ a: 1, b: '' }, ['b']);
-
-export const d3 = func({ a: { a1: ['aa'] }, b: '' }, ['a', 'a1', 1]);
+> = T2['length'] extends T1['length'] ? T : GetNameType<T[T1[T2['length']]], T1, [...T2, true]>;
