@@ -16,7 +16,7 @@ function isRenderCell<RecordType>(
 
 export default function useCellRender<RecordType>(
   record: RecordType,
-  dataIndex: DataIndex,
+  dataIndex: DataIndex<RecordType>,
   renderIndex: number,
   children?: React.ReactNode,
   render?: ColumnType<RecordType>['render'],
@@ -40,14 +40,14 @@ export default function useCellRender<RecordType>(
           ? dataIndex
           : [dataIndex];
 
-      const value: Record<string, unknown> | React.ReactNode = getValue(record, path);
+      const value: Record<string, unknown> | React.ReactNode = getValue(record, path as any);
 
       // Customize render node
       let returnChildNode = value;
       let returnCellProps: CellType<RecordType> | undefined = undefined;
 
       if (render) {
-        const renderData = render(value, record, renderIndex);
+        const renderData = render(value as any, record, renderIndex);
 
         if (isRenderCell(renderData)) {
           if (process.env.NODE_ENV !== 'production') {

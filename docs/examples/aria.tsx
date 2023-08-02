@@ -1,8 +1,9 @@
-import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
+import React from 'react';
 import '../../assets/index.less';
 
-const columns = [
+const columns: TableProps<{ name?: string; age?: string; address?: string }>['columns'] = [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -17,6 +18,8 @@ const columns = [
     title: 'Address',
     dataIndex: 'address',
     key: 'address',
+    // 这里可以检测到类型是 string
+    render: value => value.replace('a', 'b'),
   },
 ];
 

@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { DeepNamePath } from './namePathType';
 
 /**
  * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
@@ -55,7 +56,7 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
-export type DataIndex = string | number | readonly (string | number)[];
+export type DataIndex<T = any> = DeepNamePath<T>;
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -82,11 +83,14 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
 
 export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
 
-export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
+export interface ColumnType<
+  RecordType = any,
+  T1 extends DeepNamePath<RecordType> = DeepNamePath<RecordType>,
+> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: T1;
   render?: (
-    value: any,
+    value: T1 extends readonly any[] ? Demo<RecordType, T1> : Demo<RecordType, [T1]>,
     record: RecordType,
     index: number,
   ) => React.ReactNode | RenderedCell<RecordType>;
@@ -244,3 +248,26 @@ export interface TableSticky {
   offsetScroll?: number;
   getContainer?: () => Window | HTMLElement;
 }
+
+export type Demo<
+  T = any,
+  T1 extends readonly any[] = [],
+  T2 extends readonly any[] = [],
+> = T2['length'] extends T1['length'] ? T : Demo<T[T1[T2['length']]], T1, [...T2, true]>;
+
+function func<T = any, const T1 extends DeepNamePath<T> = DeepNamePath<T>>(
+  data: T,
+  params: T1,
+): T1 extends readonly any[] ? Demo<T, T1> : Demo<T, [T1]>;
+
+function func(...e: any[]) {
+  return e;
+}
+
+export const d = func({ a: 1, b: '' }, ['a']);
+
+export const d1 = func({ a: 1, b: '' }, 'a');
+
+export const d2 = func({ a: 1, b: '' }, ['b']);
+
+export const d3 = func({ a: { a1: ['aa'] }, b: '' }, ['a', 'a1', 1]);

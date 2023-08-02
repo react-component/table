@@ -23,7 +23,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   index?: number;
   /** the index of the record. For the render(value, record, renderIndex) */
   renderIndex?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
   render?: ColumnType<RecordType>['render'];
   component?: CustomizeComponent;
   children?: React.ReactNode;
