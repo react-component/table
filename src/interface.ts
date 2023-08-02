@@ -250,7 +250,9 @@ export interface TableSticky {
 }
 
 export type GetNameType<
-  T = any,
-  T1 extends readonly any[] = [],
-  T2 extends readonly any[] = [],
-> = T2['length'] extends T1['length'] ? T : GetNameType<T[T1[T2['length']]], T1, [...T2, true]>;
+  Store = any,
+  NamePath extends readonly any[] = [],
+  NamePathCache extends readonly any[] = [],
+> = NamePathCache['length'] extends NamePath['length']
+  ? Store
+  : GetNameType<Store[NamePath[NamePathCache['length']]], NamePath, [...NamePathCache, true]>;
