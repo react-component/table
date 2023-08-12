@@ -18,7 +18,9 @@ function Footer<RecordType>({ children, stickyOffsets, flattenColumns }: FooterP
 
   const lastColumnIndex = flattenColumns.length - 1;
   const scrollColumn = flattenColumns[lastColumnIndex];
-
+  React.useEffect(() => {
+    alert('123')
+  }, [])
   const summaryContext = React.useMemo(
     () => ({
       stickyOffsets,
