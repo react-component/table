@@ -34,7 +34,7 @@ npm start
 
 ## Example
 
-https://table.react-component.now.sh/
+https://table-react-component.vercel.app/
 
 ## Usage
 
