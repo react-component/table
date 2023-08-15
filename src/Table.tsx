@@ -193,6 +193,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
 
+  const useInternalHooks = internalHooks === INTERNAL_HOOKS;
+
   // ===================== Warning ======================
   if (process.env.NODE_ENV !== 'production') {
     [
@@ -235,6 +237,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     };
   }, [rowKey]);
 
+  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
+  const isCustomizeScrollBodyFn = typeof customizeScrollBody === 'function';
+
   // ====================== Hover =======================
   const [startRow, endRow, onHover] = useHover();
 
@@ -265,7 +270,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
     },
-    internalHooks === INTERNAL_HOOKS ? transformColumns : null,
+    useInternalHooks ? transformColumns : null,
   );
 
   const columnContext = React.useMemo(
@@ -437,17 +442,19 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
-    if (scrollBodyRef.current instanceof Element) {
-      setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
-    } else {
-      setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
+    if (!isCustomizeScrollBodyFn) {
+      if (scrollBodyRef.current instanceof Element) {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+      } else {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
+      }
     }
     setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
-    if (internalHooks === INTERNAL_HOOKS && internalRefs) {
+    if (useInternalHooks && internalRefs) {
       internalRefs.body.current = scrollBodyRef.current;
     }
   });
@@ -538,14 +545,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       <caption className={`${prefixCls}-caption`}>{caption}</caption>
     ) : undefined;
 
-  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
-
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    typeof customizeScrollBody === 'function' &&
-    hasData &&
-    !fixHeader
-  ) {
+  if (process.env.NODE_ENV !== 'production' && isCustomizeScrollBodyFn && hasData && !fixHeader) {
     warning(false, '`components.body` with render props is only work on `scroll.y`.');
   }
 
@@ -556,7 +556,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     // >>>>>> Fixed Header
     let bodyContent: React.ReactNode;
 
-    if (typeof customizeScrollBody === 'function') {
+    if (isCustomizeScrollBodyFn) {
       bodyContent = customizeScrollBody(mergedData, {
         scrollbarSize,
         ref: scrollBodyRef,
@@ -564,7 +564,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       });
 
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
-        const colWidth = index === flattenColumns.length - 1 ? (width as number) - scrollbarSize : width;
+        const colWidth =
+          index === flattenColumns.length - 1 ? (width as number) - scrollbarSize : width;
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
