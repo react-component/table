@@ -11,7 +11,7 @@ export {
   Summary,
   Column,
   ColumnGroup,
-  TableProps,
+  type TableProps,
   INTERNAL_COL_DEFINE,
   EXPAND_COLUMN,
   INTERNAL_HOOKS,
