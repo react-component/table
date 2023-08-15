@@ -193,7 +193,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
-            expanded={appendCellNode && expanded}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}

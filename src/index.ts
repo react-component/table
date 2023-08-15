@@ -12,11 +12,11 @@ export {
   Summary,
   Column,
   ColumnGroup,
+  type TableProps,
   INTERNAL_COL_DEFINE,
   EXPAND_COLUMN,
   INTERNAL_HOOKS,
   StaticTable,
 };
-export type { TableProps };
 
 export default Table;
