@@ -1,0 +1,23 @@
+@import (reference) 'index.less';
+
+.@{tablePrefixCls}-tbody-virtual {
+  * {
+    box-sizing: border-box;
+  }
+
+  .@{tablePrefixCls}-row {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid @border-color;
+    border-left: 1px solid @border-color;
+  }
+
+  .@{tablePrefixCls}-cell {
+    flex: 1 0 auto;
+    padding: 8px 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1px solid @border-color;
+  }
+}

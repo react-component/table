@@ -6,6 +6,7 @@ import type {
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
+  GetRowKey,
   RenderExpandIcon,
   RowClassName,
   TableLayout,
@@ -51,6 +52,8 @@ export interface TableContextProps<RecordType = any> {
   hoverStartRow: number;
   hoverEndRow: number;
   onHover: (start: number, end: number) => void;
+
+  getRowKey: GetRowKey<RecordType>;
 }
 
 const TableContext = createContext<TableContextProps>();

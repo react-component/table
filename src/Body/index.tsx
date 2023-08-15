@@ -5,7 +5,7 @@ import PerfContext from '../context/PerfContext';
 import TableContext from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { GetComponentProps, GetRowKey, Key } from '../interface';
+import type { GetComponentProps, Key } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
@@ -13,7 +13,6 @@ import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
-  getRowKey: GetRowKey<RecordType>;
   measureColumnWidth: boolean;
   expandedKeys: Set<Key>;
   onRow: GetComponentProps<RecordType>;
@@ -29,7 +28,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
   const {
     data,
-    getRowKey,
     measureColumnWidth,
     expandedKeys,
     onRow,
@@ -38,12 +36,10 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     childrenColumnName,
   } = props;
 
-  const { prefixCls, getComponent, onColumnResize, flattenColumns } = useContext(TableContext, [
-    'prefixCls',
-    'getComponent',
-    'onColumnResize',
-    'flattenColumns',
-  ]);
+  const { prefixCls, getComponent, onColumnResize, flattenColumns, getRowKey } = useContext(
+    TableContext,
+    ['prefixCls', 'getComponent', 'onColumnResize', 'flattenColumns', 'getRowKey'],
+  );
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
