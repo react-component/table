@@ -5,6 +5,7 @@ import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/constant';
+import { VariableSizeGrid as Grid } from "react-window";
 
 describe('Table.Basic', () => {
   const data = [
@@ -1216,4 +1217,116 @@ describe('Table.Basic', () => {
 
     expect(wrapper.render()).toMatchSnapshot();
   });
+
+  it('using both column children and component body simultaneously', () => {
+    const width = 150;
+    const noChildColLen = 4;
+    const ChildColLen = 4;
+    const buildChildDataIndex = (n) => `col${n}`;
+    const columns = Array.from({ length: noChildColLen }, (_, i) => ({
+      title: `第 ${i} 列`,
+      dataIndex: buildChildDataIndex(i),
+      width,
+    })).concat(Array.from({ length: ChildColLen }, (_, i) => ({
+      title: `第 ${i} 分组`,
+      dataIndex: `parentCol${i}`,
+      width: width * 2,
+      children: [
+        {
+          title: `第 ${noChildColLen + i} 列`,
+          dataIndex: buildChildDataIndex(noChildColLen + i),
+          width,
+        },
+        {
+          title: `第 ${noChildColLen + 1 + i} 列`,
+          dataIndex: buildChildDataIndex(noChildColLen + 1 + i),
+          width,
+        },
+      ]
+    })));
+    const data = Array.from({ length: 10000 }, (_, r) => {
+      const colLen = noChildColLen + ChildColLen * 2;
+      const record = {};
+      for (let c = 0; c < colLen; c ++) {
+        record[buildChildDataIndex(c)] = `r${r}, c${c}`
+      }
+      return record;
+    })
+    const Demo = (props) => {
+      const gridRef = React.useRef();
+      const [connectObject] = React.useState(() => {
+        const obj = {};
+        Object.defineProperty(obj, "scrollLeft", {
+          get: () => {
+            if (gridRef.current) {
+              return gridRef.current?.state?.scrollLeft;
+            }
+            return null;
+          },
+          set: (scrollLeft) => {
+            if (gridRef.current) {
+              gridRef.current.scrollTo({ scrollLeft });
+            }
+          }
+        });
+
+        return obj;
+      });
+
+      React.useEffect(() => {
+        gridRef.current.resetAfterIndices({
+          columnIndex: 0,
+          shouldForceUpdate: false
+        });
+      }, []);
+
+      const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
+        ref.current = connectObject;
+        return (
+          <Grid
+            ref={gridRef}
+            className="virtual-grid"
+            columnCount={columns.length}
+            columnWidth={(index) => {
+              const { width } = columns[index];
+              return index === columns.length - 1
+                ? width - scrollbarSize - 1
+                : width;
+            }}
+            height={300}
+            rowCount={rawData.length}
+            rowHeight={() => 50}
+            width={800}
+            onScroll={({ scrollLeft }) => {
+              onScroll({ scrollLeft });
+            }}
+          >
+            {({ columnIndex, rowIndex, style }) => (
+              <div
+                className={`virtual-cell ${columnIndex === columns.length - 1 ? 'virtual-cell-last' : ''}`}
+                style={style}
+              >
+                r{rowIndex}, c{columnIndex}
+              </div>
+            )}
+          </Grid>
+        );
+      };
+
+      return (
+        <Table
+          style={{ width: 800 }}
+          tableLayout="fixed"
+          columns={props.columns}
+          data={props.data}
+          scroll={{ y: 300, x: 300 }}
+          components={{
+            body: renderVirtualList
+          }}
+        />
+      );
+    };
+    const wrapper = mount(<Demo columns={columns} data={data} />);
+    expect(wrapper.find('col').at(noChildColLen + ChildColLen * 2 - 1).props().style.width + wrapper.find('col').last().props().style.width).toEqual(width);
+  })
 });
