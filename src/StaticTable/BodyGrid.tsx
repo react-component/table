@@ -7,6 +7,7 @@ import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords'
 import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
 import StaticContext from './StaticContext';
+import { RowSpanVirtualCell } from './VirtualCell';
 
 export interface GridProps<RecordType = any> {
   data: RecordType[];
@@ -83,7 +84,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
-    const { start, end } = info;
+    const { start, end, getSize } = info;
 
     // Find first rowSpan column
     const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
@@ -113,18 +114,36 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     }
 
     console.log('Range:', start, end, '->', startIndex, endIndex);
-    // console.log(
-    //   '->',
-    //   firstRowSpanColumns,
-    //   flattenColumns.map(column => getRowSpan(column, startIndex)),
-    // );
-    // console.log(
-    //   '->',
-    //   lastRowSpanColumns,
-    //   flattenColumns.map(column => getRowSpan(column, endIndex)),
-    // );
 
-    return null;
+    // Loop create the rowSpan cell
+    const nodes: React.ReactElement[] = [];
+
+    for (let i = startIndex; i <= endIndex; i += 1) {
+      const item = flattenData[i];
+      const rowKey = getRowKey(item.record, i);
+
+      flattenColumns.forEach((column, colIndex) => {
+        const rowSpan = getRowSpan(column, i);
+
+        if (rowSpan > 1) {
+          const endItem = flattenData[i + rowSpan - 1];
+          console.log('!!!', i, rowSpan, endItem);
+          nodes.push(
+            <RowSpanVirtualCell
+              key={`${i}_${colIndex}`}
+              record={item.record}
+              rowKey={rowKey}
+              column={column}
+              colIndex={colIndex}
+              index={i}
+              indent={0}
+            />,
+          );
+        }
+      });
+    }
+
+    return nodes;
   };
 
   // ========================== Render ==========================
