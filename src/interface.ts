@@ -126,12 +126,17 @@ type Component<P> =
 
 export type CustomizeComponent = Component<any>;
 
+export type OnCustomizeScroll = (info: {
+  currentTarget?: HTMLElement;
+  scrollLeft?: number;
+}) => void;
+
 export type CustomizeScrollBody<RecordType> = (
   data: readonly RecordType[],
   info: {
     scrollbarSize: number;
     ref: React.Ref<{ scrollLeft: number }>;
-    onScroll: (info: { currentTarget?: HTMLElement; scrollLeft?: number }) => void;
+    onScroll: OnCustomizeScroll;
   },
 ) => React.ReactNode;
 

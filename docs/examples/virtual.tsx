@@ -14,7 +14,22 @@ interface RecordType {
 const columns: ColumnsType = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
-  { title: 'title3', dataIndex: 'c', key: 'c' },
+  {
+    title: 'title3',
+    dataIndex: 'c',
+    key: 'c',
+    onCell: (_, index) => {
+      if (index % 3 === 0) {
+        return {
+          rowSpan: 3,
+        };
+      }
+
+      return {
+        rowSpan: 0,
+      };
+    },
+  },
   // { title: 'title4', dataIndex: 'b', key: 'd' },
   // { title: 'title5', dataIndex: 'b', key: 'e' },
   {
@@ -22,8 +37,8 @@ const columns: ColumnsType = [
     key: 'd',
     children: [
       // Children columns
-      { title: 'title4-1' },
-      { title: 'title4-2' },
+      { title: 'title4-1', dataIndex: 'b' },
+      { title: 'title4-2', dataIndex: 'b' },
     ],
   },
   { title: 'title6', dataIndex: 'b', key: 'f' },
@@ -47,7 +62,7 @@ const columns: ColumnsType = [
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
-const data: RecordType[] = new Array(1000).fill(null).map((_, index) => ({
+const data: RecordType[] = new Array(3 * 10000).fill(null).map((_, index) => ({
   a: `a${index}`,
   b: `b${index}`,
   c: `c${index}`,

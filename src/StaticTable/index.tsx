@@ -7,9 +7,9 @@ import StaticContext from './StaticContext';
 import useWidthColumns from './useWidthColumns';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
-  const { ref } = props;
+  const { ref, onScroll } = props;
 
-  return <Grid ref={ref} data={rawData as any} />;
+  return <Grid ref={ref} data={rawData as any} onScroll={onScroll} />;
 };
 
 export interface StaticTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {

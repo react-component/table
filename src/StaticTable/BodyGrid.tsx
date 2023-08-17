@@ -3,16 +3,18 @@ import classNames from 'classnames';
 import VirtualList from 'rc-virtual-list';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
-import useFlattenRecords, { FlattenData } from '../hooks/useFlattenRecords';
+import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
+import type { OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
 import StaticContext from './StaticContext';
 
 export interface GridProps<RecordType = any> {
   data: RecordType[];
+  onScroll: OnCustomizeScroll;
 }
 
 const Grid = React.forwardRef((props: GridProps, ref: any) => {
-  const { data } = props;
+  const { data, onScroll } = props;
 
   const { flattenColumns, onColumnResize, getRowKey, expandedKeys, prefixCls, childrenColumnName } =
     useContext(TableContext, [
@@ -55,6 +57,11 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
         data={flattenData}
         itemKey={getRowKey}
         scrollWidth={scrollX}
+        onVirtualScroll={({ x }) => {
+          onScroll({
+            scrollLeft: x,
+          });
+        }}
       >
         {(item, index, itemProps) => {
           const rowKey = getRowKey(item, index);
