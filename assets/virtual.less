@@ -9,6 +9,7 @@
 
   .@{tablePrefixCls}-row {
     display: flex;
+    box-sizing: border-box;
     width: 100%;
     border-bottom: @border;
     border-left: @border;
@@ -18,9 +19,6 @@
     flex: 1 0 auto;
     width: var(--virtual-width);
     padding: 8px 16px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     border-right: @border;
 
     &-fix-left {
