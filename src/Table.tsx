@@ -138,6 +138,14 @@ export interface TableProps<RecordType = unknown>
    *
    * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
    */
+  // Force trade scrollbar as 0 size.
+  hideScrollColumn?: boolean;
+
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
@@ -186,6 +194,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     internalHooks,
     transformColumns,
     internalRefs,
+    hideScrollColumn,
 
     sticky,
   } = props;
@@ -238,7 +247,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   }, [rowKey]);
 
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
-  const isCustomizeScrollBodyFn = typeof customizeScrollBody === 'function';
 
   // ====================== Hover =======================
   const [startRow, endRow, onHover] = useHover();
@@ -442,7 +450,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
-    if (!isCustomizeScrollBodyFn) {
+    if (!hideScrollColumn || !useInternalHooks) {
       if (scrollBodyRef.current instanceof Element) {
         setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
       } else {
@@ -542,10 +550,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       <caption className={`${prefixCls}-caption`}>{caption}</caption>
     ) : undefined;
 
-  if (process.env.NODE_ENV !== 'production' && isCustomizeScrollBodyFn && hasData && !fixHeader) {
-    warning(false, '`components.body` with render props is only work on `scroll.y`.');
-  }
-
   const dataProps = pickAttrs(props, { data: true });
   const ariaProps = pickAttrs(props, { aria: true });
 
@@ -553,7 +557,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     // >>>>>> Fixed Header
     let bodyContent: React.ReactNode;
 
-    if (isCustomizeScrollBodyFn) {
+    if (typeof customizeScrollBody === 'function') {
       bodyContent = customizeScrollBody(mergedData, {
         scrollbarSize,
         ref: scrollBodyRef,
