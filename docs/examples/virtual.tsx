@@ -68,6 +68,14 @@ const data: RecordType[] = new Array(3 * 10000).fill(null).map((_, index) => ({
   c: `c${index}`,
   d: index,
   indexKey: `${index}`,
+  children: [
+    {
+      indexKey: `${index}-1`,
+    },
+    {
+      indexKey: `${index}-2`,
+    },
+  ],
 }));
 
 const Demo = () => {

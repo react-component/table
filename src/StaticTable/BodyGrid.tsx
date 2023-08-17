@@ -1,6 +1,6 @@
-import { useContext } from '@rc-component/context';
+import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import VirtualList, { type ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
@@ -69,6 +69,19 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     return obj;
   });
 
+  // ======================= Col/Row Span =======================
+  const extraRender: ListProps<any>['extraRender'] = info => {
+    const { start, end } = info;
+
+    // console.log('Extra:', start, end);
+    // for (let i = start; i >= 0; i -= 1) {
+    //   const prevItem = flattenData[i];
+    //   console.log('>>>', prevItem);
+    // }
+
+    return null;
+  };
+
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
@@ -87,6 +100,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
             scrollLeft: x,
           });
         }}
+        extraRender={extraRender}
       >
         {(item, index, itemProps) => {
           const rowKey = getRowKey(item.record, index);
@@ -97,4 +111,10 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   );
 });
 
-export default Grid;
+const ResponseGrid = responseImmutable(Grid);
+
+if (process.env.NODE_ENV !== 'production') {
+  ResponseGrid.displayName = 'ResponseGrid';
+}
+
+export default ResponseGrid;

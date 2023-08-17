@@ -67,8 +67,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             key={key}
             record={record}
             index={index}
-            // renderIndex={renderIndex}
-            renderIndex={index}
+            renderIndex={record.index}
             dataIndex={dataIndex}
             render={mergedRender}
             shouldCellUpdate={column.shouldCellUpdate}

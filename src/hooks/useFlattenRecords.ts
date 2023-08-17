@@ -2,7 +2,8 @@ import * as React from 'react';
 import type { GetRowKey, Key } from '../interface';
 
 // recursion (flat tree structure)
-function flatRecord<T>(
+function fillRecords<T>(
+  list: FlattenData<T>[],
   record: T,
   indent: number,
   childrenColumnName: string,
@@ -10,9 +11,7 @@ function flatRecord<T>(
   getRowKey: GetRowKey<T>,
   index: number,
 ) {
-  const arr = [];
-
-  arr.push({
+  list.push({
     record,
     indent,
     index,
@@ -25,7 +24,8 @@ function flatRecord<T>(
   if (record && Array.isArray(record[childrenColumnName]) && expanded) {
     // expanded state, flat record
     for (let i = 0; i < record[childrenColumnName].length; i += 1) {
-      const tempArr = flatRecord(
+      fillRecords(
+        list,
         record[childrenColumnName][i],
         indent + 1,
         childrenColumnName,
@@ -33,12 +33,8 @@ function flatRecord<T>(
         getRowKey,
         i,
       );
-
-      arr.push(...tempArr);
     }
   }
-
-  return arr;
 }
 
 export interface FlattenData<RecordType> {
@@ -59,26 +55,24 @@ export interface FlattenData<RecordType> {
  * @returns flattened data
  */
 export default function useFlattenRecords<T>(
-  data: T[],
+  data: T[] | readonly T[],
   childrenColumnName: string,
   expandedKeys: Set<Key>,
   getRowKey: GetRowKey<T>,
 ): FlattenData<T>[] {
-  const arr: { record: T; indent: number; index: number }[] = React.useMemo(() => {
+  const arr: FlattenData<T>[] = React.useMemo(() => {
     if (expandedKeys?.size) {
-      let temp: { record: T; indent: number; index: number }[] = [];
+      const list: FlattenData<T>[] = [];
 
       // collect flattened record
       for (let i = 0; i < data?.length; i += 1) {
         const record = data[i];
 
         // using array.push or spread operator may cause "Maximum call stack size exceeded" exception if array size is big enough.
-        temp = temp.concat(
-          ...flatRecord<T>(record, 0, childrenColumnName, expandedKeys, getRowKey, i),
-        );
+        fillRecords(list, record, 0, childrenColumnName, expandedKeys, getRowKey, i);
       }
 
-      return temp;
+      return list;
     }
 
     return data?.map((item, index) => {
