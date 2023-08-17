@@ -49,7 +49,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         const { style: cellStyle, colSpan, rowSpan } = additionalCellProps;
         const mergedStyle = {
           ...cellStyle,
-          width: colWidth,
+          '--virtual-width': `${colWidth}px`,
         };
 
         // When `colSpan` or `rowSpan` is `0`, should skip render.

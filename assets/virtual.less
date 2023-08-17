@@ -5,19 +5,26 @@
     box-sizing: border-box;
   }
 
+  @border: 1px solid @border-color;
+
   .@{tablePrefixCls}-row {
     display: flex;
     width: 100%;
-    border-bottom: 1px solid @border-color;
-    border-left: 1px solid @border-color;
+    border-bottom: @border;
+    border-left: @border;
   }
 
   .@{tablePrefixCls}-cell {
     flex: 1 0 auto;
+    width: var(--virtual-width);
     padding: 8px 16px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border-right: 1px solid @border-color;
+    border-right: @border;
+
+    &-fix-left {
+      left: calc(var(--sticky-left) + 1px) !important;
+    }
   }
 }

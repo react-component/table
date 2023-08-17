@@ -391,16 +391,15 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       if (!getScrollTarget() || getScrollTarget() === compareTarget) {
         setScrollTarget(compareTarget);
 
-        console.log('-=>', mergedScrollLeft, scrollLeft);
-
         forceScroll(mergedScrollLeft, scrollHeaderRef.current);
         forceScroll(mergedScrollLeft, scrollBodyRef.current);
         forceScroll(mergedScrollLeft, scrollSummaryRef.current);
         forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
 
-      if (currentTarget) {
-        const { scrollWidth, clientWidth } = currentTarget;
+      const measureTarget = currentTarget || scrollHeaderRef.current;
+      if (measureTarget) {
+        const { scrollWidth, clientWidth } = measureTarget;
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
