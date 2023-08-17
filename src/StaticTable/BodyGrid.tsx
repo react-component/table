@@ -70,14 +70,41 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   });
 
   // ======================= Col/Row Span =======================
+  const isPureRow = (record: any, index: number) =>
+    flattenColumns.every(({ onCell }) => {
+      if (onCell) {
+        const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
+        return cellProps?.rowSpan !== 0;
+      }
+      return true;
+    });
+
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end } = info;
 
-    // console.log('Extra:', start, end);
-    // for (let i = start; i >= 0; i -= 1) {
-    //   const prevItem = flattenData[i];
-    //   console.log('>>>', prevItem);
-    // }
+    let startIndex = start;
+    let endIndex = end;
+
+    // Collect rowSpan records range
+    for (let i = start; i >= 0; i -= 1) {
+      const { record } = flattenData[i];
+
+      if (isPureRow(record, i)) {
+        startIndex = i;
+        break;
+      }
+    }
+
+    for (let i = end; i < flattenData.length; i += 1) {
+      const { record } = flattenData[i];
+
+      if (isPureRow(record, i)) {
+        endIndex = i;
+        break;
+      }
+    }
+
+    console.log('Range:', start, end, '->', startIndex, endIndex);
 
     return null;
   };
