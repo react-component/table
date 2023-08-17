@@ -1,24 +1,28 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
+import { getCellProps, useRowInfo } from '../Body/BodyRow';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
-import { getColumnsKey } from '../utils/valueUtil';
+import type { FlattenData } from '../hooks/useFlattenRecords';
 import StaticContext from './StaticContext';
 
 export interface BodyLineProps<RecordType = any> {
-  record: RecordType;
+  data: FlattenData<RecordType>;
   index: number;
   className?: string;
+  style?: React.CSSProperties;
+  rowKey: React.Key;
 }
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
-  const { record, index, className, style, ...restProps } = props;
+  const { data, index, className, rowKey, style, ...restProps } = props;
+  const { record, indent } = data;
 
-  const { flattenColumns, prefixCls, fixedInfoList } = useContext(TableContext);
+  const { flattenColumns, prefixCls } = useContext(TableContext);
   const { scrollX } = useContext(StaticContext, ['scrollX']);
 
-  const columnsKey = getColumnsKey(flattenColumns);
+  const rowInfo = useRowInfo(record, rowKey);
 
   // ========================== Render ==========================
   return (
@@ -32,16 +36,21 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       }}
     >
       {flattenColumns.map((column, colIndex) => {
-        const { render, dataIndex, className: columnClassName } = column;
+        const { render, dataIndex, className: columnClassName, width: colWidth } = column;
 
-        const key = columnsKey[colIndex];
-        const fixedInfo = fixedInfoList[colIndex];
+        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
+          rowInfo,
+          column,
+          colIndex,
+          indent,
+          index,
+        );
 
-        // return (
-        //   <div key={index} className={`${prefixCls}-cell`} style={{ width: column.width }}>
-        //     {value}
-        //   </div>
-        // );
+        const { style: cellStyle } = additionalCellProps;
+        const mergedStyle = {
+          ...cellStyle,
+          width: colWidth,
+        };
 
         return (
           <Cell
@@ -49,6 +58,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             ellipsis={column.ellipsis}
             align={column.align}
             scope={column.rowScope}
+            // component={column.rowScope ? scopeCellComponent : cellComponent}
             component="div"
             prefixCls={prefixCls}
             key={key}
@@ -60,8 +70,11 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
             {...fixedInfo}
-            // appendNode={appendCellNode}
-            // additionalProps={additionalCellProps}
+            appendNode={appendCellNode}
+            additionalProps={{
+              ...additionalCellProps,
+              style: mergedStyle,
+            }}
           />
         );
       })}

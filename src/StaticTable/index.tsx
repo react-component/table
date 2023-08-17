@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { INTERNAL_HOOKS } from '..';
 import type { CustomizeScrollBody } from '../interface';
 import Table, { type TableProps } from '../Table';
 import Grid from './BodyGrid';
@@ -35,6 +36,8 @@ export default function StaticTable<RecordType>(props: StaticTableProps<RecordTy
           body: renderBody,
         }}
         columns={filledWidthColumns}
+        internalHooks={INTERNAL_HOOKS}
+        hideScrollColumn
       />
     </StaticContext.Provider>
   );

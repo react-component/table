@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import VirtualList from 'rc-virtual-list';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
+import useFlattenRecords, { FlattenData } from '../hooks/useFlattenRecords';
 import BodyLine from './BodyLine';
 import StaticContext from './StaticContext';
 
@@ -13,16 +14,22 @@ export interface GridProps<RecordType = any> {
 const Grid = React.forwardRef((props: GridProps, ref: any) => {
   const { data } = props;
 
-  const { flattenColumns, onColumnResize, getRowKey, prefixCls } = useContext(TableContext, [
-    'flattenColumns',
-    'onColumnResize',
-    'getRowKey',
-    'prefixCls',
-  ]);
+  const { flattenColumns, onColumnResize, getRowKey, expandedKeys, prefixCls, childrenColumnName } =
+    useContext(TableContext, [
+      'flattenColumns',
+      'onColumnResize',
+      'getRowKey',
+      'prefixCls',
+      'expandedKeys',
+      'childrenColumnName',
+    ]);
   const { scrollY, scrollX } = useContext(StaticContext);
 
   // const context = useContext(TableContext);
   // console.log('=>', context, scrollX, scrollY);
+
+  // =========================== Data ===========================
+  const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
 
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number][]>(
@@ -41,16 +48,17 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
 
   return (
     <div ref={ref}>
-      <VirtualList
+      <VirtualList<FlattenData<any>>
         className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
         height={scrollY}
         itemHeight={24}
-        data={data}
+        data={flattenData}
         itemKey={getRowKey}
         scrollWidth={scrollX}
       >
         {(item, index, itemProps) => {
-          return <BodyLine record={item} index={index} {...itemProps} />;
+          const rowKey = getRowKey(item, index);
+          return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
         }}
       </VirtualList>
     </div>

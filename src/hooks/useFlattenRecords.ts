@@ -41,6 +41,12 @@ function flatRecord<T>(
   return arr;
 }
 
+export interface FlattenData<RecordType> {
+  record: RecordType;
+  indent: number;
+  index: number;
+}
+
 /**
  * flat tree data on expanded state
  *
@@ -53,11 +59,11 @@ function flatRecord<T>(
  * @returns flattened data
  */
 export default function useFlattenRecords<T>(
-  data,
+  data: T[],
   childrenColumnName: string,
   expandedKeys: Set<Key>,
   getRowKey: GetRowKey<T>,
-) {
+): FlattenData<T>[] {
   const arr: { record: T; indent: number; index: number }[] = React.useMemo(() => {
     if (expandedKeys?.size) {
       let temp: { record: T; indent: number; index: number }[] = [];

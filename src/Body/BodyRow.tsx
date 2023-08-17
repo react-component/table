@@ -137,7 +137,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  let additionalCellProps: React.HTMLAttributes<HTMLElement>;
+  let additionalCellProps: React.HTMLAttributes<HTMLElement> = {};
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
   }
