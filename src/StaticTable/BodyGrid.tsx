@@ -1,6 +1,6 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import VirtualList from 'rc-virtual-list';
+import VirtualList, { type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
@@ -13,7 +13,11 @@ export interface GridProps<RecordType = any> {
   onScroll: OnCustomizeScroll;
 }
 
-const Grid = React.forwardRef((props: GridProps, ref: any) => {
+export interface GridRef {
+  scrollLeft: number;
+}
+
+const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   const { data, onScroll } = props;
 
   const { flattenColumns, onColumnResize, getRowKey, expandedKeys, prefixCls, childrenColumnName } =
@@ -30,6 +34,9 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
   // const context = useContext(TableContext);
   // console.log('=>', context, scrollX, scrollY);
 
+  // =========================== Ref ============================
+  const listRef = React.useRef<ListRef>();
+
   // =========================== Data ===========================
   const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
 
@@ -45,17 +52,35 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
     });
   }, [columnsWidth]);
 
+  // =========================== Ref ============================
+  React.useImperativeHandle(ref, () => {
+    const obj = {} as GridRef;
+
+    Object.defineProperty(obj, 'scrollLeft', {
+      get: () => listRef.current.getScrollInfo().x,
+
+      set: (value: number) => {
+        listRef.current.scrollTo({
+          left: value,
+        });
+      },
+    });
+
+    return obj;
+  });
+
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
   return (
-    <div ref={ref}>
+    <div>
       <VirtualList<FlattenData<any>>
+        ref={listRef}
         className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
         height={scrollY}
         itemHeight={24}
         data={flattenData}
-        itemKey={getRowKey}
+        itemKey={item => getRowKey(item.record)}
         scrollWidth={scrollX}
         onVirtualScroll={({ x }) => {
           onScroll({
@@ -64,7 +89,7 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
         }}
       >
         {(item, index, itemProps) => {
-          const rowKey = getRowKey(item, index);
+          const rowKey = getRowKey(item.record, index);
           return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
         }}
       </VirtualList>

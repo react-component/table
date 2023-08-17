@@ -391,6 +391,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       if (!getScrollTarget() || getScrollTarget() === compareTarget) {
         setScrollTarget(compareTarget);
 
+        console.log('-=>', mergedScrollLeft, scrollLeft);
+
         forceScroll(mergedScrollLeft, scrollHeaderRef.current);
         forceScroll(mergedScrollLeft, scrollBodyRef.current);
         forceScroll(mergedScrollLeft, scrollSummaryRef.current);
