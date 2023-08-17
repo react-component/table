@@ -4,7 +4,7 @@ import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
-import type { OnCustomizeScroll } from '../interface';
+import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
 import StaticContext from './StaticContext';
 
@@ -70,35 +70,58 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   });
 
   // ======================= Col/Row Span =======================
-  const isPureRow = (record: any, index: number) =>
-    flattenColumns.every(({ onCell }) => {
-      if (onCell) {
-        const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
-        return cellProps?.rowSpan !== 0;
-      }
-      return true;
-    });
+  // const isPureRow = (record: any, index: number) =>
+  //   flattenColumns.every(({ onCell }) => {
+  //     if (onCell) {
+  //       const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
+  //       return cellProps?.rowSpan !== 0;
+  //     }
+  //     return true;
+  //   });
+
+  const isColumnHaveRowSpan = (column: ColumnType<any>, record: any, index: number) => {
+    const { onCell } = column;
+
+    if (onCell) {
+      const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
+      return cellProps?.rowSpan === 0;
+    }
+
+    return false;
+  };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end } = info;
 
-    let startIndex = start;
-    let endIndex = end;
+    // Find first rowSpan column
+    const firstRecord = flattenData[start]?.record;
+    const firstRowSpanColumns = flattenColumns.filter(column =>
+      isColumnHaveRowSpan(column, firstRecord, start),
+    );
 
-    // Collect rowSpan records range
+    let startIndex = start;
+
     for (let i = start; i >= 0; i -= 1) {
       const { record } = flattenData[i];
 
-      if (isPureRow(record, i)) {
+      if (firstRowSpanColumns.every(column => !isColumnHaveRowSpan(column, record, i))) {
         startIndex = i;
         break;
       }
     }
 
+    // Find last rowSpan column
+    const lastRecord = flattenData[end]?.record;
+    const lastRowSpanColumns = flattenColumns.filter(column =>
+      isColumnHaveRowSpan(column, lastRecord, end),
+    );
+
+    let endIndex = end;
+
     for (let i = end; i < flattenData.length; i += 1) {
       const { record } = flattenData[i];
 
-      if (isPureRow(record, i)) {
+      if (lastRowSpanColumns.every(column => !isColumnHaveRowSpan(column, record, i))) {
         endIndex = i;
         break;
       }
