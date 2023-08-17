@@ -19,10 +19,10 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
     'getRowKey',
     'prefixCls',
   ]);
-  const { scrollY } = useContext(StaticContext);
+  const { scrollY, scrollX } = useContext(StaticContext);
 
-  const context = useContext(TableContext);
-  console.log('=>', context, scrollY);
+  // const context = useContext(TableContext);
+  // console.log('=>', context, scrollX, scrollY);
 
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number][]>(
@@ -47,9 +47,10 @@ const Grid = React.forwardRef((props: GridProps, ref: any) => {
         itemHeight={24}
         data={data}
         itemKey={getRowKey}
+        scrollWidth={scrollX}
       >
-        {(item, _, itemProps) => {
-          return <BodyLine data={item} {...itemProps} />;
+        {(item, index, itemProps) => {
+          return <BodyLine record={item} index={index} {...itemProps} />;
         }}
       </VirtualList>
     </div>

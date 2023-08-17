@@ -53,7 +53,9 @@ export interface TableContextProps<RecordType = any> {
   hoverEndRow: number;
   onHover: (start: number, end: number) => void;
 
+  expandedKeys: Set<React.Key>;
   getRowKey: GetRowKey<RecordType>;
+  childrenColumnName: string;
 }
 
 const TableContext = createContext<TableContextProps>();

@@ -527,11 +527,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     <Body
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll || isSticky}
-      expandedKeys={mergedExpandedKeys}
       rowExpandable={expandableConfig.rowExpandable}
       onRow={onRow}
       emptyNode={emptyNode}
-      childrenColumnName={mergedChildrenColumnName}
     />
   );
 
@@ -769,6 +767,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onHover,
 
       getRowKey,
+      expandedKeys: mergedExpandedKeys,
+      childrenColumnName: mergedChildrenColumnName,
     }),
     [
       // Table
@@ -808,6 +808,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onHover,
 
       getRowKey,
+      mergedExpandedKeys,
+      mergedChildrenColumnName,
     ],
   );
 

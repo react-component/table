@@ -57,9 +57,11 @@
 
   // ================== Cell ==================
   &-cell {
+    background: #f4f4f4;
+
     &-fix-left,
     &-fix-right {
-      z-index: 1;
+      z-index: 2;
     }
 
     &-fix-right:last-child:not(&-fix-sticky) {
@@ -139,7 +141,7 @@
     }
 
     &&-row-hover {
-      background: rgba(255, 0, 0, 0.05);
+      background: #fff4f4;
     }
   }
 

@@ -59,7 +59,7 @@ const Demo = () => {
   const [scrollY, setScrollY] = React.useState(true);
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, padding: 64 }}>
       <label>
         <input type="checkbox" checked={scrollY} onChange={() => setScrollY(!scrollY)} />
         Scroll Y

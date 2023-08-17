@@ -5,7 +5,7 @@ import PerfContext from '../context/PerfContext';
 import TableContext from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { GetComponentProps, Key } from '../interface';
+import type { GetComponentProps } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
@@ -14,11 +14,9 @@ import MeasureRow from './MeasureRow';
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
-  expandedKeys: Set<Key>;
   onRow: GetComponentProps<RecordType>;
   rowExpandable: (record: RecordType) => boolean;
   emptyNode: React.ReactNode;
-  childrenColumnName: string;
 }
 
 function Body<RecordType>(props: BodyProps<RecordType>) {
@@ -26,20 +24,25 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const {
-    data,
-    measureColumnWidth,
-    expandedKeys,
-    onRow,
-    rowExpandable,
-    emptyNode,
-    childrenColumnName,
-  } = props;
+  const { data, measureColumnWidth, onRow, rowExpandable, emptyNode } = props;
 
-  const { prefixCls, getComponent, onColumnResize, flattenColumns, getRowKey } = useContext(
-    TableContext,
-    ['prefixCls', 'getComponent', 'onColumnResize', 'flattenColumns', 'getRowKey'],
-  );
+  const {
+    prefixCls,
+    getComponent,
+    onColumnResize,
+    flattenColumns,
+    getRowKey,
+    expandedKeys,
+    childrenColumnName,
+  } = useContext(TableContext, [
+    'prefixCls',
+    'getComponent',
+    'onColumnResize',
+    'flattenColumns',
+    'getRowKey',
+    'expandedKeys',
+    'childrenColumnName',
+  ]);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
@@ -72,11 +75,9 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           rowComponent={trComponent}
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
-          expandedKeys={expandedKeys}
           onRow={onRow}
           getRowKey={getRowKey}
           rowExpandable={rowExpandable}
-          childrenColumnName={childrenColumnName}
           indent={indent}
         />
       );
