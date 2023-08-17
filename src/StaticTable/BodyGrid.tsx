@@ -70,64 +70,59 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   });
 
   // ======================= Col/Row Span =======================
-  // const isPureRow = (record: any, index: number) =>
-  //   flattenColumns.every(({ onCell }) => {
-  //     if (onCell) {
-  //       const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
-  //       return cellProps?.rowSpan !== 0;
-  //     }
-  //     return true;
-  //   });
-
-  const isColumnHaveRowSpan = (column: ColumnType<any>, record: any, index: number) => {
+  const getRowSpan = (column: ColumnType<any>, index: number) => {
+    const record = flattenData[index]?.record;
     const { onCell } = column;
 
     if (onCell) {
       const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
-      return cellProps?.rowSpan === 0;
+      const rowSpan = cellProps?.rowSpan;
+      return rowSpan ?? 1;
     }
-
-    return false;
+    return 1;
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end } = info;
 
     // Find first rowSpan column
-    const firstRecord = flattenData[start]?.record;
-    const firstRowSpanColumns = flattenColumns.filter(column =>
-      isColumnHaveRowSpan(column, firstRecord, start),
-    );
+    const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
 
     let startIndex = start;
 
     for (let i = start; i >= 0; i -= 1) {
-      const { record } = flattenData[i];
-
-      if (firstRowSpanColumns.every(column => !isColumnHaveRowSpan(column, record, i))) {
+      if (firstRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
         startIndex = i;
         break;
       }
     }
 
     // Find last rowSpan column
-    const lastRecord = flattenData[end]?.record;
-    const lastRowSpanColumns = flattenColumns.filter(column =>
-      isColumnHaveRowSpan(column, lastRecord, end),
-    );
+    const lastRowSpanColumns = flattenColumns.filter(column => {
+      const rowSpan = getRowSpan(column, end);
+      return rowSpan !== 1;
+    });
 
     let endIndex = end;
 
     for (let i = end; i < flattenData.length; i += 1) {
-      const { record } = flattenData[i];
-
-      if (lastRowSpanColumns.every(column => !isColumnHaveRowSpan(column, record, i))) {
-        endIndex = i;
+      if (lastRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
+        endIndex = Math.max(i - 1, end);
         break;
       }
     }
 
     console.log('Range:', start, end, '->', startIndex, endIndex);
+    // console.log(
+    //   '->',
+    //   firstRowSpanColumns,
+    //   flattenColumns.map(column => getRowSpan(column, startIndex)),
+    // );
+    // console.log(
+    //   '->',
+    //   lastRowSpanColumns,
+    //   flattenColumns.map(column => getRowSpan(column, endIndex)),
+    // );
 
     return null;
   };
