@@ -1,4 +1,4 @@
-import { useContext } from '@rc-component/context';
+import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useRowInfo } from '../Body/BodyRow';
@@ -68,8 +68,10 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   );
 });
 
+const ResponseBodyLine = responseImmutable(BodyLine);
+
 if (process.env.NODE_ENV !== 'production') {
-  BodyLine.displayName = 'BodyLine';
+  ResponseBodyLine.displayName = 'BodyLine';
 }
 
-export default BodyLine;
+export default ResponseBodyLine;

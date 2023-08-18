@@ -1,3 +1,4 @@
+import { CompareProps, makeImmutable } from '@rc-component/context/lib/Immutable';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '..';
 import type { CustomizeScrollBody } from '../interface';
@@ -19,7 +20,7 @@ export interface StaticTableProps<RecordType> extends Omit<TableProps<RecordType
   };
 }
 
-export default function StaticTable<RecordType>(props: StaticTableProps<RecordType>) {
+function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
   const { columns, scroll } = props;
 
   const { x: scrollX, y: scrollY } = scroll || {};
@@ -42,3 +43,11 @@ export default function StaticTable<RecordType>(props: StaticTableProps<RecordTy
     </StaticContext.Provider>
   );
 }
+
+export function genVirtualTable(
+  shouldTriggerRender?: CompareProps<typeof Table>,
+): typeof VirtualTable {
+  return makeImmutable(VirtualTable, shouldTriggerRender);
+}
+
+export default genVirtualTable();
