@@ -42,10 +42,13 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
 
   // ========================== Column ==========================
-  const columnsWidth = React.useMemo<[key: React.Key, width: number][]>(
-    () => flattenColumns.map(({ width, key }) => [key, width as number]),
-    [flattenColumns],
-  );
+  const columnsWidth = React.useMemo<[key: React.Key, width: number, total: number][]>(() => {
+    let total = 0;
+    return flattenColumns.map(({ width, key }) => {
+      total += width as number;
+      return [key, width as number, total];
+    });
+  }, [flattenColumns]);
 
   React.useEffect(() => {
     columnsWidth.forEach(([key, width]) => {
@@ -84,7 +87,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
-    const { start, end, getSize } = info;
+    const { start, end, getSize, offsetY } = info;
 
     // Find first rowSpan column
     const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
@@ -126,10 +129,21 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         const rowSpan = getRowSpan(column, i);
 
         if (rowSpan > 1) {
-          const endItem = flattenData[i + rowSpan - 1];
-          console.log('!!!', i, rowSpan, endItem);
+          const endItemIndex = i + rowSpan - 1;
+          const endItem = flattenData[endItemIndex];
+          const endKey = getRowKey(endItem.record, endItemIndex);
+
+          const sizeInfo = getSize(rowKey, endKey);
+          const right = columnsWidth[colIndex][2];
+          const left = columnsWidth[colIndex - 1][2] || 0;
+          console.log('!!!', i, rowSpan, endItem, sizeInfo, right);
+
           nodes.push(
             <RowSpanVirtualCell
+              top={-offsetY + sizeInfo.top}
+              height={sizeInfo.bottom - sizeInfo.top}
+              left={left}
+              width={right - left}
               key={`${i}_${colIndex}`}
               record={item.record}
               rowKey={rowKey}
@@ -137,6 +151,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
               colIndex={colIndex}
               index={i}
               indent={0}
+              style={{
+                ['--sticky-left' as any]: `${left}px`,
+              }}
             />,
           );
         }

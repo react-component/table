@@ -47,53 +47,6 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             record={record}
           />
         );
-        // const { render, dataIndex, className: columnClassName, width: colWidth } = column;
-
-        // const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
-        //   rowInfo,
-        //   column,
-        //   colIndex,
-        //   indent,
-        //   index,
-        // );
-
-        // const { style: cellStyle, colSpan, rowSpan } = additionalCellProps;
-        // const mergedStyle = {
-        //   ...cellStyle,
-        //   '--virtual-width': `${colWidth}px`,
-        // };
-
-        // // When `colSpan` or `rowSpan` is `0`, should skip render.
-        // const mergedRender =
-        //   colSpan === 0 || rowSpan === 0 || colSpan > 1 || rowSpan > 1 ? () => null : render;
-
-        // return (
-        //   <Cell
-        //     className={columnClassName}
-        //     ellipsis={column.ellipsis}
-        //     align={column.align}
-        //     scope={column.rowScope}
-        //     component="div"
-        //     prefixCls={prefixCls}
-        //     key={key}
-        //     record={record}
-        //     index={index}
-        //     renderIndex={record.index}
-        //     dataIndex={dataIndex}
-        //     render={mergedRender}
-        //     shouldCellUpdate={column.shouldCellUpdate}
-        //     {...fixedInfo}
-        //     appendNode={appendCellNode}
-        //     additionalProps={{
-        //       ...additionalCellProps,
-        //       style: mergedStyle,
-
-        //       // Virtual should reset `colSpan` & `rowSpan`
-        //       rowSpan: 1,
-        //       colSpan: 1,
-        //     }}
-        //   />
-        // );
       })}
     </div>
   );

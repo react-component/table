@@ -11,7 +11,6 @@
     display: flex;
     box-sizing: border-box;
     width: 100%;
-    border-bottom: @border;
     border-left: @border;
   }
 
@@ -20,8 +19,16 @@
     width: var(--virtual-width);
     padding: 8px 16px;
     border-right: @border;
+    border-bottom: @border;
 
     &-fix-left {
+      left: calc(var(--sticky-left) + 1px) !important;
+    }
+
+    &-virtual-fixed {
+      position: absolute;
+      z-index: 1;
+      border-bottom: @border;
       left: calc(var(--sticky-left) + 1px) !important;
     }
   }
