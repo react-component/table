@@ -6,7 +6,7 @@ import TableContext from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
 import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
-import StaticContext from './StaticContext';
+import { GridContext, StaticContext } from './context';
 import { RowSpanVirtualCell } from './VirtualCell';
 
 export interface GridProps<RecordType = any> {
@@ -32,9 +32,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     ]);
   const { scrollY, scrollX } = useContext(StaticContext);
 
-  // const context = useContext(TableContext);
-  // console.log('=>', context, scrollX, scrollY);
-
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
 
@@ -49,6 +46,11 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       return [key, width as number, total];
     });
   }, [flattenColumns]);
+
+  const columnsOffset = React.useMemo<number[]>(
+    () => columnsWidth.map(colWidth => colWidth[2]),
+    [columnsWidth],
+  );
 
   React.useEffect(() => {
     columnsWidth.forEach(([key, width]) => {
@@ -123,6 +125,10 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
     for (let i = startIndex; i <= endIndex; i += 1) {
       const item = flattenData[i];
+      if (!item) {
+        continue;
+      }
+
       const rowKey = getRowKey(item.record, i);
 
       flattenColumns.forEach((column, colIndex) => {
@@ -134,9 +140,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           const endKey = getRowKey(endItem.record, endItemIndex);
 
           const sizeInfo = getSize(rowKey, endKey);
-          const right = columnsWidth[colIndex][2];
-          const left = columnsWidth[colIndex - 1][2] || 0;
-          console.log('!!!', i, rowSpan, endItem, sizeInfo, right);
+          const right = columnsOffset[colIndex];
+          const left = columnsOffset[colIndex - 1] || 0;
+          console.log('!!!', i, -offsetY + sizeInfo.top, left);
 
           nodes.push(
             <RowSpanVirtualCell
@@ -163,32 +169,37 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     return nodes;
   };
 
+  // ========================= Context ==========================
+  const gridContext = React.useMemo(() => ({ columnsOffset }), [columnsOffset]);
+
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
   return (
-    <div>
-      <VirtualList<FlattenData<any>>
-        ref={listRef}
-        className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
-        height={scrollY}
-        itemHeight={24}
-        data={flattenData}
-        itemKey={item => getRowKey(item.record)}
-        scrollWidth={scrollX}
-        onVirtualScroll={({ x }) => {
-          onScroll({
-            scrollLeft: x,
-          });
-        }}
-        extraRender={extraRender}
-      >
-        {(item, index, itemProps) => {
-          const rowKey = getRowKey(item.record, index);
-          return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
-        }}
-      </VirtualList>
-    </div>
+    <GridContext.Provider value={gridContext}>
+      <div>
+        <VirtualList<FlattenData<any>>
+          ref={listRef}
+          className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
+          height={scrollY}
+          itemHeight={24}
+          data={flattenData}
+          itemKey={item => getRowKey(item.record)}
+          scrollWidth={scrollX}
+          onVirtualScroll={({ x }) => {
+            onScroll({
+              scrollLeft: x,
+            });
+          }}
+          extraRender={extraRender}
+        >
+          {(item, index, itemProps) => {
+            const rowKey = getRowKey(item.record, index);
+            return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
+          }}
+        </VirtualList>
+      </div>
+    </GridContext.Provider>
   );
 });
 

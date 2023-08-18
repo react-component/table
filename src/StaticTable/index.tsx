@@ -3,7 +3,7 @@ import { INTERNAL_HOOKS } from '..';
 import type { CustomizeScrollBody } from '../interface';
 import Table, { type TableProps } from '../Table';
 import Grid from './BodyGrid';
-import StaticContext from './StaticContext';
+import { StaticContext } from './context';
 import useWidthColumns from './useWidthColumns';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {

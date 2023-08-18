@@ -19,9 +19,16 @@ const columns: ColumnsType = [
     dataIndex: 'c',
     key: 'c',
     onCell: (_, index) => {
-      if (index % 3 === 0) {
+      if (index % 4 === 0) {
         return {
           rowSpan: 3,
+        };
+      }
+
+      if (index % 4 === 3) {
+        return {
+          rowSpan: 1,
+          colSpan: 3,
         };
       }
 
@@ -37,11 +44,59 @@ const columns: ColumnsType = [
     key: 'd',
     children: [
       // Children columns
-      { title: 'title4-1', dataIndex: 'b' },
-      { title: 'title4-2', dataIndex: 'b' },
+      {
+        title: 'title4-1',
+        dataIndex: 'b',
+        onCell: (_, index) => {
+          if (index % 4 === 0) {
+            return {
+              colSpan: 3,
+            };
+          }
+
+          if (index % 4 === 3) {
+            return {
+              colSpan: 0,
+            };
+          }
+        },
+      },
+      {
+        title: 'title4-2',
+        dataIndex: 'b',
+        onCell: (_, index) => {
+          if (index % 4 === 0 || index % 4 === 3) {
+            return {
+              colSpan: 0,
+            };
+          }
+        },
+      },
     ],
   },
-  { title: 'title6', dataIndex: 'b', key: 'f' },
+  {
+    title: 'title6',
+    dataIndex: 'b',
+    key: 'f',
+    onCell: (_, index) => {
+      if (index % 4 === 0) {
+        return {
+          rowSpan: 0,
+          colSpan: 0,
+        };
+      }
+
+      if (index % 4 === 1) {
+        return {
+          rowSpan: 3,
+        };
+      }
+
+      return {
+        rowSpan: 0,
+      };
+    },
+  },
   {
     title: (
       <div>
@@ -62,7 +117,7 @@ const columns: ColumnsType = [
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 
-const data: RecordType[] = new Array(3 * 10000).fill(null).map((_, index) => ({
+const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   a: `a${index}`,
   b: `b${index}`,
   c: `c${index}`,

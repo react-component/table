@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useRowInfo } from '../Body/BodyRow';
 import TableContext from '../context/TableContext';
 import type { FlattenData } from '../hooks/useFlattenRecords';
-import StaticContext from './StaticContext';
+import { StaticContext } from './context';
 import VirtualCell from './VirtualCell';
 
 export interface BodyLineProps<RecordType = any> {

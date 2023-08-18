@@ -3,6 +3,8 @@ import { getCellProps, useRowInfo } from '../Body/BodyRow';
 import Cell from '../Cell';
 import type { ColumnType } from '../interface';
 import classNames from 'classnames';
+import { useContext } from '@rc-component/context';
+import { GridContext } from './context';
 
 export interface VirtualCellProps<RecordType extends { index: number }> {
   rowInfo: ReturnType<typeof useRowInfo>;
@@ -25,6 +27,8 @@ function VirtualCell<RecordType extends { index: number } = any>(
 
   const { render, dataIndex, className: columnClassName, width: colWidth } = column;
 
+  const { columnsOffset } = useContext(GridContext, ['columnsOffset']);
+
   const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
     rowInfo,
     column,
@@ -33,19 +37,37 @@ function VirtualCell<RecordType extends { index: number } = any>(
     index,
   );
 
-  const { style: cellStyle, colSpan, rowSpan } = additionalCellProps;
+  const { style: cellStyle, colSpan = 1, rowSpan = 1 } = additionalCellProps;
+
+  // ========================= ColWidth =========================
+  // column width
+  const startColIndex = colIndex - 1;
+  const concatColWidth =
+    colSpan > 1
+      ? columnsOffset[startColIndex + colSpan] - (columnsOffset[startColIndex] || 0)
+      : (colWidth as number);
+
+  // margin offset
+  const marginOffset = colSpan > 1 ? (colWidth as number) - concatColWidth : 0;
+
+  // ========================== Style ===========================
   const mergedStyle = {
     ...cellStyle,
     ...style,
-    '--virtual-width': `${colWidth}px`,
+    '--virtual-width': `${concatColWidth}px`,
+    marginRight: marginOffset,
   };
+
+  // 0 rowSpan or colSpan should not render
+  if (colSpan === 0) {
+    mergedStyle.visibility = 'hidden';
+  }
 
   // When `colSpan` or `rowSpan` is `0`, should skip render.
   const mergedRender =
-    !forceRender && (colSpan === 0 || rowSpan === 0 || colSpan > 1 || rowSpan > 1)
-      ? () => null
-      : render;
+    !forceRender && (colSpan === 0 || rowSpan === 0 || rowSpan > 1) ? () => null : render;
 
+  // ========================== Render ==========================
   return (
     <Cell
       className={classNames(columnClassName, className)}

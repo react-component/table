@@ -137,7 +137,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  let additionalCellProps: React.TdHTMLAttributes<HTMLElement> = {};
+  let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
   }
@@ -146,7 +146,7 @@ export function getCellProps<RecordType>(
     key,
     fixedInfo,
     appendCellNode,
-    additionalCellProps,
+    additionalCellProps: additionalCellProps || {},
   };
 }
 
