@@ -14,6 +14,12 @@
     border-left: @border;
   }
 
+  .@{tablePrefixCls}-row-extra {
+    .@{tablePrefixCls}-cell {
+      background: rgba(200, 200, 255) !important;
+    }
+  }
+
   .@{tablePrefixCls}-cell {
     flex: 0 0 var(--virtual-width);
     width: var(--virtual-width);
@@ -25,12 +31,14 @@
       left: calc(var(--sticky-left) + 1px) !important;
     }
 
-    &-virtual-fixed {
-      position: absolute;
-      z-index: 1;
-      border-bottom: @border;
-      left: calc(var(--sticky-left) + 1px) !important;
-      background: rgba(200, 200, 255) !important;
-    }
+    
+
+    // &-virtual-fixed {
+    //   position: absolute;
+    //   z-index: 1;
+    //   border-bottom: @border;
+    //   left: calc(var(--sticky-left) + 1px) !important;
+    //   background: rgba(200, 200, 255) !important;
+    // }
   }
 }

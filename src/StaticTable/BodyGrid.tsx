@@ -7,7 +7,6 @@ import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords'
 import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
 import { GridContext, StaticContext } from './context';
-import { RowSpanVirtualCell } from './VirtualCell';
 
 export interface GridProps<RecordType = any> {
   data: RecordType[];
@@ -134,42 +133,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       if (flattenColumns.some(column => getRowSpan(column, i) > 1)) {
         spanLines.push(i);
       }
-
-      // const rowKey = getRowKey(item.record, i);
-
-      // flattenColumns.forEach((column, colIndex) => {
-      //   const rowSpan = getRowSpan(column, i);
-
-      //   if (rowSpan > 1) {
-      //     const endItemIndex = i + rowSpan - 1;
-      //     const endItem = flattenData[endItemIndex];
-      //     const endKey = getRowKey(endItem.record, endItemIndex);
-
-      //     const sizeInfo = getSize(rowKey, endKey);
-      //     const left = columnsOffset[colIndex - 1] || 0;
-
-      //     nodes.push(
-      //       <RowSpanVirtualCell
-      //         top={-offsetY + sizeInfo.top}
-      //         height={sizeInfo.bottom - sizeInfo.top}
-      //         left={left}
-      //         key={`${i}_${colIndex}`}
-      //         record={item.record}
-      //         rowKey={rowKey}
-      //         column={column}
-      //         colIndex={colIndex}
-      //         index={i}
-      //         indent={0}
-      //         style={{
-      //           ['--sticky-left' as any]: `${left}px`,
-      //         }}
-      //       />,
-      //     );
-      //   }
-      // });
     }
-
-    console.log('>>>', spanLines);
 
     // Patch extra line on the page
     const nodes: React.ReactElement[] = spanLines.map(index => {
@@ -185,6 +149,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         return sizeInfo.bottom - sizeInfo.top;
       };
 
+      const sizeInfo = getSize(rowKey);
+
       return (
         <BodyLine
           key={index}
@@ -192,11 +158,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           rowKey={rowKey}
           index={index}
           style={{
-            position: 'absolute',
-            top: 0,
-            pointerEvents: 'none',
+            top: -offsetY + sizeInfo.top,
           }}
-          inverse
+          extra
           getHeight={getHeight}
         />
       );

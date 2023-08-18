@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getCellProps, useRowInfo } from '../Body/BodyRow';
+import { getCellProps, type useRowInfo } from '../Body/BodyRow';
 import Cell from '../Cell';
 import type { ColumnType } from '../interface';
 import classNames from 'classnames';
@@ -112,40 +112,6 @@ function VirtualCell<RecordType extends { index: number } = any>(
         rowSpan: 1,
         colSpan: 1,
       }}
-    />
-  );
-}
-
-// ================= Virtual Row Span Cell =================
-export interface RowSpanVirtualCellProps<RecordType extends { index: number }>
-  extends Omit<VirtualCellProps<RecordType>, 'rowInfo'> {
-  record: RecordType;
-  rowKey: React.Key;
-  top: number;
-  height: number;
-  left: number;
-}
-
-export function RowSpanVirtualCell<RecordType extends { index: number } = any>(
-  props: RowSpanVirtualCellProps<RecordType>,
-) {
-  const { record, rowKey, top, height, left, style } = props;
-
-  const rowInfo = useRowInfo<RecordType>(record, rowKey);
-  const { prefixCls } = rowInfo;
-
-  return (
-    <VirtualCell
-      rowInfo={rowInfo}
-      {...props}
-      style={{
-        ...style,
-        top,
-        height,
-        left,
-        position: 'absolute',
-      }}
-      className={`${prefixCls}-cell-virtual-fixed`}
     />
   );
 }

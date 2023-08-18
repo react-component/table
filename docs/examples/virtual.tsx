@@ -18,24 +18,24 @@ const columns: ColumnsType = [
     title: 'title3',
     dataIndex: 'c',
     key: 'c',
-    // onCell: (_, index) => {
-    //   if (index % 4 === 0) {
-    //     return {
-    //       rowSpan: 3,
-    //     };
-    //   }
+    onCell: (_, index) => {
+      if (index % 4 === 0) {
+        return {
+          rowSpan: 3,
+        };
+      }
 
-    //   if (index % 4 === 3) {
-    //     return {
-    //       rowSpan: 1,
-    //       colSpan: 3,
-    //     };
-    //   }
+      if (index % 4 === 3) {
+        return {
+          rowSpan: 1,
+          colSpan: 3,
+        };
+      }
 
-    //   return {
-    //     rowSpan: 0,
-    //   };
-    // },
+      return {
+        rowSpan: 0,
+      };
+    },
   },
   {
     title: 'title4',
@@ -45,30 +45,30 @@ const columns: ColumnsType = [
       {
         title: 'title4-1',
         dataIndex: 'b',
-        // onCell: (_, index) => {
-        //   if (index % 4 === 0) {
-        //     return {
-        //       colSpan: 3,
-        //     };
-        //   }
+        onCell: (_, index) => {
+          if (index % 4 === 0) {
+            return {
+              colSpan: 3,
+            };
+          }
 
-        //   if (index % 4 === 3) {
-        //     return {
-        //       colSpan: 0,
-        //     };
-        //   }
-        // },
+          if (index % 4 === 3) {
+            return {
+              colSpan: 0,
+            };
+          }
+        },
       },
       {
         title: 'title4-2',
         dataIndex: 'b',
-        // onCell: (_, index) => {
-        //   if (index % 4 === 0 || index % 4 === 3) {
-        //     return {
-        //       colSpan: 0,
-        //     };
-        //   }
-        // },
+        onCell: (_, index) => {
+          if (index % 4 === 0 || index % 4 === 3) {
+            return {
+              colSpan: 0,
+            };
+          }
+        },
       },
     ],
   },
@@ -76,24 +76,24 @@ const columns: ColumnsType = [
     title: 'title6',
     dataIndex: 'b',
     key: 'f',
-    // onCell: (_, index) => {
-    //   if (index % 4 === 0) {
-    //     return {
-    //       rowSpan: 0,
-    //       colSpan: 0,
-    //     };
-    //   }
+    onCell: (_, index) => {
+      if (index % 4 === 0) {
+        return {
+          rowSpan: 0,
+          colSpan: 0,
+        };
+      }
 
-    //   if (index % 4 === 1) {
-    //     return {
-    //       rowSpan: 3,
-    //     };
-    //   }
+      if (index % 4 === 1) {
+        return {
+          rowSpan: 3,
+        };
+      }
 
-    //   return {
-    //     rowSpan: 0,
-    //   };
-    // },
+      return {
+        rowSpan: 0,
+      };
+    },
   },
   {
     title: (
@@ -111,26 +111,26 @@ const columns: ColumnsType = [
   {
     title: 'title8',
     dataIndex: 'b',
-    // onCell: (_, index) => {
-    //   if (index % 2 === 0) {
-    //     return {
-    //       rowSpan: 2,
-    //       colSpan: 2,
-    //     };
-    //   }
+    onCell: (_, index) => {
+      if (index % 2 === 0) {
+        return {
+          rowSpan: 2,
+          colSpan: 2,
+        };
+      }
 
-    //   return {
-    //     rowSpan: 0,
-    //   };
-    // },
+      return {
+        rowSpan: 0,
+      };
+    },
   },
   {
     title: 'title9 i',
     dataIndex: 'b',
     key: 'i',
-    // onCell: () => ({
-    //   colSpan: 0,
-    // }),
+    onCell: () => ({
+      colSpan: 0,
+    }),
   },
   { title: 'title10', dataIndex: 'b', key: 'j' },
   {
@@ -165,7 +165,7 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   b: `b${index}`,
   c: `c${index}`,
   d: index,
-  bk: <h4>Hello</h4>,
+  bk: <strong>Hello</strong>,
   indexKey: `${index}`,
   // children: [
   //   {
