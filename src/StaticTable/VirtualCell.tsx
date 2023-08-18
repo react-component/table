@@ -15,9 +15,12 @@ export interface VirtualCellProps<RecordType extends { index: number }> {
   record: RecordType;
 
   // Follow props is used for RowSpanVirtualCell only
-  forceRender?: boolean;
   style?: React.CSSProperties;
   className?: string;
+
+  /** Render cell only when it has `rowSpan > 1` */
+  inverse?: boolean;
+  getHeight?: (rowSpan: number) => number;
 }
 
 /**
@@ -32,7 +35,8 @@ export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset:
 function VirtualCell<RecordType extends { index: number } = any>(
   props: VirtualCellProps<RecordType>,
 ) {
-  const { rowInfo, column, colIndex, indent, index, record, forceRender, style, className } = props;
+  const { rowInfo, column, colIndex, indent, index, record, style, className, inverse, getHeight } =
+    props;
 
   const { render, dataIndex, className: columnClassName, width: colWidth } = column;
 
@@ -62,16 +66,25 @@ function VirtualCell<RecordType extends { index: number } = any>(
     ...style,
     ['--virtual-width' as any]: `${concatColWidth}px`,
     marginRight: marginOffset,
+    pointerEvents: 'auto',
   };
 
-  // 0 rowSpan or colSpan should not render
-  if (colSpan === 0 || rowSpan === 0 || (rowSpan > 1 && !forceRender)) {
-    mergedStyle.visibility = 'hidden';
-  }
-
   // When `colSpan` or `rowSpan` is `0`, should skip render.
-  const mergedRender =
-    !forceRender && (colSpan === 0 || rowSpan === 0 || rowSpan > 1) ? () => null : render;
+  const needHide = React.useMemo(() => {
+    if (inverse) {
+      return rowSpan <= 1;
+    } else {
+      return colSpan === 0 || rowSpan === 0 || rowSpan > 1;
+    }
+  }, [rowSpan, colSpan, inverse]);
+
+  // 0 rowSpan or colSpan should not render
+  if (needHide) {
+    mergedStyle.visibility = 'hidden';
+  } else if (inverse) {
+    mergedStyle.height = getHeight?.(rowSpan);
+  }
+  const mergedRender = needHide ? () => null : render;
 
   // ========================== Render ==========================
   return (
@@ -98,14 +111,6 @@ function VirtualCell<RecordType extends { index: number } = any>(
         // Virtual should reset `colSpan` & `rowSpan`
         rowSpan: 1,
         colSpan: 1,
-
-        'data-fixed-info': {
-          rowInfo,
-          column,
-          colIndex,
-          indent,
-          index,
-        },
       }}
     />
   );
@@ -141,7 +146,6 @@ export function RowSpanVirtualCell<RecordType extends { index: number } = any>(
         position: 'absolute',
       }}
       className={`${prefixCls}-cell-virtual-fixed`}
-      forceRender
     />
   );
 }

@@ -122,8 +122,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       }
     }
 
-    // Loop create the rowSpan cell
-    const nodes: React.ReactElement[] = [];
+    // Collect the line who has rowSpan
+    const spanLines: number[] = [];
 
     for (let i = startIndex; i <= endIndex; i += 1) {
       const item = flattenData[i];
@@ -131,39 +131,76 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         continue;
       }
 
-      const rowKey = getRowKey(item.record, i);
+      if (flattenColumns.some(column => getRowSpan(column, i) > 1)) {
+        spanLines.push(i);
+      }
 
-      flattenColumns.forEach((column, colIndex) => {
-        const rowSpan = getRowSpan(column, i);
+      // const rowKey = getRowKey(item.record, i);
 
-        if (rowSpan > 1) {
-          const endItemIndex = i + rowSpan - 1;
-          const endItem = flattenData[endItemIndex];
-          const endKey = getRowKey(endItem.record, endItemIndex);
+      // flattenColumns.forEach((column, colIndex) => {
+      //   const rowSpan = getRowSpan(column, i);
 
-          const sizeInfo = getSize(rowKey, endKey);
-          const left = columnsOffset[colIndex - 1] || 0;
+      //   if (rowSpan > 1) {
+      //     const endItemIndex = i + rowSpan - 1;
+      //     const endItem = flattenData[endItemIndex];
+      //     const endKey = getRowKey(endItem.record, endItemIndex);
 
-          nodes.push(
-            <RowSpanVirtualCell
-              top={-offsetY + sizeInfo.top}
-              height={sizeInfo.bottom - sizeInfo.top}
-              left={left}
-              key={`${i}_${colIndex}`}
-              record={item.record}
-              rowKey={rowKey}
-              column={column}
-              colIndex={colIndex}
-              index={i}
-              indent={0}
-              style={{
-                ['--sticky-left' as any]: `${left}px`,
-              }}
-            />,
-          );
-        }
-      });
+      //     const sizeInfo = getSize(rowKey, endKey);
+      //     const left = columnsOffset[colIndex - 1] || 0;
+
+      //     nodes.push(
+      //       <RowSpanVirtualCell
+      //         top={-offsetY + sizeInfo.top}
+      //         height={sizeInfo.bottom - sizeInfo.top}
+      //         left={left}
+      //         key={`${i}_${colIndex}`}
+      //         record={item.record}
+      //         rowKey={rowKey}
+      //         column={column}
+      //         colIndex={colIndex}
+      //         index={i}
+      //         indent={0}
+      //         style={{
+      //           ['--sticky-left' as any]: `${left}px`,
+      //         }}
+      //       />,
+      //     );
+      //   }
+      // });
     }
+
+    console.log('>>>', spanLines);
+
+    // Patch extra line on the page
+    const nodes: React.ReactElement[] = spanLines.map(index => {
+      const item = flattenData[index];
+
+      const rowKey = getRowKey(item.record, index);
+
+      const getHeight = (rowSpan: number) => {
+        const endItemIndex = index + rowSpan - 1;
+        const endItemKey = getRowKey(flattenData[endItemIndex].record, endItemIndex);
+
+        const sizeInfo = getSize(rowKey, endItemKey);
+        return sizeInfo.bottom - sizeInfo.top;
+      };
+
+      return (
+        <BodyLine
+          key={index}
+          data={item}
+          rowKey={rowKey}
+          index={index}
+          style={{
+            position: 'absolute',
+            top: 0,
+            pointerEvents: 'none',
+          }}
+          inverse
+          getHeight={getHeight}
+        />
+      );
+    });
 
     return nodes;
   };

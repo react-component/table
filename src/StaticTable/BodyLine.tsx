@@ -13,10 +13,14 @@ export interface BodyLineProps<RecordType = any> {
   className?: string;
   style?: React.CSSProperties;
   rowKey: React.Key;
+
+  /** Render cell only when it has `rowSpan > 1` */
+  inverse?: boolean;
+  getHeight?: (rowSpan: number) => number;
 }
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
-  const { data, index, className, rowKey, style, ...restProps } = props;
+  const { data, index, className, rowKey, style, inverse, getHeight, ...restProps } = props;
   const { record, indent } = data;
 
   const { flattenColumns, prefixCls } = useContext(TableContext);
@@ -25,15 +29,18 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowInfo = useRowInfo(record, rowKey);
 
   // ========================== Render ==========================
+
+  const rowStyle: React.CSSProperties = {
+    ...style,
+    width: scrollX,
+  };
+
   return (
     <div
       {...restProps}
       ref={ref}
       className={classNames(className, `${prefixCls}-row`)}
-      style={{
-        ...style,
-        width: scrollX,
-      }}
+      style={rowStyle}
     >
       {flattenColumns.map((column, colIndex) => {
         return (
@@ -45,6 +52,8 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             indent={indent}
             index={index}
             record={record}
+            inverse={inverse}
+            getHeight={getHeight}
           />
         );
       })}

@@ -105,7 +105,7 @@ const columns: ColumnsType = [
         Hello world!
       </div>
     ),
-    dataIndex: 'b',
+    dataIndex: 'bk',
     key: 'g',
   },
   {
@@ -141,8 +141,8 @@ const columns: ColumnsType = [
     fixed: 'right',
     onCell: (_, index) => {
       return {
-        rowSpan: index % 4 === 0 ? 4 : 0,
-        colSpan: 2,
+        rowSpan: index % 2 === 0 ? 2 : 0,
+        // colSpan: 2,
       };
     },
   },
@@ -154,7 +154,7 @@ const columns: ColumnsType = [
     fixed: 'right',
     onCell: () => {
       return {
-        colSpan: 0,
+        // colSpan: 0,
       };
     },
   },
@@ -165,6 +165,7 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   b: `b${index}`,
   c: `c${index}`,
   d: index,
+  bk: <h4>Hello</h4>,
   indexKey: `${index}`,
   // children: [
   //   {

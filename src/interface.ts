@@ -116,7 +116,7 @@ export interface StickyOffsets {
 export type GetComponentProps<DataType> = (
   data: DataType,
   index?: number,
-) => React.HTMLAttributes<any> | React.TdHTMLAttributes<any>;
+) => React.HTMLAttributes<any> & React.TdHTMLAttributes<any>;
 
 type Component<P> =
   | React.ComponentType<P>
