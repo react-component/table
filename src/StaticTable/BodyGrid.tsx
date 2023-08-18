@@ -76,36 +76,26 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   });
 
   // ======================= Col/Row Span =======================
-  const getRowColSpan = (
-    column: ColumnType<any>,
-    index: number,
-  ): [rowSpan: number, colSpan: number] => {
-    let rowSpan: number;
-    let colSpan: number;
-
+  const getRowSpan = (column: ColumnType<any>, index: number): number => {
     const record = flattenData[index]?.record;
     const { onCell } = column;
 
     if (onCell) {
       const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
-      rowSpan = cellProps?.rowSpan;
-      colSpan = cellProps?.colSpan;
+      return cellProps?.rowSpan ?? 1;
     }
-    return [rowSpan || 1, colSpan || 1];
+    return 1;
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end, getSize, offsetY } = info;
 
     // Find first rowSpan column
-    const firstRowSpanColumns = flattenColumns.filter(
-      column => getRowColSpan(column, start)[0] === 0,
-    );
+    const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
 
     let startIndex = start;
-
     for (let i = start; i >= 0; i -= 1) {
-      if (firstRowSpanColumns.every(column => getRowColSpan(column, i)[0] !== 0)) {
+      if (firstRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
         startIndex = i;
         break;
       }
@@ -113,20 +103,18 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
     // Find last rowSpan column
     const lastRowSpanColumns = flattenColumns.filter(column => {
-      const rowSpan = getRowColSpan(column, end)[0];
+      const rowSpan = getRowSpan(column, end);
       return rowSpan !== 1;
     });
 
     let endIndex = end;
 
     for (let i = end; i < flattenData.length; i += 1) {
-      if (lastRowSpanColumns.every(column => getRowColSpan(column, i)[0] !== 0)) {
+      if (lastRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
         endIndex = Math.max(i - 1, end);
         break;
       }
     }
-
-    console.log('Range:', start, end, '->', startIndex, endIndex);
 
     // Loop create the rowSpan cell
     const nodes: React.ReactElement[] = [];
@@ -140,7 +128,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       const rowKey = getRowKey(item.record, i);
 
       flattenColumns.forEach((column, colIndex) => {
-        const [rowSpan] = getRowColSpan(column, i);
+        const rowSpan = getRowSpan(column, i);
 
         if (rowSpan > 1) {
           const endItemIndex = i + rowSpan - 1;
