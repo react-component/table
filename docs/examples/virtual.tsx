@@ -18,27 +18,25 @@ const columns: ColumnsType = [
     title: 'title3',
     dataIndex: 'c',
     key: 'c',
-    onCell: (_, index) => {
-      if (index % 4 === 0) {
-        return {
-          rowSpan: 3,
-        };
-      }
+    // onCell: (_, index) => {
+    //   if (index % 4 === 0) {
+    //     return {
+    //       rowSpan: 3,
+    //     };
+    //   }
 
-      if (index % 4 === 3) {
-        return {
-          rowSpan: 1,
-          colSpan: 3,
-        };
-      }
+    //   if (index % 4 === 3) {
+    //     return {
+    //       rowSpan: 1,
+    //       colSpan: 3,
+    //     };
+    //   }
 
-      return {
-        rowSpan: 0,
-      };
-    },
+    //   return {
+    //     rowSpan: 0,
+    //   };
+    // },
   },
-  // { title: 'title4', dataIndex: 'b', key: 'd' },
-  // { title: 'title5', dataIndex: 'b', key: 'e' },
   {
     title: 'title4',
     key: 'd',
@@ -47,30 +45,30 @@ const columns: ColumnsType = [
       {
         title: 'title4-1',
         dataIndex: 'b',
-        onCell: (_, index) => {
-          if (index % 4 === 0) {
-            return {
-              colSpan: 3,
-            };
-          }
+        // onCell: (_, index) => {
+        //   if (index % 4 === 0) {
+        //     return {
+        //       colSpan: 3,
+        //     };
+        //   }
 
-          if (index % 4 === 3) {
-            return {
-              colSpan: 0,
-            };
-          }
-        },
+        //   if (index % 4 === 3) {
+        //     return {
+        //       colSpan: 0,
+        //     };
+        //   }
+        // },
       },
       {
         title: 'title4-2',
         dataIndex: 'b',
-        onCell: (_, index) => {
-          if (index % 4 === 0 || index % 4 === 3) {
-            return {
-              colSpan: 0,
-            };
-          }
-        },
+        // onCell: (_, index) => {
+        //   if (index % 4 === 0 || index % 4 === 3) {
+        //     return {
+        //       colSpan: 0,
+        //     };
+        //   }
+        // },
       },
     ],
   },
@@ -78,24 +76,24 @@ const columns: ColumnsType = [
     title: 'title6',
     dataIndex: 'b',
     key: 'f',
-    onCell: (_, index) => {
-      if (index % 4 === 0) {
-        return {
-          rowSpan: 0,
-          colSpan: 0,
-        };
-      }
+    // onCell: (_, index) => {
+    //   if (index % 4 === 0) {
+    //     return {
+    //       rowSpan: 0,
+    //       colSpan: 0,
+    //     };
+    //   }
 
-      if (index % 4 === 1) {
-        return {
-          rowSpan: 3,
-        };
-      }
+    //   if (index % 4 === 1) {
+    //     return {
+    //       rowSpan: 3,
+    //     };
+    //   }
 
-      return {
-        rowSpan: 0,
-      };
-    },
+    //   return {
+    //     rowSpan: 0,
+    //   };
+    // },
   },
   {
     title: (
@@ -113,30 +111,53 @@ const columns: ColumnsType = [
   {
     title: 'title8',
     dataIndex: 'b',
-    onCell: (_, index) => {
-      if (index % 2 === 0) {
-        return {
-          rowSpan: 2,
-          colSpan: 2,
-        };
-      }
+    // onCell: (_, index) => {
+    //   if (index % 2 === 0) {
+    //     return {
+    //       rowSpan: 2,
+    //       colSpan: 2,
+    //     };
+    //   }
 
-      return {
-        rowSpan: 0,
-      };
-    },
+    //   return {
+    //     rowSpan: 0,
+    //   };
+    // },
   },
   {
     title: 'title9 i',
     dataIndex: 'b',
     key: 'i',
-    onCell: () => ({
-      colSpan: 0,
-    }),
+    // onCell: () => ({
+    //   colSpan: 0,
+    // }),
   },
   { title: 'title10', dataIndex: 'b', key: 'j' },
-  { title: 'title11', dataIndex: 'b', key: 'k', width: 50, fixed: 'right' },
-  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+  {
+    title: 'title11',
+    dataIndex: 'b',
+    key: 'k',
+    width: 50,
+    fixed: 'right',
+    onCell: (_, index) => {
+      return {
+        rowSpan: index % 4 === 0 ? 4 : 0,
+        colSpan: 2,
+      };
+    },
+  },
+  {
+    title: 'title12',
+    dataIndex: 'b',
+    key: 'l',
+    width: 100,
+    fixed: 'right',
+    onCell: () => {
+      return {
+        colSpan: 0,
+      };
+    },
+  },
 ];
 
 const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({

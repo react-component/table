@@ -214,9 +214,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
 
   const mergedStyle = {
+    ...fixedStyle,
     ...additionalProps.style,
     ...alignStyle,
-    ...fixedStyle,
     ...legacyCellProps?.style,
   };
 

@@ -91,26 +91,32 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     const { start, end, getSize, offsetY } = info;
 
     // Find first rowSpan column
-    const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
+    let firstRowSpanColumns = flattenColumns.filter(
+      // rowSpan is 0
+      column => getRowSpan(column, start) === 0,
+    );
 
     let startIndex = start;
     for (let i = start; i >= 0; i -= 1) {
-      if (firstRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
+      firstRowSpanColumns = firstRowSpanColumns.filter(column => getRowSpan(column, i) === 0);
+
+      if (!firstRowSpanColumns.length) {
         startIndex = i;
         break;
       }
     }
 
     // Find last rowSpan column
-    const lastRowSpanColumns = flattenColumns.filter(column => {
-      const rowSpan = getRowSpan(column, end);
-      return rowSpan !== 1;
-    });
+    let lastRowSpanColumns = flattenColumns.filter(
+      // rowSpan is not 1
+      column => getRowSpan(column, end) !== 1,
+    );
 
     let endIndex = end;
-
     for (let i = end; i < flattenData.length; i += 1) {
-      if (lastRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
+      lastRowSpanColumns = lastRowSpanColumns.filter(column => getRowSpan(column, i) !== 1);
+
+      if (!lastRowSpanColumns.length) {
         endIndex = Math.max(i - 1, end);
         break;
       }

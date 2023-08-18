@@ -57,15 +57,15 @@ function VirtualCell<RecordType extends { index: number } = any>(
   const marginOffset = colSpan > 1 ? (colWidth as number) - concatColWidth : 0;
 
   // ========================== Style ===========================
-  const mergedStyle = {
+  const mergedStyle: React.CSSProperties = {
     ...cellStyle,
     ...style,
-    '--virtual-width': `${concatColWidth}px`,
+    ['--virtual-width' as any]: `${concatColWidth}px`,
     marginRight: marginOffset,
   };
 
   // 0 rowSpan or colSpan should not render
-  if (colSpan === 0 || (rowSpan > 1 && !forceRender)) {
+  if (colSpan === 0 || rowSpan === 0 || (rowSpan > 1 && !forceRender)) {
     mergedStyle.visibility = 'hidden';
   }
 
@@ -98,6 +98,14 @@ function VirtualCell<RecordType extends { index: number } = any>(
         // Virtual should reset `colSpan` & `rowSpan`
         rowSpan: 1,
         colSpan: 1,
+
+        'data-fixed-info': {
+          rowInfo,
+          column,
+          colIndex,
+          indent,
+          index,
+        },
       }}
     />
   );
@@ -130,6 +138,7 @@ export function RowSpanVirtualCell<RecordType extends { index: number } = any>(
         top,
         height,
         left,
+        position: 'absolute',
       }}
       className={`${prefixCls}-cell-virtual-fixed`}
       forceRender
