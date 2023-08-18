@@ -20,6 +20,15 @@ export interface VirtualCellProps<RecordType extends { index: number }> {
   className?: string;
 }
 
+/**
+ * Return the width of the column by `colSpan`.
+ * When `colSpan` is `0` will be trade as `1`.
+ */
+export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset: number[]) {
+  const mergedColSpan = colSpan || 1;
+  return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
+}
+
 function VirtualCell<RecordType extends { index: number } = any>(
   props: VirtualCellProps<RecordType>,
 ) {
@@ -42,10 +51,7 @@ function VirtualCell<RecordType extends { index: number } = any>(
   // ========================= ColWidth =========================
   // column width
   const startColIndex = colIndex - 1;
-  const concatColWidth =
-    colSpan > 1
-      ? columnsOffset[startColIndex + colSpan] - (columnsOffset[startColIndex] || 0)
-      : (colWidth as number);
+  const concatColWidth = getColumnWidth(startColIndex, colSpan, columnsOffset);
 
   // margin offset
   const marginOffset = colSpan > 1 ? (colWidth as number) - concatColWidth : 0;
@@ -59,7 +65,7 @@ function VirtualCell<RecordType extends { index: number } = any>(
   };
 
   // 0 rowSpan or colSpan should not render
-  if (colSpan === 0) {
+  if (colSpan === 0 || (rowSpan > 1 && !forceRender)) {
     mergedStyle.visibility = 'hidden';
   }
 
@@ -105,13 +111,12 @@ export interface RowSpanVirtualCellProps<RecordType extends { index: number }>
   top: number;
   height: number;
   left: number;
-  width: number;
 }
 
 export function RowSpanVirtualCell<RecordType extends { index: number } = any>(
   props: RowSpanVirtualCellProps<RecordType>,
 ) {
-  const { record, rowKey, top, height, left, width, style } = props;
+  const { record, rowKey, top, height, left, style } = props;
 
   const rowInfo = useRowInfo<RecordType>(record, rowKey);
   const { prefixCls } = rowInfo;
@@ -125,7 +130,6 @@ export function RowSpanVirtualCell<RecordType extends { index: number } = any>(
         top,
         height,
         left,
-        width,
       }}
       className={`${prefixCls}-cell-virtual-fixed`}
       forceRender

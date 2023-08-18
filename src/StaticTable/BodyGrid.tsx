@@ -76,28 +76,36 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   });
 
   // ======================= Col/Row Span =======================
-  const getRowSpan = (column: ColumnType<any>, index: number) => {
+  const getRowColSpan = (
+    column: ColumnType<any>,
+    index: number,
+  ): [rowSpan: number, colSpan: number] => {
+    let rowSpan: number;
+    let colSpan: number;
+
     const record = flattenData[index]?.record;
     const { onCell } = column;
 
     if (onCell) {
       const cellProps = onCell(record, index) as React.TdHTMLAttributes<HTMLElement>;
-      const rowSpan = cellProps?.rowSpan;
-      return rowSpan ?? 1;
+      rowSpan = cellProps?.rowSpan;
+      colSpan = cellProps?.colSpan;
     }
-    return 1;
+    return [rowSpan || 1, colSpan || 1];
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end, getSize, offsetY } = info;
 
     // Find first rowSpan column
-    const firstRowSpanColumns = flattenColumns.filter(column => getRowSpan(column, start) === 0);
+    const firstRowSpanColumns = flattenColumns.filter(
+      column => getRowColSpan(column, start)[0] === 0,
+    );
 
     let startIndex = start;
 
     for (let i = start; i >= 0; i -= 1) {
-      if (firstRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
+      if (firstRowSpanColumns.every(column => getRowColSpan(column, i)[0] !== 0)) {
         startIndex = i;
         break;
       }
@@ -105,14 +113,14 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
     // Find last rowSpan column
     const lastRowSpanColumns = flattenColumns.filter(column => {
-      const rowSpan = getRowSpan(column, end);
+      const rowSpan = getRowColSpan(column, end)[0];
       return rowSpan !== 1;
     });
 
     let endIndex = end;
 
     for (let i = end; i < flattenData.length; i += 1) {
-      if (lastRowSpanColumns.every(column => getRowSpan(column, i) !== 0)) {
+      if (lastRowSpanColumns.every(column => getRowColSpan(column, i)[0] !== 0)) {
         endIndex = Math.max(i - 1, end);
         break;
       }
@@ -132,7 +140,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       const rowKey = getRowKey(item.record, i);
 
       flattenColumns.forEach((column, colIndex) => {
-        const rowSpan = getRowSpan(column, i);
+        const [rowSpan] = getRowColSpan(column, i);
 
         if (rowSpan > 1) {
           const endItemIndex = i + rowSpan - 1;
@@ -140,16 +148,13 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           const endKey = getRowKey(endItem.record, endItemIndex);
 
           const sizeInfo = getSize(rowKey, endKey);
-          const right = columnsOffset[colIndex];
           const left = columnsOffset[colIndex - 1] || 0;
-          console.log('!!!', i, -offsetY + sizeInfo.top, left);
 
           nodes.push(
             <RowSpanVirtualCell
               top={-offsetY + sizeInfo.top}
               height={sizeInfo.bottom - sizeInfo.top}
               left={left}
-              width={right - left}
               key={`${i}_${colIndex}`}
               record={item.record}
               rowKey={rowKey}

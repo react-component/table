@@ -110,8 +110,30 @@ const columns: ColumnsType = [
     dataIndex: 'b',
     key: 'g',
   },
-  { title: 'title8', dataIndex: 'b' },
-  { title: 'title9', dataIndex: 'b', key: 'i' },
+  {
+    title: 'title8',
+    dataIndex: 'b',
+    onCell: (_, index) => {
+      if (index % 2 === 0) {
+        return {
+          rowSpan: 2,
+          colSpan: 2,
+        };
+      }
+
+      return {
+        rowSpan: 0,
+      };
+    },
+  },
+  {
+    title: 'title9 i',
+    dataIndex: 'b',
+    key: 'i',
+    onCell: () => ({
+      colSpan: 0,
+    }),
+  },
   { title: 'title10', dataIndex: 'b', key: 'j' },
   { title: 'title11', dataIndex: 'b', key: 'k', width: 50, fixed: 'right' },
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
