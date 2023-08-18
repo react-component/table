@@ -6,12 +6,12 @@
   }
 
   @border: 1px solid @border-color;
+  border-left: @border;
 
   .@{tablePrefixCls}-row {
     display: flex;
     box-sizing: border-box;
     width: 100%;
-    border-left: @border;
   }
 
   .@{tablePrefixCls}-row-extra {
@@ -26,19 +26,5 @@
     padding: 8px 16px;
     border-right: @border;
     border-bottom: @border;
-
-    &-fix-left {
-      left: calc(var(--sticky-left) + 1px) !important;
-    }
-
-    
-
-    // &-virtual-fixed {
-    //   position: absolute;
-    //   z-index: 1;
-    //   border-bottom: @border;
-    //   left: calc(var(--sticky-left) + 1px) !important;
-    //   background: rgba(200, 200, 255) !important;
-    // }
   }
 }
