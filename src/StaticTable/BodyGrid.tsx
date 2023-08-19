@@ -1,8 +1,8 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
-import TableContext from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
 import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';

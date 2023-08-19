@@ -24,7 +24,6 @@
  *  - All expanded props, move into expandable
  */
 
-import { makeImmutable } from '@rc-component/context';
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
@@ -39,7 +38,7 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
-import TableContext from './context/TableContext';
+import TableContext, { makeImmutable } from './context/TableContext';
 import type { FixedHeaderProps } from './FixedHolder';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';

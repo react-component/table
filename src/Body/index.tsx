@@ -1,8 +1,8 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
-import TableContext from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type { GetComponentProps } from '../interface';

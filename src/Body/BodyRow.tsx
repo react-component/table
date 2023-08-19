@@ -1,9 +1,9 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import { useEvent } from 'rc-util';
 import * as React from 'react';
 import Cell from '../Cell';
-import TableContext, { type TableContextProps } from '../context/TableContext';
+import TableContext, { responseImmutable, type TableContextProps } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type { ColumnType, CustomizeComponent, GetComponentProps, GetRowKey } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';

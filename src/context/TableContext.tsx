@@ -1,4 +1,4 @@
-import { createContext } from '@rc-component/context';
+import { createContext, createImmutable } from '@rc-component/context';
 import type {
   ColumnsType,
   ColumnType,
@@ -13,6 +13,9 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
+
+const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
+export { makeImmutable, responseImmutable, useImmutableMark };
 
 export interface TableContextProps<RecordType = any> {
   // Table

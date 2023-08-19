@@ -1,8 +1,8 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useRowInfo } from '../Body/BodyRow';
-import TableContext from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import type { FlattenData } from '../hooks/useFlattenRecords';
 import { StaticContext } from './context';
 import VirtualCell from './VirtualCell';
