@@ -140,13 +140,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   if (isFixLeft) {
     fixedStyle.position = 'sticky';
     fixedStyle.left = fixLeft as number;
-    fixedStyle['--sticky-left'] = `${fixLeft}px`;
   }
   if (isFixRight) {
     fixedStyle.position = 'sticky';
-
     fixedStyle.right = fixRight as number;
-    fixedStyle['--sticky-right'] = `${fixRight}px`;
   }
 
   // ================ RowSpan & ColSpan =================

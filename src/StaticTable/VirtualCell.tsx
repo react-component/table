@@ -64,7 +64,8 @@ function VirtualCell<RecordType extends { index: number } = any>(
   const mergedStyle: React.CSSProperties = {
     ...cellStyle,
     ...style,
-    ['--virtual-width' as any]: `${concatColWidth}px`,
+    flex: `0 0 ${concatColWidth}px`,
+    width: `${concatColWidth}px`,
     marginRight: marginOffset,
     pointerEvents: 'auto',
   };
