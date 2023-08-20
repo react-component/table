@@ -7,6 +7,7 @@ import Grid from './BodyGrid';
 import { StaticContext } from './context';
 import useWidthColumns from './useWidthColumns';
 import { makeImmutable } from '../context/TableContext';
+import { warning } from 'rc-util';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
@@ -21,25 +22,40 @@ export interface StaticTableProps<RecordType> extends Omit<TableProps<RecordType
   };
 }
 
+const PRESET_COLUMN_WIDTH = 100;
+
 function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
   const { columns, scroll } = props;
 
   const { x: scrollX, y: scrollY } = scroll || {};
+  let mergedScrollX = scrollX;
 
   // Fill all column with width
-  const filledWidthColumns = useWidthColumns(columns, scrollX);
+  // const filledWidthColumns = useWidthColumns(columns, scrollX);
+  if (typeof scrollX !== 'number') {
+    mergedScrollX = ((columns || []).length + 1) * PRESET_COLUMN_WIDTH;
+
+    if (process.env.NODE_ENV !== 'production') {
+      warning(false, '`scroll.x` in virtual table must be number.');
+    }
+  }
 
   // ========================== Render ==========================
   return (
-    <StaticContext.Provider value={{ scrollX, scrollY }}>
+    <StaticContext.Provider value={{ scrollX: mergedScrollX, scrollY }}>
       <Table
         {...props}
+        scroll={{
+          ...scroll,
+          x: mergedScrollX,
+        }}
         components={{
           body: renderBody,
         }}
-        columns={filledWidthColumns}
+        columns={columns}
+        // columns={filledWidthColumns}
         internalHooks={INTERNAL_HOOKS}
-        hideScrollColumn
+        tailor
       />
     </StaticContext.Provider>
   );

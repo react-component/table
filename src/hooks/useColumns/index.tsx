@@ -1,7 +1,7 @@
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import { EXPAND_COLUMN } from '../constant';
+import { EXPAND_COLUMN } from '../../constant';
 import type {
   ColumnGroupType,
   ColumnsType,
@@ -12,8 +12,19 @@ import type {
   Key,
   RenderExpandIcon,
   TriggerEventHandler,
-} from '../interface';
-import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
+} from '../../interface';
+import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
+
+function parseColWidth(totalWidth: number, width: string | number = '') {
+  if (typeof width === 'number') {
+    return width;
+  }
+
+  if (width.endsWith('%')) {
+    return (totalWidth * parseFloat(width)) / 100;
+  }
+  return null;
+}
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -130,6 +141,7 @@ function useColumns<RecordType>(
     expandRowByClick,
     columnWidth,
     fixed,
+    scrollWidth,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -146,6 +158,7 @@ function useColumns<RecordType>(
     expandRowByClick?: boolean;
     columnWidth?: number | string;
     fixed?: FixedType;
+    scrollWidth?: number;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
@@ -259,15 +272,65 @@ function useColumns<RecordType>(
 
   // ========================== Flatten =========================
   const flattenColumns = React.useMemo(() => {
+    let tmpColumns = mergedColumns;
+
     if (direction === 'rtl') {
-      return revertForRtl(flatColumns(mergedColumns));
+      tmpColumns = revertForRtl(flatColumns(mergedColumns));
+    } else {
+      tmpColumns = flatColumns(mergedColumns);
     }
-    return flatColumns(mergedColumns);
-  }, [mergedColumns, direction]);
+
+    // Fill width if needed
+    if (scrollWidth && scrollWidth > 0) {
+      let totalWidth = 0;
+      let missWidthCount = 0;
+
+      // collect not given width column
+      tmpColumns.forEach((col: any) => {
+        const colWidth = parseColWidth(scrollWidth, col.width);
+
+        if (colWidth) {
+          totalWidth += colWidth;
+        } else {
+          missWidthCount += 1;
+        }
+      });
+
+      // Fill width
+      let restWidth = scrollWidth - totalWidth;
+      let restCount = missWidthCount;
+      const avgWidth = restWidth / missWidthCount;
+
+      tmpColumns = tmpColumns.map((col: any) => {
+        const clone = {
+          ...col,
+        };
+
+        const colWidth = parseColWidth(scrollWidth, clone.width);
+
+        if (colWidth) {
+          clone.width = colWidth;
+        } else {
+          const colAvgWidth = Math.floor(avgWidth);
+
+          clone.width = restCount === 1 ? restWidth : colAvgWidth;
+
+          restWidth -= colAvgWidth;
+          restCount -= 1;
+        }
+
+        return clone;
+      });
+    }
+
+    return tmpColumns;
+  }, [mergedColumns, direction, scrollWidth]);
+
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(direction === 'rtl' ? flattenColumns.slice().reverse() : flattenColumns);
   }
+
   return [mergedColumns, flattenColumns];
 }
 

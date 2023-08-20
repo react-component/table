@@ -138,7 +138,8 @@ export interface TableProps<RecordType = unknown>
    * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
    */
   // Force trade scrollbar as 0 size.
-  hideScrollColumn?: boolean;
+  // Force column to be average width if not set
+  tailor?: boolean;
 
   /**
    * @private Internal usage, may remove by refactor.
@@ -193,7 +194,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     internalHooks,
     transformColumns,
     internalRefs,
-    hideScrollColumn,
+    tailor,
 
     sticky,
   } = props;
@@ -276,6 +277,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
+      scrollWidth: useInternalHooks && tailor && typeof scroll?.x === 'number' ? scroll.x : null,
     },
     useInternalHooks ? transformColumns : null,
   );
@@ -450,7 +452,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
-    if (!hideScrollColumn || !useInternalHooks) {
+    if (!tailor || !useInternalHooks) {
       if (scrollBodyRef.current instanceof Element) {
         setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
       } else {
