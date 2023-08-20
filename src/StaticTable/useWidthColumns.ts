@@ -48,12 +48,9 @@ export default function useWidthColumns<RecordType>(
       let restCount = missWidthCount;
       const avgWidth = restWidth / missWidthCount;
 
-      const fillWidth = (cols: ColumnsType<RecordType>, parentKey: string) =>
-        cols.map((col: any, index) => {
-          const mergedKey = `${parentKey}-${index}`;
-
+      const fillWidth = (cols: ColumnsType<RecordType>) =>
+        cols.map((col: any) => {
           const clone = {
-            key: mergedKey,
             ...col,
           };
 
@@ -61,7 +58,7 @@ export default function useWidthColumns<RecordType>(
           const hasChildren = col.children?.length;
 
           if (hasChildren) {
-            clone.children = fillWidth(col.children, mergedKey);
+            clone.children = fillWidth(col.children);
           }
 
           if (colWidth) {
@@ -78,7 +75,7 @@ export default function useWidthColumns<RecordType>(
           return clone;
         });
 
-      return fillWidth(columns, 'key');
+      return fillWidth(columns);
     }
 
     return columns;

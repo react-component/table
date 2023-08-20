@@ -35,19 +35,23 @@ export function convertChildrenToColumns<RecordType>(
     });
 }
 
-function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
+function flatColumns<RecordType>(
+  columns: ColumnsType<RecordType>,
+  parentKey = 'key',
+): ColumnType<RecordType>[] {
   return columns
     .filter(column => column && typeof column === 'object')
-    .reduce((list, column) => {
+    .reduce((list, column, index) => {
       const { fixed } = column;
       // Convert `fixed='true'` to `fixed='left'` instead
       const parsedFixed = fixed === true ? 'left' : fixed;
+      const mergedKey = `${parentKey}-${index}`;
 
       const subColumns = (column as ColumnGroupType<RecordType>).children;
       if (subColumns && subColumns.length > 0) {
         return [
           ...list,
-          ...flatColumns(subColumns).map(subColum => ({
+          ...flatColumns(subColumns, mergedKey).map(subColum => ({
             fixed: parsedFixed,
             ...subColum,
           })),
@@ -56,6 +60,7 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
       return [
         ...list,
         {
+          key: mergedKey,
           ...column,
           fixed: parsedFixed,
         },
