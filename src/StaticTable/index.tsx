@@ -2,11 +2,12 @@ import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '..';
 import type { CustomizeScrollBody } from '../interface';
-import Table, { type TableProps } from '../Table';
+import Table, { DEFAULT_PREFIX, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
 import { makeImmutable } from '../context/TableContext';
 import { warning } from 'rc-util';
+import classNames from 'classnames';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
@@ -24,7 +25,7 @@ export interface StaticTableProps<RecordType> extends Omit<TableProps<RecordType
 const PRESET_COLUMN_WIDTH = 100;
 
 function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
-  const { columns, scroll } = props;
+  const { columns, scroll, prefixCls = DEFAULT_PREFIX, className } = props;
 
   const { x: scrollX, y: scrollY } = scroll || {};
   let mergedScrollX = scrollX;
@@ -44,6 +45,7 @@ function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
     <StaticContext.Provider value={{ scrollX: mergedScrollX, scrollY }}>
       <Table
         {...props}
+        className={classNames(className, `${prefixCls}-virtual`)}
         scroll={{
           ...scroll,
           x: mergedScrollX,

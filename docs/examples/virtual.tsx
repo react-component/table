@@ -204,6 +204,7 @@ const Demo = () => {
         expandable={{
           expandedRowRender: () => 2333,
           columnWidth: 60,
+          expandedRowClassName: () => 'good-one',
         }}
         // onRow={() => ({ className: 'rowed' })}
         rowClassName="nice-try"

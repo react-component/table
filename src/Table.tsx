@@ -75,6 +75,8 @@ import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
 
+export const DEFAULT_PREFIX = 'rc-table';
+
 // Used for conditions cache
 const EMPTY_DATA = [];
 
@@ -160,7 +162,7 @@ function defaultEmpty() {
 function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
   const props = {
     rowKey: 'key',
-    prefixCls: 'rc-table',
+    prefixCls: DEFAULT_PREFIX,
     emptyText: defaultEmpty,
     ...tableProps,
   };

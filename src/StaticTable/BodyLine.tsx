@@ -34,11 +34,24 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowInfo = useRowInfo(record, rowKey, index, indent);
 
   // ========================== Expand ==========================
-  const { rowSupportExpand, expanded, rowProps } = rowInfo;
+  const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
 
   let expandRowNode: React.ReactElement;
   if (rowSupportExpand && expanded) {
-    expandRowNode = <>233</>;
+    const expandContent = expandedRowRender(record, index, indent + 1, expanded);
+    const computedExpandedRowClassName = expandedRowClassName?.(record, index, indent);
+
+    expandRowNode = (
+      <div
+        className={classNames(
+          `${prefixCls}-expanded-row`,
+          `${prefixCls}-expanded-row-level-${indent + 1}`,
+          computedExpandedRowClassName,
+        )}
+      >
+        {expandContent}
+      </div>
+    );
   }
 
   // ========================== Render ==========================
