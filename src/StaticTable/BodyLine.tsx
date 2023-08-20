@@ -23,7 +23,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent } = data;
 
-  const { flattenColumns, prefixCls, expandableType, rowExpandable } = useContext(TableContext, [
+  const { flattenColumns, prefixCls } = useContext(TableContext, [
     'prefixCls',
     'flattenColumns',
     'expandableType',
@@ -34,6 +34,12 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowInfo = useRowInfo(record, rowKey);
 
   // ========================== Expand ==========================
+  const { expandable, expanded } = rowInfo;
+
+  let expandRowNode: React.ReactElement;
+  if (expandable && expanded) {
+    expandRowNode = <>233</>;
+  }
 
   // ========================== Render ==========================
 
@@ -47,10 +53,10 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     rowStyle.pointerEvents = 'none';
   }
 
-  return (
+  const rowNode = (
     <div
       {...restProps}
-      ref={ref}
+      ref={expandable ? null : ref}
       className={classNames(className, `${prefixCls}-row`, {
         [`${prefixCls}-row-extra`]: extra,
       })}
@@ -73,6 +79,17 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       })}
     </div>
   );
+
+  if (expandable) {
+    return (
+      <div ref={ref}>
+        {rowNode}
+        {expandRowNode}
+      </div>
+    );
+  }
+
+  return rowNode;
 });
 
 const ResponseBodyLine = responseImmutable(BodyLine);
