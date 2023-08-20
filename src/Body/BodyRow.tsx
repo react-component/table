@@ -1,8 +1,7 @@
-import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
-import TableContext, { responseImmutable } from '../context/TableContext';
+import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type { ColumnType, CustomizeComponent, GetComponentProps, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
@@ -110,7 +109,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const {
     prefixCls,
     flattenColumns,
-    expandableType,
     expandRowByClick,
     onTriggerExpand,
     rowClassName,
@@ -118,11 +116,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandedRowRender,
 
     // Misc
-    nestExpandable,
     expanded,
+    supportExpand,
+    expandable,
   } = rowInfo;
-
-  const { rowExpandable } = useContext(TableContext, ['rowExpandable']);
 
   const [expandRended, setExpandRended] = React.useState(false);
 
@@ -136,14 +133,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     }
   }, [expanded]);
 
-  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
-  const mergedExpandable = rowSupportExpand || nestExpandable;
-
   // =========================== onRow ===========================
   const additionalProps = onRow?.(record, index);
 
   const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
-    if (expandRowByClick && mergedExpandable) {
+    if (expandRowByClick && expandable) {
       onTriggerExpand(record, event);
     }
 
@@ -212,7 +206,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement;
-  if (rowSupportExpand && (expandRended || expanded)) {
+  if (supportExpand && (expandRended || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
     const computedExpandedRowClassName =
       expandedRowClassName && expandedRowClassName(record, index, indent);

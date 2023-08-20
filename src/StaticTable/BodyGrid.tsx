@@ -50,6 +50,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     () => columnsWidth.map(colWidth => colWidth[2]),
     [columnsWidth],
   );
+  console.log('~~~~>', flattenColumns, columnsWidth);
 
   React.useEffect(() => {
     columnsWidth.forEach(([key, width]) => {

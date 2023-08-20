@@ -34,7 +34,6 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowInfo = useRowInfo(record, rowKey);
 
   // ========================== Expand ==========================
-  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
 
   // ========================== Render ==========================
 

@@ -29,6 +29,8 @@ export default function useRowInfo<RecordType>(
   expanded: boolean;
   hasNestChildren: boolean;
   record: RecordType;
+  supportExpand: boolean;
+  expandable: boolean;
 } {
   const context: TableContextProps = useContext(TableContext, [
     'prefixCls',
@@ -45,21 +47,33 @@ export default function useRowInfo<RecordType>(
     'expandIconColumnIndex',
     'expandedKeys',
     'childrenColumnName',
+    'rowExpandable',
   ]);
 
-  const { flattenColumns, expandableType, expandedKeys, childrenColumnName, onTriggerExpand } =
-    context;
+  const {
+    flattenColumns,
+    expandableType,
+    expandedKeys,
+    childrenColumnName,
+    onTriggerExpand,
+    rowExpandable,
+  } = context;
 
-  const columnsKey = getColumnsKey(flattenColumns);
-
+  // ======================= Expandable =======================
   // Only when row is not expandable and `children` exist in record
   const nestExpandable = expandableType === 'nest';
+
+  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
+  const mergedExpandable = rowSupportExpand || nestExpandable;
 
   const expanded = expandedKeys && expandedKeys.has(rowKey);
 
   const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
 
   const onInternalTriggerExpand = useEvent(onTriggerExpand);
+
+  // ========================= Column =========================
+  const columnsKey = getColumnsKey(flattenColumns);
 
   return {
     ...context,
@@ -69,5 +83,7 @@ export default function useRowInfo<RecordType>(
     hasNestChildren,
     record,
     onTriggerExpand: onInternalTriggerExpand,
+    supportExpand: rowSupportExpand,
+    expandable: mergedExpandable,
   };
 }

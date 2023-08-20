@@ -160,6 +160,15 @@ const columns: ColumnsType = [
   },
 ];
 
+function cleanOnCell(cols: any = []) {
+  cols.forEach(col => {
+    delete (col as any).onCell;
+
+    cleanOnCell((col as any).children);
+  });
+}
+cleanOnCell(columns);
+
 const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   a: `a${index}`,
   b: `b${index}`,
@@ -192,7 +201,10 @@ const Demo = () => {
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
         data={data}
         rowKey="indexKey"
-        expandable={{}}
+        expandable={{
+          expandedRowRender: () => 2333,
+          columnWidth: 60,
+        }}
       />
     </div>
   );
