@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/index.less';
 import type { ColumnsType } from '../../src/interface';
-import Table from '../../src/StaticTable';
+import { VirtualTable } from '../../src';
 
 interface RecordType {
   a: string;
@@ -195,7 +195,7 @@ const Demo = () => {
         <input type="checkbox" checked={scrollY} onChange={() => setScrollY(!scrollY)} />
         Scroll Y
       </label>
-      <Table
+      <VirtualTable
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
