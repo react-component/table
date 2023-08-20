@@ -5,7 +5,6 @@ import type { CustomizeScrollBody } from '../interface';
 import Table, { type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
-import useWidthColumns from './useWidthColumns';
 import { makeImmutable } from '../context/TableContext';
 import { warning } from 'rc-util';
 
@@ -53,7 +52,6 @@ function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
           body: renderBody,
         }}
         columns={columns}
-        // columns={filledWidthColumns}
         internalHooks={INTERNAL_HOOKS}
         tailor
       />
