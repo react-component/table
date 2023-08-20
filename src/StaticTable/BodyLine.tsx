@@ -34,10 +34,10 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowInfo = useRowInfo(record, rowKey);
 
   // ========================== Expand ==========================
-  const { expandable, expanded } = rowInfo;
+  const { supportExpand, expanded } = rowInfo;
 
   let expandRowNode: React.ReactElement;
-  if (expandable && expanded) {
+  if (supportExpand && expanded) {
     expandRowNode = <>233</>;
   }
 
@@ -56,7 +56,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const rowNode = (
     <div
       {...restProps}
-      ref={expandable ? null : ref}
+      ref={supportExpand ? null : ref}
       className={classNames(className, `${prefixCls}-row`, {
         [`${prefixCls}-row-extra`]: extra,
       })}
@@ -80,7 +80,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     </div>
   );
 
-  if (expandable) {
+  if (supportExpand) {
     return (
       <div ref={ref}>
         {rowNode}

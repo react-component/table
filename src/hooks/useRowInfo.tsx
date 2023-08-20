@@ -29,7 +29,7 @@ export default function useRowInfo<RecordType>(
   expanded: boolean;
   hasNestChildren: boolean;
   record: RecordType;
-  supportExpand: boolean;
+  rowSupportExpand: boolean;
   expandable: boolean;
 } {
   const context: TableContextProps = useContext(TableContext, [
@@ -83,7 +83,7 @@ export default function useRowInfo<RecordType>(
     hasNestChildren,
     record,
     onTriggerExpand: onInternalTriggerExpand,
-    supportExpand: rowSupportExpand,
+    rowSupportExpand,
     expandable: mergedExpandable,
   };
 }

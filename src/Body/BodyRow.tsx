@@ -117,7 +117,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
     // Misc
     expanded,
-    supportExpand,
+    rowSupportExpand,
     expandable,
   } = rowInfo;
 
@@ -206,7 +206,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement;
-  if (supportExpand && (expandRended || expanded)) {
+  if (rowSupportExpand && (expandRended || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
     const computedExpandedRowClassName =
       expandedRowClassName && expandedRowClassName(record, index, indent);
