@@ -3,11 +3,13 @@ import type { TableContextProps } from '../context/TableContext';
 import TableContext from '../context/TableContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import { useEvent } from 'rc-util';
+import classNames from 'classnames';
 
 export default function useRowInfo<RecordType>(
   record: RecordType,
   rowKey: React.Key,
   recordIndex: number,
+  indent: number,
 ): Pick<
   TableContextProps,
   | 'prefixCls'
@@ -63,6 +65,7 @@ export default function useRowInfo<RecordType>(
     rowExpandable,
     onRow,
     expandRowByClick,
+    rowClassName,
   } = context;
 
   // ======================= Expandable =======================
@@ -90,6 +93,14 @@ export default function useRowInfo<RecordType>(
     onRowClick?.(event, ...args);
   };
 
+  // ====================== RowClassName ======================
+  let computeRowClassName: string;
+  if (typeof rowClassName === 'string') {
+    computeRowClassName = rowClassName;
+  } else if (typeof rowClassName === 'function') {
+    computeRowClassName = rowClassName(record, recordIndex, indent);
+  }
+
   // ========================= Column =========================
   const columnsKey = getColumnsKey(flattenColumns);
 
@@ -105,6 +116,7 @@ export default function useRowInfo<RecordType>(
     expandable: mergedExpandable,
     rowProps: {
       ...rowProps,
+      className: classNames(computeRowClassName, rowProps?.className),
       onClick,
     },
   };

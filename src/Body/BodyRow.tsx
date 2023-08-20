@@ -103,11 +103,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     cellComponent,
     scopeCellComponent,
   } = props;
-  const rowInfo = useRowInfo(record, rowKey, index);
+  const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
     prefixCls,
     flattenColumns,
-    rowClassName,
     expandedRowClassName,
     expandedRowRender,
     rowProps,
@@ -130,13 +129,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   }, [expanded]);
 
   // ======================== Base tr row ========================
-  let computeRowClassName: string;
-  if (typeof rowClassName === 'string') {
-    computeRowClassName = rowClassName;
-  } else if (typeof rowClassName === 'function') {
-    computeRowClassName = rowClassName(record, index, indent);
-  }
-
   const baseRowNode = (
     <RowComponent
       {...rowProps}
@@ -145,7 +137,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
-        computeRowClassName,
         rowProps?.className,
       )}
       style={{

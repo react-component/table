@@ -31,10 +31,10 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   ]);
   const { scrollX } = useContext(StaticContext, ['scrollX']);
 
-  const rowInfo = useRowInfo(record, rowKey, index);
+  const rowInfo = useRowInfo(record, rowKey, index, indent);
 
   // ========================== Expand ==========================
-  const { rowSupportExpand, expanded } = rowInfo;
+  const { rowSupportExpand, expanded, rowProps } = rowInfo;
 
   let expandRowNode: React.ReactElement;
   if (rowSupportExpand && expanded) {
@@ -55,12 +55,13 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
 
   const rowNode = (
     <div
+      {...rowProps}
       {...restProps}
       ref={rowSupportExpand ? null : ref}
-      className={classNames(className, `${prefixCls}-row`, {
+      className={classNames(className, `${prefixCls}-row`, rowProps?.className, {
         [`${prefixCls}-row-extra`]: extra,
       })}
-      style={rowStyle}
+      style={{ ...rowStyle, ...rowProps?.style }}
     >
       {flattenColumns.map((column, colIndex) => {
         return (
