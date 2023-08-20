@@ -5,7 +5,6 @@ import PerfContext from '../context/PerfContext';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { GetComponentProps } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
@@ -14,7 +13,6 @@ import MeasureRow from './MeasureRow';
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
-  onRow: GetComponentProps<RecordType>;
   emptyNode: React.ReactNode;
 }
 
@@ -23,7 +21,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const { data, measureColumnWidth, onRow, emptyNode } = props;
+  const { data, measureColumnWidth, emptyNode } = props;
 
   const {
     prefixCls,
@@ -74,7 +72,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           rowComponent={trComponent}
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
-          onRow={onRow}
           getRowKey={getRowKey}
           indent={indent}
         />

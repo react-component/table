@@ -6,6 +6,7 @@ import type {
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
+  GetComponentProps,
   GetRowKey,
   RenderExpandIcon,
   RowClassName,
@@ -34,6 +35,7 @@ export interface TableContextProps<RecordType = any> {
   // Body
   rowClassName: string | RowClassName<RecordType>;
   expandedRowClassName: RowClassName<RecordType>;
+  onRow?: GetComponentProps<RecordType>;
 
   tableLayout: TableLayout;
 

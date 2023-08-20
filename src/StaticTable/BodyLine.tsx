@@ -31,7 +31,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   ]);
   const { scrollX } = useContext(StaticContext, ['scrollX']);
 
-  const rowInfo = useRowInfo(record, rowKey);
+  const rowInfo = useRowInfo(record, rowKey, index);
 
   // ========================== Expand ==========================
   const { rowSupportExpand, expanded } = rowInfo;

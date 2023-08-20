@@ -7,6 +7,7 @@ import { useEvent } from 'rc-util';
 export default function useRowInfo<RecordType>(
   record: RecordType,
   rowKey: React.Key,
+  recordIndex: number,
 ): Pick<
   TableContextProps,
   | 'prefixCls'
@@ -23,6 +24,7 @@ export default function useRowInfo<RecordType>(
   | 'expandIconColumnIndex'
   | 'expandedKeys'
   | 'childrenColumnName'
+  | 'onRow'
 > & {
   columnsKey: React.Key[];
   nestExpandable: boolean;
@@ -31,6 +33,7 @@ export default function useRowInfo<RecordType>(
   record: RecordType;
   rowSupportExpand: boolean;
   expandable: boolean;
+  rowProps: React.HTMLAttributes<any> & React.TdHTMLAttributes<any>;
 } {
   const context: TableContextProps = useContext(TableContext, [
     'prefixCls',
@@ -48,6 +51,7 @@ export default function useRowInfo<RecordType>(
     'expandedKeys',
     'childrenColumnName',
     'rowExpandable',
+    'onRow',
   ]);
 
   const {
@@ -57,6 +61,8 @@ export default function useRowInfo<RecordType>(
     childrenColumnName,
     onTriggerExpand,
     rowExpandable,
+    onRow,
+    expandRowByClick,
   } = context;
 
   // ======================= Expandable =======================
@@ -72,6 +78,18 @@ export default function useRowInfo<RecordType>(
 
   const onInternalTriggerExpand = useEvent(onTriggerExpand);
 
+  // ========================= onRow ==========================
+  const rowProps = onRow?.(record, recordIndex);
+  const onRowClick = rowProps?.onClick;
+
+  const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
+    if (expandRowByClick && mergedExpandable) {
+      onTriggerExpand(record, event);
+    }
+
+    onRowClick?.(event, ...args);
+  };
+
   // ========================= Column =========================
   const columnsKey = getColumnsKey(flattenColumns);
 
@@ -85,5 +103,9 @@ export default function useRowInfo<RecordType>(
     onTriggerExpand: onInternalTriggerExpand,
     rowSupportExpand,
     expandable: mergedExpandable,
+    rowProps: {
+      ...rowProps,
+      onClick,
+    },
   };
 }

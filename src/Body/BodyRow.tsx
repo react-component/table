@@ -3,7 +3,7 @@ import * as React from 'react';
 import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnType, CustomizeComponent, GetComponentProps, GetRowKey } from '../interface';
+import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import useRowInfo from '../hooks/useRowInfo';
 
@@ -16,7 +16,6 @@ export interface BodyRowProps<RecordType> {
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
   scopeCellComponent: CustomizeComponent;
-  onRow: GetComponentProps<RecordType>;
   indent?: number;
   rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
@@ -99,26 +98,23 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     index,
     renderIndex,
     rowKey,
-    onRow,
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
   } = props;
-  const rowInfo = useRowInfo(record, rowKey);
+  const rowInfo = useRowInfo(record, rowKey, index);
   const {
     prefixCls,
     flattenColumns,
-    expandRowByClick,
-    onTriggerExpand,
     rowClassName,
     expandedRowClassName,
     expandedRowRender,
+    rowProps,
 
     // Misc
     expanded,
     rowSupportExpand,
-    expandable,
   } = rowInfo;
 
   const [expandRended, setExpandRended] = React.useState(false);
@@ -133,17 +129,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     }
   }, [expanded]);
 
-  // =========================== onRow ===========================
-  const additionalProps = onRow?.(record, index);
-
-  const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
-    if (expandRowByClick && expandable) {
-      onTriggerExpand(record, event);
-    }
-
-    additionalProps?.onClick?.(event, ...args);
-  };
-
   // ======================== Base tr row ========================
   let computeRowClassName: string;
   if (typeof rowClassName === 'string') {
@@ -154,20 +139,19 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   const baseRowNode = (
     <RowComponent
-      {...additionalProps}
+      {...rowProps}
       data-row-key={rowKey}
       className={classNames(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         computeRowClassName,
-        additionalProps && additionalProps.className,
+        rowProps?.className,
       )}
       style={{
         ...style,
-        ...(additionalProps ? additionalProps.style : null),
+        ...rowProps?.style,
       }}
-      onClick={onClick}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;

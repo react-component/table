@@ -537,7 +537,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     <Body
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll || isSticky}
-      onRow={onRow}
       emptyNode={emptyNode}
     />
   );
@@ -748,7 +747,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       horizonScroll,
 
       // Body
-
       tableLayout: mergedTableLayout,
       rowClassName,
       expandedRowClassName: expandableConfig.expandedRowClassName,
@@ -771,6 +769,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       hoverEndRow: endRow,
       onHover,
       rowExpandable: expandableConfig.rowExpandable,
+      onRow,
 
       getRowKey,
       expandedKeys: mergedExpandedKeys,
@@ -813,6 +812,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       endRow,
       onHover,
       expandableConfig.rowExpandable,
+      onRow,
 
       getRowKey,
       mergedExpandedKeys,
