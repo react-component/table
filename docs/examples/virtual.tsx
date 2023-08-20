@@ -205,6 +205,7 @@ const Demo = () => {
           expandedRowRender: () => 2333,
           columnWidth: 60,
         }}
+        onRow={() => ({ className: 'rowed' })}
       />
     </div>
   );
