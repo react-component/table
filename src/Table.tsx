@@ -535,7 +535,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     <Body
       data={mergedData}
       measureColumnWidth={fixHeader || horizonScroll || isSticky}
-      rowExpandable={expandableConfig.rowExpandable}
       onRow={onRow}
       emptyNode={emptyNode}
     />
@@ -769,6 +768,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       hoverStartRow: startRow,
       hoverEndRow: endRow,
       onHover,
+      rowExpandable: expandableConfig.rowExpandable,
 
       getRowKey,
       expandedKeys: mergedExpandedKeys,
@@ -810,6 +810,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       startRow,
       endRow,
       onHover,
+      expandableConfig.rowExpandable,
 
       getRowKey,
       mergedExpandedKeys,

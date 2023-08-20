@@ -15,7 +15,6 @@ export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
   onRow: GetComponentProps<RecordType>;
-  rowExpandable: (record: RecordType) => boolean;
   emptyNode: React.ReactNode;
 }
 
@@ -24,7 +23,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const { data, measureColumnWidth, onRow, rowExpandable, emptyNode } = props;
+  const { data, measureColumnWidth, onRow, emptyNode } = props;
 
   const {
     prefixCls,
@@ -77,7 +76,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           scopeCellComponent={thComponent}
           onRow={onRow}
           getRowKey={getRowKey}
-          rowExpandable={rowExpandable}
           indent={indent}
         />
       );

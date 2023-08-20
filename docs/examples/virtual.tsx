@@ -192,6 +192,7 @@ const Demo = () => {
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
         data={data}
         rowKey="indexKey"
+        expandable={{}}
       />
     </div>
   );

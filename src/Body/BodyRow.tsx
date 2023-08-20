@@ -1,13 +1,12 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import { useEvent } from 'rc-util';
 import * as React from 'react';
 import Cell from '../Cell';
-import TableContext, { responseImmutable, type TableContextProps } from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type { ColumnType, CustomizeComponent, GetComponentProps, GetRowKey } from '../interface';
-import { getColumnsKey } from '../utils/valueUtil';
 import ExpandedRow from './ExpandedRow';
+import useRowInfo from '../hooks/useRowInfo';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -19,80 +18,14 @@ export interface BodyRowProps<RecordType> {
   cellComponent: CustomizeComponent;
   scopeCellComponent: CustomizeComponent;
   onRow: GetComponentProps<RecordType>;
-  rowExpandable: (record: RecordType) => boolean;
   indent?: number;
   rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
 }
 
-export function useRowInfo<RecordType>(
-  record: RecordType,
-  rowKey: React.Key,
-): Pick<
-  TableContextProps,
-  | 'prefixCls'
-  | 'fixedInfoList'
-  | 'flattenColumns'
-  | 'expandableType'
-  | 'expandRowByClick'
-  | 'onTriggerExpand'
-  | 'rowClassName'
-  | 'expandedRowClassName'
-  | 'indentSize'
-  | 'expandIcon'
-  | 'expandedRowRender'
-  | 'expandIconColumnIndex'
-  | 'expandedKeys'
-  | 'childrenColumnName'
-> & {
-  columnsKey: React.Key[];
-  nestExpandable: boolean;
-  expanded: boolean;
-  hasNestChildren: boolean;
-  record: RecordType;
-} {
-  const context: TableContextProps = useContext(TableContext, [
-    'prefixCls',
-    'fixedInfoList',
-    'flattenColumns',
-    'expandableType',
-    'expandRowByClick',
-    'onTriggerExpand',
-    'rowClassName',
-    'expandedRowClassName',
-    'indentSize',
-    'expandIcon',
-    'expandedRowRender',
-    'expandIconColumnIndex',
-    'expandedKeys',
-    'childrenColumnName',
-  ]);
-
-  const { flattenColumns, expandableType, expandedKeys, childrenColumnName, onTriggerExpand } =
-    context;
-
-  const columnsKey = getColumnsKey(flattenColumns);
-
-  // Only when row is not expandable and `children` exist in record
-  const nestExpandable = expandableType === 'nest';
-
-  const expanded = expandedKeys && expandedKeys.has(rowKey);
-
-  const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
-
-  const onInternalTriggerExpand = useEvent(onTriggerExpand);
-
-  return {
-    ...context,
-    columnsKey,
-    nestExpandable,
-    expanded,
-    hasNestChildren,
-    record,
-    onTriggerExpand: onInternalTriggerExpand,
-  };
-}
-
+// ==================================================================================
+// ==                                 getCellProps                                 ==
+// ==================================================================================
 export function getCellProps<RecordType>(
   rowInfo: ReturnType<typeof useRowInfo<RecordType>>,
   column: ColumnType<RecordType>,
@@ -150,6 +83,9 @@ export function getCellProps<RecordType>(
   };
 }
 
+// ==================================================================================
+// ==                                 getCellProps                                 ==
+// ==================================================================================
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
@@ -164,7 +100,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     index,
     renderIndex,
     rowKey,
-    rowExpandable,
     onRow,
     indent = 0,
     rowComponent: RowComponent,
@@ -186,6 +121,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     nestExpandable,
     expanded,
   } = rowInfo;
+
+  const { rowExpandable } = useContext(TableContext, ['rowExpandable']);
 
   const [expandRended, setExpandRended] = React.useState(false);
 

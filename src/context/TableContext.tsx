@@ -55,6 +55,7 @@ export interface TableContextProps<RecordType = any> {
   hoverStartRow: number;
   hoverEndRow: number;
   onHover: (start: number, end: number) => void;
+  rowExpandable: (record: RecordType) => boolean;
 
   expandedKeys: Set<React.Key>;
   getRowKey: GetRowKey<RecordType>;

@@ -1,11 +1,11 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
-import { useRowInfo } from '../Body/BodyRow';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import type { FlattenData } from '../hooks/useFlattenRecords';
 import { StaticContext } from './context';
 import VirtualCell from './VirtualCell';
+import useRowInfo from '../hooks/useRowInfo';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -23,10 +23,18 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent } = data;
 
-  const { flattenColumns, prefixCls } = useContext(TableContext);
+  const { flattenColumns, prefixCls, expandableType, rowExpandable } = useContext(TableContext, [
+    'prefixCls',
+    'flattenColumns',
+    'expandableType',
+    'rowExpandable',
+  ]);
   const { scrollX } = useContext(StaticContext, ['scrollX']);
 
   const rowInfo = useRowInfo(record, rowKey);
+
+  // ========================== Expand ==========================
+  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
 
   // ========================== Render ==========================
 
