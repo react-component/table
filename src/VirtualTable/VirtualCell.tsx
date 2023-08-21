@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { getCellProps, type useRowInfo } from '../Body/BodyRow';
+import { getCellProps } from '../Body/BodyRow';
 import Cell from '../Cell';
 import type { ColumnType } from '../interface';
 import classNames from 'classnames';
 import { useContext } from '@rc-component/context';
 import { GridContext } from './context';
+import type useRowInfo from '../hooks/useRowInfo';
 
 export interface VirtualCellProps<RecordType extends { index: number }> {
   rowInfo: ReturnType<typeof useRowInfo>;
@@ -88,6 +89,14 @@ function VirtualCell<RecordType extends { index: number } = any>(
   const mergedRender = needHide ? () => null : render;
 
   // ========================== Render ==========================
+  const cellSpan: React.TdHTMLAttributes<HTMLElement> = {};
+
+  // Virtual should reset `colSpan` & `rowSpan`
+  if (rowSpan === 0 || colSpan === 0) {
+    cellSpan.rowSpan = 1;
+    cellSpan.colSpan = 1;
+  }
+
   return (
     <Cell
       className={classNames(columnClassName, className)}
@@ -108,10 +117,7 @@ function VirtualCell<RecordType extends { index: number } = any>(
       additionalProps={{
         ...additionalCellProps,
         style: mergedStyle,
-
-        // Virtual should reset `colSpan` & `rowSpan`
-        rowSpan: 1,
-        colSpan: 1,
+        ...cellSpan,
       }}
     />
   );

@@ -160,14 +160,14 @@ const columns: ColumnsType = [
   },
 ];
 
-function cleanOnCell(cols: any = []) {
+export function cleanOnCell(cols: any = []) {
   cols.forEach(col => {
     delete (col as any).onCell;
 
     cleanOnCell((col as any).children);
   });
 }
-cleanOnCell(columns);
+// cleanOnCell(columns);
 
 const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   a: `a${index}`,
@@ -201,11 +201,11 @@ const Demo = () => {
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
         data={data}
         rowKey="indexKey"
-        expandable={{
-          expandedRowRender: () => 2333,
-          columnWidth: 60,
-          expandedRowClassName: () => 'good-one',
-        }}
+        // expandable={{
+        //   expandedRowRender: () => 2333,
+        //   columnWidth: 60,
+        //   expandedRowClassName: () => 'good-one',
+        // }}
         // onRow={() => ({ className: 'rowed' })}
         rowClassName="nice-try"
       />
