@@ -13,7 +13,6 @@ import MeasureRow from './MeasureRow';
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
-  emptyNode: React.ReactNode;
 }
 
 function Body<RecordType>(props: BodyProps<RecordType>) {
@@ -21,7 +20,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const { data, measureColumnWidth, emptyNode } = props;
+  const { data, measureColumnWidth } = props;
 
   const {
     prefixCls,
@@ -31,6 +30,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     getRowKey,
     expandedKeys,
     childrenColumnName,
+    emptyNode,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -39,6 +39,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'getRowKey',
     'expandedKeys',
     'childrenColumnName',
+    'emptyNode',
   ]);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =

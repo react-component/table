@@ -36,6 +36,7 @@ export interface TableContextProps<RecordType = any> {
   rowClassName: string | RowClassName<RecordType>;
   expandedRowClassName: RowClassName<RecordType>;
   onRow?: GetComponentProps<RecordType>;
+  emptyNode?: React.ReactNode;
 
   tableLayout: TableLayout;
 

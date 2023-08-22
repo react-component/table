@@ -536,11 +536,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   // Body
   const bodyTable = (
-    <Body
-      data={mergedData}
-      measureColumnWidth={fixHeader || horizonScroll || isSticky}
-      emptyNode={emptyNode}
-    />
+    <Body data={mergedData} measureColumnWidth={fixHeader || horizonScroll || isSticky} />
   );
 
   const bodyColGroup = (
@@ -760,6 +756,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
+      emptyNode,
 
       // Column
       columns,
@@ -803,6 +800,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
       expandableConfig.indentSize,
+      emptyNode,
 
       // Column
       columns,

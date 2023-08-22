@@ -199,8 +199,8 @@ const Demo = () => {
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1200, y: scrollY ? 200 : null }}
-        // data={data}
-        data={[]}
+        data={data}
+        // data={[]}
         rowKey="indexKey"
         expandable={{
           expandedRowRender: () => 2333,
