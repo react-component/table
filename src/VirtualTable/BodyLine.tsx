@@ -6,6 +6,7 @@ import type { FlattenData } from '../hooks/useFlattenRecords';
 import { StaticContext } from './context';
 import VirtualCell from './VirtualCell';
 import useRowInfo from '../hooks/useRowInfo';
+import Cell from '../Cell';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -23,11 +24,11 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent } = data;
 
-  const { flattenColumns, prefixCls } = useContext(TableContext, [
+  const { flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(TableContext, [
     'prefixCls',
     'flattenColumns',
-    'expandableType',
-    'rowExpandable',
+    'fixColumn',
+    'componentWidth',
   ]);
   const { scrollX } = useContext(StaticContext, ['scrollX']);
 
@@ -41,6 +42,20 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
     const computedExpandedRowClassName = expandedRowClassName?.(record, index, indent);
 
+    let additionalProps: React.TdHTMLAttributes<HTMLElement> = {};
+    if (fixColumn) {
+      additionalProps = {
+        style: {
+          position: 'sticky',
+          left: 0,
+          overflow: 'hidden',
+          ['--virtual-width' as any]: `${componentWidth}px`,
+        },
+      };
+    }
+
+    const rowCellCls = `${prefixCls}-expanded-row-cell`;
+
     expandRowNode = (
       <div
         className={classNames(
@@ -49,7 +64,16 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
           computedExpandedRowClassName,
         )}
       >
-        {expandContent}
+        <Cell
+          component="div"
+          prefixCls={prefixCls}
+          className={classNames(rowCellCls, {
+            [`${rowCellCls}-fixed`]: fixColumn,
+          })}
+          additionalProps={additionalProps}
+        >
+          {expandContent}
+        </Cell>
       </div>
     );
   }
