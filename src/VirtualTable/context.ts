@@ -3,6 +3,7 @@ import { createContext } from '@rc-component/context';
 export interface StaticContextProps {
   scrollX: number;
   scrollY: number;
+  listItemHeight: number;
 }
 
 export const StaticContext = createContext<StaticContextProps>(null);

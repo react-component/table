@@ -15,17 +15,18 @@ const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   return <Grid ref={ref} data={rawData as any} onScroll={onScroll} />;
 };
 
-export interface StaticTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {
+export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {
   scroll: {
     x: number;
     y: number;
   };
+  listItemHeight?: number;
 }
 
 const PRESET_COLUMN_WIDTH = 100;
 
-function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
-  const { columns, scroll, prefixCls = DEFAULT_PREFIX, className } = props;
+function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
+  const { columns, scroll, prefixCls = DEFAULT_PREFIX, className, listItemHeight } = props;
 
   const { x: scrollX, y: scrollY } = scroll || {};
   let mergedScrollX = scrollX;
@@ -40,9 +41,15 @@ function VirtualTable<RecordType>(props: StaticTableProps<RecordType>) {
     }
   }
 
+  // ========================= Context ==========================
+  const context = React.useMemo(
+    () => ({ scrollX: mergedScrollX, scrollY, listItemHeight }),
+    [mergedScrollX, scrollY, listItemHeight],
+  );
+
   // ========================== Render ==========================
   return (
-    <StaticContext.Provider value={{ scrollX: mergedScrollX, scrollY }}>
+    <StaticContext.Provider value={context}>
       <Table
         {...props}
         className={classNames(className, `${prefixCls}-virtual`)}

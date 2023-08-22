@@ -29,7 +29,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       'expandedKeys',
       'childrenColumnName',
     ]);
-  const { scrollY, scrollX } = useContext(StaticContext);
+  const { scrollY, scrollX, listItemHeight } = useContext(StaticContext);
 
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
@@ -182,7 +182,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           ref={listRef}
           className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
           height={scrollY}
-          itemHeight={24}
+          itemHeight={listItemHeight || 24}
           data={flattenData}
           itemKey={item => getRowKey(item.record)}
           scrollWidth={scrollX}
