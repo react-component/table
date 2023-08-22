@@ -89,6 +89,11 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   const extraRender: ListProps<any>['extraRender'] = info => {
     const { start, end, getSize, offsetY } = info;
 
+    // Do nothing if no data
+    if (end < 0) {
+      return null;
+    }
+
     // Find first rowSpan column
     let firstRowSpanColumns = flattenColumns.filter(
       // rowSpan is 0

@@ -46,9 +46,6 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     if (fixColumn) {
       additionalProps = {
         style: {
-          position: 'sticky',
-          left: 0,
-          overflow: 'hidden',
           ['--virtual-width' as any]: `${componentWidth}px`,
         },
       };
