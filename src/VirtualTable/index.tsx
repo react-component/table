@@ -28,23 +28,30 @@ const PRESET_COLUMN_WIDTH = 100;
 function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
   const { columns, scroll, prefixCls = DEFAULT_PREFIX, className, listItemHeight } = props;
 
-  const { x: scrollX, y: scrollY } = scroll || {};
-  let mergedScrollX = scrollX;
+  let { x: scrollX, y: scrollY } = scroll || {};
 
-  // Fill all column with width
-  // const filledWidthColumns = useWidthColumns(columns, scrollX);
+  // Fill scrollX
   if (typeof scrollX !== 'number') {
-    mergedScrollX = ((columns || []).length + 1) * PRESET_COLUMN_WIDTH;
+    scrollX = ((columns || []).length + 1) * PRESET_COLUMN_WIDTH;
 
     if (process.env.NODE_ENV !== 'production') {
       warning(false, '`scroll.x` in virtual table must be number.');
     }
   }
 
+  // Fill scrollY
+  if (typeof scrollY !== 'number') {
+    scrollY = 500;
+
+    if (process.env.NODE_ENV !== 'production') {
+      warning(false, '`scroll.y` in virtual table must be number.');
+    }
+  }
+
   // ========================= Context ==========================
   const context = React.useMemo(
-    () => ({ scrollX: mergedScrollX, scrollY, listItemHeight }),
-    [mergedScrollX, scrollY, listItemHeight],
+    () => ({ scrollX, scrollY, listItemHeight }),
+    [scrollX, scrollY, listItemHeight],
   );
 
   // ========================== Render ==========================
@@ -55,7 +62,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
         className={classNames(className, `${prefixCls}-virtual`)}
         scroll={{
           ...scroll,
-          x: mergedScrollX,
+          x: scrollX,
         }}
         components={{
           body: renderBody,

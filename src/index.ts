@@ -1,6 +1,7 @@
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
 import { FooterComponents as Summary } from './Footer';
 import VirtualTable, { genVirtualTable } from './VirtualTable';
+import type { VirtualTableProps } from './VirtualTable';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import type { TableProps } from './Table';
@@ -18,6 +19,7 @@ export {
   INTERNAL_HOOKS,
   VirtualTable,
   genVirtualTable,
+  type VirtualTableProps,
 };
 
 export default Table;

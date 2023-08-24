@@ -140,6 +140,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
     for (let i = startIndex; i <= endIndex; i += 1) {
       const item = flattenData[i];
+
+      // This code will never reach, just incase
       if (!item) {
         continue;
       }
