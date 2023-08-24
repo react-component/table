@@ -12,6 +12,7 @@ import type {
   DefaultRecordType,
   ScopeType,
 } from '../interface';
+import CustomCell from './CustomCell';
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
 
@@ -235,24 +236,26 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
 
   return (
-    <Component
-      {...legacyCellProps}
-      {...additionalProps}
-      className={mergedClassName}
-      style={mergedStyle}
-      // A11y
-      title={title}
-      scope={scope}
-      // Hover
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      //Span
-      colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
-      rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
-    >
-      {appendNode}
-      {mergedChildNode}
-    </Component>
+    <CustomCell shouldCellUpdate={shouldCellUpdate} record={record}>
+      <Component
+        {...legacyCellProps}
+        {...additionalProps}
+        className={mergedClassName}
+        style={mergedStyle}
+        // A11y
+        title={title}
+        scope={scope}
+        // Hover
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        //Span
+        colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
+        rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
+      >
+        {appendNode}
+        {mergedChildNode}
+      </Component>
+    </CustomCell>
   );
 }
 

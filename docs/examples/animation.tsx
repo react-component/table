@@ -1,7 +1,7 @@
 import Table from 'rc-table';
 import React, { useState } from 'react';
 
-const EditableCell: React.FC<any> = ({ children, onOpen, _key, ...rest }) => {
+const EditableCell: React.FC<any> = ({ children, onOpen, _key, shouldCellUpdate, ...rest }) => {
   console.log(111, _key);
   return (
     <td {...rest} onClick={() => onOpen(true)}>
@@ -9,18 +9,34 @@ const EditableCell: React.FC<any> = ({ children, onOpen, _key, ...rest }) => {
     </td>
   );
 };
-export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
-  children?: React.ReactNode;
-  open?: boolean;
-  onOpen: (open?: boolean) => void;
-}
+// 测试
+// const Demo = (props: any) => {
+//   const { children, shouldCellUpdate } = props;
+//   const dom = useMemo(
+//     () => <EditableCell {...props}>{children}</EditableCell>,
+//     [children, props],
+//     () => shouldCellUpdate(),
+//   );
+
+//   return <React.Fragment>{dom}</React.Fragment>;
+// };
+// 普通
+const Demo = (props: any) => {
+  const { children } = props;
+
+  return (
+    <React.Fragment>
+      <EditableCell {...props}>{children}</EditableCell>
+    </React.Fragment>
+  );
+};
 
 const App: React.FC = () => {
   const [editKey, setEditKey] = useState('');
   return (
     <div>
       <Table
-        components={{ body: { cell: EditableCell } }}
+        components={{ body: { cell: Demo } }}
         data={[
           { key: '0', name: 'Edward King 0' },
           { key: '1', name: 'Edward King 1' },
@@ -28,8 +44,8 @@ const App: React.FC = () => {
         ]}
         columns={[
           {
-            title: 'name',
             dataIndex: 'name',
+            shouldCellUpdate: () => false,
             onCell: record => {
               const thisKey = `${record.key}`;
               return {
@@ -38,12 +54,12 @@ const App: React.FC = () => {
                   setEditKey(thisKey);
                 },
                 open: editKey === thisKey,
+                // shouldCellUpdate: () => false,
               } as any;
             },
-            shouldCellUpdate: () => false,
           },
         ]}
-      />
+      />{' '}
     </div>
   );
 };
