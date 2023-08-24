@@ -13,9 +13,9 @@ const CustomCell = (props: {
     () => children,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [children, record],
-    (prev, next) => shouldCellUpdate(prev, next),
+    (prev, next) => shouldCellUpdate?.(prev, next),
   );
-
+  console.log('shouldCellUpdate', shouldCellUpdate);
   return <>{shouldCellUpdate ? dom : children}</>;
 };
 
