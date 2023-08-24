@@ -15,7 +15,6 @@ const CustomCell = (props: {
     [children, record],
     (prev, next) => shouldCellUpdate?.(prev, next),
   );
-  console.log('shouldCellUpdate', shouldCellUpdate);
   return <>{shouldCellUpdate ? dom : children}</>;
 };
 
