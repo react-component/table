@@ -1,7 +1,7 @@
 import toArray from 'rc-util/lib/Children/toArray';
 import warning from 'rc-util/lib/warning';
 import * as React from 'react';
-import { EXPAND_COLUMN } from '../constant';
+import { EXPAND_COLUMN } from '../../constant';
 import type {
   ColumnGroupType,
   ColumnsType,
@@ -12,8 +12,9 @@ import type {
   Key,
   RenderExpandIcon,
   TriggerEventHandler,
-} from '../interface';
-import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
+} from '../../interface';
+import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
+import useWidthColumns from './useWidthColumns';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -35,19 +36,23 @@ export function convertChildrenToColumns<RecordType>(
     });
 }
 
-function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
+function flatColumns<RecordType>(
+  columns: ColumnsType<RecordType>,
+  parentKey = 'key',
+): ColumnType<RecordType>[] {
   return columns
     .filter(column => column && typeof column === 'object')
-    .reduce((list, column) => {
+    .reduce((list, column, index) => {
       const { fixed } = column;
       // Convert `fixed='true'` to `fixed='left'` instead
       const parsedFixed = fixed === true ? 'left' : fixed;
+      const mergedKey = `${parentKey}-${index}`;
 
       const subColumns = (column as ColumnGroupType<RecordType>).children;
       if (subColumns && subColumns.length > 0) {
         return [
           ...list,
-          ...flatColumns(subColumns).map(subColum => ({
+          ...flatColumns(subColumns, mergedKey).map(subColum => ({
             fixed: parsedFixed,
             ...subColum,
           })),
@@ -56,6 +61,7 @@ function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<R
       return [
         ...list,
         {
+          key: mergedKey,
           ...column,
           fixed: parsedFixed,
         },
@@ -125,6 +131,7 @@ function useColumns<RecordType>(
     expandRowByClick,
     columnWidth,
     fixed,
+    scrollWidth,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -141,6 +148,7 @@ function useColumns<RecordType>(
     expandRowByClick?: boolean;
     columnWidth?: number | string;
     fixed?: FixedType;
+    scrollWidth?: number;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
@@ -258,12 +266,17 @@ function useColumns<RecordType>(
       return revertForRtl(flatColumns(mergedColumns));
     }
     return flatColumns(mergedColumns);
-  }, [mergedColumns, direction]);
+  }, [mergedColumns, direction, scrollWidth]);
+
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(direction === 'rtl' ? flattenColumns.slice().reverse() : flattenColumns);
   }
-  return [mergedColumns, flattenColumns];
+
+  // ========================= FillWidth ========================
+  const filledColumns = useWidthColumns(flattenColumns, scrollWidth);
+
+  return [mergedColumns, filledColumns];
 }
 
 export default useColumns;

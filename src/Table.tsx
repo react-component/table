@@ -24,7 +24,6 @@
  *  - All expanded props, move into expandable
  */
 
-import { makeImmutable } from '@rc-component/context';
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
@@ -39,7 +38,7 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
-import TableContext from './context/TableContext';
+import TableContext, { makeImmutable } from './context/TableContext';
 import type { FixedHeaderProps } from './FixedHolder';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -75,6 +74,8 @@ import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
+
+export const DEFAULT_PREFIX = 'rc-table';
 
 // Used for conditions cache
 const EMPTY_DATA = [];
@@ -138,6 +139,15 @@ export interface TableProps<RecordType = unknown>
    *
    * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
    */
+  // Force trade scrollbar as 0 size.
+  // Force column to be average width if not set
+  tailor?: boolean;
+
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
@@ -152,7 +162,7 @@ function defaultEmpty() {
 function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
   const props = {
     rowKey: 'key',
-    prefixCls: 'rc-table',
+    prefixCls: DEFAULT_PREFIX,
     emptyText: defaultEmpty,
     ...tableProps,
   };
@@ -186,12 +196,15 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     internalHooks,
     transformColumns,
     internalRefs,
+    tailor,
 
     sticky,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
   const hasData = !!mergedData.length;
+
+  const useInternalHooks = internalHooks === INTERNAL_HOOKS;
 
   // ===================== Warning ======================
   if (process.env.NODE_ENV !== 'production') {
@@ -235,6 +248,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     };
   }, [rowKey]);
 
+  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
+
   // ====================== Hover =======================
   const [startRow, endRow, onHover] = useHover();
 
@@ -264,8 +279,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
+      scrollWidth: useInternalHooks && tailor && typeof scroll?.x === 'number' ? scroll.x : null,
     },
-    internalHooks === INTERNAL_HOOKS ? transformColumns : null,
+    useInternalHooks ? transformColumns : null,
   );
 
   const columnContext = React.useMemo(
@@ -384,8 +400,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
         forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
 
-      if (currentTarget) {
-        const { scrollWidth, clientWidth } = currentTarget;
+      const measureTarget = currentTarget || scrollHeaderRef.current;
+      if (measureTarget) {
+        const { scrollWidth, clientWidth } = measureTarget;
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
@@ -437,17 +454,19 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
-    if (scrollBodyRef.current instanceof Element) {
-      setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
-    } else {
-      setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
+    if (!tailor || !useInternalHooks) {
+      if (scrollBodyRef.current instanceof Element) {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+      } else {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
+      }
     }
     setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
-    if (internalHooks === INTERNAL_HOOKS && internalRefs) {
+    if (useInternalHooks && internalRefs) {
       internalRefs.body.current = scrollBodyRef.current;
     }
   });
@@ -517,16 +536,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   // Body
   const bodyTable = (
-    <Body
-      data={mergedData}
-      measureColumnWidth={fixHeader || horizonScroll || isSticky}
-      expandedKeys={mergedExpandedKeys}
-      rowExpandable={expandableConfig.rowExpandable}
-      getRowKey={getRowKey}
-      onRow={onRow}
-      emptyNode={emptyNode}
-      childrenColumnName={mergedChildrenColumnName}
-    />
+    <Body data={mergedData} measureColumnWidth={fixHeader || horizonScroll || isSticky} />
   );
 
   const bodyColGroup = (
@@ -537,17 +547,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     caption !== null && caption !== undefined ? (
       <caption className={`${prefixCls}-caption`}>{caption}</caption>
     ) : undefined;
-
-  const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
-
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    typeof customizeScrollBody === 'function' &&
-    hasData &&
-    !fixHeader
-  ) {
-    warning(false, '`components.body` with render props is only work on `scroll.y`.');
-  }
 
   const dataProps = pickAttrs(props, { data: true });
   const ariaProps = pickAttrs(props, { aria: true });
@@ -564,7 +563,8 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       });
 
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
-        const colWidth = index === flattenColumns.length - 1 ? (width as number) - scrollbarSize : width;
+        const colWidth =
+          index === flattenColumns.length - 1 ? (width as number) - scrollbarSize : width;
         if (typeof colWidth === 'number' && !Number.isNaN(colWidth)) {
           return colWidth;
         }
@@ -745,7 +745,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       horizonScroll,
 
       // Body
-
       tableLayout: mergedTableLayout,
       rowClassName,
       expandedRowClassName: expandableConfig.expandedRowClassName,
@@ -757,6 +756,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
+      emptyNode,
 
       // Column
       columns,
@@ -767,6 +767,12 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       hoverStartRow: startRow,
       hoverEndRow: endRow,
       onHover,
+      rowExpandable: expandableConfig.rowExpandable,
+      onRow,
+
+      getRowKey,
+      expandedKeys: mergedExpandedKeys,
+      childrenColumnName: mergedChildrenColumnName,
     }),
     [
       // Table
@@ -794,6 +800,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
       expandableConfig.indentSize,
+      emptyNode,
 
       // Column
       columns,
@@ -804,6 +811,12 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       startRow,
       endRow,
       onHover,
+      expandableConfig.rowExpandable,
+      onRow,
+
+      getRowKey,
+      mergedExpandedKeys,
+      mergedChildrenColumnName,
     ],
   );
 

@@ -1,4 +1,4 @@
-import { createContext } from '@rc-component/context';
+import { createContext, createImmutable } from '@rc-component/context';
 import type {
   ColumnsType,
   ColumnType,
@@ -6,12 +6,17 @@ import type {
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
+  GetComponentProps,
+  GetRowKey,
   RenderExpandIcon,
   RowClassName,
   TableLayout,
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
+
+const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
+export { makeImmutable, responseImmutable, useImmutableMark };
 
 export interface TableContextProps<RecordType = any> {
   // Table
@@ -30,6 +35,8 @@ export interface TableContextProps<RecordType = any> {
   // Body
   rowClassName: string | RowClassName<RecordType>;
   expandedRowClassName: RowClassName<RecordType>;
+  onRow?: GetComponentProps<RecordType>;
+  emptyNode?: React.ReactNode;
 
   tableLayout: TableLayout;
 
@@ -51,6 +58,11 @@ export interface TableContextProps<RecordType = any> {
   hoverStartRow: number;
   hoverEndRow: number;
   onHover: (start: number, end: number) => void;
+  rowExpandable: (record: RecordType) => boolean;
+
+  expandedKeys: Set<React.Key>;
+  getRowKey: GetRowKey<RecordType>;
+  childrenColumnName: string;
 }
 
 const TableContext = createContext<TableContextProps>();

@@ -36,25 +36,27 @@ describe('Table.FixedHeader', () => {
         scroll={{ y: 10 }}
       />,
     );
-    wrapper
-      .find(RcResizeObserver.Collection)
-      .first()
-      .props()
-      .onBatchResize([
-        {
-          data: wrapper.find('ResizeObserver').at(0).props().data,
-          size: { width: 100, offsetWidth: 100 },
-        },
-        {
-          data: wrapper.find('ResizeObserver').at(1).props().data,
-          size: { width: 200, offsetWidth: 200 },
-        },
-        {
-          data: wrapper.find('ResizeObserver').at(2).props().data,
-          size: { width: 0, offsetWidth: 0 },
-        },
-      ]);
-    await safeAct(wrapper);
+
+    async function triggerResize(resizeList) {
+      wrapper.find(RcResizeObserver.Collection).first().props().onBatchResize(resizeList);
+      await safeAct(wrapper);
+      wrapper.update();
+    }
+
+    await triggerResize([
+      {
+        data: wrapper.find('ResizeObserver').at(0).props().data,
+        size: { width: 100, offsetWidth: 100 },
+      },
+      {
+        data: wrapper.find('ResizeObserver').at(1).props().data,
+        size: { width: 200, offsetWidth: 200 },
+      },
+      {
+        data: wrapper.find('ResizeObserver').at(2).props().data,
+        size: { width: 0, offsetWidth: 0 },
+      },
+    ]);
 
     expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
 
@@ -64,7 +66,17 @@ describe('Table.FixedHeader', () => {
 
     // Update columns
     wrapper.setProps({ columns: [col2, col1] });
-    wrapper.update();
+
+    await triggerResize([
+      {
+        data: wrapper.find('ResizeObserver').at(0).props().data,
+        size: { width: 200, offsetWidth: 200 },
+      },
+      {
+        data: wrapper.find('ResizeObserver').at(1).props().data,
+        size: { width: 100, offsetWidth: 100 },
+      },
+    ]);
 
     expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
     expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
