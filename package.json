@@ -42,7 +42,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish --branch static-table",
+    "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish",
     "lint": "eslint src/ --ext .tsx,.ts",
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
     "now-build": "npm run docs:build",
