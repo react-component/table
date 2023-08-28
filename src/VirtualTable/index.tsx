@@ -1,13 +1,13 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
+import classNames from 'classnames';
+import { warning } from 'rc-util';
 import * as React from 'react';
-import { INTERNAL_HOOKS } from '..';
+import { INTERNAL_HOOKS } from '../constant';
+import { makeImmutable } from '../context/TableContext';
 import type { CustomizeScrollBody } from '../interface';
 import Table, { DEFAULT_PREFIX, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
-import { makeImmutable } from '../context/TableContext';
-import { warning } from 'rc-util';
-import classNames from 'classnames';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
