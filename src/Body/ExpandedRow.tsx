@@ -40,7 +40,7 @@ function ExpandedRow(props: ExpandedRowProps) {
   // Cache render node
   let contentNode = children;
 
-  if (isEmpty ? horizonScroll : fixColumn) {
+  if (isEmpty ? horizonScroll && componentWidth : fixColumn) {
     contentNode = (
       <div
         style={{
@@ -51,7 +51,7 @@ function ExpandedRow(props: ExpandedRowProps) {
         }}
         className={`${prefixCls}-expanded-row-fixed`}
       >
-        {componentWidth !== 0 && contentNode}
+        {contentNode}
       </div>
     );
   }
