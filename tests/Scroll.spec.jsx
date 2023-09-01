@@ -15,6 +15,17 @@ describe('Table.Scroll', () => {
     return <Table columns={columns} data={data} {...props} />;
   };
 
+  it('should always has content when scroll.x is enabled', () => {
+    const data = [];
+    const createTable = props => {
+      return <Table data={data} {...props} />;
+    };
+
+    const wrapper = mount(createTable({ scroll: { x: true } }));
+
+    expect(wrapper.find('.rc-table-tbody').hostNodes().text()).toContain('No Data');
+  });
+
   it('renders scroll.x is true', () => {
     const wrapper = mount(createTable({ scroll: { x: true } }));
     expect(wrapper.find('table').props().style.width).toEqual('auto');
