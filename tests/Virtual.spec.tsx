@@ -208,4 +208,22 @@ describe('Table.Virtual', () => {
 
     expect(container.querySelector('.rc-virtual-list')).toHaveAttribute('data-scroll-width', '603');
   });
+
+  it('render params should correct', () => {
+    const { container } = getTable({
+      columns: [
+        {
+          width: 93,
+          render: (_, __, index) => <div className="bamboo">{index}</div>,
+        },
+      ],
+      scroll: {
+        x: 1128,
+        y: 10,
+      },
+      data: [{}],
+    });
+
+    expect(container.querySelector('.bamboo').textContent).toEqual('0');
+  });
 });
