@@ -118,6 +118,8 @@ export interface TableProps<RecordType = unknown>
 
   direction?: Direction;
 
+  sticky?: boolean | TableSticky;
+
   // =================================== Internal ===================================
   /**
    * @private Internal usage, may remove by refactor. Should always use `columns` instead.
@@ -148,11 +150,17 @@ export interface TableProps<RecordType = unknown>
    *
    * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
    */
+  // Pass the way to get real width. e.g. exclude the border width
+  getContainerWidth?: (ele: HTMLElement, width: number) => number;
+
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
-
-  sticky?: boolean | TableSticky;
 }
 
 function defaultEmpty() {
@@ -197,6 +205,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     transformColumns,
     internalRefs,
     tailor,
+    getContainerWidth,
 
     sticky,
   } = props;
@@ -281,6 +290,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
       scrollWidth: useInternalHooks && tailor && typeof scrollX === 'number' ? scrollX : null,
+      clientWidth: componentWidth,
     },
     useInternalHooks ? transformColumns : null,
   );
@@ -432,9 +442,14 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   };
 
   const onFullTableResize = ({ width }) => {
-    if (width !== componentWidth) {
+    let mergedWidth = fullTableRef.current ? fullTableRef.current.offsetWidth : width;
+    if (useInternalHooks && getContainerWidth) {
+      mergedWidth = getContainerWidth(fullTableRef.current, mergedWidth) || mergedWidth;
+    }
+
+    if (mergedWidth !== componentWidth) {
       triggerOnScroll();
-      setComponentWidth(fullTableRef.current ? fullTableRef.current.offsetWidth : width);
+      setComponentWidth(mergedWidth);
     }
   };
 

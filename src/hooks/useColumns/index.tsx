@@ -132,6 +132,7 @@ function useColumns<RecordType>(
     columnWidth,
     fixed,
     scrollWidth,
+    clientWidth,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -147,6 +148,7 @@ function useColumns<RecordType>(
     direction?: Direction;
     expandRowByClick?: boolean;
     columnWidth?: number | string;
+    clientWidth: number;
     fixed?: FixedType;
     scrollWidth?: number;
   },
@@ -278,7 +280,11 @@ function useColumns<RecordType>(
   }
 
   // ========================= FillWidth ========================
-  const [filledColumns, realScrollWidth] = useWidthColumns(flattenColumns, scrollWidth);
+  const [filledColumns, realScrollWidth] = useWidthColumns(
+    flattenColumns,
+    scrollWidth,
+    clientWidth,
+  );
 
   return [mergedColumns, filledColumns, realScrollWidth];
 }
