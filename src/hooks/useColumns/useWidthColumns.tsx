@@ -38,7 +38,7 @@ export default function useWidthColumns(
       });
 
       // Fill width
-      let restWidth = scrollWidth - totalWidth;
+      let restWidth = Math.max(scrollWidth - totalWidth, missWidthCount);
       let restCount = missWidthCount;
       const avgWidth = restWidth / missWidthCount;
 
