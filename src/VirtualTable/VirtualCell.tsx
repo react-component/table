@@ -1,18 +1,20 @@
+import { useContext } from '@rc-component/context';
+import classNames from 'classnames';
 import * as React from 'react';
 import { getCellProps } from '../Body/BodyRow';
 import Cell from '../Cell';
-import type { ColumnType } from '../interface';
-import classNames from 'classnames';
-import { useContext } from '@rc-component/context';
-import { GridContext } from './context';
 import type useRowInfo from '../hooks/useRowInfo';
+import type { ColumnType } from '../interface';
+import { GridContext } from './context';
 
-export interface VirtualCellProps<RecordType extends { index: number }> {
+export interface VirtualCellProps<RecordType> {
   rowInfo: ReturnType<typeof useRowInfo>;
   column: ColumnType<RecordType>;
   colIndex: number;
   indent: number;
   index: number;
+  /** Used for `column.render` */
+  renderIndex: number;
   record: RecordType;
 
   // Follow props is used for RowSpanVirtualCell only
@@ -33,11 +35,20 @@ export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset:
   return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
 }
 
-function VirtualCell<RecordType extends { index: number } = any>(
-  props: VirtualCellProps<RecordType>,
-) {
-  const { rowInfo, column, colIndex, indent, index, record, style, className, inverse, getHeight } =
-    props;
+function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
+  const {
+    rowInfo,
+    column,
+    colIndex,
+    indent,
+    index,
+    renderIndex,
+    record,
+    style,
+    className,
+    inverse,
+    getHeight,
+  } = props;
 
   const { render, dataIndex, className: columnClassName, width: colWidth } = column;
 
@@ -108,7 +119,7 @@ function VirtualCell<RecordType extends { index: number } = any>(
       key={key}
       record={record}
       index={index}
-      renderIndex={record.index}
+      renderIndex={renderIndex}
       dataIndex={dataIndex}
       render={mergedRender}
       shouldCellUpdate={column.shouldCellUpdate}
