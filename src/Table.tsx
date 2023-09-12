@@ -264,9 +264,10 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   ] = useExpand(props, mergedData, getRowKey);
 
   // ====================== Column ======================
+  const scrollX = scroll?.x;
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns] = useColumns(
+  const [columns, flattenColumns, flattenScrollX] = useColumns(
     {
       ...props,
       ...expandableConfig,
@@ -279,10 +280,11 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       expandIcon: mergedExpandIcon,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
-      scrollWidth: useInternalHooks && tailor && typeof scroll?.x === 'number' ? scroll.x : null,
+      scrollWidth: useInternalHooks && tailor && typeof scrollX === 'number' ? scrollX : null,
     },
     useInternalHooks ? transformColumns : null,
   );
+  const mergedScrollX = flattenScrollX ?? scrollX;
 
   const columnContext = React.useMemo(
     () => ({
@@ -308,7 +310,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
   const fixHeader = scroll && validateValue(scroll.y);
-  const horizonScroll = (scroll && validateValue(scroll.x)) || Boolean(expandableConfig.fixed);
+  const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
@@ -345,7 +347,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       scrollYStyle = { overflowY: 'hidden' };
     }
     scrollTableStyle = {
-      width: scroll?.x === true ? 'auto' : scroll?.x,
+      width: mergedScrollX === true ? 'auto' : mergedScrollX,
       minWidth: '100%',
     };
   }
@@ -502,7 +504,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     // When scroll.x is max-content, no need to fix table layout
     // it's width should stretch out to fit content
     if (fixColumn) {
-      return scroll?.x === 'max-content' ? 'auto' : 'fixed';
+      return mergedScrollX === 'max-content' ? 'auto' : 'fixed';
     }
     if (fixHeader || isSticky || flattenColumns.some(({ ellipsis }) => ellipsis)) {
       return 'fixed';
@@ -615,7 +617,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     // Fixed holder share the props
     const fixedHolderProps = {
       noData: !mergedData.length,
-      maxContentScroll: horizonScroll && scroll.x === 'max-content',
+      maxContentScroll: horizonScroll && mergedScrollX === 'max-content',
       ...headerProps,
       ...columnContext,
       direction,
@@ -730,6 +732,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   const TableContextValue = React.useMemo(
     () => ({
+      // Scroll
+      scrollX: mergedScrollX,
+
       // Table
       prefixCls,
       getComponent,
@@ -775,6 +780,9 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
       childrenColumnName: mergedChildrenColumnName,
     }),
     [
+      // Scroll
+      mergedScrollX,
+
       // Table
       prefixCls,
       getComponent,

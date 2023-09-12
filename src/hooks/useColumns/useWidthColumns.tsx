@@ -15,15 +15,15 @@ function parseColWidth(totalWidth: number, width: string | number = '') {
 /**
  * Fill all column with width
  */
-export default function useWidthColumns(columns: ColumnsType<any>, scrollWidth: number) {
-  const filledColumns = React.useMemo(() => {
+export default function useWidthColumns(flattenColumns: ColumnsType<any>, scrollWidth: number) {
+  return React.useMemo<[columns: ColumnsType<any>, realScrollWidth: number]>(() => {
     // Fill width if needed
     if (scrollWidth && scrollWidth > 0) {
       let totalWidth = 0;
       let missWidthCount = 0;
 
       // collect not given width column
-      columns.forEach((col: any) => {
+      flattenColumns.forEach((col: any) => {
         const colWidth = parseColWidth(scrollWidth, col.width);
 
         if (colWidth) {
@@ -38,7 +38,9 @@ export default function useWidthColumns(columns: ColumnsType<any>, scrollWidth: 
       let restCount = missWidthCount;
       const avgWidth = restWidth / missWidthCount;
 
-      return columns.map((col: any) => {
+      let realTotal = 0;
+
+      const filledColumns = flattenColumns.map((col: any) => {
         const clone = {
           ...col,
         };
@@ -56,12 +58,14 @@ export default function useWidthColumns(columns: ColumnsType<any>, scrollWidth: 
           restCount -= 1;
         }
 
+        realTotal += clone.width;
+
         return clone;
       });
+
+      return [filledColumns, realTotal];
     }
 
-    return columns;
-  }, [columns, scrollWidth]);
-
-  return filledColumns;
+    return [flattenColumns, scrollWidth];
+  }, [flattenColumns, scrollWidth]);
 }

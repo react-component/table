@@ -2,12 +2,12 @@ import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
+import Cell from '../Cell';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
 import type { ColumnType, OnCustomizeScroll } from '../interface';
 import BodyLine from './BodyLine';
 import { GridContext, StaticContext } from './context';
-import Cell from '../Cell';
 
 export interface GridProps<RecordType = any> {
   data: RecordType[];
@@ -29,6 +29,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     prefixCls,
     childrenColumnName,
     emptyNode,
+    scrollX,
   } = useContext(TableContext, [
     'flattenColumns',
     'onColumnResize',
@@ -37,8 +38,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'expandedKeys',
     'childrenColumnName',
     'emptyNode',
+    'scrollX',
   ]);
-  const { scrollY, scrollX, listItemHeight } = useContext(StaticContext);
+  const { scrollY, listItemHeight } = useContext(StaticContext);
 
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
@@ -201,7 +203,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemHeight={listItemHeight || 24}
         data={flattenData}
         itemKey={item => getRowKey(item.record)}
-        scrollWidth={scrollX}
+        scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
           onScroll({
             scrollLeft: x,

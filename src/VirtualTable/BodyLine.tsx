@@ -1,12 +1,11 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
+import Cell from '../Cell';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import type { FlattenData } from '../hooks/useFlattenRecords';
-import { StaticContext } from './context';
-import VirtualCell from './VirtualCell';
 import useRowInfo from '../hooks/useRowInfo';
-import Cell from '../Cell';
+import VirtualCell from './VirtualCell';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -24,13 +23,10 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent } = data;
 
-  const { flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(TableContext, [
-    'prefixCls',
-    'flattenColumns',
-    'fixColumn',
-    'componentWidth',
-  ]);
-  const { scrollX } = useContext(StaticContext, ['scrollX']);
+  const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(
+    TableContext,
+    ['prefixCls', 'flattenColumns', 'fixColumn', 'componentWidth', 'scrollX'],
+  );
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
 
@@ -79,7 +75,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
 
   const rowStyle: React.CSSProperties = {
     ...style,
-    width: scrollX,
+    width: scrollX as number,
   };
 
   if (extra) {

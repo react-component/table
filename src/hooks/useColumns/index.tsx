@@ -151,7 +151,11 @@ function useColumns<RecordType>(
     scrollWidth?: number;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
-): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
+): [
+  columns: ColumnsType<RecordType>,
+  flattenColumns: readonly ColumnType<RecordType>[],
+  realScrollWidth: undefined | number,
+] {
   const baseColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
     [columns, children],
@@ -274,9 +278,9 @@ function useColumns<RecordType>(
   }
 
   // ========================= FillWidth ========================
-  const filledColumns = useWidthColumns(flattenColumns, scrollWidth);
+  const [filledColumns, realScrollWidth] = useWidthColumns(flattenColumns, scrollWidth);
 
-  return [mergedColumns, filledColumns];
+  return [mergedColumns, filledColumns, realScrollWidth];
 }
 
 export default useColumns;

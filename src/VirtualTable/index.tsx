@@ -49,10 +49,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
   }
 
   // ========================= Context ==========================
-  const context = React.useMemo(
-    () => ({ scrollX, scrollY, listItemHeight }),
-    [scrollX, scrollY, listItemHeight],
-  );
+  const context = React.useMemo(() => ({ scrollY, listItemHeight }), [scrollY, listItemHeight]);
 
   // ========================== Render ==========================
   return (
