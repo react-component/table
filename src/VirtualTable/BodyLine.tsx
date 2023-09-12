@@ -21,7 +21,7 @@ export interface BodyLineProps<RecordType = any> {
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
-  const { record, indent } = data;
+  const { record, indent, index: renderIndex } = data;
 
   const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(
     TableContext,
@@ -102,6 +102,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             colIndex={colIndex}
             indent={indent}
             index={index}
+            renderIndex={renderIndex}
             record={record}
             inverse={extra}
             getHeight={getHeight}
