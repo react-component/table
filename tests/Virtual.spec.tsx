@@ -1,10 +1,22 @@
-import { resetWarned } from 'rc-util/lib/warning';
-import React from 'react';
-import { type VirtualTableProps, VirtualTable } from '../src';
 import { act, fireEvent, render } from '@testing-library/react';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { _rs as onEsResize } from 'rc-resize-observer/es/utils/observerUtil';
 import { _rs as onLibResize } from 'rc-resize-observer/lib/utils/observerUtil';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
+import { VirtualTable, type VirtualTableProps } from '../src';
+
+vi.mock('rc-virtual-list', async () => {
+  const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
+
+  const WrapperVirtualList = React.forwardRef((props: any, ref) => (
+    <RealVirtualList ref={ref} {...props} data-scroll-width={props.scrollWidth} />
+  ));
+
+  return {
+    default: WrapperVirtualList,
+  };
+});
 
 describe('Table.Virtual', () => {
   let scrollLeftCalled = false;
@@ -170,14 +182,30 @@ describe('Table.Virtual', () => {
 
     scrollLeftCalled = false;
     expect(scrollLeftCalled).toBeFalsy();
-    console.log('!!!!!');
 
-    // fireEvent.scroll(container.querySelector('.rc-table-header')!);
     fireEvent.wheel(container.querySelector('.rc-virtual-list-holder')!, {
       deltaX: 10,
     });
     expect(scrollLeftCalled).toBeTruthy();
+  });
 
-    console.log(container.innerHTML);
+  it('should follow correct width', () => {
+    const { container } = getTable({
+      columns: [
+        {
+          width: 93,
+        },
+        {
+          width: 510,
+        },
+      ],
+      scroll: {
+        x: 1128,
+        y: 10,
+      },
+      data: [{}],
+    });
+
+    expect(container.querySelector('.rc-virtual-list')).toHaveAttribute('data-scroll-width', '603');
   });
 });
