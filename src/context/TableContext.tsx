@@ -19,6 +19,9 @@ const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable()
 export { makeImmutable, responseImmutable, useImmutableMark };
 
 export interface TableContextProps<RecordType = any> {
+  // Scroll
+  scrollX: number | string | true;
+
   // Table
   prefixCls: string;
   getComponent: GetComponent;
