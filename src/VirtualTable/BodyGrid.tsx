@@ -197,6 +197,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   if (flattenData.length) {
     bodyContent = (
       <VirtualList<FlattenData<any>>
+        fullHeight={false}
         ref={listRef}
         className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
         height={scrollY}
