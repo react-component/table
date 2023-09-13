@@ -12,6 +12,8 @@ interface RecordType {
 }
 
 const columns: ColumnsType = [
+  // { title: 'title1', dataIndex: 'a', key: 'a', width: 100,},
+  // { title: 'title1', dataIndex: 'a', key: 'a', width: 100, },
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
   {
@@ -198,7 +200,7 @@ const Demo = () => {
       <VirtualTable
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
-        scroll={{ x: 1200, y: scrollY ? 200 : null }}
+        scroll={{ x: 1300, y: scrollY ? 200 : null }}
         data={data}
         // data={[]}
         rowKey="indexKey"
@@ -209,6 +211,15 @@ const Demo = () => {
         }}
         // onRow={() => ({ className: 'rowed' })}
         rowClassName="nice-try"
+        getContainerWidth={(ele, width) => {
+          // Minus border
+          const borderWidth = getComputedStyle(
+            ele.querySelector('.rc-virtual-list'),
+          ).borderInlineStartWidth;
+          const mergedWidth = width - parseInt(borderWidth, 10);
+
+          return mergedWidth;
+        }}
       />
     </div>
   );

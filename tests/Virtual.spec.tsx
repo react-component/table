@@ -106,7 +106,6 @@ describe('Table.Virtual', () => {
       scroll: {} as any,
     });
 
-    expect(errSpy).toHaveBeenCalledWith('Warning: `scroll.x` in virtual table must be number.');
     expect(errSpy).toHaveBeenCalledWith('Warning: `scroll.y` in virtual table must be number.');
   });
 
@@ -225,5 +224,24 @@ describe('Table.Virtual', () => {
     });
 
     expect(container.querySelector('.bamboo').textContent).toEqual('0');
+  });
+
+  it('columns less than width', async () => {
+    const { container } = getTable({
+      columns: [{}, {}],
+      scroll: {
+        y: 10,
+      },
+      getContainerWidth: () => 200,
+      data: [{}],
+    });
+
+    resize(container.querySelector('.rc-table'));
+
+    await waitFakeTimer();
+
+    expect(container.querySelectorAll('col')).toHaveLength(2);
+    expect(container.querySelectorAll('col')[0]).toHaveStyle({ width: '100px' });
+    expect(container.querySelectorAll('col')[1]).toHaveStyle({ width: '100px' });
   });
 });

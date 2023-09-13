@@ -17,13 +17,11 @@ const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
 
 export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {
   scroll: {
-    x: number;
+    x?: number;
     y: number;
   };
   listItemHeight?: number;
 }
-
-const PRESET_COLUMN_WIDTH = 100;
 
 function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
   const { columns, scroll, prefixCls = DEFAULT_PREFIX, className, listItemHeight } = props;
@@ -32,11 +30,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
 
   // Fill scrollX
   if (typeof scrollX !== 'number') {
-    scrollX = ((columns || []).length + 1) * PRESET_COLUMN_WIDTH;
-
-    if (process.env.NODE_ENV !== 'production') {
-      warning(false, '`scroll.x` in virtual table must be number.');
-    }
+    scrollX = 1;
   }
 
   // Fill scrollY
