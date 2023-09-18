@@ -3,9 +3,9 @@ import * as React from 'react';
 import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
+import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
-import useRowInfo from '../hooks/useRowInfo';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -116,17 +116,13 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowSupportExpand,
   } = rowInfo;
 
-  const [expandRended, setExpandRended] = React.useState(false);
+  // Force render expand row if expanded before
+  const expandedRef = React.useRef(false);
+  expandedRef.current ||= expanded;
 
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
-
-  React.useEffect(() => {
-    if (expanded) {
-      setExpandRended(true);
-    }
-  }, [expanded]);
 
   // ======================== Base tr row ========================
   const baseRowNode = (
@@ -181,7 +177,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement;
-  if (rowSupportExpand && (expandRended || expanded)) {
+  if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
     const computedExpandedRowClassName =
       expandedRowClassName && expandedRowClassName(record, index, indent);
