@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
@@ -635,5 +636,19 @@ describe('Table.Expand', () => {
       'Warning: `expandedRowRender` should not use with nested Table',
     );
     errorSpy.mockRestore();
+  });
+
+  it('should only trigger once', () => {
+    const expandedRowRender = vi.fn(() => <p>extra data</p>);
+    render(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandedRowKeys: [0],
+        },
+      }),
+    );
+
+    expect(expandedRowRender).toHaveBeenCalledTimes(1);
   });
 });
