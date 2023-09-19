@@ -202,7 +202,7 @@ describe('Table.Virtual', () => {
         },
       ],
       scroll: {
-        x: 1128,
+        x: 100,
         y: 10,
       },
       data: [{}],
@@ -246,5 +246,26 @@ describe('Table.Virtual', () => {
     expect(container.querySelectorAll('col')).toHaveLength(2);
     expect(container.querySelectorAll('col')[0]).toHaveStyle({ width: '100px' });
     expect(container.querySelectorAll('col')[1]).toHaveStyle({ width: '100px' });
+  });
+
+  it('should fill width as scrollX if scrollX is larger', async () => {
+    const { container } = getTable({
+      columns: [
+        {
+          width: 100,
+        },
+      ],
+      scroll: {
+        x: 1128,
+        y: 10,
+      },
+      getContainerWidth: () => 200,
+      data: [{}],
+    });
+
+    expect(container.querySelector('.rc-virtual-list')).toHaveAttribute(
+      'data-scroll-width',
+      '1128',
+    );
   });
 });
