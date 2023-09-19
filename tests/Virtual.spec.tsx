@@ -103,9 +103,12 @@ describe('Table.Virtual', () => {
     const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     getTable({
-      scroll: {} as any,
+      scroll: {
+        x: true,
+      } as any,
     });
 
+    expect(errSpy).toHaveBeenCalledWith('Warning: `scroll.x` in virtual table must be number.');
     expect(errSpy).toHaveBeenCalledWith('Warning: `scroll.y` in virtual table must be number.');
   });
 
