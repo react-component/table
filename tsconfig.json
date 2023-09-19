@@ -14,5 +14,5 @@
     },
     "types": ["vitest/globals"]
   },
-  "include": [".dumi/**/*", ".dumirc.ts", "**/*.ts", "**/*.tsx"]
+  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx"]
 }

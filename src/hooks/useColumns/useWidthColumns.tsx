@@ -67,12 +67,14 @@ export default function useWidthColumns(
         return clone;
       });
 
+      const maxFitWidth = Math.max(scrollWidth, clientWidth);
+
       // If realTotal is less than clientWidth,
       // We need extend column width
-      if (realTotal < clientWidth) {
-        const scale = clientWidth / realTotal;
+      if (realTotal < maxFitWidth) {
+        const scale = maxFitWidth / realTotal;
 
-        restWidth = clientWidth;
+        restWidth = maxFitWidth;
 
         filledColumns.forEach((col: any, index) => {
           const colWidth = Math.floor(col.width * scale);
@@ -83,7 +85,7 @@ export default function useWidthColumns(
         });
       }
 
-      return [filledColumns, Math.max(realTotal, clientWidth)];
+      return [filledColumns, Math.max(realTotal, maxFitWidth)];
     }
 
     return [flattenColumns, scrollWidth];

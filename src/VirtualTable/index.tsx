@@ -30,6 +30,10 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>) {
 
   // Fill scrollX
   if (typeof scrollX !== 'number') {
+    if (process.env.NODE_ENV !== 'production') {
+      warning(!scrollX, '`scroll.x` in virtual table must be number.');
+    }
+
     scrollX = 1;
   }
 
