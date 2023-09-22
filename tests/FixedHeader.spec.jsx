@@ -261,8 +261,6 @@ describe('Table.FixedHeader', () => {
     const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
     await safeAct(wrapper);
     expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
-    expect(wrapper.find('th').first().props().className).not.toContain(
-      'rc-table-cell-fix-left-last',
-    );
+    expect(wrapper.find('th').first().props().className).toContain('rc-table-cell-fix-left-last');
   });
 });

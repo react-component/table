@@ -19,6 +19,23 @@ export interface FixedInfo {
   isSticky: boolean;
 }
 
+function hasColumnChildren<RecordType>(
+  column: ColumnType<RecordType> | ColumnGroupType<RecordType>,
+): boolean {
+  // no children only
+  if (!(column as ColumnGroupType<RecordType>)?.children) {
+    return true;
+  }
+  if (
+    (column as ColumnGroupType<RecordType>)?.children &&
+    (column as ColumnGroupType<RecordType>)?.children.length > 0
+  ) {
+    return (column as ColumnGroupType<RecordType>)?.children.some(children =>
+      hasColumnChildren(children),
+    );
+  }
+}
+
 export function getCellFixedInfo<RecordType = any>(
   colStart: number,
   colEnd: number,
@@ -33,9 +50,10 @@ export function getCellFixedInfo<RecordType = any>(
   let fixLeft: number;
   let fixRight: number;
 
-  if (startColumn.fixed === 'left') {
+  // RTL layout calculation logic processing
+  if (startColumn.fixed === 'left' || endColumn.fixed === 'left') {
     fixLeft = stickyOffsets.left[direction === 'rtl' ? colEnd : colStart];
-  } else if (endColumn.fixed === 'right') {
+  } else if (endColumn.fixed === 'right' || startColumn.fixed === 'right') {
     fixRight = stickyOffsets.right[direction === 'rtl' ? colStart : colEnd];
   }
 
@@ -48,8 +66,11 @@ export function getCellFixedInfo<RecordType = any>(
   const nextColumn = columns[colEnd + 1];
   const prevColumn = columns[colStart - 1];
 
+  // iff all children of a cell have exactly one child, then onlyChildren is true
+  const hasChildren = hasColumnChildren(curColumns);
+
   // no children only
-  const canLastFix = !(curColumns as ColumnGroupType<RecordType>)?.children;
+  const canLastFix = !(curColumns as ColumnGroupType<RecordType>)?.children || hasChildren;
 
   if (direction === 'rtl') {
     if (fixLeft !== undefined) {
