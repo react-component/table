@@ -268,4 +268,31 @@ describe('Table.Virtual', () => {
       '1128',
     );
   });
+
+  it('sticky header with virtual should work', async () => {
+    const { container } = getTable({ sticky: { offsetHeader: 10 } });
+
+    await waitFakeTimer();
+
+    expect(container.querySelector('.rc-table-header')).toHaveStyle({
+      overflow: 'hidden',
+      top: '10px',
+    });
+
+    expect(container.querySelector('.rc-table-header')).toHaveClass(
+      'rc-table-header',
+      'rc-table-sticky-holder',
+    );
+  });
+
+  it('sticky scrollbar with virtual should work', async () => {
+    const { container } = getTable({ sticky: { offsetScroll: 10 } });
+
+    await waitFakeTimer();
+
+    expect(container.querySelector('.rc-virtual-list-scrollbar-horizontal')).toHaveStyle({
+      position: 'sticky',
+      bottom: '10px',
+    });
+  });
 });

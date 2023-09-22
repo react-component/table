@@ -40,7 +40,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'emptyNode',
     'scrollX',
   ]);
-  const { scrollY, listItemHeight } = useContext(StaticContext);
+  const { sticky, scrollY, listItemHeight } = useContext(StaticContext);
 
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
@@ -195,10 +195,21 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
   let bodyContent: React.ReactNode;
   if (flattenData.length) {
+    // ========================== Sticky Scroll Bar ==========================
+    const horizontalScrollBarStyle: React.CSSProperties = {};
+    if (sticky) {
+      horizontalScrollBarStyle.position = 'sticky';
+      horizontalScrollBarStyle.bottom = 0;
+      if (typeof sticky === 'object' && sticky.offsetScroll) {
+        horizontalScrollBarStyle.bottom = sticky.offsetScroll;
+      }
+    }
+
     bodyContent = (
       <VirtualList<FlattenData<any>>
         fullHeight={false}
         ref={listRef}
+        styles={{ horizontalScrollBar: horizontalScrollBarStyle }}
         className={classNames(tblPrefixCls, `${tblPrefixCls}-virtual`)}
         height={scrollY}
         itemHeight={listItemHeight || 24}
