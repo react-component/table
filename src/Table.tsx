@@ -669,7 +669,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
           </FixedHolder>
         )}
 
-        {isSticky && (
+        {isSticky && scrollBodyRef.current instanceof Element && (
           <StickyScrollBar
             ref={stickyRef}
             offsetScroll={offsetScroll}
