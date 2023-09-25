@@ -70,22 +70,22 @@ export function getCellFixedInfo<RecordType = any>(
   const hasChildren = hasColumnChildren(curColumns);
 
   // no children only
-  const canLastFix = !(curColumns as ColumnGroupType<RecordType>)?.children || hasChildren;
+  const canLastFix = !(curColumns as ColumnGroupType<RecordType>)?.children;
 
   if (direction === 'rtl') {
     if (fixLeft !== undefined) {
       const prevFixLeft = prevColumn && prevColumn.fixed === 'left';
-      firstFixLeft = !prevFixLeft && canLastFix;
+      firstFixLeft = !prevFixLeft && (canLastFix || hasChildren);
     } else if (fixRight !== undefined) {
       const nextFixRight = nextColumn && nextColumn.fixed === 'right';
-      lastFixRight = !nextFixRight && canLastFix;
+      lastFixRight = !nextFixRight && (canLastFix || hasChildren);
     }
   } else if (fixLeft !== undefined) {
     const nextFixLeft = nextColumn && nextColumn.fixed === 'left';
     lastFixLeft = !nextFixLeft && canLastFix;
   } else if (fixRight !== undefined) {
     const prevFixRight = prevColumn && prevColumn.fixed === 'right';
-    firstFixRight = !prevFixRight && canLastFix;
+    firstFixRight = !prevFixRight && (canLastFix || hasChildren);
   }
 
   return {
