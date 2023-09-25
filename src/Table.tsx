@@ -443,7 +443,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
 
   const onFullTableResize = ({ width }) => {
     let mergedWidth = fullTableRef.current ? fullTableRef.current.offsetWidth : width;
-    if (useInternalHooks && getContainerWidth) {
+    if (useInternalHooks && getContainerWidth && fullTableRef.current) {
       mergedWidth = getContainerWidth(fullTableRef.current, mergedWidth) || mergedWidth;
     }
 
@@ -669,7 +669,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
           </FixedHolder>
         )}
 
-        {isSticky && scrollBodyRef.current instanceof Element && (
+        {isSticky && scrollBodyRef.current && scrollBodyRef.current instanceof Element && (
           <StickyScrollBar
             ref={stickyRef}
             offsetScroll={offsetScroll}
