@@ -196,11 +196,21 @@ const Demo = () => {
       <button
         onClick={() => {
           tblRef.current?.scrollTo({
-            top: 999999999999,
+            top: 9999999999999,
           });
         }}
       >
         Scroll To End
+      </button>
+
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            index: data.length - 1,
+          });
+        }}
+      >
+        Scroll To Key
       </button>
 
       <VirtualTable

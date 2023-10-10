@@ -4,14 +4,26 @@ import { _rs as onLibResize } from 'rc-resize-observer/lib/utils/observerUtil';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
-import { VirtualTable, type VirtualTableProps } from '../src';
+import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
+
+global.scrollToConfig = null;
 
 vi.mock('rc-virtual-list', async () => {
   const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
 
-  const WrapperVirtualList = React.forwardRef((props: any, ref) => (
-    <RealVirtualList ref={ref} {...props} data-scroll-width={props.scrollWidth} />
-  ));
+  const WrapperVirtualList = React.forwardRef((props: any, ref) => {
+    const myRef = React.useRef(null);
+
+    React.useImperativeHandle(ref, () => ({
+      ...myRef.current,
+      scrollTo: (config: any) => {
+        global.scrollToConfig = config;
+        return myRef.current.scrollTo(config);
+      },
+    }));
+
+    return <RealVirtualList ref={myRef} {...props} data-scroll-width={props.scrollWidth} />;
+  });
 
   return {
     default: WrapperVirtualList,
@@ -38,6 +50,7 @@ describe('Table.Virtual', () => {
 
   beforeEach(() => {
     scrollLeftCalled = false;
+    global.scrollToConfig = null;
     vi.useFakeTimers();
     resetWarned();
   });
@@ -293,6 +306,21 @@ describe('Table.Virtual', () => {
     expect(container.querySelector('.rc-virtual-list-scrollbar-horizontal')).toHaveStyle({
       position: 'sticky',
       bottom: '10px',
+    });
+  });
+
+  it('scrollTo should pass', async () => {
+    const tblRef = React.createRef<Reference>();
+    getTable({ reference: tblRef });
+
+    tblRef.current.scrollTo({
+      index: 99,
+    });
+
+    await waitFakeTimer();
+
+    expect(global.scrollToConfig).toEqual({
+      index: 99,
     });
   });
 });
