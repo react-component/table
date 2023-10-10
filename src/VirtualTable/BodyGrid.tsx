@@ -73,7 +73,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   React.useImperativeHandle(ref, () => {
     const obj = {
       scrollTo: (config: ScrollConfig) => {
-        console.log('!!!!', config);
         listRef.current?.scrollTo(config);
       },
     } as unknown as GridRef;

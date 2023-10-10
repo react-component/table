@@ -80,14 +80,14 @@ export type ForwardGenericVirtualTable = (<RecordType>(
   displayName?: string;
 };
 
-const RefVirtualTable = React.forwardRef(Table) as ForwardGenericVirtualTable;
+const RefVirtualTable = React.forwardRef(VirtualTable) as ForwardGenericVirtualTable;
 
 if (process.env.NODE_ENV !== 'production') {
   RefVirtualTable.displayName = 'VirtualTable';
 }
 
 export function genVirtualTable(shouldTriggerRender?: CompareProps<typeof Table>) {
-  return makeImmutable(VirtualTable, shouldTriggerRender) as ForwardGenericVirtualTable;
+  return makeImmutable(RefVirtualTable, shouldTriggerRender) as ForwardGenericVirtualTable;
 }
 
 export default genVirtualTable();
