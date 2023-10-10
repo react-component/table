@@ -236,7 +236,7 @@ const Demo = () => {
 
           return mergedWidth;
         }}
-        reference={tblRef}
+        ref={tblRef}
       />
     </div>
   );

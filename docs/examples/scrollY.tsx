@@ -60,7 +60,7 @@ const Test = () => {
         Scroll To key 9
       </button>
       <Table
-        reference={tblRef}
+        ref={tblRef}
         columns={columns}
         data={data}
         scroll={{ y: 300 }}

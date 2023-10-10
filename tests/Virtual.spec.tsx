@@ -77,7 +77,7 @@ describe('Table.Virtual', () => {
     });
   }
 
-  function getTable(props?: Partial<VirtualTableProps<any>>) {
+  function getTable(props?: Partial<VirtualTableProps<any>> & { ref?: React.Ref<Reference> }) {
     return render(
       <VirtualTable
         columns={[
@@ -311,7 +311,7 @@ describe('Table.Virtual', () => {
 
   it('scrollTo should pass', async () => {
     const tblRef = React.createRef<Reference>();
-    getTable({ reference: tblRef });
+    getTable({ ref: tblRef });
 
     tblRef.current.scrollTo({
       index: 99,
