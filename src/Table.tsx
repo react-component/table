@@ -64,6 +64,7 @@ import type {
   GetRowKey,
   LegacyExpandableProps,
   PanelRender,
+  Reference,
   RowClassName,
   TableComponents,
   TableLayout,
@@ -119,6 +120,8 @@ export interface TableProps<RecordType = unknown>
   direction?: Direction;
 
   sticky?: boolean | TableSticky;
+
+  reference?: Reference;
 
   // =================================== Internal ===================================
   /**

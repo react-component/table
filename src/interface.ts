@@ -25,6 +25,11 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+export type Reference = {
+  nativeElement: HTMLDivElement;
+  scrollTo: () => void;
+};
+
 // ==================== Row =====================
 export type RowClassName<RecordType> = (
   record: RecordType,
