@@ -5,7 +5,7 @@ import * as React from 'react';
 import Cell from '../Cell';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
-import type { ColumnType, OnCustomizeScroll } from '../interface';
+import type { ColumnType, OnCustomizeScroll, ScrollConfig } from '../interface';
 import BodyLine from './BodyLine';
 import { GridContext, StaticContext } from './context';
 
@@ -16,6 +16,7 @@ export interface GridProps<RecordType = any> {
 
 export interface GridRef {
   scrollLeft: number;
+  scrollTo?: (scrollConfig: ScrollConfig) => void;
 }
 
 const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
@@ -70,7 +71,11 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
   // =========================== Ref ============================
   React.useImperativeHandle(ref, () => {
-    const obj = {} as GridRef;
+    const obj = {
+      scrollTo: () => {
+        console.log('2333');
+      },
+    } as unknown as GridRef;
 
     Object.defineProperty(obj, 'scrollLeft', {
       get: () => listRef.current?.getScrollInfo().x || 0,

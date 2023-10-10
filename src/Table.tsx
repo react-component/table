@@ -121,7 +121,7 @@ export interface TableProps<RecordType = unknown>
 
   sticky?: boolean | TableSticky;
 
-  reference?: Reference;
+  reference?: React.Ref<Reference>;
 
   // =================================== Internal ===================================
   /**
@@ -188,6 +188,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     scroll,
     tableLayout,
     direction,
+    reference,
 
     // Additional Part
     title,
@@ -307,11 +308,37 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     [columns, flattenColumns],
   );
 
-  // ====================== Scroll ======================
+  // ======================= Refs =======================
   const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const scrollBodyContainerRef = React.useRef<HTMLDivElement>();
+
+  React.useImperativeHandle(reference, () => {
+    return {
+      nativeElement: fullTableRef.current,
+      scrollTo: config => {
+        if (scrollBodyRef.current instanceof HTMLElement) {
+          // Native scroll
+          const { index, top, key } = config;
+
+          if (top) {
+            scrollBodyRef.current?.scrollTo({
+              top,
+            });
+          } else {
+            const mergedKey = key ?? getRowKey(mergedData[index]);
+            scrollBodyRef.current.querySelector(`[data-row-key="${mergedKey}"]`)?.scrollIntoView();
+          }
+        } else if ((scrollBodyRef.current as any)?.scrollTo) {
+          // Pass to proxy
+          (scrollBodyRef.current as any).scrollTo(config);
+        }
+      },
+    };
+  });
+
+  // ====================== Scroll ======================
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);

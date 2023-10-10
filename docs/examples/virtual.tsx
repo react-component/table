@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/index.less';
 import { VirtualTable } from '../../src';
-import type { ColumnsType } from '../../src/interface';
+import type { ColumnsType, Reference } from '../../src/interface';
 
 interface RecordType {
   a: string;
@@ -189,18 +189,24 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
 }));
 
 const Demo = () => {
-  const [scrollY, setScrollY] = React.useState(true);
+  const tblRef = React.useRef<Reference>();
 
   return (
     <div style={{ width: 800, padding: `0 64px` }}>
-      <label>
-        <input type="checkbox" checked={scrollY} onChange={() => setScrollY(!scrollY)} />
-        Scroll Y
-      </label>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            top: 999999999999,
+          });
+        }}
+      >
+        Scroll To End
+      </button>
+
       <VirtualTable
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
-        scroll={{ x: 1300, y: scrollY ? 200 : null }}
+        scroll={{ x: 1300, y: 200 }}
         data={data}
         // data={[]}
         rowKey="indexKey"
@@ -220,6 +226,7 @@ const Demo = () => {
 
           return mergedWidth;
         }}
+        reference={tblRef}
       />
     </div>
   );

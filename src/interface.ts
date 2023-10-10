@@ -25,9 +25,15 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+export type ScrollConfig = {
+  index?: number;
+  key?: Key;
+  top?: number;
+};
+
 export type Reference = {
   nativeElement: HTMLDivElement;
-  scrollTo: () => void;
+  scrollTo: (config: ScrollConfig) => void;
 };
 
 // ==================== Row =====================
@@ -140,7 +146,7 @@ export type CustomizeScrollBody<RecordType> = (
   data: readonly RecordType[],
   info: {
     scrollbarSize: number;
-    ref: React.Ref<{ scrollLeft: number }>;
+    ref: React.Ref<{ scrollLeft: number; scrollTo?: (scrollConfig: ScrollConfig) => void }>;
     onScroll: OnCustomizeScroll;
   },
 ) => React.ReactNode;
