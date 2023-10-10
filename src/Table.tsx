@@ -121,8 +121,6 @@ export interface TableProps<RecordType = unknown>
 
   sticky?: boolean | TableSticky;
 
-  reference?: React.Ref<Reference>;
-
   // =================================== Internal ===================================
   /**
    * @private Internal usage, may remove by refactor. Should always use `columns` instead.
@@ -170,7 +168,10 @@ function defaultEmpty() {
   return 'No Data';
 }
 
-function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
+function Table<RecordType extends DefaultRecordType>(
+  tableProps: TableProps<RecordType>,
+  ref: React.Ref<Reference>,
+) {
   const props = {
     rowKey: 'key',
     prefixCls: DEFAULT_PREFIX,
@@ -188,7 +189,6 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     scroll,
     tableLayout,
     direction,
-    reference,
 
     // Additional Part
     title,
@@ -314,7 +314,7 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const scrollBodyContainerRef = React.useRef<HTMLDivElement>();
 
-  React.useImperativeHandle(reference, () => {
+  React.useImperativeHandle(ref, () => {
     return {
       nativeElement: fullTableRef.current,
       scrollTo: config => {
@@ -876,8 +876,20 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
-export function genTable(shouldTriggerRender?: CompareProps<typeof Table>): typeof Table {
-  return makeImmutable(Table, shouldTriggerRender);
+export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
+  props: TableProps<RecordType> & { ref?: React.Ref<Reference> },
+) => React.ReactElement) & {
+  displayName?: string;
+};
+
+const RefTable = React.forwardRef(Table) as ForwardGenericTable;
+
+if (process.env.NODE_ENV !== 'production') {
+  RefTable.displayName = 'Table';
+}
+
+export function genTable(shouldTriggerRender?: CompareProps<typeof Table>) {
+  return makeImmutable(RefTable, shouldTriggerRender) as ForwardGenericTable;
 }
 
 const ImmutableTable = genTable();

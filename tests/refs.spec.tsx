@@ -34,7 +34,7 @@ describe('Table.Ref', () => {
             dataIndex: 'key',
           },
         ]}
-        reference={ref}
+        ref={ref}
         scroll={{
           y: 10,
         }}
