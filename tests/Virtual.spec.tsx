@@ -323,4 +323,77 @@ describe('Table.Virtual', () => {
       index: 99,
     });
   });
+
+  describe('auto width', () => {
+    async function prepareTable(columns: any[]) {
+      const { container } = getTable({
+        getContainerWidth: () => 300,
+        columns: columns,
+      });
+
+      resize(container.querySelector('.rc-table')!);
+      await waitFakeTimer();
+
+      return container;
+    }
+
+    it('fill rest', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 100,
+        },
+        {
+          dataIndex: 'age',
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '100px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '200px',
+      });
+    });
+
+    it('stretch', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 100,
+        },
+        {
+          dataIndex: 'age',
+          width: 100,
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '150px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '150px',
+      });
+    });
+
+    it('exceed', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 500,
+        },
+        {
+          dataIndex: 'age',
+          width: 600,
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '500px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '600px',
+      });
+    });
+  });
 });
