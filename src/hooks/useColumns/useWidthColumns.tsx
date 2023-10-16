@@ -38,7 +38,8 @@ export default function useWidthColumns(
       });
 
       // Fill width
-      let restWidth = Math.max(scrollWidth - totalWidth, missWidthCount);
+      const maxFitWidth = Math.max(scrollWidth, clientWidth);
+      let restWidth = Math.max(maxFitWidth - totalWidth, missWidthCount);
       let restCount = missWidthCount;
       const avgWidth = restWidth / missWidthCount;
 
@@ -66,8 +67,6 @@ export default function useWidthColumns(
 
         return clone;
       });
-
-      const maxFitWidth = Math.max(scrollWidth, clientWidth);
 
       // If realTotal is less than clientWidth,
       // We need extend column width
