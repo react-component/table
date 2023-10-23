@@ -1,5 +1,5 @@
+import Table, { type Reference } from 'rc-table';
 import React from 'react';
-import Table from 'rc-table';
 import '../../assets/index.less';
 
 const data = [];
@@ -12,51 +12,63 @@ for (let i = 0; i < 10; i += 1) {
   });
 }
 
-class Demo extends React.Component {
-  state = {
-    showBody: true,
+const Test = () => {
+  const tblRef = React.useRef<Reference>();
+  const [showBody, setShowBody] = React.useState(true);
+
+  const toggleBody = () => {
+    setShowBody(!showBody);
   };
 
-  toggleBody = () => {
-    this.setState(({ showBody }) => ({ showBody: !showBody }));
-  };
-
-  render() {
-    const { showBody } = this.state;
-    const columns = [
-      { title: 'title1', key: 'a', dataIndex: 'a', width: 100 },
-      { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
-      { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
-      {
-        title: (
-          <a onClick={this.toggleBody} href="#">
-            {showBody ? '隐藏' : '显示'}体
-          </a>
-        ),
-        key: 'x',
-        width: 200,
-        render() {
-          return <a href="#">Operations</a>;
-        },
+  const columns = [
+    { title: 'title1', key: 'a', dataIndex: 'a', width: 100 },
+    { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+    { title: 'title3', key: 'c', dataIndex: 'c', width: 200 },
+    {
+      title: (
+        <a onClick={toggleBody} href="#">
+          {showBody ? '隐藏' : '显示'}体
+        </a>
+      ),
+      key: 'x',
+      width: 200,
+      render() {
+        return <a href="#">Operations</a>;
       },
-    ];
-    return (
+    },
+  ];
+
+  return (
+    <div>
+      <h2>scroll body table</h2>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            top: 9999,
+          });
+        }}
+      >
+        Scroll To End
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 9,
+          });
+        }}
+      >
+        Scroll To key 9
+      </button>
       <Table
+        ref={tblRef}
         columns={columns}
         data={data}
         scroll={{ y: 300 }}
         rowKey={record => record.key}
-        onRow={(record, index) => ({ style: { backgroundColor: "red" } })}
+        onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
       />
-    );
-  }
-}
-
-const Test = () => (
-  <div>
-    <h2>scroll body table</h2>
-    <Demo />
-  </div>
-);
+    </div>
+  );
+};
 
 export default Test;

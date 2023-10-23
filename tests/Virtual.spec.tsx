@@ -4,14 +4,26 @@ import { _rs as onLibResize } from 'rc-resize-observer/lib/utils/observerUtil';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
-import { VirtualTable, type VirtualTableProps } from '../src';
+import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
+
+global.scrollToConfig = null;
 
 vi.mock('rc-virtual-list', async () => {
   const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
 
-  const WrapperVirtualList = React.forwardRef((props: any, ref) => (
-    <RealVirtualList ref={ref} {...props} data-scroll-width={props.scrollWidth} />
-  ));
+  const WrapperVirtualList = React.forwardRef((props: any, ref) => {
+    const myRef = React.useRef(null);
+
+    React.useImperativeHandle(ref, () => ({
+      ...myRef.current,
+      scrollTo: (config: any) => {
+        global.scrollToConfig = config;
+        return myRef.current.scrollTo(config);
+      },
+    }));
+
+    return <RealVirtualList ref={myRef} {...props} data-scroll-width={props.scrollWidth} />;
+  });
 
   return {
     default: WrapperVirtualList,
@@ -38,6 +50,7 @@ describe('Table.Virtual', () => {
 
   beforeEach(() => {
     scrollLeftCalled = false;
+    global.scrollToConfig = null;
     vi.useFakeTimers();
     resetWarned();
   });
@@ -64,7 +77,7 @@ describe('Table.Virtual', () => {
     });
   }
 
-  function getTable(props?: Partial<VirtualTableProps<any>>) {
+  function getTable(props?: Partial<VirtualTableProps<any>> & { ref?: React.Ref<Reference> }) {
     return render(
       <VirtualTable
         columns={[
@@ -293,6 +306,94 @@ describe('Table.Virtual', () => {
     expect(container.querySelector('.rc-virtual-list-scrollbar-horizontal')).toHaveStyle({
       position: 'sticky',
       bottom: '10px',
+    });
+  });
+
+  it('scrollTo should pass', async () => {
+    const tblRef = React.createRef<Reference>();
+    getTable({ ref: tblRef });
+
+    tblRef.current.scrollTo({
+      index: 99,
+    });
+
+    await waitFakeTimer();
+
+    expect(global.scrollToConfig).toEqual({
+      index: 99,
+    });
+  });
+
+  describe('auto width', () => {
+    async function prepareTable(columns: any[]) {
+      const { container } = getTable({
+        getContainerWidth: () => 300,
+        columns: columns,
+      });
+
+      resize(container.querySelector('.rc-table')!);
+      await waitFakeTimer();
+
+      return container;
+    }
+
+    it('fill rest', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 100,
+        },
+        {
+          dataIndex: 'age',
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '100px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '200px',
+      });
+    });
+
+    it('stretch', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 100,
+        },
+        {
+          dataIndex: 'age',
+          width: 100,
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '150px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '150px',
+      });
+    });
+
+    it('exceed', async () => {
+      const container = await prepareTable([
+        {
+          dataIndex: 'name',
+          width: 500,
+        },
+        {
+          dataIndex: 'age',
+          width: 600,
+        },
+      ]);
+
+      expect(container.querySelectorAll('col')[0]).toHaveStyle({
+        width: '500px',
+      });
+      expect(container.querySelectorAll('col')[1]).toHaveStyle({
+        width: '600px',
+      });
     });
   });
 });

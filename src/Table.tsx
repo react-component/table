@@ -64,6 +64,7 @@ import type {
   GetRowKey,
   LegacyExpandableProps,
   PanelRender,
+  Reference,
   RowClassName,
   TableComponents,
   TableLayout,
@@ -167,7 +168,10 @@ function defaultEmpty() {
   return 'No Data';
 }
 
-function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<RecordType>) {
+function Table<RecordType extends DefaultRecordType>(
+  tableProps: TableProps<RecordType>,
+  ref: React.Ref<Reference>,
+) {
   const props = {
     rowKey: 'key',
     prefixCls: DEFAULT_PREFIX,
@@ -304,11 +308,37 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
     [columns, flattenColumns],
   );
 
-  // ====================== Scroll ======================
+  // ======================= Refs =======================
   const fullTableRef = React.useRef<HTMLDivElement>();
   const scrollHeaderRef = React.useRef<HTMLDivElement>();
   const scrollBodyRef = React.useRef<HTMLDivElement>();
   const scrollBodyContainerRef = React.useRef<HTMLDivElement>();
+
+  React.useImperativeHandle(ref, () => {
+    return {
+      nativeElement: fullTableRef.current,
+      scrollTo: config => {
+        if (scrollBodyRef.current instanceof HTMLElement) {
+          // Native scroll
+          const { index, top, key } = config;
+
+          if (top) {
+            scrollBodyRef.current?.scrollTo({
+              top,
+            });
+          } else {
+            const mergedKey = key ?? getRowKey(mergedData[index]);
+            scrollBodyRef.current.querySelector(`[data-row-key="${mergedKey}"]`)?.scrollIntoView();
+          }
+        } else if ((scrollBodyRef.current as any)?.scrollTo) {
+          // Pass to proxy
+          (scrollBodyRef.current as any).scrollTo(config);
+        }
+      },
+    };
+  });
+
+  // ====================== Scroll ======================
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
@@ -846,8 +876,20 @@ function Table<RecordType extends DefaultRecordType>(tableProps: TableProps<Reco
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
-export function genTable(shouldTriggerRender?: CompareProps<typeof Table>): typeof Table {
-  return makeImmutable(Table, shouldTriggerRender);
+export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
+  props: TableProps<RecordType> & { ref?: React.Ref<Reference> },
+) => React.ReactElement) & {
+  displayName?: string;
+};
+
+const RefTable = React.forwardRef(Table) as ForwardGenericTable;
+
+if (process.env.NODE_ENV !== 'production') {
+  RefTable.displayName = 'Table';
+}
+
+export function genTable(shouldTriggerRender?: CompareProps<typeof Table>) {
+  return makeImmutable(RefTable, shouldTriggerRender) as ForwardGenericTable;
 }
 
 const ImmutableTable = genTable();
