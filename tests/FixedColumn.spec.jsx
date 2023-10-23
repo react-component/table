@@ -282,4 +282,42 @@ describe('Table.FixedColumn', () => {
     await safeAct(wrapper);
     expect(wrapper.find('.rc-table-cell-fix-left-all')).toHaveLength(10);
   });
+
+  describe('freeze column effect under multi-level header', () => {
+    let wrapper;
+
+    // freeze column data for columns
+    const customColumns = [
+      ...columns.slice(0, columns.length - 2),
+      {
+        title: 'title12',
+        children: [
+          { title: 'title13', dataIndex: 'b', key: 'k' },
+          { title: 'title14', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+        ],
+      },
+    ];
+
+    beforeEach(() => {
+      act(() => {
+        wrapper = mount(<Table columns={customColumns} data={data} />);
+      });
+    });
+
+    afterEach(() => {
+      wrapper.unmount();
+    });
+
+    it('table header only has two frozen column cells', async () => {
+      expect(wrapper.find('.rc-table-thead .rc-table-cell-fix-right-first')).toHaveLength(2);
+    });
+
+    it('freeze column cells at the end of the corresponding row', async () => {
+      const tr = wrapper.find('.rc-table-thead tr');
+
+      tr.forEach(trElement => {
+        expect(trElement.find('th').last().hasClass('rc-table-cell-fix-right-first')).toBeTruthy();
+      });
+    });
+  });
 });
