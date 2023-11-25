@@ -1,4 +1,3 @@
-import { useImmutableMark } from '@rc-component/context';
 import useMemo from 'rc-util/lib/hooks/useMemo';
 import isEqual from 'rc-util/lib/isEqual';
 import getValue from 'rc-util/lib/utils/get';
@@ -7,6 +6,7 @@ import * as React from 'react';
 import PerfContext from '../context/PerfContext';
 import type { CellType, ColumnType, DataIndex, RenderedCell } from '../interface';
 import { validateValue } from '../utils/valueUtil';
+import { useImmutableMark } from '../context/TableContext';
 
 function isRenderCell<RecordType>(
   data: React.ReactNode | RenderedCell<RecordType>,

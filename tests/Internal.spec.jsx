@@ -1,7 +1,7 @@
-import React from 'react';
 import { mount } from 'enzyme';
+import React from 'react';
 import Table from '../src';
-import { INTERNAL_HOOKS } from '../src/Table';
+import { INTERNAL_HOOKS } from '../src/constant';
 
 // All follow test is only for internal usage which should be removed when refactor
 describe('Table.Internal', () => {

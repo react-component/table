@@ -1,12 +1,12 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Table from '../src';
 import RcResizeObserver from 'rc-resize-observer';
+import Table from '../src';
 
-jest.mock('rc-util/lib/Dom/styleChecker', () => {
+vi.mock('rc-util/lib/Dom/styleChecker', () => {
   return {
     isStyleSupport: (name, val) => val !== 'sticky',
   };
@@ -42,7 +42,7 @@ describe('Table.FixedColumn', () => {
   const data = [{ a: '123', b: 'xxxxxxxx', d: 3, key: '1' }];
 
   it('not sticky', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
 
     act(() => {
@@ -59,7 +59,7 @@ describe('Table.FixedColumn', () => {
     });
 
     await act(async () => {
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
       wrapper.update();
     });

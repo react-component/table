@@ -34,7 +34,7 @@ npm start
 
 ## Example
 
-https://table.react-component.now.sh/
+https://table-react-component.vercel.app/
 
 ## Usage
 
@@ -115,6 +115,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
+| summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
 
 ## Column Props
 
@@ -129,10 +130,28 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | fixed | String \| Boolean |  | this column will be fixed when table scroll horizontally: true or 'left' or 'right' |
 | align | String |  | specify how cell content is aligned |
 | ellipsis | Boolean |  | specify whether cell content be ellipsized |
-| rowScope | 'row' \| 'rowgroup' |  | 	Set scope attribute for all cells in this column |
+| rowScope | 'row' \| 'rowgroup' |  | Set scope attribute for all cells in this column |
 | onCell | Function(record, index) |  | Set custom props per each cell. |
 | onHeaderCell | Function(record) |  | Set custom props per each header cell. |
 | render | Function(value, row, index) |  | The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan |
+
+## Summary Props
+
+### Table.Summary
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | String |  | key of this summary |
+| fixed | boolean \| 'top' \| 'bottom' | - | `true` fixes the summary row at the bottom of the table. `top` fixes the summary row at the top of the table, while `bottom` fixes it at the bottom. `undefined` or `false` makes the summary row scrollable along with the table. |
+
+### Table.Summary.Row
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | String |  | key of this summary |
+| className | String | - | className of this summary row |
+| style | React.CSSProperties | - | style of this summary row |
+| onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
 ## License
 
