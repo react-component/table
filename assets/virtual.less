@@ -1,0 +1,30 @@
+@import (reference) 'index.less';
+
+.@{tablePrefixCls}-tbody-virtual {
+  * {
+    box-sizing: border-box;
+  }
+
+  @border: 1px solid @border-color;
+  border-left: @border;
+
+  .@{tablePrefixCls}-row {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .@{tablePrefixCls}-row-extra {
+    .@{tablePrefixCls}-cell {
+      background: rgba(200, 200, 255) !important;
+    }
+  }
+
+  .@{tablePrefixCls}-cell {
+    flex: 0 0 var(--virtual-width);
+    width: var(--virtual-width);
+    padding: 8px 16px;
+    border-right: @border;
+    border-bottom: @border;
+  }
+}

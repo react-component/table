@@ -143,13 +143,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
   if (isFixRight) {
     fixedStyle.position = 'sticky';
-
     fixedStyle.right = fixRight as number;
   }
 
   // ================ RowSpan & ColSpan =================
-  const mergedColSpan = legacyCellProps?.colSpan ?? colSpan ?? additionalProps.colSpan ?? 1;
-  const mergedRowSpan = legacyCellProps?.rowSpan ?? rowSpan ?? additionalProps.rowSpan ?? 1;
+  const mergedColSpan = legacyCellProps?.colSpan ?? additionalProps.colSpan ?? colSpan ?? 1;
+  const mergedRowSpan = legacyCellProps?.rowSpan ?? additionalProps.rowSpan ?? rowSpan ?? 1;
 
   // ====================== Hover =======================
   const [hovering, onHover] = useHoverState(index, mergedRowSpan);
@@ -212,9 +211,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
 
   const mergedStyle = {
+    ...fixedStyle,
     ...additionalProps.style,
     ...alignStyle,
-    ...fixedStyle,
     ...legacyCellProps?.style,
   };
 

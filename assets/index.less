@@ -1,3 +1,5 @@
+@import 'virtual.less';
+
 @tablePrefixCls: rc-table;
 @text-color: #666;
 @font-size-base: 12px;
@@ -55,9 +57,11 @@
 
   // ================== Cell ==================
   &-cell {
+    background: #f4f4f4;
+
     &-fix-left,
     &-fix-right {
-      z-index: 1;
+      z-index: 2;
     }
 
     &-fix-right:last-child:not(&-fix-sticky) {
@@ -137,7 +141,7 @@
     }
 
     &&-row-hover {
-      background: rgba(255, 0, 0, 0.05);
+      background: #fff4f4;
     }
   }
 
@@ -282,6 +286,13 @@
     padding: @cell-padding;
     border: @border;
     border-bottom: 0;
+  }
+
+  // ================= Caption ==================
+  &-caption {
+    padding: @cell-padding;
+    border-right: @border;
+    border-bottom: @border;
   }
 
   // ================= Footer =================

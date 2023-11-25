@@ -1,19 +1,20 @@
-import * as React from 'react';
-import warning from 'rc-util/lib/warning';
 import toArray from 'rc-util/lib/Children/toArray';
+import warning from 'rc-util/lib/warning';
+import * as React from 'react';
+import { EXPAND_COLUMN } from '../../constant';
 import type {
+  ColumnGroupType,
   ColumnsType,
   ColumnType,
-  FixedType,
-  Key,
-  GetRowKey,
-  TriggerEventHandler,
-  RenderExpandIcon,
-  ColumnGroupType,
   Direction,
-} from '../interface';
-import { INTERNAL_COL_DEFINE } from '../utils/legacyUtil';
-import { EXPAND_COLUMN } from '../constant';
+  FixedType,
+  GetRowKey,
+  Key,
+  RenderExpandIcon,
+  TriggerEventHandler,
+} from '../../interface';
+import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
+import useWidthColumns from './useWidthColumns';
 
 export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
@@ -35,31 +36,37 @@ export function convertChildrenToColumns<RecordType>(
     });
 }
 
-function flatColumns<RecordType>(columns: ColumnsType<RecordType>): ColumnType<RecordType>[] {
-  return columns.reduce((list, column) => {
-    const { fixed } = column;
+function flatColumns<RecordType>(
+  columns: ColumnsType<RecordType>,
+  parentKey = 'key',
+): ColumnType<RecordType>[] {
+  return columns
+    .filter(column => column && typeof column === 'object')
+    .reduce((list, column, index) => {
+      const { fixed } = column;
+      // Convert `fixed='true'` to `fixed='left'` instead
+      const parsedFixed = fixed === true ? 'left' : fixed;
+      const mergedKey = `${parentKey}-${index}`;
 
-    // Convert `fixed='true'` to `fixed='left'` instead
-    const parsedFixed = fixed === true ? 'left' : fixed;
-
-    const subColumns = (column as ColumnGroupType<RecordType>).children;
-    if (subColumns && subColumns.length > 0) {
+      const subColumns = (column as ColumnGroupType<RecordType>).children;
+      if (subColumns && subColumns.length > 0) {
+        return [
+          ...list,
+          ...flatColumns(subColumns, mergedKey).map(subColum => ({
+            fixed: parsedFixed,
+            ...subColum,
+          })),
+        ];
+      }
       return [
         ...list,
-        ...flatColumns(subColumns).map(subColum => ({
+        {
+          key: mergedKey,
+          ...column,
           fixed: parsedFixed,
-          ...subColum,
-        })),
+        },
       ];
-    }
-    return [
-      ...list,
-      {
-        ...column,
-        fixed: parsedFixed,
-      },
-    ];
-  }, []);
+    }, []);
 }
 
 function warningFixed(flattenColumns: readonly { fixed?: FixedType }[]) {
@@ -124,6 +131,8 @@ function useColumns<RecordType>(
     expandRowByClick,
     columnWidth,
     fixed,
+    scrollWidth,
+    clientWidth,
   }: {
     prefixCls?: string;
     columns?: ColumnsType<RecordType>;
@@ -139,10 +148,16 @@ function useColumns<RecordType>(
     direction?: Direction;
     expandRowByClick?: boolean;
     columnWidth?: number | string;
+    clientWidth: number;
     fixed?: FixedType;
+    scrollWidth?: number;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
-): [ColumnsType<RecordType>, readonly ColumnType<RecordType>[]] {
+): [
+  columns: ColumnsType<RecordType>,
+  flattenColumns: readonly ColumnType<RecordType>[],
+  realScrollWidth: undefined | number,
+] {
   const baseColumns = React.useMemo<ColumnsType<RecordType>>(
     () => columns || convertChildrenToColumns(children),
     [columns, children],
@@ -257,12 +272,21 @@ function useColumns<RecordType>(
       return revertForRtl(flatColumns(mergedColumns));
     }
     return flatColumns(mergedColumns);
-  }, [mergedColumns, direction]);
+  }, [mergedColumns, direction, scrollWidth]);
+
   // Only check out of production since it's waste for each render
   if (process.env.NODE_ENV !== 'production') {
     warningFixed(direction === 'rtl' ? flattenColumns.slice().reverse() : flattenColumns);
   }
-  return [mergedColumns, flattenColumns];
+
+  // ========================= FillWidth ========================
+  const [filledColumns, realScrollWidth] = useWidthColumns(
+    flattenColumns,
+    scrollWidth,
+    clientWidth,
+  );
+
+  return [mergedColumns, filledColumns, realScrollWidth];
 }
 
 export default useColumns;

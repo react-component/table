@@ -25,6 +25,17 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+export type ScrollConfig = {
+  index?: number;
+  key?: Key;
+  top?: number;
+};
+
+export type Reference = {
+  nativeElement: HTMLDivElement;
+  scrollTo: (config: ScrollConfig) => void;
+};
+
 // ==================== Row =====================
 export type RowClassName<RecordType> = (
   record: RecordType,
@@ -80,7 +91,7 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
   children: ColumnsType<RecordType>;
 }
 
-export type AlignType = 'left' | 'center' | 'right';
+export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
@@ -116,7 +127,7 @@ export interface StickyOffsets {
 export type GetComponentProps<DataType> = (
   data: DataType,
   index?: number,
-) => React.HTMLAttributes<any> | React.TdHTMLAttributes<any>;
+) => React.HTMLAttributes<any> & React.TdHTMLAttributes<any>;
 
 type Component<P> =
   | React.ComponentType<P>
@@ -126,12 +137,17 @@ type Component<P> =
 
 export type CustomizeComponent = Component<any>;
 
+export type OnCustomizeScroll = (info: {
+  currentTarget?: HTMLElement;
+  scrollLeft?: number;
+}) => void;
+
 export type CustomizeScrollBody<RecordType> = (
   data: readonly RecordType[],
   info: {
     scrollbarSize: number;
-    ref: React.Ref<{ scrollLeft: number }>;
-    onScroll: (info: { currentTarget?: HTMLElement; scrollLeft?: number }) => void;
+    ref: React.Ref<{ scrollLeft: number; scrollTo?: (scrollConfig: ScrollConfig) => void }>;
+    onScroll: OnCustomizeScroll;
   },
 ) => React.ReactNode;
 
@@ -184,7 +200,6 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   /** @deprecated Use `expandable.childrenColumnName` instead */
   childrenColumnName?: string;
-  /** @deprecated Use `caption` instead */
   title?: PanelRender<RecordType>;
 }
 

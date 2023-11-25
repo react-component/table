@@ -1,17 +1,10 @@
-import { responseImmutable, useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
-import TableContext from '../context/TableContext';
+import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type {
-  ColumnType,
-  CustomizeComponent,
-  GetComponentProps,
-  GetRowKey,
-  Key,
-} from '../interface';
-import { getColumnsKey } from '../utils/valueUtil';
+import useRowInfo from '../hooks/useRowInfo';
+import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
 
 export interface BodyRowProps<RecordType> {
@@ -20,18 +13,77 @@ export interface BodyRowProps<RecordType> {
   renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
-  expandedKeys: Set<Key>;
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
   scopeCellComponent: CustomizeComponent;
-  onRow: GetComponentProps<RecordType>;
-  rowExpandable: (record: RecordType) => boolean;
   indent?: number;
   rowKey: React.Key;
   getRowKey: GetRowKey<RecordType>;
-  childrenColumnName: string;
 }
 
+// ==================================================================================
+// ==                                 getCellProps                                 ==
+// ==================================================================================
+export function getCellProps<RecordType>(
+  rowInfo: ReturnType<typeof useRowInfo<RecordType>>,
+  column: ColumnType<RecordType>,
+  colIndex: number,
+  indent: number,
+  index: number,
+) {
+  const {
+    record,
+    prefixCls,
+    columnsKey,
+    fixedInfoList,
+    expandIconColumnIndex,
+    nestExpandable,
+    indentSize,
+    expandIcon,
+    expanded,
+    hasNestChildren,
+    onTriggerExpand,
+  } = rowInfo;
+
+  const key = columnsKey[colIndex];
+  const fixedInfo = fixedInfoList[colIndex];
+
+  // ============= Used for nest expandable =============
+  let appendCellNode: React.ReactNode;
+  if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
+    appendCellNode = (
+      <>
+        <span
+          style={{ paddingLeft: `${indentSize * indent}px` }}
+          className={`${prefixCls}-row-indent indent-level-${indent}`}
+        />
+        {expandIcon({
+          prefixCls,
+          expanded,
+          expandable: hasNestChildren,
+          record,
+          onExpand: onTriggerExpand,
+        })}
+      </>
+    );
+  }
+
+  let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
+  if (column.onCell) {
+    additionalCellProps = column.onCell(record, index);
+  }
+
+  return {
+    key,
+    fixedInfo,
+    appendCellNode,
+    additionalCellProps: additionalCellProps || {},
+  };
+}
+
+// ==================================================================================
+// ==                                 getCellProps                                 ==
+// ==================================================================================
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
@@ -46,137 +98,58 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     index,
     renderIndex,
     rowKey,
-    rowExpandable,
-    expandedKeys,
-    onRow,
     indent = 0,
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
-    childrenColumnName,
   } = props;
+  const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
     prefixCls,
-    fixedInfoList,
     flattenColumns,
-    expandableType,
-    expandRowByClick,
-    onTriggerExpand,
-    rowClassName,
     expandedRowClassName,
-    indentSize,
-    expandIcon,
     expandedRowRender,
-    expandIconColumnIndex,
-  } = useContext(TableContext, [
-    'prefixCls',
-    'fixedInfoList',
-    'flattenColumns',
-    'expandableType',
-    'expandRowByClick',
-    'onTriggerExpand',
-    'rowClassName',
-    'expandedRowClassName',
-    'indentSize',
-    'expandIcon',
-    'expandedRowRender',
-    'expandIconColumnIndex',
-  ]);
-  const [expandRended, setExpandRended] = React.useState(false);
+    rowProps,
+
+    // Misc
+    expanded,
+    rowSupportExpand,
+  } = rowInfo;
+
+  // Force render expand row if expanded before
+  const expandedRef = React.useRef(false);
+  expandedRef.current ||= expanded;
 
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
 
-  const expanded = expandedKeys && expandedKeys.has(rowKey);
-
-  React.useEffect(() => {
-    if (expanded) {
-      setExpandRended(true);
-    }
-  }, [expanded]);
-
-  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
-  // Only when row is not expandable and `children` exist in record
-  const nestExpandable = expandableType === 'nest';
-  const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
-  const mergedExpandable = rowSupportExpand || nestExpandable;
-
-  // ======================== Expandable =========================
-  const onExpandRef = React.useRef(onTriggerExpand);
-  onExpandRef.current = onTriggerExpand;
-
-  const onInternalTriggerExpand = (...args: Parameters<typeof onTriggerExpand>) => {
-    onExpandRef.current(...args);
-  };
-
-  // =========================== onRow ===========================
-  const additionalProps = onRow?.(record, index);
-
-  const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
-    if (expandRowByClick && mergedExpandable) {
-      onInternalTriggerExpand(record, event);
-    }
-
-    additionalProps?.onClick?.(event, ...args);
-  };
-
   // ======================== Base tr row ========================
-  let computeRowClassName: string;
-  if (typeof rowClassName === 'string') {
-    computeRowClassName = rowClassName;
-  } else if (typeof rowClassName === 'function') {
-    computeRowClassName = rowClassName(record, index, indent);
-  }
-
-  const columnsKey = getColumnsKey(flattenColumns);
   const baseRowNode = (
     <RowComponent
-      {...additionalProps}
+      {...rowProps}
       data-row-key={rowKey}
       className={classNames(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
-        computeRowClassName,
-        additionalProps && additionalProps.className,
+        rowProps?.className,
       )}
       style={{
         ...style,
-        ...(additionalProps ? additionalProps.style : null),
+        ...rowProps?.style,
       }}
-      onClick={onClick}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
-        const key = columnsKey[colIndex];
-        const fixedInfo = fixedInfoList[colIndex];
-
-        // ============= Used for nest expandable =============
-        let appendCellNode: React.ReactNode;
-        if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
-          appendCellNode = (
-            <>
-              <span
-                style={{ paddingLeft: `${indentSize * indent}px` }}
-                className={`${prefixCls}-row-indent indent-level-${indent}`}
-              />
-              {expandIcon({
-                prefixCls,
-                expanded,
-                expandable: hasNestChildren,
-                record,
-                onExpand: onInternalTriggerExpand,
-              })}
-            </>
-          );
-        }
-
-        let additionalCellProps: React.HTMLAttributes<HTMLElement>;
-        if (column.onCell) {
-          additionalCellProps = column.onCell(record, index);
-        }
+        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
+          rowInfo,
+          column,
+          colIndex,
+          indent,
+          index,
+        );
 
         return (
           <Cell
@@ -193,7 +166,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             dataIndex={dataIndex}
             render={render}
             shouldCellUpdate={column.shouldCellUpdate}
-            expanded={appendCellNode && expanded}
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
@@ -205,7 +177,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement;
-  if (rowSupportExpand && (expandRended || expanded)) {
+  if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
     const computedExpandedRowClassName =
       expandedRowClassName && expandedRowClassName(record, index, indent);

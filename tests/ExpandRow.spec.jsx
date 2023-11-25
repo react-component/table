@@ -1,8 +1,9 @@
-import React from 'react';
+import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { resetWarned } from 'rc-util/lib/warning';
 import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { resetWarned } from 'rc-util/lib/warning';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Expand', () => {
@@ -22,7 +23,7 @@ describe('Table.Expand', () => {
 
   it('renders expand row correctly', () => {
     resetWarned();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const wrapper = mount(createTable({ expandedRowRender }));
     expect(wrapper.find('tbody tr')).toHaveLength(2);
     expect(errorSpy).toHaveBeenCalledWith(
@@ -32,7 +33,7 @@ describe('Table.Expand', () => {
   });
 
   it('pass proper parameters to expandedRowRender', () => {
-    const rowRender = jest.fn(() => <div>expanded row</div>);
+    const rowRender = vi.fn(() => <div>expanded row</div>);
     const expandableProps = props => ({ expandable: { expandedRowRender: rowRender, ...props } });
     const wrapper = mount(createTable(expandableProps()));
     wrapper.setProps(expandableProps({ expandedRowKeys: [0] }));
@@ -232,7 +233,7 @@ describe('Table.Expand', () => {
   describe('config expand column index', () => {
     it('not show EXPAND_COLUMN if expandable is false', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const wrapper = mount(
         createTable({
@@ -250,7 +251,7 @@ describe('Table.Expand', () => {
 
     it('renders expand icon to the specify column', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const wrapper = mount(
         createTable({
@@ -287,7 +288,7 @@ describe('Table.Expand', () => {
 
     it('de-duplicate of EXPAND_COLUMN', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const wrapper = mount(
         createTable({
@@ -400,7 +401,7 @@ describe('Table.Expand', () => {
   });
 
   it('renders expend row class correctly', () => {
-    const expandedRowClassName = jest.fn().mockReturnValue('expand-row-test-class-name');
+    const expandedRowClassName = vi.fn().mockReturnValue('expand-row-test-class-name');
     const wrapper = mount(
       createTable({
         expandable: {
@@ -431,7 +432,7 @@ describe('Table.Expand', () => {
   });
 
   it('fires expand change event', () => {
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -448,7 +449,7 @@ describe('Table.Expand', () => {
   });
 
   it('fires onExpandedRowsChange event', () => {
-    const onExpandedRowsChange = jest.fn();
+    const onExpandedRowsChange = vi.fn();
     const wrapper = mount(
       createTable({
         expandedRowRender,
@@ -473,7 +474,7 @@ describe('Table.Expand', () => {
   });
 
   it('expandRowByClick', () => {
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -533,7 +534,7 @@ describe('Table.Expand', () => {
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -561,7 +562,7 @@ describe('Table.Expand', () => {
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when `expandRowByClick` without custom `expandIcon`', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -582,7 +583,7 @@ describe('Table.Expand', () => {
 
   it('should be collapsible when `expandRowByClick` with custom `expandIcon` and event.stopPropagation', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -612,7 +613,7 @@ describe('Table.Expand', () => {
 
   it('support invalid expandIcon', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
+    const onExpand = vi.fn();
     const wrapper = mount(
       createTable({
         expandable: {
@@ -629,11 +630,25 @@ describe('Table.Expand', () => {
 
   it('warning for use `expandedRowRender` and nested table in the same time', () => {
     resetWarned();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     mount(createTable({ expandedRowRender, data: [{ children: [] }] }));
     expect(errorSpy).toHaveBeenCalledWith(
       'Warning: `expandedRowRender` should not use with nested Table',
     );
     errorSpy.mockRestore();
+  });
+
+  it('should only trigger once', () => {
+    const expandedRowRender = vi.fn(() => <p>extra data</p>);
+    render(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandedRowKeys: [0],
+        },
+      }),
+    );
+
+    expect(expandedRowRender).toHaveBeenCalledTimes(1);
   });
 });

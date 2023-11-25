@@ -1,11 +1,10 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
-import TableContext from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords from '../hooks/useFlattenRecords';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { GetComponentProps, GetRowKey, Key } from '../interface';
 import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
@@ -13,13 +12,7 @@ import MeasureRow from './MeasureRow';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
-  getRowKey: GetRowKey<RecordType>;
   measureColumnWidth: boolean;
-  expandedKeys: Set<Key>;
-  onRow: GetComponentProps<RecordType>;
-  rowExpandable: (record: RecordType) => boolean;
-  emptyNode: React.ReactNode;
-  childrenColumnName: string;
 }
 
 function Body<RecordType>(props: BodyProps<RecordType>) {
@@ -27,22 +20,26 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const {
-    data,
-    getRowKey,
-    measureColumnWidth,
-    expandedKeys,
-    onRow,
-    rowExpandable,
-    emptyNode,
-    childrenColumnName,
-  } = props;
+  const { data, measureColumnWidth } = props;
 
-  const { prefixCls, getComponent, onColumnResize, flattenColumns } = useContext(TableContext, [
+  const {
+    prefixCls,
+    getComponent,
+    onColumnResize,
+    flattenColumns,
+    getRowKey,
+    expandedKeys,
+    childrenColumnName,
+    emptyNode,
+  } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
     'onColumnResize',
     'flattenColumns',
+    'getRowKey',
+    'expandedKeys',
+    'childrenColumnName',
+    'emptyNode',
   ]);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
@@ -76,11 +73,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           rowComponent={trComponent}
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
-          expandedKeys={expandedKeys}
-          onRow={onRow}
           getRowKey={getRowKey}
-          rowExpandable={rowExpandable}
-          childrenColumnName={childrenColumnName}
           indent={indent}
         />
       );
