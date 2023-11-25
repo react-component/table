@@ -108,6 +108,6 @@ jobs:
           key: node_modules-${{ hashFiles('**/package-temp-dir/package-lock.json') }}
 
       - name: coverage
-        run: npm test -- --coverage && bash <(curl -s https://codecov.io/bash)
+        run: npm run coverage && bash <(curl -s https://codecov.io/bash)
 
     needs: setup

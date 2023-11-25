@@ -143,7 +143,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
   if (isFixRight) {
     fixedStyle.position = 'sticky';
-
     fixedStyle.right = fixRight as number;
   }
 
@@ -212,9 +211,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   }
 
   const mergedStyle = {
+    ...fixedStyle,
     ...additionalProps.style,
     ...alignStyle,
-    ...fixedStyle,
     ...legacyCellProps?.style,
   };
 

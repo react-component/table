@@ -1,10 +1,11 @@
 import { mount } from 'enzyme';
 import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
+import { VariableSizeGrid as Grid } from 'react-window';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
-import { INTERNAL_HOOKS } from '../src/Table';
+import { INTERNAL_HOOKS } from '../src/constant';
 
 describe('Table.Basic', () => {
   const data = [
@@ -358,7 +359,7 @@ describe('Table.Basic', () => {
   describe('dataIndex', () => {
     it("pass record to render when it's falsy", () => {
       [null, undefined, '', []].forEach(dataIndex => {
-        const cellRender = jest.fn();
+        const cellRender = vi.fn();
         const columns = [
           {
             title: 'Name',
@@ -504,7 +505,7 @@ describe('Table.Basic', () => {
   });
 
   it('shows error if no rowKey specify', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
     mount(createTable({ data: localData }));
     expect(spy.mock.calls[0][0]).toMatch(
@@ -595,7 +596,7 @@ describe('Table.Basic', () => {
   });
 
   it('renders onHeaderRow correctly', () => {
-    const onHeaderRow = jest.fn((columns, index) => ({
+    const onHeaderRow = vi.fn((columns, index) => ({
       id: `header-row-${index}`,
     }));
     const wrapper = mount(createTable({ onHeaderRow }));
@@ -666,7 +667,7 @@ describe('Table.Basic', () => {
     describe('scroll content', () => {
       it('with scroll', () => {
         resetWarned();
-        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
         const wrapper = mount(
           createTable({
             columns: [{ dataIndex: 'a' }, { dataIndex: 'b', width: 903 }],
@@ -683,22 +684,24 @@ describe('Table.Basic', () => {
         );
         errSpy.mockRestore();
       });
+    });
 
-      it('without scroll', () => {
-        resetWarned();
-        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-        mount(
-          createTable({
-            components: {
-              body: () => <h1>Bamboo</h1>,
-            },
-          }),
-        );
-        expect(errSpy).toHaveBeenCalledWith(
-          'Warning: `components.body` with render props is only work on `scroll.y`.',
-        );
-        errSpy.mockRestore();
-      });
+    it('without warning - columns is empty', () => {
+      resetWarned();
+      const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      mount(
+        createTable({
+          columns: [],
+          components: {
+            body: () => <h1>Bamboo</h1>,
+          },
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+      expect(errSpy).not.toHaveBeenCalledWith(
+        'Warning: When use `components.body` with render props. Each column should have a fixed `width` value.',
+      );
+      errSpy.mockRestore();
     });
 
     it('not crash', () => {
@@ -757,7 +760,7 @@ describe('Table.Basic', () => {
     let spy;
 
     beforeAll(() => {
-      spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -769,7 +772,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires row click event', () => {
-      const onClick = jest.fn();
+      const onClick = vi.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onClick }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -782,7 +785,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires double row click event', () => {
-      const onDoubleClick = jest.fn();
+      const onDoubleClick = vi.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onDoubleClick }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -795,7 +798,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires row contextmenu event', () => {
-      const onContextMenu = jest.fn();
+      const onContextMenu = vi.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onContextMenu }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -808,7 +811,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires onRowMouseEnter', () => {
-      const onMouseEnter = jest.fn();
+      const onMouseEnter = vi.fn();
       const wrapper = mount(
         createTable({
           onRow: () => ({ onMouseEnter }),
@@ -826,7 +829,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires onRowMouseLeave', () => {
-      const onMouseLeave = jest.fn();
+      const onMouseLeave = vi.fn();
       const wrapper = mount(
         createTable({
           onRow: () => ({ onMouseLeave }),
@@ -1037,7 +1040,7 @@ describe('Table.Basic', () => {
     });
 
     it('not block nest children', () => {
-      const onExpandedRowsChange = jest.fn();
+      const onExpandedRowsChange = vi.fn();
 
       const wrapper = mount(
         <Table
@@ -1197,5 +1200,124 @@ describe('Table.Basic', () => {
     expect(wrapper.find('.rc-table-cell').at(1).text()).toEqual('title3');
 
     expect(wrapper.render()).toMatchSnapshot();
+  });
+
+  it('using both column children and component body simultaneously', () => {
+    const width = 150;
+    const noChildColLen = 4;
+    const ChildColLen = 4;
+    const buildChildDataIndex = n => `col${n}`;
+    const columns = Array.from({ length: noChildColLen }, (_, i) => ({
+      title: `第 ${i} 列`,
+      dataIndex: buildChildDataIndex(i),
+      width,
+    })).concat(
+      Array.from({ length: ChildColLen }, (_, i) => ({
+        title: `第 ${i} 分组`,
+        dataIndex: `parentCol${i}`,
+        width: width * 2,
+        children: [
+          {
+            title: `第 ${noChildColLen + i} 列`,
+            dataIndex: buildChildDataIndex(noChildColLen + i),
+            width,
+          },
+          {
+            title: `第 ${noChildColLen + 1 + i} 列`,
+            dataIndex: buildChildDataIndex(noChildColLen + 1 + i),
+            width,
+          },
+        ],
+      })),
+    );
+    const data = Array.from({ length: 10000 }, (_, r) => {
+      const colLen = noChildColLen + ChildColLen * 2;
+      const record = {};
+      for (let c = 0; c < colLen; c++) {
+        record[buildChildDataIndex(c)] = `r${r}, c${c}`;
+      }
+      return record;
+    });
+    const Demo = props => {
+      const gridRef = React.useRef();
+      const [connectObject] = React.useState(() => {
+        const obj = {};
+        Object.defineProperty(obj, 'scrollLeft', {
+          get: () => {
+            if (gridRef.current) {
+              return gridRef.current?.state?.scrollLeft;
+            }
+            return null;
+          },
+          set: scrollLeft => {
+            if (gridRef.current) {
+              gridRef.current.scrollTo({ scrollLeft });
+            }
+          },
+        });
+
+        return obj;
+      });
+
+      React.useEffect(() => {
+        gridRef.current.resetAfterIndices({
+          columnIndex: 0,
+          shouldForceUpdate: false,
+        });
+      }, []);
+
+      const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
+        ref.current = connectObject;
+        return (
+          <Grid
+            ref={gridRef}
+            className="virtual-grid"
+            columnCount={columns.length}
+            columnWidth={index => {
+              const { width } = columns[index];
+              return index === columns.length - 1 ? width - scrollbarSize - 1 : width;
+            }}
+            height={300}
+            rowCount={rawData.length}
+            rowHeight={() => 50}
+            width={800}
+            onScroll={({ scrollLeft }) => {
+              onScroll({ scrollLeft });
+            }}
+          >
+            {({ columnIndex, rowIndex, style }) => (
+              <div
+                className={`virtual-cell ${
+                  columnIndex === columns.length - 1 ? 'virtual-cell-last' : ''
+                }`}
+                style={style}
+              >
+                r{rowIndex}, c{columnIndex}
+              </div>
+            )}
+          </Grid>
+        );
+      };
+
+      return (
+        <Table
+          style={{ width: 800 }}
+          tableLayout="fixed"
+          columns={props.columns}
+          data={props.data}
+          scroll={{ y: 300, x: 300 }}
+          components={{
+            body: renderVirtualList,
+          }}
+        />
+      );
+    };
+    const wrapper = mount(<Demo columns={columns} data={data} />);
+    expect(
+      wrapper
+        .find('col')
+        .at(noChildColLen + ChildColLen * 2 - 1)
+        .props().style.width + wrapper.find('col').last().props().style.width,
+    ).toEqual(width);
   });
 });

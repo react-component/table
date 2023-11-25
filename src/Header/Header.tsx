@@ -1,6 +1,6 @@
-import { responseImmutable, useContext } from '@rc-component/context';
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
-import TableContext from '../context/TableContext';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type {
   CellType,

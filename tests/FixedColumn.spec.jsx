@@ -3,13 +3,13 @@ import RcResizeObserver from 'rc-resize-observer';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { resetWarned } from 'rc-util/lib/warning';
 import { act } from 'react-dom/test-utils';
-import { safeAct } from './utils';
 import Table from '../src';
+import { safeAct } from './utils';
 
 describe('Table.FixedColumn', () => {
   let domSpy;
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   beforeAll(() => {
     domSpy = spyElementPrototypes(HTMLElement, {
@@ -70,7 +70,7 @@ describe('Table.FixedColumn', () => {
         { name: 'without data', data: [] },
       ].forEach(({ name, data: testData }) => {
         it(`${scrollName} - ${name}`, async () => {
-          jest.useFakeTimers();
+          vi.useFakeTimers();
           const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
           act(() => {
@@ -91,7 +91,7 @@ describe('Table.FixedColumn', () => {
           });
           await safeAct(wrapper);
           expect(wrapper.render()).toMatchSnapshot();
-          jest.useRealTimers();
+          vi.useRealTimers();
         });
       });
     });
@@ -107,7 +107,7 @@ describe('Table.FixedColumn', () => {
           scroll={{ x: 'max-content' }}
         />,
       );
-      
+
       await safeAct(wrapper);
 
       expect(wrapper.find('colgroup').render()).toMatchSnapshot();
@@ -193,7 +193,7 @@ describe('Table.FixedColumn', () => {
     let errorSpy;
 
     beforeAll(() => {
-      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     beforeEach(() => {
