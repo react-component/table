@@ -16,16 +16,16 @@ interface GetColumnKeyColumn {
 
 export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
   const columnKeys: React.Key[] = [];
-  const keys: Record<React.Key, boolean> = {};
+  const keys: Record<PropertyKey, boolean> = {};
 
   columns.forEach(column => {
     const { key, dataIndex } = column || {};
 
     let mergedKey = key || toArray(dataIndex).join('-') || INTERNAL_KEY_PREFIX;
-    while (keys[mergedKey]) {
+    while (keys[mergedKey as string]) {
       mergedKey = `${mergedKey}_next`;
     }
-    keys[mergedKey] = true;
+    keys[mergedKey as string] = true;
 
     columnKeys.push(mergedKey);
   });
