@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
@@ -167,7 +168,7 @@ class Demo extends React.Component {
           ({
             index,
             moveRow: this.moveRow,
-          } as any)
+          }) as any
         }
       />
     );
