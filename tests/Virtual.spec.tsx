@@ -396,4 +396,20 @@ describe('Table.Virtual', () => {
       });
     });
   });
+
+  it('components', async () => {
+    const { container } = getTable({
+      components: {
+        header: {
+          cell: function MyTh(props: any) {
+            return <th {...props} data-mark="my-th" />;
+          },
+        },
+      },
+    });
+
+    await waitFakeTimer();
+
+    expect(container.querySelector('thead th')).toHaveAttribute('data-mark', 'my-th');
+  });
 });

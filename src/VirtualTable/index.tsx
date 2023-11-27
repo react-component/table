@@ -24,7 +24,15 @@ export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordTyp
 }
 
 function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: React.Ref<Reference>) {
-  const { columns, scroll, sticky, prefixCls = DEFAULT_PREFIX, className, listItemHeight } = props;
+  const {
+    columns,
+    scroll,
+    sticky,
+    prefixCls = DEFAULT_PREFIX,
+    className,
+    listItemHeight,
+    components,
+  } = props;
 
   let { x: scrollX, y: scrollY } = scroll || {};
 
@@ -63,6 +71,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
           x: scrollX,
         }}
         components={{
+          ...components,
           body: renderBody,
         }}
         columns={columns}
