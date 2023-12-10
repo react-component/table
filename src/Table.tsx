@@ -739,7 +739,6 @@ function Table<RecordType extends DefaultRecordType>(
       </div>
     );
   }
-
   let fullTable = (
     <div
       className={classNames(prefixCls, className, {
@@ -762,7 +761,12 @@ function Table<RecordType extends DefaultRecordType>(
       {...dataProps}
     >
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-      <div ref={scrollBodyContainerRef} className={`${prefixCls}-container`}>
+      <div
+        ref={scrollBodyContainerRef}
+        className={
+          `${prefixCls}-container` + (showHeader === false ? `` : `${prefixCls}-container-header`)
+        }
+      >
         {groupTableNode}
       </div>
       {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
