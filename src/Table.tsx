@@ -764,7 +764,7 @@ function Table<RecordType extends DefaultRecordType>(
       <div
         ref={scrollBodyContainerRef}
         className={
-          `${prefixCls}-container` + (showHeader === false ? `` : `${prefixCls}-container-header`)
+          `${prefixCls}-container` + (showHeader === false ? `` : ` ${prefixCls}-container-header`)
         }
       >
         {groupTableNode}
