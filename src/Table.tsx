@@ -763,9 +763,9 @@ function Table<RecordType extends DefaultRecordType>(
       {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
       <div
         ref={scrollBodyContainerRef}
-        className={
-          `${prefixCls}-container` + (showHeader === false ? `` : ` ${prefixCls}-container-header`)
-        }
+        className={classNames(`${prefixCls}-container`, {
+          [`${prefixCls}-container-header`]: showHeader !== false,
+        })}
       >
         {groupTableNode}
       </div>
