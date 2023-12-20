@@ -153,21 +153,27 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   // ====================== Hover =======================
   const [hovering, onHover] = useHoverState(index, mergedRowSpan);
 
-  const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = event => {
-    if (record) {
-      onHover(index, index + mergedRowSpan - 1);
-    }
+  const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = React.useCallback(
+    event => {
+      if (record) {
+        onHover(index, index + mergedRowSpan - 1);
+      }
 
-    additionalProps?.onMouseEnter?.(event);
-  };
+      additionalProps?.onMouseEnter?.(event);
+    },
+    [record, onHover, index, mergedRowSpan, additionalProps?.onMouseEnter],
+  );
 
-  const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = event => {
-    if (record) {
-      onHover(-1, -1);
-    }
+  const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = React.useCallback(
+    event => {
+      if (record) {
+        onHover(-1, -1);
+      }
 
-    additionalProps?.onMouseLeave?.(event);
-  };
+      additionalProps?.onMouseLeave?.(event);
+    },
+    [record, onHover, additionalProps?.onMouseLeave],
+  );
 
   // ====================== Render ======================
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
