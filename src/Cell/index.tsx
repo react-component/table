@@ -14,6 +14,7 @@ import type {
 } from '../interface';
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
+import { useEvent } from 'rc-util';
 
 export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
@@ -153,27 +154,21 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   // ====================== Hover =======================
   const [hovering, onHover] = useHoverState(index, mergedRowSpan);
 
-  const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = React.useCallback(
-    event => {
-      if (record) {
-        onHover(index, index + mergedRowSpan - 1);
-      }
+  const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = useEvent(event => {
+    if (record) {
+      onHover(index, index + mergedRowSpan - 1);
+    }
 
-      additionalProps?.onMouseEnter?.(event);
-    },
-    [record, onHover, index, mergedRowSpan, additionalProps?.onMouseEnter],
-  );
+    additionalProps?.onMouseEnter?.(event);
+  });
 
-  const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = React.useCallback(
-    event => {
-      if (record) {
-        onHover(-1, -1);
-      }
+  const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = useEvent(event => {
+    if (record) {
+      onHover(-1, -1);
+    }
 
-      additionalProps?.onMouseLeave?.(event);
-    },
-    [record, onHover, additionalProps?.onMouseLeave],
-  );
+    additionalProps?.onMouseLeave?.(event);
+  });
 
   // ====================== Render ======================
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
