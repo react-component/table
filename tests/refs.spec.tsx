@@ -44,5 +44,17 @@ describe('Table.Ref', () => {
     });
 
     expect(scrollParam.top).toEqual(903);
+
+    // Scroll index
+    ref.current.scrollTo({
+      index: 0,
+    });
+    expect(scrollParam.top).toEqual(0);
+
+    // Scroll key
+    ref.current.scrollTo({
+      key: 'bamboo',
+    });
+    expect(scrollParam.top).toEqual(0);
   });
 });
