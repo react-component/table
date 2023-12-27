@@ -328,7 +328,16 @@ function Table<RecordType extends DefaultRecordType>(
             });
           } else {
             const mergedKey = key ?? getRowKey(mergedData[index]);
-            scrollBodyRef.current.querySelector(`[data-row-key="${mergedKey}"]`)?.scrollIntoView();
+            const { offsetTop } =
+              (scrollBodyRef.current.querySelector(
+                `[data-row-key="${mergedKey}"]`,
+              ) as HTMLElement) || {};
+
+            if (offsetTop !== undefined) {
+              scrollBodyRef.current?.scrollTo({
+                top: offsetTop,
+              });
+            }
           }
         } else if ((scrollBodyRef.current as any)?.scrollTo) {
           // Pass to proxy
