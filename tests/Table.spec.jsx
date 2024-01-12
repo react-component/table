@@ -756,6 +756,28 @@ describe('Table.Basic', () => {
     });
   });
 
+  it('hidden columns', () => {
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            title: '姓名',
+            dataIndex: 'name',
+            key: 'name',
+          },
+          {
+            title: '年龄',
+            dataIndex: 'age',
+            key: 'age',
+            hidden: true,
+          },
+        ],
+      }),
+    );
+    expect(wrapper.find('th').at(0).text()).toEqual('姓名');
+    expect(wrapper.find('th').at(1)).toHaveLength(0);
+  });
+
   describe('row events', () => {
     let spy;
 
