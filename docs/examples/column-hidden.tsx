@@ -1,6 +1,6 @@
 import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
-import React, { useState } from 'react';
+import React from 'react';
 import '../../assets/index.less';
 
 interface RecordType {
