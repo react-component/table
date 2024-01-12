@@ -36,6 +36,25 @@ export function convertChildrenToColumns<RecordType>(
     });
 }
 
+function filterHiddenColumns<RecordType>(
+  columns: ColumnsType<RecordType>,
+): ColumnsType<RecordType> {
+  return columns
+    .filter(column => column && typeof column === 'object' && !column.hidden)
+    .map(column => {
+      const subColumns = (column as ColumnGroupType<RecordType>).children;
+
+      if (subColumns && subColumns.length > 0) {
+        return {
+          ...column,
+          children: filterHiddenColumns(subColumns),
+        };
+      }
+
+      return column;
+    });
+}
+
 function flatColumns<RecordType>(
   columns: ColumnsType<RecordType>,
   parentKey = 'key',
@@ -158,10 +177,11 @@ function useColumns<RecordType>(
   flattenColumns: readonly ColumnType<RecordType>[],
   realScrollWidth: undefined | number,
 ] {
-  const baseColumns = React.useMemo<ColumnsType<RecordType>>(
-    () => columns || convertChildrenToColumns(children),
-    [columns, children],
-  );
+  const baseColumns = React.useMemo<ColumnsType<RecordType>>(() => {
+    const newColumns = columns || convertChildrenToColumns(children) || [];
+
+    return filterHiddenColumns(newColumns.slice());
+  }, [columns, children]);
 
   // ========================== Expand ==========================
   const withExpandColumns = React.useMemo<ColumnsType<RecordType>>(() => {

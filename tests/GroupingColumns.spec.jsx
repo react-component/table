@@ -154,4 +154,37 @@ describe('Table with grouping columns', () => {
     const titleA = wrapper.find('th.title-a');
     expect(titleA.prop('rowSpan')).toBe(3);
   });
+
+  it('hidden column', () => {
+    const columns = [
+      {
+        title: 'A',
+      },
+      {
+        title: 'B',
+        hidden: true,
+        children: [
+          {
+            title: 'C',
+          },
+        ],
+      },
+      {
+        title: 'D',
+        children: [
+          {
+            title: 'E',
+            hidden: true,
+          },
+          {
+            title: 'F',
+          },
+        ],
+      },
+    ];
+    const wrapper = mount(<Table columns={columns} data={[]} />);
+
+    expect(wrapper.find('thead tr').at(0).find('th').at(1).text()).toEqual('D');
+    expect(wrapper.find('thead tr').at(1).find('th').at(0).text()).toEqual('F');
+  });
 });

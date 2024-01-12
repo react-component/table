@@ -80,6 +80,7 @@ interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
   key?: Key;
   className?: string;
+  hidden?: boolean;
   fixed?: FixedType;
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: CellEllipsisType;
