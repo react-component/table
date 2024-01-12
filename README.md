@@ -109,6 +109,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | onRow | Function(record, index) |  | Set custom props per each row. |
 | onHeaderRow | Function(record, index) |  | Set custom props per each header row. |
 | showHeader | Boolean | true | whether table head is shown |
+| hidden | Boolean | `false` | Hidden column. |
 | title | Function(currentData) |  | table title render function |
 | footer | Function(currentData) |  | table footer render function |
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
