@@ -77,7 +77,7 @@ describe('Table.Virtual', () => {
     });
   }
 
-  function getTable(props?: Partial<VirtualTableProps<any>> & { ref?: React.Ref<Reference> }) {
+  function getTable(props?: Partial<VirtualTableProps<any>> & React.RefAttributes<Reference>) {
     return render(
       <VirtualTable
         columns={[

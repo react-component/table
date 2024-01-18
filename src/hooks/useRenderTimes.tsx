@@ -38,4 +38,7 @@ export const RenderBlock = React.memo(() => {
   const times = useRenderTimes();
   return <h1>Render Times: {times}</h1>;
 });
-RenderBlock.displayName = 'RenderBlock';
+
+if (process.env.NODE_ENV !== 'production') {
+  RenderBlock.displayName = 'RenderBlock';
+}

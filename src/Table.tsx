@@ -877,10 +877,8 @@ function Table<RecordType extends DefaultRecordType>(
 }
 
 export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
-  props: TableProps<RecordType> & { ref?: React.Ref<Reference> },
-) => React.ReactElement) & {
-  displayName?: string;
-};
+  props: TableProps<RecordType> & React.RefAttributes<Reference>,
+) => React.ReactElement) & { displayName?: string };
 
 const RefTable = React.forwardRef(Table) as ForwardGenericTable;
 

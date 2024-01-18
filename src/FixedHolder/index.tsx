@@ -170,7 +170,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
   );
 });
 
-FixedHolder.displayName = 'FixedHolder';
+if (process.env.NODE_ENV !== 'production') {
+  FixedHolder.displayName = 'FixedHolder';
+}
 
 /** Return a table in div as fixed element which contains sticky info */
 // export default responseImmutable(FixedHolder);

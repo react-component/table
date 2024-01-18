@@ -208,6 +208,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   );
 }
 
-BodyRow.displayName = 'BodyRow';
+if (process.env.NODE_ENV !== 'production') {
+  BodyRow.displayName = 'BodyRow';
+}
 
 export default responseImmutable(BodyRow);
