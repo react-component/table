@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import type { ColumnGroupType, ColumnType } from '@/interface';
 import Table from 'rc-table';
+import React, { useCallback, useState } from 'react';
 import '../../assets/index.less';
-import type { ColumnType } from '@/interface';
 
 interface RecordType {
   a: string;
@@ -11,9 +11,15 @@ interface RecordType {
   key: string;
 }
 
-const defaultColumns: ColumnType<RecordType>[] = [
-  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
+const defaultColumns: (ColumnType<RecordType> | ColumnGroupType<RecordType>)[] = [
+  {
+    title: 'firstGroup',
+    fixed: 'left',
+    children: [
+      { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
+      { title: 'title2', dataIndex: 'b', key: 'b', width: 100, ellipsis: true },
+    ],
+  },
   { title: 'title3', dataIndex: 'c', key: 'c' },
   { title: 'title4', dataIndex: 'b', key: 'd' },
   { title: 'title5', dataIndex: 'b', key: 'e' },
@@ -28,8 +34,13 @@ const defaultColumns: ColumnType<RecordType>[] = [
   { title: 'title16', dataIndex: 'b', key: 'j5' },
   { title: 'title17', dataIndex: 'b', key: 'j6' },
   { title: 'title18', dataIndex: 'b', key: 'j7' },
-  { title: 'title19', dataIndex: 'b', key: 'k', width: 50, fixed: 'right' },
-  { title: 'title20', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+  {
+    title: 'lastGroup',
+    children: [
+      { title: 'title19', dataIndex: 'b', key: 'k', width: 50 },
+      { title: 'title20', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
+    ],
+  },
 ];
 
 const data: RecordType[] = Array.from(new Array(200).fill(1), (v, index) => {
@@ -45,6 +56,7 @@ const Demo = () => {
   const [isShown, setIsShown] = useState(false);
   const [renderTime, setRenderTime] = useState(0);
   const [isFixed, setIsFixed] = useState(true);
+  const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
   const [columns, setColumns] = useState(defaultColumns);
   const onToggleSideBar = useCallback(() => {
     const s = window.performance.now();
@@ -82,6 +94,10 @@ const Demo = () => {
     });
   }, []);
 
+  const onLayoutChange = useCallback(() => {
+    setDirection(preState => (preState === 'ltr' ? 'rtl' : 'ltr'));
+  }, []);
+
   const expandedRowRender = useCallback(({ b, c }) => b || c, []);
 
   return (
@@ -91,6 +107,7 @@ const Demo = () => {
         <button onClick={onToggleFixed}>切换固定列</button>
         <button onClick={onRemoveColumn}>删除列</button>
         <button onClick={onAddColumn}>增加列</button>
+        <button onClick={onLayoutChange}>切换布局方向</button>
         <p>更新用时：{renderTime} ms</p>
       </div>
       <div
@@ -107,6 +124,7 @@ const Demo = () => {
         <div style={{ flex: `0 0 ${isShown ? '10px' : '80px'}` }} />
         <div style={{ flex: 1, overflow: 'hidden' }}>
           <Table
+            direction={direction}
             columns={columns}
             scroll={isFixed ? { x: 1200 } : null}
             data={data}
