@@ -54,7 +54,7 @@ function HeaderRow<RecordType>({
           flattenColumns,
           stickyOffsets,
           direction,
-          column
+          column,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;
@@ -81,6 +81,8 @@ function HeaderRow<RecordType>({
   );
 }
 
-HeaderRow.displayName = 'HeaderRow';
+if (process.env.NODE_ENV !== 'production') {
+  HeaderRow.displayName = 'HeaderRow';
+}
 
 export default HeaderRow;

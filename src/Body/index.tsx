@@ -114,6 +114,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   );
 }
 
-Body.displayName = 'Body';
+if (process.env.NODE_ENV !== 'production') {
+  Body.displayName = 'Body';
+}
 
 export default responseImmutable(Body);
