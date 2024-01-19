@@ -1142,6 +1142,44 @@ describe('Table.Basic', () => {
       expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
     });
   });
+
+  it('when disabledHover is true', () => {
+    const tColumns = [
+      {
+        title: 'Key',
+        dataIndex: 'key',
+      },
+    ];
+
+    const tData = [
+      { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
+      { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
+    ];
+    const wrapper = mount(
+      <Table
+        columns={tColumns}
+        expandable={{ defaultExpandAllRows: true }}
+        data={tData}
+        disabledHover
+      />,
+    );
+
+    const trs = wrapper.find('tr.rc-table-row');
+
+    trs.forEach((tr, index) => {
+      tr.find('td.rc-table-cell').at(0).simulate('mouseEnter');
+      const currentClassName = wrapper
+        .find('tr.rc-table-row')
+        .at(index)
+        .find('td.rc-table-cell')
+        .at(0)
+        .getElement().props.className;
+
+      expect(currentClassName.includes('rc-table-cell-row-hover')).toEqual(false);
+      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(0);
+    });
+  });
+
   it('should get scrollbar size', () => {
     const tColumns = [{ title: 'Name', dataIndex: 'name', key: 'name', width: 100 }];
     const wrapper = mount(
