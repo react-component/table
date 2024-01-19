@@ -66,6 +66,8 @@ export interface TableContextProps<RecordType = any> {
   expandedKeys: Set<React.Key>;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
+
+  disabledHover?: boolean;
 }
 
 const TableContext = createContext<TableContextProps>();
