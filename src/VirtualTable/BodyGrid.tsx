@@ -225,7 +225,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemHeight={listItemHeight || 24}
         data={flattenData}
         itemKey={item => getRowKey(item.record)}
-        component={wrapperComponent || 'div'}
+        component={wrapperComponent}
         scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
           onScroll({
