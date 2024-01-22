@@ -1,13 +1,14 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
-import { warning } from 'rc-util';
+import { useEvent, warning } from 'rc-util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import { makeImmutable } from '../context/TableContext';
-import type { CustomizeScrollBody, Reference } from '../interface';
+import type { CustomizeScrollBody, GetComponent, Reference } from '../interface';
 import Table, { DEFAULT_PREFIX, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
+import getValue from 'rc-util/lib/utils/get';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
@@ -54,10 +55,14 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
     }
   }
 
+  const getComponent = useEvent<GetComponent>(
+    (path, defaultComponent) => getValue(components, path) || defaultComponent,
+  );
+
   // ========================= Context ==========================
   const context = React.useMemo(
-    () => ({ sticky, scrollY, listItemHeight }),
-    [sticky, scrollY, listItemHeight],
+    () => ({ sticky, scrollY, listItemHeight, getComponent }),
+    [sticky, scrollY, listItemHeight, getComponent],
   );
 
   // ========================== Render ==========================
