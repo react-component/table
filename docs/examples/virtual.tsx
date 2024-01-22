@@ -227,11 +227,6 @@ const Demo = () => {
         }}
         // onRow={() => ({ className: 'rowed' })}
         rowClassName="nice-try"
-        components={{
-          body: {
-            wrapper: Wrapper,
-          },
-        }}
         getContainerWidth={(ele, width) => {
           // Minus border
           const borderWidth = getComputedStyle(
@@ -246,11 +241,5 @@ const Demo = () => {
     </div>
   );
 };
-
-const Wrapper = React.forwardRef((props, ref) => (
-  <div {...props} ref={ref}>
-    123
-  </div>
-));
 
 export default Demo;
