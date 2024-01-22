@@ -4,7 +4,7 @@ import * as React from 'react';
 import { getCellProps } from '../Body/BodyRow';
 import Cell from '../Cell';
 import type useRowInfo from '../hooks/useRowInfo';
-import type { ColumnType } from '../interface';
+import type { ColumnType, CustomizeComponent } from '../interface';
 import { GridContext } from './context';
 
 export interface VirtualCellProps<RecordType> {
@@ -13,6 +13,7 @@ export interface VirtualCellProps<RecordType> {
   colIndex: number;
   indent: number;
   index: number;
+  component?: CustomizeComponent;
   /** Used for `column.render` */
   renderIndex: number;
   record: RecordType;
@@ -42,6 +43,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     colIndex,
     indent,
     index,
+    component,
     renderIndex,
     record,
     style,
@@ -114,7 +116,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
       ellipsis={column.ellipsis}
       align={column.align}
       scope={column.rowScope}
-      component="div"
+      component={component}
       prefixCls={rowInfo.prefixCls}
       key={key}
       record={record}
