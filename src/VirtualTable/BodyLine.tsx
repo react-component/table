@@ -6,6 +6,7 @@ import TableContext, { responseImmutable } from '../context/TableContext';
 import type { FlattenData } from '../hooks/useFlattenRecords';
 import useRowInfo from '../hooks/useRowInfo';
 import VirtualCell from './VirtualCell';
+import { StaticContext } from './context';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -27,8 +28,12 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     TableContext,
     ['prefixCls', 'flattenColumns', 'fixColumn', 'componentWidth', 'scrollX'],
   );
+  const { getComponent } = useContext(StaticContext, ['getComponent']);
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
+
+  const RowComponent = getComponent(['body', 'row'], 'div');
+  const cellComponent = getComponent(['body', 'cell'], 'div');
 
   // ========================== Expand ==========================
   const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
@@ -50,7 +55,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     const rowCellCls = `${prefixCls}-expanded-row-cell`;
 
     expandRowNode = (
-      <div
+      <RowComponent
         className={classNames(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
@@ -58,7 +63,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         )}
       >
         <Cell
-          component="div"
+          component={cellComponent}
           prefixCls={prefixCls}
           className={classNames(rowCellCls, {
             [`${rowCellCls}-fixed`]: fixColumn,
@@ -67,12 +72,11 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         >
           {expandContent}
         </Cell>
-      </div>
+      </RowComponent>
     );
   }
 
   // ========================== Render ==========================
-
   const rowStyle: React.CSSProperties = {
     ...style,
     width: scrollX as number,
@@ -84,7 +88,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   }
 
   const rowNode = (
-    <div
+    <RowComponent
       {...rowProps}
       {...restProps}
       ref={rowSupportExpand ? null : ref}
@@ -97,6 +101,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         return (
           <VirtualCell
             key={colIndex}
+            component={cellComponent}
             rowInfo={rowInfo}
             column={column}
             colIndex={colIndex}
@@ -109,7 +114,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
           />
         );
       })}
-    </div>
+    </RowComponent>
   );
 
   if (rowSupportExpand) {

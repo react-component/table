@@ -1,10 +1,11 @@
 import { createContext } from '@rc-component/context';
-import type { TableSticky } from '../interface';
+import type { GetComponent, TableSticky } from '../interface';
 
 export interface StaticContextProps {
   scrollY: number;
   listItemHeight: number;
   sticky: boolean | TableSticky;
+  getComponent: GetComponent;
 }
 
 export const StaticContext = createContext<StaticContextProps>(null);

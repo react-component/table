@@ -398,6 +398,10 @@ describe('Table.Virtual', () => {
   });
 
   it('components', async () => {
+    const Wrapper = React.forwardRef((props, ref: React.Ref<HTMLDivElement>) => (
+      <div {...props} ref={ref} data-mark="my-wrapper" />
+    ));
+
     const { container } = getTable({
       components: {
         header: {
@@ -405,11 +409,25 @@ describe('Table.Virtual', () => {
             return <th {...props} data-mark="my-th" />;
           },
         },
+        body: {
+          wrapper: Wrapper,
+          row: (props: any) => <div {...props} data-mark="my-row" />,
+          cell: (props: any) => <div {...props} data-mark="my-cell" />,
+        },
       },
     });
 
     await waitFakeTimer();
 
     expect(container.querySelector('thead th')).toHaveAttribute('data-mark', 'my-th');
+    expect(container.querySelector('.rc-virtual-list-holder')).toHaveAttribute(
+      'data-mark',
+      'my-wrapper',
+    );
+    expect(container.querySelector('.rc-table-row')).toHaveAttribute('data-mark', 'my-row');
+    expect(container.querySelector('.rc-table-row .rc-table-cell')).toHaveAttribute(
+      'data-mark',
+      'my-cell',
+    );
   });
 });

@@ -41,7 +41,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'emptyNode',
     'scrollX',
   ]);
-  const { sticky, scrollY, listItemHeight } = useContext(StaticContext);
+  const { sticky, scrollY, listItemHeight, getComponent } = useContext(StaticContext);
 
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
@@ -198,6 +198,11 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
+  // default 'div' in rc-virtual-list
+  const wrapperComponent = getComponent(['body', 'wrapper']);
+  const RowComponent = getComponent(['body', 'row'], 'div');
+  const cellComponent = getComponent(['body', 'cell'], 'div');
+
   let bodyContent: React.ReactNode;
   if (flattenData.length) {
     // ========================== Sticky Scroll Bar ==========================
@@ -220,6 +225,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemHeight={listItemHeight || 24}
         data={flattenData}
         itemKey={item => getRowKey(item.record)}
+        component={wrapperComponent}
         scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
           onScroll({
@@ -236,11 +242,11 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     );
   } else {
     bodyContent = (
-      <div className={classNames(`${prefixCls}-placeholder`)}>
-        <Cell component="div" prefixCls={prefixCls}>
+      <RowComponent className={classNames(`${prefixCls}-placeholder`)}>
+        <Cell component={cellComponent} prefixCls={prefixCls}>
           {emptyNode}
         </Cell>
-      </div>
+      </RowComponent>
     );
   }
 
