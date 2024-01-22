@@ -17,7 +17,7 @@ const Demo = () => {
     },
   ];
 
-  return <Table<RecordType> columns={columns} data={data} disabledHover />;
+  return <Table<RecordType> columns={columns} data={data} rowHoverable={false} />;
 };
 
 export default Demo;

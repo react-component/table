@@ -1,8 +1,8 @@
 ---
-title: disabled-hover
+title: row-hoverable
 nav:
   title: Demo
   path: /demo
 ---
 
-<code src="../examples/disabled-hover.tsx"></code>
+<code src="../examples/row-hoverable.tsx"></code>

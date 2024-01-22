@@ -1143,7 +1143,7 @@ describe('Table.Basic', () => {
     });
   });
 
-  it('when disabledHover is true', () => {
+  it('when rowHoverable is false', () => {
     const tColumns = [
       {
         title: 'Key',
@@ -1160,7 +1160,7 @@ describe('Table.Basic', () => {
         columns={tColumns}
         expandable={{ defaultExpandAllRows: true }}
         data={tData}
-        disabledHover
+        rowHoverable={false}
       />,
     );
 

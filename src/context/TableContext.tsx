@@ -67,7 +67,7 @@ export interface TableContextProps<RecordType = any> {
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
 
-  disabledHover?: boolean;
+  rowHoverable?: boolean;
 }
 
 const TableContext = createContext<TableContextProps>();
