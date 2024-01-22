@@ -28,7 +28,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     TableContext,
     ['prefixCls', 'flattenColumns', 'fixColumn', 'componentWidth', 'scrollX'],
   );
-  const { getComponent } = useContext(StaticContext);
+  const { getComponent } = useContext(StaticContext, ['getComponent']);
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
 

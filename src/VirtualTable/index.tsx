@@ -1,6 +1,6 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
-import { warning } from 'rc-util';
+import { useEvent, warning } from 'rc-util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import { makeImmutable } from '../context/TableContext';
@@ -55,9 +55,8 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
     }
   }
 
-  const getComponent = React.useCallback<GetComponent>(
+  const getComponent = useEvent<GetComponent>(
     (path, defaultComponent) => getValue(components, path) || defaultComponent,
-    [components],
   );
 
   // ========================= Context ==========================
