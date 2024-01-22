@@ -415,6 +415,24 @@ describe('Table.Expand', () => {
     expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
   });
 
+  it('renders expend row class correctly using children without expandedRowRender', () => {
+    const expandedRowClassName = vi.fn().mockReturnValue('expand-row-test-class-name');
+
+    const _data = [{ ...sampleData[0], children: [sampleData[1]] }];
+
+    const wrapper = mount(
+      createTable({
+        data: _data,
+        expandable: {
+          expandedRowKeys: [0],
+          expandedRowClassName,
+        },
+      }),
+    );
+
+    expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
+  });
+
   it('renders expend column title', () => {
     const wrapper = mount(
       createTable({
