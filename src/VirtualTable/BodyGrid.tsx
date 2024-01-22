@@ -198,7 +198,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
-  const wrapperComponent = getComponent(['body', 'wrapper'], 'div');
+  // default 'div' in rc-virtual-list
+  const wrapperComponent = getComponent(['body', 'wrapper']);
   const RowComponent = getComponent(['body', 'row'], 'div');
   const cellComponent = getComponent(['body', 'cell'], 'div');
 
@@ -224,7 +225,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemHeight={listItemHeight || 24}
         data={flattenData}
         itemKey={item => getRowKey(item.record)}
-        component={wrapperComponent}
+        component={wrapperComponent || 'div'}
         scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
           onScroll({
