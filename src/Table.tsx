@@ -348,7 +348,7 @@ function Table<RecordType extends DefaultRecordType>(
   const colsKeys = getColumnsKey(flattenColumns);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
-  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
