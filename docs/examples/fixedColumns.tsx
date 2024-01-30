@@ -13,8 +13,8 @@ interface RecordType {
 
 const columns: ColumnType<RecordType>[] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, ellipsis: true },
-  { title: 'title3', dataIndex: 'c', key: 'c', fixed: 'left' },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left', ellipsis: true },
+  { title: 'title3', dataIndex: 'c', key: 'c' },
   { title: 'title4', dataIndex: 'b', key: 'd' },
   { title: 'title5', dataIndex: 'b', key: 'e' },
   { title: 'title6', dataIndex: 'b', key: 'f' },
@@ -33,7 +33,7 @@ const columns: ColumnType<RecordType>[] = [
   },
   { title: 'title8', dataIndex: 'b', key: 'h' },
   { title: 'title9', dataIndex: 'b', key: 'i' },
-  { title: 'title10', dataIndex: 'b', key: 'j', fixed: 'right' },
+  { title: 'title10', dataIndex: 'b', key: 'j' },
   { title: 'title11', dataIndex: 'b', key: 'k', width: 50 },
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];

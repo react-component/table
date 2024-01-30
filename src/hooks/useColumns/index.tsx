@@ -273,10 +273,16 @@ function useColumns<RecordType>(
 
   // ========================= Gap Fixed ========================
   const hasGapFixed = React.useMemo(() => {
-    // Fixed: left
-    const lastLeftIndex = flattenColumns.findLastIndex(
-      ({ fixed: colFixed }) => colFixed === 'left' || colFixed === true,
-    );
+    // Fixed: left, since old browser not support `findLastIndex`, we should use reverse loop
+    let lastLeftIndex = -1;
+    for (let i = flattenColumns.length - 1; i >= 0; i -= 1) {
+      const colFixed = flattenColumns[i].fixed;
+      if (colFixed === 'left' || colFixed === true) {
+        lastLeftIndex = i;
+        break;
+      }
+    }
+
     if (lastLeftIndex >= 0) {
       for (let i = 0; i <= lastLeftIndex; i += 1) {
         const colFixed = flattenColumns[i].fixed;
