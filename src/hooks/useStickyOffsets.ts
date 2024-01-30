@@ -49,7 +49,13 @@ function useStickyOffsets<RecordType>(
 
       for (let i = startIndex; i !== endIndex; i += offset) {
         offsets.push(total);
-        total += colWidths[i] || 0;
+
+        const col = flattenColumns[i];
+        console.log(i, col);
+
+        if (col.fixed) {
+          total += colWidths[i] || 0;
+        }
       }
 
       return offsets;
@@ -58,9 +64,9 @@ function useStickyOffsets<RecordType>(
     const startOffsets = getOffsets(0, columnCount, 1);
     const endOffsets = getOffsets(columnCount - 1, -1, -1).reverse();
 
-    console.log('flattenColumns', flattenColumns);
-    console.log('startOffsets', startOffsets);
-    console.log('endOffsets', endOffsets);
+    // console.log('flattenColumns', flattenColumns);
+    // console.log('startOffsets', startOffsets);
+    // console.log('endOffsets', endOffsets);
 
     return direction === 'rtl'
       ? {
