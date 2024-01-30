@@ -280,7 +280,7 @@ function Table<RecordType extends DefaultRecordType>(
   const scrollX = scroll?.x;
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns, flattenScrollX] = useColumns(
+  const [columns, flattenColumns, flattenScrollX, gapFixed] = useColumns(
     {
       ...props,
       ...expandableConfig,
@@ -750,6 +750,7 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-fixed-header`]: fixHeader,
         /** No used but for compatible */
         [`${prefixCls}-fixed-column`]: fixColumn,
+        [`${prefixCls}-fixed-column-gapped`]: fixColumn && gapFixed,
         [`${prefixCls}-scroll-horizontal`]: horizonScroll,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:
