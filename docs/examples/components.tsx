@@ -12,10 +12,9 @@ for (let i = 0; i < 100; i += 1) {
 }
 
 const table = (props: any) => {
-  console.log('props', props);
   return (
     <>
-      <div style={{ background: '#fff' }}>111</div>
+      <div style={{ background: '#fff' }}>header table</div>
       <table className={props.className}>{props.children}</table>
     </>
   );
