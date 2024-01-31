@@ -294,20 +294,7 @@ describe('Table.FixedColumn', () => {
           </>
         );
       };
-      const { container } = render(
-        <Table
-          sticky
-          components={{ header: { table } }}
-          columns={[{ title: 'Name', dataIndex: 'name', key: 'name' }]}
-          data={[{}]}
-        />,
-      );
-
-      await act(async () => {
-        vi.runAllTimers();
-        await Promise.resolve();
-      });
-
+      const { container } = render(<Table sticky components={{ header: { table } }} />);
       expect(container.querySelector('.healer-table')).toBeTruthy();
     });
   });
