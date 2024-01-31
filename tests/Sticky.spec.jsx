@@ -435,4 +435,18 @@ describe('Table.Sticky', () => {
     mockFn.mockRestore();
     vi.useRealTimers();
   });
+
+  it('components.table', () => {
+    const table = props => {
+      return (
+        <>
+          <div className="healer-table">header table</div>
+          <table className={props.className}>{props.children}</table>
+        </>
+      );
+    };
+    const wrapper = mount(createTable({ components: { header: { table } } }));
+
+    expect(wrapper.exists('.healer-table')).toBeTruthy();
+  });
 });
