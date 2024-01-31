@@ -63,11 +63,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
     ...restProps
   } = props;
 
-  const { prefixCls, scrollbarSize, isSticky } = useContext(TableContext, [
+  const { prefixCls, scrollbarSize, isSticky, getComponent } = useContext(TableContext, [
     'prefixCls',
     'scrollbarSize',
     'isSticky',
+    'getComponent',
   ]);
+  const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
 
@@ -146,7 +148,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
         [stickyClassName]: !!stickyClassName,
       })}
     >
-      <table
+      <TableComponent
         style={{
           tableLayout: 'fixed',
           visibility: noData || mergedColumnWidth ? null : 'hidden',
@@ -165,7 +167,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
           columns: columnsWithScrollbar,
           flattenColumns: flattenColumnsWithScrollbar,
         })}
-      </table>
+      </TableComponent>
     </div>
   );
 });
