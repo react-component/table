@@ -284,4 +284,31 @@ describe('Table.FixedColumn', () => {
       });
     });
   });
+  describe('components.table by sticky', () => {
+    it('render', async () => {
+      const table = props => {
+        return (
+          <>
+            <div className="healer-table">header table</div>
+            <table className={props.className}>{props.children}</table>
+          </>
+        );
+      };
+      const { container } = render(
+        <Table
+          sticky
+          components={{ header: { table } }}
+          columns={[{ title: 'Name', dataIndex: 'name', key: 'name' }]}
+          data={[{}]}
+        />,
+      );
+
+      await act(async () => {
+        vi.runAllTimers();
+        await Promise.resolve();
+      });
+
+      expect(container.querySelector('.healer-table')).toBeTruthy();
+    });
+  });
 });
