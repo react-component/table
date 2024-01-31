@@ -5,6 +5,10 @@ import { act } from 'react-dom/test-utils';
 import Table from '../src';
 import { safeAct } from './utils';
 
+const data = [
+  { key: 'key0', name: 'Lucy' },
+  { key: 'key1', name: 'Jack' },
+];
 const createTable = props => {
   const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
