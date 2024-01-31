@@ -5,6 +5,12 @@ import { act } from 'react-dom/test-utils';
 import Table from '../src';
 import { safeAct } from './utils';
 
+const createTable = props => {
+  const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
+
+  return <Table columns={columns} data={data} {...props} />;
+};
+
 describe('Table.Sticky', () => {
   beforeEach(() => {
     vi.useFakeTimers();
