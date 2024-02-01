@@ -18,21 +18,20 @@ export interface RowProps<RecordType> {
   flattenColumns: readonly ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
-  tdCellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
 }
 
-function HeaderRow<RecordType>({
-  cells,
-  stickyOffsets,
-  flattenColumns,
-  rowComponent: RowComponent,
-  cellComponent: CellComponent,
-  tdCellComponent,
-  onHeaderRow,
-  index,
-}: RowProps<RecordType>) {
+const HeaderRow = <RecordType,>(props: RowProps<RecordType>) => {
+  const {
+    cells,
+    stickyOffsets,
+    flattenColumns,
+    rowComponent: RowComponent,
+    cellComponent: CellComponent,
+    onHeaderRow,
+    index,
+  } = props;
   const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
@@ -68,7 +67,7 @@ function HeaderRow<RecordType>({
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
-            component={column.title ? CellComponent : tdCellComponent}
+            component={CellComponent}
             prefixCls={prefixCls}
             key={columnsKey[cellIndex]}
             {...fixedInfo}
@@ -79,7 +78,7 @@ function HeaderRow<RecordType>({
       })}
     </RowComponent>
   );
-}
+};
 
 if (process.env.NODE_ENV !== 'production') {
   HeaderRow.displayName = 'HeaderRow';
