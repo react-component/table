@@ -319,8 +319,8 @@ describe('Table.Basic', () => {
       }),
     );
 
-    expect(wrapper.find('thead td')).toHaveLength(1);
-    expect(wrapper.find('thead th')).toHaveLength(1);
+    expect(wrapper.find('thead td')).toHaveLength(0);
+    expect(wrapper.find('thead th')).toHaveLength(2);
   });
 
   it('renders column correctly', () => {

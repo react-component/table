@@ -2068,7 +2068,7 @@ LoadedCheerio {
               >
                 title12
               </th>
-              <td
+              <th
                 class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
                 style="position: sticky; right: 0px;"
               />
@@ -2941,7 +2941,7 @@ LoadedCheerio {
               >
                 title12
               </th>
-              <td
+              <th
                 class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
                 style="position: sticky; right: 0px;"
               />
