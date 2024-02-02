@@ -90,7 +90,7 @@ export interface HeaderProps<RecordType> {
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
 }
 
-const Header = <RecordType,>(props: HeaderProps<RecordType>) => {
+const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -103,11 +103,10 @@ const Header = <RecordType,>(props: HeaderProps<RecordType>) => {
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
   const thComponent = getComponent(['header', 'cell'], 'th');
-  // const tdComponent = getComponent(['header', 'cell'], 'td');
 
   return (
     <WrapperComponent className={`${prefixCls}-thead`}>
-      {rows.map<React.ReactNode>((row, rowIndex) => {
+      {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
             key={rowIndex}

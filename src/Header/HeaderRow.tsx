@@ -22,7 +22,7 @@ export interface RowProps<RecordType> {
   index: number;
 }
 
-const HeaderRow = <RecordType,>(props: RowProps<RecordType>) => {
+const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
   const {
     cells,
     stickyOffsets,
