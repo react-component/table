@@ -155,6 +155,7 @@ export type CustomizeScrollBody<RecordType> = (
 export interface TableComponents<RecordType> {
   table?: CustomizeComponent;
   header?: {
+    table?: CustomizeComponent;
     wrapper?: CustomizeComponent;
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
