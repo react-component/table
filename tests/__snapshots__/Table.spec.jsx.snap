@@ -394,13 +394,13 @@ LoadedCheerio {
             class="rc-table-thead"
           >
             <tr>
-              <td
+              <th
                 class="rc-table-cell"
               />
-              <td
+              <th
                 class="rc-table-cell"
               />
-              <td
+              <th
                 class="rc-table-cell rc-table-cell-scrollbar"
               />
             </tr>
@@ -1021,7 +1021,7 @@ LoadedCheerio {
             class="rc-table-thead"
           >
             <tr>
-              <td
+              <th
                 class="rc-table-cell"
               />
             </tr>
@@ -1212,7 +1212,7 @@ LoadedCheerio {
               >
                 Name
               </th>
-              <td
+              <th
                 class="rc-table-cell rc-table-cell-scrollbar"
               />
             </tr>

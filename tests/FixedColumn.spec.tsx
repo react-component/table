@@ -276,10 +276,10 @@ describe('Table.FixedColumn', () => {
       });
 
       expect(container.querySelectorAll('tbody .rc-table-cell-fix-left')).toHaveLength(2);
-      expect(container.querySelectorAll('thead td')[1]).toHaveStyle({
+      expect(container.querySelectorAll('thead th')[1]).toHaveStyle({
         left: '0px',
       });
-      expect(container.querySelectorAll('thead td')[2]).toHaveStyle({
+      expect(container.querySelectorAll('thead th')[2]).toHaveStyle({
         left: '1000px',
       });
     });
