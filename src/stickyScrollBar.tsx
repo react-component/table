@@ -118,6 +118,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   React.useImperativeHandle(ref, () => ({
     setScrollLeft,
+    checkScrollBarVisible,
   }));
 
   React.useEffect(() => {
@@ -139,20 +140,6 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       onResizeListener.remove();
     };
   }, [container]);
-
-  React.useEffect(() => {
-    if (!scrollBodyRef.current) {
-      return;
-    }
-    const observer = new ResizeObserver(() => {
-      checkScrollBarVisible();
-    });
-    observer.observe(scrollBodyRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   React.useEffect(() => {
     if (!scrollState.isHiddenScrollBar) {
