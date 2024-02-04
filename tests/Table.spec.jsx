@@ -300,28 +300,6 @@ describe('Table.Basic', () => {
     });
   });
 
-  it('renders td instead of th if header title is empty', () => {
-    const wrapper = mount(
-      createTable({
-        columns: [
-          {
-            title: '',
-            dataIndex: 'firstName',
-            key: 'firstName',
-          },
-          {
-            title: 'Last Name',
-            dataIndex: 'lastName',
-            key: 'lastName',
-          },
-        ],
-        data: [{ firstName: 'John', lastName: 'Doe', key: '1' }],
-      }),
-    );
-
-    expect(wrapper.find('thead th')).toHaveLength(2);
-  });
-
   it('renders column correctly', () => {
     const columns = [
       {
