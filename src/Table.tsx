@@ -357,8 +357,6 @@ function Table<RecordType extends DefaultRecordType>(
   const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
   const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
     useSticky(sticky, prefixCls);
-  const showStickyScrollbar =
-    isSticky && scrollBodyRef.current && scrollBodyRef.current instanceof Element;
 
   // Footer (Fix footer must fixed header)
   const summaryNode = React.useMemo(() => summary?.(mergedData), [summary, mergedData]);
@@ -701,7 +699,7 @@ function Table<RecordType extends DefaultRecordType>(
           </FixedHolder>
         )}
 
-        {showStickyScrollbar && (
+        {isSticky && scrollBodyRef.current && scrollBodyRef.current instanceof Element && (
           <StickyScrollBar
             ref={stickyRef}
             offsetScroll={offsetScroll}
