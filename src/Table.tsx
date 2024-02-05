@@ -354,10 +354,7 @@ function Table<RecordType extends DefaultRecordType>(
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
-  const stickyRef = React.useRef<{
-    setScrollLeft: (left: number) => void;
-    checkScrollBarVisible: () => void;
-  }>();
+  const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
   const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
     useSticky(sticky, prefixCls);
   const showStickyScrollbar =
@@ -631,41 +628,36 @@ function Table<RecordType extends DefaultRecordType>(
       }) as number[];
     } else {
       bodyContent = (
-        <ResizeObserver
-          disabled={!showStickyScrollbar}
-          onResize={() => stickyRef.current?.checkScrollBarVisible()}
+        <div
+          style={{
+            ...scrollXStyle,
+            ...scrollYStyle,
+          }}
+          onScroll={onScroll}
+          ref={scrollBodyRef}
+          className={classNames(`${prefixCls}-body`)}
         >
-          <div
+          <TableComponent
             style={{
-              ...scrollXStyle,
-              ...scrollYStyle,
+              ...scrollTableStyle,
+              tableLayout: mergedTableLayout,
             }}
-            onScroll={onScroll}
-            ref={scrollBodyRef}
-            className={classNames(`${prefixCls}-body`)}
+            {...ariaProps}
           >
-            <TableComponent
-              style={{
-                ...scrollTableStyle,
-                tableLayout: mergedTableLayout,
-              }}
-              {...ariaProps}
-            >
-              {captionElement}
-              {bodyColGroup}
-              {bodyTable}
-              {!fixFooter && summaryNode && (
-                <Footer
-                  stickyOffsets={stickyOffsets}
-                  flattenColumns={flattenColumns}
-                  columns={columns}
-                >
-                  {summaryNode}
-                </Footer>
-              )}
-            </TableComponent>
-          </div>
-        </ResizeObserver>
+            {captionElement}
+            {bodyColGroup}
+            {bodyTable}
+            {!fixFooter && summaryNode && (
+              <Footer
+                stickyOffsets={stickyOffsets}
+                flattenColumns={flattenColumns}
+                columns={columns}
+              >
+                {summaryNode}
+              </Footer>
+            )}
+          </TableComponent>
+        </div>
       );
     }
 
@@ -716,6 +708,7 @@ function Table<RecordType extends DefaultRecordType>(
             scrollBodyRef={scrollBodyRef}
             onScroll={onScroll}
             container={container}
+            data={data}
           />
         )}
       </>
