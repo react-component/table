@@ -12,10 +12,11 @@ interface StickyScrollBarProps {
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
   container: HTMLElement | Window;
+  data?: readonly any[];
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container },
+  { scrollBodyRef, onScroll, offsetScroll, container, data },
   ref,
 ) => {
   const prefixCls = useContext(TableContext, 'prefixCls');
@@ -80,7 +81,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     refState.current.x = event.pageX;
   };
 
-  const onContainerScroll = () => {
+  const checkScrollBarVisible = () => {
     if (!scrollBodyRef.current) {
       return;
     }
@@ -123,7 +124,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   React.useEffect(() => {
     const onMouseUpListener = addEventListener(document.body, 'mouseup', onMouseUp, false);
     const onMouseMoveListener = addEventListener(document.body, 'mousemove', onMouseMove, false);
-    onContainerScroll();
+    checkScrollBarVisible();
     return () => {
       onMouseUpListener.remove();
       onMouseMoveListener.remove();
@@ -131,8 +132,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }, [scrollBarWidth, isActive]);
 
   React.useEffect(() => {
-    const onScrollListener = addEventListener(container, 'scroll', onContainerScroll, false);
-    const onResizeListener = addEventListener(window, 'resize', onContainerScroll, false);
+    const onScrollListener = addEventListener(container, 'scroll', checkScrollBarVisible, false);
+    const onResizeListener = addEventListener(window, 'resize', checkScrollBarVisible, false);
 
     return () => {
       onScrollListener.remove();
@@ -154,6 +155,11 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       });
     }
   }, [scrollState.isHiddenScrollBar]);
+
+  // The best way is to use ResizeObserver to detect the body height, but this way is enough
+  React.useEffect(() => {
+    checkScrollBarVisible();
+  }, [data]);
 
   if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
     return null;

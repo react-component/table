@@ -706,6 +706,7 @@ function Table<RecordType extends DefaultRecordType>(
             scrollBodyRef={scrollBodyRef}
             onScroll={onScroll}
             container={container}
+            data={data}
           />
         )}
       </>
