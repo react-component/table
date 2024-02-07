@@ -157,7 +157,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }, [scrollState.isHiddenScrollBar]);
 
   // The best way is to use ResizeObserver to detect the body height, but this way is enough
-  const bodyHeight = scrollBodyRef.current.offsetHeight;
+  const bodyHeight = scrollBodyRef.current?.offsetHeight;
   React.useEffect(() => {
     checkScrollBarVisible();
   }, [bodyHeight]);
