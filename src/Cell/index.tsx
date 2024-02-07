@@ -33,6 +33,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  useJsHover?: boolean;
 
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
@@ -87,6 +88,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     prefixCls,
     className,
     align,
+    useJsHover = true,
 
     // Value
     record,
@@ -244,8 +246,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       title={title}
       scope={scope}
       // Hover
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={useJsHover ? onMouseEnter : undefined}
+      onMouseLeave={useJsHover ? onMouseLeave : undefined}
       //Span
       colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
       rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}

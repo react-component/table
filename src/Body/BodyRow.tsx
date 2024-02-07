@@ -129,6 +129,15 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const computedExpandedRowClassName =
     expandedRowClassName && expandedRowClassName(record, index, indent);
 
+  const cellPropsArray = flattenColumns.map((column, colIndex) =>
+    getCellProps(rowInfo, column, colIndex, indent, index),
+  );
+  const useJsHover = flattenColumns.some((_, colIndex) => {
+    const { additionalCellProps } = cellPropsArray[colIndex];
+    const rowSpan = additionalCellProps.rowSpan ?? 1;
+    return rowSpan !== 1;
+  });
+
   // ======================== Base tr row ========================
   const baseRowNode = (
     <RowComponent
@@ -149,16 +158,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
-        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
-          rowInfo,
-          column,
-          colIndex,
-          indent,
-          index,
-        );
+        const { key, fixedInfo, appendCellNode, additionalCellProps } = cellPropsArray[colIndex];
 
         return (
           <Cell
+            useJsHover={useJsHover}
             className={columnClassName}
             ellipsis={column.ellipsis}
             align={column.align}
@@ -211,10 +215,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       {expandRowNode}
     </>
   );
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  BodyRow.displayName = 'BodyRow';
 }
 
 export default responseImmutable(BodyRow);
