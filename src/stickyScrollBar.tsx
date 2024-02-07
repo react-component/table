@@ -20,7 +20,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   ref,
 ) => {
   const prefixCls = useContext(TableContext, 'prefixCls');
-  const bodyScrollWidth = scrollBodyRef.current.scrollWidth || 0;
+  const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
