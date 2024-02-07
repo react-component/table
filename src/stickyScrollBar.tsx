@@ -12,7 +12,6 @@ interface StickyScrollBarProps {
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
   container: HTMLElement | Window;
-  data?: readonly any[];
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
