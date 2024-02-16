@@ -1,10 +1,4 @@
-import type {
-  ColumnGroupType,
-  ColumnType,
-  Direction,
-  FixedType,
-  StickyOffsets,
-} from '../interface';
+import type { Direction, FixedType, StickyOffsets } from '../interface';
 
 export interface FixedInfo {
   fixLeft: number | false;
