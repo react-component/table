@@ -9,5 +9,8 @@ export default defineConfig({
     globals: true,
     setupFiles: './tests/setup.ts',
     environment: 'jsdom',
+    coverage: {
+      exclude: ['**/docs/**', '**/__mocks__/**'],
+    },
   },
 });
