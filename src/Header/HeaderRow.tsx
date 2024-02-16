@@ -48,13 +48,12 @@ function HeaderRow<RecordType>({
     <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
-        const fixedInfo = getCellFixedInfo<RecordType>(
+        const fixedInfo = getCellFixedInfo(
           cell.colStart,
           cell.colEnd,
           flattenColumns,
           stickyOffsets,
           direction,
-          column,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;

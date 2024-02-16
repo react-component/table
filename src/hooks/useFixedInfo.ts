@@ -1,6 +1,6 @@
 import useMemo from 'rc-util/lib/hooks/useMemo';
 import isEqual from 'rc-util/lib/isEqual';
-import type { ColumnsType, ColumnType, Direction, StickyOffsets } from '../interface';
+import type { ColumnType, Direction, StickyOffsets } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
 
 export default function useFixedInfo<RecordType>(

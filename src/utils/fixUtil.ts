@@ -13,7 +13,7 @@ export interface FixedInfo {
   isSticky: boolean;
 }
 
-export function getCellFixedInfo<RecordType = any>(
+export function getCellFixedInfo(
   colStart: number,
   colEnd: number,
   columns: readonly { fixed?: FixedType }[],

@@ -24,7 +24,8 @@ export default function SummaryCell({
   align,
 }: SummaryCellProps) {
   const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
-  const { scrollColumnIndex, stickyOffsets, flattenColumns, columns } = React.useContext(SummaryContext);
+  const { scrollColumnIndex, stickyOffsets, flattenColumns, columns } =
+    React.useContext(SummaryContext);
   const lastIndex = index + colSpan - 1;
   const mergedColSpan = lastIndex + 1 === scrollColumnIndex ? colSpan + 1 : colSpan;
 
@@ -34,7 +35,6 @@ export default function SummaryCell({
     flattenColumns,
     stickyOffsets,
     direction,
-    columns?.[index]
   );
 
   return (
