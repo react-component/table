@@ -1,10 +1,15 @@
+import React from 'react';
 import { mount } from 'enzyme';
-import RcResizeObserver from 'rc-resize-observer';
+import { render } from '@testing-library/react';
+import RcResizeObserver, { _rs } from 'rc-resize-observer';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import { resetWarned } from 'rc-util/lib/warning';
 import { act } from 'react-dom/test-utils';
-import Table from '../src';
+import Table, { type ColumnsType } from '../src';
 import { safeAct } from './utils';
+
+function triggerResize(ele: HTMLElement) {
+  _rs([{ target: ele }] as any);
+}
 
 describe('Table.FixedColumn', () => {
   let domSpy;
@@ -26,7 +31,7 @@ describe('Table.FixedColumn', () => {
     domSpy.mockRestore();
   });
 
-  const columns = [
+  const columns: ColumnsType = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
     {
       title: 'title2',
@@ -86,7 +91,7 @@ describe('Table.FixedColumn', () => {
                 {
                   data: wrapper.find('table ResizeObserver').first().props().data,
                   size: { width: 93, offsetWidth: 93 },
-                },
+                } as any,
               ]);
           });
           await safeAct(wrapper);
@@ -131,7 +136,7 @@ describe('Table.FixedColumn', () => {
             scrollWidth: 200,
             clientWidth: 100,
           },
-        });
+        } as any);
     });
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
@@ -148,7 +153,7 @@ describe('Table.FixedColumn', () => {
             scrollWidth: 200,
             clientWidth: 100,
           },
-        });
+        } as any);
     });
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeFalsy();
@@ -165,7 +170,7 @@ describe('Table.FixedColumn', () => {
             scrollWidth: 200,
             clientWidth: 100,
           },
-        });
+        } as any);
     });
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
@@ -182,47 +187,11 @@ describe('Table.FixedColumn', () => {
             scrollWidth: 100,
             clientWidth: 100,
           },
-        });
+        } as any);
     });
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeFalsy();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
-  });
-
-  describe('warning if fixed not continue', () => {
-    let errorSpy;
-
-    beforeAll(() => {
-      errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    });
-
-    beforeEach(() => {
-      resetWarned();
-      errorSpy.mockReset();
-    });
-
-    afterAll(() => {
-      errorSpy.mockRestore();
-    });
-
-    it('left', async () => {
-      mount(<Table columns={[{}, { fixed: 'left' }, {}]} />);
-      expect(errorSpy).toHaveBeenCalledWith(
-        "Warning: Index 0 of `columns` missing `fixed='left'` prop.",
-      );
-    });
-
-    it('right', () => {
-      mount(<Table columns={[{}, { fixed: 'right' }, {}]} />);
-      expect(errorSpy).toHaveBeenCalledWith(
-        "Warning: Index 2 of `columns` missing `fixed='right'` prop.",
-      );
-    });
-
-    it('RTL', () => {
-      mount(<Table columns={[{}, { fixed: 'right' }]} direction="rtl" />);
-      expect(errorSpy).not.toHaveBeenCalled();
-    });
   });
 
   it('ellipsis will wrap additional dom', () => {
@@ -281,5 +250,52 @@ describe('Table.FixedColumn', () => {
     const wrapper = mount(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
     await safeAct(wrapper);
     expect(wrapper.find('.rc-table-cell-fix-left-all')).toHaveLength(10);
+  });
+
+  describe('cross fixed support', () => {
+    it('left', async () => {
+      const { container } = render(
+        <Table
+          columns={[{}, { fixed: 'left' }, { fixed: 'left' }]}
+          data={[{}]}
+          scroll={{ x: 200 }}
+        />,
+      );
+
+      act(() => {
+        Array.from(container.querySelectorAll<HTMLElement>('.rc-table-measure-row td')).forEach(
+          td => {
+            triggerResize(td);
+          },
+        );
+      });
+
+      await act(async () => {
+        vi.runAllTimers();
+        await Promise.resolve();
+      });
+
+      expect(container.querySelectorAll('tbody .rc-table-cell-fix-left')).toHaveLength(2);
+      expect(container.querySelectorAll('thead th')[1]).toHaveStyle({
+        left: '0px',
+      });
+      expect(container.querySelectorAll('thead th')[2]).toHaveStyle({
+        left: '1000px',
+      });
+    });
+  });
+  describe('components.table by sticky', () => {
+    it('render', async () => {
+      const table = props => {
+        return (
+          <>
+            <div className="healer-table">header table</div>
+            <table className={props.className}>{props.children}</table>
+          </>
+        );
+      };
+      const { container } = render(<Table sticky components={{ header: { table } }} />);
+      expect(container.querySelector('.healer-table')).toBeTruthy();
+    });
   });
 });

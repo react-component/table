@@ -280,7 +280,7 @@ function Table<RecordType extends DefaultRecordType>(
   const scrollX = scroll?.x;
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns, flattenScrollX] = useColumns(
+  const [columns, flattenColumns, flattenScrollX, hasGapFixed] = useColumns(
     {
       ...props,
       ...expandableConfig,
@@ -348,7 +348,7 @@ function Table<RecordType extends DefaultRecordType>(
   const colsKeys = getColumnsKey(flattenColumns);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
-  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns.length, direction);
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
@@ -706,6 +706,7 @@ function Table<RecordType extends DefaultRecordType>(
             scrollBodyRef={scrollBodyRef}
             onScroll={onScroll}
             container={container}
+            data={data}
           />
         )}
       </>
@@ -750,6 +751,7 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-fixed-header`]: fixHeader,
         /** No used but for compatible */
         [`${prefixCls}-fixed-column`]: fixColumn,
+        [`${prefixCls}-fixed-column-gapped`]: fixColumn && hasGapFixed,
         [`${prefixCls}-scroll-horizontal`]: horizonScroll,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:

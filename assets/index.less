@@ -56,6 +56,13 @@
   }
 
   // ================== Cell ==================
+  &-fixed-column-gapped {
+    .@{tablePrefixCls}-cell-fix-left-last::after,
+    .@{tablePrefixCls}-cell-fix-right-first::after {
+      display: none !important;
+    }
+  }
+
   &-cell {
     background: #f4f4f4;
 
