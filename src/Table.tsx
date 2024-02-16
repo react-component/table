@@ -773,7 +773,7 @@ function Table<RecordType extends DefaultRecordType>(
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
-  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction, columns);
+  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
 
   const TableContextValue = React.useMemo(
     () => ({

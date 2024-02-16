@@ -7,17 +7,9 @@ export default function useFixedInfo<RecordType>(
   flattenColumns: readonly ColumnType<RecordType>[],
   stickyOffsets: StickyOffsets,
   direction: Direction,
-  columns: ColumnsType<RecordType>,
 ) {
   const fixedInfoList = flattenColumns.map((_, colIndex) =>
-    getCellFixedInfo(
-      colIndex,
-      colIndex,
-      flattenColumns,
-      stickyOffsets,
-      direction,
-      columns?.[colIndex],
-    ),
+    getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
   );
 
   return useMemo(
