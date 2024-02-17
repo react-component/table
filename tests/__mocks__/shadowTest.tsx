@@ -1,7 +1,7 @@
 import React from 'react';
-import Table from 'rc-table';
+import Table from '../../src';
 import '../../assets/index.less';
-import type { ColumnsType } from '@/interface';
+import type { ColumnsType } from '../../src';
 
 interface DataType {
   key: React.Key;
@@ -15,7 +15,7 @@ interface DataType {
   gender: string;
 }
 
-const columns: TableColumnsType<DataType> = [
+const columns: ColumnsType<DataType> = [
   {
     title: 'Other',
     fixed: 'left',
@@ -28,7 +28,6 @@ const columns: TableColumnsType<DataType> = [
         width: 150,
         fixed: 'left',
         ellipsis: true,
-        sorter: (a, b) => a.age - b.age,
       },
       {
         title: 'Address',
@@ -71,17 +70,6 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: 'name',
     key: 'name',
     width: 100,
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value: string, record) => record.name.indexOf(value) === 0,
   },
   {
     title: 'Company',
@@ -179,13 +167,14 @@ const data2: User[] = [
   },
 ];
 
-const Demo = () => (
-  <div>
-    <h2>colSpan & rowSpan</h2>
-    <Table columns={columns} data={data} className="table" scroll={{ x: 1500, y: 500 }} />
-    <hr />
-    <Table columns={columns2} data={data2} className="table" scroll={{ x: 1500, y: 500 }} />
-  </div>
+export const RowColSpanWithFixed = () => (
+  <Table columns={columns} data={data} className="table1" scroll={{ x: 1500, y: 500 }} />
+);
+export const RowColSpanWithFixed2 = () => (
+  <Table columns={columns2} data={data2} className="table2" scroll={{ x: 1500, y: 500 }} />
 );
 
-export default Demo;
+export default {
+  RowColSpanWithFixed,
+  RowColSpanWithFixed2,
+};

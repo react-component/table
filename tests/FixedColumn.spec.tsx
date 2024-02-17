@@ -6,6 +6,7 @@ import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { act } from 'react-dom/test-utils';
 import Table, { type ColumnsType } from '../src';
 import { safeAct } from './utils';
+import { RowColSpanWithFixed, RowColSpanWithFixed2 } from './__mocks__/shadowTest';
 
 function triggerResize(ele: HTMLElement) {
   _rs([{ target: ele }] as any);
@@ -297,5 +298,15 @@ describe('Table.FixedColumn', () => {
       const { container } = render(<Table sticky components={{ header: { table } }} />);
       expect(container.querySelector('.healer-table')).toBeTruthy();
     });
+  });
+  it('shadow should display correctly', async () => {
+    const { container, rerender } = render(<RowColSpanWithFixed />);
+    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(104);
+    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(101);
+    expect(container).toMatchSnapshot();
+    rerender(<RowColSpanWithFixed2 />);
+    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(4);
+    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(4);
+    expect(container).toMatchSnapshot();
   });
 });
