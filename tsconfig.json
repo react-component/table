@@ -14,5 +14,5 @@
     },
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx"]
+  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx", "tests/__mocks__/shadowTest.tsx"]
 }

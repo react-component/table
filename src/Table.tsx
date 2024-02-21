@@ -646,11 +646,7 @@ function Table<RecordType extends DefaultRecordType>(
             {bodyColGroup}
             {bodyTable}
             {!fixFooter && summaryNode && (
-              <Footer
-                stickyOffsets={stickyOffsets}
-                flattenColumns={flattenColumns}
-                columns={columns}
-              >
+              <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
                 {summaryNode}
               </Footer>
             )}
@@ -732,7 +728,7 @@ function Table<RecordType extends DefaultRecordType>(
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
           {summaryNode && (
-            <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns} columns={columns}>
+            <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
               {summaryNode}
             </Footer>
           )}
@@ -775,7 +771,7 @@ function Table<RecordType extends DefaultRecordType>(
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
-  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction, columns);
+  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
 
   const TableContextValue = React.useMemo(
     () => ({

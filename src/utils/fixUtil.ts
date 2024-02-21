@@ -1,10 +1,4 @@
-import type {
-  ColumnGroupType,
-  ColumnType,
-  Direction,
-  FixedType,
-  StickyOffsets,
-} from '../interface';
+import type { Direction, FixedType, StickyOffsets } from '../interface';
 
 export interface FixedInfo {
   fixLeft: number | false;
@@ -19,13 +13,12 @@ export interface FixedInfo {
   isSticky: boolean;
 }
 
-export function getCellFixedInfo<RecordType = any>(
+export function getCellFixedInfo(
   colStart: number,
   colEnd: number,
   columns: readonly { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
   direction: Direction,
-  curColumns?: ColumnType<RecordType> | ColumnGroupType<RecordType>,
 ): FixedInfo {
   const startColumn = columns[colStart] || {};
   const endColumn = columns[colEnd] || {};
@@ -48,8 +41,11 @@ export function getCellFixedInfo<RecordType = any>(
   const nextColumn = columns[colEnd + 1];
   const prevColumn = columns[colStart - 1];
 
-  // no children only
-  const canLastFix = !(curColumns as ColumnGroupType<RecordType>)?.children;
+  // need show shadow only when canLastFix is true
+  const canLastFix =
+    (nextColumn && nextColumn.fixed === undefined) ||
+    (prevColumn && prevColumn.fixed === undefined) ||
+    columns.every(col => col.fixed === 'left');
 
   if (direction === 'rtl') {
     if (fixLeft !== undefined) {

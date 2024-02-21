@@ -2,7 +2,7 @@ import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, StickyOffsets } from '../interface';
+import type { ColumnType, StickyOffsets } from '../interface';
 import Summary from './Summary';
 import SummaryContext from './SummaryContext';
 
@@ -12,7 +12,6 @@ export interface FooterProps<RecordType> {
   children: React.ReactNode;
   stickyOffsets: StickyOffsets;
   flattenColumns: FlattenColumns<RecordType>;
-  columns: ColumnsType<RecordType>;
 }
 
 function Footer<RecordType>(props: FooterProps<RecordType>) {
@@ -20,7 +19,7 @@ function Footer<RecordType>(props: FooterProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const { children, stickyOffsets, flattenColumns, columns } = props;
+  const { children, stickyOffsets, flattenColumns } = props;
 
   const prefixCls = useContext(TableContext, 'prefixCls');
 
@@ -32,9 +31,8 @@ function Footer<RecordType>(props: FooterProps<RecordType>) {
       stickyOffsets,
       flattenColumns,
       scrollColumnIndex: scrollColumn?.scrollbar ? lastColumnIndex : null,
-      columns,
     }),
-    [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets, columns],
+    [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets],
   );
 
   return (
