@@ -230,7 +230,7 @@ const Demo = () => {
         getContainerWidth={(ele, width) => {
           // Minus border
           const borderWidth = getComputedStyle(
-            ele.querySelector('.rc-virtual-list'),
+            ele.querySelector('.rc-table-tbody'),
           ).borderInlineStartWidth;
           const mergedWidth = width - parseInt(borderWidth, 10);
 
