@@ -109,7 +109,7 @@ describe('Table.Virtual', () => {
 
     await waitFakeTimer();
 
-    expect(container.querySelector('.rc-virtual-list')).toBeTruthy();
+    expect(container.querySelector('.rc-table-tbody-virtual')).toBeTruthy();
   });
 
   it('warning for scroll props is not a number', () => {
@@ -198,7 +198,7 @@ describe('Table.Virtual', () => {
     scrollLeftCalled = false;
     expect(scrollLeftCalled).toBeFalsy();
 
-    fireEvent.wheel(container.querySelector('.rc-virtual-list-holder')!, {
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
       deltaX: 10,
     });
     expect(scrollLeftCalled).toBeTruthy();
@@ -221,7 +221,10 @@ describe('Table.Virtual', () => {
       data: [{}],
     });
 
-    expect(container.querySelector('.rc-virtual-list')).toHaveAttribute('data-scroll-width', '603');
+    expect(container.querySelector('.rc-table-tbody-virtual')).toHaveAttribute(
+      'data-scroll-width',
+      '603',
+    );
   });
 
   it('render params should correct', () => {
@@ -276,7 +279,7 @@ describe('Table.Virtual', () => {
       data: [{}],
     });
 
-    expect(container.querySelector('.rc-virtual-list')).toHaveAttribute(
+    expect(container.querySelector('.rc-table-tbody-virtual')).toHaveAttribute(
       'data-scroll-width',
       '1128',
     );
@@ -303,7 +306,7 @@ describe('Table.Virtual', () => {
 
     await waitFakeTimer();
 
-    expect(container.querySelector('.rc-virtual-list-scrollbar-horizontal')).toHaveStyle({
+    expect(container.querySelector('.rc-table-tbody-virtual-scrollbar-horizontal')).toHaveStyle({
       position: 'sticky',
       bottom: '10px',
     });
@@ -420,7 +423,7 @@ describe('Table.Virtual', () => {
     await waitFakeTimer();
 
     expect(container.querySelector('thead th')).toHaveAttribute('data-mark', 'my-th');
-    expect(container.querySelector('.rc-virtual-list-holder')).toHaveAttribute(
+    expect(container.querySelector('.rc-table-tbody-virtual-holder')).toHaveAttribute(
       'data-mark',
       'my-wrapper',
     );
