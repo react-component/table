@@ -116,6 +116,7 @@ export interface TableProps<RecordType = unknown>
   onRow?: GetComponentProps<RecordType>;
   onHeaderRow?: GetComponentProps<readonly ColumnType<RecordType>[]>;
   emptyText?: React.ReactNode | (() => React.ReactNode);
+  defaultValue?: React.ReactNode;
 
   direction?: Direction;
 
@@ -203,6 +204,7 @@ function Table<RecordType extends DefaultRecordType>(
     emptyText,
     onRow,
     onHeaderRow,
+    defaultValue,
 
     // Internal
     internalHooks,
@@ -805,6 +807,7 @@ function Table<RecordType extends DefaultRecordType>(
       indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
       emptyNode,
+      defaultValue,
 
       // Column
       columns,

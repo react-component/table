@@ -27,6 +27,7 @@ export default function useRowInfo<RecordType>(
   | 'expandedKeys'
   | 'childrenColumnName'
   | 'onRow'
+  | 'defaultValue'
 > & {
   columnsKey: React.Key[];
   nestExpandable: boolean;
@@ -54,6 +55,7 @@ export default function useRowInfo<RecordType>(
     'childrenColumnName',
     'rowExpandable',
     'onRow',
+    'defaultValue',
   ]);
 
   const {

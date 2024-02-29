@@ -21,6 +21,7 @@ export default function useCellRender<RecordType>(
   children?: React.ReactNode,
   render?: ColumnType<RecordType>['render'],
   shouldCellUpdate?: ColumnType<RecordType>['shouldCellUpdate'],
+  defaultValue?: React.ReactNode,
 ) {
   // TODO: Remove this after next major version
   const perfRecord = React.useContext(PerfContext);
@@ -37,13 +38,13 @@ export default function useCellRender<RecordType>(
         dataIndex === null || dataIndex === undefined || dataIndex === ''
           ? []
           : Array.isArray(dataIndex)
-          ? dataIndex
-          : [dataIndex];
+            ? dataIndex
+            : [dataIndex];
 
       const value: React.ReactNode = getValue(record, path);
 
       // Customize render node
-      let returnChildNode = value;
+      let returnChildNode = value ?? defaultValue;
       let returnCellProps: CellType<RecordType> | undefined = undefined;
 
       if (render) {

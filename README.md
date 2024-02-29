@@ -113,6 +113,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | title | Function(currentData) |  | table title render function |
 | footer | Function(currentData) |  | table footer render function |
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
+| defaultValue | React.Node |  | Set default value when data is null or undefined |
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
@@ -127,6 +128,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | colSpan | Number |  | thead colSpan of this column |
 | title | React Node |  | title of this column |
 | dataIndex | String |  | display field of the data record |
+| defaultValue | React.Node |  | Set default value when data is null or undefined |
 | width | String \| Number |  | width of the specific proportion calculation according to the width of the columns |
 | fixed | String \| Boolean |  | this column will be fixed when table scroll horizontally: true or 'left' or 'right' |
 | align | String |  | specify how cell content is aligned |

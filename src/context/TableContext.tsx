@@ -40,6 +40,7 @@ export interface TableContextProps<RecordType = any> {
   expandedRowClassName: RowClassName<RecordType>;
   onRow?: GetComponentProps<RecordType>;
   emptyNode?: React.ReactNode;
+  defaultValue?: React.ReactNode;
 
   tableLayout: TableLayout;
 

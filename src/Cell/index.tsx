@@ -33,6 +33,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   scope?: ScopeType;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  defaultValue?: React.ReactNode;
 
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
@@ -94,6 +95,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     dataIndex,
     renderIndex,
     shouldCellUpdate,
+    defaultValue,
 
     // Row
     index,
@@ -131,6 +133,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     children,
     render,
     shouldCellUpdate,
+    defaultValue,
   );
 
   // ====================== Fixed =======================

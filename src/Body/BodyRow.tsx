@@ -110,6 +110,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandedRowClassName,
     expandedRowRender,
     rowProps,
+    defaultValue,
 
     // Misc
     expanded,
@@ -166,6 +167,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             component={column.rowScope ? scopeCellComponent : cellComponent}
             prefixCls={prefixCls}
             key={key}
+            defaultValue={column.defaultValue || defaultValue}
             record={record}
             index={index}
             renderIndex={renderIndex}
