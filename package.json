@@ -92,7 +92,7 @@
     "prettier": "^3.1.0",
     "rc-animate": "^3.0.0",
     "rc-dropdown": "~4.0.1",
-    "rc-menu": "~9.6.0",
+    "rc-menu": "~9.13.0",
     "rc-tooltip": "^5.2.1",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
