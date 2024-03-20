@@ -379,7 +379,7 @@ function Table<RecordType extends DefaultRecordType>(
 
   if (fixHeader) {
     scrollYStyle = {
-      overflowY: 'scroll',
+      overflowY: hasData ? 'scroll' : 'hidden',
       maxHeight: scroll.y,
     };
   }
