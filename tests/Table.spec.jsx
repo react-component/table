@@ -6,6 +6,7 @@ import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/constant';
+import { fireEvent, render } from '@testing-library/react';
 
 describe('Table.Basic', () => {
   const data = [
@@ -1318,5 +1319,18 @@ describe('Table.Basic', () => {
         .at(noChildColLen + ChildColLen * 2 - 1)
         .props().style.width + wrapper.find('col').last().props().style.width,
     ).toEqual(width);
+  });
+
+  it('onScroll event', () => {
+    const onScroll = vi.fn();
+    const wrapper = render(
+      createTable({
+        onScroll,
+        scroll: { x: 100, y: 100 },
+      }),
+    );
+
+    fireEvent.scroll(wrapper.container.querySelector('.rc-table-body'));
+    expect(onScroll).toHaveBeenCalled();
   });
 });
