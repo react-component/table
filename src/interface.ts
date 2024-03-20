@@ -68,6 +68,8 @@ export type Direction = 'ltr' | 'rtl';
 
 export type DataIndex = string | number | readonly (string | number)[];
 
+type DataIndexArray = readonly [string] | readonly [number] | readonly (string | number)[];
+
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
 export type ColScopeType = 'col' | 'colgroup';
@@ -94,9 +96,44 @@ export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType
 
 export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
 
+type IsExactlyAny<T> = boolean extends (T extends never ? true : false) ? true : false;
+
+type ExtractIndex<RecordType> = Extract<
+    {
+        [key in Extract<keyof RecordType, string | number>]: key extends never ? [] : IsExactlyAny<RecordType[key]> extends true ? [key, ...DataIndexArray] : [key, ...DataIndexArrayType<RecordType[key]>];
+    }[Extract<keyof RecordType, string | number>],
+    readonly (string | number)[]
+>;
+
+type Unwrap<TArr extends readonly (string | number)[]> = TArr extends { length: 0 }
+    ? []
+    : number extends TArr['length']
+    ? TArr
+    : (string | number)[] extends TArr ? TArr :
+    TArr
+    | (TArr extends { length: 1 }
+        ? TArr
+        : TArr extends { length: 2 }
+        ? [TArr[0]]
+        : TArr extends [...infer U, unknown]
+        ? U extends readonly (string | number)[] ? Unwrap<U> : []
+        : []);
+
+type DataIndexArrayType<RecordType> = IsExactlyAny<RecordType> extends true
+    ? []
+    : RecordType extends string
+    ? [number]
+    : RecordType extends Record<string | number, any>
+    ? Unwrap<ExtractIndex<RecordType>>
+    : RecordType extends any[]
+    ? [number, ...Unwrap<ExtractIndex<RecordType[number]>>]
+    : [];
+
+type DataIndexType<RecordType> = Readonly<DataIndexArrayType<RecordType>> extends { length: 0 } ? DataIndex : Readonly<DataIndexArrayType<RecordType>> | Readonly<DataIndexArrayType<RecordType>>[0]
+
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndexType<RecordType>;
   render?: (
     value: any,
     record: RecordType,
