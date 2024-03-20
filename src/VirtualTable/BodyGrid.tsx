@@ -41,7 +41,13 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'emptyNode',
     'scrollX',
   ]);
-  const { sticky, scrollY, listItemHeight, getComponent } = useContext(StaticContext);
+  const {
+    sticky,
+    scrollY,
+    listItemHeight,
+    getComponent,
+    onScroll: onTablePropScroll,
+  } = useContext(StaticContext);
 
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
@@ -233,6 +239,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
             scrollLeft: x,
           });
         }}
+        onScroll={onTablePropScroll}
         extraRender={extraRender}
       >
         {(item, index, itemProps) => {
