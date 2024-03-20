@@ -33,6 +33,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
     className,
     listItemHeight,
     components,
+    onScroll,
   } = props;
 
   let { x: scrollX, y: scrollY } = scroll || {};
@@ -59,10 +60,13 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
     (path, defaultComponent) => getValue(components, path) || defaultComponent,
   );
 
+  // Memo this
+  const onInternalScroll = useEvent(onScroll);
+
   // ========================= Context ==========================
   const context = React.useMemo(
-    () => ({ sticky, scrollY, listItemHeight, getComponent }),
-    [sticky, scrollY, listItemHeight, getComponent],
+    () => ({ sticky, scrollY, listItemHeight, getComponent, onScroll: onInternalScroll }),
+    [sticky, scrollY, listItemHeight, getComponent, onInternalScroll],
   );
 
   // ========================== Render ==========================

@@ -433,4 +433,14 @@ describe('Table.Virtual', () => {
       'my-cell',
     );
   });
+
+  it('onScroll event should work', async () => {
+    const onScroll = vi.fn();
+    const { container } = getTable({ onScroll });
+
+    await waitFakeTimer();
+
+    fireEvent.scroll(container.querySelector('.rc-table-tbody-virtual-holder')!);
+    expect(onScroll).toHaveBeenCalled();
+  });
 });

@@ -121,6 +121,9 @@ export interface TableProps<RecordType = unknown>
 
   sticky?: boolean | TableSticky;
 
+  // Events
+  onScroll?: React.UIEventHandler<HTMLDivElement>;
+
   // =================================== Internal ===================================
   /**
    * @private Internal usage, may remove by refactor. Should always use `columns` instead.
@@ -203,6 +206,9 @@ function Table<RecordType extends DefaultRecordType>(
     emptyText,
     onRow,
     onHeaderRow,
+
+    // Events
+    onScroll,
 
     // Internal
     internalHooks,
@@ -426,7 +432,7 @@ function Table<RecordType extends DefaultRecordType>(
     }
   }
 
-  const onScroll = useEvent(
+  const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
       const isRTL = direction === 'rtl';
       const mergedScrollLeft =
@@ -462,9 +468,14 @@ function Table<RecordType extends DefaultRecordType>(
     },
   );
 
+  const onBodyScroll = useEvent((e: React.UIEvent<HTMLDivElement>) => {
+    onInternalScroll(e);
+    onScroll?.(e);
+  });
+
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
-      onScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+      onInternalScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
     } else {
       setPingedLeft(false);
       setPingedRight(false);
@@ -606,7 +617,7 @@ function Table<RecordType extends DefaultRecordType>(
       bodyContent = customizeScrollBody(mergedData, {
         scrollbarSize,
         ref: scrollBodyRef,
-        onScroll,
+        onScroll: onInternalScroll,
       });
 
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
@@ -631,7 +642,7 @@ function Table<RecordType extends DefaultRecordType>(
             ...scrollXStyle,
             ...scrollYStyle,
           }}
-          onScroll={onScroll}
+          onScroll={onBodyScroll}
           ref={scrollBodyRef}
           className={classNames(`${prefixCls}-body`)}
         >
@@ -663,7 +674,7 @@ function Table<RecordType extends DefaultRecordType>(
       ...columnContext,
       direction,
       stickyClassName,
-      onScroll,
+      onScroll: onInternalScroll,
     };
 
     groupTableNode = (
@@ -700,7 +711,7 @@ function Table<RecordType extends DefaultRecordType>(
             ref={stickyRef}
             offsetScroll={offsetScroll}
             scrollBodyRef={scrollBodyRef}
-            onScroll={onScroll}
+            onScroll={onInternalScroll}
             container={container}
             data={data}
           />
@@ -716,7 +727,7 @@ function Table<RecordType extends DefaultRecordType>(
           ...scrollYStyle,
         }}
         className={classNames(`${prefixCls}-content`)}
-        onScroll={onScroll}
+        onScroll={onInternalScroll}
         ref={scrollBodyRef}
       >
         <TableComponent

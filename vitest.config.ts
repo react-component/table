@@ -6,12 +6,11 @@ export default defineConfig({
   },
   test: {
     include: ['**/tests/*.spec.*'],
-    exclude: ['**/coverage/**'],
     globals: true,
     setupFiles: './tests/setup.ts',
     environment: 'jsdom',
     coverage: {
-      exclude: ['**/docs/**', '**/__mocks__/**'],
+      exclude: ['**/docs/**', '**/__mocks__/**', '**/coverage/**'],
     },
   },
 });
