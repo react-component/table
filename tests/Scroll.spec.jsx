@@ -46,7 +46,7 @@ describe('Table.Scroll', () => {
   it('renders scroll.x and scroll.y are both true', () => {
     const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
     expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
+    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('auto');
   });
 
   it('fire scroll event', () => {
