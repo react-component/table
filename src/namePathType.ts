@@ -1,3 +1,5 @@
+// source https://github.com/crazyair/field-form/blob/master/src/namePathType.ts
+
 type BaseNamePath = string | number | boolean | (string | number | boolean)[];
 /**
  * Store: The store type from `FormInstance<Store>`
