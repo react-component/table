@@ -66,7 +66,11 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
-export type DataIndex = string | number | readonly (string | number)[];
+export type DataIndex<RecordType = any> =
+  | keyof RecordType
+  | string
+  | number
+  | readonly (string | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -96,7 +100,7 @@ export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<RecordType>;
   render?: (
     value: any,
     record: RecordType,

@@ -158,7 +158,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         );
 
         return (
-          <Cell
+          <Cell<RecordType>
             className={columnClassName}
             ellipsis={column.ellipsis}
             align={column.align}

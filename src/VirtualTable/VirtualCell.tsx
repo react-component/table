@@ -8,7 +8,7 @@ import type { ColumnType, CustomizeComponent } from '../interface';
 import { GridContext } from './context';
 
 export interface VirtualCellProps<RecordType> {
-  rowInfo: ReturnType<typeof useRowInfo>;
+  rowInfo: ReturnType<typeof useRowInfo<RecordType>>;
   column: ColumnType<RecordType>;
   colIndex: number;
   indent: number;
