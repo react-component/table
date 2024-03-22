@@ -16,7 +16,7 @@ function isRenderCell<RecordType>(
 
 export default function useCellRender<RecordType>(
   record: RecordType,
-  dataIndex: DataIndex,
+  dataIndex: DataIndex<RecordType>,
   renderIndex: number,
   children?: React.ReactNode,
   render?: ColumnType<RecordType>['render'],
@@ -37,8 +37,8 @@ export default function useCellRender<RecordType>(
         dataIndex === null || dataIndex === undefined || dataIndex === ''
           ? []
           : Array.isArray(dataIndex)
-          ? dataIndex
-          : [dataIndex];
+            ? dataIndex
+            : [dataIndex];
 
       const value: React.ReactNode = getValue(record, path);
 
