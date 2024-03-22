@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { DeepNamePath } from './namePathType';
 
 /**
  * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
@@ -66,11 +67,7 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
-export type DataIndex<RecordType = any> =
-  | keyof RecordType
-  | string
-  | number
-  | readonly (string | number)[];
+export type DataIndex<T = any> = DeepNamePath<T>;
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
