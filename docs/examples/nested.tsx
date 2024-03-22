@@ -1,8 +1,9 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
+const columns: TableProps['columns'] = [
   { title: 'First Name', dataIndex: ['names', 'first'], key: 'a', width: 100 },
   { title: 'Last Name', dataIndex: ['names', 'last'], key: 'b', width: 100 },
   { title: 'Age', dataIndex: 'age', key: 'c', width: 100 },

@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
+const columns: TableProps['columns'] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-  { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
   {
     title: 'Operations',

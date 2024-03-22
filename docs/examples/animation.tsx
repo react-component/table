@@ -2,6 +2,7 @@ import React from 'react';
 import CSSMotionList from 'rc-animate/lib/CSSMotionList';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import './animation.less';
@@ -10,7 +11,7 @@ type MotionBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
 const MotionBody: React.FC<MotionBodyProps> = ({ children, ...props }) => {
   const nodeList = toArray(children);
-  const nodesRef = React.useRef<Record<React.Key, React.ReactElement>>({});
+  const nodesRef = React.useRef<Record<string, React.ReactElement>>({});
 
   // Better apply clean up logic to avoid OOM
   const keys: React.Key[] = [];
@@ -46,9 +47,9 @@ interface DemoState {
 }
 
 class Demo extends React.Component<{}, DemoState> {
-  columns = [
+  columns: TableProps['columns'] = [
     { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-    { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+    { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
     { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
     {
       title: 'Operations',

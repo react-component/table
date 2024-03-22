@@ -40,7 +40,7 @@ export default function useCellRender<RecordType>(
             ? dataIndex
             : [dataIndex];
 
-      const value: React.ReactNode = getValue(record, path);
+      const value: React.ReactNode = getValue(record, path as any);
 
       // Customize render node
       let returnChildNode = value;

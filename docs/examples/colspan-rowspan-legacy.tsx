@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import { ColumnsType, RenderedCell } from '@/interface';
+import type { ColumnsType, RenderedCell } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -116,7 +116,6 @@ const columns: ColumnsType<RecordType> = [
   },
   {
     title: 'Operations',
-    dataIndex: '',
     key: 'f',
     render(o, row, index) {
       if (index === 5) {

@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import { ColumnType } from '@/interface';
+import type { ColumnType } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -56,13 +56,12 @@ const fixedData = [
   { a: '133', c: 'edd12221', d: 2, key: '9' },
 ];
 
-const columns: ColumnType<{ a: string; b: string; c: string }>[] = [
+const columns: ColumnType<RecordType>[] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100, align: 'right' },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
   {
     title: 'Operations',
-    dataIndex: '',
     key: 'd',
     render(_, record) {
       return (

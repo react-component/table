@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import type { ColumnType } from '@/interface';
@@ -45,7 +46,7 @@ const Demo = () => {
   const [isShown, setIsShown] = useState(false);
   const [renderTime, setRenderTime] = useState(0);
   const [isFixed, setIsFixed] = useState(true);
-  const [columns, setColumns] = useState(defaultColumns);
+  const [columns, setColumns] = useState<TableProps<RecordType>['columns']>(defaultColumns);
   const onToggleSideBar = useCallback(() => {
     const s = window.performance.now();
     setIsShown(v => !v);
@@ -82,7 +83,7 @@ const Demo = () => {
     });
   }, []);
 
-  const expandedRowRender = useCallback(({ b, c }) => b || c, []);
+  const expandedRowRender = useCallback<TableProps['expandedRowRender']>(({ b, c }) => b || c, []);
 
   return (
     <div>
@@ -106,7 +107,7 @@ const Demo = () => {
       >
         <div style={{ flex: `0 0 ${isShown ? '10px' : '80px'}` }} />
         <div style={{ flex: 1, overflow: 'hidden' }}>
-          <Table
+          <Table<RecordType>
             columns={columns}
             scroll={isFixed ? { x: 1200 } : null}
             data={data}

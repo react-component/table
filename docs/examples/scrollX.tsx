@@ -1,14 +1,10 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
-  {
-    title: 'title1',
-    dataIndex: 'a',
-    key: 'a',
-    width: 100,
-  },
+const columns: TableProps['columns'] = [
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 100 },
   { title: 'title4', dataIndex: 'b', key: 'd', width: 100 },

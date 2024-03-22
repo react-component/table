@@ -1,5 +1,6 @@
 import React from 'react';
 import Tooltip from 'rc-tooltip';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -23,7 +24,7 @@ const createColumns = (length: number) => {
   }));
 };
 
-const columns = [
+const columns: TableProps['columns'] = [
   {
     title: 'name',
     dataIndex: 'name',
