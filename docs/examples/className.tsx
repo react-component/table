@@ -45,7 +45,7 @@ const data = [
 const Demo = () => (
   <div>
     <h2>rowClassName and className</h2>
-    <Table<{ a?: string }>
+    <Table
       columns={columns}
       rowClassName={(record, i) => `row-${i}`}
       expandedRowRender={record => <p>extra: {record.a}</p>}
