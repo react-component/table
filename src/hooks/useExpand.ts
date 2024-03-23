@@ -21,7 +21,7 @@ export default function useExpand<RecordType>(
   expandableConfig: ExpandableConfig<RecordType>,
   expandableType: ExpandableType,
   expandedKeys: Set<Key>,
-  expandIcon: RenderExpandIcon<unknown>,
+  expandIcon: RenderExpandIcon<RecordType>,
   childrenColumnName: string,
   onTriggerExpand: TriggerEventHandler<RecordType>,
 ] {
