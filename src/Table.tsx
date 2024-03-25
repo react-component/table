@@ -713,7 +713,6 @@ function Table<RecordType extends DefaultRecordType>(
             scrollBodyRef={scrollBodyRef}
             onScroll={onInternalScroll}
             container={container}
-            data={data}
           />
         )}
       </>
