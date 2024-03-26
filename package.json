@@ -1,6 +1,6 @@
 {
   "name": "rc-table",
-  "version": "7.43.1",
+  "version": "7.44.0",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -79,7 +79,7 @@
     "enzyme-to-json": "^3.1.2",
     "eslint": "^8.54.0",
     "eslint-plugin-jest": "^27.6.0",
-    "eslint-plugin-unicorn": "^50.0.1",
+    "eslint-plugin-unicorn": "^51.0.1",
     "father": "^4.0.0",
     "gh-pages": "^6.1.0",
     "glob": "^7.1.6",
@@ -103,7 +103,7 @@
     "react-window": "^1.8.5",
     "regenerator-runtime": "^0.14.0",
     "styled-components": "^6.1.1",
-    "typescript": "~5.3.0",
+    "typescript": "~5.4.3",
     "vitest": "^1.2.2"
   },
   "lint-staged": {

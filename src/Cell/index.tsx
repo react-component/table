@@ -118,9 +118,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft } = useContext(TableContext, [
+  const { supportSticky, allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
     'supportSticky',
     'allColumnsFixedLeft',
+    'rowHoverable',
   ]);
 
   // ====================== Value =======================
@@ -244,8 +245,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       title={title}
       scope={scope}
       // Hover
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={rowHoverable ? onMouseEnter : undefined}
+      onMouseLeave={rowHoverable ? onMouseLeave : undefined}
       //Span
       colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
       rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
