@@ -121,6 +121,8 @@ export interface TableProps<RecordType = unknown>
 
   sticky?: boolean | TableSticky;
 
+  rowHoverable?: boolean;
+
   // Events
   onScroll?: React.UIEventHandler<HTMLDivElement>;
 
@@ -218,6 +220,7 @@ function Table<RecordType extends DefaultRecordType>(
     getContainerWidth,
 
     sticky,
+    rowHoverable = true,
   } = props;
 
   const mergedData = data || EMPTY_DATA;
@@ -832,6 +835,8 @@ function Table<RecordType extends DefaultRecordType>(
       getRowKey,
       expandedKeys: mergedExpandedKeys,
       childrenColumnName: mergedChildrenColumnName,
+
+      rowHoverable,
     }),
     [
       // Scroll
@@ -879,6 +884,8 @@ function Table<RecordType extends DefaultRecordType>(
       getRowKey,
       mergedExpandedKeys,
       mergedChildrenColumnName,
+
+      rowHoverable,
     ],
   );
 

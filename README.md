@@ -117,6 +117,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
+| rowHoverable | boolean | true | Table hover interaction |
 
 ## Column Props
 
