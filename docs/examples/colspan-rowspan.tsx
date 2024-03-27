@@ -97,7 +97,6 @@ const columns: ColumnsType<RecordType> = [
   },
   {
     title: 'Operations',
-    dataIndex: '',
     key: 'f',
     render() {
       return <a href="#">Operations</a>;

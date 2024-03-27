@@ -5,9 +5,11 @@ import { createGlobalStyle } from 'styled-components';
 import update from 'immutability-helper';
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
+// eslint-disable-next-line @babel/no-unused-expressions
 createGlobalStyle`
   tr.drop-over-downward td {
     border-bottom: 2px dashed red;
@@ -113,9 +115,9 @@ BodyRow = DropTarget('row', rowTarget, (connect, monitor) => ({
   }))(BodyRow),
 );
 
-const columns = [
+const columns: TableProps['columns'] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-  { id: '123', title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
   {
     title: 'Operations',

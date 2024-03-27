@@ -29,6 +29,8 @@ interface SecondTableRecordType {
   producedVenus?: string;
   soldVenus?: string;
   key?: string;
+  mars?: string;
+  venus?: string;
 }
 
 const secondTableColumns: ColumnsType<SecondTableRecordType> = [

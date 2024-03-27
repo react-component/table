@@ -1,9 +1,10 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 
 import styles from './expandedRowClassName.module.less';
 
-const columns = [
+const columns: TableProps['columns'] = [
   {
     title: 'Name',
     dataIndex: 'name',

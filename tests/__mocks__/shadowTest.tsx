@@ -112,8 +112,12 @@ for (let i = 0; i < 100; i++) {
 }
 
 interface User {
-  key: number;
-  name: string;
+  key?: number;
+  name?: string;
+  name0?: string;
+  name1?: string;
+  name2?: string;
+  name3?: string;
 }
 
 const columns2: ColumnsType<User> = [

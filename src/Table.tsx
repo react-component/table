@@ -84,7 +84,7 @@ const EMPTY_DATA = [];
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
 
-export interface TableProps<RecordType = unknown>
+export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
   className?: string;

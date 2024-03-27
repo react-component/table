@@ -9,12 +9,12 @@ function toArray<T>(arr: T | readonly T[]): T[] {
   return (Array.isArray(arr) ? arr : [arr]) as T[];
 }
 
-interface GetColumnKeyColumn {
+export interface GetColumnKeyColumn<T = any> {
   key?: Key;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<T>;
 }
 
-export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
+export function getColumnsKey<T = any>(columns: readonly GetColumnKeyColumn<T>[]) {
   const columnKeys: React.Key[] = [];
   const keys: Record<PropertyKey, boolean> = {};
 

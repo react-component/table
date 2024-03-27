@@ -1,8 +1,15 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
+interface FieldType {
+  name?: string;
+  age?: string;
+  address?: string;
+}
+
+const columns: TableProps<FieldType>['columns'] = [
   {
     title: 'Name',
     dataIndex: 'name',

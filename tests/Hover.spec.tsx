@@ -205,7 +205,7 @@ describe('Table.Hover', () => {
   });
 
   it('perf', () => {
-    const renderTimes = {};
+    const renderTimes: Record<string, any> = {};
 
     const TD = (props: any) => {
       const children = toArray(props.children);

@@ -1,8 +1,9 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
+const columns: TableProps['columns'] = [
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 100 },
@@ -43,12 +44,7 @@ const Demo = () => {
         Trigger Visible
       </button>
       <div style={{ display: visible ? undefined : 'none' }}>
-        <Table
-          style={{ width: 800 }}
-          scroll={{ x: 1500, y: 300 }}
-          columns={columns}
-          data={data}
-        />
+        <Table style={{ width: 800 }} scroll={{ x: 1500, y: 300 }} columns={columns} data={data} />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import type { ColumnsType } from '@/interface';
@@ -15,7 +16,7 @@ interface DataType {
   gender: string;
 }
 
-const columns: TableColumnsType<DataType> = [
+const columns: TableProps['columns'] = [
   {
     title: 'Other',
     fixed: 'left',
@@ -126,6 +127,10 @@ for (let i = 0; i < 100; i++) {
 interface User {
   key: number;
   name: string;
+  name0?: string;
+  name1?: string;
+  name2?: string;
+  name3?: string;
 }
 
 const columns2: ColumnsType<User> = [
