@@ -67,7 +67,7 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
-export type DataIndex<T = any> = DeepNamePath<T>;
+export type DataIndex<T = any> = DeepNamePath<T> | '';
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -97,7 +97,7 @@ export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex<RecordType> | '';
+  dataIndex?: DataIndex<RecordType>;
   render?: (
     value: any,
     record: RecordType,
