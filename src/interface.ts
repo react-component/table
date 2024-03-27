@@ -97,7 +97,7 @@ export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndex<RecordType>;
+  dataIndex?: DataIndex<RecordType> | '';
   render?: (
     value: any,
     record: RecordType,

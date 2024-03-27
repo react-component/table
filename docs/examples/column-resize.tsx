@@ -39,6 +39,7 @@ class Demo extends React.Component<{}, DemoState> {
       { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
       {
         title: 'Operations',
+        dataIndex: '',
         key: 'd',
         render() {
           return <a href="#">Operations</a>;
