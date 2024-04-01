@@ -69,7 +69,7 @@ export type Direction = 'ltr' | 'rtl';
 
 export type SpecialString<T> = T | (string & {});
 
-export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T>;
+export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T> | SpecialString<T>[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
