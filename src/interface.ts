@@ -67,7 +67,9 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
-export type DataIndex<T = any> = DeepNamePath<T> | (string & {});
+export type SpecialString<T> = T | (string & {});
+
+export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T>;
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
