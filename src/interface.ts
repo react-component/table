@@ -67,9 +67,10 @@ export interface RenderedCell<RecordType> {
 
 export type Direction = 'ltr' | 'rtl';
 
+// SpecialString will be removed in antd@6
 export type SpecialString<T> = T | (string & {});
 
-export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T> | SpecialString<T>[];
+export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T> | number | (SpecialString<T> | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
