@@ -1,6 +1,6 @@
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
 import { FooterComponents as Summary } from './Footer';
-import type { ColumnType, ColumnsType, Reference } from './interface';
+import type { ColumnType, ColumnsType, DataIndexExtendProps, Reference } from './interface';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import type { TableProps } from './Table';
@@ -24,6 +24,7 @@ export {
   type Reference,
   type ColumnType,
   type ColumnsType,
+  type DataIndexExtendProps,
 };
 
 export default Table;

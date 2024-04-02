@@ -9,6 +9,11 @@ type FieldType = {
   e?: { e1?: { e2?: string; e3?: string[]; e4: { e5: { e6: string } } } };
   list?: { age?: string }[];
 };
+declare module '../src/index' {
+  export interface DataIndexExtendProps {
+    more?: string;
+  }
+}
 
 describe('nameTypeCheck', () => {
   it('type inference', () => {
@@ -35,6 +40,12 @@ describe('nameTypeCheck', () => {
           { dataIndex: ['list', 0, 'age'] },
         ]}
       />
+    );
+    console.log('table', table);
+  });
+  it('DataIndexExtendProps', () => {
+    const table = (
+      <Table<{ name?: string }> columns={[{ dataIndex: 'name' }, { dataIndex: 'more' }]} />
     );
     console.log('table', table);
   });
