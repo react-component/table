@@ -6,6 +6,7 @@ import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import * as React from 'react';
 import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
+import raf from 'rc-util/lib/raf';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
@@ -39,6 +40,14 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     x: 0,
   });
   const [isActive, setActive] = React.useState(false);
+  const rafRef = React.useRef<number | null>(null);
+
+  React.useEffect(
+    () => () => {
+      raf.cancel(rafRef.current);
+    },
+    [],
+  );
 
   const onMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
     setActive(false);
@@ -81,30 +90,32 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   };
 
   const checkScrollBarVisible = () => {
-    if (!scrollBodyRef.current) {
-      return;
-    }
-    const tableOffsetTop = getOffset(scrollBodyRef.current).top;
-    const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
-    const currentClientOffset =
-      container === window
-        ? document.documentElement.scrollTop + window.innerHeight
-        : getOffset(container).top + (container as HTMLElement).clientHeight;
+    rafRef.current = raf(() => {
+      if (!scrollBodyRef.current) {
+        return;
+      }
+      const tableOffsetTop = getOffset(scrollBodyRef.current).top;
+      const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
+      const currentClientOffset =
+        container === window
+          ? document.documentElement.scrollTop + window.innerHeight
+          : getOffset(container).top + (container as HTMLElement).clientHeight;
 
-    if (
-      tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
-      tableOffsetTop >= currentClientOffset - offsetScroll
-    ) {
-      setScrollState(state => ({
-        ...state,
-        isHiddenScrollBar: true,
-      }));
-    } else {
-      setScrollState(state => ({
-        ...state,
-        isHiddenScrollBar: false,
-      }));
-    }
+      if (
+        tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
+        tableOffsetTop >= currentClientOffset - offsetScroll
+      ) {
+        setScrollState(state => ({
+          ...state,
+          isHiddenScrollBar: true,
+        }));
+      } else {
+        setScrollState(state => ({
+          ...state,
+          isHiddenScrollBar: false,
+        }));
+      }
+    });
   };
 
   const setScrollLeft = (left: number) => {
