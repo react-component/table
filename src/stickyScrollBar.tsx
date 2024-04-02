@@ -91,29 +91,28 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   const checkScrollBarVisible = () => {
     rafRef.current = raf(() => {
-      if (!scrollBodyRef.current) {
-        return;
-      }
-      const tableOffsetTop = getOffset(scrollBodyRef.current).top;
-      const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
-      const currentClientOffset =
-        container === window
-          ? document.documentElement.scrollTop + window.innerHeight
-          : getOffset(container).top + (container as HTMLElement).clientHeight;
+      if (scrollBodyRef.current) {
+        const tableOffsetTop = getOffset(scrollBodyRef.current).top;
+        const tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
+        const currentClientOffset =
+          container === window
+            ? document.documentElement.scrollTop + window.innerHeight
+            : getOffset(container).top + (container as HTMLElement).clientHeight;
 
-      if (
-        tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
-        tableOffsetTop >= currentClientOffset - offsetScroll
-      ) {
-        setScrollState(state => ({
-          ...state,
-          isHiddenScrollBar: true,
-        }));
-      } else {
-        setScrollState(state => ({
-          ...state,
-          isHiddenScrollBar: false,
-        }));
+        if (
+          tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
+          tableOffsetTop >= currentClientOffset - offsetScroll
+        ) {
+          setScrollState(state => ({
+            ...state,
+            isHiddenScrollBar: true,
+          }));
+        } else {
+          setScrollState(state => ({
+            ...state,
+            isHiddenScrollBar: false,
+          }));
+        }
       }
     });
   };
