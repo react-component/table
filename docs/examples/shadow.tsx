@@ -29,6 +29,7 @@ const columns: TableProps['columns'] = [
         width: 150,
         fixed: 'left',
         ellipsis: true,
+        // @ts-ignore
         sorter: (a, b) => a.age - b.age,
       },
       {
@@ -72,6 +73,7 @@ const columns: TableProps['columns'] = [
     dataIndex: 'name',
     key: 'name',
     width: 100,
+    // @ts-ignore
     filters: [
       {
         text: 'Joe',

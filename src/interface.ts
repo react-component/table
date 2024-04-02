@@ -72,7 +72,7 @@ export interface DataIndexExtendProps {
   // more?:string
 }
 
-export type DataIndex<T = any> = DeepNamePath<T & DataIndexExtendProps>;
+export type DataIndex<T = any> = DeepNamePath<T & DataIndexExtendProps> | '';
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -116,7 +116,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export type ColumnsType<RecordType = unknown> = readonly (
+export type ColumnsType<RecordType = any> = readonly (
   | ColumnGroupType<RecordType>
   | ColumnType<RecordType>
 )[];
