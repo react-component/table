@@ -363,7 +363,10 @@ function Table<RecordType extends DefaultRecordType>(
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
-  const stickyRef = React.useRef<{ setScrollLeft: (left: number) => void }>();
+  const stickyRef = React.useRef<{
+    setScrollLeft: (left: number) => void;
+    checkScrollBarVisible: () => void;
+  }>();
   const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
     useSticky(sticky, prefixCls);
 
@@ -486,6 +489,7 @@ function Table<RecordType extends DefaultRecordType>(
   };
 
   const onFullTableResize = ({ width }) => {
+    stickyRef.current?.checkScrollBarVisible();
     let mergedWidth = fullTableRef.current ? fullTableRef.current.offsetWidth : width;
     if (useInternalHooks && getContainerWidth && fullTableRef.current) {
       mergedWidth = getContainerWidth(fullTableRef.current, mergedWidth) || mergedWidth;
@@ -716,7 +720,6 @@ function Table<RecordType extends DefaultRecordType>(
             scrollBodyRef={scrollBodyRef}
             onScroll={onInternalScroll}
             container={container}
-            data={data}
           />
         )}
       </>

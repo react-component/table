@@ -12,11 +12,10 @@ interface StickyScrollBarProps {
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
   container: HTMLElement | Window;
-  data?: readonly any[];
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container, data },
+  { scrollBodyRef, onScroll, offsetScroll, container },
   ref,
 ) => {
   const prefixCls = useContext(TableContext, 'prefixCls');
@@ -119,6 +118,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   React.useImperativeHandle(ref, () => ({
     setScrollLeft,
+    checkScrollBarVisible,
   }));
 
   React.useEffect(() => {
@@ -155,11 +155,6 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       });
     }
   }, [scrollState.isHiddenScrollBar]);
-
-  // The best way is to use ResizeObserver to detect the body height, but this way is enough
-  React.useEffect(() => {
-    checkScrollBarVisible();
-  }, [data]);
 
   if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
     return null;
