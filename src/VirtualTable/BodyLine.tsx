@@ -91,6 +91,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     <RowComponent
       {...rowProps}
       {...restProps}
+      data-row-key={rowKey}
       ref={rowSupportExpand ? null : ref}
       className={classNames(className, `${prefixCls}-row`, rowProps?.className, {
         [`${prefixCls}-row-extra`]: extra,
