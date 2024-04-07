@@ -103,6 +103,7 @@ export interface TableProps<RecordType = any>
   expandable?: ExpandableConfig<RecordType>;
   indentSize?: number;
   rowClassName?: string | RowClassName<RecordType>;
+  load?: (data: any) => void;
 
   // Additional Part
   footer?: PanelRender<RecordType>;
