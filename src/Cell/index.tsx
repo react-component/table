@@ -61,7 +61,8 @@ const getTitleFromCellRenderChildren = ({
   children,
 }: Pick<CellProps<any>, 'ellipsis' | 'rowType' | 'children'>) => {
   let title: string;
-  const ellipsisConfig: CellEllipsisType = ellipsis === true ? { showTitle: true } : ellipsis;
+  const ellipsisConfig: CellEllipsisType =
+    ellipsis === true || ellipsis === undefined ? { showTitle: true } : ellipsis;
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
     if (typeof children === 'string' || typeof children === 'number') {
       title = children.toString();
