@@ -7,6 +7,8 @@ import type { FlattenData } from '../hooks/useFlattenRecords';
 import useRowInfo from '../hooks/useRowInfo';
 import VirtualCell from './VirtualCell';
 import { StaticContext } from './context';
+import { getCellProps } from '../Body/BodyRow';
+import VirtualRow from './VirtualRow';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -14,6 +16,7 @@ export interface BodyLineProps<RecordType = any> {
   className?: string;
   style?: React.CSSProperties;
   rowKey: React.Key;
+  scrollLeft: number;
 
   /** Render cell only when it has `rowSpan > 1` */
   extra?: boolean;
@@ -21,16 +24,24 @@ export interface BodyLineProps<RecordType = any> {
 }
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
-  const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
+  const { data, index, className, rowKey, style, extra, getHeight, scrollLeft, ...restProps } =
+    props;
   const { record, indent, index: renderIndex } = data;
 
   const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(
     TableContext,
     ['prefixCls', 'flattenColumns', 'fixColumn', 'componentWidth', 'scrollX'],
   );
-  const { getComponent } = useContext(StaticContext, ['getComponent']);
+  const { getComponent, horizontalVirtual } = useContext(StaticContext, [
+    'getComponent',
+    'horizontalVirtual',
+  ]);
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
+
+  const cellPropsCollections = flattenColumns.map((column, colIndex) =>
+    getCellProps(rowInfo, column, colIndex, indent, index),
+  );
 
   const RowComponent = getComponent(['body', 'row'], 'div');
   const cellComponent = getComponent(['body', 'cell'], 'div');
@@ -87,6 +98,16 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     rowStyle.pointerEvents = 'none';
   }
 
+  const shareCellProps = {
+    index,
+    renderIndex,
+    inverse: extra,
+    record,
+    rowInfo,
+    component: cellComponent,
+    getHeight,
+  };
+
   const rowNode = (
     <RowComponent
       {...rowProps}
@@ -98,23 +119,23 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       })}
       style={{ ...rowStyle, ...rowProps?.style }}
     >
-      {flattenColumns.map((column, colIndex) => {
-        return (
+      {horizontalVirtual ? (
+        <VirtualRow
+          cellPropsCollections={cellPropsCollections}
+          scrollLeft={scrollLeft}
+          {...shareCellProps}
+        />
+      ) : (
+        flattenColumns.map((column, colIndex) => (
           <VirtualCell
             key={colIndex}
-            component={cellComponent}
-            rowInfo={rowInfo}
             column={column}
             colIndex={colIndex}
-            indent={indent}
-            index={index}
-            renderIndex={renderIndex}
-            record={record}
-            inverse={extra}
-            getHeight={getHeight}
+            cellProps={cellPropsCollections[colIndex]}
+            {...shareCellProps}
           />
-        );
-      })}
+        ))
+      )}
     </RowComponent>
   );
 

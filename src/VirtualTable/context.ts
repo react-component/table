@@ -5,6 +5,7 @@ export interface StaticContextProps {
   scrollY: number;
   listItemHeight: number;
   sticky: boolean | TableSticky;
+  horizontalVirtual: boolean;
   getComponent: GetComponent;
   onScroll?: React.UIEventHandler<HTMLDivElement>;
 }

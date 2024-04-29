@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../assets/index.less';
 import { VirtualTable } from '../../src';
 import type { ColumnsType, Reference } from '../../src/interface';
@@ -11,7 +11,7 @@ interface RecordType {
   indexKey: string;
 }
 
-const columns: ColumnsType = [
+const defaultColumns: ColumnsType = [
   // { title: 'title1', dataIndex: 'a', key: 'a', width: 100,},
   // { title: 'title1', dataIndex: 'a', key: 'a', width: 100, },
   { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
@@ -162,15 +162,6 @@ const columns: ColumnsType = [
   },
 ];
 
-export function cleanOnCell(cols: any = []) {
-  cols.forEach(col => {
-    delete (col as any).onCell;
-
-    cleanOnCell((col as any).children);
-  });
-}
-cleanOnCell(columns);
-
 const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   a: `a${index}`,
   b: `b${index}`,
@@ -190,9 +181,21 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
 
 const Demo = () => {
   const tblRef = React.useRef<Reference>();
+  const [enableColRowSpan, setEnableColRowSpan] = useState(false);
+
+  function cleanOnCell(cols: ColumnsType) {
+    return cols?.map(({ onCell, ...col }: any) => {
+      return { ...col, children: cleanOnCell(col.children) };
+    });
+  }
+
+  const columns = enableColRowSpan ? defaultColumns : cleanOnCell(defaultColumns);
 
   return (
     <div style={{ width: 800, padding: `0 64px` }}>
+      <button onClick={() => setEnableColRowSpan(!enableColRowSpan)}>
+        Toggle RowSpan and ColSpan
+      </button>
       <button
         onClick={() => {
           tblRef.current?.scrollTo({
@@ -214,6 +217,7 @@ const Demo = () => {
       </button>
 
       <VirtualTable
+        virtual={{ x: true }}
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1300, y: 200 }}

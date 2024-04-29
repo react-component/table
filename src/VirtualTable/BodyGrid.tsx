@@ -31,6 +31,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     childrenColumnName,
     emptyNode,
     scrollX,
+    componentWidth,
   } = useContext(TableContext, [
     'flattenColumns',
     'onColumnResize',
@@ -40,11 +41,13 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'childrenColumnName',
     'emptyNode',
     'scrollX',
+    'componentWidth',
   ]);
   const {
     sticky,
     scrollY,
     listItemHeight,
+    horizontalVirtual,
     getComponent,
     onScroll: onTablePropScroll,
   } = useContext(StaticContext);
@@ -69,6 +72,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     [columnsWidth],
   );
 
+  const [scrollLeft, setScrollLeft] = React.useState(0);
+
   React.useEffect(() => {
     columnsWidth.forEach(([key, width]) => {
       onColumnResize(key, width);
@@ -87,6 +92,12 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       get: () => listRef.current?.getScrollInfo().x || 0,
 
       set: (value: number) => {
+        if (horizontalVirtual) {
+          const max = (scrollX as number) - componentWidth;
+          let left = Math.max(value, 0);
+          left = Math.min(left, max);
+          setScrollLeft(left);
+        }
         listRef.current?.scrollTo({
           left: value,
         });
@@ -191,6 +202,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           }}
           extra
           getHeight={getHeight}
+          scrollLeft={scrollLeft}
         />
       );
     });
@@ -235,6 +247,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         component={wrapperComponent}
         scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
+          if (horizontalVirtual) {
+            setScrollLeft(x);
+          }
           onScroll({
             scrollLeft: x,
           });
@@ -244,7 +259,15 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       >
         {(item, index, itemProps) => {
           const rowKey = getRowKey(item.record, index);
-          return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
+          return (
+            <BodyLine
+              data={item}
+              rowKey={rowKey}
+              index={index}
+              scrollLeft={scrollLeft}
+              {...itemProps}
+            />
+          );
         }}
       </VirtualList>
     );

@@ -1,7 +1,7 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import * as React from 'react';
-import { getCellProps } from '../Body/BodyRow';
+import type { getCellProps } from '../Body/BodyRow';
 import Cell from '../Cell';
 import type useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
@@ -11,12 +11,12 @@ export interface VirtualCellProps<RecordType> {
   rowInfo: ReturnType<typeof useRowInfo<RecordType>>;
   column: ColumnType<RecordType>;
   colIndex: number;
-  indent: number;
   index: number;
   component?: CustomizeComponent;
   /** Used for `column.render` */
   renderIndex: number;
   record: RecordType;
+  cellProps: ReturnType<typeof getCellProps>;
 
   // Follow props is used for RowSpanVirtualCell only
   style?: React.CSSProperties;
@@ -41,7 +41,6 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     rowInfo,
     column,
     colIndex,
-    indent,
     index,
     component,
     renderIndex,
@@ -49,6 +48,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     style,
     className,
     inverse,
+    cellProps,
     getHeight,
   } = props;
 
@@ -56,13 +56,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
 
   const { columnsOffset } = useContext(GridContext, ['columnsOffset']);
 
-  const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
-    rowInfo,
-    column,
-    colIndex,
-    indent,
-    index,
-  );
+  const { key, fixedInfo, appendCellNode, additionalCellProps } = cellProps;
 
   const { style: cellStyle, colSpan = 1, rowSpan = 1 } = additionalCellProps;
 
