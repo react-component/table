@@ -309,4 +309,36 @@ describe('Table.FixedColumn', () => {
     expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(4);
     expect(container).toMatchSnapshot();
   });
+
+  it('shadow should be shown when there are columns where fixed is false', async () => {
+    const { container } = render(
+      <RowColSpanWithFixed
+        columns={[
+          {
+            title: 'Other',
+            fixed: 'left',
+          },
+          {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            fixed: false,
+          },
+          {
+            title: 'Company',
+            fixed: false,
+          },
+          {
+            title: 'Gender',
+            dataIndex: 'gender',
+            key: 'gender',
+            fixed: 'right',
+          },
+        ]}
+      />,
+    );
+    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(101);
+    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(101);
+    expect(container).toMatchSnapshot();
+  });
 });
