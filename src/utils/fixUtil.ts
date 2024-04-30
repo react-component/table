@@ -43,8 +43,8 @@ export function getCellFixedInfo(
 
   // need show shadow only when canLastFix is true
   const canLastFix =
-    (nextColumn && nextColumn.fixed === undefined) ||
-    (prevColumn && prevColumn.fixed === undefined) ||
+    (nextColumn && !nextColumn.fixed) ||
+    (prevColumn && !prevColumn.fixed) ||
     columns.every(col => col.fixed === 'left');
 
   if (direction === 'rtl') {

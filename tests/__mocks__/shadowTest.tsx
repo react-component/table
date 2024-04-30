@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from '../../src';
 import '../../assets/index.less';
-import type { ColumnsType } from '../../src';
+import type { ColumnsType, TableProps } from '../../src';
 
 interface DataType {
   key: React.Key;
@@ -171,8 +171,8 @@ const data2: User[] = [
   },
 ];
 
-export const RowColSpanWithFixed = () => (
-  <Table columns={columns} data={data} className="table1" scroll={{ x: 1500, y: 500 }} />
+export const RowColSpanWithFixed = (props?: TableProps) => (
+  <Table columns={columns} data={data} className="table1" scroll={{ x: 1500, y: 500 }} {...props} />
 );
 export const RowColSpanWithFixed2 = () => (
   <Table columns={columns2} data={data2} className="table2" scroll={{ x: 1500, y: 500 }} />
