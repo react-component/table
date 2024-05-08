@@ -155,6 +155,260 @@ describe('Table with grouping columns', () => {
     expect(titleA.prop('rowSpan')).toBe(3);
   });
 
+  it('more strange layout', () => {
+    /**
+     * +---+---+-----------+-----------+-----------+
+     * | A | B |     C     |           |     E     |
+     * +---+---+---+-------+     D     +-----------+
+     * |       | G |   H   |           |     I     |
+     * |       +---+---+---+---+---+---+---+---+---+
+     * |   F   |   |   |       |   | N | O | P |   |
+     * |       | J | K |   L   | M +---+---+---+ Q |
+     * |       |   |   |       |   | R | S | T |   |
+     * +-------+---+---+---+---+---+---+---+---+---+
+     */
+
+    const columns = [
+      {
+        title: 'A',
+        className: 'title-a',
+        colSpan: 1,
+        children: [
+          {
+            title: 'F',
+            className: 'title-f',
+            colSpan: 2,
+            dataIndex: 'F',
+            key: 'F',
+            onCell: () => ({ colSpan: 2 }),
+          },
+        ],
+      },
+      {
+        title: 'B',
+        className: 'title-b',
+        rowSpan: 1,
+        onCell: () => ({ colSpan: 0 }),
+      },
+      {
+        title: 'C',
+        className: 'title-c',
+        children: [
+          {
+            title: 'G',
+            className: 'title-g',
+            children: [
+              {
+                title: 'J',
+                className: 'title-j',
+                dataIndex: 'J',
+                key: 'J',
+              },
+            ],
+          },
+          {
+            title: 'H',
+            className: 'title-h',
+            colSpan: 2,
+            children: [
+              {
+                title: 'K',
+                className: 'title-k',
+                dataIndex: 'K',
+                key: 'K',
+              },
+              {
+                title: 'L',
+                className: 'title-l',
+                colSpan: 2,
+                dataIndex: 'L',
+                key: 'L',
+                onCell: () => ({ colSpan: 2 }),
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'D',
+        className: 'title-d',
+        colSpan: 3,
+        rowSpan: 2,
+        children: [
+          {
+            title: 'M',
+            className: 'title-m',
+            dataIndex: 'M',
+            key: 'M',
+          },
+          {
+            title: 'N',
+            className: 'title-n',
+            children: [
+              {
+                title: 'R',
+                className: 'title-r',
+                dataIndex: 'R',
+                key: 'R',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'E',
+        className: 'title-e',
+        children: [
+          {
+            title: 'I',
+            className: 'title-i',
+            children: [
+              {
+                title: 'O',
+                className: 'title-o',
+                children: [
+                  {
+                    title: 'S',
+                    className: 'title-s',
+                    dataIndex: 'S',
+                    key: 'S',
+                  },
+                ],
+              },
+              {
+                title: 'P',
+                className: 'title-p',
+                children: [
+                  {
+                    title: 'T',
+                    className: 'title-t',
+                    dataIndex: 'T',
+                    key: 'T',
+                  },
+                ],
+              },
+              {
+                title: 'Q',
+                className: 'title-q',
+                dataIndex: 'Q',
+                key: 'Q',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const data = [
+      {
+        key: '1',
+        F: 'F-1',
+        J: 'J-1',
+        K: 'K-1',
+        L: 'L-1',
+        M: 'M-1',
+        R: 'R-1',
+        S: 'S-1',
+        T: 'T-1',
+        Q: 'Q-1',
+      },
+      {
+        key: '2',
+        F: 'F-2',
+        J: 'J-2',
+        K: 'K-2',
+        L: 'L-2',
+        M: 'M-2',
+        R: 'R-2',
+        S: 'S-2',
+        T: 'T-2',
+        Q: 'Q-2',
+      },
+    ];
+
+    const wrapper = mount(<Table columns={columns} data={data} />);
+
+    const titleA = wrapper.find('th.title-a');
+    expect(titleA.prop('colSpan')).toBe(null);
+    expect(titleA.prop('rowSpan')).toBe(null);
+
+    const titleB = wrapper.find('th.title-b');
+    expect(titleB.prop('colSpan')).toBe(null);
+    expect(titleB.prop('rowSpan')).toBe(null);
+
+    const titleC = wrapper.find('th.title-c');
+    expect(titleC.prop('colSpan')).toBe(3);
+    expect(titleC.prop('rowSpan')).toBe(null);
+
+    const titleD = wrapper.find('th.title-d');
+    expect(titleD.prop('colSpan')).toBe(3);
+    expect(titleD.prop('rowSpan')).toBe(2);
+
+    const titleE = wrapper.find('th.title-e');
+    expect(titleE.prop('colSpan')).toBe(3);
+    expect(titleE.prop('rowSpan')).toBe(null);
+
+    const titleF = wrapper.find('th.title-f');
+    expect(titleF.prop('colSpan')).toBe(2);
+    expect(titleF.prop('rowSpan')).toBe(3);
+
+    const titleG = wrapper.find('th.title-g');
+    expect(titleG.prop('colSpan')).toBe(null);
+    expect(titleG.prop('rowSpan')).toBe(null);
+
+    const titleH = wrapper.find('th.title-h');
+    expect(titleH.prop('colSpan')).toBe(2);
+    expect(titleH.prop('rowSpan')).toBe(null);
+
+    const titleI = wrapper.find('th.title-i');
+    expect(titleI.prop('colSpan')).toBe(3);
+    expect(titleI.prop('rowSpan')).toBe(null);
+
+    const titleJ = wrapper.find('th.title-j');
+    expect(titleJ.prop('colSpan')).toBe(null);
+    expect(titleJ.prop('rowSpan')).toBe(2);
+
+    const titleK = wrapper.find('th.title-k');
+    expect(titleK.prop('colSpan')).toBe(null);
+    expect(titleK.prop('rowSpan')).toBe(2);
+
+    const titleL = wrapper.find('th.title-l');
+    expect(titleL.prop('colSpan')).toBe(2);
+    expect(titleL.prop('rowSpan')).toBe(2);
+
+    const titleM = wrapper.find('th.title-m');
+    expect(titleM.prop('colSpan')).toBe(null);
+    expect(titleM.prop('rowSpan')).toBe(2);
+
+    const titleN = wrapper.find('th.title-n');
+    expect(titleN.prop('colSpan')).toBe(null);
+    expect(titleN.prop('rowSpan')).toBe(null);
+
+    const titleO = wrapper.find('th.title-o');
+    expect(titleO.prop('colSpan')).toBe(null);
+    expect(titleO.prop('rowSpan')).toBe(null);
+
+    const titleP = wrapper.find('th.title-p');
+    expect(titleP.prop('colSpan')).toBe(null);
+    expect(titleP.prop('rowSpan')).toBe(null);
+
+    const titleQ = wrapper.find('th.title-q');
+    expect(titleQ.prop('colSpan')).toBe(null);
+    expect(titleQ.prop('rowSpan')).toBe(2);
+
+    const titleR = wrapper.find('th.title-r');
+    expect(titleR.prop('colSpan')).toBe(null);
+    expect(titleR.prop('rowSpan')).toBe(null);
+
+    const titleS = wrapper.find('th.title-s');
+    expect(titleS.prop('colSpan')).toBe(null);
+    expect(titleS.prop('rowSpan')).toBe(null);
+
+    const titleT = wrapper.find('th.title-t');
+    expect(titleT.prop('colSpan')).toBe(null);
+    expect(titleT.prop('rowSpan')).toBe(null);
+  });
+
   it('hidden column', () => {
     const columns = [
       {

@@ -2,6 +2,7 @@ import { useContext } from '@rc-component/context';
 import * as React from 'react';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
+import { convertColumns } from '../utils/convertUtil';
 import type {
   CellType,
   ColumnGroupType,
@@ -67,7 +68,7 @@ function parseHeaderRows<RecordType>(
   }
 
   // Generate `rows` cell data
-  fillRowCells(rootColumns, 0);
+  fillRowCells(convertColumns<ColumnsType<RecordType>>(rootColumns), 0);
 
   // Handle `rowSpan`
   const rowCount = rows.length;
