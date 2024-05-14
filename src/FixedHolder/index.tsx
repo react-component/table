@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, Direction } from '../interface';
+import type { CellType, ColumnsType, ColumnType, Direction } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -48,6 +48,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     className,
     noData,
     columns,
+    headCells,
     flattenColumns,
     colWidths,
     columCount,
@@ -63,12 +64,10 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     ...restProps
   } = props;
 
-  const { prefixCls, scrollbarSize, isSticky, getComponent } = useContext(TableContext, [
-    'prefixCls',
-    'scrollbarSize',
-    'isSticky',
-    'getComponent',
-  ]);
+  const { prefixCls, headMatrix, scrollbarSize, isSticky, getComponent } = useContext(
+    TableContext,
+    ['prefixCls', 'headMatrix', 'scrollbarSize', 'isSticky', 'getComponent'],
+  );
   const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
@@ -111,11 +110,26 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       className: `${prefixCls}-cell-scrollbar`,
     }),
   };
+  const ScrollBarColumnCell: CellType<unknown> = {
+    column: ScrollBarColumn,
+    colSpan: 1,
+    colStart: headMatrix[0],
+    colEnd: headMatrix[0],
+    rowSpan: headMatrix[1],
+  };
 
   const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
     () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
     [combinationScrollBarSize, columns],
   );
+
+  const headCellsWithScrollbar = useMemo<CellType<unknown>[][]>(() => {
+    if (combinationScrollBarSize) {
+      const [cell, ...cells] = headCells;
+      return [[...cell, ScrollBarColumnCell], ...cells];
+    }
+    return headCells;
+  }, [combinationScrollBarSize, headCells]);
 
   const flattenColumnsWithScrollbar = useMemo(
     () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
@@ -165,6 +179,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           ...restProps,
           stickyOffsets: headerStickyOffsets,
           columns: columnsWithScrollbar,
+          headCells: headCellsWithScrollbar,
           flattenColumns: flattenColumnsWithScrollbar,
         })}
       </TableComponent>

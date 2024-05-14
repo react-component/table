@@ -26,6 +26,12 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+/**
+ * 0 => horizontal count of table head cells
+ * 1 => vertical count of table head cells
+ */
+export type HeadMatrix = [number, number];
+
 export type ScrollConfig = {
   index?: number;
   key?: Key;
@@ -70,7 +76,11 @@ export type Direction = 'ltr' | 'rtl';
 // SpecialString will be removed in antd@6
 export type SpecialString<T> = T | (string & {});
 
-export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T> | number | (SpecialString<T> | number)[];
+export type DataIndex<T = any> =
+  | DeepNamePath<T>
+  | SpecialString<T>
+  | number
+  | (SpecialString<T> | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
