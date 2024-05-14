@@ -326,7 +326,8 @@ describe('Table with grouping columns', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} data={data} />);
+    const wrapper = mount(<Table columns={columns} data={[]} />);
+    expect(wrapper.find('.rc-table-placeholder .rc-table-cell').prop('colSpan')).toEqual(11);
 
     const titleA = wrapper.find('th.title-a');
     expect(titleA.prop('colSpan')).toBe(null);

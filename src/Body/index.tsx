@@ -26,6 +26,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     prefixCls,
     getComponent,
     onColumnResize,
+    headMatrix,
     flattenColumns,
     getRowKey,
     expandedKeys,
@@ -35,6 +36,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'prefixCls',
     'getComponent',
     'onColumnResize',
+    'headMatrix',
     'flattenColumns',
     'getRowKey',
     'expandedKeys',
@@ -86,7 +88,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
         prefixCls={prefixCls}
         component={trComponent}
         cellComponent={tdComponent}
-        colSpan={flattenColumns.length}
+        colSpan={headMatrix[0]}
         isEmpty
       >
         {emptyNode}
