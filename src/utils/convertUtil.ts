@@ -1,53 +1,32 @@
-interface Column {
-  [key: string | symbol]: any;
+import type { ColumnsType, ColumnType } from '../interface';
+
+interface Column<RecordType> extends ColumnType<RecordType> {
+  colSpanSpecified?: number;
+  rowSpanSpecified?: number;
+  parentsRowCount?: number;
+  children?: Column<RecordType>[];
 }
 
-interface Options {
-  children: string;
-  colSpan: string;
-  rowSpan: string;
-  hidden: string;
-}
-
-export function convertColumns<Columns extends readonly any[] = Column[]>(
-  columns: Columns,
-  options: Partial<Options> = {},
-) {
+export function convertColumns<RecordType = Column<any>>(
+  columns: ColumnsType<RecordType>,
+): ColumnsType<RecordType> {
   if (!Array.isArray(columns) || columns.length === 0) {
-    return [] as unknown as Columns;
+    return [];
   }
-
-  const defaultOptions = {
-    children: 'children',
-    colSpan: 'colSpan',
-    rowSpan: 'rowSpan',
-    hidden: 'hidden',
-  };
-  const {
-    children: childrenProp,
-    colSpan: colSpanProp,
-    rowSpan: rowSpanProp,
-    hidden: hiddenProp,
-  } = Object.assign({}, defaultOptions, options);
-
-  let specified = false;
-  let tree = columns.map(item => ({ ...item }) as Column);
 
   let depthCurr = 0;
   let depthNext = 0;
   const nodePos: {
     index: number;
     total: number;
-  }[] = [
-    {
-      index: tree.length,
-      total: tree.length,
-    },
-  ];
+  }[] = [{ index: columns.length, total: columns.length }];
   const rowSpans: number[] = [];
-  const columnsMap = new Map<number, Column[]>();
-  const treeMap = new Map<Column, Column[]>();
-  const branchLastSet = new Set<Column>();
+  const columnsMap = new Map<number, Column<RecordType>[]>();
+  const treeMap = new Map<Column<RecordType>, Column<RecordType>[]>();
+  const lastSet = new Set<Column<RecordType>>();
+
+  let specified = false;
+  let tree: Column<RecordType>[] = columns.map(item => ({ ...item }));
 
   while (tree.length > 0) {
     depthCurr = depthNext;
@@ -70,16 +49,16 @@ export function convertColumns<Columns extends readonly any[] = Column[]>(
 
     const node = tree.shift();
 
-    if (!node || typeof node !== 'object' || node[hiddenProp]) {
+    if (!node || typeof node !== 'object' || node.hidden) {
       continue;
     }
 
-    const colSpanSpecified = node[colSpanProp];
-    const rowSpanSpecified = node[rowSpanProp];
-    const colSpan = node[colSpanProp] ?? 1;
-    const rowSpan = node[rowSpanProp] ?? 1;
-    node[colSpanProp] = colSpan;
-    node[rowSpanProp] = rowSpan;
+    const colSpanSpecified = node.colSpan;
+    const rowSpanSpecified = node.rowSpan;
+    const colSpan = node.colSpan ?? 1;
+    const rowSpan = node.rowSpan ?? 1;
+    node.colSpan = colSpan;
+    node.rowSpan = rowSpan;
 
     if (!specified && (colSpan > 1 || rowSpan > 1)) {
       specified = true;
@@ -91,15 +70,15 @@ export function convertColumns<Columns extends readonly any[] = Column[]>(
     }
     columnsMap.get(parentsRowCount).push(node);
 
-    let leaf = node[childrenProp];
-    delete node[childrenProp];
+    let leaf = node.children;
+    delete node.children;
 
     if (Array.isArray(leaf) && leaf.length > 0) {
       depthNext = depthCurr + 1;
       nodePos[depthNext] = { index: leaf.length, total: leaf.length };
       rowSpans[depthCurr] = rowSpan;
 
-      leaf = leaf.map(item => ({ ...item }) as Column);
+      leaf = leaf.map(item => ({ ...item }));
       node.colSpanSpecified = colSpanSpecified;
       if (!treeMap.has(node)) {
         treeMap.set(node, []);
@@ -109,7 +88,7 @@ export function convertColumns<Columns extends readonly any[] = Column[]>(
     } else {
       node.rowSpanSpecified = rowSpanSpecified;
       node.parentsRowCount = parentsRowCount;
-      branchLastSet.add(node);
+      lastSet.add(node);
     }
   }
 
@@ -122,30 +101,30 @@ export function convertColumns<Columns extends readonly any[] = Column[]>(
     const { colSpanSpecified } = column;
     delete column.colSpanSpecified;
 
-    if (column[hiddenProp] || Number.isInteger(colSpanSpecified)) {
+    if (column.hidden || Number.isInteger(colSpanSpecified)) {
       return;
     }
 
     const children = treeMap.get(column);
-    column[colSpanProp] = children.reduce((acc, item) => {
-      return item[hiddenProp] ? acc : acc + item[colSpanProp];
+    column.colSpan = children.reduce((acc, item) => {
+      return item.hidden ? acc : acc + item.colSpan;
     }, 0);
   });
 
   let rowCountMax = 0;
-  branchLastSet.forEach(column => {
-    const rowCount = column[rowSpanProp] + column.parentsRowCount;
+  lastSet.forEach(column => {
+    const rowCount = column.rowSpan + column.parentsRowCount;
     if (rowCount > rowCountMax) {
       rowCountMax = rowCount;
     }
   });
 
   // correct rowSpan of column in default state
-  branchLastSet.forEach(column => {
+  lastSet.forEach(column => {
     const { rowSpanSpecified, parentsRowCount } = column;
 
     if (!Number.isInteger(rowSpanSpecified)) {
-      column[rowSpanProp] = rowCountMax - parentsRowCount;
+      column.rowSpan = rowCountMax - parentsRowCount;
     }
 
     delete column.rowSpanSpecified;
@@ -155,8 +134,8 @@ export function convertColumns<Columns extends readonly any[] = Column[]>(
   const keys = [...columnsMap.keys()].sort();
   for (let i = keys.length - 1; i >= 1; i--) {
     const parent = columnsMap.get(keys[i - 1]);
-    parent[0][childrenProp] = columnsMap.get(keys[i]);
+    parent[0].children = columnsMap.get(keys[i]);
   }
 
-  return columnsMap.get(0) as unknown as Columns;
+  return columnsMap.get(0) as unknown as ColumnsType<RecordType>;
 }

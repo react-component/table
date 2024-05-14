@@ -68,7 +68,7 @@ function parseHeaderRows<RecordType>(
   }
 
   // Generate `rows` cell data
-  fillRowCells(convertColumns<ColumnsType<RecordType>>(rootColumns), 0);
+  fillRowCells(convertColumns<RecordType>(rootColumns), 0);
 
   // Handle `rowSpan`
   const rowCount = rows.length;
