@@ -1,6 +1,8 @@
 import * as React from 'react';
 import type { ColumnType } from './interface';
 import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
+import { useContext } from '@rc-component/context';
+import TableContext from './context/TableContext';
 
 export interface ColGroupProps<RecordType> {
   colWidths: readonly (number | string)[];
@@ -9,6 +11,8 @@ export interface ColGroupProps<RecordType> {
 }
 
 function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<RecordType>) {
+  const { tableLayout } = useContext(TableContext, ['tableLayout']);
+
   const cols: React.ReactElement[] = [];
   const len = columCount || columns.length;
 
@@ -17,12 +21,13 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
   let mustInsert = false;
   for (let i = len - 1; i >= 0; i -= 1) {
     const width = colWidths[i];
-    const column = columns && columns[i];
-    const additionalProps = column && column[INTERNAL_COL_DEFINE];
+    const column = columns?.[i];
+    const minWidth = tableLayout === 'auto' && column?.minWidth;
+    const additionalProps = column?.[INTERNAL_COL_DEFINE];
 
-    if (width || additionalProps || mustInsert) {
+    if (width || minWidth || additionalProps || mustInsert) {
       const { columnType, ...restAdditionalProps } = additionalProps || {};
-      cols.unshift(<col key={i} style={{ width }} {...restAdditionalProps} />);
+      cols.unshift(<col key={i} style={{ width, minWidth }} {...restAdditionalProps} />);
       mustInsert = true;
     }
   }
