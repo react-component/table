@@ -89,7 +89,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         e.preventDefault();
       }
     }
-    scrollRef.current?.addEventListener('wheel', onWheel);
+    scrollRef.current?.addEventListener('wheel', onWheel, { passive: false });
 
     return () => {
       scrollRef.current?.removeEventListener('wheel', onWheel);
