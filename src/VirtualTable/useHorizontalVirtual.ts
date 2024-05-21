@@ -9,7 +9,7 @@ function generateRange(start: number, end: number) {
 
 export default function useHorizontalVirtual(
   cellPropsCollections: ReturnType<typeof getCellProps>[],
-  scrollLeft: number,
+  offsetX: number,
 ) {
   const { flattenColumns, componentWidth } = useContext(TableContext, [
     'flattenColumns',
@@ -26,20 +26,20 @@ export default function useHorizontalVirtual(
 
   const startIndex = useMemo(() => {
     let virtualStartIndex = flattenColumns.findIndex(col => col.fixed !== 'left');
-    let tempScrollLeft = scrollLeft;
+    let tempOffsetX = offsetX;
     for (let i = virtualStartIndex; i < flattenColumns.length; i++) {
       const colSpan = cellColSpanCollections[i];
       const width = flattenColumns
         .slice(i, i + colSpan)
         .reduce((total, col) => total + (col.width as number), 0);
-      tempScrollLeft = tempScrollLeft - width;
+      tempOffsetX = tempOffsetX - width;
       virtualStartIndex = i;
-      if (tempScrollLeft < 0) {
+      if (tempOffsetX < 0) {
         break;
       }
     }
     return virtualStartIndex;
-  }, [flattenColumns, scrollLeft, cellColSpanCollections]);
+  }, [flattenColumns, offsetX, cellColSpanCollections]);
 
   const virtualOffset = useMemo(
     () =>
@@ -65,7 +65,7 @@ export default function useHorizontalVirtual(
 
     //  计算当前这个右边部分的距离
     const firstRightWidth =
-      (flattenColumns[startIndex].width as number) - (scrollLeft - virtualOffset);
+      (flattenColumns[startIndex].width as number) - (offsetX - virtualOffset);
 
     for (let i = startIndex; i < flattenColumns.length; i++) {
       if (i === startIndex) {
@@ -79,7 +79,7 @@ export default function useHorizontalVirtual(
       }
     }
     return virtualEndIndex;
-  }, [componentWidth, flattenColumns, scrollLeft, virtualOffset, startIndex]);
+  }, [componentWidth, flattenColumns, offsetX, virtualOffset, startIndex]);
 
   const showColumnIndexes = useMemo(() => {
     const fixedLeftIndexes = [];

@@ -9,7 +9,7 @@ import type { CustomizeComponent } from '../interface';
 
 export interface VirtualRowProps {
   cellPropsCollections: ReturnType<typeof getCellProps>[];
-  scrollLeft: number;
+  offsetX: number;
   index: number;
   renderIndex: number;
   inverse: boolean;
@@ -21,14 +21,14 @@ export interface VirtualRowProps {
 
 export default function VirtualRow({
   cellPropsCollections,
-  scrollLeft,
+  offsetX,
   ...restProps
 }: VirtualRowProps) {
   const { flattenColumns } = useContext(TableContext, ['flattenColumns']);
 
   const [startIndex, virtualOffset, showColumnIndexes] = useHorizontalVirtual(
     cellPropsCollections,
-    scrollLeft,
+    offsetX,
   );
 
   return showColumnIndexes.map(colIndex => (

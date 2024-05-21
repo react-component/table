@@ -16,7 +16,7 @@ export interface BodyLineProps<RecordType = any> {
   className?: string;
   style?: React.CSSProperties;
   rowKey: React.Key;
-  scrollLeft: number;
+  offsetX: number;
 
   /** Render cell only when it has `rowSpan > 1` */
   extra?: boolean;
@@ -24,8 +24,7 @@ export interface BodyLineProps<RecordType = any> {
 }
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
-  const { data, index, className, rowKey, style, extra, getHeight, scrollLeft, ...restProps } =
-    props;
+  const { data, index, className, rowKey, style, extra, getHeight, offsetX, ...restProps } = props;
   const { record, indent, index: renderIndex } = data;
 
   const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(
@@ -122,7 +121,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       {horizontalVirtual ? (
         <VirtualRow
           cellPropsCollections={cellPropsCollections}
-          scrollLeft={scrollLeft}
+          offsetX={offsetX}
           {...shareCellProps}
         />
       ) : (
