@@ -453,18 +453,12 @@ function Table<RecordType extends DefaultRecordType>(
         forceScroll(mergedScrollLeft, scrollSummaryRef.current);
         forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
+
       const measureTarget = currentTarget || scrollHeaderRef.current;
       if (measureTarget) {
         const scrollWidth =
           typeof mergedScrollX === 'number' ? mergedScrollX : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
-        console.log(
-          'scrollWidth',
-          scrollWidth,
-          clientWidth,
-          mergedScrollLeft,
-          scrollWidth - clientWidth,
-        );
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
