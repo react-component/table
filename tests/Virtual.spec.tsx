@@ -45,6 +45,12 @@ describe('Table.Virtual', () => {
         },
         set: () => {},
       },
+      clientWidth: {
+        get: () => 80,
+      },
+      scrollWidth: {
+        get: () => 100,
+      },
     });
   });
 
@@ -442,5 +448,64 @@ describe('Table.Virtual', () => {
 
     fireEvent.scroll(container.querySelector('.rc-table-tbody-virtual-holder')!);
     expect(onScroll).toHaveBeenCalled();
+  });
+
+  it('right shadow should display correctly when mount', async () => {
+    const { container } = getTable({
+      columns: [
+        {
+          dataIndex: 'name',
+          width: 30,
+        },
+        {
+          dataIndex: 'age',
+          width: 30,
+        },
+        {
+          dataIndex: 'address',
+          width: 40,
+          fixed: 'right',
+        },
+      ],
+      getContainerWidth: () => 80,
+    });
+
+    resize(container.querySelector('.rc-table'));
+
+    await waitFakeTimer();
+
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeTruthy();
+  });
+
+  it('right shadow should display correctly when showHeader is false', async () => {
+    const { container } = getTable({
+      showHeader: false,
+      columns: [
+        {
+          dataIndex: 'name',
+          width: 30,
+        },
+        {
+          dataIndex: 'age',
+          width: 30,
+        },
+        {
+          dataIndex: 'address',
+          width: 40,
+          fixed: 'right',
+        },
+      ],
+      getContainerWidth: () => 80,
+    });
+
+    resize(container.querySelector('.rc-table'));
+
+    await waitFakeTimer();
+
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeTruthy();
   });
 });

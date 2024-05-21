@@ -625,7 +625,7 @@ LoadedCheerio {
 exports[`Table.Expand > renders fixed column correctly > work 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+    class="rc-table rc-table-ping-right rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
       class="rc-table-container"

@@ -453,10 +453,11 @@ function Table<RecordType extends DefaultRecordType>(
         forceScroll(mergedScrollLeft, scrollSummaryRef.current);
         forceScroll(mergedScrollLeft, stickyRef.current?.setScrollLeft);
       }
-
       const measureTarget = currentTarget || scrollHeaderRef.current;
       if (measureTarget) {
-        const { scrollWidth, clientWidth } = measureTarget;
+        const scrollWidth =
+          typeof mergedScrollX === 'number' ? mergedScrollX : measureTarget.scrollWidth;
+        const clientWidth = measureTarget.clientWidth;
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
@@ -481,7 +482,9 @@ function Table<RecordType extends DefaultRecordType>(
 
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
-      onInternalScroll({ currentTarget: scrollBodyRef.current } as React.UIEvent<HTMLDivElement>);
+      onInternalScroll({
+        currentTarget: (scrollBodyRef.current as any).nativeElement || scrollBodyRef.current,
+      } as React.UIEvent<HTMLDivElement>);
     } else {
       setPingedLeft(false);
       setPingedRight(false);
