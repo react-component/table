@@ -458,6 +458,13 @@ function Table<RecordType extends DefaultRecordType>(
         const scrollWidth =
           typeof mergedScrollX === 'number' ? mergedScrollX : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
+        console.log(
+          'scrollWidth',
+          scrollWidth,
+          clientWidth,
+          mergedScrollLeft,
+          scrollWidth - clientWidth,
+        );
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);

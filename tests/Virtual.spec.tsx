@@ -450,62 +450,72 @@ describe('Table.Virtual', () => {
     expect(onScroll).toHaveBeenCalled();
   });
 
-  it('right shadow should display correctly when mount', async () => {
-    const { container } = getTable({
-      columns: [
-        {
-          dataIndex: 'name',
-          width: 30,
+  describe('shadow', () => {
+    beforeAll(() => {
+      spyElementPrototypes(HTMLElement, {
+        scrollLeft: {
+          get: () => 0,
         },
-        {
-          dataIndex: 'age',
-          width: 30,
-        },
-        {
-          dataIndex: 'address',
-          width: 40,
-          fixed: 'right',
-        },
-      ],
-      getContainerWidth: () => 80,
+      });
     });
 
-    resize(container.querySelector('.rc-table'));
+    it('right shadow should display correctly when mount', async () => {
+      const { container } = getTable({
+        columns: [
+          {
+            dataIndex: 'name',
+            width: 30,
+          },
+          {
+            dataIndex: 'age',
+            width: 30,
+          },
+          {
+            dataIndex: 'address',
+            width: 40,
+            fixed: 'right',
+          },
+        ],
+        getContainerWidth: () => 80,
+      });
 
-    await waitFakeTimer();
+      resize(container.querySelector('.rc-table'));
 
-    expect(
-      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
-    ).toBeTruthy();
-  });
+      await waitFakeTimer();
 
-  it('right shadow should display correctly when showHeader is false', async () => {
-    const { container } = getTable({
-      showHeader: false,
-      columns: [
-        {
-          dataIndex: 'name',
-          width: 30,
-        },
-        {
-          dataIndex: 'age',
-          width: 30,
-        },
-        {
-          dataIndex: 'address',
-          width: 40,
-          fixed: 'right',
-        },
-      ],
-      getContainerWidth: () => 80,
+      expect(
+        container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+      ).toBeTruthy();
     });
 
-    resize(container.querySelector('.rc-table'));
+    it('right shadow should display correctly when showHeader is false', async () => {
+      const { container } = getTable({
+        showHeader: false,
+        columns: [
+          {
+            dataIndex: 'name',
+            width: 30,
+          },
+          {
+            dataIndex: 'age',
+            width: 30,
+          },
+          {
+            dataIndex: 'address',
+            width: 40,
+            fixed: 'right',
+          },
+        ],
+        getContainerWidth: () => 80,
+      });
 
-    await waitFakeTimer();
+      resize(container.querySelector('.rc-table'));
 
-    expect(
-      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
-    ).toBeTruthy();
+      await waitFakeTimer();
+
+      expect(
+        container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+      ).toBeTruthy();
+    });
   });
 });
