@@ -215,7 +215,6 @@ const Demo = () => {
 
       <VirtualTable
         columns={columns}
-        showHeader={false}
         // expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1300, y: 200 }}
         data={data}
