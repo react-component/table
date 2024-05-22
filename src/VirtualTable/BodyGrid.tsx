@@ -109,7 +109,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
-    const { start, end, getSize, offsetY } = info;
+    const { start, end, getSize, offsetX, offsetY } = info;
 
     // Do nothing if no data
     if (end < 0) {
@@ -189,6 +189,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           style={{
             top: -offsetY + sizeInfo.top,
           }}
+          offsetX={offsetX}
           extra
           getHeight={getHeight}
         />

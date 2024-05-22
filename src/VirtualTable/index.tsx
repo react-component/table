@@ -21,6 +21,7 @@ export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordTyp
     x?: number;
     y: number;
   };
+  virtual?: { x?: boolean };
   listItemHeight?: number;
 }
 
@@ -33,6 +34,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
     className,
     listItemHeight,
     components,
+    virtual,
     onScroll,
   } = props;
 
@@ -63,10 +65,19 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
   // Memo this
   const onInternalScroll = useEvent(onScroll);
 
+  const horizontalVirtual = !!virtual?.x;
+
   // ========================= Context ==========================
   const context = React.useMemo(
-    () => ({ sticky, scrollY, listItemHeight, getComponent, onScroll: onInternalScroll }),
-    [sticky, scrollY, listItemHeight, getComponent, onInternalScroll],
+    () => ({
+      sticky,
+      scrollY,
+      listItemHeight,
+      horizontalVirtual,
+      getComponent,
+      onScroll: onInternalScroll,
+    }),
+    [sticky, scrollY, listItemHeight, horizontalVirtual, getComponent, onInternalScroll],
   );
 
   // ========================== Render ==========================
@@ -93,7 +104,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
 }
 
 export type ForwardGenericVirtualTable = (<RecordType>(
-  props: TableProps<RecordType> & React.RefAttributes<Reference>,
+  props: VirtualTableProps<RecordType> & React.RefAttributes<Reference>,
 ) => React.ReactElement) & { displayName?: string };
 
 const RefVirtualTable = React.forwardRef(VirtualTable) as ForwardGenericVirtualTable;

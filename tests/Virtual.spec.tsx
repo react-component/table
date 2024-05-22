@@ -443,4 +443,110 @@ describe('Table.Virtual', () => {
     fireEvent.scroll(container.querySelector('.rc-table-tbody-virtual-holder')!);
     expect(onScroll).toHaveBeenCalled();
   });
+
+  it('horizontal virtual', async () => {
+    const { container } = getTable({
+      virtual: { x: true },
+      columns: [
+        {
+          width: 100,
+          className: 'a',
+        },
+        {
+          width: 50,
+          className: 'b',
+        },
+        {
+          width: 100,
+          className: 'c',
+        },
+        {
+          width: 50,
+          className: 'd',
+        },
+      ],
+      scroll: {
+        x: 300,
+        y: 10,
+      },
+      getContainerWidth: () => 200,
+      data: [{}],
+    });
+
+    resize(container.querySelector('.rc-table'));
+
+    await waitFakeTimer();
+
+    let rowNodeChildren = container.querySelector('.rc-table-row').children;
+
+    expect(rowNodeChildren.length).toBe(3);
+    expect(rowNodeChildren[0].classList).toContain('a');
+    expect(rowNodeChildren[1].classList).toContain('b');
+    expect(rowNodeChildren[2].classList).toContain('c');
+
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
+      deltaX: 100,
+    });
+
+    rowNodeChildren = container.querySelector('.rc-table-row').children;
+
+    expect(rowNodeChildren.length).toBe(3);
+    expect(rowNodeChildren[0].classList).toContain('b');
+    expect(rowNodeChildren[1].classList).toContain('c');
+    expect(rowNodeChildren[2].classList).toContain('d');
+  });
+
+  it('fixed column in horizontal virtual', async () => {
+    const { container } = getTable({
+      virtual: { x: true },
+      columns: [
+        {
+          width: 100,
+          className: 'a',
+          fixed: 'left',
+        },
+        {
+          width: 100,
+          className: 'b',
+        },
+        {
+          width: 100,
+          className: 'c',
+        },
+        {
+          width: 100,
+          className: 'd',
+          fixed: 'right',
+        },
+      ],
+      scroll: {
+        x: 300,
+        y: 10,
+      },
+      getContainerWidth: () => 200,
+      data: [{}],
+    });
+
+    resize(container.querySelector('.rc-table'));
+
+    await waitFakeTimer();
+
+    let rowNodeChildren = container.querySelector('.rc-table-row').children;
+
+    expect(rowNodeChildren.length).toBe(3);
+    expect(rowNodeChildren[0].classList).toContain('a');
+    expect(rowNodeChildren[1].classList).toContain('b');
+    expect(rowNodeChildren[2].classList).toContain('d');
+
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
+      deltaX: 100,
+    });
+
+    rowNodeChildren = container.querySelector('.rc-table-row').children;
+
+    expect(rowNodeChildren.length).toBe(3);
+    expect(rowNodeChildren[0].classList).toContain('a');
+    expect(rowNodeChildren[1].classList).toContain('c');
+    expect(rowNodeChildren[2].classList).toContain('d');
+  });
 });
