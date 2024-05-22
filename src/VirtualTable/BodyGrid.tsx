@@ -244,7 +244,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       >
         {(item, index, itemProps) => {
           const rowKey = getRowKey(item.record, index);
-          return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
+          return <BodyLine data={item} rowKey={rowKey} index={index} style={itemProps.style} />;
         }}
       </VirtualList>
     );
