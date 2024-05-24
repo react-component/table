@@ -32,10 +32,13 @@ function ExpandedRow(props: ExpandedRowProps) {
     isEmpty,
   } = props;
 
-  const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
-    TableContext,
-    ['scrollbarSize', 'fixHeader', 'fixColumn', 'componentWidth', 'horizonScroll'],
-  );
+  const { fixColumn, componentWidth, horizonScroll } = useContext(TableContext, [
+    'scrollbarSize',
+    'fixHeader',
+    'fixColumn',
+    'componentWidth',
+    'horizonScroll',
+  ]);
 
   // Cache render node
   let contentNode = children;
@@ -44,7 +47,7 @@ function ExpandedRow(props: ExpandedRowProps) {
     contentNode = (
       <div
         style={{
-          width: componentWidth - (fixHeader ? scrollbarSize : 0),
+          width: componentWidth,
           position: 'sticky',
           left: 0,
           overflow: 'hidden',

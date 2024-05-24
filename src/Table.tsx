@@ -385,7 +385,7 @@ function Table<RecordType extends DefaultRecordType>(
 
   if (fixHeader) {
     scrollYStyle = {
-      overflowY: 'scroll',
+      overflowY: hasData ? 'scroll' : 'auto',
       maxHeight: scroll.y,
     };
   }
@@ -521,8 +521,10 @@ function Table<RecordType extends DefaultRecordType>(
   React.useEffect(() => {
     if (!tailor || !useInternalHooks) {
       if (scrollBodyRef.current instanceof Element) {
+        console.log(getTargetScrollBarSize(scrollBodyRef.current).width);
         setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
       } else {
+        console.log(getTargetScrollBarSize(scrollBodyRef.current).width);
         setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
       }
     }
