@@ -203,19 +203,18 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // default 'div' in rc-virtual-list
   const wrapperComponent = getComponent(['body', 'wrapper']);
 
-  let bodyContent: React.ReactNode;
-  if (flattenData.length) {
-    // ========================== Sticky Scroll Bar ==========================
-    const horizontalScrollBarStyle: React.CSSProperties = {};
-    if (sticky) {
-      horizontalScrollBarStyle.position = 'sticky';
-      horizontalScrollBarStyle.bottom = 0;
-      if (typeof sticky === 'object' && sticky.offsetScroll) {
-        horizontalScrollBarStyle.bottom = sticky.offsetScroll;
-      }
+  // ========================== Sticky Scroll Bar ==========================
+  const horizontalScrollBarStyle: React.CSSProperties = {};
+  if (sticky) {
+    horizontalScrollBarStyle.position = 'sticky';
+    horizontalScrollBarStyle.bottom = 0;
+    if (typeof sticky === 'object' && sticky.offsetScroll) {
+      horizontalScrollBarStyle.bottom = sticky.offsetScroll;
     }
+  }
 
-    bodyContent = (
+  return (
+    <GridContext.Provider value={gridContext}>
       <VirtualList<FlattenData<any>>
         fullHeight={false}
         ref={listRef}
@@ -241,10 +240,8 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
         }}
       </VirtualList>
-    );
-  }
-
-  return <GridContext.Provider value={gridContext}>{bodyContent}</GridContext.Provider>;
+    </GridContext.Provider>
+  );
 });
 
 const ResponseGrid = responseImmutable(Grid);
