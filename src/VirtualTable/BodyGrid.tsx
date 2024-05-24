@@ -1,8 +1,6 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
 import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
 import * as React from 'react';
-import Cell from '../Cell';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
 import type { ColumnType, OnCustomizeScroll, ScrollConfig } from '../interface';
@@ -29,7 +27,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     expandedKeys,
     prefixCls,
     childrenColumnName,
-    emptyNode,
     scrollX,
   } = useContext(TableContext, [
     'flattenColumns',
@@ -38,7 +35,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'prefixCls',
     'expandedKeys',
     'childrenColumnName',
-    'emptyNode',
     'scrollX',
   ]);
   const {
@@ -206,8 +202,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
   // default 'div' in rc-virtual-list
   const wrapperComponent = getComponent(['body', 'wrapper']);
-  const RowComponent = getComponent(['body', 'row'], 'div');
-  const cellComponent = getComponent(['body', 'cell'], 'div');
 
   let bodyContent: React.ReactNode;
   if (flattenData.length) {
@@ -247,14 +241,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           return <BodyLine data={item} rowKey={rowKey} index={index} {...itemProps} />;
         }}
       </VirtualList>
-    );
-  } else {
-    bodyContent = (
-      <RowComponent className={classNames(`${prefixCls}-placeholder`)}>
-        <Cell component={cellComponent} prefixCls={prefixCls}>
-          {emptyNode}
-        </Cell>
-      </RowComponent>
     );
   }
 
