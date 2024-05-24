@@ -2951,7 +2951,7 @@ LoadedCheerio {
       </div>
       <div
         class="rc-table-body"
-        style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+        style="overflow-x: auto; overflow-y: auto; max-height: 100px;"
       >
         <table
           style="width: 1200px; min-width: 100%; table-layout: fixed;"
@@ -3102,7 +3102,7 @@ LoadedCheerio {
               >
                 <div
                   class="rc-table-expanded-row-fixed"
-                  style="width: 985px; position: sticky; left: 0px; overflow: hidden;"
+                  style="width: 1000px; position: sticky; left: 0px; overflow: hidden;"
                 >
                   No Data
                 </div>
