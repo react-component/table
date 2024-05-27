@@ -450,6 +450,16 @@ describe('Table.Virtual', () => {
     expect(onScroll).toHaveBeenCalled();
   });
 
+  it('scrollable when empty', async () => {
+    const onScroll = vi.fn();
+    const { container } = getTable({ data: [], onScroll });
+
+    await waitFakeTimer();
+
+    fireEvent.scroll(container.querySelector('.rc-table-body'));
+    expect(onScroll).toHaveBeenCalled();
+  });
+
   describe('shadow', () => {
     beforeAll(() => {
       spyElementPrototypes(HTMLElement, {

@@ -44,7 +44,7 @@ function ExpandedRow(props: ExpandedRowProps) {
     contentNode = (
       <div
         style={{
-          width: componentWidth - (fixHeader ? scrollbarSize : 0),
+          width: componentWidth - (fixHeader && !isEmpty ? scrollbarSize : 0),
           position: 'sticky',
           left: 0,
           overflow: 'hidden',
