@@ -13,7 +13,7 @@ import getValue from 'rc-util/lib/utils/get';
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
 
-  return <Grid ref={ref} data={rawData as any} onScroll={onScroll} />;
+  return <Grid ref={ref as any} data={rawData as any} onScroll={onScroll} />;
 };
 
 export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {

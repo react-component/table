@@ -14,7 +14,8 @@ export interface GridProps<RecordType = any> {
 
 export interface GridRef {
   scrollLeft: number;
-  scrollTo?: (scrollConfig: ScrollConfig) => void;
+  nativeElement: HTMLDivElement;
+  scrollTo: (scrollConfig: ScrollConfig) => void;
 }
 
 const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
@@ -77,6 +78,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       scrollTo: (config: ScrollConfig) => {
         listRef.current?.scrollTo(config);
       },
+      nativeElement: listRef.current?.nativeElement,
     } as unknown as GridRef;
 
     Object.defineProperty(obj, 'scrollLeft', {
@@ -229,6 +231,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         scrollWidth={scrollX as number}
         onVirtualScroll={({ x }) => {
           onScroll({
+            currentTarget: listRef.current?.nativeElement,
             scrollLeft: x,
           });
         }}
