@@ -75,6 +75,7 @@ import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue } from './utils/valueUtil';
+import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 
 export const DEFAULT_PREFIX = 'rc-table';
 
@@ -484,7 +485,7 @@ function Table<RecordType extends DefaultRecordType>(
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
       onInternalScroll({
-        currentTarget: (scrollBodyRef.current as any).nativeElement || scrollBodyRef.current,
+        currentTarget: findDOMNode(scrollBodyRef.current),
       } as React.UIEvent<HTMLDivElement>);
     } else {
       setPingedLeft(false);
