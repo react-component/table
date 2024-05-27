@@ -443,4 +443,14 @@ describe('Table.Virtual', () => {
     fireEvent.scroll(container.querySelector('.rc-table-tbody-virtual-holder')!);
     expect(onScroll).toHaveBeenCalled();
   });
+
+  it('scrollable when empty', async () => {
+    const onScroll = vi.fn();
+    const { container } = getTable({ data: [], onScroll });
+
+    await waitFakeTimer();
+
+    fireEvent.scroll(container.querySelector('.rc-table-body'));
+    expect(onScroll).toHaveBeenCalled();
+  });
 });
