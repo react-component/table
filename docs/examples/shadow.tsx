@@ -16,7 +16,7 @@ interface DataType {
   gender: string;
 }
 
-const columns: TableProps['columns'] = [
+const columns: ColumnsType<any> = [
   {
     title: 'Other',
     fixed: 'left',
@@ -29,7 +29,6 @@ const columns: TableProps['columns'] = [
         width: 150,
         fixed: 'left',
         ellipsis: true,
-        sorter: (a, b) => a.age - b.age,
       },
       {
         title: 'Address',
@@ -72,17 +71,6 @@ const columns: TableProps['columns'] = [
     dataIndex: 'name',
     key: 'name',
     width: 100,
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value: string, record) => record.name.indexOf(value) === 0,
   },
   {
     title: 'Company',

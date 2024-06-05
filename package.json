@@ -44,7 +44,7 @@
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish",
     "lint": "eslint src/ --ext .tsx,.ts",
-    "lint:tsc": "tsc -p tsconfig.json --noEmit",
+    "tsc": "tsc -p tsconfig.json --noEmit",
     "now-build": "npm run docs:build",
     "prepare": "husky install"
   },
@@ -108,8 +108,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,md,json}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }
