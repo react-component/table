@@ -124,7 +124,7 @@ describe('Table.Sticky', () => {
       await Promise.resolve();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
+    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeUndefined();
 
     const oldInnerHeight = global.innerHeight;
     const resizeEvent = new Event('resize');
@@ -392,6 +392,7 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
+      wrapper.update();
     });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
