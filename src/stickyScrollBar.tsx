@@ -30,7 +30,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     isHiddenScrollBar: boolean;
   }>({
     scrollLeft: 0,
-    isHiddenScrollBar: false,
+    isHiddenScrollBar: true,
   });
   const refState = React.useRef<{
     delta: number;

@@ -122,6 +122,7 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
+      wrapper.update();
     });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
@@ -392,6 +393,7 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
+      wrapper.update();
     });
 
     expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
