@@ -168,11 +168,9 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }, [scrollState.isHiddenScrollBar]);
 
   if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
-    console.log('1');
     return null;
   }
 
-  console.log('2', bodyScrollWidth, bodyWidth, scrollBarWidth, scrollState.isHiddenScrollBar);
   return (
     <div
       style={{
