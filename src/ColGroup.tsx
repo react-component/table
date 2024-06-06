@@ -21,9 +21,17 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
   let mustInsert = false;
   for (let i = len - 1; i >= 0; i -= 1) {
     const width = colWidths[i];
-    const column = columns?.[i];
-    const minWidth = tableLayout === 'auto' && column?.minWidth;
-    const additionalProps = column?.[INTERNAL_COL_DEFINE];
+    const column = columns && columns[i];
+    let additionalProps;
+    let minWidth: number;
+    if (column) {
+      additionalProps = column[INTERNAL_COL_DEFINE];
+
+      // fixed will cause layout problems
+      if (tableLayout === 'auto') {
+        minWidth = column.minWidth;
+      }
+    }
 
     if (width || minWidth || additionalProps || mustInsert) {
       const { columnType, ...restAdditionalProps } = additionalProps || {};
