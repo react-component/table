@@ -77,7 +77,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.2",
-    "eslint": "^8.54.0",
+    "eslint": "^9.5.0",
     "eslint-plugin-jest": "^28.2.0",
     "eslint-plugin-unicorn": "^53.0.0",
     "father": "^4.0.0",
