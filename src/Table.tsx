@@ -485,8 +485,9 @@ function Table<RecordType extends DefaultRecordType>(
   const triggerOnScroll = () => {
     if (horizonScroll && scrollBodyRef.current) {
       onInternalScroll({
-        currentTarget: getDOM(scrollBodyRef.current),
-      } as React.UIEvent<HTMLDivElement>);
+        currentTarget: getDOM(scrollBodyRef.current) as HTMLElement,
+        scrollLeft: scrollBodyRef.current?.scrollLeft,
+      });
     } else {
       setPingedLeft(false);
       setPingedRight(false);
