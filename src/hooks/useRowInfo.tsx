@@ -14,6 +14,7 @@ export default function useRowInfo<RecordType>(
   TableContextProps,
   | 'prefixCls'
   | 'fixedInfoList'
+  | 'headMatrix'
   | 'flattenColumns'
   | 'expandableType'
   | 'expandRowByClick'
@@ -40,6 +41,7 @@ export default function useRowInfo<RecordType>(
   const context: TableContextProps = useContext(TableContext, [
     'prefixCls',
     'fixedInfoList',
+    'headMatrix',
     'flattenColumns',
     'expandableType',
     'expandRowByClick',
