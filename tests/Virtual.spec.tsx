@@ -33,6 +33,8 @@ vi.mock('rc-virtual-list', async () => {
 describe('Table.Virtual', () => {
   let scrollLeftCalled = false;
 
+  const setScrollLeft = vi.fn();
+
   beforeAll(() => {
     spyElementPrototypes(HTMLElement, {
       getBoundingClientRect: () => ({
@@ -43,7 +45,7 @@ describe('Table.Virtual', () => {
           scrollLeftCalled = true;
           return 100;
         },
-        set: () => {},
+        set: setScrollLeft as any,
       },
       clientWidth: {
         get: () => 80,
@@ -56,6 +58,7 @@ describe('Table.Virtual', () => {
 
   beforeEach(() => {
     scrollLeftCalled = false;
+    setScrollLeft.mockReset();
     global.scrollToConfig = null;
     vi.useFakeTimers();
     resetWarned();
@@ -208,6 +211,35 @@ describe('Table.Virtual', () => {
       deltaX: 10,
     });
     expect(scrollLeftCalled).toBeTruthy();
+  });
+
+  it('should not reset scroll when data changed', async () => {
+    const { container, rerender } = getTable();
+
+    resize(container.querySelector('.rc-table')!);
+
+    rerender(
+      <VirtualTable
+        columns={[
+          {
+            dataIndex: 'name',
+          },
+          {
+            dataIndex: 'age',
+          },
+          {
+            dataIndex: 'address',
+          },
+        ]}
+        rowKey="name"
+        scroll={{ x: 100, y: 100 }}
+        data={[{}]}
+      />,
+    );
+    vi.runAllTimers();
+
+    // mock scrollLeft is 100, but virtual offsetX is 0
+    expect(setScrollLeft).toHaveBeenCalledWith(undefined, 0);
   });
 
   it('should follow correct width', () => {
