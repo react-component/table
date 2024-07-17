@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import { useContext } from '@rc-component/context';
 import type {
@@ -11,9 +10,10 @@ import type {
 } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
+import HeaderCell from './HeaderCell';
 
 export interface RowProps<RecordType> {
-  cells: readonly CellType<RecordType>[];
+  cells: CellType<RecordType>[];
   stickyOffsets: StickyOffsets;
   flattenColumns: readonly ColumnType<RecordType>[];
   rowComponent: CustomizeComponent;
@@ -32,7 +32,11 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
     onHeaderRow,
     index,
   } = props;
-  const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
+  const { prefixCls, direction, supportSticky } = useContext(TableContext, [
+    'prefixCls',
+    'direction',
+    'supportSticky',
+  ]);
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -59,9 +63,34 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
         if (column && column.onHeaderCell) {
           additionalProps = cell.column.onHeaderCell(column);
         }
+        const isFixLeft = typeof fixedInfo.fixLeft === 'number' && supportSticky;
+        const isFixRight = typeof fixedInfo.fixRight === 'number' && supportSticky;
+        // If scrollbar cell is not fixed right, and the previous cell of the scrollbar is resizable, then the scrollbar is resizable
+        const isScrollBarCellAndResizable =
+          column.scrollbar &&
+          // if scrollbar fixed right, the resize handle of previous cell is on the left, so there is no need to put the handle inside the scrollbar
+          (direction === 'rtl' ? !isFixLeft : !isFixRight) &&
+          (cells[cells.length - 2].column as ColumnType<RecordType>).resizable;
+
+        // Whether this cell is in the previous cell of the scrollbar
+        const isScrollBarPreviousCell =
+          cells[cells.length - 1].column.scrollbar && cellIndex === cells.length - 2;
+
+        let resizable: boolean;
+        // ltr: If it is the column before the scrollbar and fixed right, resizable is required.
+        // rtl: If it is the column before the scrollbar and fixed left, resizable is required.
+        if (isScrollBarPreviousCell) {
+          if (direction === 'rtl' ? isFixLeft : isFixRight) {
+            resizable = (column as ColumnType<RecordType>).resizable;
+          } else {
+            resizable = false;
+          }
+        } else {
+          resizable = isScrollBarCellAndResizable || (column as ColumnType<RecordType>).resizable;
+        }
 
         return (
-          <Cell
+          <HeaderCell
             {...cell}
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
@@ -72,6 +101,15 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
             {...fixedInfo}
             additionalProps={additionalProps}
             rowType="header"
+            columnKey={
+              isScrollBarCellAndResizable
+                ? columnsKey[columnsKey.length - 2]
+                : columnsKey[cellIndex]
+            }
+            isFixLeft={isFixLeft}
+            isFixRight={isFixRight}
+            resizable={resizable}
+            minWidth={(column as ColumnType<RecordType>).minWidth}
           />
         );
       })}
