@@ -79,7 +79,7 @@
     "enzyme-to-json": "^3.1.2",
     "eslint": "^8.54.0",
     "eslint-plugin-jest": "^28.2.0",
-    "eslint-plugin-unicorn": "^53.0.0",
+    "eslint-plugin-unicorn": "^54.0.0",
     "father": "^4.0.0",
     "gh-pages": "^6.1.0",
     "glob": "^7.1.6",
