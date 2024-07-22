@@ -104,7 +104,7 @@
     "regenerator-runtime": "^0.14.0",
     "styled-components": "^6.1.1",
     "typescript": "~5.5.3",
-    "vitest": "^1.2.2"
+    "vitest": "^2.0.4"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,md,json}": [
