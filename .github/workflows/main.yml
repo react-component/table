@@ -59,7 +59,7 @@ jobs:
           key: node_modules-${{ hashFiles('**/package-temp-dir/package-lock.json') }}
 
       - name: lint
-        run: npm run lint
+        run: npm i & npm run lint
 
     needs: setup
 
