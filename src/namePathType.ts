@@ -8,7 +8,7 @@ type BaseNamePath = string | number | boolean | (string | number | boolean)[];
 export type DeepNamePath<
   Store = any,
   ParentNamePath extends any[] = [],
-> = ParentNamePath['length'] extends 5
+> = ParentNamePath['length'] extends 3
   ? never
   : // Follow code is batch check if `Store` is base type
     true extends (Store extends BaseNamePath ? true : false)
