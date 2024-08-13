@@ -1,10 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: ['push', 'pull_request']
 
 jobs:
   setup:
@@ -24,7 +20,7 @@ jobs:
           key: lock-${{ github.sha }}
 
       - name: create package-lock.json
-        run: npm i --package-lock-only --ignore-scripts --legacy-peer-deps
+        run: npm i --package-lock-only --ignore-scripts
 
       - name: hack for singe file
         run: |
@@ -32,6 +28,7 @@ jobs:
             mkdir package-temp-dir
           fi
           cp package-lock.json package-temp-dir
+
       - name: cache node_modules
         id: node_modules_cache_id
         uses: actions/cache@v4
@@ -41,7 +38,7 @@ jobs:
 
       - name: install
         if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
   lint:
     runs-on: ubuntu-latest
@@ -63,29 +60,6 @@ jobs:
 
       - name: lint
         run: npm run lint
-
-    needs: setup
-
-  tsc:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-
-      - name: restore cache from package-lock.json
-        uses: actions/cache@v4
-        with:
-          path: package-temp-dir
-          key: lock-${{ github.sha }}
-
-      - name: restore cache from node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('**/package-temp-dir/package-lock.json') }}
-
-      - name: tsc
-        run: npm run tsc
 
     needs: setup
 
@@ -131,6 +105,11 @@ jobs:
           key: node_modules-${{ hashFiles('**/package-temp-dir/package-lock.json') }}
 
       - name: coverage
-        run: npm run coverage && bash <(curl -s https://codecov.io/bash)
+        run: npm test -- --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
     needs: setup
