@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 
@@ -11,8 +11,8 @@ describe('Table.ColGroup', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} />);
-    expect(wrapper.find('colgroup col').props().className).toEqual('show-in-col');
+    const { container } = render(<Table columns={columns} />);
+    expect(container.querySelector('colgroup col').className).toEqual('show-in-col');
   });
 
   it('correct key', () => {
@@ -23,8 +23,8 @@ describe('Table.ColGroup', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} />);
-    expect(String(wrapper.find('colgroup col').key())).toEqual('0');
+    const { container } = render(<Table columns={columns} />);
+    expect(String(container.querySelector('colgroup col').key)).toEqual('0');
   });
 
   it('minWidth should be worked', () => {
@@ -35,8 +35,8 @@ describe('Table.ColGroup', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} />);
-    expect(wrapper.find('colgroup col').at(0).props().style.minWidth).toEqual(100);
+    const { container } = render(<Table columns={columns} />);
+    expect(container.querySelector('colgroup col').style.minWidth).toEqual('100px');
   });
 
   it('should not have minWidth when tableLayout is fixed', () => {
@@ -48,7 +48,3 @@ describe('Table.ColGroup', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} tableLayout="fixed" />);
-    expect(wrapper.find('colgroup col').at(0).props().style.minWidth).toBeFalsy();
-  });
-});

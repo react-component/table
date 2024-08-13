@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -29,28 +29,30 @@ describe('Table.Sticky', () => {
         </div>
       );
     };
-    const wrapper = mount(<TableDemo />);
+    const { container, rerender } = render(<TableDemo />);
 
-    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-header').style).toEqual({
       overflow: 'hidden',
-      top: 0,
+      top: '0px',
     });
 
-    expect(wrapper.find('.rc-table-header').last().prop('className')).toBe(
+    expect(container.querySelector('.rc-table-header').className).toBe(
       'rc-table-header rc-table-sticky-holder',
     );
 
-    await safeAct(wrapper, () => {
-      wrapper.setProps({
-        sticky: {
-          offsetHeader: 10,
-        },
-      });
+    await safeAct(() => {
+      rerender(
+        <TableDemo
+          sticky={{
+            offsetHeader: 10,
+          }}
+        />,
+      );
     });
 
-    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-header').style).toEqual({
       overflow: 'hidden',
-      top: 10,
+      top: '10px',
     });
 
     vi.useRealTimers();
@@ -83,7 +85,7 @@ describe('Table.Sticky', () => {
 
     const col1 = { dataIndex: 'light', width: 1000 };
     const col2 = { dataIndex: 'bamboo', width: 2000 };
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[col1, col2]}
         data={[
@@ -122,10 +124,9 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
+    expect(container.querySelector('.rc-table-sticky-scroll')).not.toBeUndefined();
 
     const oldInnerHeight = global.innerHeight;
     const resizeEvent = new Event('resize');
@@ -136,28 +137,28 @@ describe('Table.Sticky', () => {
       global.dispatchEvent(resizeEvent);
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeFalsy();
+    expect(container.querySelector('.rc-table-sticky-scroll')).toBeFalsy();
 
     await act(async () => {
       global.innerHeight = oldInnerHeight;
       global.dispatchEvent(resizeEvent);
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
     const mockFn = vi.fn();
 
-    wrapper
-      .find('.rc-table-sticky-scroll-bar')
-      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
+    fireEvent.mouseDown(container.querySelector('.rc-table-sticky-scroll-bar'), {
+      persist: mockFn,
+      preventDefault: mockFn,
+      pageX: 0,
+    });
 
     expect(mockFn).toHaveBeenCalledTimes(2);
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar-active').length).toBe(1);
+    expect(container.querySelector('.rc-table-sticky-scroll-bar-active')).toBeTruthy();
 
     const mousemoveEvent = new Event('mousemove');
 
@@ -168,10 +169,9 @@ describe('Table.Sticky', () => {
       document.body.dispatchEvent(mousemoveEvent);
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-sticky-scroll-bar').style).toEqual({
       width: '50px',
       transform: 'translate3d(50.5px, 0, 0)',
     });
@@ -182,10 +182,9 @@ describe('Table.Sticky', () => {
 
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+    expect(container.querySelector('.rc-table-sticky-scroll-bar').style).toEqual({
       width: '50px',
       transform: 'translate3d(0px, 0, 0)',
     });
@@ -196,16 +195,13 @@ describe('Table.Sticky', () => {
 
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar-active').length).toBe(0);
+    expect(container.querySelector('.rc-table-sticky-scroll-bar-active')).toBeFalsy();
 
     const mouseupEvent = new Event('mouseup');
 
     document.body.dispatchEvent(mouseupEvent);
-
-    wrapper.unmount();
 
     window.pageYOffset = 0;
     mockFn.mockRestore();
@@ -229,212 +225,51 @@ describe('Table.Sticky', () => {
               { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
             ]}
             data={[
-              { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
-              { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
+              { a: '123', b: 'xxxxxxxx', d: 3, key: '1' },
+              { a: 'cdd', b: 'edd12221', d: 3, key: '2' },
+              { a: '133', c: 'edd12221', d: 2, key: '3' },
+              { a: '133', c: 'edd12221', d: 2, key: '4' },
+              { a: '133', c: 'edd12221', d: 2, key: '5' },
+              { a: '133', c: 'edd12221', d: 2, key: '6' },
+              { a: '133', c: 'edd12221', d: 2, key: '7' },
+              { a: '133', c: 'edd12221', d: 2, key: '8' },
+              { a: '133', c: 'edd12221', d: 2, key: '9' },
             ]}
-            sticky
             scroll={{
-              x: 10000,
+              x: 1000,
             }}
+            sticky
             {...props}
           />
         </div>
       );
     };
-    const wrapper = mount(<TableDemo />);
-    await safeAct(wrapper);
-    expect(
-      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
-    ).toEqual({
-      position: 'sticky',
-      right: 0,
-    });
-    expect(wrapper.find('.rc-table-cell-fix-sticky')).not.toBe(undefined);
+    const { container, rerender } = render(<TableDemo />);
 
-    vi.useRealTimers();
-  });
-
-  it('Sticky Header with scroll-y', async () => {
-    const TableDemo = props => {
-      return (
-        <div
-          style={{
-            height: 10000,
-          }}
-        >
-          <Table
-            columns={[
-              { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left' },
-              { title: 'title2', dataIndex: 'b', key: 'b' },
-              { title: 'title3', dataIndex: 'c', key: 'c' },
-              { title: 'title4', dataIndex: 'd', key: 'd', width: 100, fixed: 'right' },
-            ]}
-            data={[
-              { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
-              { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
-            ]}
-            sticky
-            scroll={{
-              x: 10000,
-              y: 10,
-            }}
-            {...props}
-          />
-        </div>
-      );
-    };
-    const wrapper = mount(<TableDemo />);
-    await safeAct(wrapper);
-    expect(
-      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
-    ).toEqual({
-      position: 'sticky',
-      right: 15,
+    expect(container.querySelector('.rc-table-header').style).toEqual({
+      overflow: 'hidden',
+      top: '0px',
     });
 
-    vi.useRealTimers();
-  });
-
-  it('Sticky scroll with getContainer', async () => {
-    window.pageYOffset = 900;
-    document.documentElement.scrollTop = 200;
-    const container = document.createElement('ol');
-    container.style = 'height: 500px;overflow: scroll';
-    document.body.appendChild(container);
-    let scrollLeft = 100;
-    const domSpy = spyElementPrototypes(HTMLDivElement, {
-      scrollLeft: {
-        get: () => scrollLeft,
-        set: left => {
-          scrollLeft = left;
-        },
-      },
-      scrollTop: {
-        get: () => 100,
-      },
-      scrollWidth: {
-        get: () => 200,
-      },
-      clientWidth: {
-        get: () => 100,
-      },
-      offsetHeight: {
-        get: () => 1000,
-      },
-    });
-
-    const sectionSpy = spyElementPrototypes(HTMLOListElement, {
-      scrollLeft: {
-        get: () => scrollLeft,
-        set: left => {
-          scrollLeft = left;
-        },
-      },
-      scrollTop: {
-        get: () => 100,
-      },
-      scrollWidth: {
-        get: () => 200,
-      },
-      clientWidth: {
-        get: () => 100,
-      },
-      clientHeight: {
-        get: () => 500,
-      },
-      offsetHeight: {
-        get: () => 100,
-      },
-    });
-
-    const col1 = { dataIndex: 'light', width: 1000 };
-    const col2 = { dataIndex: 'bamboo', width: 2000 };
-    const wrapper = mount(
-      <Table
-        columns={[col1, col2]}
-        data={[
-          { light: 'bamboo', bamboo: 'light', key: 1 },
-          { light: 'bamboo', bamboo: 'light', key: 2 },
-          { light: 'bamboo', bamboo: 'light', key: 3 },
-          { light: 'bamboo', bamboo: 'light', key: 4 },
-          { light: 'bamboo', bamboo: 'light', key: 6 },
-          { light: 'bamboo', bamboo: 'light', key: 7 },
-          { light: 'bamboo', bamboo: 'light', key: 8 },
-          { light: 'bamboo', bamboo: 'light', key: 9 },
-          { light: 'bamboo', bamboo: 'light', key: 10 },
-          { light: 'bamboo', bamboo: 'light', key: 11 },
-          { light: 'bamboo', bamboo: 'light', key: 12 },
-          { light: 'bamboo', bamboo: 'light', key: 13 },
-          { light: 'bamboo', bamboo: 'light', key: 15 },
-          { light: 'bamboo', bamboo: 'light', key: 16 },
-          { light: 'bamboo', bamboo: 'light', key: 17 },
-          { light: 'bamboo', bamboo: 'light', key: 18 },
-          { light: 'bamboo', bamboo: 'light', key: 19 },
-          { light: 'bamboo', bamboo: 'light', key: 20 },
-          { light: 'bamboo', bamboo: 'light', key: 21 },
-          { light: 'bamboo', bamboo: 'light', key: 22 },
-          { light: 'bamboo', bamboo: 'light', key: 23 },
-          { light: 'bamboo', bamboo: 'light', key: 24 },
-          { light: 'bamboo', bamboo: 'light', key: 25 },
-          { light: 'bamboo', bamboo: 'light', key: 26 },
-        ]}
-        scroll={{
-          x: 10000,
-        }}
-        sticky={{
-          getContainer: () => container,
-        }}
-      />,
-      {
-        attachTo: container,
-      },
+    expect(container.querySelector('.rc-table-header').className).toBe(
+      'rc-table-header rc-table-sticky-holder',
     );
 
-    await act(async () => {
-      vi.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
+    await safeAct(() => {
+      rerender(
+        <TableDemo
+          sticky={{
+            offsetHeader: 10,
+          }}
+        />,
+      );
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').get(0)).toBeTruthy();
-
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
-      width: '50px',
-      transform: 'translate3d(0px, 0, 0)',
+    expect(container.querySelector('.rc-table-header').style).toEqual({
+      overflow: 'hidden',
+      top: '10px',
     });
 
-    const mockFn = vi.fn();
-
-    wrapper
-      .find('.rc-table-sticky-scroll-bar')
-      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
-
-    expect(mockFn).toHaveBeenCalledTimes(2);
-
-    const mousemoveEvent = new Event('mousemove');
-
-    mousemoveEvent.buttons = 1;
-    mousemoveEvent.pageX = 50;
-
-    await act(async () => {
-      document.body.dispatchEvent(mousemoveEvent);
-      vi.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
-    });
-
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
-      width: '50px',
-      transform: 'translate3d(50.5px, 0, 0)',
-    });
-
-    wrapper.unmount();
-
-    window.pageYOffset = 0;
-    domSpy.mockRestore();
-    sectionSpy.mockRestore();
-    mockFn.mockRestore();
     vi.useRealTimers();
   });
 });

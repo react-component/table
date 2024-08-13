@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 
@@ -34,11 +34,11 @@ describe('Table.Cell', () => {
       );
     };
 
-    const wrapper = mount(<Demo />);
+    render(<Demo />);
     reRenderTime = 0;
 
     for (let i = 0; i < 100; i += 1) {
-      wrapper.find('button').simulate('click');
+      fireEvent.click(screen.getByRole('button'));
       expect(reRenderTime).toEqual(0);
     }
   });
@@ -55,14 +55,12 @@ describe('Table.Cell', () => {
       },
     ];
 
-    const wrapper = mount(<Table data={[{ key: 'light' }]} columns={getColumns()} />);
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').hasClass('test')).toBeFalsy();
+    const { container, rerender } = render(<Table data={[{ key: 'light' }]} columns={getColumns()} />);
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell').classList.contains('test')).toBeFalsy();
 
     // Update className should re-render
-    wrapper.setProps({
-      columns: getColumns({ className: 'test' }),
-    });
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').hasClass('test')).toBeTruthy();
+    rerender(<Table data={[{ key: 'light' }]} columns={getColumns({ className: 'test' })} />);
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell').classList.contains('test')).toBeTruthy();
   });
 
   it('closure should work on render', () => {
@@ -95,15 +93,15 @@ describe('Table.Cell', () => {
       }
     }
 
-    const wrapper = mount(<Demo />);
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('1');
+    const { container } = render(<Demo />);
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell').textContent).toEqual('1');
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('2');
+    fireEvent.click(screen.getByRole('button'));
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell').textContent).toEqual('2');
   });
 
   it('onHeaderCell', () => {
-    const wrapper = mount(
+    render(
       <Table
         columns={[
           {
@@ -120,6 +118,6 @@ describe('Table.Cell', () => {
       />,
     );
 
-    expect(wrapper.find('thead th').prop('title')).toEqual('Bamboo');
+    expect(screen.getByRole('columnheader').title).toEqual('Bamboo');
   });
 });

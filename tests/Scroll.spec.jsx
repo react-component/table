@@ -1,7 +1,6 @@
-import { mount } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
@@ -21,32 +20,32 @@ describe('Table.Scroll', () => {
       return <Table data={data} {...props} />;
     };
 
-    const wrapper = mount(createTable({ scroll: { x: true } }));
+    const { container } = render(createTable({ scroll: { x: true } }));
 
-    expect(wrapper.find('.rc-table-tbody').hostNodes().text()).toContain('No Data');
+    expect(container.querySelector('.rc-table-tbody').textContent).toContain('No Data');
   });
 
   it('renders scroll.x is true', () => {
-    const wrapper = mount(createTable({ scroll: { x: true } }));
-    expect(wrapper.find('table').props().style.width).toEqual('auto');
-    expect(wrapper.find('.rc-table-content').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-content').props().style.overflowY).toEqual('hidden');
+    const { container } = render(createTable({ scroll: { x: true } }));
+    expect(container.querySelector('table').style.width).toEqual('auto');
+    expect(container.querySelector('.rc-table-content').style.overflowX).toEqual('auto');
+    expect(container.querySelector('.rc-table-content').style.overflowY).toEqual('hidden');
   });
 
   it('renders scroll.x is a number', () => {
-    const wrapper = mount(createTable({ scroll: { x: 200 } }));
-    expect(wrapper.find('table').props().style.width).toEqual(200);
+    const { container } = render(createTable({ scroll: { x: 200 } }));
+    expect(container.querySelector('table').style.width).toEqual('200px');
   });
 
   it('renders scroll.y is a number', () => {
-    const wrapper = mount(createTable({ scroll: { y: 200 } }));
-    expect(wrapper.find('.rc-table-body').props().style.maxHeight).toEqual(200);
+    const { container } = render(createTable({ scroll: { y: 200 } }));
+    expect(container.querySelector('.rc-table-body').style.maxHeight).toEqual('200px');
   });
 
   it('renders scroll.x and scroll.y are both true', () => {
-    const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
-    expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
+    const { container } = render(createTable({ scroll: { x: true, y: 200 } }));
+    expect(container.querySelector('.rc-table-body').style.overflowX).toEqual('auto');
+    expect(container.querySelector('.rc-table-body').style.overflowY).toEqual('scroll');
   });
 
   it('fire scroll event', () => {
@@ -88,7 +87,7 @@ describe('Table.Scroll', () => {
       { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
       { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={newColumns}
         data={newData}
@@ -101,32 +100,19 @@ describe('Table.Scroll', () => {
 
     vi.runAllTimers();
     // Use `onScroll` directly since simulate not support `currentTarget`
-    act(() => {
-      const headerDiv = wrapper.find('div.rc-table-header').instance();
-
-      const wheelEvent = new WheelEvent('wheel');
-      Object.defineProperty(wheelEvent, 'deltaX', {
-        get: () => 10,
-      });
-
-      headerDiv.dispatchEvent(wheelEvent);
-      vi.runAllTimers();
+    fireEvent.scroll(container.querySelector('.rc-table-header'), {
+      deltaX: 10,
     });
 
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 10);
     setScrollLeft.mockReset();
 
-    act(() => {
-      wrapper
-        .find('.rc-table-body')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 33,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        });
+    fireEvent.scroll(container.querySelector('.rc-table-body'), {
+      currentTarget: {
+        scrollLeft: 33,
+        scrollWidth: 200,
+        clientWidth: 100,
+      },
     });
     vi.runAllTimers();
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 33);

@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 
@@ -31,12 +31,12 @@ describe('Table.ClassComponent', () => {
       }
     }
 
-    const wrapper = mount(<Demo />);
-    expect(wrapper.find('button').text()).toEqual('0');
-    expect(wrapper.find('td').last().text()).toEqual('0');
+    const { container } = render(<Demo />);
+    expect(screen.getByText('0')).toBeInTheDocument();
+    expect(container.querySelector('td').textContent).toEqual('0');
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('button').text()).toEqual('1');
-    expect(wrapper.find('td').last().text()).toEqual('1');
+    fireEvent.click(screen.getByText('0'));
+    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(container.querySelector('td').textContent).toEqual('1');
   });
 });

@@ -1,9 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { render } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import RcResizeObserver, { _rs } from 'rc-resize-observer';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import { act } from 'react-dom/test-utils';
 import Table, { type ColumnsType } from '../src';
 import { safeAct } from './utils';
 import { RowColSpanWithFixed, RowColSpanWithFixed2 } from './__mocks__/shadowTest';
@@ -77,33 +75,27 @@ describe('Table.FixedColumn', () => {
       ].forEach(({ name, data: testData }) => {
         it(`${scrollName} - ${name}`, async () => {
           vi.useFakeTimers();
-          const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
+          const { container } = render(<Table columns={columns} data={testData} scroll={scroll} />);
 
           act(() => {
-            wrapper.find(RcResizeObserver).first().props().onResize({ width: 100 });
+            fireEvent.resize(container.querySelector(RcResizeObserver)!, { width: 100 });
           });
 
           act(() => {
-            wrapper
-              .find(RcResizeObserver.Collection)
-              .first()
-              .props()
-              .onBatchResize([
-                {
-                  data: wrapper.find('table ResizeObserver').first().props().data,
-                  size: { width: 93, offsetWidth: 93 },
-                } as any,
-              ]);
+            fireEvent.resize(container.querySelector(RcResizeObserver.Collection)!, {
+              data: container.querySelector('table ResizeObserver')!.data,
+              size: { width: 93, offsetWidth: 93 },
+            } as any);
           });
-          await safeAct(wrapper);
-          expect(wrapper.render()).toMatchSnapshot();
+          await safeAct(container);
+          expect(container).toMatchSnapshot();
           vi.useRealTimers();
         });
       });
     });
 
     it('all column has width should use it', async () => {
-      const wrapper = mount(
+      const { container } = render(
         <Table
           columns={[
             { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
@@ -114,143 +106,116 @@ describe('Table.FixedColumn', () => {
         />,
       );
 
-      await safeAct(wrapper);
+      await safeAct(container);
 
-      expect(wrapper.find('colgroup').render()).toMatchSnapshot();
+      expect(container.querySelector('colgroup')).toMatchSnapshot();
     });
   });
 
   it('has correct scroll classNames when table resize', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={columns} data={data} scroll={{ x: true }} style={{ width: 2000 }} />,
     );
 
-    await safeAct(wrapper);
+    await safeAct(container);
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
-      wrapper
-        .find('.rc-table-content')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 10,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        } as any);
+      fireEvent.scroll(container.querySelector('.rc-table-content')!, {
+        currentTarget: {
+          scrollLeft: 10,
+          scrollWidth: 200,
+          clientWidth: 100,
+        },
+      } as any);
     });
-    wrapper.update();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeTruthy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeTruthy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeTruthy();
 
     // Left
     act(() => {
-      wrapper
-        .find('.rc-table-content')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 0,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        } as any);
+      fireEvent.scroll(container.querySelector('.rc-table-content')!, {
+        currentTarget: {
+          scrollLeft: 0,
+          scrollWidth: 200,
+          clientWidth: 100,
+        },
+      } as any);
     });
-    wrapper.update();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeFalsy();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeTruthy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeFalsy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeTruthy();
 
     // Right
     act(() => {
-      wrapper
-        .find('.rc-table-content')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 100,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        } as any);
+      fireEvent.scroll(container.querySelector('.rc-table-content')!, {
+        currentTarget: {
+          scrollLeft: 100,
+          scrollWidth: 200,
+          clientWidth: 100,
+        },
+      } as any);
     });
-    wrapper.update();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeTruthy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeFalsy();
 
     // Fullscreen
     act(() => {
-      wrapper
-        .find('.rc-table-content')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 0,
-            scrollWidth: 100,
-            clientWidth: 100,
-          },
-        } as any);
+      fireEvent.scroll(container.querySelector('.rc-table-content')!, {
+        currentTarget: {
+          scrollLeft: 0,
+          scrollWidth: 100,
+          clientWidth: 100,
+        },
+      } as any);
     });
-    wrapper.update();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeFalsy();
-    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeFalsy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeFalsy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeFalsy();
   });
 
   it('ellipsis will wrap additional dom', () => {
     const myColumns = [{ ...columns[0], ellipsis: true }];
-    const wrapper = mount(<Table columns={myColumns} data={data} />);
+    const { container } = render(<Table columns={myColumns} data={data} />);
 
-    expect(wrapper.find('tr th').find('.rc-table-cell-content')).toHaveLength(1);
-    expect(wrapper.find('tr td').find('.rc-table-cell-content')).toHaveLength(data.length);
+    expect(container.querySelector('tr th').querySelector('.rc-table-cell-content')).toBeTruthy();
+    expect(container.querySelectorAll('tr td .rc-table-cell-content')).toHaveLength(data.length);
   });
 
   it('fixed column renders correctly RTL', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={columns} data={data} direction="rtl" scroll={{ x: 1 }} />,
     );
-    expect(wrapper.render()).toMatchSnapshot();
-    await safeAct(wrapper);
+    expect(container).toMatchSnapshot();
+    await safeAct(container);
   });
 
   it('has correct scroll classNames when table direction is RTL', () => {
-    const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
+    const { container } = render(<Table columns={columns} data={data} direction="rtl" />);
 
-    expect(wrapper.find('.rc-table').hasClass('rc-table-rtl')).toBeTruthy();
+    expect(container.querySelector('.rc-table').classList.contains('rc-table-rtl')).toBeTruthy();
 
     // Left should be right in RTL
     expect(
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .find('.rc-table-cell')
-        .first()
-        .hasClass('rc-table-cell-fix-right'),
+      container.querySelector('.rc-table-row').querySelector('.rc-table-cell').classList.contains('rc-table-cell-fix-right'),
     ).toBeTruthy();
 
     // Right should be left in RTL
     expect(
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .find('.rc-table-cell')
-        .last()
-        .hasClass('rc-table-cell-fix-left'),
+      container.querySelector('.rc-table-row').querySelectorAll('.rc-table-cell').item(-1).classList.contains('rc-table-cell-fix-left'),
     ).toBeTruthy();
   });
 
   it('not break measure count', async () => {
-    const wrapper = mount(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
-    await safeAct(wrapper);
-    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(5);
+    const { container, rerender } = render(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
+    await safeAct(container);
+    expect(container.querySelectorAll('.rc-table-measure-row td')).toHaveLength(5);
 
-    wrapper.setProps({ columns: columns.slice(0, 4) });
-    wrapper.update();
-    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(4);
+    rerender(<Table columns={columns.slice(0, 4)} data={data} />);
+    expect(container.querySelectorAll('.rc-table-measure-row td')).toHaveLength(4);
   });
 
   it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
-    const wrapper = mount(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
-    await safeAct(wrapper);
-    expect(wrapper.find('.rc-table-cell-fix-left-all')).toHaveLength(10);
+    const { container } = render(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
+    await safeAct(container);
+    expect(container.querySelectorAll('.rc-table-cell-fix-left-all')).toHaveLength(10);
   });
 
   describe('cross fixed support', () => {

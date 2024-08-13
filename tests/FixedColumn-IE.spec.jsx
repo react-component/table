@@ -1,8 +1,6 @@
-import { mount } from 'enzyme';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RcResizeObserver from 'rc-resize-observer';
 import Table from '../src';
 
@@ -43,16 +41,16 @@ describe('Table.FixedColumn', () => {
 
   it('not sticky', async () => {
     vi.useFakeTimers();
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
+    const { container } = render(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
 
     act(() => {
-      wrapper
-        .find(RcResizeObserver.Collection)
+      container
+        .querySelector(RcResizeObserver.Collection)
         .first()
         .props()
         .onBatchResize([
           {
-            data: wrapper.find('table ResizeObserver').first().props().data,
+            data: container.querySelector('table ResizeObserver').first().props().data,
             size: { width: 93, offsetWidth: 93 },
           },
         ]);
@@ -61,10 +59,9 @@ describe('Table.FixedColumn', () => {
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.exists('.rc-table-cell-fix-left')).toBeFalsy();
-    expect(wrapper.exists('.rc-table-cell-fix-right')).toBeFalsy();
+    expect(container.querySelector('.rc-table-cell-fix-left')).toBeFalsy();
+    expect(container.querySelector('.rc-table-cell-fix-right')).toBeFalsy();
   });
 });
