@@ -1,10 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: ['push', 'pull_request']
 
 jobs:
   setup:
@@ -32,6 +28,7 @@ jobs:
             mkdir package-temp-dir
           fi
           cp package-lock.json package-temp-dir
+
       - name: cache node_modules
         id: node_modules_cache_id
         uses: actions/cache@v4
@@ -131,6 +128,11 @@ jobs:
           key: node_modules-${{ hashFiles('**/package-temp-dir/package-lock.json') }}
 
       - name: coverage
-        run: npm run coverage && bash <(curl -s https://codecov.io/bash)
+        run: npm test -- --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
     needs: setup
