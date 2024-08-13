@@ -78,14 +78,16 @@ describe('Table.FixedColumn', () => {
           const { container } = render(<Table columns={columns} data={testData} scroll={scroll} />);
 
           act(() => {
-            fireEvent.resize(container.querySelector(RcResizeObserver)!, { width: 100 });
+            // fireEvent.resize(container.querySelector(RcResizeObserver)!, { width: 100 });
+            triggerResize(container.querySelector('table')!);
           });
 
           act(() => {
-            fireEvent.resize(container.querySelector(RcResizeObserver.Collection)!, {
-              data: container.querySelector('table ResizeObserver')!.data,
-              size: { width: 93, offsetWidth: 93 },
-            } as any);
+            // fireEvent.resize(container.querySelector(RcResizeObserver.Collection)!, {
+            //   data: container.querySelector('table ResizeObserver')!.data,
+            //   size: { width: 93, offsetWidth: 93 },
+            // } as any);
+            triggerResize(container.querySelector('table')!);
           });
           await safeAct(container);
           expect(container).toMatchSnapshot();
@@ -128,8 +130,12 @@ describe('Table.FixedColumn', () => {
         },
       } as any);
     });
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeTruthy();
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeTruthy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-left'),
+    ).toBeTruthy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeTruthy();
 
     // Left
     act(() => {
@@ -141,8 +147,12 @@ describe('Table.FixedColumn', () => {
         },
       } as any);
     });
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeFalsy();
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeTruthy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-left'),
+    ).toBeFalsy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeTruthy();
 
     // Right
     act(() => {
@@ -154,8 +164,12 @@ describe('Table.FixedColumn', () => {
         },
       } as any);
     });
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeTruthy();
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeFalsy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-left'),
+    ).toBeTruthy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeFalsy();
 
     // Fullscreen
     act(() => {
@@ -167,8 +181,12 @@ describe('Table.FixedColumn', () => {
         },
       } as any);
     });
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-left')).toBeFalsy();
-    expect(container.querySelector('.rc-table').classList.contains('rc-table-ping-right')).toBeFalsy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-left'),
+    ).toBeFalsy();
+    expect(
+      container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
+    ).toBeFalsy();
   });
 
   it('ellipsis will wrap additional dom', () => {
@@ -194,17 +212,26 @@ describe('Table.FixedColumn', () => {
 
     // Left should be right in RTL
     expect(
-      container.querySelector('.rc-table-row').querySelector('.rc-table-cell').classList.contains('rc-table-cell-fix-right'),
+      container
+        .querySelector('.rc-table-row')
+        .querySelector('.rc-table-cell')
+        .classList.contains('rc-table-cell-fix-right'),
     ).toBeTruthy();
 
     // Right should be left in RTL
     expect(
-      container.querySelector('.rc-table-row').querySelectorAll('.rc-table-cell').item(-1).classList.contains('rc-table-cell-fix-left'),
+      container
+        .querySelector('.rc-table-row')
+        .querySelectorAll('.rc-table-cell')
+        .item(-1)
+        .classList.contains('rc-table-cell-fix-left'),
     ).toBeTruthy();
   });
 
   it('not break measure count', async () => {
-    const { container, rerender } = render(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
+    const { container, rerender } = render(
+      <Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />,
+    );
     await safeAct(container);
     expect(container.querySelectorAll('.rc-table-measure-row td')).toHaveLength(5);
 
@@ -213,7 +240,9 @@ describe('Table.FixedColumn', () => {
   });
 
   it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
-    const { container } = render(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
+    const { container } = render(
+      <Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />,
+    );
     await safeAct(container);
     expect(container.querySelectorAll('.rc-table-cell-fix-left-all')).toHaveLength(10);
   });
