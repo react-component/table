@@ -10,17 +10,20 @@ LoadedCheerio {
         class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
         colspan="2"
         style="position: sticky; left: 0px;"
+        title="Light"
       >
         Light
       </td>
       <td
         class="rc-table-cell"
+        title="Bamboo"
       >
         Bamboo
       </td>
       <td
         class="rc-table-cell"
         style="text-align: right;"
+        title="112.5"
       >
         112.5
       </td>
