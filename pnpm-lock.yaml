@@ -29,7 +29,7 @@ importers:
     devDependencies:
       '@rc-component/father-plugin':
         specifier: ^1.0.2
-        version: 1.0.3(father@4.5.0(@babel/core@7.25.2)(@types/node@22.2.0)(styled-components@6.1.12(react-dom@16.14.0(react@16.14.0))(react@16.14.0))(type-fest@4.24.0)(webpack@5.93.0))
+        version: 1.1.0(father@4.5.0(@babel/core@7.25.2)(@types/node@22.2.0)(styled-components@6.1.12(react-dom@16.14.0(react@16.14.0))(react@16.14.0))(type-fest@4.24.0)(webpack@5.93.0))
       '@testing-library/jest-dom':
         specifier: ^6.4.0
         version: 6.4.8
@@ -1746,8 +1746,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@rc-component/father-plugin@1.0.3':
-    resolution: {integrity: sha512-5nEgUqcBLTZELXF2qxCMxKII80P57edq9KVQKmthAMFF0Z/m3hKtLrzXRoxRhhCcACNYOR545t/fTUVAPLO6SA==}
+  '@rc-component/father-plugin@1.1.0':
+    resolution: {integrity: sha512-/axZyVOevR9f7+2mN7tQn1WWa0DmW9CyUtb8gcRLe5S9GIsf0pAXdZ7kyPg32nDdDfwIvVBULg5V8iIkQTAA/g==}
     peerDependencies:
       father: ^4.0.0
 
@@ -10900,7 +10900,7 @@ snapshots:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
 
-  '@rc-component/father-plugin@1.0.3(father@4.5.0(@babel/core@7.25.2)(@types/node@22.2.0)(styled-components@6.1.12(react-dom@16.14.0(react@16.14.0))(react@16.14.0))(type-fest@4.24.0)(webpack@5.93.0))':
+  '@rc-component/father-plugin@1.1.0(father@4.5.0(@babel/core@7.25.2)(@types/node@22.2.0)(styled-components@6.1.12(react-dom@16.14.0(react@16.14.0))(react@16.14.0))(type-fest@4.24.0)(webpack@5.93.0))':
     dependencies:
       father: 4.5.0(@babel/core@7.25.2)(@types/node@22.2.0)(styled-components@6.1.12(react-dom@16.14.0(react@16.14.0))(react@16.14.0))(type-fest@4.24.0)(webpack@5.93.0)
 
