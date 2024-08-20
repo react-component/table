@@ -43,3 +43,6 @@ examples/debug.tsx
 .umi-test
 .env.local
 .dumi
+
+bun.lockb
+pnpm-lock.yaml
