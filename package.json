@@ -40,7 +40,7 @@
     "compile": "father build && lessc assets/index.less assets/index.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "vitest",
+    "test": "vitest --watch false",
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish",
     "lint": "eslint src/ --ext .tsx,.ts",
