@@ -135,4 +135,22 @@ describe('Table.Scroll', () => {
     domSpy.mockRestore();
     vi.useRealTimers();
   });
+
+  it('trigger inner scrollTo when set `top` 0 after render', () => {
+    let isTriggerScroll = false;
+    spyElementPrototypes(HTMLElement, {
+      scrollTo: _ => {
+        isTriggerScroll = true;
+      },
+    });
+
+    const tRef = React.createRef();
+
+    const wrapper = mount(createTable({ ref: tRef }));
+
+    tRef.current.scrollTo({
+      top: 0,
+    });
+    expect(isTriggerScroll).toEqual(true);
+  });
 });
