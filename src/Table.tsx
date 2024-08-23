@@ -333,7 +333,7 @@ function Table<RecordType extends DefaultRecordType>(
           const { index, top, key } = config;
 
           // * 考虑top为0的情况
-          if (top != null) {
+          if (top || top === 0) {
             scrollBodyRef.current?.scrollTo({
               top,
             });
