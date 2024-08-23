@@ -59,6 +59,15 @@ const Test = () => {
       >
         Scroll To key 9
       </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            top: 0,
+          });
+        }}
+      >
+        Scroll To top
+      </button>
       <Table
         ref={tblRef}
         columns={columns}

@@ -332,7 +332,8 @@ function Table<RecordType extends DefaultRecordType>(
           // Native scroll
           const { index, top, key } = config;
 
-          if (top) {
+          // * 考虑top为0的情况
+          if (top != null) {
             scrollBodyRef.current?.scrollTo({
               top,
             });
