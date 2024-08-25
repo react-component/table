@@ -74,7 +74,7 @@ import Panel from './Panel';
 import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import { getColumnsKey, validateValue } from './utils/valueUtil';
+import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
 import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
 
 export const DEFAULT_PREFIX = 'rc-table';
@@ -331,12 +331,8 @@ function Table<RecordType extends DefaultRecordType>(
         if (scrollBodyRef.current instanceof HTMLElement) {
           // Native scroll
           const { index, top, key } = config;
-
-          // * 考虑top为0的情况
-          if (top || top === 0) {
-            scrollBodyRef.current?.scrollTo({
-              top,
-            });
+          if (validNumberValue(top)) {
+            scrollBodyRef.current?.scrollTo({ top });
           } else {
             const mergedKey = key ?? getRowKey(mergedData[index]);
             scrollBodyRef.current.querySelector(`[data-row-key="${mergedKey}"]`)?.scrollIntoView();
