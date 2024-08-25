@@ -36,3 +36,7 @@ export function getColumnsKey<T = any>(columns: readonly GetColumnKeyColumn<T>[]
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
 }
+
+export function validNumberValue(value: any) {
+  return typeof value === 'number' && !Number.isNaN(value);
+}
