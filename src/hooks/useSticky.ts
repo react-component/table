@@ -37,5 +37,5 @@ export default function useSticky(
       offsetScroll,
       container,
     };
-  }, [isSticky, prefixCls, offsetHeader, offsetSummary, offsetScroll, container]);
+  }, [isSticky, offsetScroll, offsetHeader, offsetSummary, prefixCls, container]);
 }
