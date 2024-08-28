@@ -26,8 +26,9 @@ export default function useSticky(
 
   const container = getContainer() || defaultContainer;
 
+  const isSticky = !!sticky;
+
   return React.useMemo(() => {
-    const isSticky = !!sticky;
     return {
       isSticky,
       stickyClassName: isSticky ? `${prefixCls}-sticky-holder` : '',
@@ -36,5 +37,5 @@ export default function useSticky(
       offsetScroll,
       container,
     };
-  }, [offsetScroll, offsetHeader, offsetSummary, prefixCls, container]);
+  }, [isSticky, prefixCls, offsetHeader, offsetSummary, offsetScroll, container]);
 }
