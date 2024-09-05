@@ -149,7 +149,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
       <table
         style={{
           tableLayout: 'fixed',
-          visibility: noData || mergedColumnWidth ? null : 'hidden',
+          visibility: mergedColumnWidth ? null : 'hidden',
         }}
       >
         {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
