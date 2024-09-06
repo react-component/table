@@ -29,6 +29,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     prefixCls,
     childrenColumnName,
     scrollX,
+    direction,
   } = useContext(TableContext, [
     'flattenColumns',
     'onColumnResize',
@@ -37,6 +38,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'expandedKeys',
     'childrenColumnName',
     'scrollX',
+    'direction',
   ]);
   const {
     sticky,
@@ -229,6 +231,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemKey={item => getRowKey(item.record)}
         component={wrapperComponent}
         scrollWidth={scrollX as number}
+        direction={direction}
         onVirtualScroll={({ x }) => {
           onScroll({
             currentTarget: listRef.current?.nativeElement,
