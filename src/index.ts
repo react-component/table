@@ -8,6 +8,7 @@ import Table, { genTable } from './Table';
 import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
 import type { VirtualTableProps } from './VirtualTable';
 import VirtualTable, { genVirtualTable } from './VirtualTable';
+import PancakeTable from './PancakeTable';
 
 export {
   genTable,
@@ -18,6 +19,7 @@ export {
   INTERNAL_COL_DEFINE,
   EXPAND_COLUMN,
   INTERNAL_HOOKS,
+  PancakeTable,
   VirtualTable,
   genVirtualTable,
   type VirtualTableProps,

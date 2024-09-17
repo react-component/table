@@ -161,6 +161,15 @@ export type CustomizeScrollBody<RecordType> = (
   },
 ) => React.ReactNode;
 
+export type CustomizeScrollHeader<DataType> = (
+  data: DataType,
+  info: {
+    scrollbarSize: number;
+    ref: React.Ref<{ scrollLeft: number; scrollTo?: (scrollConfig: ScrollConfig) => void }>;
+    onScroll: OnCustomizeScroll;
+  },
+) => React.ReactNode;
+
 export interface TableComponents<RecordType> {
   table?: CustomizeComponent;
   header?: {
