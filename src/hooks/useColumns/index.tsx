@@ -176,8 +176,11 @@ function useColumns<RecordType>(
       // >>> Insert expand column if not exist
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
-        if (expandColIndex >= 0) {
+        if ((expandColIndex && expandColIndex >= 0) || fixed === 'left' || !fixed) {
           cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
+        }
+        if (fixed === 'right') {
+          cloneColumns.splice(baseColumns.length, 0, EXPAND_COLUMN);
         }
       }
 
@@ -197,10 +200,8 @@ function useColumns<RecordType>(
       const prevColumn = baseColumns[expandColumnIndex];
 
       let fixedColumn: FixedType | null;
-      if ((fixed === 'left' || fixed) && !expandIconColumnIndex) {
-        fixedColumn = 'left';
-      } else if ((fixed === 'right' || fixed) && expandIconColumnIndex === baseColumns.length) {
-        fixedColumn = 'right';
+      if (fixed) {
+        fixedColumn = fixed;
       } else {
         fixedColumn = prevColumn ? prevColumn.fixed : null;
       }
