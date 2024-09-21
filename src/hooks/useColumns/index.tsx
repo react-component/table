@@ -176,7 +176,8 @@ function useColumns<RecordType>(
       // >>> Insert expand column if not exist
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
-        if ((expandColIndex && expandColIndex >= 0) || fixed === 'left' || !fixed) {
+        console.log(expandColIndex);
+        if (expandColIndex >= 0 && (expandColIndex || fixed === 'left' || !fixed)) {
           cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
         }
         if (fixed === 'right') {
