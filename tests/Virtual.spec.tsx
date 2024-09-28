@@ -163,13 +163,14 @@ describe('Table.Virtual', () => {
         expandable: {
           expandedRowKeys: ['name0', 'name3'],
           expandedRowRender: record => record.name,
+          expandedRowClassName: 'bamboo',
         },
       });
-
       const expandedCells = container.querySelectorAll('.rc-table-expanded-row-cell');
       expect(expandedCells).toHaveLength(2);
       expect(expandedCells[0].textContent).toBe('name0');
       expect(expandedCells[1].textContent).toBe('name3');
+      expect(container.querySelector<HTMLElement>('.rc-table-expanded-row')).toHaveClass('bamboo');
     });
 
     it('fixed', () => {
