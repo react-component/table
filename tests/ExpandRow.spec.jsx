@@ -415,6 +415,21 @@ describe('Table.Expand', () => {
     expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
   });
 
+  it("renders expend row class correctly when it's string", () => {
+    const expandedRowClassName = 'expand-row-test-str-class-name';
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender,
+          expandedRowKeys: [0],
+          expandedRowClassName,
+        },
+      }),
+    );
+
+    expect(wrapper.find('tbody tr').at(1).hasClass(expandedRowClassName)).toBeTruthy();
+  });
+
   it('renders expend row class correctly using children without expandedRowRender', () => {
     const expandedRowClassName = vi.fn().mockReturnValue('expand-row-test-class-name');
 

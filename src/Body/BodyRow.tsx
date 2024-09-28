@@ -126,8 +126,15 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // 若没有 expandedRowRender 参数, 将使用 baseRowNode 渲染 Children
   // 此时如果 level > 1 则说明是 expandedRow, 一样需要附加 computedExpandedRowClassName
-  const computedExpandedRowClassName =
-    expandedRowClassName && expandedRowClassName(record, index, indent);
+  const computedExpandedRowClassName = React.useMemo<string>(() => {
+    if (typeof expandedRowClassName === 'string') {
+      return expandedRowClassName;
+    }
+    if (typeof expandedRowClassName === 'function') {
+      return expandedRowClassName(record, index, indent);
+    }
+    return '';
+  }, [expandedRowClassName, record, index, indent]);
 
   // ======================== Base tr row ========================
   const baseRowNode = (
@@ -139,7 +146,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
-        indent >= 1 ? computedExpandedRowClassName : '',
+        {
+          [computedExpandedRowClassName]: indent >= 1,
+        },
       )}
       style={{
         ...style,
