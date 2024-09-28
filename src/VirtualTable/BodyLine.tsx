@@ -41,7 +41,15 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   let expandRowNode: React.ReactElement;
   if (rowSupportExpand && expanded) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
-    const computedExpandedRowClassName = expandedRowClassName?.(record, index, indent);
+
+    let computedExpandedRowClassName = '';
+
+    if (typeof expandedRowClassName === 'string') {
+      computedExpandedRowClassName = expandedRowClassName;
+    }
+    if (typeof expandedRowClassName === 'function') {
+      computedExpandedRowClassName = expandedRowClassName(record, index, indent);
+    }
 
     let additionalProps: React.TdHTMLAttributes<HTMLElement> = {};
     if (fixColumn) {
