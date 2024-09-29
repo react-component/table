@@ -188,38 +188,20 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
   // ],
 }));
 
-const Demo = () => {
-  const table1Ref = React.useRef<Reference>();
-  const table2Ref = React.useRef<Reference>();
+const Demo: React.FC = () => {
+  const tableRef = React.useRef<Reference>();
   return (
     <div style={{ width: 800, padding: `0 64px` }}>
-      <button
-        onClick={() => {
-          table1Ref.current?.scrollTo({ top: 9999999999999 });
-          table2Ref.current?.scrollTo({ top: 9999999999999 });
-        }}
-      >
+      <button onClick={() => tableRef.current?.scrollTo({ top: 9999999999999 })}>
         Scroll To End
       </button>
-      <button
-        onClick={() => {
-          table1Ref.current?.scrollTo({ top: 0 });
-          table2Ref.current?.scrollTo({ top: 0 });
-        }}
-      >
-        Scroll To Start
-      </button>
-      <button
-        onClick={() => {
-          table1Ref.current?.scrollTo({ index: data.length - 1 });
-          table2Ref.current?.scrollTo({ index: data.length - 1 });
-        }}
-      >
+      <button onClick={() => tableRef.current?.scrollTo({ top: 0 })}>Scroll To Start</button>
+      <button onClick={() => tableRef.current?.scrollTo({ index: data.length - 1 })}>
         Scroll To Key
       </button>
       <VirtualTable
         style={{ marginTop: 16 }}
-        ref={table1Ref}
+        ref={tableRef}
         columns={columns}
         // expandedRowRender={({ b, c }) => b || c}
         scroll={{ x: 1300, y: 200 }}
@@ -230,29 +212,6 @@ const Demo = () => {
           expandedRowRender: () => 2333,
           columnWidth: 60,
           expandedRowClassName: () => 'good-one',
-        }}
-        // onRow={() => ({ className: 'rowed' })}
-        rowClassName="nice-try"
-        getContainerWidth={(ele, width) => {
-          // Minus border
-          const { borderInlineStartWidth } = getComputedStyle(ele.querySelector('.rc-table-tbody'));
-          const mergedWidth = width - parseInt(borderInlineStartWidth, 10);
-          return mergedWidth;
-        }}
-      />
-      <VirtualTable
-        style={{ marginTop: 16 }}
-        ref={table2Ref}
-        columns={columns}
-        // expandedRowRender={({ b, c }) => b || c}
-        scroll={{ x: 1300, y: 200 }}
-        data={data}
-        // data={[]}
-        rowKey="indexKey"
-        expandable={{
-          expandedRowRender: () => 2333,
-          columnWidth: 60,
-          expandedRowClassName: 'good-one-string',
         }}
         // onRow={() => ({ className: 'rowed' })}
         rowClassName="nice-try"

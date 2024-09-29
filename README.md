@@ -93,7 +93,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | expandable.defaultExpandedRowKeys | String[] | [] | initial expanded rows keys |
 | expandable.expandedRowKeys | String[] |  | current expanded rows keys |
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | Content render to expanded row |
-| expandable.expandedRowClassName | Function(recode, index, indent):string |  | get expanded row's className |
+| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | get expanded row's className |
 | expandable.expandRowByClick | boolean |  | Support expand by click row |
 | expandable.expandIconColumnIndex | Number | 0 | The index of expandIcon which column will be inserted when expandIconAsCell is false |
 | expandable.expandIcon | props => ReactNode |  | Customize expand icon |
