@@ -7,7 +7,7 @@ import type { FlattenData } from '../hooks/useFlattenRecords';
 import useRowInfo from '../hooks/useRowInfo';
 import VirtualCell from './VirtualCell';
 import { StaticContext } from './context';
-import { computedExpandedClassName } from '@/utils/expandUtil';
+import { computedExpandedClassName } from '../utils/expandUtil';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;

@@ -6,7 +6,7 @@ import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
-import { computedExpandedClassName } from '@/utils/expandUtil';
+import { computedExpandedClassName } from '../utils/expandUtil';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
