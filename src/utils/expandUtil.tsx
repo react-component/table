@@ -57,12 +57,10 @@ export function computedExpandedClassName<RecordType>(
   index: number,
   indent: number,
 ) {
-  let resultClsName = '';
   if (typeof cls === 'string') {
-    resultClsName = cls;
+    return cls;
   }
   if (typeof cls === 'function') {
-    resultClsName = cls(record, index, indent);
+    return cls(record, index, indent);
   }
-  return resultClsName;
 }
