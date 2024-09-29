@@ -247,7 +247,7 @@ export interface ExpandableConfig<RecordType> {
   /** @deprecated Please use `EXPAND_COLUMN` in `columns` directly */
   expandIconColumnIndex?: number;
   showExpandColumn?: boolean;
-  expandedRowClassName?: RowClassName<RecordType>;
+  expandedRowClassName?: string | RowClassName<RecordType>;
   childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;
   columnWidth?: number | string;
