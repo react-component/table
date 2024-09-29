@@ -63,4 +63,5 @@ export function computedExpandedClassName<RecordType>(
   if (typeof cls === 'function') {
     return cls(record, index, indent);
   }
+  return '';
 }
