@@ -159,17 +159,20 @@ describe('Table.Virtual', () => {
 
   describe('expandable', () => {
     it('basic', () => {
-      const { container } = getTable({
-        expandable: {
-          expandedRowKeys: ['name0', 'name3'],
-          expandedRowRender: record => record.name,
-        },
+      (['bamboo', () => 'bamboo'] as const).forEach(cls => {
+        const { container } = getTable({
+          expandable: {
+            expandedRowKeys: ['name0', 'name3'],
+            expandedRowRender: record => record.name,
+            expandedRowClassName: cls,
+          },
+        });
+        const expandedCells = container.querySelectorAll('.rc-table-expanded-row-cell');
+        expect(expandedCells).toHaveLength(2);
+        expect(expandedCells[0].textContent).toBe('name0');
+        expect(expandedCells[1].textContent).toBe('name3');
+        expect(container.querySelector('.rc-table-expanded-row')).toHaveClass('bamboo');
       });
-
-      const expandedCells = container.querySelectorAll('.rc-table-expanded-row-cell');
-      expect(expandedCells).toHaveLength(2);
-      expect(expandedCells[0].textContent).toBe('name0');
-      expect(expandedCells[1].textContent).toBe('name3');
     });
 
     it('fixed', () => {

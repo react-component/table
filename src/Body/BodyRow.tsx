@@ -6,6 +6,7 @@ import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
 import ExpandedRow from './ExpandedRow';
+import { computedExpandedClassName } from '../utils/expandUtil';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -126,8 +127,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
   // 若没有 expandedRowRender 参数, 将使用 baseRowNode 渲染 Children
   // 此时如果 level > 1 则说明是 expandedRow, 一样需要附加 computedExpandedRowClassName
-  const computedExpandedRowClassName =
-    expandedRowClassName && expandedRowClassName(record, index, indent);
+  const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
   // ======================== Base tr row ========================
   const baseRowNode = (
@@ -139,12 +139,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
-        indent >= 1 ? computedExpandedRowClassName : '',
+        {
+          [expandedClsName]: indent >= 1,
+        },
       )}
-      style={{
-        ...style,
-        ...rowProps?.style,
-      }}
+      style={{ ...style, ...rowProps?.style }}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
@@ -192,7 +191,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         className={classNames(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
-          computedExpandedRowClassName,
+          expandedClsName,
         )}
         prefixCls={prefixCls}
         component={RowComponent}

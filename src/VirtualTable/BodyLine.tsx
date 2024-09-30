@@ -7,6 +7,7 @@ import type { FlattenData } from '../hooks/useFlattenRecords';
 import useRowInfo from '../hooks/useRowInfo';
 import VirtualCell from './VirtualCell';
 import { StaticContext } from './context';
+import { computedExpandedClassName } from '../utils/expandUtil';
 
 export interface BodyLineProps<RecordType = any> {
   data: FlattenData<RecordType>;
@@ -41,7 +42,8 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   let expandRowNode: React.ReactElement;
   if (rowSupportExpand && expanded) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
-    const computedExpandedRowClassName = expandedRowClassName?.(record, index, indent);
+
+    const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
     let additionalProps: React.TdHTMLAttributes<HTMLElement> = {};
     if (fixColumn) {
@@ -59,7 +61,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         className={classNames(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
-          computedExpandedRowClassName,
+          expandedClsName,
         )}
       >
         <Cell
