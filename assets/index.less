@@ -63,8 +63,41 @@
     }
   }
 
+  &-column-resizing {
+    cursor: col-resize;
+  }
+
   &-cell {
     background: #f4f4f4;
+
+    &-resize-handle {
+      position: absolute;
+      top: 0;
+      inset-inline-end: 0;
+      width: 4px;
+      height: 100%;
+      cursor: col-resize;
+      z-index: 1;
+      background: red;
+    }
+
+    &-resize-line {
+      position: absolute;
+      width: 4px;
+      background: red;
+      height: 100%;
+      top: 0;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    &-fix-left &-resize-handle {
+      right: 0
+    }
+
+    &-fix-right &-resize-handle {
+      left: 0
+    }
 
     &-fix-left,
     &-fix-right {
