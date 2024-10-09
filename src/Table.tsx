@@ -455,7 +455,7 @@ function Table<RecordType extends DefaultRecordType>(
       const measureTarget = currentTarget || scrollHeaderRef.current;
       if (measureTarget) {
         const scrollWidth =
-          // Same logic as scrollWidth of useColumns
+          // Should use mergedScrollX in virtual table(useInternalHooks && tailor === true)
           useInternalHooks && tailor && typeof mergedScrollX === 'number'
             ? mergedScrollX
             : measureTarget.scrollWidth;
