@@ -455,7 +455,10 @@ function Table<RecordType extends DefaultRecordType>(
       const measureTarget = currentTarget || scrollHeaderRef.current;
       if (measureTarget) {
         const scrollWidth =
-          typeof mergedScrollX === 'number' ? mergedScrollX : measureTarget.scrollWidth;
+          // Same logic as scrollWidth of useColumns
+          useInternalHooks && tailor && typeof mergedScrollX === 'number'
+            ? mergedScrollX
+            : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
