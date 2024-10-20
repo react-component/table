@@ -4,6 +4,7 @@ import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type { CustomizeComponent } from '../interface';
+import useResolve from '../hooks/useResolve';
 
 export interface ExpandedRowProps {
   prefixCls: string;
@@ -14,6 +15,7 @@ export interface ExpandedRowProps {
   children: React.ReactNode;
   colSpan: number;
   isEmpty: boolean;
+  data?: any;
 }
 
 function ExpandedRow(props: ExpandedRowProps) {
@@ -30,7 +32,10 @@ function ExpandedRow(props: ExpandedRowProps) {
     expanded,
     colSpan,
     isEmpty,
+    data,
   } = props;
+
+  const { data: LazyData, resolve } = useResolve(data.load);
 
   const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
     TableContext,
@@ -60,11 +65,17 @@ function ExpandedRow(props: ExpandedRowProps) {
     <Component
       className={className}
       style={{
-        display: expanded ? null : 'none',
+        display: data.hasChildren
+          ? expanded && resolve
+            ? null
+            : 'none'
+          : expanded
+            ? null
+            : 'none',
       }}
     >
       <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
-        {contentNode}
+        {data.hasChildren ? LazyData : contentNode}
       </Cell>
     </Component>
   );
