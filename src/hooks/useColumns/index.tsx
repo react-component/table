@@ -176,7 +176,6 @@ function useColumns<RecordType>(
       // >>> Insert expand column if not exist
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
-        console.log(expandColIndex);
         if (expandColIndex >= 0 && (expandColIndex || fixed === 'left' || !fixed)) {
           cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
         }
@@ -245,6 +244,7 @@ function useColumns<RecordType>(
     }
 
     return baseColumns.filter(col => col !== EXPAND_COLUMN);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
 
   // ========================= Transform ========================
@@ -263,6 +263,7 @@ function useColumns<RecordType>(
       ];
     }
     return finalColumns;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transformColumns, withExpandColumns, direction]);
 
   // ========================== Flatten =========================
@@ -271,6 +272,7 @@ function useColumns<RecordType>(
       return revertForRtl(flatColumns(mergedColumns));
     }
     return flatColumns(mergedColumns);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedColumns, direction, scrollWidth]);
 
   // ========================= Gap Fixed ========================
