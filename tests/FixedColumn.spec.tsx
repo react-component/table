@@ -341,4 +341,38 @@ describe('Table.FixedColumn', () => {
     expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(101);
     expect(container).toMatchSnapshot();
   });
+
+  it('right shadow should be shown when scrollX is less than the sum of the widths of all columns', async () => {
+    const wrapper = mount(
+      <Table
+        columns={[
+          { title: 'a', width: 200, fixed: 'left' },
+          { title: 'b', width: 200 },
+          { title: 'c', width: 200 },
+          { title: 'd', width: 200, fixed: 'right' },
+        ]}
+        data={data}
+        scroll={{ x: 100 }}
+        style={{ width: 400 }}
+      />,
+    );
+
+    await safeAct(wrapper);
+    // Use `onScroll` directly since simulate not support `currentTarget`
+    act(() => {
+      wrapper
+        .find('.rc-table-content')
+        .props()
+        .onScroll({
+          currentTarget: {
+            scrollLeft: 10,
+            scrollWidth: 800,
+            clientWidth: 400,
+          },
+        } as any);
+    });
+    wrapper.update();
+    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
+    expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeTruthy();
+  });
 });
