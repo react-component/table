@@ -32,7 +32,11 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
     onHeaderRow,
     index,
   } = props;
-  const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
+  const { prefixCls, direction, headerCellRefs } = useContext(TableContext, [
+    'prefixCls',
+    'direction',
+    'headerCellRefs',
+  ]);
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -62,6 +66,8 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
 
         return (
           <Cell
+            colIndex={cellIndex}
+            setRef={headerCellRef => (headerCellRefs.current[cellIndex] = headerCellRef)}
             {...cell}
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
