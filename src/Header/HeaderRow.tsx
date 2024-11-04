@@ -67,7 +67,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
         return (
           <Cell
             colIndex={cellIndex}
-            setRef={headerCellRef => (headerCellRefs.current[cellIndex] = headerCellRef)}
+            ref={headerCellRef => (headerCellRefs.current[cellIndex] = headerCellRef)}
             {...cell}
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}

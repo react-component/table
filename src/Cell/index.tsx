@@ -75,7 +75,10 @@ const getTitleFromCellRenderChildren = ({
   return title;
 };
 
-function Cell<RecordType>(props: CellProps<RecordType>) {
+function Cell<RecordType>(
+  props: CellProps<RecordType>,
+  ref: React.ForwardedRef<HTMLTableCellElement>,
+) {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -121,7 +124,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     appendNode,
     additionalProps = {},
     isSticky,
-    setRef,
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
@@ -182,13 +184,14 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   });
 
   let mergedLastFixLeft = lastFixLeft;
-  if (lastFixLeft) {
-    const { current } = headerCellRefs;
-    const dom = current[colIndex];
+  const { current } = headerCellRefs;
+  const dom = current[colIndex];
+  if (lastFixLeft && dom) {
+    const offsetLeft =
+      dom.getBoundingClientRect().x - dom.parentElement.getBoundingClientRect().x || 0;
 
     // should not be tagged as lastFixLeft if cell is not stickying;
-    mergedLastFixLeft =
-      dom && typeof fixLeft === 'number' && dom.offsetLeft === fixLeft + bodyScrollLeft + 1;
+    mergedLastFixLeft = typeof fixLeft === 'number' && offsetLeft === fixLeft + bodyScrollLeft;
   }
   // ====================== Render ======================
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
@@ -256,7 +259,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   return (
     <Component
-      ref={setRef}
+      ref={ref}
       {...legacyCellProps}
       {...additionalProps}
       className={mergedClassName}
@@ -277,4 +280,4 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   );
 }
 
-export default React.memo(React.forwardRef(Cell)) as typeof Cell;
+export default React.memo(React.forwardRef(Cell));

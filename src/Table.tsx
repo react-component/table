@@ -435,13 +435,14 @@ function Table<RecordType extends DefaultRecordType>(
       }
     }
   }
+  const [bodyScrollLeft, setBodyScrollLeft] = React.useState<number>(0);
 
   const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
       const isRTL = direction === 'rtl';
       const mergedScrollLeft =
         typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
-      console.log('mergedScrollLeft: ', mergedScrollLeft);
+      setBodyScrollLeft(mergedScrollLeft);
 
       const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
       if (!getScrollTarget() || getScrollTarget() === compareTarget) {
@@ -478,14 +479,9 @@ function Table<RecordType extends DefaultRecordType>(
     },
   );
 
-  const [bodyScrollLeft, setBodyScrollLeft] = React.useState<number>();
   const onBodyScroll = useEvent((e: React.UIEvent<HTMLDivElement>) => {
     onInternalScroll(e);
     onScroll?.(e);
-
-    const { scrollLeft } = e.currentTarget;
-
-    setBodyScrollLeft(scrollLeft);
   });
 
   const triggerOnScroll = () => {
