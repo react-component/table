@@ -25,6 +25,31 @@ describe('Table.FixedColumn', () => {
       offsetWidth: {
         get: () => 1000,
       },
+      getBoundingClientRect() {
+        if (this.tagName === 'TR') {
+          return {
+            x: 0,
+            y: 0,
+            width: 1000,
+            height: 105,
+          };
+        }
+        if (this.textContent === 'title2') {
+          return {
+            x: 93,
+            y: 0,
+            width: 93,
+            height: 105,
+          };
+        }
+
+        return {
+          x: 0,
+          y: 0,
+          width: 100,
+          height: 100,
+        };
+      },
     });
   });
 
@@ -249,6 +274,20 @@ describe('Table.FixedColumn', () => {
 
   it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
     const wrapper = mount(<Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />);
+
+    // make `mergedLastFixLeft`'s calculation work.
+    act(() => {
+      wrapper
+        .find(RcResizeObserver.Collection)
+        .first()
+        .props()
+        .onBatchResize([
+          {
+            data: wrapper.find('table ResizeObserver').first().props().data,
+            size: { width: 93, offsetWidth: 93 },
+          } as any,
+        ]);
+    });
     await safeAct(wrapper);
     expect(wrapper.find('.rc-table-cell-fix-left-all')).toHaveLength(10);
   });
