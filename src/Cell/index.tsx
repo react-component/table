@@ -23,7 +23,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   /** `column` index is the real show rowIndex */
   index?: number;
   /** the column index which cell in */
-  colIndex: number;
+  colIndex?: number;
   /** the index of the record. For the render(value, record, renderIndex) */
   renderIndex?: number;
   dataIndex?: DataIndex<RecordType>;
@@ -55,7 +55,6 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   rowType?: 'header' | 'body' | 'footer';
 
   isSticky?: boolean;
-  setRef?: React.Ref<HTMLTableCellElement>;
 }
 
 const getTitleFromCellRenderChildren = ({
@@ -280,4 +279,6 @@ function Cell<RecordType>(
   );
 }
 
-export default React.memo(React.forwardRef(Cell));
+export default React.memo(React.forwardRef(Cell)) as <RecordType>(
+  props: CellProps<RecordType> & { ref?: React.ForwardedRef<HTMLTableCellElement> },
+) => React.JSX.Element;
