@@ -182,16 +182,19 @@ function Cell<RecordType>(
     additionalProps?.onMouseLeave?.(event);
   });
 
-  let mergedLastFixLeft = lastFixLeft;
-  const { current } = headerCellRefs;
-  const dom = current[colIndex];
-  if (lastFixLeft && dom) {
-    const offsetLeft =
-      dom.getBoundingClientRect().x - dom.parentElement.getBoundingClientRect().x || 0;
+  const mergedLastFixLeft = React.useMemo(() => {
+    const { current } = headerCellRefs;
+    const dom = current[colIndex];
 
-    // should not be tagged as lastFixLeft if cell is not stickying;
-    mergedLastFixLeft = typeof fixLeft === 'number' && offsetLeft === fixLeft + bodyScrollLeft;
-  }
+    if (lastFixLeft && dom && typeof fixLeft === 'number') {
+      const offsetLeft =
+        dom.getBoundingClientRect().x - dom.parentElement.getBoundingClientRect().x || 0;
+
+      // should not be tagged as lastFixLeft if cell is not stickying;
+      return offsetLeft === fixLeft + bodyScrollLeft;
+    }
+    return lastFixLeft;
+  }, [bodyScrollLeft, colIndex, fixLeft, headerCellRefs, lastFixLeft]);
   // ====================== Render ======================
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
     return null;

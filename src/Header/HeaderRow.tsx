@@ -47,6 +47,11 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
 
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
 
+  const handleHeaderCellRef =
+    (cellIndex: number) => (headerCellRef: HTMLTableCellElement | null) => {
+      headerCellRefs.current[cellIndex] = headerCellRef;
+    };
+
   return (
     <RowComponent {...rowProps}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
@@ -67,7 +72,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
         return (
           <Cell
             colIndex={cellIndex}
-            ref={headerCellRef => (headerCellRefs.current[cellIndex] = headerCellRef)}
+            ref={handleHeaderCellRef(cellIndex)}
             {...cell}
             scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
