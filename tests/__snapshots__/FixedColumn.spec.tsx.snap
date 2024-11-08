@@ -1879,6 +1879,7 @@ LoadedCheerio {
             </tr>
             <tr
               class="rc-table-placeholder"
+              style=""
             >
               <td
                 class="rc-table-cell"
@@ -3095,6 +3096,7 @@ LoadedCheerio {
             </tr>
             <tr
               class="rc-table-placeholder"
+              style=""
             >
               <td
                 class="rc-table-cell"
