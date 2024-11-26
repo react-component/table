@@ -212,11 +212,13 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     alignStyle.textAlign = align;
   }
 
+  // The order is important since user can overwrite style.
+  // For example ant-design/ant-design#51763
   const mergedStyle = {
-    ...fixedStyle,
-    ...additionalProps.style,
-    ...alignStyle,
     ...legacyCellProps?.style,
+    ...fixedStyle,
+    ...alignStyle,
+    ...additionalProps.style,
   };
 
   // >>>>> Children Node

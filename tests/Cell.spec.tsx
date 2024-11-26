@@ -122,4 +122,28 @@ describe('Table.Cell', () => {
 
     expect(wrapper.find('thead th').prop('title')).toEqual('Bamboo');
   });
+
+  // https://github.com/ant-design/ant-design/issues/51763
+  it('style merge order', () => {
+    const wrapper = mount(
+      <Table
+        columns={[
+          {
+            align: 'center',
+            onHeaderCell: () => ({
+              style: {
+                color: 'red',
+                textAlign: 'end', // overwrite align
+              },
+            }),
+          },
+        ]}
+      />,
+    );
+
+    expect(wrapper.find('thead th').prop('style')).toEqual({
+      color: 'red',
+      textAlign: 'end',
+    });
+  });
 });
