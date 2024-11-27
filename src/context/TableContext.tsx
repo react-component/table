@@ -55,7 +55,7 @@ export interface TableContextProps<RecordType = any> {
   // Column
   columns: ColumnsType<RecordType>;
   flattenColumns: readonly ColumnType<RecordType>[];
-  onColumnResize: (columnKey: React.Key, width: number) => void;
+  onColumnWidthChange: (columnKey: React.Key, width: number) => void;
 
   // Row
   hoverStartRow: number;
@@ -68,6 +68,16 @@ export interface TableContextProps<RecordType = any> {
   childrenColumnName: string;
 
   rowHoverable?: boolean;
+  fullTableRef: React.MutableRefObject<HTMLDivElement>;
+  colsWidths: Map<React.Key, number>;
+  colWidths: number[];
+  colsKeys: React.Key[];
+  onColumnResizeComplete?: (info: {
+    columnKey: React.Key;
+    width: number;
+    columnWidths: { columnKey: React.Key; width: number }[];
+  }) => void;
+  onResizingChange: (value: boolean) => void;
 }
 
 const TableContext = createContext<TableContextProps>();

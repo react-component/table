@@ -3,15 +3,15 @@ import ResizeObserver from 'rc-resize-observer';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
-  onColumnResize: (key: React.Key, width: number) => void;
+  onColumnWidthChange: (key: React.Key, width: number) => void;
 }
 
-export default function MeasureCell({ columnKey, onColumnResize }: MeasureCellProps) {
+export default function MeasureCell({ columnKey, onColumnWidthChange }: MeasureCellProps) {
   const cellRef = React.useRef<HTMLTableCellElement>();
 
   React.useEffect(() => {
     if (cellRef.current) {
-      onColumnResize(columnKey, cellRef.current.offsetWidth);
+      onColumnWidthChange(columnKey, cellRef.current.offsetWidth);
     }
   }, []);
 
