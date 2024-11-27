@@ -230,6 +230,36 @@ describe('Table.Expand', () => {
     expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(0);
   });
 
+  it('fixed in expandable Fixed in expandable', () => {
+    const columns = [
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+      { title: 'Age', dataIndex: 'age', key: 'age' },
+      { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    ];
+    const data = [
+      { key: 0, name: 'Lucy', age: 27, gender: 'F' },
+      { key: 1, name: 'Jack', age: 28, gender: 'M' },
+    ];
+    const wrapper = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: 'left' },
+      }),
+    );
+    const wrapper2 = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: 'right' },
+      }),
+    );
+    expect(wrapper.find('.rc-table-has-fix-left').length).toBe(1);
+    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(1);
+  });
+
   describe('config expand column index', () => {
     it('not show EXPAND_COLUMN if expandable is false', () => {
       resetWarned();
