@@ -26,6 +26,12 @@ export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
+/**
+ * 0 => horizontal count of table head cells
+ * 1 => vertical count of table head cells
+ */
+export type HeadMatrix = [number, number];
+
 export type ScrollConfig = {
   index?: number;
   key?: Key;

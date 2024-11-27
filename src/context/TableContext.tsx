@@ -2,6 +2,7 @@ import { createContext, createImmutable } from '@rc-component/context';
 import type {
   ColumnsType,
   ColumnType,
+  HeadMatrix,
   Direction,
   ExpandableType,
   ExpandedRowRender,
@@ -54,6 +55,7 @@ export interface TableContextProps<RecordType = any> {
 
   // Column
   columns: ColumnsType<RecordType>;
+  headMatrix: HeadMatrix;
   flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
 
