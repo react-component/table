@@ -19,7 +19,6 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
-  getRowKey: GetRowKey<RecordType>;
 }
 
 // ==================================================================================
