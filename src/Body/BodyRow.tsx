@@ -4,7 +4,7 @@ import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
-import type { ColumnType, CustomizeComponent, GetRowKey } from '../interface';
+import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 
