@@ -73,7 +73,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           rowComponent={trComponent}
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
-          getRowKey={getRowKey}
           indent={indent}
         />
       );
