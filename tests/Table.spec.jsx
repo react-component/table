@@ -581,7 +581,17 @@ describe('Table.Basic', () => {
 
     expect(wrapper.find('thead tr').props().id).toEqual('header-row-0');
     expect(onHeaderRow).toHaveBeenCalledWith(
-      [{ title: 'Name', dataIndex: 'name', key: 'name' }],
+      [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+          colSpan: 1,
+          rowSpan: 1,
+          colStart: 0,
+          colEnd: 0,
+        },
+      ],
       0,
     );
   });
