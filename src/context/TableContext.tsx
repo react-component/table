@@ -66,8 +66,9 @@ export interface TableContextProps<RecordType = any> {
   expandedKeys: Set<React.Key>;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
-
+  headerCellRefs: React.MutableRefObject<HTMLTableCellElement[]>;
   rowHoverable?: boolean;
+  bodyScrollLeft?: number;
 }
 
 const TableContext = createContext<TableContextProps>();
