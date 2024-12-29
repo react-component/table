@@ -12,11 +12,12 @@ interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
-  container: HTMLElement | Window;
+  container: HTMLElement | Window,
+  direction: string;
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container },
+  { scrollBodyRef, onScroll, offsetScroll, container, direction },
   ref,
 ) => {
   const prefixCls = useContext(TableContext, 'prefixCls');
@@ -74,17 +75,28 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     let left: number =
       refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
-    if (left <= 0) {
-      left = 0;
+    if(direction === "ltr"){
+      if (left <= 0) {
+        left = 0;
+      }
+      if (left + scrollBarWidth >= bodyWidth) {
+        left = bodyWidth - scrollBarWidth;
+      }
+      onScroll({
+          scrollLeft: left / bodyWidth * (bodyScrollWidth + 2)
+        });
+        refState.current.x = event.pageX;
+    }else{
+      if (left > 0) {
+        left = 0;
+      }
+      if (Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth) {
+        onScroll({
+          scrollLeft: left / bodyWidth * (bodyScrollWidth + 2)
+        });
+        refState.current.x = event.pageX;
+      }
     }
-
-    if (left + scrollBarWidth >= bodyWidth) {
-      left = bodyWidth - scrollBarWidth;
-    }
-
-    onScroll({
-      scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
-    });
 
     refState.current.x = event.pageX;
   };
