@@ -126,6 +126,11 @@ export interface TableProps<RecordType = any>
 
   // Events
   onScroll?: React.UIEventHandler<HTMLDivElement>;
+  onColumnResizeComplete?: (info: {
+    columnKey: React.Key;
+    width: number;
+    columnWidths: { columnKey: React.Key; width: number }[];
+  }) => void;
 
   // =================================== Internal ===================================
   /**
@@ -212,6 +217,7 @@ function Table<RecordType extends DefaultRecordType>(
 
     // Events
     onScroll,
+    onColumnResizeComplete,
 
     // Internal
     internalHooks,
@@ -350,9 +356,11 @@ function Table<RecordType extends DefaultRecordType>(
   const [pingedLeft, setPingedLeft] = React.useState(false);
   const [pingedRight, setPingedRight] = React.useState(false);
   const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
+  const [isResizing, setIsResizing] = React.useState(false);
 
   // Convert map to number width
-  const colsKeys = getColumnsKey(flattenColumns);
+  const pureColsKeys = getColumnsKey(flattenColumns);
+  const colsKeys = React.useMemo(() => pureColsKeys, [pureColsKeys.join('_')]);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
@@ -402,7 +410,7 @@ function Table<RecordType extends DefaultRecordType>(
     };
   }
 
-  const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
+  const onColumnWidthChange = React.useCallback((columnKey: React.Key, width: number) => {
     if (isVisible(fullTableRef.current)) {
       updateColsWidths(widths => {
         if (widths.get(columnKey) !== width) {
@@ -777,6 +785,7 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-has-fix-right`]:
           flattenColumns[flattenColumns.length - 1] &&
           flattenColumns[flattenColumns.length - 1].fixed === 'right',
+        [`${prefixCls}-column-resizing`]: isResizing,
       })}
       style={style}
       id={id}
@@ -833,7 +842,7 @@ function Table<RecordType extends DefaultRecordType>(
       // Column
       columns,
       flattenColumns,
-      onColumnResize,
+      onColumnWidthChange,
 
       // Row
       hoverStartRow: startRow,
@@ -847,6 +856,12 @@ function Table<RecordType extends DefaultRecordType>(
       childrenColumnName: mergedChildrenColumnName,
 
       rowHoverable,
+      fullTableRef,
+      colsWidths,
+      colsKeys,
+      colWidths,
+      onColumnResizeComplete,
+      onResizingChange: setIsResizing,
     }),
     [
       // Scroll
@@ -860,6 +875,7 @@ function Table<RecordType extends DefaultRecordType>(
       fixedInfoList,
       isSticky,
       supportSticky,
+      fullTableRef,
 
       componentWidth,
       fixHeader,
@@ -882,7 +898,12 @@ function Table<RecordType extends DefaultRecordType>(
       // Column
       columns,
       flattenColumns,
-      onColumnResize,
+      onColumnWidthChange,
+      colsWidths,
+      colsKeys,
+      colWidths,
+      onColumnResizeComplete,
+      setIsResizing,
 
       // Row
       startRow,
