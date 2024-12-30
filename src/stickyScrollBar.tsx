@@ -12,7 +12,7 @@ interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
-  container: HTMLElement | Window,
+  container: HTMLElement | Window;
   direction: string;
 }
 
@@ -75,15 +75,14 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     let left: number =
       refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
-    const isLTR = direction === "ltr";
+    const isRTL = direction === 'rtl';
     // Limit scroll range
     left = Math.max(
-      isLTR ? 0 : -bodyWidth + scrollBarWidth,
-      Math.min(isLTR ? bodyWidth - scrollBarWidth : 0, left)
+      isRTL ? scrollBarWidth - bodyWidth : 0,
+      Math.min(isRTL ? 0 : bodyWidth - scrollBarWidth, left),
     );
     // Calculate the scroll position and update
-    const shouldScroll =
-      isLTR || Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth;
+    const shouldScroll = !isRTL || Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth;
     if (shouldScroll) {
       onScroll({
         scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
