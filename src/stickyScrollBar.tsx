@@ -12,11 +12,12 @@ interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
   onScroll: (params: { scrollLeft?: number }) => void;
   offsetScroll: number;
-  container: HTMLElement | Window;
+  container: HTMLElement | Window,
+  direction: string;
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container },
+  { scrollBodyRef, onScroll, offsetScroll, container, direction },
   ref,
 ) => {
   const prefixCls = useContext(TableContext, 'prefixCls');
@@ -74,19 +75,21 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     let left: number =
       refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
-    if (left <= 0) {
-      left = 0;
+    const isLTR = direction === "ltr";
+    // Limit scroll range
+    left = Math.max(
+      isLTR ? 0 : -bodyWidth + scrollBarWidth,
+      Math.min(isLTR ? bodyWidth - scrollBarWidth : 0, left)
+    );
+    // Calculate the scroll position and update
+    const shouldScroll =
+      isLTR || Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth;
+    if (shouldScroll) {
+      onScroll({
+        scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
+      });
+      refState.current.x = event.pageX;
     }
-
-    if (left + scrollBarWidth >= bodyWidth) {
-      left = bodyWidth - scrollBarWidth;
-    }
-
-    onScroll({
-      scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
-    });
-
-    refState.current.x = event.pageX;
   };
 
   const checkScrollBarVisible = () => {
