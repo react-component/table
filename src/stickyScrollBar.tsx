@@ -75,30 +75,21 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     let left: number =
       refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
-    if(direction === "ltr"){
-      if (left <= 0) {
-        left = 0;
-      }
-      if (left + scrollBarWidth >= bodyWidth) {
-        left = bodyWidth - scrollBarWidth;
-      }
+    const isLTR = direction === "ltr";
+    // Limit scroll range
+    left = Math.max(
+      isLTR ? 0 : -bodyWidth + scrollBarWidth,
+      Math.min(isLTR ? bodyWidth - scrollBarWidth : 0, left)
+    );
+    // Calculate the scroll position and update
+    const shouldScroll =
+      isLTR || Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth;
+    if (shouldScroll) {
       onScroll({
-          scrollLeft: left / bodyWidth * (bodyScrollWidth + 2)
-        });
-        refState.current.x = event.pageX;
-    }else{
-      if (left > 0) {
-        left = 0;
-      }
-      if (Math.abs(left) + Math.abs(scrollBarWidth) < bodyWidth) {
-        onScroll({
-          scrollLeft: left / bodyWidth * (bodyScrollWidth + 2)
-        });
-        refState.current.x = event.pageX;
-      }
+        scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
+      });
+      refState.current.x = event.pageX;
     }
-
-    refState.current.x = event.pageX;
   };
 
   const checkScrollBarVisible = () => {
