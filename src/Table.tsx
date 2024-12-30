@@ -290,7 +290,7 @@ function Table<RecordType extends DefaultRecordType>(
   const scrollX = scroll?.x;
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns, flattenScrollX, hasGapFixed] = useColumns(
+  const [columns, headCells, headMatrix, flattenColumns, flattenScrollX, hasGapFixed] = useColumns(
     {
       ...props,
       ...expandableConfig,
@@ -313,9 +313,10 @@ function Table<RecordType extends DefaultRecordType>(
   const columnContext = React.useMemo(
     () => ({
       columns,
+      headCells,
       flattenColumns,
     }),
-    [columns, flattenColumns],
+    [columns, headCells, flattenColumns],
   );
 
   // ======================= Refs =======================
@@ -832,6 +833,7 @@ function Table<RecordType extends DefaultRecordType>(
 
       // Column
       columns,
+      headMatrix,
       flattenColumns,
       onColumnResize,
 
@@ -881,6 +883,7 @@ function Table<RecordType extends DefaultRecordType>(
 
       // Column
       columns,
+      headMatrix,
       flattenColumns,
       onColumnResize,
 

@@ -3,16 +3,19 @@ import warning from 'rc-util/lib/warning';
 import * as React from 'react';
 import { EXPAND_COLUMN } from '../../constant';
 import type {
+  CellType,
   ColumnGroupType,
   ColumnsType,
   ColumnType,
   Direction,
+  HeadMatrix,
   FixedType,
   GetRowKey,
   Key,
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../../interface';
+import { convertColumns } from '../../utils/convertUtil';
 import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
 import useWidthColumns from './useWidthColumns';
 
@@ -53,39 +56,6 @@ function filterHiddenColumns<RecordType>(
 
       return column;
     });
-}
-
-function flatColumns<RecordType>(
-  columns: ColumnsType<RecordType>,
-  parentKey = 'key',
-): ColumnType<RecordType>[] {
-  return columns
-    .filter(column => column && typeof column === 'object')
-    .reduce((list, column, index) => {
-      const { fixed } = column;
-      // Convert `fixed='true'` to `fixed='left'` instead
-      const parsedFixed = fixed === true ? 'left' : fixed;
-      const mergedKey = `${parentKey}-${index}`;
-
-      const subColumns = (column as ColumnGroupType<RecordType>).children;
-      if (subColumns && subColumns.length > 0) {
-        return [
-          ...list,
-          ...flatColumns(subColumns, mergedKey).map(subColum => ({
-            fixed: parsedFixed,
-            ...subColum,
-          })),
-        ];
-      }
-      return [
-        ...list,
-        {
-          key: mergedKey,
-          ...column,
-          fixed: parsedFixed,
-        },
-      ];
-    }, []);
 }
 
 function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType<RecordType> {
@@ -150,6 +120,8 @@ function useColumns<RecordType>(
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [
   columns: ColumnsType<RecordType>,
+  headCells: CellType<RecordType>[][],
+  headMatrix: HeadMatrix,
   flattenColumns: readonly ColumnType<RecordType>[],
   realScrollWidth: undefined | number,
   hasGapFixed: boolean,
@@ -263,13 +235,17 @@ function useColumns<RecordType>(
     return finalColumns;
   }, [transformColumns, withExpandColumns, direction]);
 
+  const [headCells, headMatrix, lastColumns] = React.useMemo(() => {
+    return convertColumns<RecordType>(mergedColumns);
+  }, [mergedColumns]);
+
   // ========================== Flatten =========================
   const flattenColumns = React.useMemo(() => {
     if (direction === 'rtl') {
-      return revertForRtl(flatColumns(mergedColumns));
+      return revertForRtl(lastColumns);
     }
-    return flatColumns(mergedColumns);
-  }, [mergedColumns, direction, scrollWidth]);
+    return lastColumns;
+  }, [lastColumns, direction, scrollWidth]);
 
   // ========================= Gap Fixed ========================
   const hasGapFixed = React.useMemo(() => {
@@ -313,7 +289,7 @@ function useColumns<RecordType>(
     clientWidth,
   );
 
-  return [mergedColumns, filledColumns, realScrollWidth, hasGapFixed];
+  return [mergedColumns, headCells, headMatrix, filledColumns, realScrollWidth, hasGapFixed];
 }
 
 export default useColumns;

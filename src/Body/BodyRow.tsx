@@ -106,6 +106,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
     prefixCls,
+    headMatrix,
     flattenColumns,
     expandedRowClassName,
     expandedRowRender,
@@ -195,7 +196,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        colSpan={flattenColumns.length}
+        colSpan={headMatrix[0]}
         isEmpty={false}
       >
         {expandContent}
