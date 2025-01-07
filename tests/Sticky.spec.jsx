@@ -56,7 +56,7 @@ describe('Table.Sticky', () => {
     vi.useRealTimers();
   });
 
-  it('Sticky scroll', async () => {
+  it('Sticky scroll1', async () => {
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     let scrollLeft = 100;
