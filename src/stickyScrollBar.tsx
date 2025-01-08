@@ -1,12 +1,12 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import { getOffset } from 'rc-util/lib/Dom/css';
 import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
 import * as React from 'react';
 import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
 import raf from 'rc-util/lib/raf';
+import { getOffset } from './utils/offsetUtil';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
