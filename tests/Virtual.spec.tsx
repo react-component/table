@@ -1,8 +1,8 @@
 import { act, fireEvent, render } from '@testing-library/react';
 import { _rs as onEsResize } from 'rc-resize-observer/es/utils/observerUtil';
 import { _rs as onLibResize } from 'rc-resize-observer/lib/utils/observerUtil';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import { resetWarned } from 'rc-util/lib/warning';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
+import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
 import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
 

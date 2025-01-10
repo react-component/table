@@ -27,13 +27,13 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
-import isVisible from 'rc-util/lib/Dom/isVisible';
-import { isStyleSupport } from 'rc-util/lib/Dom/styleChecker';
-import { getTargetScrollBarSize } from 'rc-util/lib/getScrollBarSize';
-import useEvent from 'rc-util/lib/hooks/useEvent';
-import pickAttrs from 'rc-util/lib/pickAttrs';
-import getValue from 'rc-util/lib/utils/get';
-import warning from 'rc-util/lib/warning';
+import isVisible from '@rc-component/util/lib/Dom/isVisible';
+import { isStyleSupport } from '@rc-component/util/lib/Dom/styleChecker';
+import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
+import useEvent from '@rc-component/util/lib/hooks/useEvent';
+import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import getValue from '@rc-component/util/lib/utils/get';
+import warning from '@rc-component/util/lib/warning';
 import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
@@ -75,7 +75,7 @@ import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
-import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
+import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
 
 export const DEFAULT_PREFIX = 'rc-table';
 

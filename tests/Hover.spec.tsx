@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
-import toArray from 'rc-util/lib/Children/toArray';
-import { resetWarned } from 'rc-util/lib/warning';
+import toArray from '@rc-component/util/lib/Children/toArray';
+import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
 import Table from '../src';
 import type { TableProps } from '../src/Table';

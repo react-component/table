@@ -1,6 +1,6 @@
 {
-  "name": "rc-table",
-  "version": "7.50.2",
+  "name": "@rc-component/table",
+  "version": "1.0.0",
   "description": "table ui component for react",
   "engines": {
     "node": ">=8.x"
@@ -55,9 +55,9 @@
   "dependencies": {
     "@babel/runtime": "^7.10.1",
     "@rc-component/context": "^1.4.0",
+    "@rc-component/util": "^1.1.0",
     "classnames": "^2.2.5",
     "rc-resize-observer": "^1.1.0",
-    "rc-util": "^5.44.3",
     "rc-virtual-list": "^3.14.2"
   },
   "devDependencies": {

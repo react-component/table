@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import { resetWarned } from 'rc-util/lib/warning';
+import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
 import Table from '../src';
 

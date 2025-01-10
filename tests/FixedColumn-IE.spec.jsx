@@ -1,12 +1,12 @@
 import { mount } from 'enzyme';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RcResizeObserver from 'rc-resize-observer';
 import Table from '../src';
 
-vi.mock('rc-util/lib/Dom/styleChecker', () => {
+vi.mock('@rc-component/util/lib/Dom/styleChecker', () => {
   return {
     isStyleSupport: (name, val) => val !== 'sticky',
   };

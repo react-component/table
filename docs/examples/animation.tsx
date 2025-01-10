@@ -1,7 +1,7 @@
 import React from 'react';
 import CSSMotionList from 'rc-animate/lib/CSSMotionList';
 import classNames from 'classnames';
-import toArray from 'rc-util/lib/Children/toArray';
+import toArray from '@rc-component/util/lib/Children/toArray';
 import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
