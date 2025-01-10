@@ -11,10 +11,15 @@ function inHoverRange(cellStartRow: number, cellRowSpan: number, startRow: numbe
 export default function useHoverState(
   rowIndex: number,
   rowSpan: number,
-): [hovering: boolean, onHover: OnHover] {
+  colIndex: number,
+  colSpan: number,
+): [hovering: boolean, colHovering: boolean, onRowHover: OnHover, onColHover: OnHover] {
   return useContext(TableContext, ctx => {
-    const hovering = inHoverRange(rowIndex, rowSpan || 1, ctx.hoverStartRow, ctx.hoverEndRow);
+    const rowHovering =
+      ctx.rowHoverable && inHoverRange(rowIndex, rowSpan || 1, ctx.hoverStartRow, ctx.hoverEndRow);
+    const colHovering =
+      ctx.colHoverable && inHoverRange(colIndex, colSpan || 1, ctx.hoverStartCol, ctx.hoverEndCol);
 
-    return [hovering, ctx.onHover];
+    return [rowHovering, colHovering, ctx.onRowHover, ctx.onColHover];
   });
 }

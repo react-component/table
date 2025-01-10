@@ -13,16 +13,18 @@ describe('Table.Hover', () => {
   const createTable = (props?: TableProps) => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }];
 
-    return <Table columns={columns} data={data} {...props} />;
+    return <Table columns={columns} data={data} colHoverable {...props} />;
   };
 
   it('basic', () => {
     const wrapper = mount(createTable());
     wrapper.find('tbody td').first().simulate('mouseEnter');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeTruthy();
 
     wrapper.find('tbody td').first().simulate('mouseLeave');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeFalsy();
   });
 
   it('works on shouldCellUpdate', () => {
@@ -34,9 +36,11 @@ describe('Table.Hover', () => {
 
     wrapper.find('tbody td').first().simulate('mouseEnter');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeTruthy();
 
     wrapper.find('tbody td').first().simulate('mouseLeave');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeFalsy();
   });
 
   it('warning if use `render` for rowSpan', () => {
@@ -151,7 +155,7 @@ describe('Table.Hover', () => {
       renderTimes = 0;
       wrapper.find('tbody td').at(0).simulate('mouseEnter');
       expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
-      expect(renderTimes).toBe(1);
+      expect(renderTimes).toBe(2);
 
       // Hover 0-1
       renderTimes = 0;
@@ -163,7 +167,7 @@ describe('Table.Hover', () => {
       renderTimes = 0;
       wrapper.find('tbody td').at(1).simulate('mouseLeave');
       expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
-      expect(renderTimes).toBe(1);
+      expect(renderTimes).toBe(2);
     });
 
     it('perf mode to save render times', () => {
@@ -204,7 +208,7 @@ describe('Table.Hover', () => {
     });
   });
 
-  it('perf', () => {
+  it('perf row', () => {
     const renderTimes: Record<string, any> = {};
 
     const TD = (props: any) => {
@@ -217,6 +221,7 @@ describe('Table.Hover', () => {
 
     const wrapper = mount(
       createTable({
+        colHoverable: false,
         components: {
           body: {
             cell: TD,
@@ -229,11 +234,53 @@ describe('Table.Hover', () => {
 
     wrapper.find('tbody td').first().simulate('mouseEnter');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeTruthy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeFalsy();
 
     wrapper.find('tbody td').first().simulate('mouseLeave');
     expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeFalsy();
 
     expect(firstMountTimes).toEqual(renderTimes.Jack);
     expect(renderTimes.Lucy).toBeGreaterThan(renderTimes.Jack);
+  });
+
+  it('perf col', () => {
+    const renderTimes: Record<string, any> = {};
+
+    const TD = (props: any) => {
+      const children = toArray(props.children);
+      const first = children[0] as unknown as string;
+      console.log('first:', first);
+
+      renderTimes[first] = (renderTimes[first] || 0) + 1;
+      return <td {...props} />;
+    };
+
+    const columns = [
+      { title: 'index', dataIndex: 'key', key: 'key' },
+      { title: 'Name', dataIndex: 'name', key: 'name' },
+    ];
+
+    const wrapper = mount(
+      createTable({
+        columns,
+        rowHoverable: false,
+        components: {
+          body: {
+            cell: TD,
+          },
+        },
+      }),
+    );
+
+    wrapper.find('tbody td').at(1).simulate('mouseEnter');
+    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeTruthy();
+
+    wrapper.find('tbody td').at(1).simulate('mouseLeave');
+    expect(wrapper.exists('.rc-table-cell-row-hover')).toBeFalsy();
+    expect(wrapper.exists('.rc-table-cell-col-hover')).toBeFalsy();
+
+    expect(renderTimes.Lucy).toEqual(renderTimes.Jack);
   });
 });
