@@ -142,20 +142,18 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     document.body.addEventListener(MOUSEMOVE_EVENT, onMouseMove, false);
     checkScrollBarVisible();
     return () => {
-      document.body.removeEventListener(MOUSEUP_EVENT, onMouseUp, false);
-      document.body.removeEventListener(MOUSEMOVE_EVENT, onMouseMove, false);
+      document.body.removeEventListener(MOUSEUP_EVENT, onMouseUp);
+      document.body.removeEventListener(MOUSEMOVE_EVENT, onMouseMove);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollBarWidth, isActive, checkScrollBarVisible]);
+  }, [scrollBarWidth, isActive]);
 
   React.useEffect(() => {
     container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
     window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
     return () => {
-      container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-      window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
+      container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+      window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [container]);
 
   React.useEffect(() => {
