@@ -122,6 +122,7 @@ export interface TableProps<RecordType = any>
 
   sticky?: boolean | TableSticky;
 
+  colHoverable?: boolean;
   rowHoverable?: boolean;
 
   // Events
@@ -221,6 +222,7 @@ function Table<RecordType extends DefaultRecordType>(
     getContainerWidth,
 
     sticky,
+    colHoverable = false,
     rowHoverable = true,
   } = props;
 
@@ -274,7 +276,7 @@ function Table<RecordType extends DefaultRecordType>(
   const customizeScrollBody = getComponent(['body']) as CustomizeScrollBody<RecordType>;
 
   // ====================== Hover =======================
-  const [startRow, endRow, onHover] = useHover();
+  const [startRow, endRow, startCol, endCol, onRowHover, onColHover] = useHover();
 
   // ====================== Expand ======================
   const [
@@ -835,10 +837,14 @@ function Table<RecordType extends DefaultRecordType>(
       flattenColumns,
       onColumnResize,
 
+      hoverStartCol: startCol,
+      hoverEndCol: endCol,
+      onColHover,
+
       // Row
       hoverStartRow: startRow,
       hoverEndRow: endRow,
-      onHover,
+      onRowHover,
       rowExpandable: expandableConfig.rowExpandable,
       onRow,
 
@@ -846,6 +852,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandedKeys: mergedExpandedKeys,
       childrenColumnName: mergedChildrenColumnName,
 
+      colHoverable,
       rowHoverable,
     }),
     [
@@ -884,10 +891,14 @@ function Table<RecordType extends DefaultRecordType>(
       flattenColumns,
       onColumnResize,
 
+      startCol,
+      endCol,
+      onColHover,
+
       // Row
       startRow,
       endRow,
-      onHover,
+      onRowHover,
       expandableConfig.rowExpandable,
       onRow,
 
@@ -895,6 +906,7 @@ function Table<RecordType extends DefaultRecordType>(
       mergedExpandedKeys,
       mergedChildrenColumnName,
 
+      colHoverable,
       rowHoverable,
     ],
   );

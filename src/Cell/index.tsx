@@ -20,8 +20,9 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
   record?: RecordType;
+  colIndex?: number;
   /** `column` index is the real show rowIndex */
-  index?: number;
+  rowIndex?: number;
   /** the index of the record. For the render(value, record, renderIndex) */
   renderIndex?: number;
   dataIndex?: DataIndex<RecordType>;
@@ -95,8 +96,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     renderIndex,
     shouldCellUpdate,
 
+    colIndex,
+
     // Row
-    index,
+    rowIndex,
     rowType,
 
     // Span
@@ -118,10 +121,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
+  const { supportSticky, allColumnsFixedLeft } = useContext(TableContext, [
     'supportSticky',
     'allColumnsFixedLeft',
-    'rowHoverable',
   ]);
 
   // ====================== Value =======================
@@ -153,11 +155,17 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   const mergedRowSpan = legacyCellProps?.rowSpan ?? additionalProps.rowSpan ?? rowSpan ?? 1;
 
   // ====================== Hover =======================
-  const [hovering, onHover] = useHoverState(index, mergedRowSpan);
+  const [rowHovering, colHovering, onRowHover, onColHover] = useHoverState(
+    rowIndex,
+    mergedRowSpan,
+    colIndex,
+    mergedColSpan,
+  );
 
   const onMouseEnter: React.MouseEventHandler<HTMLTableCellElement> = useEvent(event => {
     if (record) {
-      onHover(index, index + mergedRowSpan - 1);
+      onRowHover(rowIndex, rowIndex + mergedRowSpan - 1);
+      onColHover(colIndex, colIndex + mergedColSpan - 1);
     }
 
     additionalProps?.onMouseEnter?.(event);
@@ -165,7 +173,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   const onMouseLeave: React.MouseEventHandler<HTMLTableCellElement> = useEvent(event => {
     if (record) {
-      onHover(-1, -1);
+      onRowHover(-1, -1);
+      onColHover(-1, -1);
     }
 
     additionalProps?.onMouseLeave?.(event);
@@ -200,7 +209,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       [`${cellPrefixCls}-ellipsis`]: ellipsis,
       [`${cellPrefixCls}-with-append`]: appendNode,
       [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
-      [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
+      [`${cellPrefixCls}-row-hover`]: !legacyCellProps && rowHovering,
+      [`${cellPrefixCls}-col-hover`]: !legacyCellProps && colHovering,
     },
     additionalProps.className,
     legacyCellProps?.className,
@@ -247,8 +257,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       title={title}
       scope={scope}
       // Hover
-      onMouseEnter={rowHoverable ? onMouseEnter : undefined}
-      onMouseLeave={rowHoverable ? onMouseLeave : undefined}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       //Span
       colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
       rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}

@@ -165,7 +165,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
             prefixCls={prefixCls}
             key={key}
             record={record}
-            index={index}
+            colIndex={colIndex}
+            rowIndex={index}
             renderIndex={renderIndex}
             dataIndex={dataIndex}
             render={render}
