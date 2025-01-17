@@ -2,7 +2,7 @@ import { useContext } from '@rc-component/context';
 import type { TableContextProps } from '../context/TableContext';
 import TableContext from '../context/TableContext';
 import { getColumnsKey } from '../utils/valueUtil';
-import { useEvent } from 'rc-util';
+import { useEvent } from '@rc-component/util';
 import classNames from 'classnames';
 
 export default function useRowInfo<RecordType>(

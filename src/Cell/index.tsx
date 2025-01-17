@@ -14,7 +14,7 @@ import type {
 } from '../interface';
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
-import { useEvent } from 'rc-util';
+import { useEvent } from '@rc-component/util';
 
 export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;

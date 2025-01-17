@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import { resetWarned } from 'rc-util/lib/warning';
+import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import Table, { INTERNAL_COL_DEFINE } from '../src';

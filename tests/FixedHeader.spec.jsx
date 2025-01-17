@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import RcResizeObserver from 'rc-resize-observer';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
+import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
