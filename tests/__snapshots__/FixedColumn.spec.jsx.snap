@@ -6,7 +6,7 @@ LoadedCheerio {
     class="rc-table rc-table-rtl rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-container rc-table-container-header"
     >
       <div
         class="rc-table-content"
@@ -826,7 +826,7 @@ LoadedCheerio {
     class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-container rc-table-container-header"
     >
       <div
         class="rc-table-content"
@@ -1645,7 +1645,7 @@ LoadedCheerio {
     class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-container rc-table-container-header"
     >
       <div
         class="rc-table-content"
@@ -1934,7 +1934,7 @@ LoadedCheerio {
     class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-container rc-table-container-header"
     >
       <div
         class="rc-table-header"
@@ -2807,7 +2807,7 @@ LoadedCheerio {
     class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-container rc-table-container-header"
     >
       <div
         class="rc-table-header"
