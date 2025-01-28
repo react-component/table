@@ -56,7 +56,7 @@
     "@rc-component/context": "^1.4.0",
     "@rc-component/util": "^1.1.0",
     "classnames": "^2.2.5",
-    "rc-resize-observer": "^1.1.0",
+    "@rc-component/resize-observer": "^1.0.0",
     "rc-virtual-list": "^3.14.2"
   },
   "devDependencies": {
