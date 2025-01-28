@@ -26,7 +26,7 @@
 
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
-import ResizeObserver from 'rc-resize-observer';
+import ResizeObserver from '@rc-component/resize-observer';
 import isVisible from '@rc-component/util/lib/Dom/isVisible';
 import { isStyleSupport } from '@rc-component/util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';

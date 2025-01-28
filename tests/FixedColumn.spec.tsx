@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { render } from '@testing-library/react';
-import RcResizeObserver, { _rs } from 'rc-resize-observer';
+import RcResizeObserver, { _rs } from '@rc-component/resize-observer';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import { act } from 'react-dom/test-utils';
 import Table, { type ColumnsType } from '../src';

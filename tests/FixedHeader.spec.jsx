@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import RcResizeObserver from 'rc-resize-observer';
+import RcResizeObserver from '@rc-component/resize-observer';
 import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
