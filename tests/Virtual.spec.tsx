@@ -1,6 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react';
-import { _rs as onEsResize } from 'rc-resize-observer/es/utils/observerUtil';
-import { _rs as onLibResize } from 'rc-resize-observer/lib/utils/observerUtil';
+import { _rs as onEsResize } from '@rc-component/resize-observer/es/utils/observerUtil';
+import { _rs as onLibResize } from '@rc-component/resize-observer/lib/utils/observerUtil';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
