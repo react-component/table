@@ -57,16 +57,21 @@ export interface TableContextProps<RecordType = any> {
   flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
 
+  hoverStartCol: number;
+  hoverEndCol: number;
+  onColHover: (start: number, end: number) => void;
+
   // Row
   hoverStartRow: number;
   hoverEndRow: number;
-  onHover: (start: number, end: number) => void;
+  onRowHover: (start: number, end: number) => void;
   rowExpandable: (record: RecordType) => boolean;
 
   expandedKeys: Set<React.Key>;
   getRowKey: GetRowKey<RecordType>;
   childrenColumnName: string;
 
+  colHoverable?: boolean;
   rowHoverable?: boolean;
 }
 
