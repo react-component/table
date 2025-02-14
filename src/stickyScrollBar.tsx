@@ -92,6 +92,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   };
 
   const checkScrollBarVisible = () => {
+    raf.cancel(rafRef.current);
+
     rafRef.current = raf(() => {
       if (!scrollBodyRef.current) {
         return;
@@ -144,13 +146,27 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     };
   }, [scrollBarWidth, isActive]);
 
+  // Loop for scroll event check
   React.useEffect(() => {
-    const onScrollListener = addEventListener(container, 'scroll', checkScrollBarVisible, false);
-    const onResizeListener = addEventListener(window, 'resize', checkScrollBarVisible, false);
+    if (!scrollBodyRef.current) return;
+
+    const scrollParents: HTMLElement[] = [];
+    let parent: HTMLElement = scrollBodyRef.current;
+    while (parent) {
+      scrollParents.push(parent);
+      parent = parent.parentElement;
+    }
+
+    scrollParents.forEach(p => p.addEventListener('scroll', checkScrollBarVisible, false));
+    window.addEventListener('resize', checkScrollBarVisible, false);
+    window.addEventListener('scroll', checkScrollBarVisible, false);
+    container.addEventListener('scroll', checkScrollBarVisible, false);
 
     return () => {
-      onScrollListener.remove();
-      onResizeListener.remove();
+      scrollParents.forEach(p => p.removeEventListener('scroll', checkScrollBarVisible));
+      window.removeEventListener('resize', checkScrollBarVisible);
+      window.removeEventListener('scroll', checkScrollBarVisible);
+      container.removeEventListener('scroll', checkScrollBarVisible);
     };
   }, [container]);
 
