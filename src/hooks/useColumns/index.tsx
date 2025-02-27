@@ -277,38 +277,61 @@ function useColumns<RecordType>(
 
   // ========================= Gap Fixed ========================
   const hasGapFixed = React.useMemo(() => {
-    // Fixed: left, since old browser not support `findLastIndex`, we should use reverse loop
-    let lastLeftIndex = -1;
-    for (let i = flattenColumns.length - 1; i >= 0; i -= 1) {
-      const colFixed = flattenColumns[i].fixed;
-      if (colFixed === 'left' || colFixed === true) {
-        lastLeftIndex = i;
-        break;
-      }
-    }
-
-    if (lastLeftIndex >= 0) {
-      for (let i = 0; i <= lastLeftIndex; i += 1) {
+    const checkGap = (startIndex: number, endIndex: number, fixedValue: FixedType) => {
+      for (let i = startIndex; i <= endIndex; i += 1) {
         const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'left' && colFixed !== true) {
+        if (colFixed !== fixedValue) {
           return true;
         }
       }
-    }
+      return false;
+    };
 
-    // Fixed: right
-    const firstRightIndex = flattenColumns.findIndex(({ fixed: colFixed }) => colFixed === 'right');
-    if (firstRightIndex >= 0) {
-      for (let i = firstRightIndex; i < flattenColumns.length; i += 1) {
-        const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'right') {
-          return true;
+    // dut to old browser not support `findLastIndex`
+    const findLastIndex = (fixedValue: FixedType) => {
+      for (let i = flattenColumns.length - 1; i >= 0; i -= 1) {
+        if (flattenColumns[i].fixed === fixedValue) {
+          return i;
         }
+      }
+      return -1;
+    };
+
+    const findFirstIndex = (fixedValue: FixedType) => {
+      for (let i = 0; i < flattenColumns.length; i += 1) {
+        if (flattenColumns[i].fixed === fixedValue) {
+          return i;
+        }
+      }
+      return -1;
+    };
+
+    if (direction !== 'rtl') {
+      const lastLeftIndex =
+        findLastIndex('left') !== -1 ? findLastIndex('left') : findLastIndex(true);
+      if (lastLeftIndex >= 0 && checkGap(0, lastLeftIndex, 'left')) {
+        return true;
+      }
+
+      const firstRightIndex = findFirstIndex('right');
+      if (firstRightIndex >= 0 && checkGap(firstRightIndex, flattenColumns.length - 1, 'right')) {
+        return true;
+      }
+    } else {
+      const lastRightIndex = findLastIndex('right');
+      if (lastRightIndex >= 0 && checkGap(0, lastRightIndex, 'right')) {
+        return true;
+      }
+
+      const firstLeftIndex =
+        findFirstIndex('left') !== -1 ? findFirstIndex('left') : findFirstIndex(true);
+      if (firstLeftIndex >= 0 && checkGap(firstLeftIndex, flattenColumns.length - 1, 'left')) {
+        return true;
       }
     }
 
     return false;
-  }, [flattenColumns]);
+  }, [flattenColumns, direction]);
 
   // ========================= FillWidth ========================
   const [filledColumns, realScrollWidth] = useWidthColumns(
