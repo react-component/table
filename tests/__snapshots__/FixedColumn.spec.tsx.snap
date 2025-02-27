@@ -3,7 +3,7 @@
 exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-rtl rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
+    class="rc-table rc-table-rtl rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal rc-table-has-fix-left"
   >
     <div
       class="rc-table-container"
@@ -29,7 +29,9 @@ LoadedCheerio {
             <col />
             <col />
             <col />
-            <col />
+            <col
+              style="width: 100px;"
+            />
             <col />
             <col
               style="width: 100px;"
@@ -97,8 +99,9 @@ LoadedCheerio {
                 title9
               </th>
               <th
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
                 scope="col"
+                style="position: sticky; left: 0px;"
               >
                 title10
               </th>
@@ -287,7 +290,8 @@ LoadedCheerio {
                 xxxxxxxx
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               >
                 xxxxxxxx
               </td>
@@ -356,7 +360,8 @@ LoadedCheerio {
                 edd12221
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               >
                 edd12221
               </td>
@@ -415,7 +420,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -468,7 +474,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -521,7 +528,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -574,7 +582,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -627,7 +636,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -680,7 +690,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -733,7 +744,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-first"
+                style="position: sticky; left: 0px;"
               />
               <td
                 class="rc-table-cell"
@@ -823,7 +835,7 @@ LoadedCheerio {
 exports[`Table.FixedColumn > renders correctly > scrollX - with data 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+    class="rc-table rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
       class="rc-table-container"
@@ -849,7 +861,9 @@ LoadedCheerio {
             <col />
             <col />
             <col />
-            <col />
+            <col
+              style="width: 100px;"
+            />
             <col />
             <col
               style="width: 100px;"
@@ -921,8 +935,9 @@ LoadedCheerio {
                 title9
               </th>
               <th
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
+                style="position: sticky; right: 1000px;"
               >
                 title10
               </th>
@@ -1115,7 +1130,8 @@ LoadedCheerio {
                 xxxxxxxx
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               >
                 xxxxxxxx
               </td>
@@ -1188,7 +1204,8 @@ LoadedCheerio {
                 edd12221
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               >
                 edd12221
               </td>
@@ -1251,7 +1268,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1308,7 +1326,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1365,7 +1384,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1422,7 +1442,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1479,7 +1500,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1536,7 +1558,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1593,7 +1616,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -1642,7 +1666,7 @@ LoadedCheerio {
 exports[`Table.FixedColumn > renders correctly > scrollX - without data 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+    class="rc-table rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
       class="rc-table-container"
@@ -1668,7 +1692,9 @@ LoadedCheerio {
             <col />
             <col />
             <col />
-            <col />
+            <col
+              style="width: 100px;"
+            />
             <col />
             <col
               style="width: 100px;"
@@ -1740,8 +1766,9 @@ LoadedCheerio {
                 title9
               </th>
               <th
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
+                style="position: sticky; right: 1000px;"
               >
                 title10
               </th>
@@ -1931,7 +1958,7 @@ LoadedCheerio {
 exports[`Table.FixedColumn > renders correctly > scrollXY - with data 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
       class="rc-table-container"
@@ -2050,8 +2077,9 @@ LoadedCheerio {
                 title9
               </th>
               <th
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
+                style="position: sticky; right: 1015px;"
               >
                 title10
               </th>
@@ -2097,7 +2125,9 @@ LoadedCheerio {
             <col />
             <col />
             <col />
-            <col />
+            <col
+              style="width: 100px;"
+            />
             <col />
             <col
               style="width: 100px;"
@@ -2277,7 +2307,8 @@ LoadedCheerio {
                 xxxxxxxx
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               >
                 xxxxxxxx
               </td>
@@ -2350,7 +2381,8 @@ LoadedCheerio {
                 edd12221
               </td>
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               >
                 edd12221
               </td>
@@ -2413,7 +2445,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2470,7 +2503,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2527,7 +2561,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2584,7 +2619,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2641,7 +2677,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2698,7 +2735,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2755,7 +2793,8 @@ LoadedCheerio {
                 class="rc-table-cell"
               />
               <td
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+                style="position: sticky; right: 1000px;"
               />
               <td
                 class="rc-table-cell"
@@ -2804,7 +2843,7 @@ LoadedCheerio {
 exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
   >
     <div
       class="rc-table-container"
@@ -2923,8 +2962,9 @@ LoadedCheerio {
                 title9
               </th>
               <th
-                class="rc-table-cell"
+                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
                 scope="col"
+                style="position: sticky; right: 1015px;"
               >
                 title10
               </th>
@@ -2970,7 +3010,9 @@ LoadedCheerio {
             <col />
             <col />
             <col />
-            <col />
+            <col
+              style="width: 100px;"
+            />
             <col />
             <col
               style="width: 100px;"
