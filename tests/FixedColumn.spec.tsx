@@ -383,4 +383,30 @@ describe('Table.FixedColumn', () => {
 
     expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fixed-column-gapped');
   });
+
+  it('should correctly calculate whether there is a gap in fixed columns', () => {
+    const { container } = render(
+      <Table
+        columns={columns.slice(0, columns.length - 1)}
+        data={data}
+        direction="rtl"
+        scroll={{ x: 'max-content' }}
+      />,
+    );
+
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fixed-column-gapped');
+  });
+
+  it('should not have rc-table-fixed-column-gapped classname', () => {
+    const { container } = render(
+      <Table
+        columns={columns.slice(0, columns.length - 3)}
+        data={data}
+        direction="rtl"
+        scroll={{ x: 'max-content' }}
+      />,
+    );
+
+    expect(container.querySelector('.rc-table')).not.toHaveClass('rc-table-fixed-column-gapped');
+  });
 });
