@@ -50,7 +50,7 @@ describe('Table.FixedColumn', () => {
     { title: 'title7', dataIndex: 'b', key: 'g' },
     { title: 'title8', dataIndex: 'b', key: 'h' },
     { title: 'title9', dataIndex: 'b', key: 'i' },
-    { title: 'title10', dataIndex: 'b', key: 'j' },
+    { title: 'title10', dataIndex: 'b', key: 'j', width: 100, fixed: 'right' },
     { title: 'title11', dataIndex: 'b', key: 'k' },
     { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
   ];
@@ -374,5 +374,13 @@ describe('Table.FixedColumn', () => {
     wrapper.update();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-left')).toBeTruthy();
     expect(wrapper.find('.rc-table').hasClass('rc-table-ping-right')).toBeTruthy();
+  });
+
+  it('should contain the related className', () => {
+    const { container } = render(
+      <Table columns={columns} data={data} direction="rtl" scroll={{ x: 'max-content' }} />,
+    );
+
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fixed-column-gapped');
   });
 });
