@@ -116,12 +116,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const {
-    // zombieJ: not used anymore?
-    // allColumnsFixedLeft,
-    rowHoverable,
-  } = useContext(TableContext, [
-    // 'allColumnsFixedLeft',
+  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
+    'allColumnsFixedLeft',
     'rowHoverable',
   ]);
 
@@ -137,8 +133,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  const isFixStart = typeof fixStart === 'number';
-  const isFixEnd = typeof fixEnd === 'number';
+  const isFixStart = typeof fixStart === 'number' && !allColumnsFixedLeft;
+  const isFixEnd = typeof fixEnd === 'number' && !allColumnsFixedLeft;
 
   const [showFixStartShadow, showFixEndShadow] = useContext(TableContext, ({ scrollInfo }) => {
     if (!isFixStart && !isFixEnd) {
@@ -209,7 +205,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       // Fixed
       [`${cellPrefixCls}-fix`]: isFixStart || isFixEnd,
       [`${cellPrefixCls}-fix-start`]: isFixStart,
-      // [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
       [`${cellPrefixCls}-fix-end`]: isFixEnd,
 
       // Fixed shadow

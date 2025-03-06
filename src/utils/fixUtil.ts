@@ -34,9 +34,9 @@ export function getCellFixedInfo(
   let fixStart: number = null;
   let fixEnd: number = null;
 
-  if (isFixedStart(startColumn)) {
+  if (isFixedStart(startColumn) && isFixedStart(endColumn)) {
     fixStart = stickyOffsets.start[colStart];
-  } else if (isFixedEnd(endColumn)) {
+  } else if (isFixedEnd(endColumn) && isFixedEnd(startColumn)) {
     fixEnd = stickyOffsets.end[colEnd];
   }
 
