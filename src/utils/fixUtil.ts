@@ -13,6 +13,13 @@ export interface FixedInfo {
   fixedEndShadow?: boolean;
 
   zIndex?: number;
+
+  /** Get the scroll position of the scrollbar at
+   * which the current `fixed: start` needs to display a shadow */
+  stickyStart?: number;
+  /** Get the scroll position of the scrollbar at
+   * which the current `fixed: end` needs to display a shadow */
+  stickyEnd?: number;
 }
 
 function isFixedStart(column: { fixed?: FixedType }) {
@@ -47,7 +54,6 @@ export function getCellFixedInfo(
   // Calc `zIndex`.
   // first fixed start (start -> end) column `zIndex` should be greater than next column.
   // first fixed end (end -> start) column `zIndex` should be greater than next column.
-
   let zIndex = 0;
 
   if (fixStart !== null) {

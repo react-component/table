@@ -121,6 +121,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     'rowHoverable',
   ]);
 
+  useContext(TableContext, ({ scrollInfo }) => {
+    if (fixedStartShadow) {
+      console.log('~~~>', fixedStartShadow, scrollInfo);
+    }
+  });
+
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
     record,
