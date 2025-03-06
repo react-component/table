@@ -10,10 +10,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@@/*": [".dumi/tmp/*"],
-      "rc-table": ["src/index.ts"],
+      "rc-table": ["src/index.ts"]
     },
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "types": ["@testing-library/jest-dom"]
   },
   "include": [".dumirc.ts", "**/*.ts", "**/*.tsx", "tests/__mocks__/shadowTest.tsx"],
-  "exclude": ["./vitest.config.ts"],
+  "exclude": ["./vitest.config.ts"]
 }
