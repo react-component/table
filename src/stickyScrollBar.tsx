@@ -7,6 +7,7 @@ import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
 import raf from 'rc-util/lib/raf';
 import { getOffset } from './utils/offsetUtil';
+import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
@@ -150,8 +151,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   React.useEffect(() => {
     if (!scrollBodyRef.current) return;
 
-    const scrollParents: HTMLElement[] = [];
-    let parent: HTMLElement = scrollBodyRef.current;
+    const scrollParents: (HTMLElement | SVGElement)[] = [];
+    let parent = getDOM(scrollBodyRef.current);
     while (parent) {
       scrollParents.push(parent);
       parent = parent.parentElement;
