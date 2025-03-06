@@ -1,9 +1,9 @@
 import { mount } from 'enzyme';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Table from '../src';
 import { safeAct } from './utils';
+import { render, act } from '@testing-library/react';
 
 describe('Table.Sticky', () => {
   beforeEach(() => {
@@ -241,15 +241,16 @@ describe('Table.Sticky', () => {
         </div>
       );
     };
-    const wrapper = mount(<TableDemo />);
-    await safeAct(wrapper);
-    expect(
-      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
-    ).toEqual({
-      position: 'sticky',
-      right: 0,
+    const { container } = render(<TableDemo />);
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
     });
-    expect(wrapper.find('.rc-table-cell-fix-sticky')).not.toBe(undefined);
+
+    expect(container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky')).toHaveStyle({
+      'inset-inline-end': 0,
+    });
+    expect(container.querySelector('.rc-table-cell-fix-sticky')).toBeTruthy();
 
     jest.useRealTimers();
   });
@@ -283,13 +284,14 @@ describe('Table.Sticky', () => {
         </div>
       );
     };
-    const wrapper = mount(<TableDemo />);
-    await safeAct(wrapper);
-    expect(
-      wrapper.find('.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky').prop('style'),
-    ).toEqual({
-      position: 'sticky',
-      right: 15,
+    const { container } = render(<TableDemo />);
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
+
+    expect(container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky')).toHaveStyle({
+      'inset-inline-end': '15px',
     });
 
     jest.useRealTimers();

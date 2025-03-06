@@ -260,7 +260,6 @@ describe('Table.FixedColumn', () => {
         await Promise.resolve();
       });
 
-      console.log(container.innerHTML);
       expect(container.querySelectorAll('tbody .rc-table-cell-fix-start')).toHaveLength(2);
       expect(container.querySelectorAll('thead th')[1]).toHaveStyle({
         'inset-inline-start': '0',

@@ -2,9 +2,9 @@ import { mount } from 'enzyme';
 import RcResizeObserver from '@rc-component/resize-observer';
 import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { safeAct } from './utils';
+import { render, act } from '@testing-library/react';
 
 describe('Table.FixedHeader', () => {
   let domSpy;
@@ -139,27 +139,6 @@ describe('Table.FixedHeader', () => {
     );
   });
 
-  it('rtl', async () => {
-    const wrapper = mount(
-      <Table
-        columns={[{ dataIndex: 'light', width: 100 }]}
-        data={[{ key: 0, light: 'bamboo' }]}
-        direction="rtl"
-        scroll={{
-          y: 100,
-        }}
-      />,
-    );
-    await safeAct(wrapper);
-
-    expect(wrapper.find('Header').props().stickyOffsets).toEqual(
-      expect.objectContaining({
-        isSticky: false,
-        left: [expect.anything(), expect.anything()],
-      }),
-    );
-  });
-
   it('invisible should not change width', async () => {
     const col1 = { dataIndex: 'light', width: 93 };
     const wrapper = mount(
@@ -212,7 +191,7 @@ describe('Table.FixedHeader', () => {
     jest.useRealTimers();
   });
 
-  it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', async () => {
+  it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
         title: '父表头右侧的阴影导致整个表格最右侧有空隙',
@@ -258,11 +237,12 @@ describe('Table.FixedHeader', () => {
         name: 'Jack1',
       },
     ];
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
-    await safeAct(wrapper);
-    expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
-    expect(wrapper.find('th').first().props().className).not.toContain(
-      'rc-table-cell-fix-left-last',
-    );
+    const { container } = render(<Table columns={columns} data={data} scroll={{ x: true }} />);
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
+    expect(container.querySelectorAll('th.rc-table-cell-fix-start')).toHaveLength(2);
+    expect(container.querySelectorAll('th.rc-table-cell-fix-end')).toHaveLength(1);
   });
 });
