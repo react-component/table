@@ -116,8 +116,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
-    'allColumnsFixedLeft',
+  const {
+    // zombieJ: not used anymore?
+    // allColumnsFixedLeft,
+    rowHoverable,
+  } = useContext(TableContext, [
+    // 'allColumnsFixedLeft',
     'rowHoverable',
   ]);
 
@@ -199,12 +203,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       // Fixed
       [`${cellPrefixCls}-fix`]: isFixStart || isFixEnd,
       [`${cellPrefixCls}-fix-start`]: isFixStart,
-      // [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
-      // [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
       // [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
       [`${cellPrefixCls}-fix-end`]: isFixEnd,
-      // [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
-      // [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
 
       // Fixed shadow
       [`${cellPrefixCls}-fix-start-shadow`]: fixedStartShadow,
