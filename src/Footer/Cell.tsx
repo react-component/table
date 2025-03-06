@@ -28,11 +28,9 @@ export default function SummaryCell({
   const lastIndex = index + colSpan - 1;
   const mergedColSpan = lastIndex + 1 === scrollColumnIndex ? colSpan + 1 : colSpan;
 
-  const fixedInfo = getCellFixedInfo(
-    index,
-    index + mergedColSpan - 1,
-    flattenColumns,
-    stickyOffsets,
+  const fixedInfo = React.useMemo(
+    () => getCellFixedInfo(index, index + mergedColSpan - 1, flattenColumns, stickyOffsets),
+    [index, mergedColSpan, flattenColumns, stickyOffsets],
   );
 
   return (
