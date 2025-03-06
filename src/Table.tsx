@@ -37,7 +37,7 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
-import TableContext, { makeImmutable } from './context/TableContext';
+import TableContext, { makeImmutable, type ScrollInfoType } from './context/TableContext';
 import type { FixedHeaderProps } from './FixedHolder';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -75,6 +75,7 @@ import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
 import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
+import isEqual from '@rc-component/util/lib/isEqual';
 
 export const DEFAULT_PREFIX = 'rc-table';
 
@@ -435,6 +436,8 @@ function Table<RecordType extends DefaultRecordType>(
     }
   }
 
+  const [scrollInfo, setScrollInfo] = React.useState<ScrollInfoType>([0, 0]);
+
   const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
       const isRTL = direction === 'rtl';
@@ -459,6 +462,12 @@ function Table<RecordType extends DefaultRecordType>(
             ? mergedScrollX
             : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
+
+        setScrollInfo(ori => {
+          const nextScrollInfo: ScrollInfoType = [mergedScrollLeft, scrollWidth - clientWidth];
+          return isEqual(ori, nextScrollInfo) ? ori : nextScrollInfo;
+        });
+
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
@@ -798,6 +807,7 @@ function Table<RecordType extends DefaultRecordType>(
     () => ({
       // Scroll
       scrollX: mergedScrollX,
+      scrollInfo,
 
       // Table
       prefixCls,
@@ -847,6 +857,7 @@ function Table<RecordType extends DefaultRecordType>(
     [
       // Scroll
       mergedScrollX,
+      scrollInfo,
 
       // Table
       prefixCls,

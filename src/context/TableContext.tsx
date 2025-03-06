@@ -18,6 +18,8 @@ import type { FixedInfo } from '../utils/fixUtil';
 const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
 export { makeImmutable, responseImmutable, useImmutableMark };
 
+export type ScrollInfoType = [scrollLeft: number, scrollRange: number];
+
 export interface TableContextProps<RecordType = any> {
   // Scroll
   scrollX: number | string | true;
@@ -33,6 +35,7 @@ export interface TableContextProps<RecordType = any> {
   fixHeader: boolean;
   fixColumn: boolean;
   horizonScroll: boolean;
+  scrollInfo: ScrollInfoType;
 
   // Body
   rowClassName: string | RowClassName<RecordType>;
