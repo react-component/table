@@ -32,7 +32,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
     onHeaderRow,
     index,
   } = props;
-  const { prefixCls, direction } = useContext(TableContext, ['prefixCls', 'direction']);
+  const { prefixCls } = useContext(TableContext, ['prefixCls']);
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -52,7 +52,6 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
           cell.colEnd,
           flattenColumns,
           stickyOffsets,
-          direction,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;

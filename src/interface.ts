@@ -20,7 +20,10 @@ import type { DeepNamePath } from './namePathType';
 
 export type Key = React.Key;
 
-export type FixedType = 'left' | 'right' | boolean;
+/**
+ * Use `start` or `end` instead. `left` or `right` is deprecated.
+ */
+export type FixedType = 'start' | 'end' | 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
@@ -128,8 +131,8 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 // ================= Fix Column =================
 export interface StickyOffsets {
-  left: readonly number[];
-  right: readonly number[];
+  start: readonly number[];
+  end: readonly number[];
   isSticky?: boolean;
 }
 

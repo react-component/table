@@ -276,6 +276,7 @@ function useColumns<RecordType>(
   }, [mergedColumns, direction, scrollWidth]);
 
   // ========================= Gap Fixed ========================
+  // TODO: Remove this. We no need gapped check anymore
   const hasGapFixed = React.useMemo(() => {
     // Fixed: left, since old browser not support `findLastIndex`, we should use reverse loop
     let lastLeftIndex = -1;

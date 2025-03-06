@@ -37,12 +37,10 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
   // Fixed
-  fixLeft?: number | false;
-  fixRight?: number | false;
-  firstFixLeft?: boolean;
-  lastFixLeft?: boolean;
-  firstFixRight?: boolean;
-  lastFixRight?: boolean;
+  fixStart?: number | false;
+  fixEnd?: number | false;
+  fixedStartShadow?: boolean;
+  fixedEndShadow?: boolean;
   allColsFixedLeft?: boolean;
 
   // ====================== Private Props ======================
@@ -104,12 +102,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     rowSpan,
 
     // Fixed
-    fixLeft,
-    fixRight,
-    firstFixLeft,
-    lastFixLeft,
-    firstFixRight,
-    lastFixRight,
+    fixStart,
+    fixEnd,
+    fixedStartShadow,
+    fixedEndShadow,
 
     // Private
     appendNode,
@@ -118,8 +114,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
-    'supportSticky',
+  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
     'allColumnsFixedLeft',
     'rowHoverable',
   ]);
@@ -136,16 +131,14 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  const isFixLeft = typeof fixLeft === 'number' && supportSticky;
-  const isFixRight = typeof fixRight === 'number' && supportSticky;
+  const isFixStart = typeof fixStart === 'number';
+  const isFixEnd = typeof fixEnd === 'number';
 
-  if (isFixLeft) {
-    fixedStyle.position = 'sticky';
-    fixedStyle.left = fixLeft as number;
+  if (isFixStart) {
+    fixedStyle.insetInlineStart = fixStart as number;
   }
-  if (isFixRight) {
-    fixedStyle.position = 'sticky';
-    fixedStyle.right = fixRight as number;
+  if (isFixEnd) {
+    fixedStyle.insetInlineEnd = fixEnd as number;
   }
 
   // ================ RowSpan & ColSpan =================
@@ -190,16 +183,21 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     cellPrefixCls,
     className,
     {
-      [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
-      [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
-      [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
-      [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
+      // Fixed
+      [`${cellPrefixCls}-fix`]: isFixStart || isFixEnd,
+      [`${cellPrefixCls}-fix-start`]: isFixStart,
+      // [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
+      // [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
+      // [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
+      [`${cellPrefixCls}-fix-end`]: isFixEnd,
+      // [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
+      // [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
+
+      // Fixed shadow
+
       [`${cellPrefixCls}-ellipsis`]: ellipsis,
       [`${cellPrefixCls}-with-append`]: appendNode,
-      [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
+      [`${cellPrefixCls}-fix-sticky`]: (isFixStart || isFixEnd) && isSticky,
       [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
     },
     additionalProps.className,
@@ -233,9 +231,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     mergedChildNode = null;
   }
 
-  if (ellipsis && (lastFixLeft || firstFixRight)) {
-    mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
-  }
+  // if (ellipsis && (lastFixLeft || firstFixRight)) {
+  //   mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
+  // }
 
   return (
     <Component

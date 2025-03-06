@@ -28,7 +28,6 @@ import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from '@rc-component/resize-observer';
 import isVisible from '@rc-component/util/lib/Dom/isVisible';
-import { isStyleSupport } from '@rc-component/util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
@@ -355,7 +354,7 @@ function Table<RecordType extends DefaultRecordType>(
   const colsKeys = getColumnsKey(flattenColumns);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
-  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns);
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
@@ -522,7 +521,6 @@ function Table<RecordType extends DefaultRecordType>(
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
-  const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
     if (!tailor || !useInternalHooks) {
@@ -532,7 +530,6 @@ function Table<RecordType extends DefaultRecordType>(
         setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
       }
     }
-    setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
   // ================== INTERNAL HOOKS ==================
@@ -795,7 +792,7 @@ function Table<RecordType extends DefaultRecordType>(
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
-  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
+  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets);
 
   const TableContextValue = React.useMemo(
     () => ({
@@ -809,7 +806,6 @@ function Table<RecordType extends DefaultRecordType>(
       direction,
       fixedInfoList,
       isSticky,
-      supportSticky,
 
       componentWidth,
       fixHeader,
@@ -859,7 +855,6 @@ function Table<RecordType extends DefaultRecordType>(
       direction,
       fixedInfoList,
       isSticky,
-      supportSticky,
 
       componentWidth,
       fixHeader,

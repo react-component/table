@@ -56,96 +56,100 @@
   }
 
   // ================== Cell ==================
-  &-fixed-column-gapped {
-    .@{tablePrefixCls}-cell-fix-left-last::after,
-    .@{tablePrefixCls}-cell-fix-right-first::after {
-      display: none !important;
-    }
-  }
+  // &-fixed-column-gapped {
+  //   .@{tablePrefixCls}-cell-fix-left-last::after,
+  //   .@{tablePrefixCls}-cell-fix-right-first::after {
+  //     display: none !important;
+  //   }
+  // }
 
   &-cell {
     background: #f4f4f4;
 
-    &-fix-left,
-    &-fix-right {
-      z-index: 2;
+    &-fix {
+      position: sticky !important;
     }
 
-    &-fix-right:last-child:not(&-fix-sticky) {
-      border-right-color: transparent;
-    }
+    // &-fix-left,
+    // &-fix-right {
+    //   z-index: 2;
+    // }
 
-    .@{tablePrefixCls}-rtl & {
-      &-fix-right:last-child {
-        border-right-color: @border-color;
-      }
-      &-fix-left:last-child {
-        border-left-color: transparent;
-      }
-    }
+    // &-fix-right:last-child:not(&-fix-sticky) {
+    //   border-right-color: transparent;
+    // }
 
-    &-fix-left-first {
-      .@{tablePrefixCls}-rtl & {
-        box-shadow: 1px 0 0 @border-color;
-      }
-    }
+    // .@{tablePrefixCls}-rtl & {
+    //   &-fix-right:last-child {
+    //     border-right-color: @border-color;
+    //   }
+    //   &-fix-left:last-child {
+    //     border-left-color: transparent;
+    //   }
+    // }
 
-    &-fix-left-first::after,
-    &-fix-left-last::after {
-      position: absolute;
-      top: 0;
-      right: -1px;
-      bottom: -1px;
-      width: 20px;
-      transform: translateX(100%);
-      transition: box-shadow 0.3s;
-      content: '';
-      pointer-events: none;
-    }
+    // &-fix-left-first {
+    //   .@{tablePrefixCls}-rtl & {
+    //     box-shadow: 1px 0 0 @border-color;
+    //   }
+    // }
 
-    &-fix-left-all::after {
-      display: none;
-    }
+    // &-fix-left-first::after,
+    // &-fix-left-last::after {
+    //   position: absolute;
+    //   top: 0;
+    //   right: -1px;
+    //   bottom: -1px;
+    //   width: 20px;
+    //   transform: translateX(100%);
+    //   transition: box-shadow 0.3s;
+    //   content: '';
+    //   pointer-events: none;
+    // }
 
-    &-fix-right-first,
-    &-fix-right-last {
-      box-shadow: -1px 0 0 @border-color;
+    // &-fix-left-all::after {
+    //   display: none;
+    // }
 
-      .@{tablePrefixCls}-rtl & {
-        box-shadow: none;
-      }
+    // &-fix-right-first,
+    // &-fix-right-last {
+    //   box-shadow: -1px 0 0 @border-color;
 
-      &::after {
-        position: absolute;
-        top: 0;
-        bottom: -1px;
-        left: -1px;
-        width: 20px;
-        transform: translateX(-100%);
-        transition: box-shadow 0.3s;
-        content: '';
-        pointer-events: none;
-      }
-    }
+    //   .@{tablePrefixCls}-rtl & {
+    //     box-shadow: none;
+    //   }
 
-    &&-ellipsis {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    //   &::after {
+    //     position: absolute;
+    //     top: 0;
+    //     bottom: -1px;
+    //     left: -1px;
+    //     width: 20px;
+    //     transform: translateX(-100%);
+    //     transition: box-shadow 0.3s;
+    //     content: '';
+    //     pointer-events: none;
+    //   }
+    // }
 
-      // Fixed first or last should special process
-      &.@{tablePrefixCls}-cell-fix-left-first,
-      &.@{tablePrefixCls}-cell-fix-left-last,
-      &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
-        overflow: visible;
+    // &&-ellipsis {
+    //   overflow: hidden;
+    //   white-space: nowrap;
+    //   text-overflow: ellipsis;
 
-        .@{tablePrefixCls}-cell-content {
-          display: block;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-    }
+    //   // Fixed first or last should special process
+    //   &.@{tablePrefixCls}-cell-fix-left-first,
+    //   &.@{tablePrefixCls}-cell-fix-left-last,
+    //   &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
+    //     overflow: visible;
+
+    //     .@{tablePrefixCls}-cell-content {
+    //       display: block;
+    //       overflow: hidden;
+    //       text-overflow: ellipsis;
+    //     }
+    //   }
+    // }
 
     &&-row-hover {
       background: #fff4f4;

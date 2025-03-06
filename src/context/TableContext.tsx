@@ -29,7 +29,6 @@ export interface TableContextProps<RecordType = any> {
   direction: Direction;
   fixedInfoList: readonly FixedInfo[];
   isSticky: boolean;
-  supportSticky: boolean;
   componentWidth: number;
   fixHeader: boolean;
   fixColumn: boolean;
