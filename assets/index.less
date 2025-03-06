@@ -79,7 +79,13 @@
         bottom: 0;
         width: 5px;
         background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
         content: '';
+        transition: opacity 0.3s;
+      }
+
+      &-show::after {
+        opacity: 1;
       }
     }
 

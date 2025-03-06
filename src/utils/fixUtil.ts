@@ -13,13 +13,6 @@ export interface FixedInfo {
   fixedEndShadow?: boolean;
 
   zIndex?: number;
-
-  /** Get the scroll position of the scrollbar at
-   * which the current `fixed: start` needs to display a shadow */
-  stickyStart?: number;
-  /** Get the scroll position of the scrollbar at
-   * which the current `fixed: end` needs to display a shadow */
-  stickyEnd?: number;
 }
 
 function isFixedStart(column: { fixed?: FixedType }) {
@@ -58,7 +51,7 @@ export function getCellFixedInfo(
 
   if (fixStart !== null) {
     fixedStartShadow = !columns[colEnd + 1] || !isFixedStart(columns[colEnd + 1]);
-    zIndex = columns.length - colStart;
+    zIndex = columns.length * 2 - colStart; // Fix start always overlay fix end
   }
   if (fixEnd !== null) {
     fixedEndShadow = !columns[colStart - 1] || !isFixedEnd(columns[colStart - 1]);

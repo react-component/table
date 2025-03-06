@@ -121,12 +121,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     'rowHoverable',
   ]);
 
-  useContext(TableContext, ({ scrollInfo }) => {
-    if (fixedStartShadow) {
-      console.log('~~~>', fixedStartShadow, scrollInfo);
-    }
-  });
-
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
     record,
@@ -141,6 +135,15 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   const fixedStyle: React.CSSProperties = {};
   const isFixStart = typeof fixStart === 'number';
   const isFixEnd = typeof fixEnd === 'number';
+
+  const [showFixStartShadow, showFixEndShadow] = useContext(TableContext, ({ scrollInfo }) => {
+    const [scroll, scrollWidth] = scrollInfo;
+
+    const showStartShadow = isFixStart && fixedStartShadow && scroll > fixStart;
+    const showEndShadow = isFixEnd && fixedEndShadow && scrollWidth - scroll > fixEnd;
+
+    return [showStartShadow, showEndShadow];
+  });
 
   if (isFixStart) {
     fixedStyle.insetInlineStart = fixStart as number;
@@ -205,7 +208,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
       // Fixed shadow
       [`${cellPrefixCls}-fix-start-shadow`]: fixedStartShadow,
+      [`${cellPrefixCls}-fix-start-shadow-show`]: fixedStartShadow && showFixStartShadow,
       [`${cellPrefixCls}-fix-end-shadow`]: fixedEndShadow,
+      [`${cellPrefixCls}-fix-end-shadow-show`]: fixedEndShadow && showFixEndShadow,
 
       [`${cellPrefixCls}-ellipsis`]: ellipsis,
       [`${cellPrefixCls}-with-append`]: appendNode,
