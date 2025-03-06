@@ -8,8 +8,8 @@ import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
 
 global.scrollToConfig = null;
 
-vi.mock('rc-virtual-list', async () => {
-  const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
+jest.mock('rc-virtual-list', async () => {
+  const RealVirtualList = ((await jest.importActual('rc-virtual-list')) as any).default;
 
   const WrapperVirtualList = React.forwardRef((props: any, ref) => {
     const myRef = React.useRef(null);
@@ -33,7 +33,7 @@ vi.mock('rc-virtual-list', async () => {
 describe('Table.Virtual', () => {
   let scrollLeftCalled = false;
 
-  const setScrollLeft = vi.fn();
+  const setScrollLeft = jest.fn();
 
   beforeAll(() => {
     spyElementPrototypes(HTMLElement, {
@@ -60,20 +60,20 @@ describe('Table.Virtual', () => {
     scrollLeftCalled = false;
     setScrollLeft.mockReset();
     global.scrollToConfig = null;
-    vi.useFakeTimers();
+    jest.useFakeTimers();
     resetWarned();
   });
 
   afterEach(() => {
-    vi.clearAllTimers();
-    vi.useRealTimers();
+    jest.clearAllTimers();
+    jest.useRealTimers();
   });
 
   async function waitFakeTimer() {
     for (let i = 0; i < 10; i += 1) {
       // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-loop-func
       await act(async () => {
-        vi.advanceTimersByTime(100);
+        jest.advanceTimersByTime(100);
         await Promise.resolve();
       });
     }
@@ -122,7 +122,7 @@ describe('Table.Virtual', () => {
   });
 
   it('warning for scroll props is not a number', () => {
-    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     getTable({
       scroll: {
@@ -239,7 +239,7 @@ describe('Table.Virtual', () => {
         data={[{}]}
       />,
     );
-    vi.runAllTimers();
+    jest.runAllTimers();
 
     // mock scrollLeft is 100, but virtual offsetX is 0
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 0);
@@ -476,7 +476,7 @@ describe('Table.Virtual', () => {
   });
 
   it('onScroll event should work', async () => {
-    const onScroll = vi.fn();
+    const onScroll = jest.fn();
     const { container } = getTable({ onScroll });
 
     await waitFakeTimer();
@@ -486,7 +486,7 @@ describe('Table.Virtual', () => {
   });
 
   it('scrollable when empty', async () => {
-    const onScroll = vi.fn();
+    const onScroll = jest.fn();
     const { container } = getTable({ data: [], onScroll });
 
     await waitFakeTimer();

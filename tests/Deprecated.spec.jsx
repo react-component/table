@@ -7,7 +7,7 @@ describe('Table.Deprecated', () => {
   let errorSpy;
 
   beforeAll(() => {
-    errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Table.Deprecated', () => {
       removedProp => {
         it(`warning for '${removedProp}'`, () => {
           const props = {
-            [removedProp]: vi.fn(),
+            [removedProp]: jest.fn(),
           };
           mount(<Table {...props} />);
 

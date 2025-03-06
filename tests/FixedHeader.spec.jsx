@@ -17,7 +17,7 @@ describe('Table.FixedHeader', () => {
   });
 
   beforeEach(() => {
-    vi.useFakeTimers();
+    jest.useFakeTimers();
     visible = true;
   });
 
@@ -81,7 +81,7 @@ describe('Table.FixedHeader', () => {
     expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
     expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
 
-    vi.useRealTimers();
+    jest.useRealTimers();
   });
 
   it('INTERNAL_COL_DEFINE', async () => {
@@ -201,7 +201,7 @@ describe('Table.FixedHeader', () => {
       ]);
 
     act(() => {
-      vi.runAllTimers();
+      jest.runAllTimers();
       wrapper.update();
     });
 
@@ -209,7 +209,7 @@ describe('Table.FixedHeader', () => {
       expect.objectContaining({ width: 93 }),
     );
 
-    vi.useRealTimers();
+    jest.useRealTimers();
   });
 
   it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', async () => {

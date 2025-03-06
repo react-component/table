@@ -41,7 +41,7 @@ describe('Table.Hover', () => {
 
   it('warning if use `render` for rowSpan', () => {
     resetWarned();
-    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     const wrapper = mount(
       createTable({

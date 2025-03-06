@@ -1,6 +1,6 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Table.Basic > columns support JSX condition 1`] = `
+exports[`Table.Basic columns support JSX condition 1`] = `
 LoadedCheerio {
   "0": <button>
     Click 2 times
@@ -105,7 +105,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > custom components > renders correctly 1`] = `
+exports[`Table.Basic custom components renders correctly 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -201,170 +201,140 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > custom components > renders fixed column and header correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+exports[`Table.Basic custom components renders fixed column and header correctly 1`] = `
+<div
+  class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-header"
+      style="overflow: hidden;"
     >
-      <div
-        class="rc-table-header"
-        style="overflow: hidden;"
+      <table
+        style="table-layout: fixed; visibility: hidden;"
       >
-        <table
-          style="table-layout: fixed; visibility: hidden;"
+        <colgroup />
+        <thead
+          class="rc-table-thead"
+          name="my-header-wrapper"
         >
-          <colgroup />
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
+          <tr
+            name="my-header-row"
           >
-            <tr
-              name="my-header-row"
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              name="my-header-cell"
+              scope="col"
+              style="inset-inline-start: 0; --z-offset: 8;"
             >
-              <th
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                name="my-header-cell"
-                scope="col"
-                style="position: sticky; left: 0px;"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                name="my-header-cell"
-                scope="col"
-              >
-                Age
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                name="my-header-cell"
-                scope="col"
-                style="position: sticky; right: 15px;"
-              >
-                Gender
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-                name="my-header-cell"
-                style="position: sticky; right: 0px;"
-              />
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body"
-        style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
-      >
-        <table
-          name="my-table"
-          style="width: 100px; min-width: 100%; table-layout: fixed;"
-        >
-          <colgroup />
-          <tbody
-            class="rc-table-tbody"
-            name="my-body-wrapper"
-          >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px; font-size: 0px;"
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              name="my-header-cell"
+              scope="col"
             >
-              <td
-                style="padding: 0px; border: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding: 0px; border: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding: 0px; border: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden;"
-                >
-                   
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
-              name="my-body-row"
+              Age
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              name="my-header-cell"
+              scope="col"
+              style="inset-inline-end: 15px; --z-offset: 2;"
             >
-              <td
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                name="my-body-cell"
-                style="position: sticky; left: 0px;"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-                name="my-body-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                name="my-body-cell"
-                style="position: sticky; right: 0px;"
-              >
-                F
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Gender
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-scrollbar"
+              name="my-header-cell"
+              style="inset-inline-end: 0; --z-offset: 3;"
+            />
+          </tr>
+        </thead>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+    <div
+      class="rc-table-body"
+      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+    >
+      <table
+        name="my-table"
+        style="width: 100px; min-width: 100%; table-layout: fixed;"
+      >
+        <colgroup />
+        <tbody
+          class="rc-table-tbody"
+          name="my-body-wrapper"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px; font-size: 0px;"
+          >
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
+            name="my-body-row"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              name="my-body-cell"
+              style="inset-inline-start: 0; --z-offset: 6;"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+              name="my-body-cell"
+            >
+              27
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              name="my-body-cell"
+              style="inset-inline-end: 0; --z-offset: 2;"
+            >
+              F
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 `;
 
-exports[`Table.Basic > custom components > scroll content > with scroll 1`] = `
+exports[`Table.Basic custom components scroll content with scroll 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table rc-table-fixed-header rc-table-scroll-horizontal"
@@ -443,7 +413,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > internal api > transformColumns > basic 1`] = `
+exports[`Table.Basic internal api transformColumns basic 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -553,7 +523,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders colSpan correctly 1`] = `
+exports[`Table.Basic renders colSpan correctly 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -646,7 +616,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders correctly > RTL 1`] = `
+exports[`Table.Basic renders correctly RTL 1`] = `
 LoadedCheerio {
   "0": <div
     class="test-prefix test-class-name test-prefix-rtl"
@@ -732,7 +702,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders correctly > basic 1`] = `
+exports[`Table.Basic renders correctly basic 1`] = `
 LoadedCheerio {
   "0": <div
     class="test-prefix test-class-name"
@@ -818,7 +788,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders correctly > column children undefined 1`] = `
+exports[`Table.Basic renders correctly column children undefined 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -916,7 +886,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders correctly > falsy columns 1`] = `
+exports[`Table.Basic renders correctly falsy columns 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -1002,7 +972,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders correctly > no columns 1`] = `
+exports[`Table.Basic renders correctly no columns 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -1081,7 +1051,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > renders rowSpan correctly 1`] = `
+exports[`Table.Basic renders rowSpan correctly 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"
@@ -1179,7 +1149,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > should get scrollbar size 1`] = `
+exports[`Table.Basic should get scrollbar size 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table rc-table-fixed-header"
@@ -1252,7 +1222,7 @@ LoadedCheerio {
 }
 `;
 
-exports[`Table.Basic > syntactic sugar 1`] = `
+exports[`Table.Basic syntactic sugar 1`] = `
 LoadedCheerio {
   "0": <div
     class="rc-table"

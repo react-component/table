@@ -50,14 +50,14 @@ describe('Table.Scroll', () => {
   });
 
   it('fire scroll event', () => {
-    vi.useFakeTimers();
+    jest.useFakeTimers();
     let scrollLeft = 0;
     let scrollTop = 0;
 
-    const setScrollLeft = vi.fn((_, val) => {
+    const setScrollLeft = jest.fn((_, val) => {
       scrollLeft = val;
     });
-    const setScrollTop = vi.fn((_, val) => {
+    const setScrollTop = jest.fn((_, val) => {
       scrollTop = val;
     });
 
@@ -99,7 +99,7 @@ describe('Table.Scroll', () => {
       />,
     );
 
-    vi.runAllTimers();
+    jest.runAllTimers();
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
       const headerDiv = wrapper.find('div.rc-table-header').instance();
@@ -110,7 +110,7 @@ describe('Table.Scroll', () => {
       });
 
       headerDiv.dispatchEvent(wheelEvent);
-      vi.runAllTimers();
+      jest.runAllTimers();
     });
 
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 10);
@@ -128,12 +128,12 @@ describe('Table.Scroll', () => {
           },
         });
     });
-    vi.runAllTimers();
+    jest.runAllTimers();
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 33);
     setScrollLeft.mockReset();
 
     domSpy.mockRestore();
-    vi.useRealTimers();
+    jest.useRealTimers();
   });
 
   it('trigger inner scrollTo when set `top` 0 after render', () => {

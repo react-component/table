@@ -15,7 +15,7 @@ function triggerResize(ele: HTMLElement) {
 describe('Table.FixedColumn', () => {
   let domSpy;
   beforeEach(() => {
-    vi.useFakeTimers();
+    jest.useFakeTimers();
   });
   beforeAll(() => {
     domSpy = spyElementPrototypes(HTMLElement, {
@@ -76,7 +76,7 @@ describe('Table.FixedColumn', () => {
         { name: 'without data', data: [] },
       ].forEach(({ name, data: testData }) => {
         it(`${scrollName} - ${name}`, async () => {
-          vi.useFakeTimers();
+          jest.useFakeTimers();
           const wrapper = mount(<Table columns={columns} data={testData} scroll={scroll} />);
 
           act(() => {
@@ -97,7 +97,7 @@ describe('Table.FixedColumn', () => {
           });
           await safeAct(wrapper);
           expect(wrapper.render()).toMatchSnapshot();
-          vi.useRealTimers();
+          jest.useRealTimers();
         });
       });
     });
@@ -272,7 +272,7 @@ describe('Table.FixedColumn', () => {
       });
 
       await act(async () => {
-        vi.runAllTimers();
+        jest.runAllTimers();
         await Promise.resolve();
       });
 

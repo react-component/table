@@ -337,7 +337,7 @@ describe('Table.Basic', () => {
   describe('dataIndex', () => {
     it("pass record to render when it's falsy", () => {
       [null, undefined, '', []].forEach(dataIndex => {
-        const cellRender = vi.fn();
+        const cellRender = jest.fn();
         const columns = [
           {
             title: 'Name',
@@ -483,7 +483,7 @@ describe('Table.Basic', () => {
   });
 
   it('shows error if no rowKey specify', () => {
-    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
     mount(createTable({ data: localData }));
     expect(spy.mock.calls[0][0]).toMatch(
@@ -574,7 +574,7 @@ describe('Table.Basic', () => {
   });
 
   it('renders onHeaderRow correctly', () => {
-    const onHeaderRow = vi.fn((columns, index) => ({
+    const onHeaderRow = jest.fn((columns, index) => ({
       id: `header-row-${index}`,
     }));
     const wrapper = mount(createTable({ onHeaderRow }));
@@ -631,7 +631,7 @@ describe('Table.Basic', () => {
         { title: 'Gender', dataIndex: 'gender', key: 'gender', fixed: 'right' },
       ];
       const sampleData = [{ key: 0, name: 'Lucy', age: 27, gender: 'F' }];
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns,
           data: sampleData,
@@ -639,13 +639,13 @@ describe('Table.Basic', () => {
           scroll: { x: 100, y: 100 },
         }),
       );
-      expect(wrapper.render()).toMatchSnapshot();
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     describe('scroll content', () => {
       it('with scroll', () => {
         resetWarned();
-        const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         const wrapper = mount(
           createTable({
             columns: [{ dataIndex: 'a' }, { dataIndex: 'b', width: 903 }],
@@ -666,7 +666,7 @@ describe('Table.Basic', () => {
 
     it('without warning - columns is empty', () => {
       resetWarned();
-      const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       mount(
         createTable({
           columns: [],
@@ -760,7 +760,7 @@ describe('Table.Basic', () => {
     let spy;
 
     beforeAll(() => {
-      spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -772,7 +772,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires row click event', () => {
-      const onClick = vi.fn();
+      const onClick = jest.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onClick }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -785,7 +785,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires double row click event', () => {
-      const onDoubleClick = vi.fn();
+      const onDoubleClick = jest.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onDoubleClick }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -798,7 +798,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires row contextmenu event', () => {
-      const onContextMenu = vi.fn();
+      const onContextMenu = jest.fn();
       const wrapper = mount(createTable({ onRow: () => ({ onContextMenu }) }));
       const tr = wrapper.find('tbody tr').first();
 
@@ -811,7 +811,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires onRowMouseEnter', () => {
-      const onMouseEnter = vi.fn();
+      const onMouseEnter = jest.fn();
       const wrapper = mount(
         createTable({
           onRow: () => ({ onMouseEnter }),
@@ -829,7 +829,7 @@ describe('Table.Basic', () => {
     });
 
     it('fires onRowMouseLeave', () => {
-      const onMouseLeave = vi.fn();
+      const onMouseLeave = jest.fn();
       const wrapper = mount(
         createTable({
           onRow: () => ({ onMouseLeave }),
@@ -1040,7 +1040,7 @@ describe('Table.Basic', () => {
     });
 
     it('not block nest children', () => {
-      const onExpandedRowsChange = vi.fn();
+      const onExpandedRowsChange = jest.fn();
 
       const wrapper = mount(
         <Table
@@ -1360,7 +1360,7 @@ describe('Table.Basic', () => {
   });
 
   it('onScroll event', () => {
-    const onScroll = vi.fn();
+    const onScroll = jest.fn();
     const wrapper = render(
       createTable({
         onScroll,

@@ -54,7 +54,7 @@ describe('Table.Summary', () => {
   });
 
   it('summary row click', async () => {
-    const onClick = vi.fn();
+    const onClick = jest.fn();
     const wrapper = mount(
       <Table
         columns={[
