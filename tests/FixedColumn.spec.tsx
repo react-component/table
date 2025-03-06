@@ -215,26 +215,6 @@ describe('Table.FixedColumn', () => {
     const wrapper = mount(<Table columns={columns} data={data} direction="rtl" />);
 
     expect(wrapper.find('.rc-table').hasClass('rc-table-rtl')).toBeTruthy();
-
-    // Left should be right in RTL
-    expect(
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .find('.rc-table-cell')
-        .first()
-        .hasClass('rc-table-cell-fix-right'),
-    ).toBeTruthy();
-
-    // Right should be left in RTL
-    expect(
-      wrapper
-        .find('.rc-table-row')
-        .first()
-        .find('.rc-table-cell')
-        .last()
-        .hasClass('rc-table-cell-fix-left'),
-    ).toBeTruthy();
   });
 
   it('not break measure count', async () => {

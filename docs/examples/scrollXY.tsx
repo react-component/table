@@ -32,6 +32,8 @@ const data = [
 
 const Demo = () => {
   const [visible, setVisible] = React.useState(true);
+  const [rtl, setRtl] = React.useState(true);
+
   return (
     <div>
       <h2>Scroll X/Y</h2>
@@ -43,8 +45,23 @@ const Demo = () => {
       >
         Trigger Visible
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRtl(!rtl);
+        }}
+      >
+        {rtl ? 'RTL' : 'LTR'}
+      </button>
+
       <div style={{ display: visible ? undefined : 'none' }}>
-        <Table style={{ width: 800 }} scroll={{ x: 1500, y: 300 }} columns={columns} data={data} />
+        <Table
+          direction={rtl ? 'rtl' : 'ltr'}
+          style={{ width: 800 }}
+          scroll={{ x: 1500, y: 300 }}
+          columns={columns}
+          data={data}
+        />
       </div>
     </div>
   );

@@ -141,10 +141,16 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   const isFixEnd = typeof fixEnd === 'number';
 
   const [showFixStartShadow, showFixEndShadow] = useContext(TableContext, ({ scrollInfo }) => {
+    if (!isFixStart && !isFixEnd) {
+      return [false, false];
+    }
+
     const [scroll, scrollWidth] = scrollInfo;
 
-    const showStartShadow = isFixStart && fixedStartShadow && scroll > fixStart;
-    const showEndShadow = isFixEnd && fixedEndShadow && scrollWidth - scroll > fixEnd;
+    const absScroll = Math.abs(scroll);
+
+    const showStartShadow = isFixStart && fixedStartShadow && absScroll > fixStart;
+    const showEndShadow = isFixEnd && fixedEndShadow && scrollWidth - absScroll > fixEnd;
 
     return [showStartShadow, showEndShadow];
   });

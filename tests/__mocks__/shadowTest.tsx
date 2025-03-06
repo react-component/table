@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../../src';
-import '../../assets/index.less';
+// import '../../assets/index.less';
 import type { ColumnsType, TableProps } from '../../src';
 
 interface DataType {
