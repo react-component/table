@@ -1,5 +1,4 @@
 import { act, fireEvent, render } from '@testing-library/react';
-import { _rs as onEsResize } from '@rc-component/resize-observer/es/utils/observerUtil';
 import { _rs as onLibResize } from '@rc-component/resize-observer/lib/utils/observerUtil';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import { resetWarned } from '@rc-component/util/lib/warning';
@@ -8,13 +7,14 @@ import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
 
 global.scrollToConfig = null;
 
-jest.mock('rc-virtual-list', async () => {
-  const RealVirtualList = ((await jest.importActual('rc-virtual-list')) as any).default;
+jest.mock('rc-virtual-list', () => {
+  const OriReact = jest.requireActual('react');
+  const RealVirtualList = jest.requireActual('rc-virtual-list').default;
 
-  const WrapperVirtualList = React.forwardRef((props: any, ref) => {
-    const myRef = React.useRef(null);
+  const WrapperVirtualList = OriReact.forwardRef((props: any, ref) => {
+    const myRef = OriReact.useRef(null);
 
-    React.useImperativeHandle(ref, () => ({
+    OriReact.useImperativeHandle(ref, () => ({
       ...myRef.current,
       scrollTo: (config: any) => {
         global.scrollToConfig = config;
@@ -25,9 +25,7 @@ jest.mock('rc-virtual-list', async () => {
     return <RealVirtualList ref={myRef} {...props} data-scroll-width={props.scrollWidth} />;
   });
 
-  return {
-    default: WrapperVirtualList,
-  };
+  return WrapperVirtualList;
 });
 
 describe('Table.Virtual', () => {
@@ -82,7 +80,6 @@ describe('Table.Virtual', () => {
   function resize(target: HTMLElement) {
     act(() => {
       onLibResize([{ target } as any]);
-      onEsResize([{ target } as any]);
     });
   }
 
