@@ -41,6 +41,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   fixEnd?: number | false;
   fixedStartShadow?: boolean;
   fixedEndShadow?: boolean;
+  zIndex?: number;
   allColsFixedLeft?: boolean;
 
   // ====================== Private Props ======================
@@ -106,6 +107,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     fixEnd,
     fixedStartShadow,
     fixedEndShadow,
+    zIndex,
 
     // Private
     appendNode,
@@ -136,9 +138,11 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   if (isFixStart) {
     fixedStyle.insetInlineStart = fixStart as number;
+    fixedStyle['--z-offset'] = zIndex;
   }
   if (isFixEnd) {
     fixedStyle.insetInlineEnd = fixEnd as number;
+    fixedStyle['--z-offset'] = zIndex;
   }
 
   // ================ RowSpan & ColSpan =================
@@ -194,6 +198,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       // [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
 
       // Fixed shadow
+      [`${cellPrefixCls}-fix-start-shadow`]: fixedStartShadow,
+      [`${cellPrefixCls}-fix-end-shadow`]: fixedEndShadow,
 
       [`${cellPrefixCls}-ellipsis`]: ellipsis,
       [`${cellPrefixCls}-with-append`]: appendNode,
@@ -231,9 +237,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     mergedChildNode = null;
   }
 
-  // if (ellipsis && (lastFixLeft || firstFixRight)) {
-  //   mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
-  // }
+  if (ellipsis && (fixedStartShadow || fixedEndShadow)) {
+    mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
+  }
 
   return (
     <Component

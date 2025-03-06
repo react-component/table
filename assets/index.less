@@ -68,6 +68,26 @@
 
     &-fix {
       position: sticky !important;
+      z-index: calc(2 + var(--z-offset));
+    }
+
+    &-fix-start-shadow,
+    &-fix-end-shadow {
+      &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        content: '';
+      }
+    }
+
+    &-fix-start-shadow::after {
+      left: 100%;
+    }
+    &-fix-end-shadow::after {
+      right: 100%;
     }
 
     // &-fix-left,
@@ -132,24 +152,35 @@
     //   }
     // }
 
-    // &&-ellipsis {
-    //   overflow: hidden;
-    //   white-space: nowrap;
-    //   text-overflow: ellipsis;
+    &&-ellipsis {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
-    //   // Fixed first or last should special process
-    //   &.@{tablePrefixCls}-cell-fix-left-first,
-    //   &.@{tablePrefixCls}-cell-fix-left-last,
-    //   &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
-    //     overflow: visible;
+      // Fixed first or last should special process
+      &.@{tablePrefixCls}-cell-fix-start-shadow,
+      &.@{tablePrefixCls}-cell-fix-end-shadow {
+        overflow: visible;
 
-    //     .@{tablePrefixCls}-cell-content {
-    //       display: block;
-    //       overflow: hidden;
-    //       text-overflow: ellipsis;
-    //     }
-    //   }
-    // }
+        .@{tablePrefixCls}-cell-content {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      //   &.@{tablePrefixCls}-cell-fix-left-first,
+      //   &.@{tablePrefixCls}-cell-fix-left-last,
+      //   &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
+      //     overflow: visible;
+
+      //     .@{tablePrefixCls}-cell-content {
+      //       display: block;
+      //       overflow: hidden;
+      //       text-overflow: ellipsis;
+      //     }
+      //   }
+    }
 
     &&-row-hover {
       background: #fff4f4;

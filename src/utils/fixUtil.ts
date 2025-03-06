@@ -40,18 +40,24 @@ export function getCellFixedInfo(
     fixEnd = stickyOffsets.end[colEnd];
   }
 
-  console.log('fixStart:', colStart);
-
   // check if need to add shadow
-  const fixedStartShadow =
-    fixStart !== null && (!columns[colStart + 1] || !isFixedStart(columns[colStart + 1]));
-  const fixedEndShadow =
-    fixEnd !== null && (!columns[colEnd - 1] || !isFixedEnd(columns[colEnd - 1]));
+  let fixedStartShadow: boolean;
+  let fixedEndShadow: boolean;
 
   // Calc `zIndex`.
   // first fixed start (start -> end) column `zIndex` should be greater than next column.
   // first fixed end (end -> start) column `zIndex` should be greater than next column.
-  // TODO: handle this
+
+  let zIndex = 0;
+
+  if (fixStart !== null) {
+    fixedStartShadow = !columns[colEnd + 1] || !isFixedStart(columns[colEnd + 1]);
+    zIndex = columns.length - colStart;
+  }
+  if (fixEnd !== null) {
+    fixedEndShadow = !columns[colStart - 1] || !isFixedEnd(columns[colStart - 1]);
+    zIndex = colEnd;
+  }
 
   return {
     fixStart,
@@ -59,5 +65,6 @@ export function getCellFixedInfo(
     fixedStartShadow,
     fixedEndShadow,
     isSticky: stickyOffsets.isSticky,
+    zIndex,
   };
 }
