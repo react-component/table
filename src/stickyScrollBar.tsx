@@ -6,6 +6,7 @@ import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
 import raf from '@rc-component/util/lib/raf';
 import { getOffset } from './utils/offsetUtil';
+import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
 
 const MOUSEUP_EVENT: keyof WindowEventMap = 'mouseup';
 const MOUSEMOVE_EVENT: keyof WindowEventMap = 'mousemove';
@@ -153,8 +154,8 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   React.useEffect(() => {
     if (!scrollBodyRef.current) return;
 
-    const scrollParents: HTMLElement[] = [];
-    let parent: HTMLElement = scrollBodyRef.current;
+    const scrollParents: (HTMLElement | SVGElement)[] = [];
+    let parent = getDOM(scrollBodyRef.current);
     while (parent) {
       scrollParents.push(parent);
       parent = parent.parentElement;
