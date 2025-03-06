@@ -7,7 +7,7 @@ import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
 import raf from 'rc-util/lib/raf';
 import { getOffset } from './utils/offsetUtil';
-import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
+import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
