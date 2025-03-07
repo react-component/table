@@ -39,7 +39,7 @@ export default function SummaryCell({
   return (
     <Cell
       className={className}
-      index={index}
+      rowIndex={index}
       component="td"
       prefixCls={prefixCls}
       record={null}
