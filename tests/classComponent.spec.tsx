@@ -1,13 +1,11 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import Table from '../src';
 
 describe('Table.ClassComponent', () => {
-  it.skip('should re-render', () => {
-    class Demo extends React.Component {
-      state = {
-        count: 0,
-      };
+  it('should re-render', () => {
+    class Demo extends React.Component<{}, { count: number }> {
+      state = { count: 0 };
 
       renderColumn = () => this.state.count;
 
@@ -31,12 +29,14 @@ describe('Table.ClassComponent', () => {
       }
     }
 
-    const wrapper = mount(<Demo />);
-    expect(wrapper.find('button').text()).toEqual('0');
-    expect(wrapper.find('td').last().text()).toEqual('0');
+    const { getByRole, container } = render(<Demo />);
+    expect(getByRole('button').textContent).toEqual('0');
+    const tdElements = container.querySelectorAll('td');
+    expect(tdElements[tdElements.length - 1].textContent).toEqual('0');
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('button').text()).toEqual('1');
-    expect(wrapper.find('td').last().text()).toEqual('1');
+    fireEvent.click(getByRole('button'));
+    expect(getByRole('button').textContent).toEqual('1');
+    const updatedTdElements = container.querySelectorAll('td');
+    expect(updatedTdElements[updatedTdElements.length - 1].textContent).toEqual('1');
   });
 });
