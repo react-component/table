@@ -56,76 +56,37 @@
   }
 
   // ================== Cell ==================
-  &-fixed-column-gapped {
-    .@{tablePrefixCls}-cell-fix-left-last::after,
-    .@{tablePrefixCls}-cell-fix-right-first::after {
-      display: none !important;
-    }
-  }
-
   &-cell {
     background: #f4f4f4;
 
-    &-fix-left,
-    &-fix-right {
-      z-index: 2;
+    &-fix {
+      position: sticky !important;
+      z-index: calc(2 + var(--z-offset));
     }
 
-    &-fix-right:last-child:not(&-fix-sticky) {
-      border-right-color: transparent;
-    }
-
-    .@{tablePrefixCls}-rtl & {
-      &-fix-right:last-child {
-        border-right-color: @border-color;
-      }
-      &-fix-left:last-child {
-        border-left-color: transparent;
-      }
-    }
-
-    &-fix-left-first {
-      .@{tablePrefixCls}-rtl & {
-        box-shadow: 1px 0 0 @border-color;
-      }
-    }
-
-    &-fix-left-first::after,
-    &-fix-left-last::after {
-      position: absolute;
-      top: 0;
-      right: -1px;
-      bottom: -1px;
-      width: 20px;
-      transform: translateX(100%);
-      transition: box-shadow 0.3s;
-      content: '';
-      pointer-events: none;
-    }
-
-    &-fix-left-all::after {
-      display: none;
-    }
-
-    &-fix-right-first,
-    &-fix-right-last {
-      box-shadow: -1px 0 0 @border-color;
-
-      .@{tablePrefixCls}-rtl & {
-        box-shadow: none;
-      }
-
+    &-fix-start-shadow,
+    &-fix-end-shadow {
       &::after {
         position: absolute;
         top: 0;
-        bottom: -1px;
-        left: -1px;
-        width: 20px;
-        transform: translateX(-100%);
-        transition: box-shadow 0.3s;
+        bottom: 0;
+        width: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
         content: '';
-        pointer-events: none;
+        transition: opacity 0.3s;
       }
+
+      &-show::after {
+        opacity: 1;
+      }
+    }
+
+    &-fix-start-shadow::after {
+      inset-inline-start: 100%;
+    }
+    &-fix-end-shadow::after {
+      inset-inline-end: 100%;
     }
 
     &&-ellipsis {
@@ -134,9 +95,8 @@
       text-overflow: ellipsis;
 
       // Fixed first or last should special process
-      &.@{tablePrefixCls}-cell-fix-left-first,
-      &.@{tablePrefixCls}-cell-fix-left-last,
-      &.@{tablePrefixCls}-cell-fix-right-first &.@{tablePrefixCls}-cell-fix-right-last {
+      &.@{tablePrefixCls}-cell-fix-start-shadow,
+      &.@{tablePrefixCls}-cell-fix-end-shadow {
         overflow: visible;
 
         .@{tablePrefixCls}-cell-content {

@@ -460,13 +460,13 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
         >
           <tr>
             <th
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8;"
             />
             <th
-              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               scope="col"
-              style="position: sticky; left: 0px;"
+              style="inset-inline-start: 0; --z-offset: 7;"
             >
               Name
             </th>
@@ -477,9 +477,9 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
               Age
             </th>
             <th
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               scope="col"
-              style="position: sticky; right: 0px;"
+              style="inset-inline-end: 0; --z-offset: 3;"
             >
               Gender
             </th>
@@ -535,16 +535,16 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             data-row-key="0"
           >
             <td
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
             </td>
             <td
-              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 7;"
             >
               Lucy
             </td>
@@ -554,8 +554,8 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
               27
             </td>
             <td
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              style="inset-inline-end: 0; --z-offset: 3;"
             >
               F
             </td>
@@ -582,16 +582,16 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             data-row-key="1"
           >
             <td
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
               />
             </td>
             <td
-              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 7;"
             >
               Jack
             </td>
@@ -601,8 +601,8 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
               28
             </td>
             <td
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-              style="position: sticky; right: 0px;"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              style="inset-inline-end: 0; --z-offset: 3;"
             >
               M
             </td>
@@ -1028,7 +1028,7 @@ exports[`Table.Expand > work in expandable fix 1`] = `
 
 exports[`Table.Expand > work in expandable fix 2`] = `
 <div
-  class="rc-table rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal"
+  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"
@@ -1071,8 +1071,8 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               Gender
             </th>
             <th
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5;"
             />
           </tr>
         </thead>
@@ -1141,8 +1141,8 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               F
             </td>
             <td
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
@@ -1169,8 +1169,8 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               M
             </td>
             <td
-              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-              style="position: sticky; left: 0px;"
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"

@@ -237,15 +237,10 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
     });
-    const fixedCell = container.querySelector(
-      '.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky',
-    );
-    expect(fixedCell.style).toEqual(
-      expect.objectContaining({
-        position: 'sticky',
-        right: '0px',
-      }),
-    );
+    const fixedCell = container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky');
+    expect(fixedCell).toHaveStyle({
+      'inset-inline-end': '0',
+    });
     expect(container.querySelector('.rc-table-cell-fix-sticky')).not.toBeNull();
 
     vi.useRealTimers();
@@ -284,15 +279,10 @@ describe('Table.Sticky', () => {
     await act(async () => {
       vi.runAllTimers();
     });
-    const fixedCell = container.querySelector(
-      '.rc-table-cell-fix-right-first.rc-table-cell-fix-sticky',
-    );
-    expect(fixedCell.style).toEqual(
-      expect.objectContaining({
-        position: 'sticky',
-        right: '15px',
-      }),
-    );
+    const fixedCell = container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky');
+    expect(fixedCell).toHaveStyle({
+      'inset-inline-end': '15px',
+    });
 
     vi.useRealTimers();
   });

@@ -208,22 +208,6 @@ describe('Table.FixedColumn', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('has correct scroll classNames when table direction is RTL', () => {
-    const { container } = render(<Table columns={columns} data={data} direction="rtl" />);
-
-    expect(container.querySelector('.rc-table')?.classList.contains('rc-table-rtl')).toBeTruthy();
-
-    expect(container.querySelector('.rc-table-row')?.querySelector('.rc-table-cell')).toHaveClass(
-      'rc-table-cell-fix-right',
-    );
-
-    expect(
-      container.querySelector('.rc-table-row')?.querySelectorAll('.rc-table-cell')[
-        container.querySelector('.rc-table-row')?.querySelectorAll('.rc-table-cell').length - 1
-      ],
-    ).toHaveClass('rc-table-cell-fix-left');
-  });
-
   it('not break measure count', async () => {
     const { container, rerender } = render(
       <Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />,
@@ -240,17 +224,15 @@ describe('Table.FixedColumn', () => {
     expect(container.querySelectorAll('.rc-table-measure-row td')).toHaveLength(4);
   });
 
-  it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
+  it('when all columns fixed left, should not add fixed className', async () => {
     const { container } = render(
       <Table columns={columns.slice(0, 2)} data={data} scroll={{ x: 1000 }} />,
     );
-
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
     });
-
-    expect(container.querySelectorAll('.rc-table-cell-fix-left-all')).toHaveLength(10);
+    expect(container.querySelector('.rc-table-cell-fix')).toBeFalsy();
   });
 
   describe('cross fixed support', () => {
@@ -274,9 +256,13 @@ describe('Table.FixedColumn', () => {
         await Promise.resolve();
       });
 
-      expect(container.querySelectorAll('tbody .rc-table-cell-fix-left')).toHaveLength(2);
-      expect(container.querySelectorAll('thead th')[1]).toHaveStyle({ left: '0px' });
-      expect(container.querySelectorAll('thead th')[2]).toHaveStyle({ left: '1000px' });
+      expect(container.querySelectorAll('tbody .rc-table-cell-fix-start')).toHaveLength(2);
+      expect(container.querySelectorAll('thead th')[1]).toHaveStyle({
+        'inset-inline-start': '0',
+      });
+      expect(container.querySelectorAll('thead th')[2]).toHaveStyle({
+        'inset-inline-start': '1000px',
+      });
     });
   });
   describe('components.table by sticky', () => {
@@ -295,13 +281,11 @@ describe('Table.FixedColumn', () => {
   });
   it('shadow should display correctly', async () => {
     const { container, rerender } = render(<RowColSpanWithFixed />);
-    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(104);
-    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(101);
-    expect(container).toMatchSnapshot();
+    expect(container.querySelectorAll('.rc-table-cell-fix-start-shadow').length).toBe(104);
+    expect(container.querySelectorAll('.rc-table-cell-fix-end-shadow').length).toBe(101);
     rerender(<RowColSpanWithFixed2 />);
-    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(4);
-    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(4);
-    expect(container).toMatchSnapshot();
+    expect(container.querySelectorAll('.rc-table-cell-fix-start-shadow').length).toBe(4);
+    expect(container.querySelectorAll('.rc-table-cell-fix-end-shadow').length).toBe(4);
   });
 
   it('shadow should be shown when there are columns where fixed is false', async () => {
@@ -331,9 +315,9 @@ describe('Table.FixedColumn', () => {
         ]}
       />,
     );
-    expect(container.querySelectorAll('.rc-table-cell-fix-left-last').length).toBe(101);
-    expect(container.querySelectorAll('.rc-table-cell-fix-right-first').length).toBe(101);
-    expect(container).toMatchSnapshot();
+
+    expect(container.querySelectorAll('.rc-table-cell-fix-end-shadow')).toHaveLength(101);
+    expect(container.querySelectorAll('.rc-table-cell-fix-start-shadow')).toHaveLength(101);
   });
 
   it('right shadow should be shown when scrollX is less than the sum of the widths of all columns', async () => {

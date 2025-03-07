@@ -34,7 +34,7 @@ const columns: ColumnType<RecordType>[] = [
   { title: 'title8', dataIndex: 'b', key: 'h' },
   { title: 'title9', dataIndex: 'b', key: 'i' },
   { title: 'title10', dataIndex: 'b', key: 'j' },
-  { title: 'title11', dataIndex: 'b', key: 'k', width: 50 },
+  { title: 'title11', dataIndex: 'b', key: 'k', width: 50, fixed: 'right'  },
   { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right' },
 ];
 

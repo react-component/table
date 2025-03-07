@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { ColumnType, Direction, StickyOffsets } from '../interface';
+import type { ColumnType, StickyOffsets } from '../interface';
 
 /**
  * Get sticky column offset width
@@ -7,7 +7,6 @@ import type { ColumnType, Direction, StickyOffsets } from '../interface';
 function useStickyOffsets<RecordType>(
   colWidths: number[],
   flattenColumns: readonly ColumnType<RecordType>[],
-  direction: Direction,
 ) {
   const stickyOffsets: StickyOffsets = useMemo(() => {
     const columnCount = flattenColumns.length;
@@ -30,16 +29,11 @@ function useStickyOffsets<RecordType>(
     const startOffsets = getOffsets(0, columnCount, 1);
     const endOffsets = getOffsets(columnCount - 1, -1, -1).reverse();
 
-    return direction === 'rtl'
-      ? {
-          left: endOffsets,
-          right: startOffsets,
-        }
-      : {
-          left: startOffsets,
-          right: endOffsets,
-        };
-  }, [colWidths, flattenColumns, direction]);
+    return {
+      start: startOffsets,
+      end: endOffsets,
+    };
+  }, [colWidths, flattenColumns]);
 
   return stickyOffsets;
 }

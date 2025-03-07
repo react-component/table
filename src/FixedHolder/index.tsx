@@ -85,7 +85,22 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     function onWheel(e: WheelEvent) {
       const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
       if (deltaX) {
-        onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
+        const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+        const maxScrollWidth = scrollWidth - clientWidth;
+        let nextScroll = scrollLeft + deltaX;
+
+        if (direction === 'rtl') {
+          nextScroll = Math.max(-maxScrollWidth, nextScroll);
+          nextScroll = Math.min(0, nextScroll);
+        } else {
+          nextScroll = Math.min(maxScrollWidth, nextScroll);
+          nextScroll = Math.max(0, nextScroll);
+        }
+
+        onScroll({
+          currentTarget,
+          scrollLeft: nextScroll,
+        });
         e.preventDefault();
       }
     }
@@ -124,13 +139,15 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   // Calculate the sticky offsets
   const headerStickyOffsets = useMemo(() => {
-    const { right, left } = stickyOffsets;
+    const { start, end } = stickyOffsets;
     return {
       ...stickyOffsets,
-      left:
-        direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
-      right:
-        direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      // left:
+      //   direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
+      // right:
+      //   direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      start: start,
+      end: [...end.map(width => width + combinationScrollBarSize), 0],
       isSticky,
     };
   }, [combinationScrollBarSize, stickyOffsets, isSticky]);

@@ -4,18 +4,18 @@ import Table from 'rc-table';
 import '../../assets/index.less';
 
 const columns: TableProps['columns'] = [
-  { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'start' },
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
-  { title: 'title3', dataIndex: 'c', key: 'c', width: 100 },
+  { title: 'title3', dataIndex: 'c', key: 'c', width: 100, fixed: 'start' },
   { title: 'title4', dataIndex: 'b', key: 'd', width: 100 },
   { title: 'title5', dataIndex: 'b', key: 'e', width: 100 },
   { title: 'title6', dataIndex: 'b', key: 'f', width: 100 },
   { title: 'title7', dataIndex: 'b', key: 'g', width: 100 },
   { title: 'title8', dataIndex: 'b', key: 'h', width: 100 },
   { title: 'title9', dataIndex: 'b', key: 'i', width: 100 },
-  { title: 'title10', dataIndex: 'b', key: 'j', width: 100 },
+  { title: 'title10', dataIndex: 'b', key: 'j', width: 100, fixed: 'end' },
   { title: 'title11', dataIndex: 'b', key: 'k', width: 100 },
-  { title: 'title12', dataIndex: 'b', key: 'l', width: 100 },
+  { title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'end' },
 ];
 
 const data = [
@@ -32,6 +32,8 @@ const data = [
 
 const Demo = () => {
   const [visible, setVisible] = React.useState(true);
+  const [rtl, setRtl] = React.useState(true);
+
   return (
     <div>
       <h2>Scroll X/Y</h2>
@@ -43,8 +45,23 @@ const Demo = () => {
       >
         Trigger Visible
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRtl(!rtl);
+        }}
+      >
+        {rtl ? 'RTL' : 'LTR'}
+      </button>
+
       <div style={{ display: visible ? undefined : 'none' }}>
-        <Table style={{ width: 800 }} scroll={{ x: 1500, y: 300 }} columns={columns} data={data} />
+        <Table
+          direction={rtl ? 'rtl' : 'ltr'}
+          style={{ width: 800 }}
+          scroll={{ x: 1500, y: 300 }}
+          columns={columns}
+          data={data}
+        />
       </div>
     </div>
   );

@@ -152,7 +152,6 @@ function useColumns<RecordType>(
   columns: ColumnsType<RecordType>,
   flattenColumns: readonly ColumnType<RecordType>[],
   realScrollWidth: undefined | number,
-  hasGapFixed: boolean,
 ] {
   const baseColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     const newColumns = columns || convertChildrenToColumns(children) || [];
@@ -275,41 +274,6 @@ function useColumns<RecordType>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedColumns, direction, scrollWidth]);
 
-  // ========================= Gap Fixed ========================
-  const hasGapFixed = React.useMemo(() => {
-    // Fixed: left, since old browser not support `findLastIndex`, we should use reverse loop
-    let lastLeftIndex = -1;
-    for (let i = flattenColumns.length - 1; i >= 0; i -= 1) {
-      const colFixed = flattenColumns[i].fixed;
-      if (colFixed === 'left' || colFixed === true) {
-        lastLeftIndex = i;
-        break;
-      }
-    }
-
-    if (lastLeftIndex >= 0) {
-      for (let i = 0; i <= lastLeftIndex; i += 1) {
-        const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'left' && colFixed !== true) {
-          return true;
-        }
-      }
-    }
-
-    // Fixed: right
-    const firstRightIndex = flattenColumns.findIndex(({ fixed: colFixed }) => colFixed === 'right');
-    if (firstRightIndex >= 0) {
-      for (let i = firstRightIndex; i < flattenColumns.length; i += 1) {
-        const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'right') {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }, [flattenColumns]);
-
   // ========================= FillWidth ========================
   const [filledColumns, realScrollWidth] = useWidthColumns(
     flattenColumns,
@@ -317,7 +281,7 @@ function useColumns<RecordType>(
     clientWidth,
   );
 
-  return [mergedColumns, filledColumns, realScrollWidth, hasGapFixed];
+  return [mergedColumns, filledColumns, realScrollWidth];
 }
 
 export default useColumns;

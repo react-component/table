@@ -97,10 +97,10 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
             name="my-header-row"
           >
             <th
-              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               name="my-header-cell"
               scope="col"
-              style="position: sticky; left: 0px;"
+              style="inset-inline-start: 0; --z-offset: 8;"
             >
               Name
             </th>
@@ -112,17 +112,17 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
               Age
             </th>
             <th
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               name="my-header-cell"
               scope="col"
-              style="position: sticky; right: 15px;"
+              style="inset-inline-end: 15px; --z-offset: 2;"
             >
               Gender
             </th>
             <th
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-scrollbar"
               name="my-header-cell"
-              style="position: sticky; right: 0px;"
+              style="inset-inline-end: 0; --z-offset: 3;"
             />
           </tr>
         </thead>
@@ -180,9 +180,9 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
             name="my-body-row"
           >
             <td
-              class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               name="my-body-cell"
-              style="position: sticky; left: 0px;"
+              style="inset-inline-start: 0; --z-offset: 6;"
             >
               Lucy
             </td>
@@ -193,9 +193,9 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
               27
             </td>
             <td
-              class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               name="my-body-cell"
-              style="position: sticky; right: 0px;"
+              style="inset-inline-end: 0; --z-offset: 2;"
             >
               F
             </td>

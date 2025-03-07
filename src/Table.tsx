@@ -28,7 +28,6 @@ import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from '@rc-component/resize-observer';
 import isVisible from '@rc-component/util/lib/Dom/isVisible';
-import { isStyleSupport } from '@rc-component/util/lib/Dom/styleChecker';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
@@ -38,7 +37,7 @@ import * as React from 'react';
 import Body from './Body';
 import ColGroup from './ColGroup';
 import { EXPAND_COLUMN, INTERNAL_HOOKS } from './constant';
-import TableContext, { makeImmutable } from './context/TableContext';
+import TableContext, { makeImmutable, type ScrollInfoType } from './context/TableContext';
 import type { FixedHeaderProps } from './FixedHolder';
 import FixedHolder from './FixedHolder';
 import Footer, { FooterComponents } from './Footer';
@@ -76,6 +75,7 @@ import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
 import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
+import isEqual from '@rc-component/util/lib/isEqual';
 
 export const DEFAULT_PREFIX = 'rc-table';
 
@@ -290,7 +290,7 @@ function Table<RecordType extends DefaultRecordType>(
   const scrollX = scroll?.x;
   const [componentWidth, setComponentWidth] = React.useState(0);
 
-  const [columns, flattenColumns, flattenScrollX, hasGapFixed] = useColumns(
+  const [columns, flattenColumns, flattenScrollX] = useColumns(
     {
       ...props,
       ...expandableConfig,
@@ -355,7 +355,7 @@ function Table<RecordType extends DefaultRecordType>(
   const colsKeys = getColumnsKey(flattenColumns);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
-  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
+  const stickyOffsets = useStickyOffsets(colWidths, flattenColumns);
   const fixHeader = scroll && validateValue(scroll.y);
   const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
@@ -436,6 +436,8 @@ function Table<RecordType extends DefaultRecordType>(
     }
   }
 
+  const [scrollInfo, setScrollInfo] = React.useState<ScrollInfoType>([0, 0]);
+
   const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
       const isRTL = direction === 'rtl';
@@ -460,6 +462,12 @@ function Table<RecordType extends DefaultRecordType>(
             ? mergedScrollX
             : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
+
+        setScrollInfo(ori => {
+          const nextScrollInfo: ScrollInfoType = [mergedScrollLeft, scrollWidth - clientWidth];
+          return isEqual(ori, nextScrollInfo) ? ori : nextScrollInfo;
+        });
+
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
           setPingedLeft(false);
@@ -522,7 +530,6 @@ function Table<RecordType extends DefaultRecordType>(
 
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
-  const [supportSticky, setSupportSticky] = React.useState(true); // Only IE not support, we mark as support first
 
   React.useEffect(() => {
     if (!tailor || !useInternalHooks) {
@@ -532,7 +539,6 @@ function Table<RecordType extends DefaultRecordType>(
         setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
       }
     }
-    setSupportSticky(isStyleSupport('position', 'sticky'));
   }, []);
 
   // ================== INTERNAL HOOKS ==================
@@ -771,7 +777,6 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-fixed-header`]: fixHeader,
         /** No used but for compatible */
         [`${prefixCls}-fixed-column`]: fixColumn,
-        [`${prefixCls}-fixed-column-gapped`]: fixColumn && hasGapFixed,
         [`${prefixCls}-scroll-horizontal`]: horizonScroll,
         [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
         [`${prefixCls}-has-fix-right`]:
@@ -795,12 +800,13 @@ function Table<RecordType extends DefaultRecordType>(
     fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
   }
 
-  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
+  const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets);
 
   const TableContextValue = React.useMemo(
     () => ({
       // Scroll
       scrollX: mergedScrollX,
+      scrollInfo,
 
       // Table
       prefixCls,
@@ -809,7 +815,6 @@ function Table<RecordType extends DefaultRecordType>(
       direction,
       fixedInfoList,
       isSticky,
-      supportSticky,
 
       componentWidth,
       fixHeader,
@@ -851,6 +856,7 @@ function Table<RecordType extends DefaultRecordType>(
     [
       // Scroll
       mergedScrollX,
+      scrollInfo,
 
       // Table
       prefixCls,
@@ -859,7 +865,6 @@ function Table<RecordType extends DefaultRecordType>(
       direction,
       fixedInfoList,
       isSticky,
-      supportSticky,
 
       componentWidth,
       fixHeader,
