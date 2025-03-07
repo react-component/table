@@ -154,7 +154,7 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
-  it('do not mask as ant-table-cell-fix-left-last in nested table parent cell', async () => {
+  it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
         title: '父表头右侧的阴影导致整个表格最右侧有空隙',
@@ -201,8 +201,11 @@ describe('Table.FixedHeader', () => {
       },
     ];
     const { container } = render(<Table columns={columns} data={data} scroll={{ x: true }} />);
-    await safeAct(container);
-    expect(container.querySelectorAll('td')[9].className).toContain('rc-table-cell-fix-left-last');
-    expect(container.querySelector('th').className).not.toContain('rc-table-cell-fix-left-last');
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    expect(container.querySelectorAll('th.rc-table-cell-fix-start')).toHaveLength(2);
+    expect(container.querySelectorAll('th.rc-table-cell-fix-end')).toHaveLength(1);
   });
 });
