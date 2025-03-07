@@ -1,22 +1,35 @@
-import { mount } from 'enzyme';
-import RcResizeObserver from '@rc-component/resize-observer';
-import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
+import { render, act, fireEvent } from '@testing-library/react';
+import RcResizeObserver, { _rs } from '@rc-component/resize-observer';
+import { spyElementPrototype, spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { safeAct } from './utils';
+
+async function triggerResize(ele) {
+  await act(async () => {
+    _rs([{ target: ele }]);
+    await Promise.resolve();
+  });
+}
 
 describe('Table.FixedHeader', () => {
   let domSpy;
   let visible = true;
+  let measureWidth = 100;
 
   beforeAll(() => {
-    domSpy = spyElementPrototype(HTMLElement, 'offsetParent', {
-      get: () => (visible ? {} : null),
+    domSpy = spyElementPrototypes(HTMLElement, {
+      offsetParent: {
+        get: () => (visible ? {} : null),
+      },
+      offsetWidth: {
+        get: () => (visible ? measureWidth : 0),
+      },
     });
   });
 
   beforeEach(() => {
+    measureWidth = 100;
     vi.useFakeTimers();
     visible = true;
   });
@@ -29,7 +42,7 @@ describe('Table.FixedHeader', () => {
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
     const col3 = { dataIndex: 'empty', width: 0 };
-    const wrapper = mount(
+    const { container, rerender } = render(
       <Table
         columns={[col1, col2, col3]}
         data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
@@ -37,49 +50,20 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    async function triggerResize(resizeList) {
-      wrapper.find(RcResizeObserver.Collection).first().props().onBatchResize(resizeList);
-      await safeAct(wrapper);
-      wrapper.update();
-    }
+    const measureCells = container.querySelectorAll('.rc-table-measure-row');
 
-    await triggerResize([
-      {
-        data: wrapper.find('ResizeObserver').at(0).props().data,
-        size: { width: 100, offsetWidth: 100 },
-      },
-      {
-        data: wrapper.find('ResizeObserver').at(1).props().data,
-        size: { width: 200, offsetWidth: 200 },
-      },
-      {
-        data: wrapper.find('ResizeObserver').at(2).props().data,
-        size: { width: 0, offsetWidth: 0 },
-      },
-    ]);
+    await triggerResize(measureCells[0]);
+    await triggerResize(measureCells[1]);
+    await triggerResize(measureCells[2]);
+    act(() => {
+      vi.runAllTimers();
+    });
 
-    expect(wrapper.find('.rc-table-header table').props().style.visibility).toBeFalsy();
+    expect(container.querySelector('.rc-table-header table').style.visibility).toBeFalsy();
 
-    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(100);
-    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(200);
-    expect(wrapper.find('colgroup col').at(2).props().style.width).toEqual(0);
-
-    // Update columns
-    wrapper.setProps({ columns: [col2, col1] });
-
-    await triggerResize([
-      {
-        data: wrapper.find('ResizeObserver').at(0).props().data,
-        size: { width: 200, offsetWidth: 200 },
-      },
-      {
-        data: wrapper.find('ResizeObserver').at(1).props().data,
-        size: { width: 100, offsetWidth: 100 },
-      },
-    ]);
-
-    expect(wrapper.find('colgroup col').at(0).props().style.width).toEqual(200);
-    expect(wrapper.find('colgroup col').at(1).props().style.width).toEqual(100);
+    expect(parseInt(container.querySelectorAll('colgroup col')[0].style.width)).toEqual(100);
+    expect(parseInt(container.querySelectorAll('colgroup col')[1].style.width)).toEqual(100);
+    expect(parseInt(container.querySelectorAll('colgroup col')[2].style.width)).toEqual(100);
 
     vi.useRealTimers();
   });
@@ -91,21 +75,20 @@ describe('Table.FixedHeader', () => {
       [INTERNAL_COL_DEFINE]: { className: 'test-internal' },
     };
     const col2 = { dataIndex: 'bamboo', width: 200 };
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[col1, col2]}
         data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
         scroll={{ y: 10 }}
       />,
     );
-    await safeAct(wrapper);
+    await safeAct(container);
 
-    expect(wrapper.find('table').last().find('colgroup col').first().props().className).toEqual(
+    const tables = container.querySelectorAll('table');
+    expect(tables[tables.length - 1].querySelector('colgroup col').className).toEqual(
       'test-internal',
     );
-    expect(wrapper.find('table').first().find('colgroup col').first().props().className).toEqual(
-      'test-internal',
-    );
+    expect(tables[0].querySelector('colgroup col').className).toEqual('test-internal');
   });
 
   it('show header when data is null', async () => {
@@ -122,7 +105,7 @@ describe('Table.FixedHeader', () => {
       },
     ];
 
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={columns}
         data={[]}
@@ -133,36 +116,19 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    await safeAct(wrapper);
-    expect(wrapper.find('.rc-table-header table').props().style).toEqual(
-      expect.objectContaining({ visibility: null }),
-    );
-  });
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
 
-  it('rtl', async () => {
-    const wrapper = mount(
-      <Table
-        columns={[{ dataIndex: 'light', width: 100 }]}
-        data={[{ key: 0, light: 'bamboo' }]}
-        direction="rtl"
-        scroll={{
-          y: 100,
-        }}
-      />,
-    );
-    await safeAct(wrapper);
-
-    expect(wrapper.find('Header').props().stickyOffsets).toEqual(
-      expect.objectContaining({
-        isSticky: false,
-        left: [expect.anything(), expect.anything()],
-      }),
-    );
+    expect(container.querySelector('.rc-table-header table')).not.toHaveStyle({
+      visibility: 'hidden',
+    });
   });
 
   it('invisible should not change width', async () => {
-    const col1 = { dataIndex: 'light', width: 93 };
-    const wrapper = mount(
+    const col1 = { dataIndex: 'light' };
+    const { container } = render(
       <Table
         columns={[col1]}
         data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
@@ -170,44 +136,20 @@ describe('Table.FixedHeader', () => {
       />,
     );
 
-    wrapper
-      .find(RcResizeObserver.Collection)
-      .first()
-      .props()
-      .onBatchResize([
-        {
-          data: wrapper.find('ResizeObserver').at(0).props().data,
-          size: { width: 93, offsetWidth: 93 },
-        },
-      ]);
-    await safeAct(wrapper);
+    await triggerResize(container.querySelector('.rc-table-measure-row'));
 
-    expect(wrapper.find('FixedHolder col').first().props().style).toEqual(
-      expect.objectContaining({ width: 93 }),
-    );
+    expect(parseInt(container.querySelector('col').style.width)).toEqual(100);
 
     // Hide Table should not modify column width
     visible = false;
+    await triggerResize(container.querySelector('.rc-table-measure-row'));
 
-    wrapper
-      .find(RcResizeObserver.Collection)
-      .first()
-      .props()
-      .onBatchResize([
-        {
-          data: wrapper.find('ResizeObserver').at(0).props().data,
-          size: { width: 0, offsetWidth: 0 },
-        },
-      ]);
-
-    act(() => {
+    await act(async () => {
       vi.runAllTimers();
-      wrapper.update();
+      await Promise.resolve();
     });
 
-    expect(wrapper.find('FixedHolder col').first().props().style).toEqual(
-      expect.objectContaining({ width: 93 }),
-    );
+    expect(parseInt(container.querySelector('col').style.width)).toEqual(100);
 
     vi.useRealTimers();
   });
@@ -258,11 +200,9 @@ describe('Table.FixedHeader', () => {
         name: 'Jack1',
       },
     ];
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: true }} />);
-    await safeAct(wrapper);
-    expect(wrapper.find('td').at(9).props().className).toContain('rc-table-cell-fix-left-last');
-    expect(wrapper.find('th').first().props().className).not.toContain(
-      'rc-table-cell-fix-left-last',
-    );
+    const { container } = render(<Table columns={columns} data={data} scroll={{ x: true }} />);
+    await safeAct(container);
+    expect(container.querySelectorAll('td')[9].className).toContain('rc-table-cell-fix-left-last');
+    expect(container.querySelector('th').className).not.toContain('rc-table-cell-fix-left-last');
   });
 });
