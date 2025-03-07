@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import RcResizeObserver, { _rs } from '@rc-component/resize-observer';
+import { _rs } from '@rc-component/resize-observer';
 import Table, { type ColumnsType } from '../src';
 import { RowColSpanWithFixed, RowColSpanWithFixed2 } from './__mocks__/shadowTest';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
