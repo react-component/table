@@ -1,5 +1,5 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import Table from '../src';
 
 describe('Table.Cell', () => {
@@ -34,11 +34,11 @@ describe('Table.Cell', () => {
       );
     };
 
-    const wrapper = mount(<Demo />);
+    const { getByRole } = render(<Demo />);
     reRenderTime = 0;
 
     for (let i = 0; i < 100; i += 1) {
-      wrapper.find('button').simulate('click');
+      fireEvent.click(getByRole('button'));
       expect(reRenderTime).toEqual(0);
     }
   });
@@ -55,14 +55,15 @@ describe('Table.Cell', () => {
       },
     ];
 
-    const wrapper = mount(<Table data={[{ key: 'light' }]} columns={getColumns()} />);
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').hasClass('test')).toBeFalsy();
+    const { container, rerender } = render(
+      <Table data={[{ key: 'light' }]} columns={getColumns()} />,
+    );
+    const cellEl = container.querySelector('.rc-table-tbody .rc-table-cell');
+    expect(cellEl).not.toHaveClass('test');
 
     // Update className should re-render
-    wrapper.setProps({
-      columns: getColumns({ className: 'test' }),
-    });
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').hasClass('test')).toBeTruthy();
+    rerender(<Table data={[{ key: 'light' }]} columns={getColumns({ className: 'test' })} />);
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell')).toHaveClass('test');
   });
 
   it('closure should work on render', () => {
@@ -95,15 +96,16 @@ describe('Table.Cell', () => {
       }
     }
 
-    const wrapper = mount(<Demo />);
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('1');
+    const { container, getByRole } = render(<Demo />);
+    const cellEl = container.querySelector('.rc-table-tbody .rc-table-cell');
+    expect(cellEl?.textContent).toEqual('1');
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('.rc-table-tbody .rc-table-cell').text()).toEqual('2');
+    fireEvent.click(getByRole('button'));
+    expect(container.querySelector('.rc-table-tbody .rc-table-cell')?.textContent).toEqual('2');
   });
 
   it('onHeaderCell', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[
           {
@@ -120,12 +122,13 @@ describe('Table.Cell', () => {
       />,
     );
 
-    expect(wrapper.find('thead th').prop('title')).toEqual('Bamboo');
+    const thEl = container.querySelector('thead th');
+    expect(thEl).toHaveAttribute('title', 'Bamboo');
   });
 
   // https://github.com/ant-design/ant-design/issues/51763
   it('style merge order', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[
           {
@@ -141,9 +144,8 @@ describe('Table.Cell', () => {
       />,
     );
 
-    expect(wrapper.find('thead th').prop('style')).toEqual({
-      color: 'red',
-      textAlign: 'end',
-    });
+    const thEl = container.querySelector<HTMLTableCellElement>('thead th');
+    expect(thEl?.style.color).toEqual('red');
+    expect(thEl?.style.textAlign).toEqual('end');
   });
 });
