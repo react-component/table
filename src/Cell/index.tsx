@@ -22,6 +22,8 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   record?: RecordType;
   /** `column` index is the real show rowIndex */
   index?: number;
+  /** the column index which cell in */
+  colIndex?: number;
   /** the index of the record. For the render(value, record, renderIndex) */
   renderIndex?: number;
   dataIndex?: DataIndex<RecordType>;
@@ -72,7 +74,10 @@ const getTitleFromCellRenderChildren = ({
   return title;
 };
 
-function Cell<RecordType>(props: CellProps<RecordType>) {
+function Cell<RecordType>(
+  props: CellProps<RecordType>,
+  ref: React.ForwardedRef<HTMLTableCellElement>,
+) {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -99,6 +104,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     index,
     rowType,
 
+    // Col,
+    colIndex,
+
     // Span
     colSpan,
     rowSpan,
@@ -118,11 +126,14 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
-    'supportSticky',
-    'allColumnsFixedLeft',
-    'rowHoverable',
-  ]);
+  const { supportSticky, allColumnsFixedLeft, rowHoverable, bodyScrollLeft, headerCellRefs } =
+    useContext(TableContext, [
+      'supportSticky',
+      'allColumnsFixedLeft',
+      'rowHoverable',
+      'bodyScrollLeft',
+      'headerCellRefs',
+    ]);
 
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
@@ -171,6 +182,19 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     additionalProps?.onMouseLeave?.(event);
   });
 
+  const mergedLastFixLeft = React.useMemo(() => {
+    const { current } = headerCellRefs;
+    const dom = current[colIndex];
+
+    if (lastFixLeft && dom && typeof fixLeft === 'number') {
+      const offsetLeft =
+        dom.getBoundingClientRect().x - dom.parentElement.getBoundingClientRect().x || 0;
+
+      // should not be tagged as lastFixLeft if cell is not stickying;
+      return offsetLeft === fixLeft + bodyScrollLeft;
+    }
+    return lastFixLeft;
+  }, [bodyScrollLeft, colIndex, fixLeft, headerCellRefs, lastFixLeft]);
   // ====================== Render ======================
   if (mergedColSpan === 0 || mergedRowSpan === 0) {
     return null;
@@ -192,8 +216,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     {
       [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
       [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
+      [`${cellPrefixCls}-fix-left-last`]: mergedLastFixLeft && supportSticky,
+      [`${cellPrefixCls}-fix-left-all`]: mergedLastFixLeft && allColumnsFixedLeft && supportSticky,
       [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
       [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
       [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
@@ -239,6 +263,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   return (
     <Component
+      ref={ref}
       {...legacyCellProps}
       {...additionalProps}
       className={mergedClassName}
@@ -259,4 +284,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   );
 }
 
-export default React.memo(Cell) as typeof Cell;
+export default React.memo(React.forwardRef(Cell)) as <RecordType>(
+  props: CellProps<RecordType> & { ref?: React.ForwardedRef<HTMLTableCellElement> },
+) => React.JSX.Element;

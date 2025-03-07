@@ -435,12 +435,14 @@ function Table<RecordType extends DefaultRecordType>(
       }
     }
   }
+  const [bodyScrollLeft, setBodyScrollLeft] = React.useState<number>(0);
 
   const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
       const isRTL = direction === 'rtl';
       const mergedScrollLeft =
         typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
+      setBodyScrollLeft(mergedScrollLeft);
 
       const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
       if (!getScrollTarget() || getScrollTarget() === compareTarget) {
@@ -797,6 +799,7 @@ function Table<RecordType extends DefaultRecordType>(
 
   const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
 
+  const headerCellRefs = React.useRef<HTMLTableCellElement[]>([]);
   const TableContextValue = React.useMemo(
     () => ({
       // Scroll
@@ -847,6 +850,8 @@ function Table<RecordType extends DefaultRecordType>(
       childrenColumnName: mergedChildrenColumnName,
 
       rowHoverable,
+      bodyScrollLeft,
+      headerCellRefs,
     }),
     [
       // Scroll
@@ -896,6 +901,8 @@ function Table<RecordType extends DefaultRecordType>(
       mergedChildrenColumnName,
 
       rowHoverable,
+      bodyScrollLeft,
+      headerCellRefs,
     ],
   );
 
