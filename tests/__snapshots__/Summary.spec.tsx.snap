@@ -1,58 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Table.Summary support data type 1`] = `
-LoadedCheerio {
-  "0": <tfoot
-    class="rc-table-summary"
-  >
-    <tr>
-      <td
-        class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-        colspan="2"
-        style="inset-inline-start: 0; --z-offset: 6;"
-      >
-        Light
-      </td>
-      <td
-        class="rc-table-cell"
-      >
-        Bamboo
-      </td>
-      <td
-        class="rc-table-cell"
-        style="text-align: right;"
-      >
-        112.5
-      </td>
-    </tr>
-  </tfoot>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+exports[`Table.Summary > support data type 1`] = `
+<tfoot
+  class="rc-table-summary"
+>
+  <tr>
+    <td
+      class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+      colspan="2"
+      style="inset-inline-start: 0; --z-offset: 6;"
+    >
+      Light
+    </td>
+    <td
+      class="rc-table-cell"
+    >
+      Bamboo
+    </td>
+    <td
+      class="rc-table-cell"
+      style="text-align: right;"
+    >
+      112.5
+    </td>
+  </tr>
+</tfoot>
 `;

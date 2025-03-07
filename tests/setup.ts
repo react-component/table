@@ -7,12 +7,7 @@ window.getComputedStyle = elt => getComputedStyle(elt);
 global.requestAnimationFrame = cb => setTimeout(cb, 0);
 require('regenerator-runtime');
 
-jest.mock('@rc-component/util/lib/getScrollBarSize');
-
-const Enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
-
-Enzyme.configure({ adapter: new Adapter() });
+vi.mock('@rc-component/util/lib/getScrollBarSize');
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver implements ResizeObserver {

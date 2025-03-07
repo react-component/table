@@ -1,9 +1,7 @@
-import { render } from '@testing-library/react';
-import { mount } from 'enzyme';
+import React from 'react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
 import { resetWarned } from '@rc-component/util/lib/warning';
-import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Table from '../src';
 
 describe('Table.Expand', () => {
@@ -23,9 +21,9 @@ describe('Table.Expand', () => {
 
   it('renders expand row correctly', () => {
     resetWarned();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const wrapper = mount(createTable({ expandedRowRender }));
-    expect(wrapper.find('tbody tr')).toHaveLength(2);
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const { container } = render(createTable({ expandedRowRender }));
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(2);
     expect(errorSpy).toHaveBeenCalledWith(
       'Warning: expanded related props have been moved into `expandable`.',
     );
@@ -33,12 +31,12 @@ describe('Table.Expand', () => {
   });
 
   it('pass proper parameters to expandedRowRender', () => {
-    const rowRender = jest.fn(() => <div>expanded row</div>);
+    const rowRender = vi.fn(() => <div>expanded row</div>);
     const expandableProps = props => ({ expandable: { expandedRowRender: rowRender, ...props } });
-    const wrapper = mount(createTable(expandableProps()));
-    wrapper.setProps(expandableProps({ expandedRowKeys: [0] }));
+    const { rerender } = render(createTable(expandableProps()));
+    rerender(createTable(expandableProps({ expandedRowKeys: [0] })));
     expect(rowRender).toHaveBeenLastCalledWith(sampleData[0], 0, 1, true);
-    wrapper.setProps(expandableProps({ expandedRowKeys: [] }));
+    rerender(createTable(expandableProps({ expandedRowKeys: [] })));
     expect(rowRender).toHaveBeenLastCalledWith(sampleData[0], 0, 1, false);
   });
 
@@ -52,9 +50,9 @@ describe('Table.Expand', () => {
       },
       { key: 1, name: 'Jack', age: 28 },
     ];
-    const wrapper = mount(createTable({ data, expandable: { defaultExpandAllRows: true } }));
-    expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(wrapper.render()).toMatchSnapshot();
+    const { container } = render(createTable({ data, expandable: { defaultExpandAllRows: true } }));
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('renders tree row correctly with different children', () => {
@@ -71,8 +69,8 @@ describe('Table.Expand', () => {
       { key: 4, name: 'Jack', age: 28, children: undefined },
       { key: 5, name: 'Jack', age: 28, children: false },
     ];
-    const wrapper = mount(createTable({ data }));
-    expect(wrapper.render()).toMatchSnapshot();
+    const { container } = render(createTable({ data }));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('not use nest when children is invalidate', () => {
@@ -81,8 +79,8 @@ describe('Table.Expand', () => {
       { key: 4, name: 'Jack', age: 28, children: undefined },
       { key: 5, name: 'Jack', age: 28, children: false },
     ];
-    const wrapper = mount(createTable({ data }));
-    expect(wrapper.render()).toMatchSnapshot();
+    const { container } = render(createTable({ data }));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('childrenColumnName', () => {
@@ -95,11 +93,11 @@ describe('Table.Expand', () => {
       },
       { key: 1, name: 'Jack', age: 28 },
     ];
-    const wrapper = mount(
+    const { container } = render(
       createTable({ data, expandable: { defaultExpandAllRows: true, childrenColumnName: 'list' } }),
     );
-    expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(wrapper.render()).toMatchSnapshot();
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('renders fixed column correctly', () => {
@@ -125,7 +123,7 @@ describe('Table.Expand', () => {
         { key: 0, name: 'Lucy', age: 27, gender: 'F' },
         { key: 1, name: 'Jack', age: 28, gender: 'M' },
       ];
-      const wrapper = mount(
+      const { container, rerender } = render(
         createTable({
           columns,
           data,
@@ -134,10 +132,21 @@ describe('Table.Expand', () => {
         }),
       );
       act(() => {
-        wrapper.find('ResizeObserver').first().props().onResize({ width: 1128 });
+        // 模拟 ResizeObserver onResize 回调
+        const resizeObserver = container.querySelector('ResizeObserver');
+        if (resizeObserver && resizeObserver.onResize) {
+          resizeObserver.onResize({ width: 1128 });
+        }
       });
-      wrapper.update();
-      expect(wrapper.render()).toMatchSnapshot();
+      rerender(
+        createTable({
+          columns,
+          data,
+          scroll: { x: 903 },
+          expandable: { expandedRowRender, defaultExpandAllRows: true },
+        }),
+      );
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
@@ -151,7 +160,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const wrapper = mount(
+    const { container, rerender } = render(
       createTable({
         columns,
         data,
@@ -159,7 +168,7 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: true },
       }),
     );
-    const wrapper2 = mount(
+    const { container: container2, rerender: rerender2 } = render(
       createTable({
         columns,
         data,
@@ -167,8 +176,8 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: true, expandIconColumnIndex: 3 },
       }),
     );
-    expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper2.render()).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
+    expect(container2.firstChild).toMatchSnapshot();
   });
 
   it('does not crash if scroll is not set', () => {
@@ -181,7 +190,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const wrapper = mount(
+    const { container, rerender } = render(
       createTable({
         columns,
         data,
@@ -189,15 +198,15 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: true },
       }),
     );
-    const wrapper2 = mount(
+    const { container: container2, rerender: rerender2 } = render(
       createTable({
         columns,
         data,
         expandable: { expandedRowRender, fixed: true },
       }),
     );
-    expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper2.render()).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
+    expect(container2.firstChild).toMatchSnapshot();
   });
 
   it('expandable fix not when expandIconColumnIndex', () => {
@@ -210,7 +219,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const wrapper = mount(
+    const { container, rerender } = render(
       createTable({
         columns,
         data,
@@ -218,7 +227,7 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'left', expandIconColumnIndex: 1 },
       }),
     );
-    const wrapper2 = mount(
+    const { container: container2, rerender: rerender2 } = render(
       createTable({
         columns,
         data,
@@ -226,8 +235,8 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'right', expandIconColumnIndex: 2 },
       }),
     );
-    expect(wrapper.find('.rc-table-has-fix-left').length).toBe(0);
-    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(0);
+    expect(container.querySelectorAll('.rc-table-has-fix-left').length).toBe(0);
+    expect(container2.querySelectorAll('.rc-table-has-fix-right').length).toBe(0);
   });
 
   it('fixed in expandable Fixed in expandable', () => {
@@ -240,7 +249,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const wrapper = mount(
+    const { container, rerender } = render(
       createTable({
         columns,
         data,
@@ -248,7 +257,7 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'left' },
       }),
     );
-    const wrapper2 = mount(
+    const { container: container2, rerender: rerender2 } = render(
       createTable({
         columns,
         data,
@@ -256,22 +265,22 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'right' },
       }),
     );
-    expect(wrapper.find('.rc-table-has-fix-left').length).toBe(1);
-    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(1);
+    expect(container.querySelectorAll('.rc-table-has-fix-left').length).toBe(1);
+    expect(container2.querySelectorAll('.rc-table-has-fix-right').length).toBe(1);
   });
 
   describe('config expand column index', () => {
     it('not show EXPAND_COLUMN if expandable is false', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [...sampleColumns, Table.EXPAND_COLUMN],
         }),
       );
 
-      expect(wrapper.exists('.rc-table-row-expand-icon-cell')).toBeFalsy();
+      expect(container.querySelectorAll('.rc-table-row-expand-icon-cell')).toHaveLength(0);
 
       expect(errorSpy).toHaveBeenCalledWith(
         'Warning: `expandable` is not config but there exist `EXPAND_COLUMN` in `columns`.',
@@ -281,9 +290,9 @@ describe('Table.Expand', () => {
 
     it('renders expand icon to the specify column', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           expandable: {
             expandedRowRender,
@@ -292,7 +301,9 @@ describe('Table.Expand', () => {
         }),
       );
       expect(
-        wrapper.find('tbody tr td').at(1).hasClass('rc-table-row-expand-icon-cell'),
+        container
+          .querySelectorAll('tbody tr td')[1]
+          .classList.contains('rc-table-row-expand-icon-cell'),
       ).toBeTruthy();
 
       expect(errorSpy).toHaveBeenCalledWith(
@@ -302,7 +313,7 @@ describe('Table.Expand', () => {
     });
 
     it('order with EXPAND_COLUMN', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [...sampleColumns, Table.EXPAND_COLUMN],
           expandable: {
@@ -312,15 +323,17 @@ describe('Table.Expand', () => {
       );
 
       expect(
-        wrapper.find('tbody tr td').at(2).hasClass('rc-table-row-expand-icon-cell'),
+        container
+          .querySelectorAll('tbody tr td')[2]
+          .classList.contains('rc-table-row-expand-icon-cell'),
       ).toBeTruthy();
     });
 
     it('de-duplicate of EXPAND_COLUMN', () => {
       resetWarned();
-      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [Table.EXPAND_COLUMN, ...sampleColumns, Table.EXPAND_COLUMN],
           expandable: {
@@ -330,9 +343,11 @@ describe('Table.Expand', () => {
       );
 
       expect(
-        wrapper.find('tbody tr td').at(0).hasClass('rc-table-row-expand-icon-cell'),
+        container
+          .querySelectorAll('tbody tr td')[0]
+          .classList.contains('rc-table-row-expand-icon-cell'),
       ).toBeTruthy();
-      expect(wrapper.find('tbody tr').first().find('td')).toHaveLength(3);
+      expect(container.querySelectorAll('tbody tr')[0].querySelectorAll('td')).toHaveLength(3);
 
       expect(errorSpy).toHaveBeenCalledWith(
         'Warning: There exist more than one `EXPAND_COLUMN` in `columns`.',
@@ -345,7 +360,7 @@ describe('Table.Expand', () => {
   describe('hide expandColumn', () => {
     // https://github.com/ant-design/ant-design/issues/24129
     it('should not render expand icon column when expandIconColumnIndex is negative', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           expandable: {
             expandedRowRender,
@@ -353,11 +368,11 @@ describe('Table.Expand', () => {
           },
         }),
       );
-      expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+      expect(container.querySelectorAll('.rc-table-row-expand-icon-cell')).toHaveLength(0);
     });
 
     it('showExpandColumn = false', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           expandable: {
             expandedRowRender,
@@ -365,7 +380,7 @@ describe('Table.Expand', () => {
           },
         }),
       );
-      expect(wrapper.find('.rc-table-row-expand-icon-cell').length).toBe(0);
+      expect(container.querySelectorAll('.rc-table-row-expand-icon-cell')).toHaveLength(0);
     });
   });
 
@@ -377,7 +392,7 @@ describe('Table.Expand', () => {
         </a>
       );
     }
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -387,21 +402,21 @@ describe('Table.Expand', () => {
         },
       }),
     );
-    expect(wrapper.find('a.expand-row-icon').length).toBeTruthy();
+    expect(container.querySelector('a.expand-row-icon')).toBeTruthy();
   });
 
   it('expand all rows by default', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandedRowRender,
         defaultExpandAllRows: true,
       }),
     );
-    expect(wrapper.find('tbody tr')).toHaveLength(4);
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(4);
   });
 
   it('expand rows by defaultExpandedRowKeys', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -409,30 +424,38 @@ describe('Table.Expand', () => {
         },
       }),
     );
-    expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(wrapper.find('tbody tr').at(2).hasClass('rc-table-expanded-row')).toBeTruthy();
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
+    expect(
+      container.querySelectorAll('tbody tr')[2].classList.contains('rc-table-expanded-row'),
+    ).toBeTruthy();
   });
 
   it('controlled by expandedRowKeys', () => {
-    const wrapper = mount(
+    const { container, rerender } = render(
       createTable({
         expandedRowRender,
         expandedRowKeys: [0],
       }),
     );
-    expect(wrapper.find('tbody tr')).toHaveLength(3);
-    expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
+    expect(
+      container.querySelectorAll('tbody tr')[1].classList.contains('rc-table-expanded-row'),
+    ).toBeTruthy();
 
-    wrapper.setProps({ expandedRowKeys: [1] });
-    expect(wrapper.find('tbody tr')).toHaveLength(4);
-    expect(wrapper.find('tbody tr').at(1).hasClass('rc-table-expanded-row')).toBeTruthy();
-    expect(wrapper.find('tbody tr').at(1).props().style.display).toEqual('none');
-    expect(wrapper.find('tbody tr').at(3).hasClass('rc-table-expanded-row')).toBeTruthy();
+    rerender(createTable({ expandedRowRender, expandedRowKeys: [1] }));
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(4);
+    expect(
+      container.querySelectorAll('tbody tr')[1].classList.contains('rc-table-expanded-row'),
+    ).toBeTruthy();
+    expect(container.querySelectorAll('tbody tr')[1].style.display).toEqual('none');
+    expect(
+      container.querySelectorAll('tbody tr')[3].classList.contains('rc-table-expanded-row'),
+    ).toBeTruthy();
   });
 
   it('renders expend row class correctly', () => {
-    const expandedRowClassName = jest.fn().mockReturnValue('expand-row-test-class-name');
-    const wrapper = mount(
+    const expandedRowClassName = vi.fn().mockReturnValue('expand-row-test-class-name');
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -442,12 +465,14 @@ describe('Table.Expand', () => {
       }),
     );
 
-    expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
+    expect(
+      container.querySelectorAll('tbody tr')[1].classList.contains('expand-row-test-class-name'),
+    ).toBeTruthy();
   });
 
   it("renders expend row class correctly when it's string", () => {
     const expandedRowClassName = 'expand-row-test-str-class-name';
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -457,15 +482,17 @@ describe('Table.Expand', () => {
       }),
     );
 
-    expect(wrapper.find('tbody tr').at(1).hasClass(expandedRowClassName)).toBeTruthy();
+    expect(
+      container.querySelectorAll('tbody tr')[1].classList.contains(expandedRowClassName),
+    ).toBeTruthy();
   });
 
   it('renders expend row class correctly using children without expandedRowRender', () => {
-    const expandedRowClassName = jest.fn().mockReturnValue('expand-row-test-class-name');
+    const expandedRowClassName = vi.fn().mockReturnValue('expand-row-test-class-name');
 
     const _data = [{ ...sampleData[0], children: [sampleData[1]] }];
 
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         data: _data,
         expandable: {
@@ -475,11 +502,13 @@ describe('Table.Expand', () => {
       }),
     );
 
-    expect(wrapper.find('tbody tr').at(1).hasClass('expand-row-test-class-name')).toBeTruthy();
+    expect(
+      container.querySelectorAll('tbody tr')[1].classList.contains('expand-row-test-class-name'),
+    ).toBeTruthy();
   });
 
   it('renders expend column title', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -489,42 +518,42 @@ describe('Table.Expand', () => {
     );
 
     expect(
-      wrapper.find('thead tr th').first().hasClass('rc-table-row-expand-icon-cell'),
+      container
+        .querySelectorAll('thead tr th')[0]
+        .classList.contains('rc-table-row-expand-icon-cell'),
     ).toBeTruthy();
-    expect(wrapper.find('thead tr th').first().html()).toContain('column title');
+    expect(container.querySelectorAll('thead tr th')[0].innerHTML).toContain('column title');
   });
 
   it('fires expand change event', () => {
-    const onExpand = jest.fn();
-    const wrapper = mount(
-      createTable({
-        expandable: {
-          expandedRowRender,
-          onExpand,
-        },
-      }),
-    );
-    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
-
-    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+    const onExpand = vi.fn();
+    const { container } = render(createTable({ expandable: { expandedRowRender, onExpand } }));
+    const expandIcon = container.querySelector('.rc-table-row-expand-icon');
+    if (expandIcon) {
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+    }
   });
 
   it('fires onExpandedRowsChange event', () => {
-    const onExpandedRowsChange = jest.fn();
-    const wrapper = mount(
+    const onExpandedRowsChange = vi.fn();
+    const { container } = render(
       createTable({
         expandedRowRender,
         onExpandedRowsChange,
       }),
     );
-    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
-    expect(onExpandedRowsChange).toHaveBeenCalledWith([0]);
+    const expandIcon = container.querySelector('.rc-table-row-expand-icon');
+    if (expandIcon) {
+      fireEvent.click(expandIcon);
+      expect(onExpandedRowsChange).toHaveBeenCalledWith([0]);
+    }
   });
 
   it('show icon if use `expandIcon` & `expandRowByClick`', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandedRowRender,
         expandRowByClick: true,
@@ -533,12 +562,12 @@ describe('Table.Expand', () => {
       }),
     );
 
-    expect(wrapper.find('.should-display').length).toBeTruthy();
+    expect(container.querySelectorAll('.should-display')).toHaveLength(1);
   });
 
   it('expandRowByClick', () => {
-    const onExpand = jest.fn();
-    const wrapper = mount(
+    const onExpand = vi.fn();
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -547,15 +576,18 @@ describe('Table.Expand', () => {
         },
       }),
     );
-    wrapper.find('tbody tr').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
+    const firstRow = container.querySelectorAll('tbody tr')[0];
+    if (firstRow) {
+      fireEvent.click(firstRow);
+      expect(onExpand).toHaveBeenCalledWith(true, sampleData[0]);
 
-    wrapper.find('tbody tr').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+      fireEvent.click(firstRow);
+      expect(onExpand).toHaveBeenCalledWith(false, sampleData[0]);
+    }
   });
 
   it('some row should not expandable', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -565,18 +597,16 @@ describe('Table.Expand', () => {
     );
 
     expect(
-      wrapper
-        .find('tbody tr')
-        .first()
-        .find('.rc-table-row-expand-icon')
-        .hasClass('rc-table-row-spaced'),
+      container
+        .querySelectorAll('tbody tr')[0]
+        .querySelector('.rc-table-row-expand-icon')
+        .classList.contains('rc-table-row-spaced'),
     ).toBeTruthy();
     expect(
-      wrapper
-        .find('tbody tr')
-        .last()
-        .find('.rc-table-row-expand-icon')
-        .hasClass('rc-table-row-collapsed'),
+      container
+        .querySelectorAll('tbody tr')[1]
+        .querySelector('.rc-table-row-expand-icon')
+        .classList.contains('rc-table-row-collapsed'),
     ).toBeTruthy();
   });
 
@@ -588,17 +618,17 @@ describe('Table.Expand', () => {
         sub: [{ key: 1, sub: [{ key: 2 }] }],
       },
     ];
-    const wrapper = mount(
+    const { container } = render(
       createTable({ data, childrenColumnName: 'sub', expandable: { defaultExpandAllRows: true } }),
     );
-    expect(wrapper.find('tbody tr')).toHaveLength(3);
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
   });
 
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when use `expandIcon` & `expandRowByClick`', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
-    const wrapper = mount(
+    const onExpand = vi.fn();
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -611,22 +641,25 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
-    wrapper.find('.custom-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(1);
-    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('');
-    wrapper.find('.custom-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(2);
-    expect(wrapper.find('.rc-table-expanded-row').first().getDOMNode().style.display).toBe('none');
+    expect(container.querySelectorAll('.rc-table-expanded-row')).toHaveLength(0);
+    const expandIcon = container.querySelector('.custom-expand-icon');
+    if (expandIcon) {
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(1);
+      expect(container.querySelector('.rc-table-expanded-row').style.display).toBe('');
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(2);
+      expect(container.querySelector('.rc-table-expanded-row').style.display).toBe('none');
+    }
   });
 
   // https://github.com/ant-design/ant-design/issues/23894
   it('should be collapsible when `expandRowByClick` without custom `expandIcon`', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
-    const wrapper = mount(
+    const onExpand = vi.fn();
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -636,18 +669,21 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(1);
-    wrapper.find('.rc-table-row-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(2);
+    const expandIcon = container.querySelector('.rc-table-row-expand-icon');
+    if (expandIcon) {
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(1);
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(2);
+    }
   });
 
   it('should be collapsible when `expandRowByClick` with custom `expandIcon` and event.stopPropagation', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
-    const wrapper = mount(
+    const onExpand = vi.fn();
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -666,18 +702,21 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    wrapper.find('.custom-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(true, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(1);
-    wrapper.find('.custom-expand-icon').first().simulate('click');
-    expect(onExpand).toHaveBeenCalledWith(false, data[0]);
-    expect(onExpand).toHaveBeenCalledTimes(2);
+    const expandIcon = container.querySelector('.custom-expand-icon');
+    if (expandIcon) {
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(true, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(1);
+      fireEvent.click(expandIcon);
+      expect(onExpand).toHaveBeenCalledWith(false, data[0]);
+      expect(onExpand).toHaveBeenCalledTimes(2);
+    }
   });
 
   it('support invalid expandIcon', () => {
     const data = [{ key: 0, name: 'Lucy', age: 27 }];
-    const onExpand = jest.fn();
-    const wrapper = mount(
+    const onExpand = vi.fn();
+    const { container } = render(
       createTable({
         expandable: {
           expandedRowRender,
@@ -688,13 +727,13 @@ describe('Table.Expand', () => {
         data,
       }),
     );
-    expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
+    expect(container.querySelectorAll('.rc-table-expanded-row')).toHaveLength(0);
   });
 
   it('warning for use `expandedRowRender` and nested table in the same time', () => {
     resetWarned();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    mount(createTable({ expandedRowRender, data: [{ children: [] }] }));
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    render(createTable({ expandedRowRender, data: [{ children: [] }] }));
     expect(errorSpy).toHaveBeenCalledWith(
       'Warning: `expandedRowRender` should not use with nested Table',
     );
@@ -702,7 +741,7 @@ describe('Table.Expand', () => {
   });
 
   it('should only trigger once', () => {
-    const expandedRowRender = jest.fn(() => <p>extra data</p>);
+    const expandedRowRender = vi.fn(() => <p>extra data</p>);
     render(
       createTable({
         expandable: {

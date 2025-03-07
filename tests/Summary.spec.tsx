@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 
@@ -14,7 +14,7 @@ describe('Table.Summary', () => {
   };
 
   it('render correctly', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         summary: () => (
           <tr className="summary">
@@ -24,11 +24,11 @@ describe('Table.Summary', () => {
       }),
     );
 
-    expect(wrapper.find('tfoot').text()).toEqual('Good');
+    expect(container.querySelector('tfoot')?.textContent).toEqual('Good');
   });
 
   it('support data type', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[
           { dataIndex: 'a', fixed: 'left', width: 10 },
@@ -50,12 +50,12 @@ describe('Table.Summary', () => {
       />,
     );
 
-    expect(wrapper.find('tfoot').render()).toMatchSnapshot();
+    expect(container.querySelector('tfoot')).toMatchSnapshot();
   });
 
   it('summary row click', async () => {
-    const onClick = jest.fn();
-    const wrapper = mount(
+    const onClick = vi.fn();
+    const { container } = render(
       <Table
         columns={[
           { dataIndex: 'a', fixed: 'left', width: 10 },
@@ -77,14 +77,16 @@ describe('Table.Summary', () => {
       />,
     );
 
-    const tr = wrapper.find('tfoot tr').first();
-    tr.simulate('click');
+    const tr = container.querySelector('tfoot tr');
+    if (tr) {
+      fireEvent.click(tr);
+    }
     expect(onClick).toHaveBeenCalled();
   });
 
   describe('fixed summary', () => {
     const getSummaryTable = (fixed: boolean | 'top' | 'bottom') =>
-      mount(
+      render(
         <Table
           columns={[
             { dataIndex: 'a', fixed: 'left', width: 10 },
@@ -106,26 +108,26 @@ describe('Table.Summary', () => {
       );
 
     it('fixed', () => {
-      const wrapper = getSummaryTable(false);
+      const { container } = getSummaryTable(false);
 
-      expect(wrapper.exists('tfoot.rc-table-summary')).toBeTruthy();
+      expect(container.querySelector('tfoot.rc-table-summary')).toBeTruthy();
     });
 
     it('fixed bottom', () => {
-      const wrapper = getSummaryTable('bottom');
+      const { container } = getSummaryTable('bottom');
 
-      expect(wrapper.exists('tfoot.rc-table-summary')).toBeTruthy();
+      expect(container.querySelector('tfoot.rc-table-summary')).toBeTruthy();
     });
 
     it('sticky', () => {
-      const wrapper = getSummaryTable(true);
+      const { container } = getSummaryTable(true);
 
-      expect(wrapper.exists('div.rc-table-summary')).toBeTruthy();
+      expect(container.querySelector('div.rc-table-summary')).toBeTruthy();
     });
 
     it('fixed top', () => {
-      const wrapper = getSummaryTable('top');
-      expect(wrapper.exists('.rc-table-header tfoot.rc-table-summary')).toBeTruthy();
+      const { container } = getSummaryTable('top');
+      expect(container.querySelector('.rc-table-header tfoot.rc-table-summary')).toBeTruthy();
     });
   });
 });

@@ -1,12 +1,10 @@
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
-import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/constant';
-import { fireEvent, render } from '@testing-library/react';
 
 describe('Table.Basic', () => {
   const data = [
@@ -21,33 +19,33 @@ describe('Table.Basic', () => {
 
   describe('renders correctly', () => {
     it('basic', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           prefixCls: 'test-prefix',
           className: 'test-class-name',
         }),
       );
-      expect(wrapper.render()).toMatchSnapshot();
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     it('RTL', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           prefixCls: 'test-prefix',
           className: 'test-class-name',
           direction: 'rtl',
         }),
       );
-      expect(wrapper.render()).toMatchSnapshot();
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     it('no columns', () => {
-      const wrapper = mount(createTable({ columns: [] }));
-      expect(wrapper.render()).toMatchSnapshot();
+      const { container } = render(createTable({ columns: [] }));
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     it('column children undefined', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [
             {
@@ -65,13 +63,13 @@ describe('Table.Basic', () => {
           ],
         }),
       );
-      expect(wrapper.render()).toMatchSnapshot();
-      expect(wrapper.find('th').at(0).text()).toEqual('姓名');
-      expect(wrapper.find('th').at(1).text()).toEqual('年龄');
+      expect(container.firstChild).toMatchSnapshot();
+      expect(container.querySelectorAll('th')[0].textContent).toEqual('姓名');
+      expect(container.querySelectorAll('th')[1].textContent).toEqual('年龄');
     });
 
     it('falsy columns', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [
             {
@@ -84,19 +82,19 @@ describe('Table.Basic', () => {
           ],
         }),
       );
-      expect(wrapper.render()).toMatchSnapshot();
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('renders empty text correctly', () => {
     it('ReactNode', () => {
-      const wrapper = mount(createTable({ data: [], emptyText: 'No data' }));
-      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('No data');
+      const { container } = render(createTable({ data: [], emptyText: 'No data' }));
+      expect(container.querySelector('.rc-table-placeholder').textContent).toEqual('No data');
     });
 
     it('renderProps', () => {
-      const wrapper = mount(createTable({ data: [], emptyText: () => 'No data' }));
-      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('No data');
+      const { container } = render(createTable({ data: [], emptyText: () => 'No data' }));
+      expect(container.querySelector('.rc-table-placeholder').textContent).toEqual('No data');
     });
 
     it('effect update', () => {
@@ -107,100 +105,106 @@ describe('Table.Basic', () => {
         }, []);
         return <Table emptyText={emptyText} />;
       };
-      const wrapper = mount(<App />);
-      wrapper.update();
-      expect(wrapper.find('.rc-table-placeholder').hostNodes().text()).toEqual('bamboo');
+      const { container, rerender } = render(<App />);
+      rerender(<App />);
+      expect(container.querySelector('.rc-table-placeholder').textContent).toEqual('bamboo');
     });
   });
 
   it('renders without header', () => {
-    const wrapper = mount(createTable({ showHeader: false }));
-    expect(wrapper.find('thead').length).toBeFalsy();
+    const { container } = render(createTable({ showHeader: false }));
+    expect(container.querySelector('thead')).toBeNull();
   });
 
   it('renders fixed header correctly', () => {
-    const wrapper = mount(createTable({ scroll: { y: 100 } }));
-    expect(wrapper.find('.rc-table-header').length).toBeTruthy();
+    const { container } = render(createTable({ scroll: { y: 100 } }));
+    expect(container.querySelector('.rc-table-header')).toBeTruthy();
   });
 
   it('renders title correctly', () => {
-    const wrapper = mount(createTable({ title: () => <p>title</p> }));
-    expect(wrapper.find('.rc-table-title').hostNodes().text()).toEqual('title');
+    const { container } = render(createTable({ title: () => <p>title</p> }));
+    expect(container.querySelector('.rc-table-title').textContent).toEqual('title');
   });
 
   it('renders footer correctly', () => {
-    const wrapper = mount(createTable({ footer: () => <p>footer</p> }));
-    expect(wrapper.find('.rc-table-footer').hostNodes().text()).toEqual('footer');
+    const { container } = render(createTable({ footer: () => <p>footer</p> }));
+    expect(container.querySelector('.rc-table-footer').textContent).toEqual('footer');
   });
 
   it('renders with id correctly', () => {
     const testId = 'test-identifier';
-    const wrapper = mount(createTable({ id: testId }));
-    expect(wrapper.find(`div#${testId}`).length).toBeTruthy();
+    const { container } = render(createTable({ id: testId }));
+    expect(container.querySelector(`div#${testId}`)).toBeTruthy();
   });
 
   it('renders data- attributes', () => {
     const miscProps = { 'data-test': 'names-table' };
-    const wrapper = mount(createTable(miscProps));
-    const props = wrapper.find('div.rc-table').props();
-    expect(props).toEqual(expect.objectContaining(miscProps));
+    const { container } = render(createTable(miscProps));
+    const tableDiv = container.querySelector('div.rc-table');
+    expect(tableDiv).toHaveAttribute('data-test', 'names-table');
   });
 
   it('renders aria- attributes', () => {
     const miscProps = { 'aria-label': 'names-table-aria' };
-    const wrapper = mount(createTable(miscProps));
-    const props = wrapper.find('table').props();
-    expect(props).toEqual(expect.objectContaining(miscProps));
+    const { container } = render(createTable(miscProps));
+    const tableEl = container.querySelector('table');
+    expect(tableEl).toHaveAttribute('aria-label', 'names-table-aria');
   });
 
   describe('rowKey', () => {
     it('uses record.key', () => {
-      const wrapper = mount(createTable());
-      expect(wrapper.find(BodyRow).at(0).key()).toBe('key0');
-      expect(wrapper.find(BodyRow).at(1).key()).toBe('key1');
+      const { container } = render(createTable());
+      const rows = container.querySelectorAll('.rc-table-row');
+      expect(rows[0].getAttribute('data-row-key')).toBe('key0');
+      expect(rows[1].getAttribute('data-row-key')).toBe('key1');
     });
 
     it('sets by rowKey', () => {
-      const wrapper = mount(createTable({ rowKey: 'name' }));
-      expect(wrapper.find(BodyRow).at(0).key()).toBe('Lucy');
-      expect(wrapper.find(BodyRow).at(1).key()).toBe('Jack');
+      const { container } = render(createTable({ rowKey: 'name' }));
+      const rows = container.querySelectorAll('.rc-table-row');
+      expect(rows[0].getAttribute('data-row-key')).toBe('Lucy');
+      expect(rows[1].getAttribute('data-row-key')).toBe('Jack');
     });
 
     it('sets by rowKey function', () => {
-      const wrapper = mount(createTable({ rowKey: record => `${record.key}1` }));
-      expect(wrapper.find(BodyRow).at(0).key()).toBe('key01');
-      expect(wrapper.find(BodyRow).at(1).key()).toBe('key11');
+      const { container } = render(createTable({ rowKey: record => `${record.key}1` }));
+      const rows = container.querySelectorAll('.rc-table-row');
+      expect(rows[0].getAttribute('data-row-key')).toBe('key01');
+      expect(rows[1].getAttribute('data-row-key')).toBe('key11');
     });
   });
 
   describe('caption', () => {
     it('renders string caption', () => {
       const miscProps = { caption: 'test_caption' };
-      const wrapper = mount(createTable(miscProps));
-      expect(wrapper.find('.rc-table-caption')).toBeTruthy();
+      const { container } = render(createTable(miscProps));
+      expect(container.querySelector('.rc-table-caption')).toBeTruthy();
     });
 
     it('renders React.Node caption', () => {
       const miscProps = { caption: <div className="caption_inner" /> };
-      const wrapper = mount(createTable(miscProps));
-      expect(wrapper.find('.rc-table-caption .caption_inner')).toBeTruthy();
+      const { container } = render(createTable(miscProps));
+      expect(container.querySelector('.rc-table-caption .caption_inner')).toBeTruthy();
     });
 
     it('renders without caption', () => {
       const miscProps = {};
-      const wrapper = mount(createTable(miscProps));
-      expect(wrapper.find('.rc-table-caption').length).toBeFalsy();
+      const { container } = render(createTable(miscProps));
+      expect(container.querySelector('.rc-table-caption')).toBeNull();
     });
   });
 
   it('renders tableLayout', () => {
-    const wrapper = mount(createTable({ tableLayout: 'fixed' }));
-    expect(wrapper.find('table').props().style.tableLayout).toEqual('fixed');
-    expect(wrapper.find('div.rc-table').hasClass('rc-table-layout-fixed')).toBeTruthy();
+    const { container } = render(createTable({ tableLayout: 'fixed' }));
+    const tableEl = container.querySelector('table');
+    expect(tableEl.style.tableLayout).toEqual('fixed');
+    expect(
+      container.querySelector('div.rc-table').classList.contains('rc-table-layout-fixed'),
+    ).toBeTruthy();
   });
 
   it('renders ellipsis', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         columns: [
           { title: 'title', ellipsis: true },
@@ -208,14 +212,13 @@ describe('Table.Basic', () => {
         ],
       }),
     );
-
-    wrapper.find('td').forEach(td => {
-      expect(td.hasClass('rc-table-cell-ellipsis')).toBeTruthy();
+    container.querySelectorAll('td').forEach(td => {
+      expect(td.classList.contains('rc-table-cell-ellipsis')).toBeTruthy();
     });
   });
 
   it('renders ellipsis by showTitle option', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         columns: [
           { title: 'title', ellipsis: { showTitle: true } },
@@ -223,9 +226,8 @@ describe('Table.Basic', () => {
         ],
       }),
     );
-
-    wrapper.find('td').forEach(td => {
-      expect(td.hasClass('rc-table-cell-ellipsis')).toBeTruthy();
+    container.querySelectorAll('td').forEach(td => {
+      expect(td.classList.contains('rc-table-cell-ellipsis')).toBeTruthy();
     });
   });
 
@@ -234,24 +236,18 @@ describe('Table.Basic', () => {
       { title: 'title', ellipsis: { showTitle: false } },
       { title: 'node title', ellipsis: { showTitle: false }, render: () => <h1>233</h1> },
     ];
-    const wrapper = mount(
-      createTable({
-        columns,
-      }),
-    );
-
-    wrapper.find('.rc-table-thead th').forEach(td => {
-      expect(td.getDOMNode().attributes.getNamedItem('title')).toBeTruthy();
+    const { container } = render(createTable({ columns }));
+    container.querySelectorAll('.rc-table-thead th').forEach(td => {
+      expect(td.getAttribute('title')).toBeTruthy();
     });
-
-    wrapper.find('.rc-table-tbody td').forEach(td => {
-      expect(td.getDOMNode().attributes.getNamedItem('title')).toBeFalsy();
+    container.querySelectorAll('.rc-table-tbody td').forEach(td => {
+      expect(td.getAttribute('title')).toBeNull();
     });
   });
 
   describe('scope', () => {
     it('renders columns scope correctly', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [
             {
@@ -259,27 +255,20 @@ describe('Table.Basic', () => {
             },
             {
               title: 'Contact',
-              children: [
-                {
-                  title: 'Email',
-                },
-                {
-                  title: 'Phone Number',
-                },
-              ],
+              children: [{ title: 'Email' }, { title: 'Phone Number' }],
             },
           ],
         }),
       );
-
-      expect(wrapper.find('thead th').at(0).prop('scope')).toEqual('col');
-      expect(wrapper.find('thead th').at(1).prop('scope')).toEqual('colgroup');
-      expect(wrapper.find('thead th').at(2).prop('scope')).toEqual('col');
-      expect(wrapper.find('thead th').at(3).prop('scope')).toEqual('col');
+      const thEls = container.querySelectorAll('thead th');
+      expect(thEls[0].getAttribute('scope')).toEqual('col');
+      expect(thEls[1].getAttribute('scope')).toEqual('colgroup');
+      expect(thEls[2].getAttribute('scope')).toEqual('col');
+      expect(thEls[3].getAttribute('scope')).toEqual('col');
     });
 
     it('renders rows scope correctly', () => {
-      const wrapper = mount(
+      const { container } = render(
         createTable({
           columns: [
             {
@@ -295,9 +284,9 @@ describe('Table.Basic', () => {
           ],
         }),
       );
-
-      expect(wrapper.find('tbody th').at(0).prop('scope')).toEqual('row');
-      expect(wrapper.find('tbody th').at(1).prop('scope')).toEqual('row');
+      const thEls = container.querySelectorAll('tbody th');
+      expect(thEls[0].getAttribute('scope')).toEqual('row');
+      expect(thEls[1].getAttribute('scope')).toEqual('row');
     });
   });
 
@@ -311,13 +300,13 @@ describe('Table.Basic', () => {
         width: 100,
       },
     ];
-    const wrapper = mount(createTable({ columns }));
-    wrapper.find('td').forEach((td, index) => {
-      expect(td.hasClass('name-class')).toBeTruthy();
-      expect(td.text()).toEqual(['Lucy', 'Jack'][index]);
+    const { container } = render(createTable({ columns }));
+    container.querySelectorAll('td').forEach((td, index) => {
+      expect(td.classList.contains('name-class')).toBeTruthy();
+      expect(td.textContent).toEqual(['Lucy', 'Jack'][index]);
     });
-
-    expect(wrapper.find('col').props().style).toEqual(expect.objectContaining({ width: 100 }));
+    const colEl = container.querySelector('col');
+    expect(colEl.style.width).toEqual('100px');
   });
 
   it('renders custom cell correctly', () => {
@@ -328,16 +317,16 @@ describe('Table.Basic', () => {
         render: text => <p>!!!{text}!!!</p>,
       },
     ];
-    const wrapper = mount(createTable({ columns }));
-    wrapper.find('td').forEach((td, index) => {
-      expect(td.text()).toEqual(['!!!Lucy!!!', '!!!Jack!!!'][index]);
+    const { container } = render(createTable({ columns }));
+    container.querySelectorAll('td').forEach((td, index) => {
+      expect(td.textContent).toEqual(['!!!Lucy!!!', '!!!Jack!!!'][index]);
     });
   });
 
   describe('dataIndex', () => {
     it("pass record to render when it's falsy", () => {
       [null, undefined, '', []].forEach(dataIndex => {
-        const cellRender = jest.fn();
+        const cellRender = vi.fn();
         const columns = [
           {
             title: 'Name',
@@ -346,7 +335,7 @@ describe('Table.Basic', () => {
             render: cellRender,
           },
         ];
-        mount(createTable({ columns }));
+        render(createTable({ columns }));
         expect(cellRender).toHaveBeenCalledWith(data[0], data[0], 0);
       });
     });
@@ -360,16 +349,14 @@ describe('Table.Basic', () => {
         { key: 'key0', name: { first: 'John', last: 'Doe' } },
         { key: 'key1', name: { first: 'Terry', last: 'Garner' } },
       ];
-      const wrapper = mount(createTable({ columns, data: localData }));
-
+      const { container } = render(createTable({ columns, data: localData }));
       const targetData = [
         ['John', 'Doe'],
         ['Terry', 'Garner'],
       ];
-
-      wrapper.find('tbody tr').forEach((tr, ri) => {
-        tr.find('td').forEach((td, di) => {
-          expect(td.text()).toEqual(targetData[ri][di]);
+      container.querySelectorAll('tbody tr').forEach((tr, ri) => {
+        tr.querySelectorAll('td').forEach((td, di) => {
+          expect(td.textContent).toEqual(targetData[ri][di]);
         });
       });
     });
@@ -380,8 +367,8 @@ describe('Table.Basic', () => {
       { key: 'key0', name: {} },
       { key: 'key1', name: 'Jack' },
     ];
-    const wrapper = mount(createTable({ data: localData }));
-    expect(wrapper.find('table td').first().text()).toBe('');
+    const { container } = render(createTable({ data: localData }));
+    expect(container.querySelector('table td').textContent).toBe('');
   });
 
   it('renders colSpan correctly', () => {
@@ -423,8 +410,8 @@ describe('Table.Basic', () => {
       { key: 'key0', firstName: 'John', lastName: 'Doe' },
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
-    const wrapper = mount(createTable({ columns, data: localData }));
-    expect(wrapper.render()).toMatchSnapshot();
+    const { container } = render(createTable({ columns, data: localData }));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('render with style & className & data-*', () => {
@@ -441,12 +428,11 @@ describe('Table.Basic', () => {
         }),
       },
     ];
-
-    const wrapper = mount(<Table columns={columns} data={[{ key: '' }]} />);
-    const props = wrapper.find('tbody td').props();
-    expect(props.style).toEqual(expect.objectContaining({ background: 'red' }));
-    expect(props.className.includes('customize-render')).toBeTruthy();
-    expect(props['data-light']).toEqual('bamboo');
+    const { container } = render(<Table columns={columns} data={[{ key: '' }]} />);
+    const td = container.querySelector('tbody td');
+    expect(td.style.background).toEqual('red');
+    expect(td.className.includes('customize-render')).toBeTruthy();
+    expect(td.getAttribute('data-light')).toEqual('bamboo');
   });
 
   it('renders rowSpan correctly', () => {
@@ -478,14 +464,14 @@ describe('Table.Basic', () => {
       { key: 'key0', firstName: 'John', lastName: 'Doe' },
       { key: 'key1', firstName: 'Terry', lastName: 'Garner' },
     ];
-    const wrapper = mount(createTable({ columns, data: localData }));
-    expect(wrapper.render()).toMatchSnapshot();
+    const { container } = render(createTable({ columns, data: localData }));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('shows error if no rowKey specify', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const localData = [{ name: 'Lucy' }, { name: 'Jack' }];
-    mount(createTable({ data: localData }));
+    render(createTable({ data: localData }));
     expect(spy.mock.calls[0][0]).toMatch(
       'Warning: Each record in table should have a unique `key` prop, or set `rowKey` to an unique primary key.',
     );
@@ -493,29 +479,27 @@ describe('Table.Basic', () => {
   });
 
   it('renders correctly RowClassName as string', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         rowClassName: 'test-row-class-name-asStr',
       }),
     );
-
-    wrapper.find('tbody tr').forEach(tr => {
-      expect(tr.hasClass('test-row-class-name-asStr')).toBeTruthy();
+    container.querySelectorAll('tbody tr').forEach(tr => {
+      expect(tr.classList.contains('test-row-class-name-asStr')).toBeTruthy();
     });
-    expect(wrapper.find('tbody tr').length).toBeTruthy();
+    expect(container.querySelectorAll('tbody tr').length).toBeTruthy();
   });
 
   it('renders correctly RowClassName as function', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         rowClassName: () => 'test-row-class-name-asFn',
       }),
     );
-
-    wrapper.find('tbody tr').forEach(tr => {
-      expect(tr.hasClass('test-row-class-name-asFn')).toBeTruthy();
+    container.querySelectorAll('tbody tr').forEach(tr => {
+      expect(tr.classList.contains('test-row-class-name-asFn')).toBeTruthy();
     });
-    expect(wrapper.find('tbody tr').length).toBeTruthy();
+    expect(container.querySelectorAll('tbody tr').length).toBeTruthy();
   });
 
   describe('onRow', () => {
@@ -524,19 +508,15 @@ describe('Table.Basic', () => {
         id: `row-${record.key}`,
         index,
       });
-      const wrapper = mount(createTable({ onRow }));
-
-      expect(wrapper.find('tbody tr').length).toBeTruthy();
-      wrapper.find('tbody tr').forEach((tr, index) => {
-        expect(tr.props().id).toEqual(`row-${data[index].key}`);
-        expect(tr.simulate.bind(tr, 'click')).not.toThrowError();
-      });
+      const { container } = render(createTable({ onRow }));
+      const tr = container.querySelector('tbody tr');
+      expect(tr.id).toEqual(`row-${data[0].key}`);
+      fireEvent.click(tr);
     });
 
     it('onRow should keep update', () => {
       const Test = () => {
         const [count, setCount] = React.useState(0);
-
         return (
           <div>
             <Table
@@ -552,10 +532,11 @@ describe('Table.Basic', () => {
           </div>
         );
       };
-      const wrapper = mount(<Test />);
+      const { container, getByText } = render(<Test />);
+      const buttonTarget = container.querySelector('tbody tr td:last-child');
       for (let i = 0; i < 10; i += 1) {
-        wrapper.find('tbody tr td').last().simulate('click');
-        expect(wrapper.find('#count').text()).toEqual(String(i + 1));
+        fireEvent.click(buttonTarget);
+        expect(getByText(String(i + 1))).toBeTruthy();
       }
     });
   });
@@ -565,21 +546,21 @@ describe('Table.Basic', () => {
       id: `cell-${record.name}`,
     });
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onCell }];
-    const wrapper = mount(createTable({ columns }));
-
-    expect(wrapper.find('tbody td')).toHaveLength(2);
-    wrapper.find('tbody td').forEach((td, index) => {
-      expect(td.props().id).toEqual(`cell-${data[index].name}`);
+    const { container } = render(createTable({ columns }));
+    const tds = container.querySelectorAll('tbody td');
+    expect(tds).toHaveLength(2);
+    tds.forEach((td, index) => {
+      expect(td.getAttribute('id')).toEqual(`cell-${data[index].name}`);
     });
   });
 
   it('renders onHeaderRow correctly', () => {
-    const onHeaderRow = jest.fn((columns, index) => ({
+    const onHeaderRow = vi.fn((columns, index) => ({
       id: `header-row-${index}`,
     }));
-    const wrapper = mount(createTable({ onHeaderRow }));
-
-    expect(wrapper.find('thead tr').props().id).toEqual('header-row-0');
+    const { container } = render(createTable({ onHeaderRow }));
+    const headerRow = container.querySelector('thead tr');
+    expect(headerRow.id).toEqual('header-row-0');
     expect(onHeaderRow).toHaveBeenCalledWith(
       [{ title: 'Name', dataIndex: 'name', key: 'name' }],
       0,
@@ -591,10 +572,9 @@ describe('Table.Basic', () => {
       id: `header-cell-${column.key}`,
     });
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name', onHeaderCell }];
-    const wrapper = mount(createTable({ columns }));
-
-    expect(wrapper.find('thead th')).toHaveLength(1);
-    expect(wrapper.find('thead th').props().id).toEqual('header-cell-name');
+    const { container } = render(createTable({ columns }));
+    const th = container.querySelector('thead th');
+    expect(th.getAttribute('id')).toEqual('header-cell-name');
   });
 
   describe('custom components', () => {
@@ -620,8 +600,8 @@ describe('Table.Basic', () => {
     };
 
     it('renders correctly', () => {
-      const wrapper = mount(createTable({ components }));
-      expect(wrapper.render()).toMatchSnapshot();
+      const { container } = render(createTable({ components }));
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     it('renders fixed column and header correctly', () => {
@@ -645,8 +625,8 @@ describe('Table.Basic', () => {
     describe('scroll content', () => {
       it('with scroll', () => {
         resetWarned();
-        const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-        const wrapper = mount(
+        const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const { container } = render(
           createTable({
             columns: [{ dataIndex: 'a' }, { dataIndex: 'b', width: 903 }],
             components: {
@@ -655,7 +635,7 @@ describe('Table.Basic', () => {
             scroll: { x: 100, y: 100 },
           }),
         );
-        expect(wrapper.render()).toMatchSnapshot();
+        expect(container.firstChild).toMatchSnapshot();
 
         expect(errSpy).toHaveBeenCalledWith(
           'Warning: When use `components.body` with render props. Each column should have a fixed `width` value.',
@@ -666,8 +646,8 @@ describe('Table.Basic', () => {
 
     it('without warning - columns is empty', () => {
       resetWarned();
-      const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      mount(
+      const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(
         createTable({
           columns: [],
           components: {
@@ -686,7 +666,7 @@ describe('Table.Basic', () => {
       const Looper = React.forwardRef(() => <td />);
       Looper.looper = Looper;
 
-      mount(
+      render(
         createTable({
           components: {
             body: {
@@ -703,13 +683,13 @@ describe('Table.Basic', () => {
       { title: 'Name', dataIndex: 'name', key: 'name' },
       { title: 'Age', dataIndex: 'age', key: 'age', align: 'center' },
     ];
-    const wrapper = mount(createTable({ columns }));
-    expect(wrapper.find('th').at(0).props().style.textAlign).toBeFalsy();
-    expect(wrapper.find('th').at(1).props().style.textAlign).toEqual('center');
-    expect(wrapper.find('tbody tr').first().find('td').at(0).props().style.textAlign).toBeFalsy();
-    expect(wrapper.find('tbody tr').first().find('td').at(1).props().style.textAlign).toEqual(
-      'center',
-    );
+    const { container } = render(createTable({ columns }));
+    const thEls = container.querySelectorAll('th');
+    expect(thEls[0].style.textAlign).toBeFalsy();
+    expect(thEls[1].style.textAlign).toEqual('center');
+    const tdEls = container.querySelectorAll('tbody tr:first-child td');
+    expect(tdEls[0].style.textAlign).toBeFalsy();
+    expect(tdEls[1].style.textAlign).toEqual('center');
   });
 
   it('align column should not override cell style', () => {
@@ -723,19 +703,17 @@ describe('Table.Basic', () => {
         onHeaderCell: () => ({ style: { color: 'green' } }),
       },
     ];
-    const wrapper = mount(createTable({ columns }));
-    expect(wrapper.find('th').first().props().style).toEqual({
-      color: 'green',
-      textAlign: 'center',
-    });
-    expect(wrapper.find('td').first().props().style).toEqual({
-      color: 'red',
-      textAlign: 'center',
-    });
+    const { container } = render(createTable({ columns }));
+    const th = container.querySelector('th');
+    expect(th.style.color).toEqual('green');
+    expect(th.style.textAlign).toEqual('center');
+    const td = container.querySelector('td');
+    expect(td.style.color).toEqual('red');
+    expect(td.style.textAlign).toEqual('center');
   });
 
   it('hidden columns', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         columns: [
           {
@@ -752,15 +730,15 @@ describe('Table.Basic', () => {
         ],
       }),
     );
-    expect(wrapper.find('th').at(0).text()).toEqual('姓名');
-    expect(wrapper.find('th').at(1)).toHaveLength(0);
+    expect(container.querySelectorAll('th')[0].textContent).toEqual('姓名');
+    expect(container.querySelectorAll('th')).toHaveLength(1);
   });
 
   describe('row events', () => {
     let spy;
 
     beforeAll(() => {
-      spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -772,124 +750,101 @@ describe('Table.Basic', () => {
     });
 
     it('fires row click event', () => {
-      const onClick = jest.fn();
-      const wrapper = mount(createTable({ onRow: () => ({ onClick }) }));
-      const tr = wrapper.find('tbody tr').first();
+      const onClick = vi.fn();
+      const { container } = render(createTable({ onRow: () => ({ onClick }) }));
+      const tr = container.querySelector('tbody tr');
 
-      tr.simulate('click');
-      expect(onClick).toHaveBeenCalledWith(
-        expect.objectContaining({
-          target: tr.instance(),
-        }),
-      );
+      fireEvent.click(tr);
+      expect(onClick).toHaveBeenCalled();
     });
 
     it('fires double row click event', () => {
-      const onDoubleClick = jest.fn();
-      const wrapper = mount(createTable({ onRow: () => ({ onDoubleClick }) }));
-      const tr = wrapper.find('tbody tr').first();
+      const onDoubleClick = vi.fn();
+      const { container } = render(createTable({ onRow: () => ({ onDoubleClick }) }));
+      const tr = container.querySelector('tbody tr');
 
-      tr.first().simulate('doubleClick');
-      expect(onDoubleClick).toHaveBeenCalledWith(
-        expect.objectContaining({
-          target: tr.instance(),
-        }),
-      );
+      fireEvent.doubleClick(tr);
+      expect(onDoubleClick).toHaveBeenCalled();
     });
 
     it('fires row contextmenu event', () => {
-      const onContextMenu = jest.fn();
-      const wrapper = mount(createTable({ onRow: () => ({ onContextMenu }) }));
-      const tr = wrapper.find('tbody tr').first();
+      const onContextMenu = vi.fn();
+      const { container } = render(createTable({ onRow: () => ({ onContextMenu }) }));
+      const tr = container.querySelector('tbody tr');
 
-      tr.first().simulate('contextMenu');
-      expect(onContextMenu).toHaveBeenCalledWith(
-        expect.objectContaining({
-          target: tr.instance(),
-        }),
-      );
+      fireEvent.contextMenu(tr);
+      expect(onContextMenu).toHaveBeenCalled();
     });
 
     it('fires onRowMouseEnter', () => {
-      const onMouseEnter = jest.fn();
-      const wrapper = mount(
+      const onMouseEnter = vi.fn();
+      const { container } = render(
         createTable({
           onRow: () => ({ onMouseEnter }),
         }),
       );
 
-      const tr = wrapper.find('.rc-table-row').first();
+      const tr = container.querySelector('.rc-table-row');
 
-      tr.simulate('mouseEnter');
-      expect(onMouseEnter).toHaveBeenCalledWith(
-        expect.objectContaining({
-          target: tr.instance(),
-        }),
-      );
+      fireEvent.mouseEnter(tr);
+      expect(onMouseEnter).toHaveBeenCalled();
     });
 
     it('fires onRowMouseLeave', () => {
-      const onMouseLeave = jest.fn();
-      const wrapper = mount(
+      const onMouseLeave = vi.fn();
+      const { container } = render(
         createTable({
           onRow: () => ({ onMouseLeave }),
         }),
       );
 
-      const tr = wrapper.find('.rc-table-row').first();
+      const tr = container.querySelector('.rc-table-row');
 
-      tr.simulate('mouseLeave');
-      expect(onMouseLeave).toHaveBeenCalledWith(
-        expect.objectContaining({
-          target: tr.instance(),
-        }),
-      );
+      fireEvent.mouseLeave(tr);
+      expect(onMouseLeave).toHaveBeenCalled();
     });
   });
 
   it('columns without key', () => {
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         columns: [{ dataIndex: null }],
       }),
     );
-
-    expect(wrapper.find('tbody').find(Cell).first().key()).toBeTruthy();
+    expect(container.querySelectorAll('tbody td')[0]).toBeTruthy();
   });
 
   it('syntactic sugar', () => {
     const { Column, ColumnGroup } = Table;
     expect(
-      mount(
+      render(
         <Table>
           <ColumnGroup title="total">
             <Column title="Name" dataIndex="name" />
           </ColumnGroup>
           Invalidate Column
         </Table>,
-      ).render(),
+      ).container.firstChild,
     ).toMatchSnapshot();
   });
 
   describe('internal api', () => {
     describe('transformColumns', () => {
       it('basic', () => {
-        const wrapper = mount(
+        const { container } = render(
           createTable({
             internalHooks: INTERNAL_HOOKS,
             transformColumns: columns => [{ title: 'before' }, ...columns, { title: 'after' }],
           }),
         );
 
-        expect(wrapper.render()).toMatchSnapshot();
+        expect(container.firstChild).toMatchSnapshot();
       });
 
-      // Used for antd to check if is expand column
-      // We'd better to move selection into rc-table also
       it('internal columnType', () => {
         let existExpandColumn = false;
 
-        mount(
+        render(
           createTable({
             expandable: {
               expandedRowRender: () => null,
@@ -913,7 +868,7 @@ describe('Table.Basic', () => {
         body: React.createRef(),
       };
 
-      mount(
+      render(
         createTable({
           internalHooks: INTERNAL_HOOKS,
           internalRefs,
@@ -927,17 +882,17 @@ describe('Table.Basic', () => {
   });
 
   it('column render array', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[{ dataIndex: 'test', render: () => [<span className="test" key="test" />] }]}
         data={[{ key: 1 }]}
       />,
     );
-    expect(wrapper.find('.test')).toHaveLength(1);
+    expect(container.querySelector('.test')).toBeTruthy();
   });
 
   it('component body should pass `data-row-key`', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[{ dataIndex: 'test' }]}
         components={{ body: { row: props => <tr {...props} /> } }}
@@ -945,7 +900,8 @@ describe('Table.Basic', () => {
       />,
     );
 
-    expect(wrapper.find('tr').last().props()['data-row-key']).toEqual('light');
+    const trs = container.querySelectorAll('tr');
+    expect(trs[trs.length - 1].getAttribute('data-row-key')).toEqual('light');
   });
 
   it('render with state change', () => {
@@ -954,7 +910,15 @@ describe('Table.Basic', () => {
         change: false,
         columns: [
           {
-            render: () => String(this.state.change),
+            render: () => (
+              <button
+                onClick={() => {
+                  this.setState({ change: !this.state.change });
+                }}
+              >
+                {String(this.state.change)}
+              </button>
+            ),
           },
         ],
       };
@@ -964,16 +928,16 @@ describe('Table.Basic', () => {
       }
     }
 
-    const wrapper = mount(<Test />);
-    expect(wrapper.find('tbody td').text()).toEqual('false');
+    const { container } = render(<Test />);
+    expect(container.querySelector('button').textContent).toEqual('false');
 
-    wrapper.setState({ change: true });
-    expect(wrapper.find('tbody td').text()).toEqual('true');
+    fireEvent.click(container.querySelector('button'));
+    expect(container.querySelector('button').textContent).toEqual('true');
   });
 
   it('not crash with raw data', () => {
     expect(() => {
-      mount(
+      render(
         createTable({
           data: [122, null, '2333', true, undefined],
         }),
@@ -1021,28 +985,26 @@ describe('Table.Basic', () => {
         );
       };
 
-      const wrapper = mount(<Demo records={[record]} />);
+      const { container, rerender } = render(<Demo records={[record]} />);
       renderTimes = 0;
 
-      wrapper.find('button').simulate('click');
+      fireEvent.click(container.querySelector('button'));
       expect(renderTimes).toEqual(0);
 
       shouldUpdate = true;
-      wrapper.find('button').simulate('click');
+      fireEvent.click(container.querySelector('button'));
       expect(renderTimes).toEqual(1);
 
-      // Should update match prev & next
       const newRecord = { ...record, next: true };
-      wrapper.setProps({ records: [newRecord] });
-      // wrapper.update();
+      rerender(<Demo records={[newRecord]} />);
       expect(prev).toBe(record);
       expect(next).toBe(newRecord);
     });
 
     it('not block nest children', () => {
-      const onExpandedRowsChange = jest.fn();
+      const onExpandedRowsChange = vi.fn();
 
-      const wrapper = mount(
+      const { container } = render(
         <Table
           columns={[{ dataIndex: 'key', shouldCellUpdate: () => false }]}
           expandable={{ onExpandedRowsChange }}
@@ -1058,24 +1020,22 @@ describe('Table.Basic', () => {
         />,
       );
 
-      // First Level - parent
-      wrapper.find('span.rc-table-row-expand-icon').first().simulate('click');
-      expect(
-        wrapper.find('span.rc-table-row-expand-icon').first().hasClass('rc-table-row-expanded'),
-      ).toBeTruthy();
+      const getExpandIcons = () => container.querySelectorAll('span.rc-table-row-expand-icon');
 
-      // Second Level - light twice
+      fireEvent.click(getExpandIcons()[0]);
+      expect(getExpandIcons()[0].classList.contains('rc-table-row-expanded')).toBeTruthy();
+
       onExpandedRowsChange.mockReset();
-      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      fireEvent.click(getExpandIcons()[1]);
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'light']);
 
       onExpandedRowsChange.mockReset();
-      wrapper.find('span.rc-table-row-expand-icon').at(1).simulate('click');
+      fireEvent.click(getExpandIcons()[1]);
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent']);
 
-      // Second Level - bamboo
       onExpandedRowsChange.mockReset();
-      wrapper.find('span.rc-table-row-expand-icon').last().simulate('click');
+      const icons = getExpandIcons();
+      fireEvent.click(icons[icons.length - 1]);
       expect(onExpandedRowsChange).toHaveBeenCalledWith(['parent', 'bamboo']);
     });
   });
@@ -1097,18 +1057,18 @@ describe('Table.Basic', () => {
       { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
       { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={tColumns} expandable={{ defaultExpandAllRows: true }} data={tData} />,
     );
 
-    const trs = wrapper.find('BodyRow');
+    const trs = container.querySelectorAll('tbody tr');
 
-    expect(trs.at(0).find(Cell).at(1).text()).toEqual('0');
-    expect(trs.at(1).find(Cell).at(1).text()).toEqual('0');
-    expect(trs.at(2).find(Cell).at(1).text()).toEqual('1');
-    expect(trs.at(3).find(Cell).at(1).text()).toEqual('1');
-    expect(trs.at(4).find(Cell).at(1).text()).toEqual('0');
-    expect(trs.at(5).find(Cell).at(1).text()).toEqual('1');
+    expect(trs[0].querySelectorAll('td')[1].textContent).toEqual('0');
+    expect(trs[1].querySelectorAll('td')[1].textContent).toEqual('0');
+    expect(trs[2].querySelectorAll('td')[1].textContent).toEqual('1');
+    expect(trs[3].querySelectorAll('td')[1].textContent).toEqual('1');
+    expect(trs[4].querySelectorAll('td')[1].textContent).toEqual('0');
+    expect(trs[5].querySelectorAll('td')[1].textContent).toEqual('1');
   });
 
   it('hover the tree table', () => {
@@ -1123,23 +1083,21 @@ describe('Table.Basic', () => {
       { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
       { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={tColumns} expandable={{ defaultExpandAllRows: true }} data={tData} />,
     );
 
-    const trs = wrapper.find('tr.rc-table-row');
+    const trs = container.querySelectorAll('tr.rc-table-row');
 
     trs.forEach((tr, index) => {
-      tr.find('td.rc-table-cell').at(0).simulate('mouseEnter');
-      const currentClassName = wrapper
-        .find('tr.rc-table-row')
-        .at(index)
-        .find('td.rc-table-cell')
-        .at(0)
-        .getElement().props.className;
+      fireEvent.mouseEnter(tr.querySelectorAll('td.rc-table-cell')[0]);
+      const currentClassName = container
+        .querySelectorAll('tr.rc-table-row')
+        [index].querySelectorAll('td.rc-table-cell')[0]
+        .getAttribute('class');
 
       expect(currentClassName.includes('rc-table-cell-row-hover')).toEqual(true);
-      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(1);
+      expect(container.querySelectorAll('td.rc-table-cell-row-hover')).toHaveLength(1);
     });
   });
 
@@ -1155,7 +1113,7 @@ describe('Table.Basic', () => {
       { key: 'row0', children: [{ key: 'row0-0' }, { key: 'row0-1' }] },
       { key: 'row1', children: [{ key: 'row1-0' }, { key: 'row1-1' }] },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={tColumns}
         expandable={{ defaultExpandAllRows: true }}
@@ -1164,25 +1122,23 @@ describe('Table.Basic', () => {
       />,
     );
 
-    const trs = wrapper.find('tr.rc-table-row');
+    const trs = container.querySelectorAll('tr.rc-table-row');
 
     trs.forEach((tr, index) => {
-      tr.find('td.rc-table-cell').at(0).simulate('mouseEnter');
-      const currentClassName = wrapper
-        .find('tr.rc-table-row')
-        .at(index)
-        .find('td.rc-table-cell')
-        .at(0)
-        .getElement().props.className;
+      fireEvent.mouseEnter(tr.querySelectorAll('td.rc-table-cell')[0]);
+      const currentClassName = container
+        .querySelectorAll('tr.rc-table-row')
+        [index].querySelectorAll('td.rc-table-cell')[0]
+        .getAttribute('class');
 
       expect(currentClassName.includes('rc-table-cell-row-hover')).toEqual(false);
-      expect(wrapper.find('td.rc-table-cell-row-hover')).toHaveLength(0);
+      expect(container.querySelectorAll('td.rc-table-cell-row-hover')).toHaveLength(0);
     });
   });
 
   it('should get scrollbar size', () => {
     const tColumns = [{ title: 'Name', dataIndex: 'name', key: 'name', width: 100 }];
-    const wrapper = mount(
+    const { container } = render(
       createTable({
         columns: tColumns,
         scroll: { y: 100 },
@@ -1191,8 +1147,8 @@ describe('Table.Basic', () => {
         },
       }),
     );
-    expect(wrapper.render()).toMatchSnapshot();
-    expect(wrapper.find('col')).toHaveLength(tColumns.length + 1);
+    expect(container.firstChild).toMatchSnapshot();
+    expect(container.querySelectorAll('col')).toHaveLength(tColumns.length + 1);
   });
   it('columns support JSX condition', () => {
     const Example = () => {
@@ -1229,15 +1185,15 @@ describe('Table.Basic', () => {
         </>
       );
     };
-    const wrapper = mount(<Example />);
+    const { container } = render(<Example />);
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('.rc-table-cell').at(1).text()).toEqual('title2');
+    fireEvent.click(container.querySelector('button'));
+    expect(container.querySelectorAll('.rc-table-cell')[1].textContent).toEqual('title2');
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('.rc-table-cell').at(1).text()).toEqual('title3');
+    fireEvent.click(container.querySelector('button'));
+    expect(container.querySelectorAll('.rc-table-cell')[1].textContent).toEqual('title3');
 
-    expect(wrapper.render()).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('using both column children and component body simultaneously', () => {
@@ -1350,25 +1306,31 @@ describe('Table.Basic', () => {
         />
       );
     };
-    const wrapper = mount(<Demo columns={columns} data={data} />);
-    expect(
-      wrapper
-        .find('col')
-        .at(noChildColLen + ChildColLen * 2 - 1)
-        .props().style.width + wrapper.find('col').last().props().style.width,
-    ).toEqual(width);
+    const { container } = render(<Demo columns={columns} data={data} />);
+
+    const last0ColWidth =
+      container.querySelectorAll('col')[noChildColLen + ChildColLen * 2 - 1].style.width;
+    const last1ColWidth =
+      container.querySelectorAll('col')[container.querySelectorAll('col').length - 1].style.width;
+
+    expect(parseInt(last0ColWidth, 10) + parseInt(last1ColWidth, 10)).toEqual(width);
   });
 
   it('onScroll event', () => {
-    const onScroll = jest.fn();
-    const wrapper = render(
+    const onScroll = vi.fn();
+    const { container } = render(
       createTable({
         onScroll,
         scroll: { x: 100, y: 100 },
       }),
     );
-
-    fireEvent.scroll(wrapper.container.querySelector('.rc-table-body'));
+    const tableBody = container.querySelector('.rc-table-body');
+    Object.defineProperty(tableBody, 'scrollLeft', {
+      get() {
+        return 100;
+      },
+    });
+    fireEvent.scroll(tableBody);
     expect(onScroll).toHaveBeenCalled();
   });
 });

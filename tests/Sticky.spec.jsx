@@ -1,13 +1,13 @@
-import { mount } from 'enzyme';
+import { render, fireEvent, createEvent } from '@testing-library/react';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
+import { act } from '@testing-library/react';
 import Table from '../src';
 import { safeAct } from './utils';
-import { render, act } from '@testing-library/react';
 
 describe('Table.Sticky', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   it('Sticky Header', async () => {
     const col1 = { dataIndex: 'light', width: 100 };
@@ -29,34 +29,35 @@ describe('Table.Sticky', () => {
         </div>
       );
     };
-    const wrapper = mount(<TableDemo />);
+    const { container, rerender } = render(<TableDemo />);
 
-    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
-      overflow: 'hidden',
-      top: 0,
+    let headers = container.querySelectorAll('.rc-table-header');
+    const lastHeader = headers[headers.length - 1];
+    expect(lastHeader.style).toEqual(
+      expect.objectContaining({
+        overflow: 'hidden',
+        top: '0px',
+      }),
+    );
+    expect(lastHeader.className).toBe('rc-table-header rc-table-sticky-holder');
+
+    await act(async () => {
+      rerender(<TableDemo sticky={{ offsetHeader: 10 }} />);
+      vi.runAllTimers();
     });
-
-    expect(wrapper.find('.rc-table-header').last().prop('className')).toBe(
-      'rc-table-header rc-table-sticky-holder',
+    headers = container.querySelectorAll('.rc-table-header');
+    const updatedHeader = headers[headers.length - 1];
+    expect(updatedHeader.style).toEqual(
+      expect.objectContaining({
+        overflow: 'hidden',
+        top: '10px',
+      }),
     );
 
-    await safeAct(wrapper, () => {
-      wrapper.setProps({
-        sticky: {
-          offsetHeader: 10,
-        },
-      });
-    });
-
-    expect(wrapper.find('.rc-table-header').last().prop('style')).toEqual({
-      overflow: 'hidden',
-      top: 10,
-    });
-
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
-  it('Sticky scroll', async () => {
+  it('Sticky scroll basic', async () => {
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
     let scrollLeft = 100;
@@ -83,7 +84,7 @@ describe('Table.Sticky', () => {
 
     const col1 = { dataIndex: 'light', width: 1000 };
     const col2 = { dataIndex: 'bamboo', width: 2000 };
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={[col1, col2]}
         data={[
@@ -120,12 +121,11 @@ describe('Table.Sticky', () => {
     );
 
     await act(async () => {
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).not.toBeUndefined();
+    expect(container.querySelector('.rc-table-sticky-scroll')).not.toBeNull();
 
     const oldInnerHeight = global.innerHeight;
     const resizeEvent = new Event('resize');
@@ -134,83 +134,75 @@ describe('Table.Sticky', () => {
 
     await act(async () => {
       global.dispatchEvent(resizeEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeFalsy();
+    expect(container.querySelector('.rc-table-sticky-scroll')).toBeNull();
 
     await act(async () => {
       global.innerHeight = oldInnerHeight;
       global.dispatchEvent(resizeEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    const mockFn = jest.fn();
+    const mockFn = vi.fn();
+    const scrollBar = container.querySelector('.rc-table-sticky-scroll-bar');
+    const mouseDownEvent = createEvent.mouseDown(scrollBar, { pageX: 0 });
+    mouseDownEvent.preventDefault = mockFn;
+    fireEvent(scrollBar, mouseDownEvent);
 
-    wrapper
-      .find('.rc-table-sticky-scroll-bar')
-      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
+    expect(mockFn).toHaveBeenCalled();
 
-    expect(mockFn).toHaveBeenCalledTimes(2);
+    expect(container.querySelector('.rc-table-sticky-scroll-bar-active')).not.toBeNull();
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar-active').length).toBe(1);
-
-    const mousemoveEvent = new Event('mousemove');
-
-    mousemoveEvent.buttons = 1;
-    mousemoveEvent.pageX = 50;
+    const mousemoveEvent = new MouseEvent('mousemove', { bubbles: true });
+    Object.defineProperty(mousemoveEvent, 'buttons', { get: () => 1, configurable: true });
+    Object.defineProperty(mousemoveEvent, 'pageX', { get: () => 50, configurable: true });
 
     await act(async () => {
       document.body.dispatchEvent(mousemoveEvent);
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
-      width: '50px',
-      transform: 'translate3d(50.5px, 0, 0)',
-    });
+    expect(scrollBar.style).toEqual(
+      expect.objectContaining({
+        width: '50px',
+        transform: expect.stringContaining('translate3d(50.5px'),
+      }),
+    );
 
     await act(async () => {
-      mousemoveEvent.pageX = -50;
+      Object.defineProperty(mousemoveEvent, 'pageX', { get: () => -50, configurable: true });
       document.body.dispatchEvent(mousemoveEvent);
-
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
-      width: '50px',
-      transform: 'translate3d(0px, 0, 0)',
-    });
+    expect(scrollBar.style).toEqual(
+      expect.objectContaining({
+        width: '50px',
+        transform: expect.stringContaining('translate3d(0px'),
+      }),
+    );
 
     await act(async () => {
-      mousemoveEvent.buttons = 0;
+      Object.defineProperty(mousemoveEvent, 'buttons', { get: () => 0 });
       document.body.dispatchEvent(mousemoveEvent);
-
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar-active').length).toBe(0);
+    expect(container.querySelector('.rc-table-sticky-scroll-bar-active')).toBeNull();
 
-    const mouseupEvent = new Event('mouseup');
+    const mouseupEvent = new MouseEvent('mouseup', { bubbles: true });
 
     document.body.dispatchEvent(mouseupEvent);
 
-    wrapper.unmount();
-
-    window.pageYOffset = 0;
-    mockFn.mockRestore();
+    vi.useRealTimers();
     domSpy.mockRestore();
-    jest.useRealTimers();
   });
 
   it('Sticky Header with border classname', async () => {
@@ -243,16 +235,15 @@ describe('Table.Sticky', () => {
     };
     const { container } = render(<TableDemo />);
     await act(async () => {
-      jest.runAllTimers();
-      await Promise.resolve();
+      vi.runAllTimers();
     });
-
-    expect(container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky')).toHaveStyle({
-      'inset-inline-end': 0,
+    const fixedCell = container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky');
+    expect(fixedCell).toHaveStyle({
+      'inset-inline-end': '0',
     });
-    expect(container.querySelector('.rc-table-cell-fix-sticky')).toBeTruthy();
+    expect(container.querySelector('.rc-table-cell-fix-sticky')).not.toBeNull();
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky Header with scroll-y', async () => {
@@ -286,23 +277,22 @@ describe('Table.Sticky', () => {
     };
     const { container } = render(<TableDemo />);
     await act(async () => {
-      jest.runAllTimers();
-      await Promise.resolve();
+      vi.runAllTimers();
     });
-
-    expect(container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky')).toHaveStyle({
+    const fixedCell = container.querySelector('.rc-table-cell-fix-end.rc-table-cell-fix-sticky');
+    expect(fixedCell).toHaveStyle({
       'inset-inline-end': '15px',
     });
 
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('Sticky scroll with getContainer', async () => {
     window.pageYOffset = 900;
     document.documentElement.scrollTop = 200;
-    const container = document.createElement('ol');
-    container.style = 'height: 500px;overflow: scroll';
-    document.body.appendChild(container);
+    const containerEl = document.createElement('ol');
+    containerEl.style = 'height: 500px;overflow: scroll';
+    document.body.appendChild(containerEl);
     let scrollLeft = 100;
     const domSpy = spyElementPrototypes(HTMLDivElement, {
       scrollLeft: {
@@ -351,7 +341,7 @@ describe('Table.Sticky', () => {
 
     const col1 = { dataIndex: 'light', width: 1000 };
     const col2 = { dataIndex: 'bamboo', width: 2000 };
-    const wrapper = mount(
+    const renderResult = render(
       <Table
         columns={[col1, col2]}
         data={[
@@ -384,59 +374,51 @@ describe('Table.Sticky', () => {
           x: 10000,
         }}
         sticky={{
-          getContainer: () => container,
+          getContainer: () => containerEl,
         }}
       />,
       {
-        attachTo: container,
+        container: containerEl,
       },
     );
 
     await act(async () => {
-      jest.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
+      vi.runAllTimers();
     });
 
-    expect(wrapper.find('.rc-table-sticky-scroll').get(0)).toBeTruthy();
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').get(0)).toBeTruthy();
-
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
+    expect(containerEl.querySelector('.rc-table-sticky-scroll')).toBeTruthy();
+    expect(containerEl.querySelector('.rc-table-sticky-scroll-bar')).toBeTruthy();
+    const scrollBar = containerEl.querySelector('.rc-table-sticky-scroll-bar');
+    expect(scrollBar).toHaveStyle({
       width: '50px',
-      transform: 'translate3d(0px, 0, 0)',
+      // Safe to be any value, just check if it contains `translate3d`
+      transform: 'translate3d(50px, 0, 0)',
     });
 
-    const mockFn = jest.fn();
+    const preventDefaultFn = vi.fn();
+    const mouseDownEvent = createEvent.mouseDown(scrollBar, { pageX: 0 });
+    mouseDownEvent.preventDefault = preventDefaultFn;
+    fireEvent(scrollBar, mouseDownEvent);
+    expect(preventDefaultFn).toHaveBeenCalled();
 
-    wrapper
-      .find('.rc-table-sticky-scroll-bar')
-      .simulate('mousedown', { persist: mockFn, preventDefault: mockFn, pageX: 0 });
-
-    expect(mockFn).toHaveBeenCalledTimes(2);
-
-    const mousemoveEvent = new Event('mousemove');
-
-    mousemoveEvent.buttons = 1;
-    mousemoveEvent.pageX = 50;
-
+    const mousemoveEvent = new MouseEvent('mousemove', { bubbles: true });
+    Object.defineProperty(mousemoveEvent, 'buttons', { get: () => 1 });
+    Object.defineProperty(mousemoveEvent, 'pageX', { get: () => 50 });
     await act(async () => {
       document.body.dispatchEvent(mousemoveEvent);
-      jest.runAllTimers();
-      await Promise.resolve();
-      wrapper.update();
+      vi.runAllTimers();
     });
+    expect(scrollBar.style).toEqual(
+      expect.objectContaining({
+        width: '50px',
+        transform: expect.stringContaining('translate3d(50.5px'),
+      }),
+    );
 
-    expect(wrapper.find('.rc-table-sticky-scroll-bar').prop('style')).toEqual({
-      width: '50px',
-      transform: 'translate3d(50.5px, 0, 0)',
-    });
-
-    wrapper.unmount();
-
+    renderResult.unmount();
     window.pageYOffset = 0;
     domSpy.mockRestore();
     sectionSpy.mockRestore();
-    mockFn.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });

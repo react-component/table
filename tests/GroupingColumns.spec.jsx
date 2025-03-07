@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render, act, fireEvent } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 
@@ -56,7 +56,7 @@ describe('Table with grouping columns', () => {
       { key: '2', a: 'a2', b: 'b2', c: 'c2', d: 'd2', e: 'e2', f: 'f2', g: 'g2', h: 'h2', i: 'i2' },
       { key: '3', a: 'a3', b: 'b3', c: 'c3', d: 'd3', e: 'e3', f: 'f3', g: 'g3', h: 'h3', i: 'i3' },
     ];
-    const wrapper = mount(<Table columns={columns} data={data} />);
+    const { container } = render(<Table columns={columns} data={data} />);
 
     const cells = {
       'title-a': [4, undefined],
@@ -75,8 +75,9 @@ describe('Table with grouping columns', () => {
     };
     Object.keys(cells).forEach(className => {
       const cell = cells[className];
-      expect(wrapper.find(`th.${className}`).prop('rowSpan') || 1).toBe(cell[0] || 1);
-      expect(wrapper.find(`th.${className}`).prop('colSpan') || 1).toBe(cell[1] || 1);
+      const cellElement = container.querySelector(`th.${className}`);
+      expect(Number(cellElement?.getAttribute('rowspan') || 1)).toBe(cell[0] || 1);
+      expect(Number(cellElement?.getAttribute('colspan') || 1)).toBe(cell[1] || 1);
     });
   });
 
@@ -119,9 +120,9 @@ describe('Table with grouping columns', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} data={[]} />);
-    const titleB = wrapper.find('th.title-b');
-    expect(titleB.prop('rowSpan')).toBe(2);
+    const { container } = render(<Table columns={columns} data={[]} />);
+    const titleB = container.querySelector('th.title-b');
+    expect(Number(titleB?.getAttribute('rowspan') || 1)).toBe(2);
   });
 
   it('strange layout', () => {
@@ -150,9 +151,9 @@ describe('Table with grouping columns', () => {
       },
     ];
 
-    const wrapper = mount(<Table columns={columns} data={[]} />);
-    const titleA = wrapper.find('th.title-a');
-    expect(titleA.prop('rowSpan')).toBe(3);
+    const { container } = render(<Table columns={columns} data={[]} />);
+    const titleA = container.querySelector('th.title-a');
+    expect(Number(titleA?.getAttribute('rowspan') || 1)).toBe(3);
   });
 
   it('hidden column', () => {
@@ -182,9 +183,13 @@ describe('Table with grouping columns', () => {
         ],
       },
     ];
-    const wrapper = mount(<Table columns={columns} data={[]} />);
+    const { container } = render(<Table columns={columns} data={[]} />);
 
-    expect(wrapper.find('thead tr').at(0).find('th').at(1).text()).toEqual('D');
-    expect(wrapper.find('thead tr').at(1).find('th').at(0).text()).toEqual('F');
+    expect(container.querySelectorAll('thead tr')[0].querySelectorAll('th')[1].textContent).toEqual(
+      'D',
+    );
+    expect(container.querySelectorAll('thead tr')[1].querySelectorAll('th')[0].textContent).toEqual(
+      'F',
+    );
   });
 });

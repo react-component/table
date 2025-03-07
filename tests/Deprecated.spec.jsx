@@ -1,13 +1,13 @@
-import { mount } from 'enzyme';
-import { resetWarned } from '@rc-component/util/lib/warning';
 import React from 'react';
+import { render } from '@testing-library/react';
+import { resetWarned } from '@rc-component/util/lib/warning';
 import Table from '../src';
 
 describe('Table.Deprecated', () => {
   let errorSpy;
 
   beforeAll(() => {
-    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('Table.Deprecated', () => {
       const getBodyWrapper = body => (
         <tbody className="custom-wrapper">{body.props.children}</tbody>
       );
-      mount(<Table getBodyWrapper={getBodyWrapper} />);
+      render(<Table getBodyWrapper={getBodyWrapper} />);
       expect(errorSpy).toHaveBeenCalledWith(
         'Warning: `getBodyWrapper` is deprecated, please use custom `components` instead.',
       );
@@ -34,10 +34,9 @@ describe('Table.Deprecated', () => {
       removedProp => {
         it(`warning for '${removedProp}'`, () => {
           const props = {
-            [removedProp]: jest.fn(),
+            [removedProp]: vi.fn(),
           };
-          mount(<Table {...props} />);
-
+          render(<Table {...props} />);
           expect(errorSpy.mock.calls[0][0].includes(removedProp)).toBeTruthy();
         });
       },

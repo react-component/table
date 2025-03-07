@@ -1,10 +1,8 @@
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 
-export function safeAct(wrapper, cb) {
+export function safeAct() {
   return act(async () => {
-    cb && cb();
-    jest.runAllTimers();
+    vi.runAllTimers();
     await Promise.resolve();
-    wrapper.update();
   });
 }
