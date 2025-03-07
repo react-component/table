@@ -61,6 +61,8 @@ function ExpandedRow(props: ExpandedRowProps) {
       className={className}
       style={{
         display: expanded ? null : 'none',
+        // fix https://github.com/ant-design/ant-design/issues/49279
+        visibility: isEmpty && horizonScroll && !componentWidth ? 'hidden' : null,
       }}
     >
       <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
