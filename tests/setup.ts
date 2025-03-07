@@ -9,11 +9,6 @@ require('regenerator-runtime');
 
 vi.mock('@rc-component/util/lib/getScrollBarSize');
 
-const Enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
-
-Enzyme.configure({ adapter: new Adapter() });
-
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver implements ResizeObserver {
   callback: ResizeObserverCallback;

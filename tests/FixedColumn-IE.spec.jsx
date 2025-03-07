@@ -42,7 +42,6 @@ describe('Table.FixedColumn', () => {
 
   it('not sticky', async () => {
     vi.useFakeTimers();
-    // 使用 render 替代 enzyme 的 mount
     const { container } = render(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
 
     // 模拟时间流逝，触发 Table 内部的更新逻辑
