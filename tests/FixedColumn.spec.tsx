@@ -264,7 +264,7 @@ describe('Table.FixedColumn', () => {
       );
 
       act(() => {
-        container.querySelectorAll('.rc-table-measure-row td').forEach(td => {
+        container.querySelectorAll<HTMLElement>('.rc-table-measure-row td').forEach(td => {
           triggerResize(td);
         });
       });
