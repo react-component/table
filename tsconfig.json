@@ -12,7 +12,7 @@
       "@@/*": [".dumi/tmp/*"],
       "rc-table": ["src/index.ts"]
     },
-    "types": ["@testing-library/jest-dom"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "include": [".dumirc.ts", "**/*.ts", "**/*.tsx", "tests/__mocks__/shadowTest.tsx"],
   "exclude": ["./vitest.config.ts"]
