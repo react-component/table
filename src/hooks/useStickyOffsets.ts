@@ -32,6 +32,7 @@ function useStickyOffsets<RecordType>(
     return {
       start: startOffsets,
       end: endOffsets,
+      widths: colWidths,
     };
   }, [colWidths, flattenColumns]);
 

@@ -133,6 +133,7 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 export interface StickyOffsets {
   start: readonly number[];
   end: readonly number[];
+  widths: readonly number[];
   isSticky?: boolean;
 }
 

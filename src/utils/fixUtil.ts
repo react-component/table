@@ -12,6 +12,11 @@ export interface FixedInfo {
   /** `fixed: end` with shadow */
   fixedEndShadow?: boolean;
 
+  /** Show the shadow when `scrollLeft` arrive for `fixed: start` */
+  offsetFixedStartShadow?: number;
+  /** Show the shadow when `scrollLeft` arrive for `fixed: end` */
+  offsetFixedEndShadow?: number;
+
   zIndex?: number;
 }
 
@@ -41,8 +46,8 @@ export function getCellFixedInfo(
   }
 
   // check if need to add shadow
-  let fixedStartShadow: boolean;
-  let fixedEndShadow: boolean;
+  let fixedStartShadow = false;
+  let fixedEndShadow = false;
 
   // Calc `zIndex`.
   // first fixed start (start -> end) column `zIndex` should be greater than next column.
@@ -58,11 +63,32 @@ export function getCellFixedInfo(
     zIndex = colEnd;
   }
 
+  // Check if scrollLeft will show the shadow
+  let offsetFixedStartShadow = 0;
+  let offsetFixedEndShadow = 0;
+
+  if (fixedStartShadow) {
+    for (let i = 0; i < colStart; i += 1) {
+      if (!isFixedStart(columns[i])) {
+        offsetFixedStartShadow += stickyOffsets.widths[i] || 0;
+      }
+    }
+  }
+  if (fixedEndShadow) {
+    for (let i = columns.length - 1; i > colEnd; i -= 1) {
+      if (!isFixedEnd(columns[i])) {
+        offsetFixedEndShadow += stickyOffsets.widths[i] || 0;
+      }
+    }
+  }
+
   return {
     fixStart,
     fixEnd,
     fixedStartShadow,
     fixedEndShadow,
+    offsetFixedStartShadow,
+    offsetFixedEndShadow,
     isSticky: stickyOffsets.isSticky,
     zIndex,
   };
