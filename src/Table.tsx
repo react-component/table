@@ -440,7 +440,6 @@ function Table<RecordType extends DefaultRecordType>(
 
   const onInternalScroll = useEvent(
     ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
-      const isRTL = direction === 'rtl';
       const mergedScrollLeft =
         typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
 
@@ -475,13 +474,6 @@ function Table<RecordType extends DefaultRecordType>(
           setShadowEnd(false);
           return;
         }
-        // if (isRTL) {
-        //   setPingedStart(-mergedScrollLeft < scrollWidth - clientWidth);
-        //   setPingedEnd(-mergedScrollLeft > 0);
-        // } else {
-        //   setPingedStart(mergedScrollLeft > 0);
-        //   setPingedEnd(mergedScrollLeft < scrollWidth - clientWidth);
-        // }
         setShadowStart(absScrollStart > 0);
         setShadowEnd(absScrollStart < scrollWidth - clientWidth);
       }
