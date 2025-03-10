@@ -438,7 +438,7 @@ exports[`Table.Expand > not use nest when children is invalidate 1`] = `
 
 exports[`Table.Expand > renders fixed column correctly > work 1`] = `
 <div
-  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
 >
   <div
     class="rc-table-container"

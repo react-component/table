@@ -265,8 +265,8 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'right' },
       }),
     );
-    expect(container.querySelectorAll('.rc-table-has-fix-left').length).toBe(1);
-    expect(container2.querySelectorAll('.rc-table-has-fix-right').length).toBe(1);
+    expect(container.querySelector('.rc-table-has-fix-start')).toBeTruthy();
+    expect(container2.querySelector('.rc-table-has-fix-end')).toBeTruthy();
   });
 
   describe('config expand column index', () => {
