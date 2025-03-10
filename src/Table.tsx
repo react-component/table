@@ -347,8 +347,8 @@ function Table<RecordType extends DefaultRecordType>(
 
   // ====================== Scroll ======================
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
-  const [pingedLeft, setPingedLeft] = React.useState(false);
-  const [pingedRight, setPingedRight] = React.useState(false);
+  const [shadowStart, setShadowStart] = React.useState(false);
+  const [shadowEnd, setShadowEnd] = React.useState(false);
   const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
 
   // Convert map to number width
@@ -463,24 +463,27 @@ function Table<RecordType extends DefaultRecordType>(
             : measureTarget.scrollWidth;
         const clientWidth = measureTarget.clientWidth;
 
+        const absScrollStart = Math.abs(mergedScrollLeft);
         setScrollInfo(ori => {
-          const nextScrollInfo: ScrollInfoType = [mergedScrollLeft, scrollWidth - clientWidth];
+          const nextScrollInfo: ScrollInfoType = [absScrollStart, scrollWidth - clientWidth];
           return isEqual(ori, nextScrollInfo) ? ori : nextScrollInfo;
         });
 
         // There is no space to scroll
         if (scrollWidth === clientWidth) {
-          setPingedLeft(false);
-          setPingedRight(false);
+          setShadowStart(false);
+          setShadowEnd(false);
           return;
         }
-        if (isRTL) {
-          setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
-          setPingedRight(-mergedScrollLeft > 0);
-        } else {
-          setPingedLeft(mergedScrollLeft > 0);
-          setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
-        }
+        // if (isRTL) {
+        //   setPingedStart(-mergedScrollLeft < scrollWidth - clientWidth);
+        //   setPingedEnd(-mergedScrollLeft > 0);
+        // } else {
+        //   setPingedStart(mergedScrollLeft > 0);
+        //   setPingedEnd(mergedScrollLeft < scrollWidth - clientWidth);
+        // }
+        setShadowStart(absScrollStart > 0);
+        setShadowEnd(absScrollStart < scrollWidth - clientWidth);
       }
     },
   );
@@ -497,8 +500,8 @@ function Table<RecordType extends DefaultRecordType>(
         scrollLeft: scrollBodyRef.current?.scrollLeft,
       });
     } else {
-      setPingedLeft(false);
-      setPingedRight(false);
+      setShadowStart(false);
+      setShadowEnd(false);
     }
   };
 
@@ -771,8 +774,10 @@ function Table<RecordType extends DefaultRecordType>(
     <div
       className={classNames(prefixCls, className, {
         [`${prefixCls}-rtl`]: direction === 'rtl',
-        [`${prefixCls}-ping-left`]: pingedLeft,
-        [`${prefixCls}-ping-right`]: pingedRight,
+        [`${prefixCls}-fix-start-shadow`]: horizonScroll,
+        [`${prefixCls}-fix-end-shadow`]: horizonScroll,
+        [`${prefixCls}-fix-start-shadow-show`]: horizonScroll && shadowStart,
+        [`${prefixCls}-fix-end-shadow-show`]: horizonScroll && shadowEnd,
         [`${prefixCls}-layout-fixed`]: tableLayout === 'fixed',
         [`${prefixCls}-fixed-header`]: fixHeader,
         /** No used but for compatible */

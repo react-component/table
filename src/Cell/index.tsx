@@ -141,9 +141,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       return [false, false];
     }
 
-    const [scroll, scrollWidth] = scrollInfo;
-
-    const absScroll = Math.abs(scroll);
+    const [absScroll, scrollWidth] = scrollInfo;
 
     const showStartShadow = isFixStart && fixedStartShadow && absScroll > fixStart;
     const showEndShadow = isFixEnd && fixedEndShadow && scrollWidth - absScroll > fixEnd;
