@@ -140,12 +140,8 @@ describe('Table.FixedColumn', () => {
         fireEvent.scroll(tableContent);
       }
     });
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-left'),
-    ).toBeTruthy();
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-right'),
-    ).toBeTruthy();
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-start-shadow-show');
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
 
     act(() => {
       if (tableContent) {
@@ -155,12 +151,8 @@ describe('Table.FixedColumn', () => {
         fireEvent.scroll(tableContent);
       }
     });
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-left'),
-    ).toBeFalsy();
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-right'),
-    ).toBeTruthy();
+    expect(container.querySelector('.rc-table')).not.toHaveClass('rc-table-fix-start-shadow-show');
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
 
     act(() => {
       if (tableContent) {
@@ -170,12 +162,8 @@ describe('Table.FixedColumn', () => {
         fireEvent.scroll(tableContent);
       }
     });
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-left'),
-    ).toBeTruthy();
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-right'),
-    ).toBeFalsy();
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-start-shadow-show');
+    expect(container.querySelector('.rc-table')).not.toHaveClass('rc-table-fix-end-shadow-show');
 
     act(() => {
       if (tableContent) {
@@ -185,12 +173,8 @@ describe('Table.FixedColumn', () => {
         fireEvent.scroll(tableContent);
       }
     });
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-left'),
-    ).toBeFalsy();
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-right'),
-    ).toBeFalsy();
+    expect(container.querySelector('.rc-table')).not.toHaveClass('rc-table-fix-start-shadow-show');
+    expect(container.querySelector('.rc-table')).not.toHaveClass('rc-table-fix-end-shadow-show');
   });
 
   it('ellipsis will wrap additional dom', () => {
@@ -349,11 +333,7 @@ describe('Table.FixedColumn', () => {
         fireEvent.scroll(tableContent);
       }
     });
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-left'),
-    ).toBeTruthy();
-    expect(
-      container.querySelector('.rc-table')?.classList.contains('rc-table-ping-right'),
-    ).toBeTruthy();
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-start-shadow-show');
+    expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
   });
 });
