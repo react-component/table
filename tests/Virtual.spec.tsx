@@ -528,9 +528,7 @@ describe('Table.Virtual', () => {
 
       await waitFakeTimer();
 
-      expect(
-        container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
-      ).toBeTruthy();
+      expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
     });
 
     it('right shadow should display correctly when showHeader is false', async () => {
@@ -558,9 +556,7 @@ describe('Table.Virtual', () => {
 
       await waitFakeTimer();
 
-      expect(
-        container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
-      ).toBeTruthy();
+      expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
     });
   });
 });

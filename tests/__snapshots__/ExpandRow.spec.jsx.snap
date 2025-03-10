@@ -107,7 +107,7 @@ exports[`Table.Expand > childrenColumnName 1`] = `
 
 exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 <div
-  class="rc-table rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"
@@ -229,7 +229,7 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 
 exports[`Table.Expand > does not crash if scroll is not set 2`] = `
 <div
-  class="rc-table rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"
@@ -438,7 +438,7 @@ exports[`Table.Expand > not use nest when children is invalidate 1`] = `
 
 exports[`Table.Expand > renders fixed column correctly > work 1`] = `
 <div
-  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
 >
   <div
     class="rc-table-container"
@@ -906,7 +906,7 @@ exports[`Table.Expand > renders tree row correctly with different children 1`] =
 
 exports[`Table.Expand > work in expandable fix 1`] = `
 <div
-  class="rc-table rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"
@@ -1028,7 +1028,7 @@ exports[`Table.Expand > work in expandable fix 1`] = `
 
 exports[`Table.Expand > work in expandable fix 2`] = `
 <div
-  class="rc-table rc-table-fixed-column rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal"
 >
   <div
     class="rc-table-container"
