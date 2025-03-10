@@ -775,10 +775,8 @@ function Table<RecordType extends DefaultRecordType>(
         /** No used but for compatible */
         [`${prefixCls}-fixed-column`]: fixColumn,
         [`${prefixCls}-scroll-horizontal`]: horizonScroll,
-        [`${prefixCls}-has-fix-left`]: flattenColumns[0] && flattenColumns[0].fixed,
-        [`${prefixCls}-has-fix-right`]:
-          flattenColumns[flattenColumns.length - 1] &&
-          flattenColumns[flattenColumns.length - 1].fixed === 'right',
+        [`${prefixCls}-has-fix-start`]: flattenColumns[0]?.fixed,
+        [`${prefixCls}-has-fix-end`]: flattenColumns[flattenColumns.length - 1]?.fixed === 'end',
       })}
       style={style}
       id={id}

@@ -619,6 +619,7 @@ describe('Table.Basic', () => {
           scroll: { x: 100, y: 100 },
         }),
       );
+      console.log(container.innerHTML);
       expect(container.firstChild).toMatchSnapshot();
     });
 

@@ -63,8 +63,8 @@ function flatColumns<RecordType>(
     .filter(column => column && typeof column === 'object')
     .reduce((list, column, index) => {
       const { fixed } = column;
-      // Convert `fixed='true'` to `fixed='left'` instead
-      const parsedFixed = fixed === true ? 'left' : fixed;
+      const parsedFixed =
+        fixed === true || fixed === 'left' ? 'start' : fixed === 'right' ? 'end' : fixed;
       const mergedKey = `${parentKey}-${index}`;
 
       const subColumns = (column as ColumnGroupType<RecordType>).children;
@@ -86,24 +86,6 @@ function flatColumns<RecordType>(
         },
       ];
     }, []);
-}
-
-function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType<RecordType> {
-  return columns.map(column => {
-    const { fixed, ...restProps } = column;
-
-    // Convert `fixed='left'` to `fixed='right'` instead
-    let parsedFixed = fixed;
-    if (fixed === 'left') {
-      parsedFixed = 'right';
-    } else if (fixed === 'right') {
-      parsedFixed = 'left';
-    }
-    return {
-      fixed: parsedFixed,
-      ...restProps,
-    };
-  });
 }
 
 /**
@@ -266,13 +248,11 @@ function useColumns<RecordType>(
   }, [transformColumns, withExpandColumns, direction]);
 
   // ========================== Flatten =========================
-  const flattenColumns = React.useMemo(() => {
-    if (direction === 'rtl') {
-      return revertForRtl(flatColumns(mergedColumns));
-    }
-    return flatColumns(mergedColumns);
+  const flattenColumns = React.useMemo(
+    () => flatColumns(mergedColumns),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedColumns, direction, scrollWidth]);
+    [mergedColumns, direction, scrollWidth],
+  );
 
   // ========================= FillWidth ========================
   const [filledColumns, realScrollWidth] = useWidthColumns(
