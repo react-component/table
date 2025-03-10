@@ -16,10 +16,10 @@ export interface FixedInfo {
 }
 
 function isFixedStart(column: { fixed?: FixedType }) {
-  return column.fixed === 'left' || column.fixed === 'start';
+  return column.fixed === 'start';
 }
 function isFixedEnd(column: { fixed?: FixedType }) {
-  return column.fixed === 'right' || column.fixed === 'end';
+  return column.fixed === 'end';
 }
 
 export function getCellFixedInfo(

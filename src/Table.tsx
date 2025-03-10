@@ -827,7 +827,7 @@ function Table<RecordType extends DefaultRecordType>(
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       indentSize: expandableConfig.indentSize,
-      allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'left'),
+      allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'start'),
       emptyNode,
 
       // Column
