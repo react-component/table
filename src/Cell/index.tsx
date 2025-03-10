@@ -41,6 +41,8 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   fixEnd?: number | false;
   fixedStartShadow?: boolean;
   fixedEndShadow?: boolean;
+  offsetFixedStartShadow?: number;
+  offsetFixedEndShadow?: number;
   zIndex?: number;
   allColsFixedLeft?: boolean;
 
@@ -107,6 +109,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     fixEnd,
     fixedStartShadow,
     fixedEndShadow,
+    offsetFixedStartShadow,
+    offsetFixedEndShadow,
     zIndex,
 
     // Private
@@ -146,12 +150,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     const showStartShadow =
       (isFixStart && fixedStartShadow && absScroll) -
         // For precision, we not show shadow by default which has better user experience.
-        (fixStart as number) >=
+        (offsetFixedStartShadow as number) >=
       1;
     const showEndShadow =
       (isFixEnd && fixedEndShadow && scrollWidth - absScroll) -
         // Same as above
-        (fixEnd as number) >=
+        (offsetFixedEndShadow as number) >=
       1;
 
     return [showStartShadow, showEndShadow];

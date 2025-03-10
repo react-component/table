@@ -4,12 +4,12 @@ import Table from 'rc-table';
 import '../../assets/index.less';
 
 const columns: TableProps['columns'] = [
-  { title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'start' },
-  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
-  { title: 'title3', dataIndex: 'c', key: 'c', width: 100, fixed: 'start' },
-  { title: 'title4', dataIndex: 'b', key: 'd', width: 100 },
-  { title: 'title5', dataIndex: 'b', key: 'e', width: 100 },
-  { title: 'title6', dataIndex: 'b', key: 'f', width: 100 },
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 60, fixed: 'start' },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 80, fixed: 'start' },
+  { title: 'title3', dataIndex: 'c', key: 'c', width: 120 },
+  { title: 'title4', dataIndex: 'b', key: 'd', width: 100, fixed: 'start' },
+  { title: 'title5', dataIndex: 'b', key: 'e' },
+  { title: 'title6', dataIndex: 'b', key: 'f' },
   { title: 'title7', dataIndex: 'b', key: 'g', width: 100 },
   { title: 'title8', dataIndex: 'b', key: 'h', width: 100 },
   { title: 'title9', dataIndex: 'b', key: 'i', width: 100 },
