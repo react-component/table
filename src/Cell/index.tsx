@@ -143,8 +143,16 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
     const [absScroll, scrollWidth] = scrollInfo;
 
-    const showStartShadow = isFixStart && fixedStartShadow && absScroll > fixStart;
-    const showEndShadow = isFixEnd && fixedEndShadow && scrollWidth - absScroll > fixEnd;
+    const showStartShadow =
+      (isFixStart && fixedStartShadow && absScroll) -
+        // For precision, we not show shadow by default which has better user experience.
+        (fixStart as number) >=
+      1;
+    const showEndShadow =
+      (isFixEnd && fixedEndShadow && scrollWidth - absScroll) -
+        // Same as above
+        (fixEnd as number) >=
+      1;
 
     return [showStartShadow, showEndShadow];
   });
