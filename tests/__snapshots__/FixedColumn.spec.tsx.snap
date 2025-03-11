@@ -3,7 +3,6 @@
 exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
 <div
   class="rc-table rc-table-rtl rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 12;"
 >
   <div
     class="rc-table-container"
@@ -795,7 +794,6 @@ exports[`Table.FixedColumn > renders correctly > all column has width should use
 exports[`Table.FixedColumn > renders correctly > scrollX - with data 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 12;"
 >
   <div
     class="rc-table-container"
@@ -1585,7 +1583,6 @@ exports[`Table.FixedColumn > renders correctly > scrollX - with data 1`] = `
 exports[`Table.FixedColumn > renders correctly > scrollX - without data 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 12;"
 >
   <div
     class="rc-table-container"
@@ -1845,7 +1842,6 @@ exports[`Table.FixedColumn > renders correctly > scrollX - without data 1`] = `
 exports[`Table.FixedColumn > renders correctly > scrollXY - with data 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 12;"
 >
   <div
     class="rc-table-container"
@@ -2689,7 +2685,6 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - with data 1`] = `
 exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 12;"
 >
   <div
     class="rc-table-container"

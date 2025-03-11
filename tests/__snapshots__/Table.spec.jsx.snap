@@ -11,7 +11,6 @@ exports[`Table.Basic > columns support JSX condition 1`] = `
 exports[`Table.Basic > custom components > renders correctly 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 1;"
 >
   <div
     class="rc-table-container"
@@ -78,7 +77,6 @@ exports[`Table.Basic > custom components > renders correctly 1`] = `
 exports[`Table.Basic > custom components > renders fixed column and header correctly 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 3;"
 >
   <div
     class="rc-table-container"
@@ -212,7 +210,6 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
 exports[`Table.Basic > custom components > scroll content > with scroll 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-scroll-horizontal"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -262,7 +259,6 @@ exports[`Table.Basic > custom components > scroll content > with scroll 1`] = `
 exports[`Table.Basic > internal api > transformColumns > basic 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 3;"
 >
   <div
     class="rc-table-container"
@@ -343,7 +339,6 @@ exports[`Table.Basic > internal api > transformColumns > basic 1`] = `
 exports[`Table.Basic > renders colSpan correctly 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -407,7 +402,6 @@ exports[`Table.Basic > renders colSpan correctly 1`] = `
 exports[`Table.Basic > renders correctly > RTL 1`] = `
 <div
   class="test-prefix test-class-name test-prefix-rtl"
-  style="--columns-count: 1;"
 >
   <div
     class="test-prefix-container"
@@ -464,7 +458,6 @@ exports[`Table.Basic > renders correctly > RTL 1`] = `
 exports[`Table.Basic > renders correctly > basic 1`] = `
 <div
   class="test-prefix test-class-name"
-  style="--columns-count: 1;"
 >
   <div
     class="test-prefix-container"
@@ -521,7 +514,6 @@ exports[`Table.Basic > renders correctly > basic 1`] = `
 exports[`Table.Basic > renders correctly > column children undefined 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -590,7 +582,6 @@ exports[`Table.Basic > renders correctly > column children undefined 1`] = `
 exports[`Table.Basic > renders correctly > falsy columns 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 1;"
 >
   <div
     class="rc-table-container"
@@ -647,7 +638,6 @@ exports[`Table.Basic > renders correctly > falsy columns 1`] = `
 exports[`Table.Basic > renders correctly > no columns 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 1;"
 >
   <div
     class="rc-table-container"
@@ -697,7 +687,6 @@ exports[`Table.Basic > renders correctly > no columns 1`] = `
 exports[`Table.Basic > renders rowSpan correctly 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -766,7 +755,6 @@ exports[`Table.Basic > renders rowSpan correctly 1`] = `
 exports[`Table.Basic > should get scrollbar size 1`] = `
 <div
   class="rc-table rc-table-fixed-header"
-  style="--columns-count: 1;"
 >
   <div
     class="rc-table-container"
@@ -810,7 +798,6 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
 exports[`Table.Basic > syntactic sugar 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 1;"
 >
   <div
     class="rc-table-container"
