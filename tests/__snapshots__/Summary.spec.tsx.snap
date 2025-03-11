@@ -8,7 +8,7 @@ exports[`Table.Summary > support data type 1`] = `
     <td
       class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
       colspan="2"
-      style="inset-inline-start: 0; --z-offset: 6;"
+      style="inset-inline-start: 0; --z-offset: 6; --z-offset-reverse: 0;"
     >
       Light
     </td>

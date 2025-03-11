@@ -44,6 +44,7 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   offsetFixedStartShadow?: number;
   offsetFixedEndShadow?: number;
   zIndex?: number;
+  zIndexReverse?: number;
   allColsFixedLeft?: boolean;
 
   // ====================== Private Props ======================
@@ -112,6 +113,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     offsetFixedStartShadow,
     offsetFixedEndShadow,
     zIndex,
+    zIndexReverse,
 
     // Private
     appendNode,
@@ -164,10 +166,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   if (isFixStart) {
     fixedStyle.insetInlineStart = fixStart as number;
     fixedStyle['--z-offset'] = zIndex;
+    fixedStyle['--z-offset-reverse'] = zIndexReverse;
   }
   if (isFixEnd) {
     fixedStyle.insetInlineEnd = fixEnd as number;
     fixedStyle['--z-offset'] = zIndex;
+    fixedStyle['--z-offset-reverse'] = zIndexReverse;
   }
 
   // ================ RowSpan & ColSpan =================
