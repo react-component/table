@@ -3,7 +3,6 @@
 exports[`Table.Expand > childrenColumnName 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -109,7 +108,6 @@ exports[`Table.Expand > childrenColumnName 1`] = `
 exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
-  style="--columns-count: 3;"
 >
   <div
     class="rc-table-container"
@@ -232,7 +230,6 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 exports[`Table.Expand > does not crash if scroll is not set 2`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
-  style="--columns-count: 3;"
 >
   <div
     class="rc-table-container"
@@ -355,7 +352,6 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
 exports[`Table.Expand > not use nest when children is invalidate 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -443,7 +439,6 @@ exports[`Table.Expand > not use nest when children is invalidate 1`] = `
 exports[`Table.Expand > renders fixed column correctly > work 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
-  style="--columns-count: 4;"
 >
   <div
     class="rc-table-container"
@@ -639,7 +634,6 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
 exports[`Table.Expand > renders tree row correctly 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -745,7 +739,6 @@ exports[`Table.Expand > renders tree row correctly 1`] = `
 exports[`Table.Expand > renders tree row correctly with different children 1`] = `
 <div
   class="rc-table"
-  style="--columns-count: 2;"
 >
   <div
     class="rc-table-container"
@@ -914,7 +907,6 @@ exports[`Table.Expand > renders tree row correctly with different children 1`] =
 exports[`Table.Expand > work in expandable fix 1`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
-  style="--columns-count: 3;"
 >
   <div
     class="rc-table-container"
@@ -1037,7 +1029,6 @@ exports[`Table.Expand > work in expandable fix 1`] = `
 exports[`Table.Expand > work in expandable fix 2`] = `
 <div
   class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal"
-  style="--columns-count: 4;"
 >
   <div
     class="rc-table-container"

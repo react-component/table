@@ -762,6 +762,15 @@ function Table<RecordType extends DefaultRecordType>(
     );
   }
 
+  const tableStyle = {
+    ...style,
+  };
+
+  // Add css var for sticky header `zIndex` calc
+  if (isSticky) {
+    tableStyle['--columns-count'] = flattenColumns.length;
+  }
+
   let fullTable = (
     <div
       className={classNames(prefixCls, className, {
@@ -778,12 +787,7 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-has-fix-start`]: flattenColumns[0]?.fixed,
         [`${prefixCls}-has-fix-end`]: flattenColumns[flattenColumns.length - 1]?.fixed === 'end',
       })}
-      style={
-        {
-          ...style,
-          '--columns-count': flattenColumns.length,
-        } as React.CSSProperties
-      }
+      style={tableStyle}
       id={id}
       ref={fullTableRef}
       {...dataProps}
