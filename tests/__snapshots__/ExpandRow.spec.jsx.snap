@@ -461,12 +461,12 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
           <tr>
             <th
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
-              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 0;"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             />
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               scope="col"
-              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 1;"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
             >
               Name
             </th>
@@ -479,7 +479,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               scope="col"
-              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 5;"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
             >
               Gender
             </th>
@@ -536,7 +536,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
           >
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
-              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 0;"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
@@ -544,7 +544,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 1;"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
             >
               Lucy
             </td>
@@ -555,7 +555,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
-              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 5;"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
             >
               F
             </td>
@@ -583,7 +583,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
           >
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
-              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 0;"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-expanded"
@@ -591,7 +591,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 1;"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
             >
               Jack
             </td>
@@ -602,7 +602,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
-              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 5;"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
             >
               M
             </td>
@@ -1072,7 +1072,7 @@ exports[`Table.Expand > work in expandable fix 2`] = `
             </th>
             <th
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 3;"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
             />
           </tr>
         </thead>
@@ -1142,7 +1142,7 @@ exports[`Table.Expand > work in expandable fix 2`] = `
             </td>
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 3;"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
@@ -1170,7 +1170,7 @@ exports[`Table.Expand > work in expandable fix 2`] = `
             </td>
             <td
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
-              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 3;"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
             >
               <span
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
