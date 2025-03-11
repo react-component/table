@@ -17,7 +17,10 @@ export interface FixedInfo {
   /** Show the shadow when `scrollLeft` arrive for `fixed: end` */
   offsetFixedEndShadow?: number;
 
+  /** First sticky column `zIndex` will be larger than next */
   zIndex?: number;
+  /** First sticky column `zIndex` will be smaller than next */
+  zIndexReverse?: number;
 }
 
 function isFixedStart(column: { fixed?: FixedType }) {
@@ -53,14 +56,17 @@ export function getCellFixedInfo(
   // first fixed start (start -> end) column `zIndex` should be greater than next column.
   // first fixed end (end -> start) column `zIndex` should be greater than next column.
   let zIndex = 0;
+  let zIndexReverse = 0;
 
   if (fixStart !== null) {
     fixedStartShadow = !columns[colEnd + 1] || !isFixedStart(columns[colEnd + 1]);
     zIndex = columns.length * 2 - colStart; // Fix start always overlay fix end
+    zIndexReverse = colStart;
   }
   if (fixEnd !== null) {
     fixedEndShadow = !columns[colStart - 1] || !isFixedEnd(columns[colStart - 1]);
     zIndex = colEnd;
+    zIndexReverse = columns.length * 2 - colEnd; // Fix end always overlay fix start
   }
 
   // Check if scrollLeft will show the shadow
@@ -91,5 +97,6 @@ export function getCellFixedInfo(
     offsetFixedEndShadow,
     isSticky: stickyOffsets.isSticky,
     zIndex,
+    zIndexReverse,
   };
 }
