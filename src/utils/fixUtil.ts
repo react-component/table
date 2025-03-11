@@ -61,12 +61,12 @@ export function getCellFixedInfo(
   if (fixStart !== null) {
     fixedStartShadow = !columns[colEnd + 1] || !isFixedStart(columns[colEnd + 1]);
     zIndex = columns.length * 2 - colStart; // Fix start always overlay fix end
-    zIndexReverse = colStart;
+    zIndexReverse = columns.length + colStart;
   }
   if (fixEnd !== null) {
     fixedEndShadow = !columns[colStart - 1] || !isFixedEnd(columns[colStart - 1]);
     zIndex = colEnd;
-    zIndexReverse = columns.length * 2 - colEnd; // Fix end always overlay fix start
+    zIndexReverse = columns.length - colEnd; // Fix end always overlay fix start
   }
 
   // Check if scrollLeft will show the shadow

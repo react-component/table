@@ -100,7 +100,7 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               name="my-header-cell"
               scope="col"
-              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 0;"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
               Name
             </th>
@@ -115,14 +115,14 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               name="my-header-cell"
               scope="col"
-              style="inset-inline-end: 15px; --z-offset: 2; --z-offset-reverse: 6;"
+              style="inset-inline-end: 15px; --z-offset: 2; --z-offset-reverse: 2;"
             >
               Gender
             </th>
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-scrollbar"
               name="my-header-cell"
-              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 5;"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
             />
           </tr>
         </thead>
@@ -182,7 +182,7 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               name="my-body-cell"
-              style="inset-inline-start: 0; --z-offset: 6; --z-offset-reverse: 0;"
+              style="inset-inline-start: 0; --z-offset: 6; --z-offset-reverse: 3;"
             >
               Lucy
             </td>
@@ -195,7 +195,7 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               name="my-body-cell"
-              style="inset-inline-end: 0; --z-offset: 2; --z-offset-reverse: 4;"
+              style="inset-inline-end: 0; --z-offset: 2; --z-offset-reverse: 1;"
             >
               F
             </td>
