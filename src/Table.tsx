@@ -778,7 +778,12 @@ function Table<RecordType extends DefaultRecordType>(
         [`${prefixCls}-has-fix-start`]: flattenColumns[0]?.fixed,
         [`${prefixCls}-has-fix-end`]: flattenColumns[flattenColumns.length - 1]?.fixed === 'end',
       })}
-      style={style}
+      style={
+        {
+          ...style,
+          '--columns-count': flattenColumns.length,
+        } as React.CSSProperties
+      }
       id={id}
       ref={fullTableRef}
       {...dataProps}
