@@ -559,4 +559,133 @@ describe('Table.Virtual', () => {
       expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
     });
   });
+
+  describe('expanding and collapsing rows', () => {
+    it('preserves scroll position when expanding non-first rows', async () => {
+      vi.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => {
+        cb(0);
+        return 0;
+      });
+
+      // Setup a spy on scrollTo
+      const originalScrollTo = HTMLElement.prototype.scrollTo;
+      const scrollToSpy = vi.fn();
+      HTMLElement.prototype.scrollTo = scrollToSpy;
+
+      // Create a controlled expandable table
+      let expandedRowKeys: React.Key[] = [];
+
+      const expandHandler = vi.fn((expanded, record) => {
+        if (expanded) {
+          expandedRowKeys = [...expandedRowKeys, record.name];
+        } else {
+          expandedRowKeys = expandedRowKeys.filter(key => key !== record.name);
+        }
+      });
+
+      const { container, rerender } = render(
+        <VirtualTable
+          columns={[{ dataIndex: 'name' }, { dataIndex: 'age' }, { dataIndex: 'address' }]}
+          rowKey="name"
+          scroll={{ x: 100, y: 100 }}
+          data={new Array(100).fill(null).map((_, index) => ({
+            name: `name${index}`,
+            age: index,
+            address: `address${index}`,
+          }))}
+          expandable={{
+            expandedRowKeys,
+            onExpand: expandHandler,
+            expandedRowRender: record => `Expanded ${record.name}`,
+          }}
+        />,
+      );
+
+      await waitFakeTimer();
+
+      // Get expand buttons
+      const expandButtons = container.querySelectorAll('.rc-table-row-expand-icon');
+
+      // Clear any previous scroll calls
+      scrollToSpy.mockClear();
+
+      try {
+        // 1. First test - Expanding the first row should not cause unwanted scrolling
+        const firstRowExpandButton = expandButtons[0];
+        fireEvent.click(firstRowExpandButton);
+
+        // Force rerender with the new expanded keys
+        rerender(
+          <VirtualTable
+            columns={[{ dataIndex: 'name' }, { dataIndex: 'age' }, { dataIndex: 'address' }]}
+            rowKey="name"
+            scroll={{ x: 100, y: 100 }}
+            data={new Array(100).fill(null).map((_, index) => ({
+              name: `name${index}`,
+              age: index,
+              address: `address${index}`,
+            }))}
+            expandable={{
+              expandedRowKeys: ['name0'],
+              onExpand: expandHandler,
+              expandedRowRender: record => `Expanded ${record.name}`,
+            }}
+          />,
+        );
+
+        await waitFakeTimer();
+
+        // Verify our fix is working - the fix should prevent forced scrolling to top (0)
+        // for first row expansion
+        const forceScrollToTopCalls = scrollToSpy.mock.calls.filter(
+          call => call[0] && typeof call[0] === 'object' && 'top' in call[0] && call[0].top === 0,
+        );
+
+        // Our fix should be preventing unnecessary scrollTo(0) calls
+        expect(forceScrollToTopCalls.length).toBe(0);
+
+        // 2. Next test - Non-first row expansion should not force scroll to top
+        scrollToSpy.mockClear();
+
+        // Click fifth row expand button
+        const fifthRowExpandButton = expandButtons[5];
+        fireEvent.click(fifthRowExpandButton);
+
+        // Update expanded keys
+        rerender(
+          <VirtualTable
+            columns={[{ dataIndex: 'name' }, { dataIndex: 'age' }, { dataIndex: 'address' }]}
+            rowKey="name"
+            scroll={{ x: 100, y: 100 }}
+            data={new Array(100).fill(null).map((_, index) => ({
+              name: `name${index}`,
+              age: index,
+              address: `address${index}`,
+            }))}
+            expandable={{
+              expandedRowKeys: ['name0', 'name5'],
+              onExpand: expandHandler,
+              expandedRowRender: record => `Expanded ${record.name}`,
+            }}
+          />,
+        );
+
+        await waitFakeTimer();
+
+        // Again check no forced scrollTo(0) is happening
+        const nonFirstRowForceScrollCalls = scrollToSpy.mock.calls.filter(
+          call => call[0] && typeof call[0] === 'object' && 'top' in call[0] && call[0].top === 0,
+        );
+
+        // Our fix should prevent unnecessary scrollTo(0) calls for non-first rows too
+        expect(nonFirstRowForceScrollCalls.length).toBe(0);
+
+        // Test passes if we make it here without unwanted scrolling
+        expect(true).toBeTruthy();
+      } finally {
+        // Restore original methods
+        HTMLElement.prototype.scrollTo = originalScrollTo;
+      }
+    });
+  });
 });

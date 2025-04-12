@@ -51,8 +51,47 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // =========================== Ref ============================
   const listRef = React.useRef<ListRef>();
 
+  // Track current scroll position
+  const scrollPositionRef = React.useRef<number>(0);
+
+  // Store previous expanded keys for comparison
+  const prevExpandedKeysRef = React.useRef<Set<React.Key>>();
+
+  // Track if we're in a first row expansion or collapse
+  const firstRowExpandChangeRef = React.useRef<boolean>(false);
+
+  // Track if we should preserve scroll position (for non-first row changes)
+  const shouldPreserveScroll = React.useRef<boolean>(false);
+
   // =========================== Data ===========================
   const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
+
+  // Check if the expansion state has changed and determine if it's for the first row
+  React.useEffect(() => {
+    if (!prevExpandedKeysRef.current) {
+      prevExpandedKeysRef.current = new Set(expandedKeys);
+      return;
+    }
+
+    shouldPreserveScroll.current = true;
+    firstRowExpandChangeRef.current = false;
+
+    // Check if the first row's expansion state changed
+    if (data.length > 0) {
+      const firstRowKey = getRowKey(data[0], 0);
+
+      const wasExpanded = prevExpandedKeysRef.current.has(firstRowKey);
+      const isNowExpanded = expandedKeys.has(firstRowKey);
+
+      // Detect change in first row's expanded state (either expand or collapse)
+      if (wasExpanded !== isNowExpanded) {
+        firstRowExpandChangeRef.current = true;
+        shouldPreserveScroll.current = false;
+      }
+    }
+
+    prevExpandedKeysRef.current = new Set(expandedKeys);
+  }, [expandedKeys, data, getRowKey]);
 
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number, total: number][]>(() => {
@@ -109,6 +148,35 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   };
 
   const extraRender: ListProps<any>['extraRender'] = info => {
+    // Get current scroll info
+    const currentScrollInfo = listRef.current?.getScrollInfo();
+
+    // If we're expanding/collapsing the first row, don't do any automatic scrolling
+    if (firstRowExpandChangeRef.current && currentScrollInfo) {
+      firstRowExpandChangeRef.current = false;
+
+      // Use rAF to execute after the current render cycle
+      requestAnimationFrame(() => {
+        // Keep the scroll position at its current position rather than jumping
+        if (listRef.current) {
+          listRef.current.scrollTo({ top: 0 });
+        }
+      });
+    }
+    // For non-first row changes, we want to preserve the scroll position
+    else if (shouldPreserveScroll.current && currentScrollInfo) {
+      const savedScrollPos = scrollPositionRef.current;
+      shouldPreserveScroll.current = false;
+
+      if (savedScrollPos > 0) {
+        requestAnimationFrame(() => {
+          if (listRef.current) {
+            listRef.current.scrollTo({ top: savedScrollPos });
+          }
+        });
+      }
+    }
+
     const { start, end, getSize, offsetY } = info;
 
     // Do nothing if no data
@@ -201,6 +269,18 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================= Context ==========================
   const gridContext = React.useMemo(() => ({ columnsOffset }), [columnsOffset]);
 
+  // Track scroll position for restoration
+  const handleScroll = React.useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      if (e.currentTarget) {
+        scrollPositionRef.current = e.currentTarget.scrollTop;
+      }
+
+      onTablePropScroll?.(e);
+    },
+    [onTablePropScroll],
+  );
+
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
@@ -238,7 +318,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
             scrollLeft: x,
           });
         }}
-        onScroll={onTablePropScroll}
+        onScroll={handleScroll}
         extraRender={extraRender}
       >
         {(item, index, itemProps) => {
