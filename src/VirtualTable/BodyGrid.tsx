@@ -163,19 +163,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         }
       });
     }
-    // For non-first row changes, we want to preserve the scroll position
-    else if (shouldPreserveScroll.current && currentScrollInfo) {
-      const savedScrollPos = scrollPositionRef.current;
-      shouldPreserveScroll.current = false;
-
-      if (savedScrollPos > 0) {
-        requestAnimationFrame(() => {
-          if (listRef.current) {
-            listRef.current.scrollTo({ top: savedScrollPos });
-          }
-        });
-      }
-    }
 
     const { start, end, getSize, offsetY } = info;
 
