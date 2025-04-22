@@ -46,6 +46,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const {
     className,
+    style,
     noData,
     columns,
     flattenColumns,
@@ -159,6 +160,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       style={{
         overflow: 'hidden',
         ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
+        ...style,
       }}
       ref={setScrollRef}
       className={classNames(className, {

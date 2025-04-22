@@ -14,6 +14,7 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
+import { SemanticName } from '../Table';
 
 const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
 export { makeImmutable, responseImmutable, useImmutableMark };
@@ -23,6 +24,9 @@ export type ScrollInfoType = [scrollLeft: number, scrollRange: number];
 export interface TableContextProps<RecordType = any> {
   // Scroll
   scrollX: number | string | true;
+  style?: React.CSSProperties;
+  classNames?: Partial<Record<SemanticName, string>>;
+  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
 
   // Table
   prefixCls: string;
