@@ -24,7 +24,6 @@ export type ScrollInfoType = [scrollLeft: number, scrollRange: number];
 export interface TableContextProps<RecordType = any> {
   // Scroll
   scrollX: number | string | true;
-  style?: React.CSSProperties;
   classNames?: Partial<Record<SemanticName, string>>;
   styles?: Partial<Record<SemanticName, React.CSSProperties>>;
 

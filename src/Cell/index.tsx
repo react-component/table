@@ -123,7 +123,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   const cellPrefixCls = `${prefixCls}-cell`;
 
-  const { allColumnsFixedLeft, rowHoverable, classNames, styles } = useContext(TableContext);
+  const { allColumnsFixedLeft, rowHoverable, classNames, styles } = useContext(TableContext, [
+    'allColumnsFixedLeft',
+    'rowHoverable',
+    'classNames',
+    'styles',
+  ]);
 
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(

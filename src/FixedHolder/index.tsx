@@ -26,6 +26,7 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
+  style?: React.CSSProperties;
   noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
