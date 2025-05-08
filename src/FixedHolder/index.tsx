@@ -168,7 +168,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       <TableComponent
         style={{
           tableLayout: 'fixed',
-          visibility: noData || mergedColumnWidth ? null : 'hidden',
+          visibility: mergedColumnWidth ? null : 'hidden',
         }}
       >
         {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
