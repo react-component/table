@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ResizeObserver from '@rc-component/resize-observer';
 import MeasureCell from './MeasureCell';
+import isVisible from '@rc-component/util/lib/Dom/isVisible';
 
 export interface MeasureCellProps {
   prefixCls: string;
@@ -9,17 +10,22 @@ export interface MeasureCellProps {
 }
 
 export default function MeasureRow({ prefixCls, columnsKey, onColumnResize }: MeasureCellProps) {
+  const ref = React.useRef<HTMLTableRowElement>(null);
+
   return (
     <tr
       aria-hidden="true"
       className={`${prefixCls}-measure-row`}
       style={{ height: 0, fontSize: 0 }}
+      ref={ref}
     >
       <ResizeObserver.Collection
         onBatchResize={infoList => {
-          infoList.forEach(({ data: columnKey, size }) => {
-            onColumnResize(columnKey, size.offsetWidth);
-          });
+          if (isVisible(ref.current)) {
+            infoList.forEach(({ data: columnKey, size }) => {
+              onColumnResize(columnKey, size.offsetWidth);
+            });
+          }
         }}
       >
         {columnsKey.map(columnKey => (

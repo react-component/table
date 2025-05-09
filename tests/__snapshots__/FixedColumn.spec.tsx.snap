@@ -48,7 +48,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
               scope="col"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="title2"
             >
               <span
@@ -249,7 +249,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -322,7 +322,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -395,7 +395,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -452,7 +452,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -509,7 +509,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -566,7 +566,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -623,7 +623,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -680,7 +680,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
@@ -737,7 +737,7 @@ exports[`Table.FixedColumn > fixed column renders correctly RTL 1`] = `
             </td>
             <td
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow rc-table-cell-ellipsis"
-              style="inset-inline-start: 0; --z-offset: 23; --z-offset-reverse: 13;"
+              style="inset-inline-start: 1000px; --z-offset: 23; --z-offset-reverse: 13;"
               title="1111"
             >
               <span
