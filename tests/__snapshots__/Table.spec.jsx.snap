@@ -214,9 +214,22 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; visibility: hidden;"
+          style="table-layout: fixed;"
         >
-          <colgroup />
+          <colgroup>
+            <col
+              style="width: 0px;"
+            />
+            <col
+              style="width: 0px;"
+            />
+            <col
+              style="width: 0px;"
+            />
+            <col
+              style="width: 15px;"
+            />
+          </colgroup>
           <thead
             class="rc-table-thead"
             name="my-header-wrapper"
