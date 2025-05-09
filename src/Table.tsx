@@ -27,7 +27,6 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import classNames from 'classnames';
 import ResizeObserver from '@rc-component/resize-observer';
-import isVisible from '@rc-component/util/lib/Dom/isVisible';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
@@ -47,7 +46,7 @@ import Header from './Header/Header';
 import useColumns from './hooks/useColumns';
 import useExpand from './hooks/useExpand';
 import useFixedInfo from './hooks/useFixedInfo';
-import { useLayoutState, useTimeoutLock } from './hooks/useFrame';
+import { useTimeoutLock } from './hooks/useFrame';
 import useHover from './hooks/useHover';
 import useSticky from './hooks/useSticky';
 import useStickyOffsets from './hooks/useStickyOffsets';
@@ -76,6 +75,7 @@ import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
 import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
 import isEqual from '@rc-component/util/lib/isEqual';
+import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 
 export const DEFAULT_PREFIX = 'rc-table';
 
@@ -349,7 +349,7 @@ function Table<RecordType extends DefaultRecordType>(
   const scrollSummaryRef = React.useRef<HTMLDivElement>();
   const [shadowStart, setShadowStart] = React.useState(false);
   const [shadowEnd, setShadowEnd] = React.useState(false);
-  const [colsWidths, updateColsWidths] = useLayoutState(new Map<React.Key, number>());
+  const [colsWidths, updateColsWidths] = React.useState(new Map<React.Key, number>());
 
   // Convert map to number width
   const colsKeys = getColumnsKey(flattenColumns);
@@ -403,16 +403,14 @@ function Table<RecordType extends DefaultRecordType>(
   }
 
   const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
-    if (isVisible(fullTableRef.current)) {
-      updateColsWidths(widths => {
-        if (widths.get(columnKey) !== width) {
-          const newWidths = new Map(widths);
-          newWidths.set(columnKey, width);
-          return newWidths;
-        }
-        return widths;
-      });
-    }
+    updateColsWidths(widths => {
+      if (widths.get(columnKey) !== width) {
+        const newWidths = new Map(widths);
+        newWidths.set(columnKey, width);
+        return newWidths;
+      }
+      return widths;
+    });
   }, []);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
@@ -526,7 +524,7 @@ function Table<RecordType extends DefaultRecordType>(
   // ===================== Effects ======================
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
 
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     if (!tailor || !useInternalHooks) {
       if (scrollBodyRef.current instanceof Element) {
         setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
