@@ -1819,6 +1819,7 @@ exports[`Table.FixedColumn > renders correctly > scrollX - without data 1`] = `
           </tr>
           <tr
             class="rc-table-placeholder"
+            style=""
           >
             <td
               class="rc-table-cell"
@@ -2975,6 +2976,7 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
           </tr>
           <tr
             class="rc-table-placeholder"
+            style=""
           >
             <td
               class="rc-table-cell"
