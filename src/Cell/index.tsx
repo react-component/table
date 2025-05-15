@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import cls from 'classnames';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -122,9 +122,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
+
+  const { allColumnsFixedLeft, rowHoverable, classNames, styles } = useContext(TableContext, [
     'allColumnsFixedLeft',
     'rowHoverable',
+    'classNames',
+    'styles',
   ]);
 
   // ====================== Value =======================
@@ -212,8 +215,9 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     });
 
   // >>>>> ClassName
-  const mergedClassName = classNames(
+  const mergedClassName = cls(
     cellPrefixCls,
+    classNames?.item,
     className,
     {
       // Fixed
@@ -249,6 +253,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     ...fixedStyle,
     ...alignStyle,
     ...additionalProps.style,
+    ...styles?.item,
   };
 
   // >>>>> Children Node
