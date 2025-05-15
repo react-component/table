@@ -569,7 +569,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             >
               <div
                 class="rc-table-expanded-row-fixed"
-                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+                style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
               >
                 <p>
                   extra data
@@ -616,7 +616,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             >
               <div
                 class="rc-table-expanded-row-fixed"
-                style="width: 0px; position: sticky; left: 0px; overflow: hidden;"
+                style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
               >
                 <p>
                   extra data

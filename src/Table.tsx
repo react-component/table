@@ -495,9 +495,9 @@ function Table<RecordType extends DefaultRecordType>(
     }
   };
 
-  const onFullTableResize = ({ width }) => {
+  const onFullTableResize = (offsetWidth?: number) => {
     stickyRef.current?.checkScrollBarVisible();
-    let mergedWidth = fullTableRef.current ? fullTableRef.current.offsetWidth : width;
+    let mergedWidth = offsetWidth ?? fullTableRef.current?.offsetWidth ?? 0;
     if (useInternalHooks && getContainerWidth && fullTableRef.current) {
       mergedWidth = getContainerWidth(fullTableRef.current, mergedWidth) || mergedWidth;
     }
@@ -507,6 +507,13 @@ function Table<RecordType extends DefaultRecordType>(
       setComponentWidth(mergedWidth);
     }
   };
+
+  // fix https://github.com/ant-design/ant-design/issues/49279
+  useLayoutEffect(() => {
+    if (horizonScroll) {
+      onFullTableResize();
+    }
+  }, [horizonScroll]);
 
   // Sync scroll bar when init or `horizonScroll`, `data` and `columns.length` changed
   const mounted = React.useRef(false);
@@ -799,7 +806,11 @@ function Table<RecordType extends DefaultRecordType>(
   );
 
   if (horizonScroll) {
-    fullTable = <ResizeObserver onResize={onFullTableResize}>{fullTable}</ResizeObserver>;
+    fullTable = (
+      <ResizeObserver onResize={({ offsetWidth }) => onFullTableResize(offsetWidth)}>
+        {fullTable}
+      </ResizeObserver>
+    );
   }
 
   const fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets);
