@@ -109,7 +109,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     return () => {
       scrollRef.current?.removeEventListener('wheel', onWheel);
     };
-  }, []);
+  }, [direction]);
 
   // Check if all flattenColumns has width
   const allFlattenColumnsWithWidth = React.useMemo(
