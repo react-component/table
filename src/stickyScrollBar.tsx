@@ -141,18 +141,25 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }));
 
   React.useEffect(() => {
-    document.body.addEventListener(MOUSEUP_EVENT, onMouseUp, false);
-    document.body.addEventListener(MOUSEMOVE_EVENT, onMouseMove, false);
+    const abortController = new AbortController();
+    document.body.addEventListener(MOUSEUP_EVENT, onMouseUp, {
+      capture: false,
+      signal: abortController.signal,
+    });
+    document.body.addEventListener(MOUSEMOVE_EVENT, onMouseMove, {
+      capture: false,
+      signal: abortController.signal,
+    });
     checkScrollBarVisible();
     return () => {
-      document.body.removeEventListener(MOUSEUP_EVENT, onMouseUp);
-      document.body.removeEventListener(MOUSEMOVE_EVENT, onMouseMove);
+      abortController.abort();
     };
   }, [scrollBarWidth, isActive]);
 
   // Loop for scroll event check
   React.useEffect(() => {
     if (!scrollBodyRef.current) return;
+    const abortController = new AbortController();
 
     const scrollParents: (HTMLElement | SVGElement)[] = [];
     let parent = getDOM(scrollBodyRef.current);
@@ -161,16 +168,27 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       parent = parent.parentElement;
     }
 
-    scrollParents.forEach(p => p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false));
-    window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
-    window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-    container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+    scrollParents.forEach(p =>
+      p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, {
+        capture: false,
+        signal: abortController.signal,
+      }),
+    );
+    window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, {
+      capture: false,
+      signal: abortController.signal,
+    });
+    window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, {
+      capture: false,
+      signal: abortController.signal,
+    });
+    container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, {
+      capture: false,
+      signal: abortController.signal,
+    });
 
     return () => {
-      scrollParents.forEach(p => p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible));
-      window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
-      window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
-      container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+      abortController.abort();
     };
   }, [container]);
 
