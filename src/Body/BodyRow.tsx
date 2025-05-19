@@ -31,7 +31,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
-  getRowKey: (index: number) => React.Key,
+  getRowKey?: (index: number) => React.Key,
 ) {
   const {
     record,
@@ -77,7 +77,7 @@ export function getCellProps<RecordType>(
     // 下面如果是 0 的，增加 +1 逻辑
     const thisCellProps = column.onCell(record, _index);
     if (thisCellProps.rowSpan === 0) {
-      const thisExpanded = expandedKeys.has(getRowKey(_index));
+      const thisExpanded = expandedKeys.has(getRowKey?.(_index));
       if (thisExpanded) {
         _rowSpan = _rowSpan + 1;
       }
