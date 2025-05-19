@@ -19,6 +19,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
+  getRowKey: (index: number) => React.Key;
 }
 
 // ==================================================================================
@@ -30,6 +31,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
+  getRowKey: (index: number) => React.Key,
 ) {
   const {
     record,
@@ -43,6 +45,7 @@ export function getCellProps<RecordType>(
     expanded,
     hasNestChildren,
     onTriggerExpand,
+    expandedKeys,
   } = rowInfo;
 
   const key = columnsKey[colIndex];
@@ -68,9 +71,32 @@ export function getCellProps<RecordType>(
     );
   }
 
+  const addChildrenRowSpan = (rowSpan: number, index2: number) => {
+    const _index = index2 + 1;
+    let _rowSpan = rowSpan;
+    // 下面如果是 0 的，增加 +1 逻辑
+    const dd = column.onCell(record, _index);
+    if (dd.rowSpan === 0) {
+      const ddd = expandedKeys.has(getRowKey(_index));
+      if (ddd) {
+        _rowSpan = _rowSpan + 1;
+      }
+      return addChildrenRowSpan(_rowSpan, _index);
+    }
+    return _rowSpan;
+  };
+
   let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
+    if (additionalCellProps.rowSpan > 0) {
+      // 本身展开 +1
+      if (expanded) {
+        additionalCellProps.rowSpan = additionalCellProps.rowSpan + 1;
+      }
+      additionalCellProps.rowSpan = addChildrenRowSpan(additionalCellProps.rowSpan, index);
+    }
+    console.log('additionalCellProps.rowSpan', additionalCellProps.rowSpan);
   }
 
   return {
@@ -102,8 +128,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
+    getRowKey,
   } = props;
   const rowInfo = useRowInfo(record, rowKey, index, indent);
+
   const {
     prefixCls,
     flattenColumns,
@@ -144,7 +172,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       )}
       style={{ ...style, ...rowProps?.style }}
     >
-      {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      {flattenColumns.map((column, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
         const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
@@ -153,8 +181,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           colIndex,
           indent,
           index,
+          getRowKey,
         );
-
+        if (column.title === '手机号') {
+          // console.log('additionalCellProps', column.title, additionalCellProps);
+        }
         return (
           <Cell<RecordType>
             className={columnClassName}

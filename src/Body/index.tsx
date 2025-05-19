@@ -67,6 +67,12 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
         <BodyRow
           key={key}
           rowKey={key}
+          getRowKey={index => {
+            const thisRecord = flattenData[index]?.record;
+            if (thisRecord) {
+              return getRowKey(thisRecord, index);
+            }
+          }}
           record={record}
           index={idx}
           renderIndex={renderIndex}
