@@ -172,7 +172,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       )}
       style={{ ...style, ...rowProps?.style }}
     >
-      {flattenColumns.map((column, colIndex) => {
+      {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
         const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
@@ -183,9 +183,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           index,
           getRowKey,
         );
-        if (column.title === '手机号') {
-          // console.log('additionalCellProps', column.title, additionalCellProps);
-        }
         return (
           <Cell<RecordType>
             className={columnClassName}
