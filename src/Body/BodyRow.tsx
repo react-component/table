@@ -75,14 +75,16 @@ export function getCellProps<RecordType>(
     const _index = index2 + 1;
     let _rowSpan = rowSpan;
     // 下面如果是 0 的，增加 +1 逻辑
-    const dd = column.onCell(record, _index);
-    if (dd.rowSpan === 0) {
-      const ddd = expandedKeys.has(getRowKey(_index));
-      if (ddd) {
+    const thisCellProps = column.onCell(record, _index);
+    if (thisCellProps.rowSpan === 0) {
+      const thisExpanded = expandedKeys.has(getRowKey(_index));
+      if (thisExpanded) {
         _rowSpan = _rowSpan + 1;
       }
+      // 继续往下找
       return addChildrenRowSpan(_rowSpan, _index);
     }
+    // 找不到后返回
     return _rowSpan;
   };
 
