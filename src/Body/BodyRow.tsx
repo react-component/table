@@ -1,7 +1,8 @@
-import classNames from 'classnames';
+import cls from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
-import { responseImmutable } from '../context/TableContext';
+import { useContext } from '@rc-component/context';
+import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
@@ -19,6 +20,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
+  rowType?: 'header' | 'body' | 'footer';
 }
 
 // ==================================================================================
@@ -90,7 +92,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
-
   const {
     className,
     style,
@@ -102,7 +103,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
+    rowType,
   } = props;
+  const { classNames, styles } = useContext(TableContext, ['classNames', 'styles']);
+  const { body: bodyCls, header: headerCls } = classNames || {};
+  const { body: bodyStyles, header: headerStyles } = styles || {};
   const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
     prefixCls,
@@ -133,16 +138,23 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     <RowComponent
       {...rowProps}
       data-row-key={rowKey}
-      className={classNames(
+      className={cls(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
         {
+          [headerCls?.row]: headerCls?.row && rowType === 'header',
+          [bodyCls?.row]: bodyCls?.row && rowType === 'body',
           [expandedClsName]: indent >= 1,
         },
       )}
-      style={{ ...style, ...rowProps?.style }}
+      style={{
+        ...style,
+        ...rowProps?.style,
+        ...(rowType === 'header' && headerStyles?.row),
+        ...(rowType === 'body' && bodyStyles?.row),
+      }}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
@@ -157,6 +169,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
         return (
           <Cell<RecordType>
+            rowType="body"
             className={columnClassName}
             ellipsis={column.ellipsis}
             align={column.align}
@@ -187,7 +200,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
-        className={classNames(
+        className={cls(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
           expandedClsName,

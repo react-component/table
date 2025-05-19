@@ -24,6 +24,18 @@ const Demo = () => {
   return (
     <div>
       <Table
+        classNames={{
+          body: {
+            wrapper: 'test-body-wrapper',
+            cell: 'test-body-cell',
+            row: 'test-body-row',
+          },
+          header: {
+            wrapper: 'test-header-wrapper',
+            cell: 'test-header-cell',
+            row: 'test-header-row',
+          },
+        }}
         components={{ header: { table } }}
         sticky
         columns={[

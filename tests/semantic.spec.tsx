@@ -43,44 +43,61 @@ describe('support classNames and styles', () => {
   const commonTableProps = {
     columns: columns,
     rowClassName: (record, i) => `row-${i}`,
-    expandedRowRender: (record) => <p>extra: {record.a}</p>,
+    expandedRowRender: record => <p>extra: {record.a}</p>,
     expandedRowClassName: (record, i) => `ex-row-${i}`,
-    className: "table",
+    className: 'table',
     title: () => <span>title</span>,
     footer: () => <span>footer</span>,
   };
   it('should support className and style', () => {
     const testClassNames = {
       section: 'test-section',
-      header: 'test-header',
       title: 'test-title',
-      body: 'test-body',
       footer: 'test-footer',
       content: 'test-content',
       item: 'test-item',
-    }
+      body: {
+        wrapper: 'test-body-wrapper',
+        cell: 'test-body-cell',
+        row: 'test-body-row',
+      },
+      header: {
+        wrapper: 'test-header-wrapper',
+        cell: 'test-header-cell',
+        row: 'test-header-row',
+      },
+    };
     const testStyles = {
       section: { background: 'red' },
-      header: { background: 'blue' },
       title: { background: 'green' },
-      body: { background: 'yellow' },
       footer: { background: 'pink' },
       content: { background: 'purple' },
-      item: { background: 'orange' },
-    }
+      item: { fontSize: '19px' },
+      body: {
+        wrapper: { background: 'cyan' },
+        cell: { background: 'lime' },
+        row: { background: 'teal' },
+      },
+      header: {
+        wrapper: { background: 'magenta' },
+        cell: { background: 'gold' },
+        row: { background: 'silver' },
+      },
+    };
     const { container } = render(
-      <Table
-        {...commonTableProps}
-        classNames={testClassNames}
-        styles={testStyles}
-        data={data}
-      />
-    )
+      <Table {...commonTableProps} classNames={testClassNames} styles={testStyles} data={data} />,
+    );
     const section = container.querySelector('.rc-table-container');
     const title = container.querySelector('.rc-table-title');
     const footer = container.querySelector('.rc-table-footer');
     const content = container.querySelector('.rc-table-content');
     const item = container.querySelector('.rc-table-cell');
+    const headerWrapper = container.querySelector('.rc-table-thead');
+    const headerCell = container.querySelector('.rc-table-cell');
+    const headerRow = container.querySelector('tr');
+    const bodyWrapper = container.querySelector('.rc-table-tbody');
+    const bodyCell = container.querySelector('.rc-table-tbody .rc-table-cell');
+    const bodyRow = container.querySelector('.rc-table-row');
     expect(section).toHaveClass(testClassNames.section);
     expect(section).toHaveStyle(testStyles.section);
     expect(title).toHaveClass(testClassNames.title);
@@ -90,23 +107,19 @@ describe('support classNames and styles', () => {
     expect(content).toHaveClass(testClassNames.content);
     expect(content).toHaveStyle(testStyles.content);
     expect(item).toHaveClass(testClassNames.item);
-    expect(item).toHaveStyle(testStyles.item);
+    expect(item).toHaveStyle({ fontSize: testStyles.item.fontSize });
 
-    const { container: scrollContainer } = render(
-      <Table
-        {...commonTableProps}
-        classNames={testClassNames}
-        styles={testStyles}
-        data={data}
-        scroll={{ y: 200 }}
-      />
-    )
-    const header = scrollContainer.querySelector('.rc-table-header');
-    const body = scrollContainer.querySelector('.rc-table-body');
-    expect(header).toHaveClass(testClassNames.header);
-    expect(header).toHaveStyle(testStyles.header);
-    expect(body).toHaveClass(testClassNames.body);
-    expect(body).toHaveStyle(testStyles.body);
-  })
-})
-
+    expect(headerWrapper).toHaveClass(testClassNames.header.wrapper);
+    expect(headerWrapper).toHaveStyle(testStyles.header.wrapper);
+    expect(headerCell).toHaveClass(testClassNames.header.cell);
+    expect(headerCell).toHaveStyle({ background: testStyles.header.cell.background });
+    expect(headerRow).toHaveClass(testClassNames.header.row);
+    expect(headerRow).toHaveStyle(testStyles.header.row);
+    expect(bodyWrapper).toHaveClass(testClassNames.body.wrapper);
+    expect(bodyWrapper).toHaveStyle(testStyles.body.wrapper);
+    expect(bodyCell).toHaveClass(testClassNames.body.cell);
+    expect(bodyCell).toHaveStyle(testStyles.body.cell);
+    expect(bodyRow).toHaveClass(testClassNames.body.row);
+    expect(bodyRow).toHaveStyle(testStyles.body.row);
+  });
+});

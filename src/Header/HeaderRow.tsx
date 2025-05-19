@@ -32,7 +32,13 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
     onHeaderRow,
     index,
   } = props;
-  const { prefixCls } = useContext(TableContext, ['prefixCls']);
+  const { prefixCls, styles, classNames } = useContext(TableContext, [
+    'prefixCls',
+    'styles',
+    'classNames',
+  ]);
+  const { header: headerCls } = classNames || {};
+  const { header: headerStyles } = styles || {};
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -44,7 +50,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
 
   return (
-    <RowComponent {...rowProps}>
+    <RowComponent {...rowProps} className={headerCls?.row} style={headerStyles?.row}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
         const fixedInfo = getCellFixedInfo(

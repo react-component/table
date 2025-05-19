@@ -85,14 +85,21 @@ const EMPTY_DATA = [];
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
 
-export type SemanticName =  'section'| 'header' | 'title' | 'footer' | 'body' | 'content' | 'item';
+export type SemanticName = 'section' | 'title' | 'footer' | 'content' | 'item';
+export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
 export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
-  classNames?: Partial<Record<SemanticName, string>>;
-  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
+  classNames?: Partial<Record<SemanticName, string>> & {
+    body?: Partial<Record<ComponentsSemantic, string>>;
+    header?: Partial<Record<ComponentsSemantic, string>>;
+  };
+  styles?: Partial<Record<SemanticName, React.CSSProperties>> & {
+    body?: Partial<Record<ComponentsSemantic, React.CSSProperties>>;
+    header?: Partial<Record<ComponentsSemantic, React.CSSProperties>>;
+  };
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
@@ -660,11 +667,10 @@ function Table<RecordType extends DefaultRecordType>(
           style={{
             ...scrollXStyle,
             ...scrollYStyle,
-            ...styles?.body,
           }}
           onScroll={onBodyScroll}
           ref={scrollBodyRef}
-          className={cls(`${prefixCls}-body`, classNames?.body)}
+          className={`${prefixCls}-body`}
         >
           <TableComponent
             style={{
@@ -704,8 +710,7 @@ function Table<RecordType extends DefaultRecordType>(
           <FixedHolder
             {...fixedHolderProps}
             stickyTopOffset={offsetHeader}
-            className={cls(`${prefixCls}-header`, classNames?.header)}
-            style={styles?.header}
+            className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
           >
             {renderFixedHeaderTable}
@@ -800,11 +805,23 @@ function Table<RecordType extends DefaultRecordType>(
       ref={fullTableRef}
       {...dataProps}
     >
-      {title && <Panel className={cls(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>{title(mergedData)}</Panel>}
-      <div ref={scrollBodyContainerRef} className={cls(`${prefixCls}-container`, classNames?.section)} style={styles?.section}>
+      {title && (
+        <Panel className={cls(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
+          {title(mergedData)}
+        </Panel>
+      )}
+      <div
+        ref={scrollBodyContainerRef}
+        className={cls(`${prefixCls}-container`, classNames?.section)}
+        style={styles?.section}
+      >
         {groupTableNode}
       </div>
-      {footer && <Panel className={cls(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>{footer(mergedData)}</Panel>}
+      {footer && (
+        <Panel className={cls(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
+          {footer(mergedData)}
+        </Panel>
+      )}
     </div>
   );
 

@@ -11,6 +11,7 @@ import type {
   StickyOffsets,
 } from '../interface';
 import HeaderRow from './HeaderRow';
+import cls from 'classnames';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
@@ -97,7 +98,14 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
 
   const { stickyOffsets, columns, flattenColumns, onHeaderRow } = props;
 
-  const { prefixCls, getComponent } = useContext(TableContext, ['prefixCls', 'getComponent']);
+  const { prefixCls, getComponent, classNames, styles } = useContext(TableContext, [
+    'prefixCls',
+    'getComponent',
+    'classNames',
+    'styles',
+  ]);
+  const { header: headerCls } = classNames || {};
+  const { header: headerStyles } = styles || {};
   const rows = React.useMemo<CellType<RecordType>[][]>(() => parseHeaderRows(columns), [columns]);
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
@@ -105,7 +113,10 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
   const thComponent = getComponent(['header', 'cell'], 'th');
 
   return (
-    <WrapperComponent className={`${prefixCls}-thead`}>
+    <WrapperComponent
+      className={cls(`${prefixCls}-thead`, headerCls?.wrapper)}
+      style={headerStyles?.wrapper}
+    >
       {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
