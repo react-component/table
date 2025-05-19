@@ -183,6 +183,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           index,
           getRowKey,
         );
+
         return (
           <Cell<RecordType>
             className={columnClassName}
