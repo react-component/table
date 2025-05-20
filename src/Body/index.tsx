@@ -72,8 +72,9 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
       return (
         <BodyRow
+          classNames={bodyCls}
+          styles={bodyStyles}
           key={key}
-          rowType="body"
           rowKey={key}
           record={record}
           index={idx}

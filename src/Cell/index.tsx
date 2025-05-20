@@ -19,6 +19,7 @@ import { useEvent } from '@rc-component/util';
 export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
+  style?: React.CSSProperties;
   record?: RecordType;
   /** `column` index is the real show rowIndex */
   index?: number;
@@ -88,6 +89,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     // Style
     prefixCls,
     className,
+    style,
     align,
 
     // Value
@@ -129,8 +131,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     'classNames',
     'styles',
   ]);
-  const { body: bodyCls, header: headerCls } = classNames || {};
-  const { body: bodyStyles, header: headerStyles } = styles || {};
 
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
@@ -222,9 +222,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     classNames?.item,
     className,
     {
-      [headerCls?.cell]: headerCls?.cell && rowType === 'header',
-      [bodyCls?.cell]: bodyCls?.cell && rowType === 'body',
-
       // Fixed
       [`${cellPrefixCls}-fix`]: isFixStart || isFixEnd,
       [`${cellPrefixCls}-fix-start`]: isFixStart,
@@ -259,10 +256,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     ...alignStyle,
     ...additionalProps.style,
     ...styles?.item,
-    ...(rowType === 'header' && headerStyles?.cell),
-    ...(rowType === 'body' && bodyStyles?.cell),
+    ...style,
   };
-  console.log('rowType', rowType);
 
   // >>>>> Children Node
   let mergedChildNode = childNode;

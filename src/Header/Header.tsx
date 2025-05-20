@@ -12,9 +12,12 @@ import type {
 } from '../interface';
 import HeaderRow from './HeaderRow';
 import cls from 'classnames';
+import { TableProps } from '..';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
+  classNames: TableProps['classNames']['header'],
+  styles: TableProps['styles']['header'],
 ): CellType<RecordType>[][] {
   const rows: CellType<RecordType>[][] = [];
 
@@ -30,7 +33,8 @@ function parseHeaderRows<RecordType>(
     const colSpans: number[] = columns.filter(Boolean).map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
-        className: column.className || '',
+        className: cls(column.className, classNames?.cell) || '',
+        style: styles?.cell,
         children: column.title,
         column,
         colStart: currentColIndex,
@@ -106,7 +110,10 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
   ]);
   const { header: headerCls } = classNames || {};
   const { header: headerStyles } = styles || {};
-  const rows = React.useMemo<CellType<RecordType>[][]>(() => parseHeaderRows(columns), [columns]);
+  const rows = React.useMemo<CellType<RecordType>[][]>(
+    () => parseHeaderRows(columns, headerCls, headerStyles),
+    [columns, headerCls, headerStyles],
+  );
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
