@@ -45,6 +45,7 @@ export function getCellProps<RecordType>(
     expanded,
     hasNestChildren,
     onTriggerExpand,
+    expandable,
     expandedKeys,
   } = rowInfo;
 
@@ -94,14 +95,17 @@ export function getCellProps<RecordType>(
   let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
-    if (additionalCellProps.rowSpan > 0) {
-      // 本身展开 +1
-      if (expanded) {
-        additionalCellProps.rowSpan = additionalCellProps.rowSpan + 1;
+    // 开启 expanded 的增加下面逻辑
+    if (expandable) {
+      if (additionalCellProps.rowSpan > 0) {
+        // 本身展开 +1
+        if (expanded) {
+          additionalCellProps.rowSpan = additionalCellProps.rowSpan + 1;
+        }
+        additionalCellProps.rowSpan = addChildrenRowSpan(additionalCellProps.rowSpan, index);
       }
-      additionalCellProps.rowSpan = addChildrenRowSpan(additionalCellProps.rowSpan, index);
+      // console.log('additionalCellProps.rowSpan', additionalCellProps.rowSpan);
     }
-    console.log('additionalCellProps.rowSpan', additionalCellProps.rowSpan);
   }
 
   return {
