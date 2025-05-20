@@ -15,7 +15,6 @@ export interface BodyLineProps<RecordType = any> {
   className?: string;
   style?: React.CSSProperties;
   rowKey: React.Key;
-  rowKeys: React.Key[];
 
   /** Render cell only when it has `rowSpan > 1` */
   extra?: boolean;
@@ -23,7 +22,7 @@ export interface BodyLineProps<RecordType = any> {
 }
 
 const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) => {
-  const { data, index, className, rowKey, style, extra, getHeight, rowKeys, ...restProps } = props;
+  const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent, index: renderIndex } = data;
 
   const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth } = useContext(
@@ -115,7 +114,6 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
             record={record}
             inverse={extra}
             getHeight={getHeight}
-            rowKeys={rowKeys}
           />
         );
       })}

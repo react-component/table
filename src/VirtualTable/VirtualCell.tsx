@@ -25,7 +25,6 @@ export interface VirtualCellProps<RecordType> {
   /** Render cell only when it has `rowSpan > 1` */
   inverse?: boolean;
   getHeight?: (rowSpan: number) => number;
-  rowKeys: React.Key[];
 }
 
 /**
@@ -51,7 +50,6 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     className,
     inverse,
     getHeight,
-    rowKeys,
   } = props;
 
   const { render, dataIndex, className: columnClassName, width: colWidth } = column;
@@ -64,7 +62,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     colIndex,
     indent,
     index,
-    rowKeys,
+    [],
   );
 
   const { style: cellStyle, colSpan = 1, rowSpan = 1 } = additionalCellProps;

@@ -95,7 +95,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
     return obj;
   });
-  const rowKeys = flattenData.map(item => item.rowKey);
+
   // ======================= Col/Row Span =======================
   const getRowSpan = (column: ColumnType<any>, index: number): number => {
     const record = flattenData[index]?.record;
@@ -185,7 +185,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           key={index}
           data={item}
           rowKey={rowKey}
-          rowKeys={rowKeys}
           index={index}
           style={{
             top: -offsetY + sizeInfo.top,
@@ -244,15 +243,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       >
         {(item, index, itemProps) => {
           const rowKey = getRowKey(item.record, index);
-          return (
-            <BodyLine
-              data={item}
-              rowKey={rowKey}
-              rowKeys={rowKeys}
-              index={index}
-              style={itemProps.style}
-            />
-          );
+          return <BodyLine data={item} rowKey={rowKey} index={index} style={itemProps.style} />;
         }}
       </VirtualList>
     </GridContext.Provider>
