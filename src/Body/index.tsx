@@ -49,6 +49,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     getRowKey,
   );
 
+  const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);
+
   // =================== Performance ====================
   const perfRef = React.useRef<PerfRecord>({
     renderWithProps: false,
@@ -62,7 +64,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
   let rows: React.ReactNode;
   if (data.length) {
-    const rowKeys = flattenData.map(item => item.rowKey);
     rows = flattenData.map((item, idx) => {
       const { record, indent, index: renderIndex, rowKey } = item;
 
