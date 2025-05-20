@@ -104,7 +104,6 @@ export function getCellProps<RecordType>(
         }
         additionalCellProps.rowSpan = addChildrenRowSpan(additionalCellProps.rowSpan, index);
       }
-      // console.log('additionalCellProps.rowSpan', additionalCellProps.rowSpan);
     }
   }
 
