@@ -82,7 +82,7 @@ export function getCellProps<RecordType>(
     if (expandable && rowSpan > 1) {
       let currentRowSpan = rowSpan;
 
-      for (let i = index; i < rowSpan; i += 1) {
+      for (let i = index; i < index + rowSpan - 1; i += 1) {
         const rowKey = rowKeys[i];
         if (expandedKeys.has(rowKey)) {
           currentRowSpan += 1;
