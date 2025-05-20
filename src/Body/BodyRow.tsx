@@ -15,8 +15,8 @@ export interface BodyRowProps<RecordType> {
   renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
-  classNames?: TableProps['classNames']['body'];
-  styles?: TableProps['styles']['body'];
+  classNames: TableProps['classNames']['body'];
+  styles: TableProps['styles']['body'];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
   scopeCellComponent: CustomizeComponent;

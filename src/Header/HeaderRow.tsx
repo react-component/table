@@ -21,8 +21,8 @@ export interface RowProps<RecordType> {
   cellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
-  classNames?: TableProps['classNames']['header'];
-  styles?: TableProps['styles']['header'];
+  classNames: TableProps['classNames']['header'];
+  styles: TableProps['styles']['header'];
 }
 
 const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
