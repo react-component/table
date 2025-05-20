@@ -16,8 +16,7 @@ const columns: ColumnsType = [
       if (index === 2) props.rowSpan = 0;
       if (index === 3) props.rowSpan = 0;
       if (index === 4) props.rowSpan = 0;
-      if (index === 5) props.rowSpan = 1;
-
+      if (index === 5) props.rowSpan = undefined;
       return props;
     },
   },
