@@ -42,11 +42,12 @@ const data = [
 
 const Demo = () => (
   <div>
-    <h2>colSpan & rowSpan & expanded</h2>
-    <Table
+    <h2>expanded & rowSpan</h2>
+    <Table<Record<string, any>>
+      rowKey="key"
       columns={columns}
       data={data}
-      expandable={{ expandedRowRender: (record: any) => <p style={{ margin: 0 }}>{record.key}</p> }}
+      expandable={{ expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p> }}
       className="table"
     />
   </div>

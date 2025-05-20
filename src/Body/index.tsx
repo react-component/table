@@ -42,8 +42,12 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'emptyNode',
   ]);
 
-  const flattenData: { record: RecordType; indent: number; index: number }[] =
-    useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
+  const flattenData = useFlattenRecords<RecordType>(
+    data,
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
+  );
 
   // =================== Performance ====================
   const perfRef = React.useRef<PerfRecord>({
@@ -59,19 +63,15 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   let rows: React.ReactNode;
   if (data.length) {
     rows = flattenData.map((item, idx) => {
-      const { record, indent, index: renderIndex } = item;
-
-      const key = getRowKey(record, idx);
+      const { record, indent, index: renderIndex, rowKey } = item;
 
       return (
         <BodyRow
-          key={key}
-          rowKey={key}
+          key={rowKey}
+          rowKey={rowKey}
           getRowKey={index => {
-            const thisRecord = flattenData[index]?.record;
-            if (thisRecord) {
-              return getRowKey(thisRecord, index);
-            }
+            const thisRecord = flattenData[index];
+            return thisRecord?.rowKey;
           }}
           record={record}
           index={idx}
