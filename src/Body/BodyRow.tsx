@@ -71,20 +71,20 @@ export function getCellProps<RecordType>(
     );
   }
 
-  const addChildrenRowSpan = (rowSpan: number, index2: number) => {
-    const _index = index2 + 1;
+  const addChildrenRowSpan = (rowSpan: number, idx: number) => {
+    const nextIndex = idx + 1;
+    const rowKey = rowKeys[nextIndex];
     let _rowSpan = rowSpan;
-    const rowKey = rowKeys[_index];
     if (rowKey !== undefined) {
       // 下面如果是 0 的，增加 +1 逻辑
-      const thisCellProps = column.onCell(record, _index);
+      const thisCellProps = column.onCell(record, nextIndex);
       if (thisCellProps.rowSpan === 0) {
         const thisExpanded = expandedKeys.has(rowKey);
         if (thisExpanded) {
           _rowSpan = _rowSpan + 1;
         }
         // 继续往下找
-        return addChildrenRowSpan(_rowSpan, _index);
+        return addChildrenRowSpan(_rowSpan, nextIndex);
       }
     }
     // 找不到后返回
