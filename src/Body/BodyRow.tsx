@@ -19,7 +19,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
-  getRowKey: (index: number) => React.Key;
+  rowKeys: React.Key[];
 }
 
 // ==================================================================================
@@ -31,7 +31,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
-  getRowKey?: (index: number) => React.Key,
+  rowKeys: React.Key[],
 ) {
   const {
     record,
@@ -74,12 +74,12 @@ export function getCellProps<RecordType>(
   const addChildrenRowSpan = (rowSpan: number, index2: number) => {
     const _index = index2 + 1;
     let _rowSpan = rowSpan;
-    const rowKey = getRowKey?.(_index);
+    const rowKey = rowKeys[_index];
     if (rowKey !== undefined) {
       // 下面如果是 0 的，增加 +1 逻辑
       const thisCellProps = column.onCell(record, _index);
       if (thisCellProps.rowSpan === 0) {
-        const thisExpanded = expandedKeys.has(getRowKey?.(_index));
+        const thisExpanded = expandedKeys.has(rowKey);
         if (thisExpanded) {
           _rowSpan = _rowSpan + 1;
         }
@@ -133,7 +133,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
-    getRowKey,
+    rowKeys,
   } = props;
   const rowInfo = useRowInfo(record, rowKey, index, indent);
 
@@ -186,7 +186,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           colIndex,
           indent,
           index,
-          getRowKey,
+          rowKeys,
         );
 
         return (

@@ -62,6 +62,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
   let rows: React.ReactNode;
   if (data.length) {
+    const rowKeys = flattenData.map(item => item.rowKey);
     rows = flattenData.map((item, idx) => {
       const { record, indent, index: renderIndex, rowKey } = item;
 
@@ -69,10 +70,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
         <BodyRow
           key={rowKey}
           rowKey={rowKey}
-          getRowKey={index => {
-            const thisRecord = flattenData[index];
-            return thisRecord?.rowKey;
-          }}
+          rowKeys={rowKeys}
           record={record}
           index={idx}
           renderIndex={renderIndex}
