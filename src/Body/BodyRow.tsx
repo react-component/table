@@ -75,35 +75,20 @@ export function getCellProps<RecordType>(
   let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
-    // 开启 expanded 的增加下面逻辑
-    if (expandable) {
-      // 当前为合并单元格开始
-      if (additionalCellProps.rowSpan > 0) {
-        // 本身展开 +1
-        if (expanded) {
-          additionalCellProps.rowSpan = additionalCellProps.rowSpan + 1;
+    const { rowSpan } = additionalCellProps;
+
+    // For expandable row with rowSpan,
+    // We should increase the rowSpan if the row is expanded
+    if (expandable && rowSpan > 1) {
+      let currentRowSpan = rowSpan;
+
+      for (let i = index; i < rowSpan; i += 1) {
+        const rowKey = rowKeys[i];
+        if (expandedKeys.has(rowKey)) {
+          currentRowSpan += 1;
         }
-        // 下面如果是 0 的，增加 +1 逻辑
-        const addChildrenRowSpan = (rowSpan: number, idx: number) => {
-          const nextIndex = idx + 1;
-          const rowKey = rowKeys[nextIndex];
-          let _rowSpan = rowSpan;
-          if (rowKey !== undefined) {
-            const thisCellProps = column.onCell(record, nextIndex);
-            if (thisCellProps.rowSpan === 0) {
-              const thisExpanded = expandedKeys.has(rowKey);
-              if (thisExpanded) {
-                _rowSpan = _rowSpan + 1;
-              }
-              // 继续往下找
-              return addChildrenRowSpan(_rowSpan, nextIndex);
-            }
-          }
-          // 找不到后返回
-          return _rowSpan;
-        };
-        additionalCellProps.rowSpan = addChildrenRowSpan(additionalCellProps.rowSpan, index);
       }
+      additionalCellProps.rowSpan = currentRowSpan;
     }
   }
 

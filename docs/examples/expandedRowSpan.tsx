@@ -11,16 +11,14 @@ const columns: ColumnsType = [
     width: 100,
     onCell: (_, index) => {
       const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-      if (index === 0) {
+      if (index === 1) {
         props.rowSpan = 4;
-      } else if (index === 1) {
-        props.rowSpan = 0;
       } else if (index === 2) {
         props.rowSpan = 0;
       } else if (index === 3) {
         props.rowSpan = 0;
       } else if (index === 4) {
-        props.rowSpan = 1;
+        props.rowSpan = 0;
       }
 
       return props;
@@ -33,6 +31,7 @@ const columns: ColumnsType = [
 ];
 
 const data = [
+  { a: '12313132132', b: '0571-43243256', c: '小二', d: '文零西路', e: 'Male', key: 'z' },
   { a: '13812340987', b: '0571-12345678', c: '张三', d: '文一西路', e: 'Male', key: 'a' },
   { a: '13812340987', b: '0571-12345678', c: '张夫人', d: '文一西路', e: 'Female', key: 'b' },
   { a: '13812340987', b: '0571-099877', c: '李四', d: '文二西路', e: 'Male', key: 'c' },
