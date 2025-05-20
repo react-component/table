@@ -84,6 +84,8 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   }, []);
 
   React.useEffect(() => {
+    const abortController = new AbortController();
+
     function onWheel(e: WheelEvent) {
       const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
       if (deltaX) {
@@ -106,10 +108,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         e.preventDefault();
       }
     }
-    scrollRef.current?.addEventListener('wheel', onWheel, { passive: false });
+    scrollRef.current?.addEventListener('wheel', onWheel, {
+      passive: false,
+      signal: abortController.signal,
+    });
 
     return () => {
-      scrollRef.current?.removeEventListener('wheel', onWheel);
+      abortController.abort();
     };
   }, []);
 
