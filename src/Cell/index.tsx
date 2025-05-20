@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import cls from 'classnames';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -19,6 +19,7 @@ import { useEvent } from '@rc-component/util';
 export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
+  style?: React.CSSProperties;
   record?: RecordType;
   /** `column` index is the real show rowIndex */
   index?: number;
@@ -88,6 +89,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     // Style
     prefixCls,
     className,
+    style,
     align,
 
     // Value
@@ -122,6 +124,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
+
   const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
     'allColumnsFixedLeft',
     'rowHoverable',
@@ -212,7 +215,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     });
 
   // >>>>> ClassName
-  const mergedClassName = classNames(
+  const mergedClassName = cls(
     cellPrefixCls,
     className,
     {
@@ -249,6 +252,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     ...fixedStyle,
     ...alignStyle,
     ...additionalProps.style,
+    ...style,
   };
 
   // >>>>> Children Node

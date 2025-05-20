@@ -14,6 +14,7 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
+import { TableProps } from '../Table';
 
 const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
 export { makeImmutable, responseImmutable, useImmutableMark };
@@ -23,6 +24,8 @@ export type ScrollInfoType = [scrollLeft: number, scrollRange: number];
 export interface TableContextProps<RecordType = any> {
   // Scroll
   scrollX: number | string | true;
+  classNames?: TableProps['classNames'];
+  styles?: TableProps['styles'];
 
   // Table
   prefixCls: string;
