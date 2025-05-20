@@ -33,8 +33,8 @@ function parseHeaderRows<RecordType>(
     const colSpans: number[] = columns.filter(Boolean).map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
-        className: cls(column.className, classNames?.cell) || '',
-        style: styles?.cell,
+        className: cls(column.className, classNames.cell) || '',
+        style: styles.cell,
         children: column.title,
         column,
         colStart: currentColIndex,
@@ -108,8 +108,8 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
     'classNames',
     'styles',
   ]);
-  const { header: headerCls } = classNames || {};
-  const { header: headerStyles } = styles || {};
+  const { header: headerCls = {} } = classNames || {};
+  const { header: headerStyles = {} } = styles || {};
   const rows = React.useMemo<CellType<RecordType>[][]>(
     () => parseHeaderRows(columns, headerCls, headerStyles),
     [columns, headerCls, headerStyles],
@@ -121,12 +121,14 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
 
   return (
     <WrapperComponent
-      className={cls(`${prefixCls}-thead`, headerCls?.wrapper)}
-      style={headerStyles?.wrapper}
+      className={cls(`${prefixCls}-thead`, headerCls.wrapper)}
+      style={headerStyles.wrapper}
     >
       {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
+            classNames={headerCls}
+            styles={headerStyles}
             key={rowIndex}
             flattenColumns={flattenColumns}
             cells={row}

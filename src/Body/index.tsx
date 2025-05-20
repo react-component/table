@@ -46,8 +46,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'classNames',
     'styles',
   ]);
-  const { body: bodyCls } = classNames || {};
-  const { body: bodyStyles } = styles || {};
+  const { body: bodyCls = {} } = classNames || {};
+  const { body: bodyStyles = {} } = styles || {};
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
@@ -107,8 +107,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   return (
     <PerfContext.Provider value={perfRef.current}>
       <WrapperComponent
-        className={cls(`${prefixCls}-tbody`, bodyCls?.wrapper)}
-        style={bodyStyles?.wrapper}
+        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
+        style={bodyStyles.wrapper}
       >
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (

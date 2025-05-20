@@ -93,6 +93,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
+
   const {
     className,
     style,
@@ -143,7 +144,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
-        classNames?.row,
+        classNames.row,
         {
           [expandedClsName]: indent >= 1,
         },
@@ -151,7 +152,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       style={{
         ...style,
         ...rowProps?.style,
-        ...styles?.row,
+        ...styles.row,
       }}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
@@ -167,8 +168,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
         return (
           <Cell<RecordType>
-            className={cls(columnClassName, classNames?.cell)}
-            style={styles?.cell}
+            className={cls(columnClassName, classNames.cell)}
+            style={styles.cell}
             ellipsis={column.ellipsis}
             align={column.align}
             scope={column.rowScope}

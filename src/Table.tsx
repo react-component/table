@@ -85,7 +85,7 @@ const EMPTY_DATA = [];
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
 
-export type SemanticName = 'section' | 'title' | 'footer' | 'content' | 'item';
+export type SemanticName = 'section' | 'title' | 'footer' | 'content' | 'cell';
 export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
 export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
