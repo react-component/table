@@ -19,6 +19,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
+  rowKeys: React.Key[];
 }
 
 // ==================================================================================
@@ -30,6 +31,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
+  rowKeys: React.Key[],
 ) {
   const {
     record,
@@ -43,6 +45,9 @@ export function getCellProps<RecordType>(
     expanded,
     hasNestChildren,
     onTriggerExpand,
+    expandable,
+    expandedKeys,
+    offset,
   } = rowInfo;
 
   const key = columnsKey[colIndex];
@@ -71,6 +76,21 @@ export function getCellProps<RecordType>(
   let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
+    const { rowSpan } = additionalCellProps;
+
+    // For expandable row with rowSpan,
+    // We should increase the rowSpan if the row is expanded
+    if (expandable && rowSpan > offset) {
+      let currentRowSpan = rowSpan;
+
+      for (let i = index; i < index + rowSpan; i += 1) {
+        const rowKey = rowKeys[i];
+        if (expandedKeys.has(rowKey)) {
+          currentRowSpan += 1;
+        }
+      }
+      additionalCellProps.rowSpan = currentRowSpan;
+    }
   }
 
   return {
@@ -102,8 +122,10 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
+    rowKeys,
   } = props;
   const rowInfo = useRowInfo(record, rowKey, index, indent);
+
   const {
     prefixCls,
     flattenColumns,
@@ -153,6 +175,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           colIndex,
           indent,
           index,
+          rowKeys,
         );
 
         return (

@@ -27,6 +27,7 @@ export default function useRowInfo<RecordType>(
   | 'expandedKeys'
   | 'childrenColumnName'
   | 'onRow'
+  | 'offset'
 > & {
   columnsKey: React.Key[];
   nestExpandable: boolean;
@@ -54,6 +55,7 @@ export default function useRowInfo<RecordType>(
     'childrenColumnName',
     'rowExpandable',
     'onRow',
+    'offset',
   ]);
 
   const {
@@ -103,7 +105,6 @@ export default function useRowInfo<RecordType>(
 
   // ========================= Column =========================
   const columnsKey = getColumnsKey(flattenColumns);
-
   return {
     ...context,
     columnsKey,

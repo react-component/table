@@ -15,6 +15,7 @@ function fillRecords<T>(
     record,
     indent,
     index,
+    rowKey: getRowKey(record, index),
   });
 
   const key = getRowKey(record);
@@ -41,6 +42,7 @@ export interface FlattenData<RecordType> {
   record: RecordType;
   indent: number;
   index: number;
+  rowKey: Key;
 }
 
 /**
@@ -80,6 +82,7 @@ export default function useFlattenRecords<T>(
         record: item,
         indent: 0,
         index,
+        rowKey: getRowKey(item, index),
       };
     });
   }, [data, childrenColumnName, expandedKeys, getRowKey]);

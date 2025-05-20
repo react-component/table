@@ -842,6 +842,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandableType,
       expandRowByClick: expandableConfig.expandRowByClick,
       expandedRowRender: expandableConfig.expandedRowRender,
+      offset: expandableConfig.offset,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       indentSize: expandableConfig.indentSize,

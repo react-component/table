@@ -62,6 +62,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
     colIndex,
     indent,
     index,
+    [],
   );
 
   const { style: cellStyle, colSpan = 1, rowSpan = 1 } = additionalCellProps;
