@@ -11,15 +11,12 @@ const columns: ColumnsType = [
     width: 100,
     onCell: (_, index) => {
       const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-      if (index === 1) {
-        props.rowSpan = 4;
-      } else if (index === 2) {
-        props.rowSpan = 0;
-      } else if (index === 3) {
-        props.rowSpan = 0;
-      } else if (index === 4) {
-        props.rowSpan = 0;
-      }
+      if (index === 0) props.rowSpan = 1;
+      if (index === 1) props.rowSpan = 4;
+      if (index === 2) props.rowSpan = 0;
+      if (index === 3) props.rowSpan = 0;
+      if (index === 4) props.rowSpan = 0;
+      if (index === 5) props.rowSpan = 1;
 
       return props;
     },
