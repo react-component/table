@@ -22,7 +22,6 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
-  rowType?: 'header' | 'body' | 'footer';
 }
 
 // ==================================================================================
