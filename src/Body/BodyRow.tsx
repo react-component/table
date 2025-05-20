@@ -47,6 +47,7 @@ export function getCellProps<RecordType>(
     onTriggerExpand,
     expandable,
     expandedKeys,
+    offset,
   } = rowInfo;
 
   const key = columnsKey[colIndex];
@@ -79,7 +80,7 @@ export function getCellProps<RecordType>(
 
     // For expandable row with rowSpan,
     // We should increase the rowSpan if the row is expanded
-    if (expandable && rowSpan > 1) {
+    if (expandable && rowSpan > offset) {
       let currentRowSpan = rowSpan;
 
       for (let i = index; i < index + rowSpan; i += 1) {

@@ -3,6 +3,7 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandableConfig,
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
@@ -49,6 +50,7 @@ export interface TableContextProps<RecordType = any> {
   expandableType: ExpandableType;
   expandRowByClick: boolean;
   expandedRowRender: ExpandedRowRender<RecordType>;
+  offset: ExpandableConfig<RecordType>['offset'];
   expandIcon: RenderExpandIcon<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;

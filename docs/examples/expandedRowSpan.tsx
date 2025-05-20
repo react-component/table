@@ -11,7 +11,9 @@ const columns: ColumnsType = [
     width: 100,
     onCell: (_, index) => {
       const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-      if (index === 1) {
+      if (index === 0) {
+        props.rowSpan = 1;
+      } else if (index === 1) {
         props.rowSpan = 4;
       } else if (index === 2) {
         props.rowSpan = 0;
@@ -19,6 +21,8 @@ const columns: ColumnsType = [
         props.rowSpan = 0;
       } else if (index === 4) {
         props.rowSpan = 0;
+      } else if (index === 5) {
+        props.rowSpan = 1;
       }
 
       return props;
@@ -46,7 +50,10 @@ const Demo = () => (
       rowKey="key"
       columns={columns}
       data={data}
-      expandable={{ expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p> }}
+      expandable={{
+        offset: 0,
+        expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,
+      }}
       className="table"
     />
   </div>
