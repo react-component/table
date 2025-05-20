@@ -125,12 +125,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   const cellPrefixCls = `${prefixCls}-cell`;
 
-  const {
-    allColumnsFixedLeft,
-    rowHoverable,
-    classNames = {},
-    styles = {},
-  } = useContext(TableContext, ['allColumnsFixedLeft', 'rowHoverable', 'classNames', 'styles']);
+  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
+    'allColumnsFixedLeft',
+    'rowHoverable',
+  ]);
 
   // ====================== Value =======================
   const [childNode, legacyCellProps] = useCellRender(
@@ -219,7 +217,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   // >>>>> ClassName
   const mergedClassName = cls(
     cellPrefixCls,
-    classNames.cell,
     className,
     {
       // Fixed
@@ -255,7 +252,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     ...fixedStyle,
     ...alignStyle,
     ...additionalProps.style,
-    ...styles.cell,
     ...style,
   };
 

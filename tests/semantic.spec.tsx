@@ -55,7 +55,6 @@ describe('support classNames and styles', () => {
       title: 'test-title',
       footer: 'test-footer',
       content: 'test-content',
-      cell: 'test-cell',
       body: {
         wrapper: 'test-body-wrapper',
         cell: 'test-body-cell',
@@ -72,7 +71,6 @@ describe('support classNames and styles', () => {
       title: { background: 'green' },
       footer: { background: 'pink' },
       content: { background: 'purple' },
-      cell: { fontSize: '19px' },
       body: {
         wrapper: { background: 'cyan' },
         cell: { background: 'lime' },
@@ -91,7 +89,6 @@ describe('support classNames and styles', () => {
     const title = container.querySelector('.rc-table-title');
     const footer = container.querySelector('.rc-table-footer');
     const content = container.querySelector('.rc-table-content');
-    const cell = container.querySelector('.rc-table-cell');
     const headerWrapper = container.querySelector('.rc-table-thead');
     const headerCell = container.querySelector('.rc-table-cell');
     const headerRow = container.querySelector('tr');
@@ -106,8 +103,6 @@ describe('support classNames and styles', () => {
     expect(footer).toHaveStyle(testStyles.footer);
     expect(content).toHaveClass(testClassNames.content);
     expect(content).toHaveStyle(testStyles.content);
-    expect(cell).toHaveClass(testClassNames.cell);
-    expect(cell).toHaveStyle({ fontSize: testStyles.cell.fontSize });
 
     expect(headerWrapper).toHaveClass(testClassNames.header.wrapper);
     expect(headerWrapper).toHaveStyle(testStyles.header.wrapper);
