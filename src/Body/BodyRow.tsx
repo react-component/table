@@ -82,7 +82,7 @@ export function getCellProps<RecordType>(
 
     // For expandable row with rowSpan,
     // We should increase the rowSpan if the row is expanded
-    if (expandable) {
+    if (expandable && rowSpan !== undefined) {
       let currentRowSpan = rowSpan;
 
       for (let i = index; i < index + rowSpan; i += 1) {
