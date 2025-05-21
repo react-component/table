@@ -4,7 +4,7 @@ import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
-import type { ColumnType, CustomizeComponent } from '../interface';
+import type { ColumnType, CustomizeComponent, ExpandableConfig } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 
@@ -19,6 +19,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
+  expandedRowColSpan?: ExpandableConfig<RecordType>['expandedRowColSpan'];
 }
 
 // ==================================================================================
@@ -102,6 +103,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
+    expandedRowColSpan,
   } = props;
   const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
@@ -195,7 +197,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        colSpan={flattenColumns.length}
+        colSpan={expandedRowColSpan ?? flattenColumns.length}
         isEmpty={false}
       >
         {expandContent}

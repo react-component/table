@@ -844,6 +844,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandedRowRender: expandableConfig.expandedRowRender,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
+      expandedRowColSpan: expandableConfig.expandedRowColSpan,
       indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'start'),
       emptyNode,
@@ -894,6 +895,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandableConfig.expandedRowRender,
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
+      expandableConfig.expandedRowColSpan,
       expandableConfig.indentSize,
       emptyNode,
 

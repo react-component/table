@@ -3,6 +3,7 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandableConfig,
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
@@ -52,6 +53,7 @@ export interface TableContextProps<RecordType = any> {
   expandIcon: RenderExpandIcon<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;
+  expandedRowColSpan: ExpandableConfig<RecordType>['expandedRowColSpan'];
   allColumnsFixedLeft: boolean;
 
   // Column
