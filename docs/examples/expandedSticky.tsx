@@ -11,6 +11,7 @@ const Demo = () => {
       title: '手机号',
       dataIndex: 'a',
       width: 100,
+      fixed: 'left',
       onCell: (_, index) => {
         const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
         if (index === 1) props.rowSpan = expandedRowKeys.includes('b') ? 3 : 2;
@@ -19,16 +20,21 @@ const Demo = () => {
       },
     },
     Table.EXPAND_COLUMN,
-    { title: 'Name', dataIndex: 'c', width: 100 },
-    { title: 'Address', dataIndex: 'd', width: 200 },
+    { title: 'Name', dataIndex: 'c' },
+    { title: 'Address', fixed: 'right', dataIndex: 'd', width: 200 },
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        height: 10000,
+      }}
+    >
       <h2>expanded & sticky</h2>
       <Table<Record<string, any>>
         rowKey="key"
         sticky
+        scroll={{ x: 800 }}
         columns={columns}
         data={[
           { key: 'a', a: '12313132132', c: '小二', d: '文零西路' },
@@ -36,7 +42,7 @@ const Demo = () => {
           { key: 'c', a: '13812340987', c: '张夫', d: '文二西路' },
         ]}
         expandable={{
-          expandedRowColSpan: columns.length - 1,
+          expandedRowOffset: 1,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
           expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,

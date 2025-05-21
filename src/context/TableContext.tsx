@@ -53,7 +53,7 @@ export interface TableContextProps<RecordType = any> {
   expandIcon: RenderExpandIcon<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;
-  expandedRowColSpan: ExpandableConfig<RecordType>['expandedRowColSpan'];
+  expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
   allColumnsFixedLeft: boolean;
 
   // Column

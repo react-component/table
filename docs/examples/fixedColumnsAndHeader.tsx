@@ -61,7 +61,7 @@ const columns = [
 
 const Demo = () => (
   <React.StrictMode>
-    <Table columns={columns as any} data={[]} scroll={{ x: 'max-content' }} sticky />
+    <Table columns={columns as any} data={[{ key: 1 }]} scroll={{ x: 2000 }} sticky />
   </React.StrictMode>
 );
 
