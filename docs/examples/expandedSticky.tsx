@@ -42,7 +42,7 @@ const Demo = () => {
           { key: 'c', a: '13812340987', c: '张夫', d: '文二西路' },
         ]}
         expandable={{
-          expandedRowColSpan: columns.length - 1,
+          expandedRowOffset: 1,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
           expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,

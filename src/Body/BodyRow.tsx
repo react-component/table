@@ -19,7 +19,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
-  expandedRowColSpan?: ExpandableConfig<RecordType>['expandedRowColSpan'];
+  expandedRowOffset?: ExpandableConfig<RecordType>['expandedRowOffset'];
 }
 
 // ==================================================================================
@@ -103,7 +103,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
-    expandedRowColSpan,
+    expandedRowOffset = 0,
   } = props;
   const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
@@ -186,6 +186,14 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
+    const offsetColumns = flattenColumns.filter((_, idx) => idx < expandedRowOffset);
+    let offsetWidth = 0;
+    offsetColumns.forEach(item => {
+      if (typeof item.width === 'number') {
+        offsetWidth = offsetWidth + (item.width ?? 0);
+      }
+    });
+
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
@@ -197,7 +205,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        colSpan={expandedRowColSpan ?? flattenColumns.length}
+        offsetWidth={offsetWidth}
+        colSpan={flattenColumns.length - expandedRowOffset}
         isEmpty={false}
       >
         {expandContent}

@@ -31,7 +31,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     expandedKeys,
     childrenColumnName,
     emptyNode,
-    expandedRowColSpan,
+    expandedRowOffset,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -41,7 +41,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'expandedKeys',
     'childrenColumnName',
     'emptyNode',
-    'expandedRowColSpan',
+    'expandedRowOffset',
   ]);
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
@@ -76,7 +76,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
-          expandedRowColSpan={expandedRowColSpan}
+          expandedRowOffset={expandedRowOffset}
         />
       );
     });
