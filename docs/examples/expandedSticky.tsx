@@ -11,6 +11,7 @@ const Demo = () => {
       title: '手机号',
       dataIndex: 'a',
       width: 100,
+      fixed: 'left',
       onCell: (_, index) => {
         const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
         if (index === 1) props.rowSpan = expandedRowKeys.includes('b') ? 3 : 2;
@@ -19,8 +20,8 @@ const Demo = () => {
       },
     },
     Table.EXPAND_COLUMN,
-    { title: 'Name', dataIndex: 'c', width: 100 },
-    { title: 'Address', dataIndex: 'd', width: 200 },
+    { title: 'Name', dataIndex: 'c' },
+    { title: 'Address', fixed: 'right', dataIndex: 'd', width: 200 },
   ];
 
   return (
@@ -29,6 +30,7 @@ const Demo = () => {
       <Table<Record<string, any>>
         rowKey="key"
         sticky
+        scroll={{ x: 1500 }}
         columns={columns}
         data={[
           { key: 'a', a: '12313132132', c: '小二', d: '文零西路' },
