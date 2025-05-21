@@ -42,7 +42,6 @@ function ExpandedRow(props: ExpandedRowProps) {
   // Cache render node
   let contentNode = children;
   if (isEmpty ? horizonScroll && componentWidth : fixColumn) {
-    console.log('1', { componentWidth, fixHeader, isEmpty, scrollbarSize });
     contentNode = (
       <div
         style={{
