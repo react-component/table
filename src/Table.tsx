@@ -872,6 +872,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandedRowRender: expandableConfig.expandedRowRender,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
+      expandedRowOffset: expandableConfig.expandedRowOffset,
       indentSize: expandableConfig.indentSize,
       allColumnsFixedLeft: flattenColumns.every(col => col.fixed === 'start'),
       emptyNode,
@@ -920,6 +921,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandableType,
       expandableConfig.expandRowByClick,
       expandableConfig.expandedRowRender,
+      expandableConfig.expandedRowOffset,
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
       expandableConfig.indentSize,
@@ -942,6 +944,8 @@ function Table<RecordType extends DefaultRecordType>(
       mergedChildrenColumnName,
 
       rowHoverable,
+      classNames,
+      styles,
     ],
   );
 
