@@ -4,7 +4,7 @@ import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
-import type { ColumnType, CustomizeComponent, ExpandableConfig } from '../interface';
+import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 import type { TableProps } from '..';
@@ -23,7 +23,6 @@ export interface BodyRowProps<RecordType> {
   indent?: number;
   rowKey: React.Key;
   rowKeys: React.Key[];
-  expandedRowOffset?: ExpandableConfig<RecordType>['expandedRowOffset'];
 }
 
 // ==================================================================================
@@ -104,9 +103,31 @@ export function getCellProps<RecordType>(
   };
 }
 
-// ==================================================================================
-// ==                                 getCellProps                                 ==
-// ==================================================================================
+const getOffsetData = (
+  columnsData: {
+    column: ColumnType<any>;
+    cell: { additionalCellProps: React.TdHTMLAttributes<HTMLElement> };
+  }[],
+) => {
+  let offsetWidth = 0;
+  let offsetColumn = 0;
+  let isRowSpanEnd = false;
+  columnsData.forEach(item => {
+    if (!isRowSpanEnd) {
+      const { column, cell } = item;
+      if (cell.additionalCellProps.rowSpan !== undefined) {
+        offsetColumn += 1;
+        if (typeof column.width === 'number') {
+          offsetWidth = offsetWidth + (column.width ?? 0);
+        }
+      } else {
+        isRowSpanEnd = true;
+      }
+    }
+  });
+  return { offsetWidth, offsetColumn };
+};
+
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
@@ -127,7 +148,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
-    expandedRowOffset = 0,
     rowKeys,
   } = props;
 
@@ -157,6 +177,17 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   // 此时如果 level > 1 则说明是 expandedRow, 一样需要附加 computedExpandedRowClassName
   const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
+  const { columnsData, offsetData } = React.useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const columnsData = flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      const cell = getCellProps(rowInfo, column, colIndex, indent, index, rowKeys);
+      return { column, cell };
+    });
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const offsetData = getOffsetData(columnsData);
+    return { columnsData, offsetData };
+  }, [flattenColumns, indent, index, rowInfo, rowKeys]);
+
   // ======================== Base tr row ========================
   const baseRowNode = (
     <RowComponent
@@ -178,17 +209,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         ...styles.row,
       }}
     >
-      {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      {columnsData.map(item => {
+        const { column, cell } = item;
         const { render, dataIndex, className: columnClassName } = column;
 
-        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
-          rowInfo,
-          column,
-          colIndex,
-          indent,
-          index,
-          rowKeys,
-        );
+        const { key, fixedInfo, appendCellNode, additionalCellProps } = cell;
 
         return (
           <Cell<RecordType>
@@ -220,14 +245,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
-    const offsetColumns = flattenColumns.filter((_, idx) => idx < expandedRowOffset);
-    let offsetWidth = 0;
-    offsetColumns.forEach(item => {
-      if (typeof item.width === 'number') {
-        offsetWidth = offsetWidth + (item.width ?? 0);
-      }
-    });
-
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
@@ -239,8 +256,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        offsetWidth={offsetWidth}
-        colSpan={flattenColumns.length - expandedRowOffset}
+        offsetWidth={offsetData.offsetWidth}
+        colSpan={flattenColumns.length - offsetData.offsetColumn}
         isEmpty={false}
       >
         {expandContent}

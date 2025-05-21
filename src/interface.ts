@@ -256,7 +256,6 @@ export interface ExpandableConfig<RecordType> {
   rowExpandable?: (record: RecordType) => boolean;
   columnWidth?: number | string;
   fixed?: FixedType;
-  expandedRowOffset?: number;
 }
 
 // =================== Render ===================

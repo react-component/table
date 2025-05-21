@@ -7,6 +7,7 @@ const Demo = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
 
   const columns: ColumnType<Record<string, any>>[] = [
+    // { title: '分割', dataIndex: 'ca' },
     {
       title: '手机号',
       dataIndex: 'a',
@@ -43,7 +44,6 @@ const Demo = () => {
           { key: 'c', a: '13812340987', c: '张夫', d: '文二西路' },
         ]}
         expandable={{
-          expandedRowOffset: 1,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
           expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,

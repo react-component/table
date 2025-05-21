@@ -32,7 +32,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     expandedKeys,
     childrenColumnName,
     emptyNode,
-    expandedRowOffset,
     classNames,
     styles,
   } = useContext(TableContext, [
@@ -44,7 +43,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'expandedKeys',
     'childrenColumnName',
     'emptyNode',
-    'expandedRowOffset',
     'classNames',
     'styles',
   ]);
@@ -90,7 +88,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
-          expandedRowOffset={expandedRowOffset}
         />
       );
     });
