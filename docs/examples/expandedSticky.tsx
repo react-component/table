@@ -25,7 +25,11 @@ const Demo = () => {
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        height: 10000,
+      }}
+    >
       <h2>expanded & sticky</h2>
       <Table<Record<string, any>>
         rowKey="key"
@@ -38,7 +42,7 @@ const Demo = () => {
           { key: 'c', a: '13812340987', c: '张夫', d: '文二西路' },
         ]}
         expandable={{
-          //   expandedRowColSpan: columns.length - 1,
+          expandedRowColSpan: columns.length - 1,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
           expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,
