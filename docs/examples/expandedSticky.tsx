@@ -55,6 +55,7 @@ const Demo = () => {
       },
     },
     Table.EXPAND_COLUMN,
+    { title: 'key', dataIndex: 'key' },
     { title: 'Address', fixed: 'right', dataIndex: 'd', width: 200 },
   ];
 
@@ -71,7 +72,7 @@ const Demo = () => {
           expandedRowOffset: 1,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
-          expandedRowRender: record => <p style={{ margin: 0 }}>{record.key}</p>,
+          expandedRowRender: record => <p style={{ margin: 0 }}>expandedRowRender: {record.key}</p>,
         }}
         className="table"
       />
