@@ -34,6 +34,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     emptyNode,
     classNames,
     styles,
+    expandedRowOffset,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -45,6 +46,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'emptyNode',
     'classNames',
     'styles',
+    'expandedRowOffset',
   ]);
   const { body: bodyCls = {} } = classNames || {};
   const { body: bodyStyles = {} } = styles || {};
@@ -83,6 +85,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
+          expandedRowOffset={expandedRowOffset}
         />
       );
     });

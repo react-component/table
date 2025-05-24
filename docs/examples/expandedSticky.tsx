@@ -25,11 +25,7 @@ const Demo = () => {
   ];
 
   return (
-    <div
-      style={{
-        height: 10000,
-      }}
-    >
+    <div style={{ height: 10000 }}>
       <h2>expanded & sticky</h2>
       <Table<Record<string, any>>
         rowKey="key"
