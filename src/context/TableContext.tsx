@@ -3,6 +3,7 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandableConfig,
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
@@ -68,6 +69,8 @@ export interface TableContextProps<RecordType = any> {
   childrenColumnName: string;
 
   rowHoverable?: boolean;
+
+  expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
 }
 
 const TableContext = createContext<TableContextProps>();
