@@ -25,7 +25,7 @@
  */
 
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
-import classNames from 'classnames';
+import cls from 'classnames';
 import ResizeObserver from '@rc-component/resize-observer';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
@@ -85,11 +85,21 @@ const EMPTY_DATA = [];
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
 
+export type SemanticName = 'section' | 'title' | 'footer' | 'content';
+export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
 export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
+  classNames?: Partial<Record<SemanticName, string>> & {
+    body?: Partial<Record<ComponentsSemantic, string>>;
+    header?: Partial<Record<ComponentsSemantic, string>>;
+  };
+  styles?: Partial<Record<SemanticName, React.CSSProperties>> & {
+    body?: Partial<Record<ComponentsSemantic, React.CSSProperties>>;
+    header?: Partial<Record<ComponentsSemantic, React.CSSProperties>>;
+  };
   children?: React.ReactNode;
   data?: readonly RecordType[];
   columns?: ColumnsType<RecordType>;
@@ -190,6 +200,8 @@ function Table<RecordType extends DefaultRecordType>(
     className,
     rowClassName,
     style,
+    classNames,
+    styles,
     data,
     rowKey,
     scroll,
@@ -663,7 +675,7 @@ function Table<RecordType extends DefaultRecordType>(
           }}
           onScroll={onBodyScroll}
           ref={scrollBodyRef}
-          className={classNames(`${prefixCls}-body`)}
+          className={`${prefixCls}-body`}
         >
           <TableComponent
             style={{
@@ -744,8 +756,9 @@ function Table<RecordType extends DefaultRecordType>(
         style={{
           ...scrollXStyle,
           ...scrollYStyle,
+          ...styles?.content,
         }}
-        className={classNames(`${prefixCls}-content`)}
+        className={cls(`${prefixCls}-content`, classNames?.content)}
         onScroll={onInternalScroll}
         ref={scrollBodyRef}
       >
@@ -778,7 +791,7 @@ function Table<RecordType extends DefaultRecordType>(
 
   let fullTable = (
     <div
-      className={classNames(prefixCls, className, {
+      className={cls(prefixCls, className, {
         [`${prefixCls}-rtl`]: direction === 'rtl',
         [`${prefixCls}-fix-start-shadow`]: horizonScroll,
         [`${prefixCls}-fix-end-shadow`]: horizonScroll,
@@ -797,11 +810,23 @@ function Table<RecordType extends DefaultRecordType>(
       ref={fullTableRef}
       {...dataProps}
     >
-      {title && <Panel className={`${prefixCls}-title`}>{title(mergedData)}</Panel>}
-      <div ref={scrollBodyContainerRef} className={`${prefixCls}-container`}>
+      {title && (
+        <Panel className={cls(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
+          {title(mergedData)}
+        </Panel>
+      )}
+      <div
+        ref={scrollBodyContainerRef}
+        className={cls(`${prefixCls}-container`, classNames?.section)}
+        style={styles?.section}
+      >
         {groupTableNode}
       </div>
-      {footer && <Panel className={`${prefixCls}-footer`}>{footer(mergedData)}</Panel>}
+      {footer && (
+        <Panel className={cls(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
+          {footer(mergedData)}
+        </Panel>
+      )}
     </div>
   );
 
@@ -820,6 +845,9 @@ function Table<RecordType extends DefaultRecordType>(
       // Scroll
       scrollX: mergedScrollX,
       scrollInfo,
+
+      classNames,
+      styles,
 
       // Table
       prefixCls,
