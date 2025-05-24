@@ -9,7 +9,6 @@ import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
 import MeasureRow from './MeasureRow';
-import cls from 'classnames';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -32,8 +31,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     expandedKeys,
     childrenColumnName,
     emptyNode,
-    classNames,
-    styles,
+    expandedRowOffset,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -43,11 +41,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'expandedKeys',
     'childrenColumnName',
     'emptyNode',
-    'classNames',
-    'styles',
+    'expandedRowOffset',
   ]);
-  const { body: bodyCls = {} } = classNames || {};
-  const { body: bodyStyles = {} } = styles || {};
 
   const flattenData: { record: RecordType; indent: number; index: number }[] =
     useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
@@ -72,8 +67,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
       return (
         <BodyRow
-          classNames={bodyCls}
-          styles={bodyStyles}
           key={key}
           rowKey={key}
           record={record}
@@ -83,6 +76,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
+          expandedRowOffset={expandedRowOffset}
         />
       );
     });
@@ -106,10 +100,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
   return (
     <PerfContext.Provider value={perfRef.current}>
-      <WrapperComponent
-        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
-        style={bodyStyles.wrapper}
-      >
+      <WrapperComponent className={`${prefixCls}-tbody`}>
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (
           <MeasureRow
