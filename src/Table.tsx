@@ -942,6 +942,8 @@ function Table<RecordType extends DefaultRecordType>(
       mergedChildrenColumnName,
 
       rowHoverable,
+      classNames,
+      styles,
     ],
   );
 

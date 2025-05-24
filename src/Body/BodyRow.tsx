@@ -7,7 +7,7 @@ import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
-import { TableProps } from '..';
+import type { TableProps } from '..';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -22,6 +22,7 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
+  rowKeys: React.Key[];
 }
 
 // ==================================================================================
@@ -33,6 +34,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
+  rowKeys: React.Key[],
 ) {
   const {
     record,
@@ -46,6 +48,8 @@ export function getCellProps<RecordType>(
     expanded,
     hasNestChildren,
     onTriggerExpand,
+    expandable,
+    expandedKeys,
   } = rowInfo;
 
   const key = columnsKey[colIndex];
@@ -74,6 +78,21 @@ export function getCellProps<RecordType>(
   let additionalCellProps: React.TdHTMLAttributes<HTMLElement>;
   if (column.onCell) {
     additionalCellProps = column.onCell(record, index);
+    const { rowSpan } = additionalCellProps;
+
+    // For expandable row with rowSpan,
+    // We should increase the rowSpan if the row is expanded
+    if (expandable && rowSpan !== undefined) {
+      let currentRowSpan = rowSpan;
+
+      for (let i = index; i < index + rowSpan; i += 1) {
+        const rowKey = rowKeys[i];
+        if (expandedKeys.has(rowKey)) {
+          currentRowSpan += 1;
+        }
+      }
+      additionalCellProps.rowSpan = currentRowSpan;
+    }
   }
 
   return {
@@ -84,9 +103,31 @@ export function getCellProps<RecordType>(
   };
 }
 
-// ==================================================================================
-// ==                                 getCellProps                                 ==
-// ==================================================================================
+const getOffsetData = (
+  columnsData: {
+    column: ColumnType<any>;
+    cell: { additionalCellProps: React.TdHTMLAttributes<HTMLElement> };
+  }[],
+) => {
+  let offsetWidth = 0;
+  let offsetColumn = 0;
+  let isRowSpanEnd = false;
+  columnsData.forEach(item => {
+    if (!isRowSpanEnd) {
+      const { column, cell } = item;
+      if (cell.additionalCellProps.rowSpan !== undefined) {
+        offsetColumn += 1;
+        if (typeof column.width === 'number') {
+          offsetWidth = offsetWidth + (column.width ?? 0);
+        }
+      } else {
+        isRowSpanEnd = true;
+      }
+    }
+  });
+  return { offsetWidth, offsetColumn };
+};
+
 function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
 ) {
@@ -107,9 +148,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
+    rowKeys,
   } = props;
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
+
   const {
     prefixCls,
     flattenColumns,
@@ -134,6 +177,17 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   // 此时如果 level > 1 则说明是 expandedRow, 一样需要附加 computedExpandedRowClassName
   const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
+  const { columnsData, offsetData } = React.useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const columnsData = flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      const cell = getCellProps(rowInfo, column, colIndex, indent, index, rowKeys);
+      return { column, cell };
+    });
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const offsetData = getOffsetData(columnsData);
+    return { columnsData, offsetData };
+  }, [flattenColumns, indent, index, rowInfo, rowKeys]);
+
   // ======================== Base tr row ========================
   const baseRowNode = (
     <RowComponent
@@ -155,16 +209,11 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         ...styles.row,
       }}
     >
-      {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
+      {columnsData.map(item => {
+        const { column, cell } = item;
         const { render, dataIndex, className: columnClassName } = column;
 
-        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
-          rowInfo,
-          column,
-          colIndex,
-          indent,
-          index,
-        );
+        const { key, fixedInfo, appendCellNode, additionalCellProps } = cell;
 
         return (
           <Cell<RecordType>
@@ -207,7 +256,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        colSpan={flattenColumns.length}
+        offsetWidth={offsetData.offsetWidth}
+        colSpan={flattenColumns.length - offsetData.offsetColumn}
         isEmpty={false}
       >
         {expandContent}

@@ -7,7 +7,11 @@ export interface TitleProps {
 }
 
 function Panel({ className, style, children }: TitleProps) {
-  return <div className={className} style={style}>{children}</div>;
+  return (
+    <div className={className} style={style}>
+      {children}
+    </div>
+  );
 }
 
 export default Panel;
