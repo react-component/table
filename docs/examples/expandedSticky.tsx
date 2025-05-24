@@ -23,9 +23,9 @@ const Demo = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
 
   const data = [
-    { key: 'a', a: '1', c: '小二', d: '文零西路' },
-    { key: 'b', a: '2', c: '张三', d: '文一西路' },
-    { key: 'c', a: '2', c: '张夫', d: '文二西路' },
+    { key: 'a', a: '小二', d: '文零西路' },
+    { key: 'b', a: '张三', d: '文一西路' },
+    { key: 'c', a: '张三', d: '文二西路' },
   ];
   const rowKeys = data.map(item => item.key);
 
@@ -55,7 +55,6 @@ const Demo = () => {
       },
     },
     Table.EXPAND_COLUMN,
-    { title: 'Name', dataIndex: 'c' },
     { title: 'Address', fixed: 'right', dataIndex: 'd', width: 200 },
   ];
 
