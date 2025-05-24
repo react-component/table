@@ -56,7 +56,7 @@ const Demo = () => (
       footer={() => <span>footer</span>}
     />
     <h2>scroll</h2>
-    <Table
+     <Table
       columns={columns}
       rowClassName={(record, i) => `row-${i}`}
       expandedRowRender={record => <p>extra: {record.a}</p>}
