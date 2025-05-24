@@ -3,8 +3,33 @@ import type { ColumnType } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
+// 合并单元格
+export const getRowSpan = (source: (string | number | undefined)[] = []) => {
+  const list: { rowSpan?: number }[] = [];
+  let span = 0;
+  source.reverse().forEach((key, index) => {
+    span = span + 1;
+    if (key !== source[index + 1]) {
+      list.push({ rowSpan: span });
+      span = 0;
+    } else {
+      list.push({ rowSpan: 0 });
+    }
+  });
+  return list.reverse();
+};
+
 const Demo = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
+
+  const data = [
+    { key: 'a', a: '1', c: '小二', d: '文零西路' },
+    { key: 'b', a: '2', c: '张三', d: '文一西路' },
+    { key: 'c', a: '2', c: '张夫', d: '文二西路' },
+  ];
+  const rowKeys = data.map(item => item.key);
+
+  const rowSpanList = getRowSpan(data.map(item => item.a));
 
   const columns: ColumnType<Record<string, any>>[] = [
     {
@@ -13,9 +38,19 @@ const Demo = () => {
       width: 100,
       fixed: 'left',
       onCell: (_, index) => {
+        const { rowSpan = 1 } = rowSpanList[index];
         const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-        if (index === 1) props.rowSpan = expandedRowKeys.includes('b') ? 3 : 2;
-        if (index === 2) props.rowSpan = 0;
+        props.rowSpan = rowSpan;
+        if (rowSpan >= 1) {
+          let currentRowSpan = rowSpan;
+          for (let i = index; i < index + rowSpan; i += 1) {
+            const rowKey = rowKeys[i];
+            if (expandedRowKeys.includes(rowKey)) {
+              currentRowSpan += 1;
+            }
+          }
+          props.rowSpan = currentRowSpan;
+        }
         return props;
       },
     },
@@ -32,11 +67,7 @@ const Demo = () => {
         sticky
         scroll={{ x: 800 }}
         columns={columns}
-        data={[
-          { key: 'a', a: '12313132132', c: '小二', d: '文零西路' },
-          { key: 'b', a: '13812340987', c: '张三', d: '文一西路' },
-          { key: 'c', a: '13812340987', c: '张夫', d: '文二西路' },
-        ]}
+        data={data}
         expandable={{
           expandedRowOffset: 1,
           expandedRowKeys,
