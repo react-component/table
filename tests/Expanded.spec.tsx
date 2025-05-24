@@ -25,26 +25,25 @@ describe('Table.Expanded', () => {
     domSpy.mockRestore();
   });
 
-  const columns: ColumnsType = [
-    {
-      title: 'key',
-      dataIndex: 'key',
-      width: 100,
-      onCell: (_, index) => {
-        const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-        if (index === 0) props.rowSpan = 1;
-        if (index === 1) props.rowSpan = 2;
-        if (index === 2) props.rowSpan = 0;
-        if (index === 3) props.rowSpan = undefined;
-        return props;
-      },
-    },
-    Table.EXPAND_COLUMN,
-    { title: 'key2', dataIndex: 'key2', width: 100 },
-  ];
-  const data = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }];
-
   it('expanded + rowSpan', async () => {
+    const columns: ColumnsType = [
+      {
+        title: 'key',
+        dataIndex: 'key',
+        width: 100,
+        onCell: (_, index) => {
+          const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
+          if (index === 0) props.rowSpan = 1;
+          if (index === 1) props.rowSpan = 2;
+          if (index === 2) props.rowSpan = 0;
+          if (index === 3) props.rowSpan = undefined;
+          return props;
+        },
+      },
+      Table.EXPAND_COLUMN,
+      { title: 'key2', dataIndex: 'key2', width: 100 },
+    ];
+    const data = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }];
     const { container } = render(
       <Table<Record<string, any>>
         columns={columns}
@@ -83,5 +82,42 @@ describe('Table.Expanded', () => {
     // expand 4
     expect(trList[7].querySelectorAll('td').length).toBe(1);
     expect(trList[7].querySelectorAll('td')[0].getAttribute('colspan')).toBe('3');
+  });
+
+  it('expanded + sticky', async () => {
+    const columns: ColumnsType = [
+      {
+        title: '手机号',
+        dataIndex: 'a',
+        width: 100,
+        fixed: 'left',
+        onCell: (_, index) => {
+          const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
+          if (index === 0) props.rowSpan = 1;
+          if (index === 1) props.rowSpan = 2;
+          if (index === 2) props.rowSpan = 0;
+          return props;
+        },
+      },
+      Table.EXPAND_COLUMN,
+      { title: 'Name', dataIndex: 'c' },
+    ];
+    const data = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }];
+    const { container } = render(
+      <Table<Record<string, any>>
+        columns={columns}
+        data={data}
+        sticky
+        expandable={{
+          defaultExpandAllRows: true,
+          expandedRowRender: record => <div>{record.key}</div>,
+        }}
+      />,
+    );
+    console.log('container', container);
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
   });
 });
