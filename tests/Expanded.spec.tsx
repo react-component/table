@@ -1,8 +1,27 @@
 import React from 'react';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { render, act } from '@testing-library/react';
 import Table, { type ColumnsType } from '../src';
 
 describe('Table.Expanded', () => {
+  let domSpy;
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  beforeAll(() => {
+    domSpy = spyElementPrototypes(HTMLElement, {
+      offsetParent: {
+        get: () => ({}),
+      },
+      offsetWidth: {
+        get: () => 1000,
+      },
+    });
+  });
+
+  afterAll(() => {
+    domSpy.mockRestore();
+  });
   it('expanded + sticky', async () => {
     const columns: ColumnsType = [
       {
