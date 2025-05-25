@@ -25,8 +25,8 @@ describe('Table.Expanded', () => {
   it('expanded + sticky', async () => {
     const columns: ColumnsType = [
       {
-        title: '手机号',
-        dataIndex: 'a',
+        title: 'key',
+        dataIndex: 'key',
         width: 100,
         fixed: 'left',
         onCell: (_, index) => {
@@ -36,10 +36,10 @@ describe('Table.Expanded', () => {
         },
       },
       Table.EXPAND_COLUMN,
+      { title: 'a', dataIndex: 'a' },
       { title: 'b', dataIndex: 'b' },
-      { title: 'c', dataIndex: 'c' },
     ];
-    const data = [{ a: 'a' }];
+    const data = [{ key: 'a' }];
     const { container } = render(
       <Table<Record<string, any>>
         columns={columns}
