@@ -93,9 +93,8 @@ describe('Table.Expanded', () => {
     });
 
     const expandDom = container.querySelector('.rc-table-expanded-row-fixed') as HTMLDivElement;
-    const trDom = expandDom.parentElement;
-    console.log(2222, expandDom.style.width);
-    console.log(2222, expandDom.getAttribute('style'));
-    expect(trDom.getAttribute('colspan')).toBe('3');
+
+    expect(expandDom.parentElement.getAttribute('colspan')).toBe('3');
+    expect(expandDom.style.width).toBe('-100px');
   });
 });
