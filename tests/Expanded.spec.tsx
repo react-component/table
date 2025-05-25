@@ -58,7 +58,7 @@ describe('Table.Expanded', () => {
         expandable={{
           expandedRowOffset: 1,
           defaultExpandAllRows: true,
-          expandedRowRender: record => <div>11122233{record.key}</div>,
+          expandedRowRender: record => <div className="expand-dom">11122233{record.key}</div>,
         }}
       />,
     );
@@ -72,9 +72,7 @@ describe('Table.Expanded', () => {
     await waitFakeTimer();
     await waitFakeTimer();
 
-    console.log('rc-table-body', container.querySelector('.rc-table-body'));
-
-    const expandDom = container.querySelector('.rc-table-expanded-row-fixed');
+    const expandDom = container.querySelector('.expand-dom');
     console.log('expandDom', expandDom);
     const trDom = expandDom.parentElement;
     expect(trDom.getAttribute('colspan')).toBe('2');
