@@ -55,6 +55,7 @@ describe('Table.Expanded', () => {
         columns={columns}
         data={data}
         sticky
+        scroll={{ x: 600 }}
         expandable={{
           expandedRowOffset: 1,
           defaultExpandAllRows: true,
@@ -75,6 +76,6 @@ describe('Table.Expanded', () => {
     const expandDom = container.querySelector('.expand-dom');
     console.log('expandDom', expandDom);
     const trDom = expandDom.parentElement;
-    expect(trDom.getAttribute('colspan')).toBe('2');
+    expect(trDom.getAttribute('colspan')).toBe('3');
   });
 });
