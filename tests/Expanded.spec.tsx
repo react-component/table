@@ -58,6 +58,7 @@ describe('Table.Expanded', () => {
     });
 
     const expandDom = container.querySelector('.rc-table-expanded-row-fixed');
+    console.log('expandDom', expandDom);
     const trDom = expandDom.parentElement;
     expect(trDom.getAttribute('colspan')).toBe('2');
   });
