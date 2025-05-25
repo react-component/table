@@ -1,6 +1,7 @@
 import React from 'react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
-import { render, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { safeAct } from './utils';
 import Table, { type ColumnsType } from '../src';
 
 describe('Table.Expanded', () => {
@@ -40,7 +41,7 @@ describe('Table.Expanded', () => {
       { title: 'c', dataIndex: 'c' },
     ];
     const data = [{ a: 'a' }];
-    const { container } = render(
+    const wrapper = render(
       <Table<Record<string, any>>
         columns={columns}
         data={data}
@@ -51,13 +52,9 @@ describe('Table.Expanded', () => {
         }}
       />,
     );
-    console.log('container', container);
-    await act(async () => {
-      vi.runAllTimers();
-      await Promise.resolve();
-    });
+    await safeAct(wrapper);
 
-    const expandDom = container.querySelector('.rc-table-expanded-row-fixed');
+    const expandDom = wrapper.container.querySelector('.rc-table-expanded-row-fixed');
     console.log('expandDom', expandDom);
     const trDom = expandDom.parentElement;
     expect(trDom.getAttribute('colspan')).toBe('2');
