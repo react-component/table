@@ -56,6 +56,7 @@ describe('Table.Expanded', () => {
         data={data}
         sticky
         expandable={{
+          expandedRowOffset: 1,
           defaultExpandAllRows: true,
           expandedRowRender: record => <div>11122233{record.key}</div>,
         }}
