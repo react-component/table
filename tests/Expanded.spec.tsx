@@ -19,6 +19,16 @@ describe('Table.Expanded', () => {
     });
   });
 
+  async function waitFakeTimer() {
+    for (let i = 0; i < 10; i += 1) {
+      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-loop-func
+      await act(async () => {
+        vi.advanceTimersByTime(100);
+        await Promise.resolve();
+      });
+    }
+  }
+
   afterAll(() => {
     domSpy.mockRestore();
   });
@@ -56,6 +66,11 @@ describe('Table.Expanded', () => {
       vi.runAllTimers();
       await Promise.resolve();
     });
+
+    await waitFakeTimer();
+    await waitFakeTimer();
+    await waitFakeTimer();
+
     console.log('rc-table-body', container.querySelector('.rc-table-body'));
 
     const expandDom = container.querySelector('.rc-table-expanded-row-fixed');
