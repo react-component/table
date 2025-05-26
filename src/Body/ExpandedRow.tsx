@@ -14,7 +14,7 @@ export interface ExpandedRowProps {
   children: React.ReactNode;
   colSpan: number;
   isEmpty: boolean;
-  offsetWidth?: number;
+  stickyOffset?: number;
 }
 
 function ExpandedRow(props: ExpandedRowProps) {
@@ -31,7 +31,7 @@ function ExpandedRow(props: ExpandedRowProps) {
     expanded,
     colSpan,
     isEmpty,
-    offsetWidth = 0,
+    stickyOffset = 0,
   } = props;
 
   const { scrollbarSize, fixHeader, fixColumn, componentWidth, horizonScroll } = useContext(
@@ -46,9 +46,9 @@ function ExpandedRow(props: ExpandedRowProps) {
     contentNode = (
       <div
         style={{
-          width: componentWidth - offsetWidth - (fixHeader && !isEmpty ? scrollbarSize : 0),
+          width: componentWidth - stickyOffset - (fixHeader && !isEmpty ? scrollbarSize : 0),
           position: 'sticky',
-          left: 0,
+          left: stickyOffset,
           overflow: 'hidden',
         }}
         className={`${prefixCls}-expanded-row-fixed`}

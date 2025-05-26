@@ -833,6 +833,7 @@ function Table<RecordType extends DefaultRecordType>(
       columns,
       flattenColumns,
       onColumnResize,
+      colWidths,
 
       // Row
       hoverStartRow: startRow,
@@ -883,6 +884,7 @@ function Table<RecordType extends DefaultRecordType>(
       columns,
       flattenColumns,
       onColumnResize,
+      colWidths,
 
       // Row
       startRow,

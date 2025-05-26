@@ -57,6 +57,7 @@ export interface TableContextProps<RecordType = any> {
   columns: ColumnsType<RecordType>;
   flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
+  colWidths: number[];
 
   // Row
   hoverStartRow: number;
