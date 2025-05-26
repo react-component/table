@@ -41,7 +41,7 @@ export function getCellProps<RecordType>(
   colIndex: number,
   indent: number,
   index: number,
-  rowKeys: React.Key[],
+  rowKeys: React.Key[] = [],
   expandedRowOffset = 0,
 ) {
   const {
