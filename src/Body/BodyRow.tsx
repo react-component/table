@@ -4,10 +4,10 @@ import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
-import type { ColumnType, CustomizeComponent, ExpandableConfig } from '../interface';
+import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
-import { TableProps } from '..';
+import type { TableProps } from '..';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -22,7 +22,12 @@ export interface BodyRowProps<RecordType> {
   scopeCellComponent: CustomizeComponent;
   indent?: number;
   rowKey: React.Key;
-  expandedRowOffset?: ExpandableConfig<RecordType>['expandedRowOffset'];
+
+  // Expanded Row
+  expandedRowInfo: {
+    colSpan: number;
+    sticky: number;
+  };
 }
 
 // ==================================================================================
@@ -108,7 +113,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowComponent: RowComponent,
     cellComponent,
     scopeCellComponent,
-    expandedRowOffset = 0,
+    expandedRowInfo,
   } = props;
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
@@ -198,14 +203,6 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
-    const offsetColumns = flattenColumns.filter((_, idx) => idx < expandedRowOffset);
-    let offsetWidth = 0;
-    offsetColumns.forEach(item => {
-      if (typeof item.width === 'number') {
-        offsetWidth = offsetWidth + (item.width ?? 0);
-      }
-    });
-
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
@@ -217,9 +214,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        offsetWidth={offsetWidth}
-        colSpan={flattenColumns.length - expandedRowOffset}
+        colSpan={expandedRowInfo.colSpan}
         isEmpty={false}
+        stickyOffset={expandedRowInfo.sticky}
       >
         {expandContent}
       </ExpandedRow>

@@ -65,7 +65,7 @@ const Demo = () => {
       <Table<Record<string, any>>
         rowKey="key"
         sticky
-        scroll={{ x: 800 }}
+        scroll={{ x: 2000 }}
         columns={columns}
         data={data}
         expandable={{

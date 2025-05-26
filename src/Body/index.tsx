@@ -35,6 +35,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     classNames,
     styles,
     expandedRowOffset,
+    fixedInfoList,
+    colWidths,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -47,6 +49,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'classNames',
     'styles',
     'expandedRowOffset',
+    'fixedInfoList',
+    'colWidths',
   ]);
   const { body: bodyCls = {} } = classNames || {};
   const { body: bodyStyles = {} } = styles || {};
@@ -58,6 +62,23 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   const perfRef = React.useRef<PerfRecord>({
     renderWithProps: false,
   });
+
+  // ===================== Expanded =====================
+  // `expandedRowOffset` data is same for all the rows.
+  // Let's calc on Body side to save performance.
+  const expandedRowInfo = React.useMemo(() => {
+    const expandedColSpan = flattenColumns.length - expandedRowOffset;
+
+    let expandedStickyStart = 0;
+    for (let i = 0; i < expandedRowOffset; i += 1) {
+      expandedStickyStart += colWidths[i] || 0;
+    }
+
+    return {
+      colSpan: expandedColSpan,
+      sticky: expandedStickyStart,
+    };
+  }, [flattenColumns.length, expandedRowOffset, colWidths]);
 
   // ====================== Render ======================
   const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -85,7 +106,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
-          expandedRowOffset={expandedRowOffset}
+          // Expanded row info
+          expandedRowInfo={expandedRowInfo}
         />
       );
     });
