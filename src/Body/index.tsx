@@ -34,8 +34,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     emptyNode,
     classNames,
     styles,
-    expandedRowOffset,
-    fixedInfoList,
+    expandedRowOffset = 0,
     colWidths,
   } = useContext(TableContext, [
     'prefixCls',

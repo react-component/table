@@ -36,7 +36,7 @@ const Demo = () => {
       title: '手机号',
       dataIndex: 'a',
       width: 100,
-      fixed: 'left',
+      // fixed: 'left',
       onCell: (_, index) => {
         const { rowSpan = 1 } = rowSpanList[index];
         const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};

@@ -104,6 +104,7 @@ function useColumns<RecordType>(
     expandIcon,
     rowExpandable,
     expandIconColumnIndex,
+    expandedRowOffset = 0,
     direction,
     expandRowByClick,
     columnWidth,
@@ -128,6 +129,7 @@ function useColumns<RecordType>(
     clientWidth: number;
     fixed?: FixedType;
     scrollWidth?: number;
+    expandedRowOffset?: number;
   },
   transformColumns: (columns: ColumnsType<RecordType>) => ColumnsType<RecordType>,
 ): [
@@ -220,7 +222,16 @@ function useColumns<RecordType>(
         },
       };
 
-      return cloneColumns.map(col => (col === EXPAND_COLUMN ? expandColumn : col));
+      return cloneColumns.map((col, index) => {
+        const column = col === EXPAND_COLUMN ? expandColumn : col;
+        if (index < expandedRowOffset) {
+          return {
+            ...column,
+            fixed: column.fixed || 'start',
+          };
+        }
+        return column;
+      });
     }
 
     if (process.env.NODE_ENV !== 'production' && baseColumns.includes(EXPAND_COLUMN)) {
@@ -229,7 +240,7 @@ function useColumns<RecordType>(
 
     return baseColumns.filter(col => col !== EXPAND_COLUMN);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
+  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction, expandedRowOffset]);
 
   // ========================= Transform ========================
   const mergedColumns = React.useMemo(() => {

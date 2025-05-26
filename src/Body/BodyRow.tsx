@@ -24,7 +24,7 @@ export interface BodyRowProps<RecordType> {
   rowKey: React.Key;
 
   // Expanded Row
-  expandedRowInfo: {
+  expandedRowInfo?: {
     colSpan: number;
     sticky: number;
   };
@@ -214,9 +214,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         prefixCls={prefixCls}
         component={RowComponent}
         cellComponent={cellComponent}
-        colSpan={expandedRowInfo.colSpan}
+        colSpan={expandedRowInfo ? expandedRowInfo.colSpan : flattenColumns.length}
         isEmpty={false}
-        stickyOffset={expandedRowInfo.sticky}
+        stickyOffset={expandedRowInfo?.sticky}
       >
         {expandContent}
       </ExpandedRow>
