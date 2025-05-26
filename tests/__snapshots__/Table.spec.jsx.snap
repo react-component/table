@@ -88,7 +88,6 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
       <table
         style="table-layout: fixed;"
       >
-<<<<<<< HEAD
         <colgroup>
           <col
             style="width: 0px;"
@@ -109,28 +108,6 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
         >
           <tr
             name="my-header-row"
-=======
-        <table
-          style="table-layout: fixed;"
-        >
-          <colgroup>
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 15px;"
-            />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
->>>>>>> tmp-expanded-sticky-5
           >
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
