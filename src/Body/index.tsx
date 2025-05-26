@@ -54,8 +54,14 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   const { body: bodyCls = {} } = classNames || {};
   const { body: bodyStyles = {} } = styles || {};
 
-  const flattenData: { record: RecordType; indent: number; index: number }[] =
-    useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
+  const flattenData = useFlattenRecords<RecordType>(
+    data,
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
+  );
+
+  const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);
 
   // =================== Performance ====================
   const perfRef = React.useRef<PerfRecord>({
@@ -74,6 +80,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     }
 
     return {
+      offset: expandedRowOffset,
       colSpan: expandedColSpan,
       sticky: expandedStickyStart,
     };
@@ -88,16 +95,15 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   let rows: React.ReactNode;
   if (data.length) {
     rows = flattenData.map((item, idx) => {
-      const { record, indent, index: renderIndex } = item;
-
-      const key = getRowKey(record, idx);
+      const { record, indent, index: renderIndex, rowKey } = item;
 
       return (
         <BodyRow
           classNames={bodyCls}
           styles={bodyStyles}
-          key={key}
-          rowKey={key}
+          key={rowKey}
+          rowKey={rowKey}
+          rowKeys={rowKeys}
           record={record}
           index={idx}
           renderIndex={renderIndex}

@@ -27,33 +27,45 @@ const Demo = () => {
     { key: 'b', a: '张三', d: '文一西路' },
     { key: 'c', a: '张三', d: '文二西路' },
   ];
-  const rowKeys = data.map(item => item.key);
+  // const rowKeys = data.map(item => item.key);
 
-  const rowSpanList = getRowSpan(data.map(item => item.a));
+  // const rowSpanList = getRowSpan(data.map(item => item.a));
 
   const columns: ColumnType<Record<string, any>>[] = [
     {
       title: '手机号',
       dataIndex: 'a',
       width: 100,
+      colSpan: 2,
       // fixed: 'left',
       onCell: (_, index) => {
-        const { rowSpan = 1 } = rowSpanList[index];
-        const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
-        props.rowSpan = rowSpan;
-        if (rowSpan >= 1) {
-          let currentRowSpan = rowSpan;
-          for (let i = index; i < index + rowSpan; i += 1) {
-            const rowKey = rowKeys[i];
-            if (expandedRowKeys.includes(rowKey)) {
-              currentRowSpan += 1;
-            }
-          }
-          props.rowSpan = currentRowSpan;
+        // const { rowSpan = 1 } = rowSpanList[index];
+        // const props: React.TdHTMLAttributes<HTMLTableCellElement> = {};
+        // props.rowSpan = rowSpan;
+        // if (rowSpan >= 1) {
+        //   let currentRowSpan = rowSpan;
+        //   for (let i = index; i < index + rowSpan; i += 1) {
+        //     const rowKey = rowKeys[i];
+        //     if (expandedRowKeys.includes(rowKey)) {
+        //       currentRowSpan += 1;
+        //     }
+        //   }
+        //   props.rowSpan = currentRowSpan;
+        // }
+        // return props;
+
+        if (index === 1) {
+          return {
+            rowSpan: 2,
+          };
+        } else if (index === 2) {
+          return {
+            rowSpan: 0,
+          };
         }
-        return props;
       },
     },
+    { title: 'key', dataIndex: 'key2', colSpan: 0, width: 100 },
     Table.EXPAND_COLUMN,
     { title: 'key', dataIndex: 'key' },
     { title: 'Address', fixed: 'right', dataIndex: 'd', width: 200 },
@@ -65,11 +77,11 @@ const Demo = () => {
       <Table<Record<string, any>>
         rowKey="key"
         sticky
-        scroll={{ x: 2000 }}
+        scroll={{ x: 1000 }}
         columns={columns}
         data={data}
         expandable={{
-          expandedRowOffset: 1,
+          expandedRowOffset: 2,
           expandedRowKeys,
           onExpandedRowsChange: keys => setExpandedRowKeys(keys),
           expandedRowRender: record => <p style={{ margin: 0 }}>expandedRowRender: {record.key}</p>,
