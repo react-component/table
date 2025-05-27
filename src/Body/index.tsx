@@ -34,6 +34,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     emptyNode,
     classNames,
     styles,
+    expandedRowOffset = 0,
+    colWidths,
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -45,17 +47,44 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'emptyNode',
     'classNames',
     'styles',
+    'expandedRowOffset',
+    'fixedInfoList',
+    'colWidths',
   ]);
   const { body: bodyCls = {} } = classNames || {};
   const { body: bodyStyles = {} } = styles || {};
 
-  const flattenData: { record: RecordType; indent: number; index: number }[] =
-    useFlattenRecords<RecordType>(data, childrenColumnName, expandedKeys, getRowKey);
+  const flattenData = useFlattenRecords<RecordType>(
+    data,
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
+  );
+
+  const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);
 
   // =================== Performance ====================
   const perfRef = React.useRef<PerfRecord>({
     renderWithProps: false,
   });
+
+  // ===================== Expanded =====================
+  // `expandedRowOffset` data is same for all the rows.
+  // Let's calc on Body side to save performance.
+  const expandedRowInfo = React.useMemo(() => {
+    const expandedColSpan = flattenColumns.length - expandedRowOffset;
+
+    let expandedStickyStart = 0;
+    for (let i = 0; i < expandedRowOffset; i += 1) {
+      expandedStickyStart += colWidths[i] || 0;
+    }
+
+    return {
+      offset: expandedRowOffset,
+      colSpan: expandedColSpan,
+      sticky: expandedStickyStart,
+    };
+  }, [flattenColumns.length, expandedRowOffset, colWidths]);
 
   // ====================== Render ======================
   const WrapperComponent = getComponent(['body', 'wrapper'], 'tbody');
@@ -66,16 +95,15 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   let rows: React.ReactNode;
   if (data.length) {
     rows = flattenData.map((item, idx) => {
-      const { record, indent, index: renderIndex } = item;
-
-      const key = getRowKey(record, idx);
+      const { record, indent, index: renderIndex, rowKey } = item;
 
       return (
         <BodyRow
           classNames={bodyCls}
           styles={bodyStyles}
-          key={key}
-          rowKey={key}
+          key={rowKey}
+          rowKey={rowKey}
+          rowKeys={rowKeys}
           record={record}
           index={idx}
           renderIndex={renderIndex}
@@ -83,6 +111,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
           cellComponent={tdComponent}
           scopeCellComponent={thComponent}
           indent={indent}
+          // Expanded row info
+          expandedRowInfo={expandedRowInfo}
         />
       );
     });

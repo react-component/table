@@ -870,6 +870,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandableType,
       expandRowByClick: expandableConfig.expandRowByClick,
       expandedRowRender: expandableConfig.expandedRowRender,
+      expandedRowOffset: expandableConfig.expandedRowOffset,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       indentSize: expandableConfig.indentSize,
@@ -880,6 +881,7 @@ function Table<RecordType extends DefaultRecordType>(
       columns,
       flattenColumns,
       onColumnResize,
+      colWidths,
 
       // Row
       hoverStartRow: startRow,
@@ -920,6 +922,7 @@ function Table<RecordType extends DefaultRecordType>(
       expandableType,
       expandableConfig.expandRowByClick,
       expandableConfig.expandedRowRender,
+      expandableConfig.expandedRowOffset,
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
       expandableConfig.indentSize,
@@ -929,6 +932,7 @@ function Table<RecordType extends DefaultRecordType>(
       columns,
       flattenColumns,
       onColumnResize,
+      colWidths,
 
       // Row
       startRow,

@@ -3,6 +3,7 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandableConfig,
   ExpandableType,
   ExpandedRowRender,
   GetComponent,
@@ -61,6 +62,7 @@ export interface TableContextProps<RecordType = any> {
   columns: ColumnsType<RecordType>;
   flattenColumns: readonly ColumnType<RecordType>[];
   onColumnResize: (columnKey: React.Key, width: number) => void;
+  colWidths: number[];
 
   // Row
   hoverStartRow: number;
@@ -73,6 +75,8 @@ export interface TableContextProps<RecordType = any> {
   childrenColumnName: string;
 
   rowHoverable?: boolean;
+
+  expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
 }
 
 const TableContext = createContext<TableContextProps>();
