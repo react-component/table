@@ -56,6 +56,7 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
 
   const { columnsOffset } = useContext(GridContext, ['columnsOffset']);
 
+  // TODO: support `expandableRowOffset`
   const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
     rowInfo,
     column,
