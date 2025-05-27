@@ -11,13 +11,14 @@ function fillRecords<T>(
   getRowKey: GetRowKey<T>,
   index: number,
 ) {
+  const key = getRowKey(record, index);
+
   list.push({
     record,
     indent,
     index,
+    rowKey: key,
   });
-
-  const key = getRowKey(record);
 
   const expanded = expandedKeys?.has(key);
 
@@ -41,6 +42,7 @@ export interface FlattenData<RecordType> {
   record: RecordType;
   indent: number;
   index: number;
+  rowKey: Key;
 }
 
 /**
@@ -80,6 +82,7 @@ export default function useFlattenRecords<T>(
         record: item,
         indent: 0,
         index,
+        rowKey: getRowKey(item, index),
       };
     });
   }, [data, childrenColumnName, expandedKeys, getRowKey]);
