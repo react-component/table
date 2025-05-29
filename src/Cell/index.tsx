@@ -238,6 +238,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     additionalProps.className,
     legacyCellProps?.className,
   );
+  const innerCellDivClassName = cls(`${cellPrefixCls}-inner-div`, { [`${cellPrefixCls}-with-append`]: appendNode});
 
   // >>>>> Style
   const alignStyle: React.CSSProperties = {};
@@ -287,8 +288,10 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       colSpan={mergedColSpan !== 1 ? mergedColSpan : null}
       rowSpan={mergedRowSpan !== 1 ? mergedRowSpan : null}
     >
-      {appendNode}
-      {mergedChildNode}
+      <div className={innerCellDivClassName}>
+        {appendNode}
+        {mergedChildNode}
+      </div>
     </Component>
   );
 }
