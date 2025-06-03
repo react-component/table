@@ -43,6 +43,10 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
+  // 记录上一次的 container
+  const lastContainerRef = React.useRef<HTMLElement | Window>();
+  // 记录上一次的 scrollParents
+  const lastScrollParentsRef = React.useRef<(HTMLElement | SVGElement)[]>([]);
 
   React.useEffect(
     () => () => {
@@ -151,17 +155,29 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   React.useEffect(() => {
     if (!scrollBodyRef.current) return;
 
+    // 清理上一次 scrollParents 的事件监听
+    lastScrollParentsRef.current.forEach(p =>
+      p.removeEventListener('scroll', checkScrollBarVisible),
+    );
+
     const scrollParents: (HTMLElement | SVGElement)[] = [];
     let parent = getDOM(scrollBodyRef.current);
     while (parent) {
       scrollParents.push(parent);
       parent = parent.parentElement;
     }
+    lastScrollParentsRef.current = scrollParents;
 
     scrollParents.forEach(p => p.addEventListener('scroll', checkScrollBarVisible, false));
     window.addEventListener('resize', checkScrollBarVisible, false);
     window.addEventListener('scroll', checkScrollBarVisible, false);
     container.addEventListener('scroll', checkScrollBarVisible, false);
+
+    // 清理上一次 container 的事件监听
+    if (lastContainerRef.current && lastContainerRef.current !== container) {
+      lastContainerRef.current.removeEventListener('scroll', checkScrollBarVisible);
+    }
+    lastContainerRef.current = container;
 
     return () => {
       scrollParents.forEach(p => p.removeEventListener('scroll', checkScrollBarVisible));
@@ -169,7 +185,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       window.removeEventListener('scroll', checkScrollBarVisible);
       container.removeEventListener('scroll', checkScrollBarVisible);
     };
-  }, [container]);
+  }, [container, scrollBodyRef.current]);
 
   React.useEffect(() => {
     if (!scrollState.isHiddenScrollBar) {

@@ -415,6 +415,15 @@ function Table<RecordType extends DefaultRecordType>(
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
+  // ======================= Unmount Ref =======================
+  const unmountedRef = React.useRef(false);
+  React.useEffect(() => {
+    unmountedRef.current = false;
+    return () => {
+      unmountedRef.current = true;
+    };
+  }, []);
+
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
     if (!target) {
       return;
@@ -428,7 +437,9 @@ function Table<RecordType extends DefaultRecordType>(
       // ref: https://github.com/ant-design/ant-design/issues/37179
       if (target.scrollLeft !== scrollLeft) {
         setTimeout(() => {
-          target.scrollLeft = scrollLeft;
+          if (!unmountedRef.current) {
+            target.scrollLeft = scrollLeft;
+          }
         }, 0);
       }
     }
@@ -904,6 +915,7 @@ function Table<RecordType extends DefaultRecordType>(
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
 }
 
+// ========== 类型和导出补全 ==========
 export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
   props: TableProps<RecordType> & React.RefAttributes<Reference>,
 ) => React.ReactElement) & { displayName?: string };
