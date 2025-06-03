@@ -6,7 +6,7 @@ import Table, { INTERNAL_COL_DEFINE } from '../src';
 import BodyRow from '../src/Body/BodyRow';
 import Cell from '../src/Cell';
 import { INTERNAL_HOOKS } from '../src/constant';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, cleanup } from '@testing-library/react';
 
 describe('Table.Basic', () => {
   const data = [
@@ -1376,12 +1376,12 @@ describe('Table.Basic', () => {
 describe('Table memory leak and cleanup', () => {
   afterEach(() => {
     cleanup();
-    jest.clearAllTimers();
+    vi.clearAllTimers();
   });
 
   it('should cleanup stickyScrollBar events on unmount', () => {
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { unmount } = render(
       <Table
         columns={[{ title: 'A', dataIndex: 'a' }]}
@@ -1399,15 +1399,15 @@ describe('Table memory leak and cleanup', () => {
   });
 
   it('should not call setTimeout callback after unmount', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const { unmount } = render(
       <Table columns={[{ title: 'A', dataIndex: 'a' }]} data={[{ a: 1 }]} scroll={{ x: 100 }} />,
     );
     unmount();
     // 触发所有定时器
-    jest.runAllTimers();
+    vi.runAllTimers();
     // 没有报错即通过
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should not leak when mount/unmount multiple times', () => {
@@ -1422,8 +1422,8 @@ describe('Table memory leak and cleanup', () => {
 
   it('should cleanup scrollParents events when scrollBodyRef changes', () => {
     // 这里只能间接测试，mount/unmount 后事件应被清理
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { rerender, unmount } = render(
       <Table
         columns={[{ title: 'A', dataIndex: 'a' }]}
