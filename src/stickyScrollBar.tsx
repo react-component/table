@@ -43,8 +43,6 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
-  // 记录上一次的 container
-  const lastContainerRef = React.useRef<HTMLElement | Window>();
   // 记录上一次的 scrollParents
   const lastScrollParentsRef = React.useRef<(HTMLElement | SVGElement)[]>([]);
 
@@ -174,12 +172,6 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     window.addEventListener('resize', checkScrollBarVisible, false);
     window.addEventListener('scroll', checkScrollBarVisible, false);
     container.addEventListener('scroll', checkScrollBarVisible, false);
-
-    // 清理上一次 container 的事件监听
-    if (lastContainerRef.current && lastContainerRef.current !== container) {
-      lastContainerRef.current.removeEventListener('scroll', checkScrollBarVisible);
-    }
-    lastContainerRef.current = container;
 
     return () => {
       scrollParents.forEach(p => p.removeEventListener('scroll', checkScrollBarVisible));
