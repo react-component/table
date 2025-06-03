@@ -187,7 +187,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       window.removeEventListener('scroll', checkScrollBarVisible);
       container.removeEventListener('scroll', checkScrollBarVisible);
     };
-  }, [container, scrollBodyRef.current]);
+  }, [container]);
 
   React.useEffect(() => {
     if (!scrollState.isHiddenScrollBar) {
