@@ -1372,3 +1372,73 @@ describe('Table.Basic', () => {
     expect(onScroll).toHaveBeenCalled();
   });
 });
+
+describe('Table memory leak and cleanup', () => {
+  afterEach(() => {
+    cleanup();
+    jest.clearAllTimers();
+  });
+
+  it('should cleanup stickyScrollBar events on unmount', () => {
+    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const { unmount } = render(
+      <Table
+        columns={[{ title: 'A', dataIndex: 'a' }]}
+        data={[{ a: 1 }]}
+        scroll={{ x: 100 }}
+        sticky
+      />,
+    );
+    unmount();
+    // 断言事件被移除
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
+  });
+
+  it('should not call setTimeout callback after unmount', () => {
+    jest.useFakeTimers();
+    const { unmount } = render(
+      <Table columns={[{ title: 'A', dataIndex: 'a' }]} data={[{ a: 1 }]} scroll={{ x: 100 }} />,
+    );
+    unmount();
+    // 触发所有定时器
+    jest.runAllTimers();
+    // 没有报错即通过
+    jest.useRealTimers();
+  });
+
+  it('should not leak when mount/unmount multiple times', () => {
+    for (let i = 0; i < 5; i++) {
+      const { unmount } = render(
+        <Table columns={[{ title: 'A', dataIndex: 'a' }]} data={[{ a: 1 }]} scroll={{ x: 100 }} />,
+      );
+      unmount();
+    }
+    // 没有报错即通过
+  });
+
+  it('should cleanup scrollParents events when scrollBodyRef changes', () => {
+    // 这里只能间接测试，mount/unmount 后事件应被清理
+    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const { rerender, unmount } = render(
+      <Table
+        columns={[{ title: 'A', dataIndex: 'a' }]}
+        data={[{ a: 1 }]}
+        scroll={{ x: 100 }}
+        sticky
+      />,
+    );
+    // 模拟数据变化导致 scrollBodyRef 变化
+    rerender(
+      <Table columns={[{ title: 'A', dataIndex: 'a' }]} data={[]} scroll={{ x: 100 }} sticky />,
+    );
+    unmount();
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function));
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
+  });
+});

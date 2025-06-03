@@ -153,7 +153,9 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   // Loop for scroll event check
   React.useEffect(() => {
-    if (!scrollBodyRef.current) return;
+    if (!scrollBodyRef.current) {
+      return;
+    }
 
     // 清理上一次 scrollParents 的事件监听
     lastScrollParentsRef.current.forEach(p =>
