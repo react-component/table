@@ -14,6 +14,7 @@ import cls from 'classnames';
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
+  stripe: boolean;
 }
 
 function Body<RecordType>(props: BodyProps<RecordType>) {
@@ -21,7 +22,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     devRenderTimes(props);
   }
 
-  const { data, measureColumnWidth } = props;
+  const { data, measureColumnWidth, stripe } = props;
 
   const {
     prefixCls,
@@ -96,10 +97,14 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   if (data.length) {
     rows = flattenData.map((item, idx) => {
       const { record, indent, index: renderIndex, rowKey } = item;
-
+      let className = '';
+      if (stripe && idx % 2 === 1) {
+        className = `${prefixCls}-row-striped`;
+      }
       return (
         <BodyRow
           classNames={bodyCls}
+          className={className}
           styles={bodyStyles}
           key={rowKey}
           rowKey={rowKey}
