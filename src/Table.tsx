@@ -907,7 +907,6 @@ function Table<RecordType extends DefaultRecordType>(
       fullTableRef,
       colsWidths,
       colsKeys,
-      colWidths,
       onColumnResizeEnd,
       onResizingChange: setIsResizing,
     }),
