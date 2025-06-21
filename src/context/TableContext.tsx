@@ -77,7 +77,6 @@ export interface TableContextProps<RecordType = any> {
   rowHoverable?: boolean;
   fullTableRef: React.MutableRefObject<HTMLDivElement>;
   colsWidths: Map<React.Key, number>;
-  colWidths: number[];
   colsKeys: React.Key[];
   onColumnResizeEnd?: (info: {
     columnKey: React.Key;
