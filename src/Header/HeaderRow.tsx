@@ -11,6 +11,7 @@ import type {
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
 import HeaderCell from './HeaderCell';
+import { TableProps } from '..';
 
 export interface RowProps<RecordType> {
   cells: readonly CellType<RecordType>[];
@@ -20,6 +21,8 @@ export interface RowProps<RecordType> {
   cellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
+  classNames: TableProps['classNames']['header'];
+  styles: TableProps['styles']['header'];
 }
 
 const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
@@ -31,6 +34,8 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
     cellComponent: CellComponent,
     onHeaderRow,
     index,
+    classNames,
+    styles,
   } = props;
   const { prefixCls } = useContext(TableContext, ['prefixCls']);
   let rowProps: React.HTMLAttributes<HTMLElement>;
@@ -44,7 +49,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
 
   return (
-    <RowComponent {...rowProps}>
+    <RowComponent {...rowProps} className={classNames.row} style={styles.row}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
         const fixedInfo = getCellFixedInfo(
