@@ -53,7 +53,7 @@ export interface CellType<RecordType> {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  column?: ColumnsType<RecordType>[number];
+  column?: ColumnsType<RecordType>[number] & { scrollbar?: boolean };
   colSpan?: number;
   rowSpan?: number;
 
@@ -117,6 +117,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   rowSpan?: number;
   width?: number | string;
   minWidth?: number;
+  resizable?: boolean;
   onCell?: GetComponentProps<RecordType>;
   /** @deprecated Please use `onCell` instead */
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
