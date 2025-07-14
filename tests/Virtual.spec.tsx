@@ -383,6 +383,7 @@ describe('Table.Virtual', () => {
     expect(global.scrollToConfig).toEqual({
       index: 50,
       offset: 20,
+      align: 'top',
     });
 
     // Test key with offset
@@ -396,6 +397,7 @@ describe('Table.Virtual', () => {
     expect(global.scrollToConfig).toEqual({
       key: '25',
       offset: -10,
+      align: 'top',
     });
 
     // Test top with offset (offset should be passed to virtual list)
@@ -409,6 +411,7 @@ describe('Table.Virtual', () => {
     expect(global.scrollToConfig).toEqual({
       top: 100,
       offset: 30,
+      align: 'top',
     });
   });
 
