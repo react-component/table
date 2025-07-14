@@ -30,9 +30,18 @@ export type DefaultRecordType = Record<string, any>;
 export type TableLayout = 'auto' | 'fixed';
 
 export type ScrollConfig = {
+  /** The index of the row to scroll to */
   index?: number;
+  /** The key of the row to scroll to */
   key?: Key;
+  /** The absolute scroll position from top */
   top?: number;
+  /**
+   * Additional offset in pixels to apply to the scroll position.
+   * Only effective when using `key` or `index` mode.
+   * Ignored when using `top` mode.
+   */
+  offset?: number;
 };
 
 export type Reference = {
