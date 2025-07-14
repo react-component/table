@@ -368,6 +368,50 @@ describe('Table.Virtual', () => {
     });
   });
 
+  it('scrollTo with offset should pass', async () => {
+    const tblRef = React.createRef<Reference>();
+    getTable({ ref: tblRef });
+
+    // Test index with offset
+    tblRef.current.scrollTo({
+      index: 50,
+      offset: 20,
+    });
+
+    await waitFakeTimer();
+
+    expect(global.scrollToConfig).toEqual({
+      index: 50,
+      offset: 20,
+    });
+
+    // Test key with offset
+    tblRef.current.scrollTo({
+      key: '25',
+      offset: -10,
+    });
+
+    await waitFakeTimer();
+
+    expect(global.scrollToConfig).toEqual({
+      key: '25',
+      offset: -10,
+    });
+
+    // Test top with offset (offset should be passed to virtual list)
+    tblRef.current.scrollTo({
+      top: 100,
+      offset: 30,
+    });
+
+    await waitFakeTimer();
+
+    expect(global.scrollToConfig).toEqual({
+      top: 100,
+      offset: 30,
+    });
+  });
+
   describe('auto width', () => {
     async function prepareTable(columns: any[]) {
       const { container } = getTable({

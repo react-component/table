@@ -40,6 +40,7 @@ export type ScrollConfig = {
    * Additional offset in pixels to apply to the scroll position.
    * Only effective when using `key` or `index` mode.
    * Ignored when using `top` mode.
+   * When offset is set, the target element will always be aligned to the top of the container.
    */
   offset?: number;
 };
