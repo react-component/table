@@ -199,6 +199,12 @@ const Demo: React.FC = () => {
       <button onClick={() => tableRef.current?.scrollTo({ index: data.length - 1 })}>
         Scroll To Key
       </button>
+      <button onClick={() => tableRef.current?.scrollTo({ index: 10, offset: -10 })}>
+        Scroll To Index 10 + Offset -10
+      </button>
+      <button onClick={() => tableRef.current?.scrollTo({ key: '50', offset: -10 })}>
+        Scroll To Key 50 + Offset -10
+      </button>
       <VirtualTable
         style={{ marginTop: 16 }}
         ref={tableRef}

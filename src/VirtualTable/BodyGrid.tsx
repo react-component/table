@@ -78,7 +78,18 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   React.useImperativeHandle(ref, () => {
     const obj = {
       scrollTo: (config: ScrollConfig) => {
-        listRef.current?.scrollTo(config);
+        const { offset, ...restConfig } = config;
+
+        // If offset is provided, force align to 'top' for consistent behavior
+        if (offset) {
+          listRef.current?.scrollTo({
+            ...restConfig,
+            offset,
+            align: 'top',
+          });
+        } else {
+          listRef.current?.scrollTo(config);
+        }
       },
       nativeElement: listRef.current?.nativeElement,
     } as unknown as GridRef;
