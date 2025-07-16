@@ -72,8 +72,8 @@ function flatColumns<RecordType>(
         return [
           ...list,
           ...flatColumns(subColumns, mergedKey).map(subColum => ({
-            fixed: parsedFixed,
             ...subColum,
+            fixed: subColum.fixed ?? parsedFixed,
           })),
         ];
       }
