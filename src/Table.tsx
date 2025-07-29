@@ -348,12 +348,26 @@ function Table<RecordType extends DefaultRecordType>(
       scrollTo: config => {
         if (scrollBodyRef.current instanceof HTMLElement) {
           // Native scroll
-          const { index, top, key } = config;
+          const { index, top, key, offset } = config;
+
           if (validNumberValue(top)) {
+            // In top mode, offset is ignored
             scrollBodyRef.current?.scrollTo({ top });
           } else {
             const mergedKey = key ?? getRowKey(mergedData[index]);
-            scrollBodyRef.current.querySelector(`[data-row-key="${mergedKey}"]`)?.scrollIntoView();
+            const targetElement = scrollBodyRef.current.querySelector(
+              `[data-row-key="${mergedKey}"]`,
+            );
+            if (targetElement) {
+              if (!offset) {
+                // No offset, use scrollIntoView for default behavior
+                targetElement.scrollIntoView();
+              } else {
+                // With offset, use element's offsetTop + offset
+                const elementTop = (targetElement as HTMLElement).offsetTop;
+                scrollBodyRef.current.scrollTo({ top: elementTop + offset });
+              }
+            }
           }
         } else if ((scrollBodyRef.current as any)?.scrollTo) {
           // Pass to proxy

@@ -3,7 +3,7 @@ import React from 'react';
 import '../../assets/index.less';
 
 const data = [];
-for (let i = 0; i < 10; i += 1) {
+for (let i = 0; i < 20; i += 1) {
   data.push({
     key: i,
     a: `a${i}`,
@@ -67,6 +67,26 @@ const Test = () => {
         }}
       >
         Scroll To top
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            index: 5,
+            offset: -10,
+          });
+        }}
+      >
+        Scroll To Index 5 + Offset -10
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 6,
+            offset: -10,
+          });
+        }}
+      >
+        Scroll To Key 6 + Offset -10
       </button>
       <Table
         ref={tblRef}
