@@ -93,6 +93,17 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       },
     });
 
+    // https://github.com/ant-design/ant-design/issues/54734
+    Object.defineProperty(obj, 'scrollTop', {
+      get: () => listRef.current?.getScrollInfo().y || 0,
+
+      set: (value: number) => {
+        listRef.current?.scrollTo({
+          top: value,
+        });
+      },
+    });
+
     return obj;
   });
 
