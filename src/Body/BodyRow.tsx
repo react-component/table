@@ -46,6 +46,7 @@ export function getCellProps<RecordType>(
   rowKeys: React.Key[] = [],
   expandedRowOffset = 0,
   rowStickyOffsets?: ReturnType<typeof useStickyOffsets>,
+  hasColSpanZero?: boolean,
 ) {
   const {
     record,
@@ -67,7 +68,7 @@ export function getCellProps<RecordType>(
   const key = columnsKey[colIndex];
   let fixedInfo = fixedInfoList[colIndex];
 
-  if (column.fixed && rowStickyOffsets) {
+  if (column.fixed && hasColSpanZero) {
     fixedInfo = getCellFixedInfo(colIndex, colIndex, flattenColumns, rowStickyOffsets);
   }
   let appendCellNode: React.ReactNode;
@@ -217,6 +218,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           rowKeys,
           expandedRowInfo?.offset,
           rowStickyOffsets,
+          hasColSpanZero,
         );
 
         return (
