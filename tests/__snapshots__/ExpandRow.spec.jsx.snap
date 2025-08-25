@@ -138,7 +138,7 @@ LoadedCheerio {
 exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-scroll-horizontal"
+    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
   >
     <div
       class="rc-table-container"
@@ -148,13 +148,21 @@ LoadedCheerio {
         style="overflow-x: auto; overflow-y: hidden;"
       >
         <table
-          style="min-width: 100%; table-layout: auto;"
+          style="min-width: 100%; table-layout: fixed;"
         >
-          <colgroup />
+          <colgroup>
+            <col
+              class="rc-table-expand-icon-col"
+            />
+          </colgroup>
           <thead
             class="rc-table-thead"
           >
             <tr>
+              <th
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              />
               <th
                 class="rc-table-cell"
                 scope="col"
@@ -210,11 +218,28 @@ LoadedCheerio {
                    
                 </div>
               </td>
+              <td
+                style="padding: 0px; border: 0px; height: 0px;"
+              >
+                <div
+                  style="height: 0px; overflow: hidden;"
+                >
+                   
+                </div>
+              </td>
             </tr>
             <tr
               class="rc-table-row rc-table-row-level-0"
               data-row-key="0"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
@@ -235,6 +260,14 @@ LoadedCheerio {
               class="rc-table-row rc-table-row-level-0"
               data-row-key="1"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
@@ -290,7 +323,7 @@ LoadedCheerio {
 exports[`Table.Expand > does not crash if scroll is not set 2`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-scroll-horizontal"
+    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
   >
     <div
       class="rc-table-container"
@@ -300,13 +333,21 @@ LoadedCheerio {
         style="overflow-x: auto; overflow-y: hidden;"
       >
         <table
-          style="min-width: 100%; table-layout: auto;"
+          style="min-width: 100%; table-layout: fixed;"
         >
-          <colgroup />
+          <colgroup>
+            <col
+              class="rc-table-expand-icon-col"
+            />
+          </colgroup>
           <thead
             class="rc-table-thead"
           >
             <tr>
+              <th
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              />
               <th
                 class="rc-table-cell"
                 scope="col"
@@ -362,11 +403,28 @@ LoadedCheerio {
                    
                 </div>
               </td>
+              <td
+                style="padding: 0px; border: 0px; height: 0px;"
+              >
+                <div
+                  style="height: 0px; overflow: hidden;"
+                >
+                   
+                </div>
+              </td>
             </tr>
             <tr
               class="rc-table-row rc-table-row-level-0"
               data-row-key="0"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
@@ -387,6 +445,14 @@ LoadedCheerio {
               class="rc-table-row rc-table-row-level-0"
               data-row-key="1"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
@@ -1117,7 +1183,7 @@ LoadedCheerio {
 exports[`Table.Expand > work in expandable fix 1`] = `
 LoadedCheerio {
   "0": <div
-    class="rc-table rc-table-scroll-horizontal"
+    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
   >
     <div
       class="rc-table-container"
@@ -1127,13 +1193,21 @@ LoadedCheerio {
         style="overflow-x: auto; overflow-y: hidden;"
       >
         <table
-          style="width: 903px; min-width: 100%; table-layout: auto;"
+          style="width: 903px; min-width: 100%; table-layout: fixed;"
         >
-          <colgroup />
+          <colgroup>
+            <col
+              class="rc-table-expand-icon-col"
+            />
+          </colgroup>
           <thead
             class="rc-table-thead"
           >
             <tr>
+              <th
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              />
               <th
                 class="rc-table-cell"
                 scope="col"
@@ -1189,11 +1263,28 @@ LoadedCheerio {
                    
                 </div>
               </td>
+              <td
+                style="padding: 0px; border: 0px; height: 0px;"
+              >
+                <div
+                  style="height: 0px; overflow: hidden;"
+                >
+                   
+                </div>
+              </td>
             </tr>
             <tr
               class="rc-table-row rc-table-row-level-0"
               data-row-key="0"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
@@ -1214,6 +1305,14 @@ LoadedCheerio {
               class="rc-table-row rc-table-row-level-0"
               data-row-key="1"
             >
+              <td
+                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
+                style="position: sticky; left: 0px;"
+              >
+                <span
+                  class="rc-table-row-expand-icon rc-table-row-collapsed"
+                />
+              </td>
               <td
                 class="rc-table-cell"
               >
