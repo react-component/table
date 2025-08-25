@@ -178,11 +178,10 @@ function useColumns<RecordType>(
       // >>> Insert expand column if not exist
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
-        if (expandColIndex >= 0 && (expandColIndex || fixed === 'left' || !fixed)) {
-          cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
-        }
-        if (fixed === 'right') {
-          cloneColumns.splice(baseColumns.length, 0, EXPAND_COLUMN);
+        const insertIndex =
+          expandColIndex === 0 && fixed === 'right' ? baseColumns.length : expandColIndex;
+        if (insertIndex >= 0) {
+          cloneColumns.splice(insertIndex, 0, EXPAND_COLUMN);
         }
       }
 
