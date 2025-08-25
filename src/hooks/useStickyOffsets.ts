@@ -3,10 +3,14 @@ import type { ColumnType, StickyOffsets } from '../interface';
 
 /**
  * Get sticky column offset width
+ * @param colWidths - Column widths array
+ * @param flattenColumns - Flattened columns
+ * @param rowContext - Optional row context for dynamic colSpan calculation
  */
 function useStickyOffsets<RecordType>(
   colWidths: number[],
   flattenColumns: readonly ColumnType<RecordType>[],
+  rowContext?: { record: RecordType; rowIndex: number },
 ) {
   const stickyOffsets: StickyOffsets = useMemo(() => {
     const columnCount = flattenColumns.length;
@@ -16,9 +20,19 @@ function useStickyOffsets<RecordType>(
       let total = 0;
 
       for (let i = startIndex; i !== endIndex; i += offset) {
+        const column = flattenColumns[i];
+
         offsets.push(total);
 
-        if (flattenColumns[i].fixed) {
+        let colSpan = 1;
+        if (rowContext) {
+          const cellProps = column.onCell?.(rowContext.record, rowContext.rowIndex) || {};
+          colSpan = cellProps.colSpan ?? 1;
+        } else {
+          colSpan = column.colSpan ?? 1;
+        }
+
+        if (column.fixed && colSpan !== 0) {
           total += colWidths[i] || 0;
         }
       }
@@ -33,8 +47,9 @@ function useStickyOffsets<RecordType>(
       start: startOffsets,
       end: endOffsets,
       widths: colWidths,
+      isSticky: flattenColumns.some(column => column.fixed),
     };
-  }, [colWidths, flattenColumns]);
+  }, [colWidths, flattenColumns, ...(rowContext ? [rowContext.record, rowContext.rowIndex] : [])]);
 
   return stickyOffsets;
 }

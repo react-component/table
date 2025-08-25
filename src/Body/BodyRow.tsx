@@ -8,6 +8,8 @@ import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 import type { TableProps } from '..';
+import useStickyOffsets from '../hooks/useStickyOffsets';
+import { getCellFixedInfo } from '../utils/fixUtil';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -43,12 +45,14 @@ export function getCellProps<RecordType>(
   index: number,
   rowKeys: React.Key[] = [],
   expandedRowOffset = 0,
+  rowStickyOffsets?: ReturnType<typeof useStickyOffsets>,
 ) {
   const {
     record,
     prefixCls,
     columnsKey,
     fixedInfoList,
+    flattenColumns,
     expandIconColumnIndex,
     nestExpandable,
     indentSize,
@@ -61,9 +65,11 @@ export function getCellProps<RecordType>(
   } = rowInfo;
 
   const key = columnsKey[colIndex];
-  const fixedInfo = fixedInfoList[colIndex];
+  let fixedInfo = fixedInfoList[colIndex];
 
-  // ============= Used for nest expandable =============
+  if (column.fixed && rowStickyOffsets) {
+    fixedInfo = getCellFixedInfo(colIndex, colIndex, flattenColumns, rowStickyOffsets);
+  }
   let appendCellNode: React.ReactNode;
   if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
     appendCellNode = (
@@ -143,6 +149,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const {
     prefixCls,
     flattenColumns,
+    colWidths,
     expandedRowClassName,
     expandedRowRender,
     rowProps,
@@ -151,6 +158,19 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expanded,
     rowSupportExpand,
   } = rowInfo;
+
+  const hasColSpanZero = React.useMemo(() => {
+    return flattenColumns.some(col => {
+      const cellProps = col.onCell?.(record, index) || {};
+      return (cellProps.colSpan ?? 1) === 0;
+    });
+  }, [flattenColumns, record, index]);
+
+  const rowStickyOffsets = useStickyOffsets(
+    colWidths,
+    flattenColumns,
+    hasColSpanZero ? { record, rowIndex: index } : undefined,
+  );
 
   // Force render expand row if expanded before
   const expandedRef = React.useRef(false);
@@ -196,6 +216,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           index,
           rowKeys,
           expandedRowInfo?.offset,
+          rowStickyOffsets,
         );
 
         return (
