@@ -6,7 +6,10 @@ import { resetWarned } from 'rc-util/lib/warning';
 import React from 'react';
 import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
 
+const identity = (value: any) => value;
+
 global.scrollToConfig = null;
+global.collectGetScrollInfoReturn = identity;
 
 vi.mock('rc-virtual-list', async () => {
   const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
@@ -19,6 +22,10 @@ vi.mock('rc-virtual-list', async () => {
       scrollTo: (config: any) => {
         global.scrollToConfig = config;
         return myRef.current.scrollTo(config);
+      },
+      getScrollInfo: () => {
+        const originResult = myRef.current.getScrollInfo();
+        return global.collectGetScrollInfoReturn(originResult);
       },
     }));
 
@@ -59,7 +66,8 @@ describe('Table.Virtual', () => {
   beforeEach(() => {
     scrollLeftCalled = false;
     setScrollLeft.mockReset();
-    global.scrollToConfig = null;
+    global.scrollToConfig = vi.fn(identity);
+    // global.collectGetScrollInfoReturn.mockReset();
     vi.useFakeTimers();
     resetWarned();
   });
@@ -561,6 +569,28 @@ describe('Table.Virtual', () => {
       expect(
         container.querySelector('.rc-table').classList.contains('rc-table-ping-right'),
       ).toBeTruthy();
+    });
+  });
+
+  /**
+   * In antd, we need to call the scrollTop method through ref to achieve scrolling.
+   * see: https://github.com/ant-design/ant-design/issues/54734
+   */
+  it('should get and set scrollTop correctly', async () => {
+    const ref = React.createRef<any>();
+
+    global.collectGetScrollInfoReturn = (origin: any) => ({
+      ...origin,
+      y: 50,
+    });
+
+    getTable({ internalRefs: { body: ref } });
+
+    expect(ref.current.scrollTop).toBe(50);
+
+    ref.current.scrollTop = 200;
+    expect(global.scrollToConfig).toEqual({
+      top: 200,
     });
   });
 });
