@@ -28,8 +28,6 @@ function useStickyOffsets<RecordType>(
         if (rowContext) {
           const cellProps = column.onCell?.(rowContext.record, rowContext.rowIndex) || {};
           colSpan = cellProps.colSpan ?? 1;
-        } else {
-          colSpan = column.colSpan ?? 1;
         }
 
         if (column.fixed && colSpan !== 0) {
@@ -49,7 +47,7 @@ function useStickyOffsets<RecordType>(
       widths: colWidths,
       isSticky: flattenColumns.some(column => column.fixed),
     };
-  }, [colWidths, flattenColumns, ...(rowContext ? [rowContext.record, rowContext.rowIndex] : [])]);
+  }, [colWidths, flattenColumns, rowContext]);
 
   return stickyOffsets;
 }
