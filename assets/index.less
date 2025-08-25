@@ -55,6 +55,10 @@
     }
   }
 
+  &-column-resizing {
+    cursor: col-resize;
+  }
+
   // ================== Cell ==================
   &-cell {
     background: #f4f4f4;
@@ -62,6 +66,26 @@
     &-fix {
       position: sticky !important;
       z-index: calc(2 + var(--z-offset));
+    }
+
+    &-resize-handle {
+      position: absolute;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      cursor: col-resize;
+      background: red;
+      z-index: 1;
+    }
+
+    &-resize-line {
+      position: absolute;
+      width: 4px;
+      background: red;
+      height: 100%;
+      top: 0;
+      transform: translateX(-50%);
+      z-index: 100;
     }
 
     &-fix-start-shadow,
@@ -75,6 +99,7 @@
         opacity: 0;
         content: '';
         transition: opacity 0.3s;
+        pointer-events: none;
       }
 
       &-show::after {
