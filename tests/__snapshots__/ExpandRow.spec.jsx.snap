@@ -107,7 +107,7 @@ exports[`Table.Expand > childrenColumnName 1`] = `
 
 exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 <div
-  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
 >
   <div
     class="rc-table-container"
@@ -117,13 +117,21 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
       style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
-        style="min-width: 100%; table-layout: auto;"
+        style="min-width: 100%; table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
           <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            />
             <th
               class="rc-table-cell"
               scope="col"
@@ -179,11 +187,28 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
                  
               </div>
             </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >
@@ -204,6 +229,14 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
             class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >
@@ -229,7 +262,7 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
 
 exports[`Table.Expand > does not crash if scroll is not set 2`] = `
 <div
-  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
 >
   <div
     class="rc-table-container"
@@ -239,13 +272,21 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
       style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
-        style="min-width: 100%; table-layout: auto;"
+        style="min-width: 100%; table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
           <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            />
             <th
               class="rc-table-cell"
               scope="col"
@@ -301,11 +342,28 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
                  
               </div>
             </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >
@@ -326,6 +384,14 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
             class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >
@@ -906,7 +972,7 @@ exports[`Table.Expand > renders tree row correctly with different children 1`] =
 
 exports[`Table.Expand > work in expandable fix 1`] = `
 <div
-  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-scroll-horizontal"
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
 >
   <div
     class="rc-table-container"
@@ -916,13 +982,21 @@ exports[`Table.Expand > work in expandable fix 1`] = `
       style="overflow-x: auto; overflow-y: hidden;"
     >
       <table
-        style="width: 903px; min-width: 100%; table-layout: auto;"
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
       >
-        <colgroup />
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
           <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            />
             <th
               class="rc-table-cell"
               scope="col"
@@ -978,11 +1052,28 @@ exports[`Table.Expand > work in expandable fix 1`] = `
                  
               </div>
             </td>
+            <td
+              style="padding: 0px; border: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden;"
+              >
+                 
+              </div>
+            </td>
           </tr>
           <tr
             class="rc-table-row rc-table-row-level-0"
             data-row-key="0"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >
@@ -1003,6 +1094,14 @@ exports[`Table.Expand > work in expandable fix 1`] = `
             class="rc-table-row rc-table-row-level-0"
             data-row-key="1"
           >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
             <td
               class="rc-table-cell"
             >

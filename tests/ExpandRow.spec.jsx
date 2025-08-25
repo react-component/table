@@ -219,7 +219,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const { container, rerender } = render(
+    const { container } = render(
       createTable({
         columns,
         data,
@@ -227,7 +227,15 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'left', expandIconColumnIndex: 1 },
       }),
     );
-    const { container: container2, rerender: rerender2 } = render(
+    const { container: container2 } = render(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true, expandIconColumnIndex: 1 },
+      }),
+    );
+    const { container: container3 } = render(
       createTable({
         columns,
         data,
@@ -235,11 +243,12 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'right', expandIconColumnIndex: 2 },
       }),
     );
-    expect(container.querySelectorAll('.rc-table-has-fix-left').length).toBe(0);
-    expect(container2.querySelectorAll('.rc-table-has-fix-right').length).toBe(0);
+    expect(container.querySelectorAll('.rc-table-has-fix-start').length).toBe(0);
+    expect(container2.querySelectorAll('.rc-table-has-fix-start').length).toBe(0);
+    expect(container3.querySelectorAll('.rc-table-has-fix-end').length).toBe(0);
   });
 
-  it('fixed in expandable Fixed in expandable', () => {
+  it('fixed in expandable', () => {
     const columns = [
       { title: 'Name', dataIndex: 'name', key: 'name' },
       { title: 'Age', dataIndex: 'age', key: 'age' },
@@ -249,7 +258,7 @@ describe('Table.Expand', () => {
       { key: 0, name: 'Lucy', age: 27, gender: 'F' },
       { key: 1, name: 'Jack', age: 28, gender: 'M' },
     ];
-    const { container, rerender } = render(
+    const { container } = render(
       createTable({
         columns,
         data,
@@ -257,7 +266,15 @@ describe('Table.Expand', () => {
         expandable: { expandedRowRender, fixed: 'left' },
       }),
     );
-    const { container: container2, rerender: rerender2 } = render(
+    const { container: container2 } = render(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true },
+      }),
+    );
+    const { container: container3 } = render(
       createTable({
         columns,
         data,
@@ -266,7 +283,8 @@ describe('Table.Expand', () => {
       }),
     );
     expect(container.querySelector('.rc-table-has-fix-start')).toBeTruthy();
-    expect(container2.querySelector('.rc-table-has-fix-end')).toBeTruthy();
+    expect(container2.querySelector('.rc-table-has-fix-start')).toBeTruthy();
+    expect(container3.querySelector('.rc-table-has-fix-end')).toBeTruthy();
   });
 
   describe('config expand column index', () => {
