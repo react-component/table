@@ -45,7 +45,6 @@ function useStickyOffsets<RecordType>(
       start: startOffsets,
       end: endOffsets,
       widths: colWidths,
-      isSticky: flattenColumns.some(column => column.fixed),
     };
   }, [colWidths, flattenColumns, rowContext]);
 
