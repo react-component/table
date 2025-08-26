@@ -680,6 +680,7 @@ function Table<RecordType extends DefaultRecordType>(
     // Fixed holder share the props
     const fixedHolderProps = {
       noData: !mergedData.length,
+      maxContentScroll: horizonScroll && mergedScrollX === 'max-content',
       ...headerProps,
       ...columnContext,
       direction,

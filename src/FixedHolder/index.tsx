@@ -27,6 +27,7 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
   noData: boolean;
+  maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
   direction: Direction;
@@ -57,6 +58,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyBottomOffset,
     stickyClassName,
     onScroll,
+    maxContentScroll,
     children,
     ...restProps
   } = props;
@@ -95,6 +97,12 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       scrollEle?.removeEventListener('wheel', onWheel);
     };
   }, []);
+
+  // Check if all flattenColumns has width
+  const allFlattenColumnsWithWidth = React.useMemo(
+    () => flattenColumns.every(column => column.width),
+    [flattenColumns],
+  );
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
@@ -148,11 +156,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           visibility: noData || mergedColumnWidth ? null : 'hidden',
         }}
       >
-        <ColGroup
-          colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
-          columCount={columCount + 1}
-          columns={flattenColumnsWithScrollbar}
-        />
+        {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
+          <ColGroup
+            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
+            columCount={columCount + 1}
+            columns={flattenColumnsWithScrollbar}
+          />
+        )}
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,
