@@ -223,14 +223,23 @@ describe('Table.Expand', () => {
         columns,
         data,
         scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true, expandIconColumnIndex: 1 },
+      }),
+    );
+    const wrapper3 = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
         expandable: { expandedRowRender, fixed: 'right', expandIconColumnIndex: 2 },
       }),
     );
     expect(wrapper.find('.rc-table-has-fix-left').length).toBe(0);
-    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(0);
+    expect(wrapper2.find('.rc-table-has-fix-left').length).toBe(0);
+    expect(wrapper3.find('.rc-table-has-fix-right').length).toBe(0);
   });
 
-  it('fixed in expandable Fixed in expandable', () => {
+  it('fixed in expandable', () => {
     const columns = [
       { title: 'Name', dataIndex: 'name', key: 'name' },
       { title: 'Age', dataIndex: 'age', key: 'age' },
@@ -253,11 +262,20 @@ describe('Table.Expand', () => {
         columns,
         data,
         scroll: { x: 903 },
+        expandable: { expandedRowRender, fixed: true },
+      }),
+    );
+    const wrapper3 = mount(
+      createTable({
+        columns,
+        data,
+        scroll: { x: 903 },
         expandable: { expandedRowRender, fixed: 'right' },
       }),
     );
     expect(wrapper.find('.rc-table-has-fix-left').length).toBe(1);
-    expect(wrapper2.find('.rc-table-has-fix-right').length).toBe(1);
+    expect(wrapper2.find('.rc-table-has-fix-left').length).toBe(1);
+    expect(wrapper3.find('.rc-table-has-fix-right').length).toBe(1);
   });
 
   describe('config expand column index', () => {
