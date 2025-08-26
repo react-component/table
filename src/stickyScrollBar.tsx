@@ -117,7 +117,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   const setScrollLeft = (left: number) => {
     setScrollState(state => ({
       ...state,
-      scrollLeft: (left / bodyScrollWidth) * bodyWidth || 0,
+      scrollLeft: bodyScrollWidth ? (left / bodyScrollWidth) * bodyWidth : 0,
     }));
   };
 
