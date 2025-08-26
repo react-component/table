@@ -105,31 +105,20 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
         container === window
           ? document.documentElement.scrollTop + window.innerHeight
           : getOffset(container).top + (container as HTMLElement).clientHeight;
-
-      if (
-        tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
-        tableOffsetTop >= currentClientOffset - offsetScroll
-      ) {
-        setScrollState(state => ({
-          ...state,
-          isHiddenScrollBar: true,
-        }));
-      } else {
-        setScrollState(state => ({
-          ...state,
-          isHiddenScrollBar: false,
-        }));
-      }
+      setScrollState(state => ({
+        ...state,
+        isHiddenScrollBar:
+          tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
+          tableOffsetTop >= currentClientOffset - offsetScroll,
+      }));
     });
   };
 
   const setScrollLeft = (left: number) => {
-    setScrollState(state => {
-      return {
-        ...state,
-        scrollLeft: (left / bodyScrollWidth) * bodyWidth || 0,
-      };
-    });
+    setScrollState(state => ({
+      ...state,
+      scrollLeft: bodyScrollWidth ? (left / bodyScrollWidth) * bodyWidth : 0,
+    }));
   };
 
   React.useImperativeHandle(ref, () => ({
