@@ -47,6 +47,7 @@ export function getCellProps<RecordType>(
   expandedRowOffset = 0,
   rowStickyOffsets?: ReturnType<typeof useStickyOffsets>,
   hasColSpanZero?: boolean,
+  cachedCellProps?: Record<string, any>,
 ) {
   const {
     record,
@@ -68,7 +69,7 @@ export function getCellProps<RecordType>(
   const key = columnsKey[colIndex];
   let fixedInfo = fixedInfoList[colIndex];
 
-  if (column.fixed && hasColSpanZero) {
+  if (column.fixed && hasColSpanZero && rowStickyOffsets) {
     fixedInfo = getCellFixedInfo(colIndex, colIndex, flattenColumns, rowStickyOffsets);
   }
   let appendCellNode: React.ReactNode;
@@ -90,7 +91,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  const additionalCellProps = column.onCell?.(record, index) || {};
+  const additionalCellProps = cachedCellProps || column.onCell?.(record, index) || {};
 
   // Expandable row has offset
   if (expandedRowOffset) {
@@ -160,12 +161,13 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     rowSupportExpand,
   } = rowInfo;
 
-  const hasColSpanZero = React.useMemo(() => {
-    return flattenColumns.some(col => {
-      const cellProps = col.onCell?.(record, index) || {};
-      return (cellProps.colSpan ?? 1) === 0;
-    });
+  const cellPropsCache = React.useMemo(() => {
+    return flattenColumns.map(col => col.onCell?.(record, index) || {});
   }, [flattenColumns, record, index]);
+
+  const hasColSpanZero = React.useMemo(() => {
+    return cellPropsCache.some(cellProps => (cellProps.colSpan ?? 1) === 0);
+  }, [cellPropsCache]);
 
   const rowStickyOffsets = useStickyOffsets(
     colWidths,
@@ -219,6 +221,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           expandedRowInfo?.offset,
           rowStickyOffsets,
           hasColSpanZero,
+          cellPropsCache[colIndex],
         );
 
         return (
