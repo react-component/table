@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, Direction } from '../interface';
+import type { ColumnsType, ColumnType, Direction, TableLayout } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -32,6 +32,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   columCount: number;
   direction: Direction;
   fixHeader: boolean;
+  tableLayout: TableLayout;
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
@@ -60,6 +61,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     onScroll,
     maxContentScroll,
     children,
+    tableLayout,
     ...restProps
   } = props;
 
@@ -152,7 +154,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     >
       <TableComponent
         style={{
-          tableLayout: 'fixed',
+          tableLayout,
           visibility: noData || mergedColumnWidth ? null : 'hidden',
         }}
       >

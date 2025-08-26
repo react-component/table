@@ -697,6 +697,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
+            tableLayout={mergedTableLayout}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -712,6 +713,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
+            tableLayout={mergedTableLayout}
           >
             {renderFixedFooterTable}
           </FixedHolder>
