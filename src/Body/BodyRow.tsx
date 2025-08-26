@@ -91,7 +91,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  const additionalCellProps = cachedCellProps || column.onCell?.(record, index) || {};
+  const additionalCellProps = { ...(cachedCellProps || column.onCell?.(record, index) || {}) };
 
   // Expandable row has offset
   if (expandedRowOffset) {

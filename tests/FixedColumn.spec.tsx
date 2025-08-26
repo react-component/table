@@ -336,4 +336,139 @@ describe('Table.FixedColumn', () => {
     expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-start-shadow-show');
     expect(container.querySelector('.rc-table')).toHaveClass('rc-table-fix-end-shadow-show');
   });
+
+  describe('colSpan=0 with fixed columns regression test', () => {
+    interface TestDataType {
+      key: string;
+      col0: string;
+      col1: string;
+      col2: string;
+    }
+
+    const testColumns: ColumnsType<TestDataType> = [
+      {
+        title: 'Column 0',
+        dataIndex: 'col0',
+        key: 'col0',
+        width: 100,
+        fixed: 'left',
+        onCell: (record, index) => {
+          if (index === 1) {
+            return { colSpan: 0 };
+          }
+          return {};
+        },
+      },
+      {
+        title: 'Column 1',
+        dataIndex: 'col1',
+        key: 'col1',
+        width: 120,
+        fixed: 'left',
+        onCell: (record, index) => {
+          if (index === 1) {
+            return { colSpan: 2 };
+          }
+          return {};
+        },
+      },
+      {
+        title: 'Column 2',
+        dataIndex: 'col2',
+        key: 'col2',
+        width: 150,
+      },
+    ];
+
+    const testData: TestDataType[] = [
+      { key: '0', col0: 'Row0-Col0', col1: 'Row0-Col1', col2: 'Row0-Col2' },
+      { key: '1', col0: 'Row1-Col0', col1: 'Row1-Merged', col2: 'Row1-Col2' },
+      { key: '2', col0: 'Row2-Col0', col1: 'Row2-Col1', col2: 'Row2-Col2' },
+    ];
+
+    it('should calculate correct sticky offsets when colSpan=0 exists', async () => {
+      const { container } = render(
+        <Table columns={testColumns} data={testData} scroll={{ x: 500 }} />,
+      );
+
+      await triggerResize(container.querySelector<HTMLElement>('.rc-table'));
+
+      act(() => {
+        const coll = container.querySelector('.rc-table-resize-collection');
+        if (coll) {
+          triggerResize(coll as HTMLElement);
+        }
+      });
+
+      await act(async () => {
+        vi.runAllTimers();
+        await Promise.resolve();
+      });
+
+      const rows = container.querySelectorAll('.rc-table-tbody .rc-table-row');
+      expect(rows).toHaveLength(3);
+
+      const secondRow = rows[1];
+      const cells = secondRow.querySelectorAll('.rc-table-cell');
+      expect(cells).toHaveLength(2);
+
+      const mergedCell = cells[0];
+      expect(mergedCell).toHaveAttribute('colSpan', '2');
+
+      expect(mergedCell.textContent).toContain('Row1-Merged');
+      const hasFixedLeftClass = mergedCell.classList.contains('rc-table-cell-fix-left');
+
+      if (hasFixedLeftClass) {
+        const cellStyle = window.getComputedStyle(mergedCell);
+        expect(cellStyle.left).toBe('0px');
+      }
+    });
+
+    it('should work correctly with expandable rows', async () => {
+      const expandableTestData = testData.map(item => ({
+        ...item,
+        children:
+          item.key === '1'
+            ? [{ key: '1-0', col0: 'Child-Col0', col1: 'Child-Col1', col2: 'Child-Col2' }]
+            : undefined,
+      }));
+
+      const { container } = render(
+        <Table
+          columns={testColumns}
+          data={expandableTestData}
+          scroll={{ x: 500 }}
+          expandable={{
+            expandedRowKeys: ['1'],
+            expandRowByClick: true,
+          }}
+        />,
+      );
+
+      await triggerResize(container.querySelector<HTMLElement>('.rc-table'));
+
+      act(() => {
+        const coll = container.querySelector('.rc-table-resize-collection');
+        if (coll) {
+          triggerResize(coll as HTMLElement);
+        }
+      });
+
+      await act(async () => {
+        vi.runAllTimers();
+        await Promise.resolve();
+      });
+
+      const allRows = container.querySelectorAll('.rc-table-tbody .rc-table-row');
+      expect(allRows.length).toBeGreaterThan(3); // 包含展开的子行
+
+      const parentRow = allRows[1];
+      const parentCells = parentRow.querySelectorAll('.rc-table-cell');
+      expect(parentCells).toHaveLength(2);
+
+      const childRow = allRows[2];
+      const childCells = childRow.querySelectorAll('.rc-table-cell');
+      expect(childCells).toHaveLength(3);
+    });
+  });
 });
