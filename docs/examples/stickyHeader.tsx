@@ -212,6 +212,16 @@ const Demo = () => {
         suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
         beatae totam aperiam. Sunt, laudantium?
       </div>
+
+      <h2>Sticky width empty data</h2>
+      <Table
+        columns={fixedColumns}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
     </div>
   );
 };
