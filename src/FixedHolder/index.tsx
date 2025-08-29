@@ -27,7 +27,6 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
   noData: boolean;
-  maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
   direction: Direction;
@@ -35,7 +34,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
-  width?: number | string;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
   colGroup?: React.ReactNode;
@@ -61,8 +59,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyBottomOffset,
     stickyClassName,
     onScroll,
-    maxContentScroll,
-    width,
     children,
     ...restProps
   } = props;
@@ -152,8 +148,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         style={{
           tableLayout: 'fixed',
           visibility: noData || mergedColumnWidth ? null : 'hidden',
-          minWidth: '100%',
-          width,
         }}
       >
         {/* use original ColGroup if no data, otherwise use calculated column width */}

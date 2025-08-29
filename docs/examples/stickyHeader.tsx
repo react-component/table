@@ -216,7 +216,7 @@ const Demo = () => {
         beatae totam aperiam. Sunt, laudantium?
       </div>
 
-      <h2>Sticky header column width test</h2>
+      <h2>Sticky header with empty data</h2>
       <Table
         columns={fixedColumns}
         data={[]}
@@ -231,6 +231,15 @@ const Demo = () => {
         data={[]}
         scroll={{
           x: 1200,
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsWithWidth}
+        data={[]}
+        scroll={{
+          x: 'max-content',
         }}
         sticky
       />
