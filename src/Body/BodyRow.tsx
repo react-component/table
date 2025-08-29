@@ -8,6 +8,8 @@ import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 import type { TableProps } from '..';
+import useStickyOffsets from '../hooks/useStickyOffsets';
+import { getCellFixedInfo } from '../utils/fixUtil';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -43,12 +45,16 @@ export function getCellProps<RecordType>(
   index: number,
   rowKeys: React.Key[] = [],
   expandedRowOffset = 0,
+  rowStickyOffsets?: ReturnType<typeof useStickyOffsets>,
+  hasColSpanZero?: boolean,
+  cachedCellProps?: Record<string, any>,
 ) {
   const {
     record,
     prefixCls,
     columnsKey,
     fixedInfoList,
+    flattenColumns,
     expandIconColumnIndex,
     nestExpandable,
     indentSize,
@@ -61,9 +67,11 @@ export function getCellProps<RecordType>(
   } = rowInfo;
 
   const key = columnsKey[colIndex];
-  const fixedInfo = fixedInfoList[colIndex];
+  let fixedInfo = fixedInfoList[colIndex];
 
-  // ============= Used for nest expandable =============
+  if (column.fixed && hasColSpanZero && rowStickyOffsets) {
+    fixedInfo = getCellFixedInfo(colIndex, colIndex, flattenColumns, rowStickyOffsets);
+  }
   let appendCellNode: React.ReactNode;
   if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
     appendCellNode = (
@@ -83,7 +91,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  const additionalCellProps = column.onCell?.(record, index) || {};
+  const additionalCellProps = { ...(cachedCellProps || column.onCell?.(record, index) || {}) };
 
   // Expandable row has offset
   if (expandedRowOffset) {
@@ -143,6 +151,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const {
     prefixCls,
     flattenColumns,
+    colWidths,
     expandedRowClassName,
     expandedRowRender,
     rowProps,
@@ -151,6 +160,20 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     expanded,
     rowSupportExpand,
   } = rowInfo;
+
+  const cellPropsCache = React.useMemo(() => {
+    return flattenColumns.map(col => col.onCell?.(record, index) || {});
+  }, [flattenColumns, record, index]);
+
+  const hasColSpanZero = React.useMemo(() => {
+    return cellPropsCache.some(cellProps => (cellProps.colSpan ?? 1) === 0);
+  }, [cellPropsCache]);
+
+  const rowStickyOffsets = useStickyOffsets(
+    colWidths,
+    flattenColumns,
+    hasColSpanZero ? { record, rowIndex: index } : undefined,
+  );
 
   // Force render expand row if expanded before
   const expandedRef = React.useRef(false);
@@ -196,6 +219,9 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
           index,
           rowKeys,
           expandedRowInfo?.offset,
+          rowStickyOffsets,
+          hasColSpanZero,
+          cellPropsCache[colIndex],
         );
 
         return (
