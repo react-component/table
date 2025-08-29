@@ -680,7 +680,6 @@ function Table<RecordType extends DefaultRecordType>(
     // Fixed holder share the props
     const fixedHolderProps = {
       noData: !mergedData.length,
-      maxContentScroll: horizonScroll && mergedScrollX === 'max-content',
       ...headerProps,
       ...columnContext,
       direction,
@@ -697,6 +696,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -712,6 +712,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedFooterTable}
           </FixedHolder>

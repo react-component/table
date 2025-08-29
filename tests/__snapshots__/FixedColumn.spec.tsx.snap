@@ -2818,43 +2818,22 @@ LoadedCheerio {
         >
           <colgroup>
             <col
-              style="width: 93px;"
+              style="width: 100px;"
             />
             <col
-              style="width: 1000px;"
+              style="width: 100px;"
             />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
             <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 1000px;"
-            />
-            <col
-              style="width: 15px;"
+              style="width: 100px;"
             />
           </colgroup>
           <thead
