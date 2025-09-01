@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import type { ColumnType } from '@/interface';
+import type { ColumnType, ColumnsType } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -84,6 +84,34 @@ const columnsWithWidth: ColumnType<RecordType>[] = [
   { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
   { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
   { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
+];
+
+const columnsGrouped: ColumnsType<any> = [
+  {
+    title: '',
+    dataIndex: 'productType',
+    key: 'productType',
+    rowSpan: 2,
+    rowScope: 'row',
+  },
+  {
+    title: 'Mars',
+    dataIndex: 'mars',
+    key: 'mars',
+    children: [
+      { title: 'ProducedProducedProduced', dataIndex: 'producedMars', key: 'producedMars' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars' },
+    ],
+  },
+  {
+    title: 'Venus',
+    dataIndex: 'venus',
+    key: 'venus',
+    children: [
+      { title: 'Produced Produced', dataIndex: 'producedVenus', key: 'producedVenus' },
+      { title: 'Sold Sold Sold Sold', dataIndex: 'soldVenus', key: 'soldVenus' },
+    ],
+  },
 ];
 
 const data = [
@@ -265,6 +293,24 @@ const Demo = () => {
       <Table
         columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
         data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[{}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsGrouped}
+        data={[{}, {}]}
         scroll={{
           x: 'max-content',
         }}
