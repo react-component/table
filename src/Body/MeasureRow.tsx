@@ -4,7 +4,7 @@ import MeasureCell from './MeasureCell';
 import isVisible from 'rc-util/lib/Dom/isVisible';
 import type { ColumnType } from '../interface';
 
-export interface MeasureCellProps {
+export interface MeasureRowProps {
   prefixCls: string;
   onColumnResize: (key: React.Key, width: number) => void;
   columnsKey: React.Key[];
