@@ -86,6 +86,34 @@ const columnsWithWidth: ColumnType<RecordType>[] = [
   { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
 ];
 
+const columnsGrouped: ColumnsType<SecondTableRecordType> = [
+  {
+    title: '',
+    dataIndex: 'productType',
+    key: 'productType',
+    rowSpan: 2,
+    rowScope: 'row',
+  },
+  {
+    title: 'Mars',
+    dataIndex: 'mars',
+    key: 'mars',
+    children: [
+      { title: 'ProducedProducedProduced', dataIndex: 'producedMars', key: 'producedMars' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars' },
+    ],
+  },
+  {
+    title: 'Venus',
+    dataIndex: 'venus',
+    key: 'venus',
+    children: [
+      { title: 'Produced Produced', dataIndex: 'producedVenus', key: 'producedVenus' },
+      { title: 'Sold Sold Sold Sold', dataIndex: 'soldVenus', key: 'soldVenus' },
+    ],
+  },
+];
+
 const data = [
   { a: '123', key: '1' },
   { a: 'cdd', b: 'edd', key: '2' },
@@ -274,6 +302,15 @@ const Demo = () => {
       <Table
         columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
         data={[{}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsGrouped}
+        data={[{}, {}]}
         scroll={{
           x: 'max-content',
         }}
