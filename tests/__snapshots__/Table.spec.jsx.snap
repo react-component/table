@@ -214,7 +214,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed;"
+          style="table-layout: fixed; width: 100px; min-width: 100%;"
         >
           <colgroup>
             <col
@@ -390,7 +390,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed;"
+          style="table-layout: fixed; width: 100px; min-width: 100%;"
         >
           <colgroup>
             <col
