@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import type { ColumnType } from '@/interface';
+import type { ColumnType, ColumnsType } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -86,7 +86,7 @@ const columnsWithWidth: ColumnType<RecordType>[] = [
   { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
 ];
 
-const columnsGrouped: ColumnType<SecondTableRecordType> = [
+const columnsGrouped: ColumnsType<any> = [
   {
     title: '',
     dataIndex: 'productType',
