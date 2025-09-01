@@ -288,7 +288,7 @@ LoadedCheerio {
               style="height: 0px;"
             >
               <td
-                style="padding-block: 0; border-block: 0; height: 0px;"
+                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
               >
                 <div
                   style="height: 0px; overflow: hidden; font-weight: bold;"
@@ -297,7 +297,7 @@ LoadedCheerio {
                 </div>
               </td>
               <td
-                style="padding-block: 0; border-block: 0; height: 0px;"
+                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
               >
                 <div
                   style="height: 0px; overflow: hidden; font-weight: bold;"
@@ -306,7 +306,7 @@ LoadedCheerio {
                 </div>
               </td>
               <td
-                style="padding-block: 0; border-block: 0; height: 0px;"
+                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
               >
                 <div
                   style="height: 0px; overflow: hidden; font-weight: bold;"

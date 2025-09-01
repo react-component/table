@@ -20,7 +20,10 @@ export default function MeasureCell({ columnKey, onColumnResize, column }: Measu
 
   return (
     <ResizeObserver data={columnKey}>
-      <td ref={cellRef} style={{ paddingBlock: 0, borderBlock: 0, height: 0 }}>
+      <td
+        ref={cellRef}
+        style={{ paddingTop: 0, paddingBottom: 0, borderTop: 0, borderBottom: 0, height: 0 }}
+      >
         <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>
           {column?.title || '\xa0'}
         </div>
