@@ -34,6 +34,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
+  scrollTableStyle?: React.CSSProperties;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
   colGroup?: React.ReactNode;
@@ -58,6 +59,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyTopOffset,
     stickyBottomOffset,
     stickyClassName,
+    scrollTableStyle,
     onScroll,
     children,
     ...restProps
@@ -148,6 +150,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         style={{
           tableLayout: 'fixed',
           visibility: noData || mergedColumnWidth ? null : 'hidden',
+          ...scrollTableStyle,
         }}
       >
         {/* use original ColGroup if no data, otherwise use calculated column width */}
