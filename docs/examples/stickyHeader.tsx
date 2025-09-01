@@ -86,7 +86,7 @@ const columnsWithWidth: ColumnType<RecordType>[] = [
   { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
 ];
 
-const columnsGrouped: ColumnsType<SecondTableRecordType> = [
+const columnsGrouped: ColumnType<SecondTableRecordType> = [
   {
     title: '',
     dataIndex: 'productType',
