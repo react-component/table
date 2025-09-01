@@ -270,6 +270,15 @@ const Demo = () => {
         }}
         sticky
       />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[{}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
     </div>
   );
 };
