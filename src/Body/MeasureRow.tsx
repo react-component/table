@@ -16,7 +16,7 @@ export default function MeasureRow({
   columnsKey,
   onColumnResize,
   columns,
-}: MeasureCellProps) {
+}: MeasureRowProps) {
   const ref = React.useRef<HTMLTableRowElement>(null);
 
   return (
