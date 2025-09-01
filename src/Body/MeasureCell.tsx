@@ -22,7 +22,7 @@ export default function MeasureCell({ columnKey, onColumnResize, column }: Measu
     <ResizeObserver data={columnKey}>
       <td ref={cellRef} style={{ paddingBlock: 0, borderBlock: 0, height: 0 }}>
         <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>
-          {column?.title || '&nbsp;'}
+          {column?.title || '\xa0'}
         </div>
       </td>
     </ResizeObserver>
