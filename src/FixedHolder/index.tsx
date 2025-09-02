@@ -169,7 +169,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           ...scrollTableStyle,
         }}
       >
-        {getColGroup()}
+        {colGroupNode}
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,
