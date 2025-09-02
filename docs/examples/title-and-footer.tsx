@@ -3,7 +3,7 @@ import React from 'react';
 import Table from 'rc-table';
 import { useCheckbox } from './utils/useInput';
 import '../../assets/index.less';
-import { ColumnType } from '@/interface';
+import type { ColumnType } from '@/interface';
 
 interface RecordType {
   a: string;
@@ -35,7 +35,6 @@ function useColumns(fixColumns: boolean): ColumnType<RecordType>[] {
     { title: 'value2', dataIndex: 'value2' },
     {
       title: 'Operations',
-      dataIndex: '',
       key: 'd',
       render() {
         return <a href="#">Operations</a>;

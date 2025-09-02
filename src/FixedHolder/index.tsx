@@ -1,11 +1,13 @@
+import { useContext } from '@rc-component/context';
+import classNames from 'classnames';
+import { fillRef } from '@rc-component/util/lib/ref';
 import * as React from 'react';
 import { useMemo } from 'react';
-import classNames from 'classnames';
-import { fillRef } from 'rc-util/lib/ref';
-import type { HeaderProps } from '../Header/Header';
 import ColGroup from '../ColGroup';
-import type { ColumnsType, ColumnType } from '../interface';
 import TableContext from '../context/TableContext';
+import type { HeaderProps } from '../Header/Header';
+import devRenderTimes from '../hooks/useRenderTimes';
+import type { ColumnsType, ColumnType, Direction } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -24,11 +26,12 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
+  style?: React.CSSProperties;
   noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
-  direction: 'ltr' | 'rtl';
+  direction: Direction;
   fixHeader: boolean;
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
@@ -37,134 +40,164 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
 
-const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<unknown>>(
-  (
-    {
-      className,
-      noData,
-      columns,
-      flattenColumns,
-      colWidths,
-      columCount,
-      stickyOffsets,
-      direction,
-      fixHeader,
-      stickyTopOffset,
-      stickyBottomOffset,
-      stickyClassName,
-      onScroll,
-      maxContentScroll,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
-    const { prefixCls, scrollbarSize, isSticky } = React.useContext(TableContext);
+const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
 
-    const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
+  const {
+    className,
+    style,
+    noData,
+    columns,
+    flattenColumns,
+    colWidths,
+    columCount,
+    stickyOffsets,
+    direction,
+    fixHeader,
+    stickyTopOffset,
+    stickyBottomOffset,
+    stickyClassName,
+    onScroll,
+    maxContentScroll,
+    children,
+    ...restProps
+  } = props;
 
-    // Pass wheel to scroll event
-    const scrollRef = React.useRef<HTMLDivElement>(null);
+  const { prefixCls, scrollbarSize, isSticky, getComponent } = useContext(TableContext, [
+    'prefixCls',
+    'scrollbarSize',
+    'isSticky',
+    'getComponent',
+  ]);
+  const TableComponent = getComponent(['header', 'table'], 'table');
 
-    const setScrollRef = React.useCallback((element: HTMLElement) => {
-      fillRef(ref, element);
-      fillRef(scrollRef, element);
-    }, []);
+  const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
 
-    React.useEffect(() => {
-      function onWheel(e: WheelEvent) {
-        const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
-        if (deltaX) {
-          onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
-          e.preventDefault();
+  // Pass wheel to scroll event
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const setScrollRef = React.useCallback((element: HTMLElement) => {
+    fillRef(ref, element);
+    fillRef(scrollRef, element);
+  }, []);
+
+  React.useEffect(() => {
+    function onWheel(e: WheelEvent) {
+      const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
+      if (deltaX) {
+        const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+        const maxScrollWidth = scrollWidth - clientWidth;
+        let nextScroll = scrollLeft + deltaX;
+
+        if (direction === 'rtl') {
+          nextScroll = Math.max(-maxScrollWidth, nextScroll);
+          nextScroll = Math.min(0, nextScroll);
+        } else {
+          nextScroll = Math.min(maxScrollWidth, nextScroll);
+          nextScroll = Math.max(0, nextScroll);
         }
+
+        onScroll({
+          currentTarget,
+          scrollLeft: nextScroll,
+        });
+        e.preventDefault();
       }
-      scrollRef.current?.addEventListener('wheel', onWheel);
+    }
 
-      return () => {
-        scrollRef.current?.removeEventListener('wheel', onWheel);
-      };
-    }, []);
+    const scrollEle = scrollRef.current;
+    scrollEle?.addEventListener('wheel', onWheel, { passive: false });
 
-    // Check if all flattenColumns has width
-    const allFlattenColumnsWithWidth = React.useMemo(
-      () => flattenColumns.every(column => column.width >= 0),
-      [flattenColumns],
-    );
-
-    // Add scrollbar column
-    const lastColumn = flattenColumns[flattenColumns.length - 1];
-    const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
-      fixed: lastColumn ? lastColumn.fixed : null,
-      scrollbar: true,
-      onHeaderCell: () => ({
-        className: `${prefixCls}-cell-scrollbar`,
-      }),
+    return () => {
+      scrollEle?.removeEventListener('wheel', onWheel);
     };
+  }, []);
 
-    const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
-      () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
-      [combinationScrollBarSize, columns],
-    );
+  // Check if all flattenColumns has width
+  const allFlattenColumnsWithWidth = React.useMemo(
+    () => flattenColumns.every(column => column.width),
+    [flattenColumns],
+  );
 
-    const flattenColumnsWithScrollbar = useMemo(
-      () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-      [combinationScrollBarSize, flattenColumns],
-    );
+  // Add scrollbar column
+  const lastColumn = flattenColumns[flattenColumns.length - 1];
+  const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
+    fixed: lastColumn ? lastColumn.fixed : null,
+    scrollbar: true,
+    onHeaderCell: () => ({
+      className: `${prefixCls}-cell-scrollbar`,
+    }),
+  };
 
-    // Calculate the sticky offsets
-    const headerStickyOffsets = useMemo(() => {
-      const { right, left } = stickyOffsets;
-      return {
-        ...stickyOffsets,
-        left:
-          direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
-        right:
-          direction === 'rtl'
-            ? right
-            : [...right.map(width => width + combinationScrollBarSize), 0],
-        isSticky,
-      };
-    }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+  const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
+    () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
+    [combinationScrollBarSize, columns],
+  );
 
-    const mergedColumnWidth = useColumnWidth(colWidths, columCount);
+  const flattenColumnsWithScrollbar = useMemo(
+    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
+    [combinationScrollBarSize, flattenColumns],
+  );
 
-    return (
-      <div
+  // Calculate the sticky offsets
+  const headerStickyOffsets = useMemo(() => {
+    const { start, end } = stickyOffsets;
+    return {
+      ...stickyOffsets,
+      // left:
+      //   direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
+      // right:
+      //   direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      start: start,
+      end: [...end.map(width => width + combinationScrollBarSize), 0],
+      isSticky,
+    };
+  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+
+  const mergedColumnWidth = useColumnWidth(colWidths, columCount);
+
+  return (
+    <div
+      style={{
+        overflow: 'hidden',
+        ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
+        ...style,
+      }}
+      ref={setScrollRef}
+      className={classNames(className, {
+        [stickyClassName]: !!stickyClassName,
+      })}
+    >
+      <TableComponent
         style={{
-          overflow: 'hidden',
-          ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
+          tableLayout: 'fixed',
+          visibility: noData || mergedColumnWidth ? null : 'hidden',
         }}
-        ref={setScrollRef}
-        className={classNames(className, {
-          [stickyClassName]: !!stickyClassName,
-        })}
       >
-        <table
-          style={{
-            tableLayout: 'fixed',
-            visibility: noData || mergedColumnWidth ? null : 'hidden',
-          }}
-        >
-          {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
-            <ColGroup
-              colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
-              columCount={columCount + 1}
-              columns={flattenColumnsWithScrollbar}
-            />
-          )}
-          {children({
-            ...props,
-            stickyOffsets: headerStickyOffsets,
-            columns: columnsWithScrollbar,
-            flattenColumns: flattenColumnsWithScrollbar,
-          })}
-        </table>
-      </div>
-    );
-  },
-);
+        {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
+          <ColGroup
+            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
+            columCount={columCount + 1}
+            columns={flattenColumnsWithScrollbar}
+          />
+        )}
+        {children({
+          ...restProps,
+          stickyOffsets: headerStickyOffsets,
+          columns: columnsWithScrollbar,
+          flattenColumns: flattenColumnsWithScrollbar,
+        })}
+      </TableComponent>
+    </div>
+  );
+});
 
-FixedHolder.displayName = 'FixedHolder';
+if (process.env.NODE_ENV !== 'production') {
+  FixedHolder.displayName = 'FixedHolder';
+}
 
-export default FixedHolder;
+/** Return a table in div as fixed element which contains sticky info */
+// export default responseImmutable(FixedHolder);
+export default React.memo(FixedHolder);

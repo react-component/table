@@ -1,8 +1,9 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
-const columns = [
+const columns: TableProps['columns'] = [
   {
     title: 'title1',
     dataIndex: 'a',
@@ -11,7 +12,6 @@ const columns = [
     width: 100,
   },
   {
-    id: '123',
     title: 'title2',
     dataIndex: 'b',
     className: 'b',
@@ -52,6 +52,20 @@ const Demo = () => (
       expandedRowClassName={(record, i) => `ex-row-${i}`}
       data={data}
       className="table"
+      title={() => <span>title</span>}
+      footer={() => <span>footer</span>}
+    />
+    <h2>scroll</h2>
+     <Table
+      columns={columns}
+      rowClassName={(record, i) => `row-${i}`}
+      expandedRowRender={record => <p>extra: {record.a}</p>}
+      expandedRowClassName={(record, i) => `ex-row-${i}`}
+      data={Array(5).fill(data)}
+      className="table"
+      scroll={{ x: 'calc(700px + 50%)', y: 47 * 5 }}
+      title={() => <span>title</span>}
+      footer={() => <span>footer</span>}
     />
   </div>
 );

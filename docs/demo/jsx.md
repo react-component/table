@@ -1,3 +1,8 @@
-## jsx
+---
+title: Hover Perf
+nav:
+  title: Demo
+  path: /demo
+---
 
-<code src="../examples/jsx.tsx">
+<code src="../examples/hover-perf.tsx"></code>

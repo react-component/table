@@ -3,7 +3,7 @@ import { Resizable } from 'react-resizable';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import 'react-resizable/css/styles.css';
-import { ColumnType } from '@/interface';
+import type { ColumnType } from '@/interface';
 
 const ResizableTitle = props => {
   const { onResize, width, ...restProps } = props;
@@ -60,16 +60,18 @@ class Demo extends React.Component<{}, DemoState> {
     { a: '1333', c: 'eee', d: 2, key: '3' },
   ];
 
-  handleResize = index => (e, { size }) => {
-    this.setState(({ columns }) => {
-      const nextColumns = [...columns];
-      nextColumns[index] = {
-        ...nextColumns[index],
-        width: size.width,
-      };
-      return { columns: nextColumns };
-    });
-  };
+  handleResize =
+    index =>
+    (e, { size }) => {
+      this.setState(({ columns }) => {
+        const nextColumns = [...columns];
+        nextColumns[index] = {
+          ...nextColumns[index],
+          width: size.width,
+        };
+        return { columns: nextColumns };
+      });
+    };
 
   render() {
     const columns = this.state.columns.map((col, index) => ({
@@ -78,7 +80,7 @@ class Demo extends React.Component<{}, DemoState> {
         ({
           width: column.width,
           onResize: this.handleResize(index),
-        } as any),
+        }) as any,
     }));
 
     return (

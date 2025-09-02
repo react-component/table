@@ -1,8 +1,6 @@
 import React from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import { ColumnsType } from '@/interface';
-import { useCheckbox } from './utils/useInput';
 
 const columns = [
   {
@@ -61,14 +59,10 @@ const columns = [
   },
 ];
 
-const Demo = () => {
-  return (
-    <React.StrictMode>
-      <div>
-        <Table columns={columns as any} data={[]} scroll={{ x: 'max-content' }} sticky />
-      </div>
-    </React.StrictMode>
-  );
-};
+const Demo = () => (
+  <React.StrictMode>
+    <Table columns={columns as any} data={[]} scroll={{ x: 'max-content' }} sticky />
+  </React.StrictMode>
+);
 
 export default Demo;

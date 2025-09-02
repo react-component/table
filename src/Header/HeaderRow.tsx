@@ -1,15 +1,17 @@
 import * as React from 'react';
 import Cell from '../Cell';
+import TableContext from '../context/TableContext';
+import { useContext } from '@rc-component/context';
 import type {
   CellType,
-  StickyOffsets,
   ColumnType,
   CustomizeComponent,
   GetComponentProps,
+  StickyOffsets,
 } from '../interface';
-import TableContext from '../context/TableContext';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
+import { TableProps } from '..';
 
 export interface RowProps<RecordType> {
   cells: readonly CellType<RecordType>[];
@@ -19,19 +21,23 @@ export interface RowProps<RecordType> {
   cellComponent: CustomizeComponent;
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
   index: number;
+  classNames: TableProps['classNames']['header'];
+  styles: TableProps['styles']['header'];
 }
 
-function HeaderRow<RecordType>({
-  cells,
-  stickyOffsets,
-  flattenColumns,
-  rowComponent: RowComponent,
-  cellComponent: CellComponent,
-  onHeaderRow,
-  index,
-}: RowProps<RecordType>) {
-  const { prefixCls, direction } = React.useContext(TableContext);
-
+const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
+  const {
+    cells,
+    stickyOffsets,
+    flattenColumns,
+    rowComponent: RowComponent,
+    cellComponent: CellComponent,
+    onHeaderRow,
+    index,
+    classNames,
+    styles,
+  } = props;
+  const { prefixCls } = useContext(TableContext, ['prefixCls']);
   let rowProps: React.HTMLAttributes<HTMLElement>;
   if (onHeaderRow) {
     rowProps = onHeaderRow(
@@ -43,7 +49,7 @@ function HeaderRow<RecordType>({
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
 
   return (
-    <RowComponent {...rowProps}>
+    <RowComponent {...rowProps} className={classNames.row} style={styles.row}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column } = cell;
         const fixedInfo = getCellFixedInfo(
@@ -51,7 +57,6 @@ function HeaderRow<RecordType>({
           cell.colEnd,
           flattenColumns,
           stickyOffsets,
-          direction,
         );
 
         let additionalProps: React.HTMLAttributes<HTMLElement>;
@@ -62,6 +67,7 @@ function HeaderRow<RecordType>({
         return (
           <Cell
             {...cell}
+            scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
             component={CellComponent}
@@ -75,8 +81,10 @@ function HeaderRow<RecordType>({
       })}
     </RowComponent>
   );
-}
+};
 
-HeaderRow.displayName = 'HeaderRow';
+if (process.env.NODE_ENV !== 'production') {
+  HeaderRow.displayName = 'HeaderRow';
+}
 
 export default HeaderRow;

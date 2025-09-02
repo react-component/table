@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { DeepNamePath } from './namePathType';
 
 /**
  * ColumnType which applied in antd: https://ant.design/components/table-cn/#Column
@@ -19,11 +20,35 @@ import type * as React from 'react';
 
 export type Key = React.Key;
 
-export type FixedType = 'left' | 'right' | boolean;
+/**
+ * Use `start` or `end` instead. `left` or `right` is deprecated.
+ */
+export type FixedType = 'start' | 'end' | 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
+
+export type ScrollConfig = {
+  /** The index of the row to scroll to */
+  index?: number;
+  /** The key of the row to scroll to */
+  key?: Key;
+  /** The absolute scroll position from top */
+  top?: number;
+  /**
+   * Additional offset in pixels to apply to the scroll position.
+   * Only effective when using `key` or `index` mode.
+   * Ignored when using `top` mode.
+   * When offset is set, the target element will always be aligned to the top of the container.
+   */
+  offset?: number;
+};
+
+export type Reference = {
+  nativeElement: HTMLDivElement;
+  scrollTo: (config: ScrollConfig) => void;
+};
 
 // ==================== Row =====================
 export type RowClassName<RecordType> = (
@@ -53,27 +78,42 @@ export interface RenderedCell<RecordType> {
   children?: React.ReactNode;
 }
 
-export type DataIndex = string | number | readonly (string | number)[];
+export type Direction = 'ltr' | 'rtl';
 
-type DataIndexArray = readonly [string] | readonly [number] | readonly (string | number)[];
+// SpecialString will be removed in antd@6
+export type SpecialString<T> = T | (string & {});
+
+export type DataIndex<T = any> =
+  | DeepNamePath<T>
+  | SpecialString<T>
+  | number
+  | (SpecialString<T> | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
+
+export type ColScopeType = 'col' | 'colgroup';
+
+export type RowScopeType = 'row' | 'rowgroup';
+
+export type ScopeType = ColScopeType | RowScopeType;
 
 interface ColumnSharedType<RecordType> {
   title?: React.ReactNode;
   key?: Key;
   className?: string;
+  hidden?: boolean;
   fixed?: FixedType;
   onHeaderCell?: GetComponentProps<ColumnsType<RecordType>[number]>;
   ellipsis?: CellEllipsisType;
   align?: AlignType;
+  rowScope?: RowScopeType;
 }
 
 export interface ColumnGroupType<RecordType> extends ColumnSharedType<RecordType> {
   children: ColumnsType<RecordType>;
 }
 
-export type AlignType = 'left' | 'center' | 'right';
+export type AlignType = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
 
 type IsExactlyAny<T> = boolean extends (T extends never ? true : false) ? true : false;
 
@@ -112,7 +152,7 @@ type DataIndexType<RecordType> = Readonly<DataIndexArrayType<RecordType>> extend
 
 export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   colSpan?: number;
-  dataIndex?: DataIndexType<RecordType>;
+  dataIndex?: DataIndex<RecordType>;
   render?: (
     value: any,
     record: RecordType,
@@ -121,6 +161,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
   rowSpan?: number;
   width?: number | string;
+  minWidth?: number;
   onCell?: GetComponentProps<RecordType>;
   /** @deprecated Please use `onCell` instead */
   onCellClick?: (record: RecordType, e: React.MouseEvent<HTMLElement>) => void;
@@ -135,8 +176,9 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 // ================= Fix Column =================
 export interface StickyOffsets {
-  left: readonly number[];
-  right: readonly number[];
+  start: readonly number[];
+  end: readonly number[];
+  widths: readonly number[];
   isSticky?: boolean;
 }
 
@@ -144,7 +186,7 @@ export interface StickyOffsets {
 export type GetComponentProps<DataType> = (
   data: DataType,
   index?: number,
-) => React.HTMLAttributes<any> | React.TdHTMLAttributes<any>;
+) => React.HTMLAttributes<any> & React.TdHTMLAttributes<any>;
 
 type Component<P> =
   | React.ComponentType<P>
@@ -154,18 +196,24 @@ type Component<P> =
 
 export type CustomizeComponent = Component<any>;
 
+export type OnCustomizeScroll = (info: {
+  currentTarget?: HTMLElement;
+  scrollLeft?: number;
+}) => void;
+
 export type CustomizeScrollBody<RecordType> = (
   data: readonly RecordType[],
   info: {
     scrollbarSize: number;
-    ref: React.Ref<{ scrollLeft: number }>;
-    onScroll: (info: { currentTarget?: HTMLElement; scrollLeft?: number }) => void;
+    ref: React.Ref<{ scrollLeft: number; scrollTo?: (scrollConfig: ScrollConfig) => void }>;
+    onScroll: OnCustomizeScroll;
   },
 ) => React.ReactNode;
 
 export interface TableComponents<RecordType> {
   table?: CustomizeComponent;
   header?: {
+    table?: CustomizeComponent;
     wrapper?: CustomizeComponent;
     row?: CustomizeComponent;
     cell?: CustomizeComponent;
@@ -212,6 +260,7 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowClassName?: RowClassName<RecordType>;
   /** @deprecated Use `expandable.childrenColumnName` instead */
   childrenColumnName?: string;
+  title?: PanelRender<RecordType>;
 }
 
 export type ExpandedRowRender<ValueType> = (
@@ -237,6 +286,7 @@ export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
   defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
+  columnTitle?: React.ReactNode;
   expandRowByClick?: boolean;
   expandIcon?: RenderExpandIcon<RecordType>;
   onExpand?: (expanded: boolean, record: RecordType) => void;
@@ -246,11 +296,12 @@ export interface ExpandableConfig<RecordType> {
   /** @deprecated Please use `EXPAND_COLUMN` in `columns` directly */
   expandIconColumnIndex?: number;
   showExpandColumn?: boolean;
-  expandedRowClassName?: RowClassName<RecordType>;
+  expandedRowClassName?: string | RowClassName<RecordType>;
   childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;
   columnWidth?: number | string;
   fixed?: FixedType;
+  expandedRowOffset?: number;
 }
 
 // =================== Render ===================

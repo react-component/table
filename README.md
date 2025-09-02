@@ -2,7 +2,7 @@
 
 React table component with useful functions.
 
-[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![Dependencies][david-image]][david-url] [![DevDependencies][david-dev-image]][david-dev-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
+[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-table.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-table
@@ -34,7 +34,7 @@ npm start
 
 ## Example
 
-https://table.react-component.now.sh/
+https://table-react-component.vercel.app/
 
 ## Usage
 
@@ -93,7 +93,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | expandable.defaultExpandedRowKeys | String[] | [] | initial expanded rows keys |
 | expandable.expandedRowKeys | String[] |  | current expanded rows keys |
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | Content render to expanded row |
-| expandable.expandedRowClassName | Function(recode, index, indent):string |  | get expanded row's className |
+| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | get expanded row's className |
 | expandable.expandRowByClick | boolean |  | Support expand by click row |
 | expandable.expandIconColumnIndex | Number | 0 | The index of expandIcon which column will be inserted when expandIconAsCell is false |
 | expandable.expandIcon | props => ReactNode |  | Customize expand icon |
@@ -102,19 +102,22 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | expandable.onExpand | Function(expanded, record) |  | function to call when click expand icon |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | function to call when the expanded rows change |
 | expandable.fixed | String \| Boolean | - | this expand icon will be fixed when table scroll horizontally: true or `left` or `right` and `expandIconColumnIndex` need to stay first or last |
-| rowKey | string or Function(record):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record)` will be use as key. |
+| rowKey | string or Function(record, index):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record, index)` will be use as key. |
 | rowClassName | string or Function(record, index, indent):string |  | get row's className |
 | rowRef | Function(record, index, indent):string |  | get row's ref key |
 | data | Object[] |  | data record array to be rendered |
 | onRow | Function(record, index) |  | Set custom props per each row. |
 | onHeaderRow | Function(record, index) |  | Set custom props per each header row. |
 | showHeader | Boolean | true | whether table head is shown |
+| hidden | Boolean | `false` | Hidden column. |
 | title | Function(currentData) |  | table title render function |
 | footer | Function(currentData) |  | table footer render function |
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
+| summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
+| rowHoverable | boolean | true | Table hover interaction |
 
 ## Column Props
 
@@ -126,12 +129,32 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | title | React Node |  | title of this column |
 | dataIndex | String |  | display field of the data record |
 | width | String \| Number |  | width of the specific proportion calculation according to the width of the columns |
+| minWidth | Number |  | the minimum width of the column, only worked when tableLayout is auto |
 | fixed | String \| Boolean |  | this column will be fixed when table scroll horizontally: true or 'left' or 'right' |
 | align | String |  | specify how cell content is aligned |
 | ellipsis | Boolean |  | specify whether cell content be ellipsized |
+| rowScope | 'row' \| 'rowgroup' |  | Set scope attribute for all cells in this column |
 | onCell | Function(record, index) |  | Set custom props per each cell. |
 | onHeaderCell | Function(record) |  | Set custom props per each header cell. |
 | render | Function(value, row, index) |  | The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan |
+
+## Summary Props
+
+### Table.Summary
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | String |  | key of this summary |
+| fixed | boolean \| 'top' \| 'bottom' | - | `true` fixes the summary row at the bottom of the table. `top` fixes the summary row at the top of the table, while `bottom` fixes it at the bottom. `undefined` or `false` makes the summary row scrollable along with the table. |
+
+### Table.Summary.Row
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | String |  | key of this summary |
+| className | String | - | className of this summary row |
+| style | React.CSSProperties | - | style of this summary row |
+| onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
 ## License
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 
@@ -8,6 +9,7 @@ interface RecordType {
   age: number;
   address: string;
   children?: RecordType[];
+  operation?: string;
 }
 
 function CustomExpandIcon(props) {
@@ -27,7 +29,7 @@ function CustomExpandIcon(props) {
   );
 }
 
-const columns = [
+const columns: TableProps<RecordType>['columns'] = [
   {
     title: 'Name',
     dataIndex: 'name',

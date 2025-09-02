@@ -1,4 +1,4 @@
-import type { Key, DataIndex } from '../interface';
+import type { DataIndex, Key } from '../interface';
 
 const INTERNAL_KEY_PREFIX = 'RC_TABLE_KEY';
 
@@ -9,48 +9,23 @@ function toArray<T>(arr: T | readonly T[]): T[] {
   return (Array.isArray(arr) ? arr : [arr]) as T[];
 }
 
-export function getPathValue<ValueType, ObjectType extends object>(
-  record: ObjectType,
-  path: DataIndex,
-): ValueType {
-  // Skip if path is empty
-  if (!path && typeof path !== 'number') {
-    return record as unknown as ValueType;
-  }
-
-  const pathList = toArray(path);
-
-  let current: ValueType | ObjectType = record;
-
-  for (let i = 0; i < pathList.length; i += 1) {
-    if (!current) {
-      return null;
-    }
-
-    const prop = pathList[i];
-    current = current[prop];
-  }
-
-  return current as ValueType;
-}
-
-interface GetColumnKeyColumn {
+export interface GetColumnKeyColumn<T = any> {
   key?: Key;
-  dataIndex?: DataIndex;
+  dataIndex?: DataIndex<T>;
 }
 
-export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
+export function getColumnsKey<T = any>(columns: readonly GetColumnKeyColumn<T>[]) {
   const columnKeys: React.Key[] = [];
-  const keys: Record<React.Key, boolean> = {};
+  const keys: Record<PropertyKey, boolean> = {};
 
   columns.forEach(column => {
     const { key, dataIndex } = column || {};
 
     let mergedKey = key || toArray(dataIndex).join('-') || INTERNAL_KEY_PREFIX;
-    while (keys[mergedKey]) {
+    while (keys[mergedKey as string]) {
       mergedKey = `${mergedKey}_next`;
     }
-    keys[mergedKey] = true;
+    keys[mergedKey as string] = true;
 
     columnKeys.push(mergedKey);
   });
@@ -58,34 +33,10 @@ export function getColumnsKey(columns: readonly GetColumnKeyColumn[]) {
   return columnKeys;
 }
 
-export function mergeObject<ReturnObject extends object>(
-  ...objects: Partial<ReturnObject>[]
-): ReturnObject {
-  const merged: Partial<ReturnObject> = {};
-
-  /* eslint-disable no-param-reassign */
-  function fillProps(obj: object, clone: object) {
-    if (clone) {
-      Object.keys(clone).forEach(key => {
-        const value = clone[key];
-        if (value && typeof value === 'object') {
-          obj[key] = obj[key] || {};
-          fillProps(obj[key], value);
-        } else {
-          obj[key] = value;
-        }
-      });
-    }
-  }
-  /* eslint-enable */
-
-  objects.forEach(clone => {
-    fillProps(merged, clone);
-  });
-
-  return merged as ReturnObject;
-}
-
 export function validateValue<T>(val: T) {
   return val !== null && val !== undefined;
+}
+
+export function validNumberValue(value: any) {
+  return typeof value === 'number' && !Number.isNaN(value);
 }

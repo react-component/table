@@ -1,17 +1,23 @@
+import { useContext } from '@rc-component/context';
 import * as React from 'react';
+import TableContext, { responseImmutable } from '../context/TableContext';
+import devRenderTimes from '../hooks/useRenderTimes';
 import type {
-  ColumnsType,
   CellType,
-  StickyOffsets,
+  ColumnGroupType,
+  ColumnsType,
   ColumnType,
   GetComponentProps,
-  ColumnGroupType,
+  StickyOffsets,
 } from '../interface';
 import HeaderRow from './HeaderRow';
-import TableContext from '../context/TableContext';
+import cls from 'classnames';
+import { TableProps } from '..';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,
+  classNames: TableProps['classNames']['header'],
+  styles: TableProps['styles']['header'],
 ): CellType<RecordType>[][] {
   const rows: CellType<RecordType>[][] = [];
 
@@ -27,7 +33,8 @@ function parseHeaderRows<RecordType>(
     const colSpans: number[] = columns.filter(Boolean).map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
-        className: column.className || '',
+        className: cls(column.className, classNames.cell) || '',
+        style: styles.cell,
         children: column.title,
         column,
         colStart: currentColIndex,
@@ -88,24 +95,40 @@ export interface HeaderProps<RecordType> {
   onHeaderRow: GetComponentProps<readonly ColumnType<RecordType>[]>;
 }
 
-function Header<RecordType>({
-  stickyOffsets,
-  columns,
-  flattenColumns,
-  onHeaderRow,
-}: HeaderProps<RecordType>): React.ReactElement {
-  const { prefixCls, getComponent } = React.useContext(TableContext);
-  const rows: CellType<RecordType>[][] = React.useMemo(() => parseHeaderRows(columns), [columns]);
+const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
+  if (process.env.NODE_ENV !== 'production') {
+    devRenderTimes(props);
+  }
+
+  const { stickyOffsets, columns, flattenColumns, onHeaderRow } = props;
+
+  const { prefixCls, getComponent, classNames, styles } = useContext(TableContext, [
+    'prefixCls',
+    'getComponent',
+    'classNames',
+    'styles',
+  ]);
+  const { header: headerCls = {} } = classNames || {};
+  const { header: headerStyles = {} } = styles || {};
+  const rows = React.useMemo<CellType<RecordType>[][]>(
+    () => parseHeaderRows(columns, headerCls, headerStyles),
+    [columns, headerCls, headerStyles],
+  );
 
   const WrapperComponent = getComponent(['header', 'wrapper'], 'thead');
   const trComponent = getComponent(['header', 'row'], 'tr');
   const thComponent = getComponent(['header', 'cell'], 'th');
 
   return (
-    <WrapperComponent className={`${prefixCls}-thead`}>
+    <WrapperComponent
+      className={cls(`${prefixCls}-thead`, headerCls.wrapper)}
+      style={headerStyles.wrapper}
+    >
       {rows.map((row, rowIndex) => {
         const rowNode = (
           <HeaderRow
+            classNames={headerCls}
+            styles={headerStyles}
             key={rowIndex}
             flattenColumns={flattenColumns}
             cells={row}
@@ -116,11 +139,10 @@ function Header<RecordType>({
             index={rowIndex}
           />
         );
-
         return rowNode;
       })}
     </WrapperComponent>
   );
-}
+};
 
-export default Header;
+export default responseImmutable(Header);
