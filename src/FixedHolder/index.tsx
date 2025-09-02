@@ -137,7 +137,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
-  const getColGroup = () => {
+  const colGroupNode = useMemo(() => {
     // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
     if (noData || !mergedColumnWidth) {
       return colGroup;
@@ -149,7 +149,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         columns={flattenColumnsWithScrollbar}
       />
     );
-  };
+  }, [noData, mergedColumnWidth, colGroup, combinationScrollBarSize, columCount, flattenColumnsWithScrollbar]);
 
   return (
     <div
