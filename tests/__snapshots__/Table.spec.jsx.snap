@@ -216,20 +216,7 @@ LoadedCheerio {
         <table
           style="table-layout: fixed; width: 100px; min-width: 100%;"
         >
-          <colgroup>
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 0px;"
-            />
-            <col
-              style="width: 15px;"
-            />
-          </colgroup>
+          <colgroup />
           <thead
             class="rc-table-thead"
             name="my-header-wrapper"
