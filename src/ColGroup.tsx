@@ -22,7 +22,7 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
   for (let i = len - 1; i >= 0; i -= 1) {
     const width = colWidths[i];
     const column = columns && columns[i];
-    let additionalProps;
+    let additionalProps: any;
     let minWidth: number;
     if (column) {
       additionalProps = column[INTERNAL_COL_DEFINE];
