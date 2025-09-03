@@ -139,7 +139,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const colGroupNode = useMemo(() => {
     // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
-    // 如果没有数据，或者 mergedColumnWidth 为空，或者 mergedColumnWidth 里全是 falsy 值，则返回原始 colGroup
+    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
     if (
       noData ||
       !mergedColumnWidth ||
