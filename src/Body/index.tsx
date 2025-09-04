@@ -146,6 +146,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
             prefixCls={prefixCls}
             columnsKey={columnsKey}
             onColumnResize={onColumnResize}
+            columns={flattenColumns}
           />
         )}
 

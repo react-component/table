@@ -719,6 +719,8 @@ function Table<RecordType extends DefaultRecordType>(
       ...columnContext,
       direction,
       stickyClassName,
+      scrollTableStyle,
+      tableLayout: mergedTableLayout,
       onScroll: onInternalScroll,
     };
 

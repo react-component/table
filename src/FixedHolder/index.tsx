@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, Direction } from '../interface';
+import type { ColumnsType, ColumnType, Direction, TableLayout } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -36,6 +36,8 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
+  scrollTableStyle?: React.CSSProperties;
+  tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
 }
@@ -59,6 +61,8 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyTopOffset,
     stickyBottomOffset,
     stickyClassName,
+    scrollTableStyle,
+    tableLayout = 'fixed',
     onScroll,
     maxContentScroll,
     children,
@@ -115,12 +119,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     };
   }, []);
 
-  // Check if all flattenColumns has width
-  const allFlattenColumnsWithWidth = React.useMemo(
-    () => flattenColumns.every(column => column.width),
-    [flattenColumns],
-  );
-
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
   const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
@@ -158,6 +156,32 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
+  const colGroupNode = useMemo(() => {
+    // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
+    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
+    if (
+      noData ||
+      !mergedColumnWidth ||
+      mergedColumnWidth.length === 0 ||
+      mergedColumnWidth.every(width => !width)
+    ) {
+      return ColGroup;
+    }
+    return (
+      <ColGroup
+        colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
+        columCount={columCount + 1}
+        columns={flattenColumnsWithScrollbar}
+      />
+    );
+  }, [
+    noData,
+    mergedColumnWidth,
+    combinationScrollBarSize,
+    columCount,
+    flattenColumnsWithScrollbar,
+  ]);
+
   return (
     <div
       style={{
@@ -172,17 +196,12 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     >
       <TableComponent
         style={{
-          tableLayout: 'fixed',
+          tableLayout,
           visibility: noData || mergedColumnWidth ? null : 'hidden',
+          ...scrollTableStyle,
         }}
       >
-        {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
-          <ColGroup
-            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
-            columCount={columCount + 1}
-            columns={flattenColumnsWithScrollbar}
-          />
-        )}
+        {colGroupNode}
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,
