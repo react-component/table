@@ -158,42 +158,42 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0px;"
+            style="height: 0px;"
           >
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                  
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Name
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Age
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Gender
               </div>
             </td>
           </tr>
@@ -313,42 +313,42 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0px;"
+            style="height: 0px;"
           >
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                  
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Name
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Age
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Gender
               </div>
             </td>
           </tr>
@@ -557,42 +557,42 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0px;"
+            style="height: 0px;"
           >
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                  
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Name
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Age
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Gender
               </div>
             </td>
           </tr>
@@ -1023,42 +1023,42 @@ exports[`Table.Expand > work in expandable fix 1`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0px;"
+            style="height: 0px;"
           >
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                  
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Name
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Age
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Gender
               </div>
             </td>
           </tr>
@@ -1181,40 +1181,40 @@ exports[`Table.Expand > work in expandable fix 2`] = `
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
-            style="height: 0px; font-size: 0px;"
+            style="height: 0px;"
           >
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Name
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Age
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
-                 
+                Gender
               </div>
             </td>
             <td
-              style="padding: 0px; border: 0px; height: 0px;"
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
-                style="height: 0px; overflow: hidden;"
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                  
               </div>
