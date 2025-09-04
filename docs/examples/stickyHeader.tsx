@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import type { ColumnType } from '@/interface';
+import type { ColumnType, ColumnsType } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -79,6 +79,41 @@ const columns: ColumnType<RecordType>[] = [
   },
 ];
 
+const columnsWithWidth: ColumnType<RecordType>[] = [
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+  { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
+  { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
+];
+
+const columnsGrouped: ColumnsType<any> = [
+  {
+    title: '',
+    dataIndex: 'productType',
+    key: 'productType',
+    rowSpan: 2,
+    rowScope: 'row',
+  },
+  {
+    title: 'Mars',
+    dataIndex: 'mars',
+    key: 'mars',
+    children: [
+      { title: 'ProducedProducedProduced', dataIndex: 'producedMars', key: 'producedMars' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars' },
+    ],
+  },
+  {
+    title: 'Venus',
+    dataIndex: 'venus',
+    key: 'venus',
+    children: [
+      { title: 'Produced Produced', dataIndex: 'producedVenus', key: 'producedVenus' },
+      { title: 'Sold Sold Sold Sold', dataIndex: 'soldVenus', key: 'soldVenus' },
+    ],
+  },
+];
+
 const data = [
   { a: '123', key: '1' },
   { a: 'cdd', b: 'edd', key: '2' },
@@ -105,11 +140,7 @@ const data = [
 const Demo = () => {
   const container = useRef();
   return (
-    <div
-      style={{
-        height: 10000,
-      }}
-    >
+    <div>
       <h2>Sticky</h2>
       <Table<RecordType>
         columns={columns}
@@ -212,6 +243,79 @@ const Demo = () => {
         suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
         beatae totam aperiam. Sunt, laudantium?
       </div>
+
+      <h2>Sticky header with empty data</h2>
+      <Table
+        columns={fixedColumns}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns}
+        data={[]}
+        scroll={{
+          x: 1200,
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsWithWidth}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns}
+        data={[{}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsWithWidth}
+        data={[{}]}
+        scroll={{
+          x: 1200,
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[{}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsGrouped}
+        data={[{}, {}]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
     </div>
   );
 };
