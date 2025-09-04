@@ -1,5 +1,5 @@
-import { useContext } from '@rc-component/context';
 import * as React from 'react';
+import { useContext } from '@rc-component/context';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
 import type {
@@ -12,7 +12,7 @@ import type {
 } from '../interface';
 import HeaderRow from './HeaderRow';
 import cls from 'classnames';
-import { TableProps } from '..';
+import type { TableProps } from '..';
 
 function parseHeaderRows<RecordType>(
   rootColumns: ColumnsType<RecordType>,

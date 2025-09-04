@@ -11,7 +11,7 @@ import type {
 } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
-import { TableProps } from '..';
+import type { TableProps } from '..';
 
 export interface RowProps<RecordType> {
   cells: readonly CellType<RecordType>[];
@@ -51,23 +51,15 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
   return (
     <RowComponent {...rowProps} className={classNames.row} style={styles.row}>
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
-        const { column } = cell;
-        const fixedInfo = getCellFixedInfo(
-          cell.colStart,
-          cell.colEnd,
-          flattenColumns,
-          stickyOffsets,
-        );
+        const { column, colStart, colEnd, colSpan } = cell;
+        const fixedInfo = getCellFixedInfo(colStart, colEnd, flattenColumns, stickyOffsets);
 
-        let additionalProps: React.HTMLAttributes<HTMLElement>;
-        if (column && column.onHeaderCell) {
-          additionalProps = cell.column.onHeaderCell(column);
-        }
+        const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell(column);
 
         return (
           <Cell
             {...cell}
-            scope={column.title ? (cell.colSpan > 1 ? 'colgroup' : 'col') : null}
+            scope={column.title ? (colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
             component={CellComponent}
