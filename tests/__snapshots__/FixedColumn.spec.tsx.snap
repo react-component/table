@@ -1941,7 +1941,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 1200px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 1200px;"
         >
           <colgroup>
             <col
@@ -2814,7 +2814,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 1200px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 1200px;"
         >
           <colgroup>
             <col
@@ -3136,7 +3136,7 @@ exports[`Table.FixedColumn > shadow should be shown when there are columns where
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 1500px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 1500px;"
         >
           <colgroup>
             <col
@@ -3200,7 +3200,6 @@ exports[`Table.FixedColumn > shadow should be shown when there are columns where
         <table
           style="width: 1500px; min-width: 100%; table-layout: fixed;"
         >
-          <colgroup />
           <tbody
             class="rc-table-tbody"
           >
@@ -5567,7 +5566,7 @@ exports[`Table.FixedColumn > shadow should display correctly 1`] = `
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 1500px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 1500px;"
         >
           <colgroup>
             <col
@@ -11653,7 +11652,7 @@ exports[`Table.FixedColumn > shadow should display correctly 2`] = `
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 1500px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 1500px;"
         >
           <colgroup>
             <col

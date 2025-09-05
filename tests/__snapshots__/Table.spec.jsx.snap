@@ -17,7 +17,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -120,7 +119,6 @@ LoadedCheerio {
           name="my-table"
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
             name="my-header-wrapper"
@@ -214,9 +212,8 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 100px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 100px;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
             name="my-header-wrapper"
@@ -264,7 +261,6 @@ LoadedCheerio {
           name="my-table"
           style="width: 100px; min-width: 100%; table-layout: fixed;"
         >
-          <colgroup />
           <tbody
             class="rc-table-tbody"
             name="my-body-wrapper"
@@ -377,7 +373,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed; width: 100px; min-width: 100%;"
+          style="table-layout: fixed; min-width: 100%; width: 100px;"
         >
           <colgroup>
             <col
@@ -457,7 +453,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -567,7 +562,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -660,7 +654,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="test-prefix-thead"
           >
@@ -746,7 +739,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="test-prefix-thead"
           >
@@ -832,7 +824,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -930,7 +921,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -1016,7 +1006,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -1095,7 +1084,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -1192,7 +1180,7 @@ LoadedCheerio {
         style="overflow: hidden;"
       >
         <table
-          style="table-layout: fixed;"
+          style="table-layout: fixed; min-width: 100%;"
         >
           <colgroup>
             <col
@@ -1266,7 +1254,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
