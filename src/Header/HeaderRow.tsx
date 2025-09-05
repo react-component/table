@@ -54,7 +54,7 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
         const { column, colStart, colEnd, colSpan } = cell;
         const fixedInfo = getCellFixedInfo(colStart, colEnd, flattenColumns, stickyOffsets);
 
-        const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell(column);
+        const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell?.(column);
 
         return (
           <Cell
