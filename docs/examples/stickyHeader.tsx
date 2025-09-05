@@ -302,7 +302,7 @@ const Demo = () => {
       <br />
       <Table
         columns={fixedColumns}
-        data={[{}]}
+        data={[{ key: '1' }]}
         scroll={{
           x: 'max-content',
         }}
@@ -311,7 +311,7 @@ const Demo = () => {
       <br />
       <Table
         columns={columnsWithWidth}
-        data={[{}]}
+        data={[{ key: '1' }]}
         scroll={{
           x: 1200,
         }}
@@ -329,7 +329,7 @@ const Demo = () => {
       <br />
       <Table
         columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
-        data={[{}]}
+        data={[{ key: '1' }]}
         scroll={{
           x: 'max-content',
         }}
@@ -338,7 +338,7 @@ const Demo = () => {
       <br />
       <Table
         columns={columnsGrouped}
-        data={[{}, {}]}
+        data={[{ key: '1' }, { key: '2' }]}
         scroll={{
           x: 'max-content',
         }}
