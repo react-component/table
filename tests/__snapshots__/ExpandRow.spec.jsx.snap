@@ -14,7 +14,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -519,7 +518,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -861,7 +859,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >
@@ -996,7 +993,6 @@ LoadedCheerio {
         <table
           style="table-layout: auto;"
         >
-          <colgroup />
           <thead
             class="rc-table-thead"
           >

@@ -137,6 +137,34 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '20' },
 ];
 
+const columns3: ColumnType<RecordType>[] = [
+  { title: '', dataIndex: 'name', key: '0' },
+  { title: 'First column', dataIndex: 'name', key: '1' },
+  { title: 'Second column', dataIndex: 'address', key: '2' },
+  { title: 'Third column', dataIndex: 'age', key: '3' },
+  { title: 'Another column', dataIndex: 'address', key: '4' },
+  { title: 'Extra column', dataIndex: 'name', key: '5' },
+  { title: 'And yet another column', dataIndex: 'address', key: '6' },
+  {
+    title: 'Column 7 with extraaaaaaaaa long word',
+    dataIndex: 'age',
+    key: '7',
+  },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  { title: 'Column 9', dataIndex: 'name', key: '9' },
+  { title: 'Column 10', dataIndex: 'address', key: '10' },
+  { title: 'Column 11', dataIndex: 'address', key: '11' },
+  { title: 'Column 12', dataIndex: 'age', key: '12' },
+  { title: 'Column 13', dataIndex: 'address', key: '13' },
+  { title: 'Column 14', dataIndex: 'name', key: '14' },
+  { title: 'Column 15', dataIndex: 'address', key: '15' },
+  { title: 'Column 16', dataIndex: 'address', key: '16' },
+  { title: 'Column 17', dataIndex: 'name', key: '17' },
+  { title: 'Column 18', dataIndex: 'address', key: '18' },
+  { title: 'Column 19', dataIndex: 'address', key: '19' },
+  { title: 'Column 20', dataIndex: 'age', key: '20' },
+];
+
 const Demo = () => {
   const container = useRef();
   return (
@@ -315,6 +343,20 @@ const Demo = () => {
           x: 'max-content',
         }}
         sticky
+      />
+      <br />
+      <h3>scroll.x is true</h3>
+      <p>https://github.com/ant-design/ant-design/issues/54894</p>
+      <Table
+        columns={columns3}
+        data={
+          [
+            { key: '1', name: 'Test', age: 1, address: '2' },
+            { key: '2', name: '0', age: 1, address: '2' },
+          ] as any
+        }
+        sticky
+        scroll={{ x: true }}
       />
     </div>
   );
