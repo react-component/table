@@ -150,7 +150,7 @@ const columns3: ColumnType<RecordType>[] = [
     dataIndex: 'age',
     key: '7',
   },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  { title: 'Column 8', dataIndex: 'address', width: 200, key: '8' },
   { title: 'Column 9', dataIndex: 'name', key: '9' },
   { title: 'Column 10', dataIndex: 'address', key: '10' },
   { title: 'Column 11', dataIndex: 'address', key: '11' },

@@ -25,7 +25,7 @@ export default function MeasureCell({ columnKey, onColumnResize, column }: Measu
         style={{ paddingTop: 0, paddingBottom: 0, borderTop: 0, borderBottom: 0, height: 0 }}
       >
         <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>
-          {column?.title || '\xa0'}
+          {('width' in column ? '' : column?.title) || '\xa0'}
         </div>
       </td>
     </ResizeObserver>
