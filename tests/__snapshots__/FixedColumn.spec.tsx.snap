@@ -124,6 +124,7 @@ LoadedCheerio {
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -948,6 +949,7 @@ LoadedCheerio {
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -1767,6 +1769,7 @@ LoadedCheerio {
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -2110,6 +2113,7 @@ LoadedCheerio {
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -2962,6 +2966,7 @@ LoadedCheerio {
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -3207,6 +3212,7 @@ exports[`Table.FixedColumn > shadow should be shown when there are columns where
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -5757,6 +5763,7 @@ exports[`Table.FixedColumn > shadow should display correctly 1`] = `
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
@@ -11749,6 +11756,7 @@ exports[`Table.FixedColumn > shadow should display correctly 2`] = `
               aria-hidden="true"
               class="rc-table-measure-row"
               style="height: 0px;"
+              tabindex="-1"
             >
               <td
                 style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
