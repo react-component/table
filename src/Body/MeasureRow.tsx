@@ -2,6 +2,8 @@ import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import MeasureCell from './MeasureCell';
 import isVisible from 'rc-util/lib/Dom/isVisible';
+import { useContext } from '@rc-component/context';
+import TableContext from '../context/TableContext';
 import type { ColumnType } from '../interface';
 
 export interface MeasureRowProps {
@@ -18,8 +20,9 @@ export default function MeasureRow({
   columns,
 }: MeasureRowProps) {
   const ref = React.useRef<HTMLTableRowElement>(null);
+  const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
-  return (
+  const measureRow = (
     <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
       <ResizeObserver.Collection
         onBatchResize={infoList => {
@@ -44,4 +47,6 @@ export default function MeasureRow({
       </ResizeObserver.Collection>
     </tr>
   );
+
+  return measureRowRender ? measureRowRender(measureRow) : measureRow;
 }
