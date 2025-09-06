@@ -168,6 +168,12 @@ export interface TableProps<RecordType = any>
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
+  measureRowRender?: (measureRow: React.ReactNode) => React.ReactNode;
 }
 
 function defaultEmpty() {
@@ -209,6 +215,9 @@ function Table<RecordType extends DefaultRecordType>(
     emptyText,
     onRow,
     onHeaderRow,
+
+    // Measure Row
+    measureRowRender,
 
     // Events
     onScroll,
@@ -850,6 +859,9 @@ function Table<RecordType extends DefaultRecordType>(
       childrenColumnName: mergedChildrenColumnName,
 
       rowHoverable,
+
+      // Measure Row
+      measureRowRender,
     }),
     [
       // Scroll
@@ -901,6 +913,8 @@ function Table<RecordType extends DefaultRecordType>(
       mergedChildrenColumnName,
 
       rowHoverable,
+
+      measureRowRender,
     ],
   );
 
