@@ -23,7 +23,7 @@ export default function MeasureRow({
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
   const measureRow = (
-    <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref} tabIndex={-1}>
+    <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           if (isVisible(ref.current)) {
