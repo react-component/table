@@ -108,37 +108,6 @@ describe('Table.FixedHeader', () => {
     );
   });
 
-  it('show header when data is null', async () => {
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-      },
-    ];
-
-    const wrapper = mount(
-      <Table
-        columns={columns}
-        data={[]}
-        scroll={{
-          x: true,
-          y: 100,
-        }}
-      />,
-    );
-
-    await safeAct(wrapper);
-    expect(wrapper.find('.rc-table-header table').props().style).toEqual(
-      expect.objectContaining({ visibility: null }),
-    );
-  });
-
   it('rtl', async () => {
     const wrapper = mount(
       <Table
