@@ -20,7 +20,13 @@ export default function MeasureRow({
   const ref = React.useRef<HTMLTableRowElement>(null);
 
   return (
-    <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
+    <tr
+      aria-hidden="true"
+      tabIndex={-1}
+      className={`${prefixCls}-measure-row`}
+      style={{ height: 0 }}
+      ref={ref}
+    >
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           if (isVisible(ref.current)) {
