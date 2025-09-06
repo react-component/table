@@ -178,7 +178,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       <TableComponent
         style={{
           tableLayout,
-          visibility: noData || mergedColumnWidth ? null : 'hidden',
           minWidth: '100%',
           // https://github.com/ant-design/ant-design/issues/54894
           width: scrollX,
