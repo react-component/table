@@ -23,13 +23,13 @@ export default function MeasureRow({
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
   const measureRow = (
-     <tr
+    <tr
       aria-hidden="true"
       tabIndex={-1}
       className={`${prefixCls}-measure-row`}
       style={{ height: 0 }}
       ref={ref}
-     >
+    >
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           if (isVisible(ref.current)) {
