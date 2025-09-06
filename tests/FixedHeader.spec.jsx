@@ -265,4 +265,62 @@ describe('Table.FixedHeader', () => {
       'rc-table-cell-fix-left-last',
     );
   });
+
+  it('should support measureRowRender to wrap MeasureRow with custom provider', async () => {
+    const FilterDropdown = ({ visible, onVisibleChange }) => (
+      <div className="test-filter-dropdown" style={{ display: visible ? 'block' : 'none' }}>
+        Filter Content
+        <button onClick={() => onVisibleChange && onVisibleChange(!visible)}>Toggle</button>
+      </div>
+    );
+
+    const columns = [
+      {
+        title: (
+          <div>
+            Name
+            <FilterDropdown visible={true} onVisibleChange={() => {}} />
+          </div>
+        ),
+        dataIndex: 'name',
+        key: 'name',
+        width: 100,
+      },
+    ];
+
+    const data = [
+      {
+        key: 1,
+        name: 'Jack',
+      },
+    ];
+
+    // Mock ConfigProvider-like wrapper
+    const measureRowRender = measureRow => (
+      <div data-testid="measure-row-wrapper" style={{ display: 'none' }}>
+        {measureRow}
+      </div>
+    );
+
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={data}
+        sticky
+        scroll={{ x: true }}
+        measureRowRender={measureRowRender}
+      />,
+    );
+
+    await safeAct(wrapper);
+
+    // Check that measureRowRender wrapper is applied
+    const measureRowWrapper = wrapper.find('[data-testid="measure-row-wrapper"]');
+    expect(measureRowWrapper).toHaveLength(1);
+    expect(measureRowWrapper.prop('style').display).toBe('none');
+
+    // Check that MeasureRow is inside the wrapper
+    const measureRowInWrapper = measureRowWrapper.find('.rc-table-measure-row');
+    expect(measureRowInWrapper).toHaveLength(1);
+  });
 });
