@@ -77,6 +77,9 @@ export interface TableContextProps<RecordType = any> {
   rowHoverable?: boolean;
 
   expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
+
+  // Measure Row
+  measureRowRender?: (measureRow: React.ReactNode) => React.ReactNode;
 }
 
 const TableContext = createContext<TableContextProps>();

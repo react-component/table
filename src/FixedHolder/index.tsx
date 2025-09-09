@@ -36,7 +36,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
-  scrollTableStyle?: React.CSSProperties;
+  scrollX?: number | string | true;
   tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
@@ -61,7 +61,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyTopOffset,
     stickyBottomOffset,
     stickyClassName,
-    scrollTableStyle,
+    scrollX,
     tableLayout = 'fixed',
     onScroll,
     maxContentScroll,
@@ -197,8 +197,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       <TableComponent
         style={{
           tableLayout,
-          visibility: noData || mergedColumnWidth ? null : 'hidden',
-          ...scrollTableStyle,
+          minWidth: '100%',
+          // https://github.com/ant-design/ant-design/issues/54894
+          width: scrollX,
         }}
       >
         {colGroupNode}

@@ -22,7 +22,6 @@ exports[`Table.Basic > custom components > renders correctly 1`] = `
         name="my-table"
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
           name="my-header-wrapper"
@@ -86,7 +85,7 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; width: 100px; min-width: 100%;"
+        style="table-layout: fixed; min-width: 100%; width: 100px;"
       >
         <thead
           class="rc-table-thead"
@@ -135,7 +134,6 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
         name="my-table"
         style="width: 100px; min-width: 100%; table-layout: fixed;"
       >
-        <colgroup />
         <tbody
           class="rc-table-tbody"
           name="my-body-wrapper"
@@ -218,7 +216,7 @@ exports[`Table.Basic > custom components > scroll content > with scroll 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; width: 100px; min-width: 100%;"
+        style="table-layout: fixed; min-width: 100%; width: 100px;"
       >
         <colgroup>
           <col
@@ -268,7 +266,6 @@ exports[`Table.Basic > internal api > transformColumns > basic 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -348,7 +345,6 @@ exports[`Table.Basic > renders colSpan correctly 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -411,7 +407,6 @@ exports[`Table.Basic > renders correctly > RTL 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="test-prefix-thead"
         >
@@ -467,7 +462,6 @@ exports[`Table.Basic > renders correctly > basic 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="test-prefix-thead"
         >
@@ -523,7 +517,6 @@ exports[`Table.Basic > renders correctly > column children undefined 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -591,7 +584,6 @@ exports[`Table.Basic > renders correctly > falsy columns 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -647,7 +639,6 @@ exports[`Table.Basic > renders correctly > no columns 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -696,7 +687,6 @@ exports[`Table.Basic > renders rowSpan correctly 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
@@ -763,7 +753,7 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed;"
+        style="table-layout: fixed; min-width: 100%;"
       >
         <colgroup>
           <col
@@ -807,7 +797,6 @@ exports[`Table.Basic > syntactic sugar 1`] = `
       <table
         style="table-layout: auto;"
       >
-        <colgroup />
         <thead
           class="rc-table-thead"
         >
