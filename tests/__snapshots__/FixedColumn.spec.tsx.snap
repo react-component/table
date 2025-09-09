@@ -1851,7 +1851,7 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - with data 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; width: 1200px; min-width: 100%;"
+        style="table-layout: fixed; min-width: 100%; width: 1200px;"
       >
         <colgroup>
           <col
@@ -2694,7 +2694,7 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; width: 1200px; min-width: 100%;"
+        style="table-layout: fixed; min-width: 100%; width: 1200px;"
       >
         <thead
           class="rc-table-thead"

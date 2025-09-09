@@ -40,7 +40,7 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
     }
   }
 
-  return <colgroup>{cols}</colgroup>;
+  return cols.length > 0 ? <colgroup>{cols}</colgroup> : null;
 }
 
 export default ColGroup;

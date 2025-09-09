@@ -96,6 +96,9 @@ const Test = () => {
         rowKey={record => record.key}
         onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
       />
+      <h3>Column align issue</h3>
+      <p>https://github.com/ant-design/ant-design/issues/54889</p>
+      <Table columns={columns} data={data} sticky scroll={{ y: 300, x: 2000 }} />
     </div>
   );
 };
