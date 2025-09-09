@@ -46,7 +46,7 @@
     "lint": "eslint src",
     "tsc": "tsc -p tsconfig.json --noEmit",
     "now-build": "npm run docs:build",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
