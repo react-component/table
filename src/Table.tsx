@@ -191,10 +191,10 @@ function defaultEmpty() {
   return 'No Data';
 }
 
-function Table<RecordType extends DefaultRecordType>(
+const Table = <RecordType extends DefaultRecordType>(
   tableProps: TableProps<RecordType>,
   ref: React.Ref<Reference>,
-) {
+) => {
   const props = {
     rowKey: 'key',
     prefixCls: DEFAULT_PREFIX,
@@ -927,6 +927,8 @@ function Table<RecordType extends DefaultRecordType>(
       // Scroll
       mergedScrollX,
       scrollInfo,
+      classNames,
+      styles,
 
       // Table
       prefixCls,
@@ -979,7 +981,7 @@ function Table<RecordType extends DefaultRecordType>(
   );
 
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
-}
+};
 
 export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
   props: TableProps<RecordType> & React.RefAttributes<Reference>,
@@ -991,11 +993,12 @@ if (process.env.NODE_ENV !== 'production') {
   RefTable.displayName = 'Table';
 }
 
-export function genTable(shouldTriggerRender?: CompareProps<typeof Table>) {
+export function genTable(shouldTriggerRender?: CompareProps<ForwardGenericTable>) {
   return makeImmutable(RefTable, shouldTriggerRender) as ForwardGenericTable;
 }
 
 const ImmutableTable = genTable();
+
 type ImmutableTableType = typeof ImmutableTable & {
   EXPAND_COLUMN: typeof EXPAND_COLUMN;
   INTERNAL_HOOKS: typeof INTERNAL_HOOKS;

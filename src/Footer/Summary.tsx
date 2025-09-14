@@ -9,11 +9,15 @@ export interface SummaryProps {
 /**
  * Syntactic sugar. Do not support HOC.
  */
-const Summary: React.FC<React.PropsWithChildren<SummaryProps>> = ({ children }) => {
-  return children as React.ReactElement<any>;
+const Summary: React.FC<React.PropsWithChildren<SummaryProps>> & {
+  Row: typeof Row;
+  Cell: typeof Cell;
+} = props => {
+  const { children } = props;
+  return children;
 };
 
-(Summary as any).Row = Row;
-(Summary as any).Cell = Cell;
+Summary.Row = Row;
+Summary.Cell = Cell;
 
 export default Summary;
