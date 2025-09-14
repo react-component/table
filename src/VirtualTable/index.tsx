@@ -16,8 +16,8 @@ const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
 };
 
 export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {
-  scroll: { x?: number; y: number };
   listItemHeight?: number;
+  scroll: { x?: number; y?: number };
 }
 
 const VirtualTable = <RecordType,>(

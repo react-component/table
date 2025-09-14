@@ -144,28 +144,28 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   // Loop for scroll event check
   React.useEffect(() => {
-    if (!scrollBodyRef.current) {
-      return;
+    if (scrollBodyRef.current) {
+      const scrollParents: (HTMLElement | SVGElement)[] = [];
+      let parent = getDOM(scrollBodyRef.current);
+      while (parent) {
+        scrollParents.push(parent);
+        parent = parent.parentElement;
+      }
+      scrollParents.forEach(p => {
+        p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      });
+      window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
+      window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      return () => {
+        scrollParents.forEach(p => {
+          p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        });
+        window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
+        window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+      };
     }
-
-    const scrollParents: (HTMLElement | SVGElement)[] = [];
-    let parent = getDOM(scrollBodyRef.current);
-    while (parent) {
-      scrollParents.push(parent);
-      parent = parent.parentElement;
-    }
-
-    scrollParents.forEach(p => p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false));
-    window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
-    window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-    container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-
-    return () => {
-      scrollParents.forEach(p => p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible));
-      window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
-      window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
-      container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
-    };
   }, [container]);
 
   React.useEffect(() => {
