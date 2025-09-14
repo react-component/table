@@ -22,9 +22,10 @@ interface StickyScrollBarProps {
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container, direction },
+  props,
   ref,
 ) => {
+  const { scrollBodyRef, onScroll, offsetScroll, container, direction } = props;
   const prefixCls = useContext(TableContext, 'prefixCls');
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
@@ -34,10 +35,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   const [scrollState, setScrollState] = useLayoutState<{
     scrollLeft: number;
     isHiddenScrollBar: boolean;
-  }>({
-    scrollLeft: 0,
-    isHiddenScrollBar: true,
-  });
+  }>({ scrollLeft: 0, isHiddenScrollBar: true });
   const refState = React.useRef<{ delta: number; x: number }>({ delta: 0, x: 0 });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
@@ -146,7 +144,9 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   // Loop for scroll event check
   React.useEffect(() => {
-    if (!scrollBodyRef.current) return;
+    if (!scrollBodyRef.current) {
+      return;
+    }
 
     const scrollParents: (HTMLElement | SVGElement)[] = [];
     let parent = getDOM(scrollBodyRef.current);

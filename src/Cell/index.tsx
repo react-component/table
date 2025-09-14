@@ -78,7 +78,7 @@ const getTitleFromCellRenderChildren = ({
   return title;
 };
 
-function Cell<RecordType>(props: CellProps<RecordType>) {
+const Cell = <RecordType,>(props: CellProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -294,6 +294,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       {mergedChildNode}
     </Component>
   );
-}
+};
 
 export default React.memo(Cell) as typeof Cell;

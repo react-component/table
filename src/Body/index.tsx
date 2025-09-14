@@ -16,7 +16,7 @@ export interface BodyProps<RecordType> {
   measureColumnWidth: boolean;
 }
 
-function Body<RecordType>(props: BodyProps<RecordType>) {
+const Body = <RecordType,>(props: BodyProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -135,8 +135,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   return (
     <PerfContext.Provider value={perfRef.current}>
       <WrapperComponent
-        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
         style={bodyStyles.wrapper}
+        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
       >
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (
@@ -151,7 +151,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
       </WrapperComponent>
     </PerfContext.Provider>
   );
-}
+};
 
 if (process.env.NODE_ENV !== 'production') {
   Body.displayName = 'Body';

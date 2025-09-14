@@ -62,6 +62,7 @@
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.4.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@types/responselike": "^1.0.0",

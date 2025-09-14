@@ -116,9 +116,9 @@ export function getCellProps<RecordType>(
 // ==================================================================================
 // ==                                 getCellProps                                 ==
 // ==================================================================================
-function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
+const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
-) {
+) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -255,7 +255,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       {expandRowNode}
     </>
   );
-}
+};
 
 if (process.env.NODE_ENV !== 'production') {
   BodyRow.displayName = 'BodyRow';

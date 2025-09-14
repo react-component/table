@@ -993,9 +993,9 @@ if (process.env.NODE_ENV !== 'production') {
   RefTable.displayName = 'Table';
 }
 
-export function genTable(shouldTriggerRender?: CompareProps<ForwardGenericTable>) {
-  return makeImmutable(RefTable, shouldTriggerRender) as ForwardGenericTable;
-}
+export const genTable = (shouldTriggerRender?: CompareProps<ForwardGenericTable>) => {
+  return makeImmutable(RefTable, shouldTriggerRender);
+};
 
 const ImmutableTable = genTable();
 

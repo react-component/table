@@ -84,11 +84,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
         // If offset is provided, force align to 'top' for consistent behavior
         if (offset) {
-          listRef.current?.scrollTo({
-            ...restConfig,
-            offset,
-            align: 'top',
-          });
+          listRef.current?.scrollTo({ ...restConfig, offset, align: 'top' });
         } else {
           listRef.current?.scrollTo(config);
         }
