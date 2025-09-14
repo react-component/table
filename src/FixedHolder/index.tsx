@@ -137,32 +137,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
-  const colGroupNode = useMemo(() => {
+  const isColGroupEmpty = useMemo<boolean>(() => {
     // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
     // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
-    if (
-      noData ||
-      !mergedColumnWidth ||
-      mergedColumnWidth.length === 0 ||
-      mergedColumnWidth.every(width => !width)
-    ) {
-      return colGroup;
-    }
-    return (
-      <ColGroup
-        colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
-        columCount={columCount + 1}
-        columns={flattenColumnsWithScrollbar}
-      />
-    );
-  }, [
-    noData,
-    mergedColumnWidth,
-    colGroup,
-    combinationScrollBarSize,
-    columCount,
-    flattenColumnsWithScrollbar,
-  ]);
+    const noWidth =
+      !mergedColumnWidth || !mergedColumnWidth.length || mergedColumnWidth.every(w => !w);
+    return noData || noWidth;
+  }, [noData, mergedColumnWidth]);
 
   return (
     <div
@@ -183,7 +164,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           width: scrollX,
         }}
       >
-        {colGroupNode}
+        {isColGroupEmpty ? null : (
+          <ColGroup
+            colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
+            columCount={columCount + 1}
+            columns={flattenColumnsWithScrollbar}
+          />
+        )}
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,

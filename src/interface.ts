@@ -143,7 +143,7 @@ type Component<P> =
   | React.ComponentType<P>
   | React.ForwardRefExoticComponent<P>
   | React.FC<P>
-  | keyof React.ReactHTML;
+  | keyof React.JSX.IntrinsicElements;
 
 export type CustomizeComponent = Component<any>;
 
