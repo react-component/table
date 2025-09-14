@@ -13,13 +13,14 @@ export interface MeasureRowProps {
   columns: readonly ColumnType<any>[];
 }
 
-export default function MeasureRow({
+const MeasureRow: React.FC<MeasureRowProps> = ({
   prefixCls,
   columnsKey,
   onColumnResize,
   columns,
-}: MeasureRowProps) {
+}) => {
   const ref = React.useRef<HTMLTableRowElement>(null);
+
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
   const measureRow = (
@@ -40,7 +41,7 @@ export default function MeasureRow({
               key={columnKey}
               columnKey={columnKey}
               onColumnResize={onColumnResize}
-              column={column}
+              title={column?.title}
             />
           );
         })}
@@ -48,5 +49,7 @@ export default function MeasureRow({
     </tr>
   );
 
-  return measureRowRender ? measureRowRender(measureRow) : measureRow;
-}
+  return typeof measureRowRender === 'function' ? measureRowRender(measureRow) : measureRow;
+};
+
+export default MeasureRow;

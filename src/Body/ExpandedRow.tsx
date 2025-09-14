@@ -59,12 +59,7 @@ function ExpandedRow(props: ExpandedRowProps) {
   }
 
   return (
-    <Component
-      className={className}
-      style={{
-        display: expanded ? null : 'none',
-      }}
-    >
+    <Component className={className} style={{ display: expanded ? null : 'none' }}>
       <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
         {contentNode}
       </Cell>

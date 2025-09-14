@@ -40,6 +40,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'scrollX',
     'direction',
   ]);
+
   const {
     sticky,
     scrollY,
@@ -49,7 +50,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   } = useContext(StaticContext);
 
   // =========================== Ref ============================
-  const listRef = React.useRef<ListRef>();
+  const listRef = React.useRef<ListRef>(null);
 
   // =========================== Data ===========================
   const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
@@ -188,7 +189,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     }
 
     // Patch extra line on the page
-    const nodes: React.ReactElement[] = spanLines.map(index => {
+    const nodes = spanLines.map<React.ReactElement<any>>(index => {
       const item = flattenData[index];
 
       const rowKey = getRowKey(item.record, index);

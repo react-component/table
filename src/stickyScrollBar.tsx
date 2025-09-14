@@ -30,7 +30,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
-  const scrollBarRef = React.useRef<HTMLDivElement>();
+  const scrollBarRef = React.useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useLayoutState<{
     scrollLeft: number;
     isHiddenScrollBar: boolean;
@@ -38,13 +38,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     scrollLeft: 0,
     isHiddenScrollBar: true,
   });
-  const refState = React.useRef<{
-    delta: number;
-    x: number;
-  }>({
-    delta: 0,
-    x: 0,
-  });
+  const refState = React.useRef<{ delta: number; x: number }>({ delta: 0, x: 0 });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
 

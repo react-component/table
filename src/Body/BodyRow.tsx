@@ -6,6 +6,7 @@ import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
+import type { ExpandedRowProps } from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
 import type { TableProps } from '..';
 
@@ -224,7 +225,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   );
 
   // ======================== Expand Row =========================
-  let expandRowNode: React.ReactElement;
+  let expandRowNode: React.ReactElement<ExpandedRowProps>;
   if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 

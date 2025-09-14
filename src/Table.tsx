@@ -333,18 +333,15 @@ function Table<RecordType extends DefaultRecordType>(
   const mergedScrollX = flattenScrollX ?? scrollX;
 
   const columnContext = React.useMemo(
-    () => ({
-      columns,
-      flattenColumns,
-    }),
+    () => ({ columns, flattenColumns }),
     [columns, flattenColumns],
   );
 
   // ======================= Refs =======================
-  const fullTableRef = React.useRef<HTMLDivElement>();
-  const scrollHeaderRef = React.useRef<HTMLDivElement>();
-  const scrollBodyRef = React.useRef<HTMLDivElement>();
-  const scrollBodyContainerRef = React.useRef<HTMLDivElement>();
+  const fullTableRef = React.useRef<HTMLDivElement>(null);
+  const scrollHeaderRef = React.useRef<HTMLDivElement>(null);
+  const scrollBodyRef = React.useRef<HTMLDivElement>(null);
+  const scrollBodyContainerRef = React.useRef<HTMLDivElement>(null);
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -382,7 +379,7 @@ function Table<RecordType extends DefaultRecordType>(
   });
 
   // ====================== Scroll ======================
-  const scrollSummaryRef = React.useRef<HTMLDivElement>();
+  const scrollSummaryRef = React.useRef<HTMLDivElement>(null);
   const [shadowStart, setShadowStart] = React.useState(false);
   const [shadowEnd, setShadowEnd] = React.useState(false);
   const [colsWidths, updateColsWidths] = React.useState(new Map<React.Key, number>());
@@ -400,7 +397,8 @@ function Table<RecordType extends DefaultRecordType>(
   const stickyRef = React.useRef<{
     setScrollLeft: (left: number) => void;
     checkScrollBarVisible: () => void;
-  }>();
+  }>(null);
+
   const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
     useSticky(sticky, prefixCls);
 
@@ -636,7 +634,7 @@ function Table<RecordType extends DefaultRecordType>(
   };
 
   // Empty
-  const emptyNode: React.ReactNode = React.useMemo(() => {
+  const emptyNode = React.useMemo<React.ReactNode>(() => {
     if (hasData) {
       return null;
     }
@@ -985,7 +983,7 @@ function Table<RecordType extends DefaultRecordType>(
 
 export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
   props: TableProps<RecordType> & React.RefAttributes<Reference>,
-) => React.ReactElement) & { displayName?: string };
+) => React.ReactElement<any>) & { displayName?: string };
 
 const RefTable = React.forwardRef(Table) as ForwardGenericTable;
 

@@ -20,8 +20,8 @@ export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
 ): ColumnsType<RecordType> {
   return toArray(children)
-    .filter(node => React.isValidElement(node))
-    .map(({ key, props }: React.ReactElement) => {
+    .filter(node => React.isValidElement<React.PropsWithChildren<any>>(node))
+    .map(({ key, props }) => {
       const { children: nodeChildren, ...restProps } = props;
       const column = {
         key,

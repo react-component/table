@@ -96,7 +96,7 @@ function VirtualTable<RecordType>(props: VirtualTableProps<RecordType>, ref: Rea
 
 export type ForwardGenericVirtualTable = (<RecordType>(
   props: TableProps<RecordType> & React.RefAttributes<Reference>,
-) => React.ReactElement) & { displayName?: string };
+) => React.ReactElement<any>) & { displayName?: string };
 
 const RefVirtualTable = React.forwardRef(VirtualTable) as ForwardGenericVirtualTable;
 

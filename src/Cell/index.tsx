@@ -68,7 +68,10 @@ const getTitleFromCellRenderChildren = ({
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
     if (typeof children === 'string' || typeof children === 'number') {
       title = children.toString();
-    } else if (React.isValidElement(children) && typeof children.props.children === 'string') {
+    } else if (
+      React.isValidElement<React.PropsWithChildren<any>>(children) &&
+      typeof children.props.children === 'string'
+    ) {
       title = children.props.children;
     }
   }
@@ -247,7 +250,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // The order is important since user can overwrite style.
   // For example ant-design/ant-design#51763
-  const mergedStyle = {
+  const mergedStyle: React.CSSProperties = {
     ...legacyCellProps?.style,
     ...fixedStyle,
     ...alignStyle,

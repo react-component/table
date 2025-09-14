@@ -64,9 +64,7 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
   const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);
 
   // =================== Performance ====================
-  const perfRef = React.useRef<PerfRecord>({
-    renderWithProps: false,
-  });
+  const perfRef = React.useRef<PerfRecord>({ renderWithProps: false });
 
   // ===================== Expanded =====================
   // `expandedRowOffset` data is same for all the rows.
@@ -149,7 +147,6 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
             columns={flattenColumns}
           />
         )}
-
         {rows}
       </WrapperComponent>
     </PerfContext.Provider>

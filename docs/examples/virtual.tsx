@@ -189,7 +189,7 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
 }));
 
 const Demo: React.FC = () => {
-  const tableRef = React.useRef<Reference>();
+  const tableRef = React.useRef<Reference>(null);
   return (
     <div style={{ width: 800, padding: `0 64px` }}>
       <button onClick={() => tableRef.current?.scrollTo({ top: 9999999999999 })}>

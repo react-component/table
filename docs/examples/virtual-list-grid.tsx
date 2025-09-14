@@ -23,7 +23,7 @@ for (let i = 0; i < 100000; i += 1) {
   });
 }
 const Demo = () => {
-  const gridRef = React.useRef<any>();
+  const gridRef = React.useRef<any>(null);
   const [connectObject] = React.useState<any>(() => {
     const obj = {};
     Object.defineProperty(obj, 'scrollLeft', {
