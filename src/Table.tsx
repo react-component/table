@@ -87,6 +87,7 @@ const EMPTY_SCROLL_TARGET = {};
 
 export type SemanticName = 'section' | 'title' | 'footer' | 'content';
 export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
+
 export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
