@@ -59,7 +59,7 @@
     "@rc-component/father-plugin": "^2.0.1",
     "@rc-component/np": "^1.0.3",
     "@testing-library/jest-dom": "^6.4.0",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
