@@ -30,7 +30,9 @@ const data = [
   { key: 3, name: 'Jime', age: 35 },
 ];
 
-// 自定义 MeasureRow 渲染，隐藏弹层内容
+// 注意，这个 measureRow 实际上是一个 <tr> 元素
+// 按照 html 规范，tr 的父元素必须是 table/thead/tbody/tfoot，tr 的子元素必须是 th/td
+// 因此这里我们用一个 div 包裹是不对的，在控制台中会报错
 const measureRowRender: TableProps['measureRowRender'] = measureRow => (
   <div style={{ display: 'none' }}>{measureRow}</div>
 );
