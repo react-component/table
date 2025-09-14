@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-export interface FooterRowProps {
+export interface FooterRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   className?: string;
   style?: React.CSSProperties;
-  onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
 }
 
 const FooterRow: React.FC<React.PropsWithChildren<FooterRowProps>> = props => {
