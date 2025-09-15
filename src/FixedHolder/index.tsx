@@ -40,6 +40,7 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
+  colGroup?: React.ReactNode;
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
@@ -54,6 +55,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     columns,
     flattenColumns,
     colWidths,
+    colGroup,
     columCount,
     stickyOffsets,
     direction,
@@ -185,7 +187,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           width: scrollX,
         }}
       >
-        {isColGroupEmpty ? null : (
+        {isColGroupEmpty ? (
+          colGroup
+        ) : (
           <ColGroup
             colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
             columCount={columCount + 1}

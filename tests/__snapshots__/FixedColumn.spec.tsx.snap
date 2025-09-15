@@ -2696,6 +2696,26 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
       <table
         style="table-layout: fixed; min-width: 100%; width: 1200px;"
       >
+        <colgroup>
+          <col
+            style="width: 100px;"
+          />
+          <col
+            style="width: 100px;"
+          />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 100px;"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
         >
