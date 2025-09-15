@@ -164,7 +164,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           width: scrollX,
         }}
       >
-        {isColGroupEmpty ? null : (
+        {isColGroupEmpty ? (
+          colGroup
+        ) : (
           <ColGroup
             colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
             columCount={columCount + 1}
