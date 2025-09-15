@@ -75,6 +75,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     'isSticky',
     'getComponent',
   ]);
+
   const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;

@@ -8,7 +8,7 @@ function useStickyOffsets<RecordType>(
   colWidths: number[],
   flattenColumns: readonly ColumnType<RecordType>[],
 ) {
-  const stickyOffsets: StickyOffsets = useMemo(() => {
+  const stickyOffsets = useMemo<StickyOffsets>(() => {
     const columnCount = flattenColumns.length;
 
     const getOffsets = (startIndex: number, endIndex: number, offset: number) => {

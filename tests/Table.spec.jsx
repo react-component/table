@@ -1234,7 +1234,7 @@ describe('Table.Basic', () => {
       return record;
     });
     const Demo = props => {
-      const gridRef = React.useRef();
+      const gridRef = React.useRef(null);
       const [connectObject] = React.useState(() => {
         const obj = {};
         Object.defineProperty(obj, 'scrollLeft', {

@@ -166,7 +166,7 @@ const columns3: ColumnType<RecordType>[] = [
 ];
 
 const Demo = () => {
-  const container = useRef();
+  const container = useRef(null);
   return (
     <div>
       <h2>Sticky</h2>

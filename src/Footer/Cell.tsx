@@ -8,21 +8,14 @@ import SummaryContext from './SummaryContext';
 
 export interface SummaryCellProps {
   className?: string;
-  children?: React.ReactNode;
   index: number;
   colSpan?: number;
   rowSpan?: number;
   align?: AlignType;
 }
 
-export default function SummaryCell({
-  className,
-  index,
-  children,
-  colSpan = 1,
-  rowSpan,
-  align,
-}: SummaryCellProps) {
+const SummaryCell: React.FC<React.PropsWithChildren<SummaryCellProps>> = props => {
+  const { className, index, children, colSpan = 1, rowSpan, align } = props;
   const { prefixCls } = useContext(TableContext, ['prefixCls']);
   const { scrollColumnIndex, stickyOffsets, flattenColumns } = React.useContext(SummaryContext);
   const lastIndex = index + colSpan - 1;
@@ -48,4 +41,6 @@ export default function SummaryCell({
       {...fixedInfo}
     />
   );
-}
+};
+
+export default SummaryCell;
