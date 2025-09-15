@@ -1,1323 +1,837 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Table.Basic > columns support JSX condition 1`] = `
-LoadedCheerio {
-  "0": <button>
-    Click 2 times
-  </button>,
-  "1": <div
-    class="rc-table"
-  >
-    <div
-      class="rc-table-container"
-    >
-      <div
-        class="rc-table-content"
-      >
-        <table
-          style="table-layout: auto;"
-        >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                title
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                title3
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-            >
-              <td
-                class="rc-table-cell"
-              >
-                2
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                3
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-            >
-              <td
-                class="rc-table-cell"
-              >
-                2
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                3
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 2,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+<button>
+  Click 
+  2
+   times
+</button>
 `;
 
 exports[`Table.Basic > custom components > renders correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        name="my-table"
+        style="table-layout: auto;"
       >
-        <table
-          name="my-table"
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
+          name="my-header-wrapper"
         >
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
+          <tr
+            name="my-header-row"
           >
-            <tr
-              name="my-header-row"
+            <th
+              class="rc-table-cell"
+              name="my-header-cell"
+              scope="col"
             >
-              <th
-                class="rc-table-cell"
-                name="my-header-cell"
-                scope="col"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-            name="my-body-wrapper"
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+          name="my-body-wrapper"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+            name="my-body-row"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-              name="my-body-row"
+            <td
+              class="rc-table-cell"
+              name="my-body-cell"
             >
-              <td
-                class="rc-table-cell"
-                name="my-body-cell"
-              >
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-              name="my-body-row"
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+            name="my-body-row"
+          >
+            <td
+              class="rc-table-cell"
+              name="my-body-cell"
             >
-              <td
-                class="rc-table-cell"
-                name="my-body-cell"
-              >
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > custom components > renders fixed column and header correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-header"
+      style="overflow: hidden;"
     >
-      <div
-        class="rc-table-header"
-        style="overflow: hidden;"
+      <table
+        style="table-layout: fixed; min-width: 100%; width: 100px;"
       >
-        <table
-          style="table-layout: fixed; min-width: 100%; width: 100px;"
+        <thead
+          class="rc-table-thead"
+          name="my-header-wrapper"
         >
-          <thead
-            class="rc-table-thead"
-            name="my-header-wrapper"
+          <tr
+            name="my-header-row"
           >
-            <tr
-              name="my-header-row"
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              name="my-header-cell"
+              scope="col"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <th
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                name="my-header-cell"
-                scope="col"
-                style="position: sticky; left: 0px;"
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              name="my-header-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              name="my-header-cell"
+              scope="col"
+              style="inset-inline-end: 15px; --z-offset: 2; --z-offset-reverse: 2;"
+            >
+              Gender
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-scrollbar"
+              name="my-header-cell"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
+            />
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="rc-table-body"
+      style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
+    >
+      <table
+        name="my-table"
+        style="width: 100px; min-width: 100%; table-layout: fixed;"
+      >
+        <tbody
+          class="rc-table-tbody"
+          name="my-body-wrapper"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
+          >
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                name="my-header-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                name="my-header-cell"
-                scope="col"
-                style="position: sticky; right: 15px;"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-scrollbar"
-                name="my-header-cell"
-                style="position: sticky; right: 0px;"
-              />
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div
-        class="rc-table-body"
-        style="overflow-x: auto; overflow-y: scroll; max-height: 100px;"
-      >
-        <table
-          name="my-table"
-          style="width: 100px; min-width: 100%; table-layout: fixed;"
-        >
-          <tbody
-            class="rc-table-tbody"
-            name="my-body-wrapper"
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
+            name="my-body-row"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              name="my-body-cell"
+              style="inset-inline-start: 0; --z-offset: 6; --z-offset-reverse: 3;"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
-              name="my-body-row"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+              name="my-body-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                name="my-body-cell"
-                style="position: sticky; left: 0px;"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-                name="my-body-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                name="my-body-cell"
-                style="position: sticky; right: 0px;"
-              >
-                F
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              27
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              name="my-body-cell"
+              style="inset-inline-end: 0; --z-offset: 2; --z-offset-reverse: 1;"
+            >
+              F
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > custom components > scroll content > with scroll 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-header rc-table-scroll-horizontal"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-header rc-table-scroll-horizontal"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-header"
+      style="overflow: hidden;"
     >
-      <div
-        class="rc-table-header"
-        style="overflow: hidden;"
+      <table
+        style="table-layout: fixed; min-width: 100%; width: 100px;"
       >
-        <table
-          style="table-layout: fixed; min-width: 100%; width: 100px;"
+        <colgroup>
+          <col
+            style="width: 0px;"
+          />
+          <col
+            style="width: 888px;"
+          />
+          <col
+            style="width: 15px;"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              style="width: 0px;"
+          <tr>
+            <th
+              class="rc-table-cell"
             />
-            <col
-              style="width: 888px;"
+            <th
+              class="rc-table-cell"
             />
-            <col
-              style="width: 15px;"
+            <th
+              class="rc-table-cell rc-table-cell-scrollbar"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-              />
-              <th
-                class="rc-table-cell"
-              />
-              <th
-                class="rc-table-cell rc-table-cell-scrollbar"
-              />
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <h1>
-        Bamboo
-      </h1>
+          </tr>
+        </thead>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+    <h1>
+      Bamboo
+    </h1>
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > internal api > transformColumns > basic 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                before
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                after
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              />
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
+              before
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              />
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              after
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            />
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders colSpan correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                colspan="2"
-                scope="colgroup"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="rc-table-cell"
+              colspan="2"
+              scope="colgroup"
             >
-              <td
-                class="rc-table-cell"
-                colspan="2"
-              >
-                John
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
+              colspan="2"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Terry
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Garner
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              John
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Terry
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Garner
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders correctly > RTL 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="test-prefix test-class-name test-prefix-rtl"
+<div
+  class="test-prefix test-class-name test-prefix-rtl"
+>
+  <div
+    class="test-prefix-container"
   >
     <div
-      class="test-prefix-container"
+      class="test-prefix-content"
     >
-      <div
-        class="test-prefix-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="test-prefix-thead"
         >
-          <thead
-            class="test-prefix-thead"
-          >
-            <tr>
-              <th
-                class="test-prefix-cell"
-                scope="col"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="test-prefix-tbody"
-          >
-            <tr
-              class="test-prefix-row test-prefix-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="test-prefix-cell"
+              scope="col"
             >
-              <td
-                class="test-prefix-cell"
-              >
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="test-prefix-row test-prefix-row-level-0"
-              data-row-key="key1"
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="test-prefix-tbody"
+        >
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="test-prefix-cell"
             >
-              <td
-                class="test-prefix-cell"
-              >
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="test-prefix-cell"
+            >
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders correctly > basic 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="test-prefix test-class-name"
+<div
+  class="test-prefix test-class-name"
+>
+  <div
+    class="test-prefix-container"
   >
     <div
-      class="test-prefix-container"
+      class="test-prefix-content"
     >
-      <div
-        class="test-prefix-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="test-prefix-thead"
         >
-          <thead
-            class="test-prefix-thead"
-          >
-            <tr>
-              <th
-                class="test-prefix-cell"
-                scope="col"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="test-prefix-tbody"
-          >
-            <tr
-              class="test-prefix-row test-prefix-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="test-prefix-cell"
+              scope="col"
             >
-              <td
-                class="test-prefix-cell"
-              >
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="test-prefix-row test-prefix-row-level-0"
-              data-row-key="key1"
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="test-prefix-tbody"
+        >
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="test-prefix-cell"
             >
-              <td
-                class="test-prefix-cell"
-              >
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="test-prefix-row test-prefix-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="test-prefix-cell"
+            >
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders correctly > column children undefined 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                姓名
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                年龄
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
+              姓名
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              年龄
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders correctly > falsy columns 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                姓名
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
+              姓名
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Lucy
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders correctly > no columns 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
+          <tr>
+            <th
+              class="rc-table-cell"
+            />
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-              />
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
-            >
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
-            >
-              <td
-                class="rc-table-cell"
-              />
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <td
+              class="rc-table-cell"
+            />
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > renders rowSpan correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                First Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Last Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key0"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                John
-              </td>
-              <td
-                class="rc-table-cell"
-                rowspan="2"
-              >
-                Doe
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="key1"
+              First Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Terry
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Last Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key0"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              John
+            </td>
+            <td
+              class="rc-table-cell"
+              rowspan="2"
+            >
+              Doe
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="key1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Terry
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > should get scrollbar size 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-header"
+<div
+  class="rc-table rc-table-fixed-header"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-header"
+      style="overflow: hidden;"
     >
-      <div
-        class="rc-table-header"
-        style="overflow: hidden;"
+      <table
+        style="table-layout: fixed; min-width: 100%;"
       >
-        <table
-          style="table-layout: fixed; min-width: 100%;"
+        <colgroup>
+          <col
+            style="width: 85px;"
+          />
+          <col
+            style="width: 15px;"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              style="width: 85px;"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-scrollbar"
             />
-            <col
-              style="width: 15px;"
-            />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-scrollbar"
-              />
-            </tr>
-          </thead>
-        </table>
-      </div>
+          </tr>
+        </thead>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Basic > syntactic sugar 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
-          >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                total
-              </th>
-            </tr>
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
-          >
-            <tr
-              class="rc-table-placeholder"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
             >
-              <td
-                class="rc-table-cell"
-              >
-                No Data
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              total
+            </th>
+          </tr>
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-placeholder"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              No Data
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;

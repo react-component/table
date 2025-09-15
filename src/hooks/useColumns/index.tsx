@@ -1,5 +1,5 @@
-import toArray from 'rc-util/lib/Children/toArray';
-import warning from 'rc-util/lib/warning';
+import toArray from '@rc-component/util/lib/Children/toArray';
+import warning from '@rc-component/util/lib/warning';
 import * as React from 'react';
 import { EXPAND_COLUMN } from '../../constant';
 import type {
@@ -20,8 +20,9 @@ export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
 ): ColumnsType<RecordType> {
   return toArray(children)
-    .filter(node => React.isValidElement(node))
-    .map(({ key, props }: React.ReactElement) => {
+    .filter(node => React.isValidElement<any>(node))
+    .map(node => {
+      const { key, props } = node as React.ReactElement<any>;
       const { children: nodeChildren, ...restProps } = props;
       const column = {
         key,
@@ -63,8 +64,8 @@ function flatColumns<RecordType>(
     .filter(column => column && typeof column === 'object')
     .reduce((list, column, index) => {
       const { fixed } = column;
-      // Convert `fixed='true'` to `fixed='left'` instead
-      const parsedFixed = fixed === true ? 'left' : fixed;
+      const parsedFixed =
+        fixed === true || fixed === 'left' ? 'start' : fixed === 'right' ? 'end' : fixed;
       const mergedKey = `${parentKey}-${index}`;
 
       const subColumns = (column as ColumnGroupType<RecordType>).children;
@@ -86,24 +87,6 @@ function flatColumns<RecordType>(
         },
       ];
     }, []);
-}
-
-function revertForRtl<RecordType>(columns: ColumnsType<RecordType>): ColumnsType<RecordType> {
-  return columns.map(column => {
-    const { fixed, ...restProps } = column;
-
-    // Convert `fixed='left'` to `fixed='right'` instead
-    let parsedFixed = fixed;
-    if (fixed === 'left') {
-      parsedFixed = 'right';
-    } else if (fixed === 'right') {
-      parsedFixed = 'left';
-    }
-    return {
-      fixed: parsedFixed,
-      ...restProps,
-    };
-  });
 }
 
 /**
@@ -154,7 +137,6 @@ function useColumns<RecordType>(
   columns: ColumnsType<RecordType>,
   flattenColumns: readonly ColumnType<RecordType>[],
   realScrollWidth: undefined | number,
-  hasGapFixed: boolean,
 ] {
   const baseColumns = React.useMemo<ColumnsType<RecordType>>(() => {
     const newColumns = columns || convertChildrenToColumns(children) || [];
@@ -179,7 +161,9 @@ function useColumns<RecordType>(
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
         const insertIndex =
-          expandColIndex === 0 && fixed === 'right' ? baseColumns.length : expandColIndex;
+          expandColIndex === 0 && (fixed === 'right' || fixed === 'end')
+            ? baseColumns.length
+            : expandColIndex;
         if (insertIndex >= 0) {
           cloneColumns.splice(insertIndex, 0, EXPAND_COLUMN);
         }
@@ -242,7 +226,7 @@ function useColumns<RecordType>(
         if (index < expandedRowOffset) {
           return {
             ...column,
-            fixed: column.fixed || 'left',
+            fixed: column.fixed || 'start',
           };
         }
         return column;
@@ -277,48 +261,11 @@ function useColumns<RecordType>(
   }, [transformColumns, withExpandColumns, direction]);
 
   // ========================== Flatten =========================
-  const flattenColumns = React.useMemo(() => {
-    if (direction === 'rtl') {
-      return revertForRtl(flatColumns(mergedColumns));
-    }
-    return flatColumns(mergedColumns);
+  const flattenColumns = React.useMemo(
+    () => flatColumns(mergedColumns),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedColumns, direction, scrollWidth]);
-
-  // ========================= Gap Fixed ========================
-  const hasGapFixed = React.useMemo(() => {
-    // Fixed: left, since old browser not support `findLastIndex`, we should use reverse loop
-    let lastLeftIndex = -1;
-    for (let i = flattenColumns.length - 1; i >= 0; i -= 1) {
-      const colFixed = flattenColumns[i].fixed;
-      if (colFixed === 'left' || colFixed === true) {
-        lastLeftIndex = i;
-        break;
-      }
-    }
-
-    if (lastLeftIndex >= 0) {
-      for (let i = 0; i <= lastLeftIndex; i += 1) {
-        const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'left' && colFixed !== true) {
-          return true;
-        }
-      }
-    }
-
-    // Fixed: right
-    const firstRightIndex = flattenColumns.findIndex(({ fixed: colFixed }) => colFixed === 'right');
-    if (firstRightIndex >= 0) {
-      for (let i = firstRightIndex; i < flattenColumns.length; i += 1) {
-        const colFixed = flattenColumns[i].fixed;
-        if (colFixed !== 'right') {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }, [flattenColumns]);
+    [mergedColumns, direction, scrollWidth],
+  );
 
   // ========================= FillWidth ========================
   const [filledColumns, realScrollWidth] = useWidthColumns(
@@ -327,7 +274,7 @@ function useColumns<RecordType>(
     clientWidth,
   );
 
-  return [mergedColumns, filledColumns, realScrollWidth, hasGapFixed];
+  return [mergedColumns, filledColumns, realScrollWidth];
 }
 
 export default useColumns;

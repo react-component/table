@@ -1,4 +1,4 @@
-import warning from 'rc-util/lib/warning';
+import warning from '@rc-component/util/lib/warning';
 import type { ExpandableConfig, LegacyExpandableProps } from '../interface';
 
 export const INTERNAL_COL_DEFINE = 'RC_TABLE_INTERNAL_COL_DEFINE';

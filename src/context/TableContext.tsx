@@ -15,13 +15,18 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
+import type { TableProps } from '../Table';
 
 const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
 export { makeImmutable, responseImmutable, useImmutableMark };
 
+export type ScrollInfoType = [scrollLeft: number, scrollRange: number];
+
 export interface TableContextProps<RecordType = any> {
   // Scroll
   scrollX: number | string | true;
+  classNames?: TableProps['classNames'];
+  styles?: TableProps['styles'];
 
   // Table
   prefixCls: string;
@@ -30,11 +35,11 @@ export interface TableContextProps<RecordType = any> {
   direction: Direction;
   fixedInfoList: readonly FixedInfo[];
   isSticky: boolean;
-  supportSticky: boolean;
   componentWidth: number;
   fixHeader: boolean;
   fixColumn: boolean;
   horizonScroll: boolean;
+  scrollInfo: ScrollInfoType;
 
   // Body
   rowClassName: string | RowClassName<RecordType>;

@@ -4,15 +4,18 @@ import Row from './Row';
 
 export interface SummaryProps {
   fixed?: boolean | 'top' | 'bottom';
-  children?: React.ReactNode;
 }
 
 /**
  * Syntactic sugar. Do not support HOC.
  */
-function Summary({ children }: SummaryProps) {
-  return children as React.ReactElement;
-}
+const Summary: React.FC<React.PropsWithChildren<SummaryProps>> & {
+  Row: typeof Row;
+  Cell: typeof Cell;
+} = props => {
+  const { children } = props;
+  return children;
+};
 
 Summary.Row = Row;
 Summary.Cell = Cell;

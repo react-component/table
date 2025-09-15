@@ -9,13 +9,14 @@ import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
 import MeasureRow from './MeasureRow';
+import cls from 'classnames';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
   measureColumnWidth: boolean;
 }
 
-function Body<RecordType>(props: BodyProps<RecordType>) {
+const Body = <RecordType,>(props: BodyProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -31,6 +32,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     expandedKeys,
     childrenColumnName,
     emptyNode,
+    classNames,
+    styles,
     expandedRowOffset = 0,
     colWidths,
   } = useContext(TableContext, [
@@ -42,10 +45,14 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     'expandedKeys',
     'childrenColumnName',
     'emptyNode',
+    'classNames',
+    'styles',
     'expandedRowOffset',
     'fixedInfoList',
     'colWidths',
   ]);
+  const { body: bodyCls = {} } = classNames || {};
+  const { body: bodyStyles = {} } = styles || {};
 
   const flattenData = useFlattenRecords<RecordType>(
     data,
@@ -53,12 +60,11 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
     expandedKeys,
     getRowKey,
   );
+
   const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);
 
   // =================== Performance ====================
-  const perfRef = React.useRef<PerfRecord>({
-    renderWithProps: false,
-  });
+  const perfRef = React.useRef<PerfRecord>({ renderWithProps: false });
 
   // ===================== Expanded =====================
   // `expandedRowOffset` data is same for all the rows.
@@ -91,6 +97,8 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
       return (
         <BodyRow
+          classNames={bodyCls}
+          styles={bodyStyles}
           key={rowKey}
           rowKey={rowKey}
           rowKeys={rowKeys}
@@ -126,7 +134,10 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
 
   return (
     <PerfContext.Provider value={perfRef.current}>
-      <WrapperComponent className={`${prefixCls}-tbody`}>
+      <WrapperComponent
+        style={bodyStyles.wrapper}
+        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
+      >
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (
           <MeasureRow
@@ -136,12 +147,11 @@ function Body<RecordType>(props: BodyProps<RecordType>) {
             columns={flattenColumns}
           />
         )}
-
         {rows}
       </WrapperComponent>
     </PerfContext.Provider>
   );
-}
+};
 
 if (process.env.NODE_ENV !== 'production') {
   Body.displayName = 'Body';

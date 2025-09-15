@@ -2,11 +2,16 @@ import * as React from 'react';
 
 export interface TitleProps {
   className: string;
-  children: React.ReactNode;
+  style: React.CSSProperties;
 }
 
-function Panel({ className, children }: TitleProps) {
-  return <div className={className}>{children}</div>;
-}
+const Panel: React.FC<React.PropsWithChildren<TitleProps>> = props => {
+  const { children, className, style } = props;
+  return (
+    <div className={className} style={style}>
+      {children}
+    </div>
+  );
+};
 
 export default Panel;

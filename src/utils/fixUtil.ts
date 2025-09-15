@@ -1,16 +1,33 @@
-import type { Direction, FixedType, StickyOffsets } from '../interface';
+import type { FixedType, StickyOffsets } from '../interface';
 
 export interface FixedInfo {
-  fixLeft: number | false;
-  fixRight: number | false;
-  lastFixLeft: boolean;
-  firstFixRight: boolean;
-
-  // For Rtl Direction
-  lastFixRight: boolean;
-  firstFixLeft: boolean;
+  fixStart: number | false;
+  fixEnd: number | false;
 
   isSticky: boolean;
+
+  // Position info(for shadow usage)
+  /** `fixed: start` with shadow */
+  fixedStartShadow?: boolean;
+  /** `fixed: end` with shadow */
+  fixedEndShadow?: boolean;
+
+  /** Show the shadow when `scrollLeft` arrive for `fixed: start` */
+  offsetFixedStartShadow?: number;
+  /** Show the shadow when `scrollLeft` arrive for `fixed: end` */
+  offsetFixedEndShadow?: number;
+
+  /** First sticky column `zIndex` will be larger than next */
+  zIndex?: number;
+  /** First sticky column `zIndex` will be smaller than next */
+  zIndexReverse?: number;
+}
+
+function isFixedStart(column: { fixed?: FixedType }) {
+  return column.fixed === 'start';
+}
+function isFixedEnd(column: { fixed?: FixedType }) {
+  return column.fixed === 'end';
 }
 
 export function getCellFixedInfo(
@@ -18,58 +35,68 @@ export function getCellFixedInfo(
   colEnd: number,
   columns: readonly { fixed?: FixedType }[],
   stickyOffsets: StickyOffsets,
-  direction: Direction,
 ): FixedInfo {
   const startColumn = columns[colStart] || {};
   const endColumn = columns[colEnd] || {};
 
-  let fixLeft: number;
-  let fixRight: number;
+  let fixStart: number = null;
+  let fixEnd: number = null;
 
-  if (startColumn.fixed === 'left') {
-    fixLeft = stickyOffsets.left[direction === 'rtl' ? colEnd : colStart];
-  } else if (endColumn.fixed === 'right') {
-    fixRight = stickyOffsets.right[direction === 'rtl' ? colStart : colEnd];
+  if (isFixedStart(startColumn) && isFixedStart(endColumn)) {
+    fixStart = stickyOffsets.start[colStart];
+  } else if (isFixedEnd(endColumn) && isFixedEnd(startColumn)) {
+    fixEnd = stickyOffsets.end[colEnd];
   }
 
-  let lastFixLeft: boolean = false;
-  let firstFixRight: boolean = false;
+  // check if need to add shadow
+  let fixedStartShadow = false;
+  let fixedEndShadow = false;
 
-  let lastFixRight: boolean = false;
-  let firstFixLeft: boolean = false;
+  // Calc `zIndex`.
+  // first fixed start (start -> end) column `zIndex` should be greater than next column.
+  // first fixed end (end -> start) column `zIndex` should be greater than next column.
+  let zIndex = 0;
+  let zIndexReverse = 0;
 
-  const nextColumn = columns[colEnd + 1];
-  const prevColumn = columns[colStart - 1];
+  if (fixStart !== null) {
+    fixedStartShadow = !columns[colEnd + 1] || !isFixedStart(columns[colEnd + 1]);
+    zIndex = columns.length * 2 - colStart; // Fix start always overlay fix end
+    zIndexReverse = columns.length + colStart;
+  }
+  if (fixEnd !== null) {
+    fixedEndShadow = !columns[colStart - 1] || !isFixedEnd(columns[colStart - 1]);
+    zIndex = colEnd;
+    zIndexReverse = columns.length - colEnd; // Fix end always overlay fix start
+  }
 
-  // need show shadow only when canLastFix is true
-  const canLastFix =
-    (nextColumn && !nextColumn.fixed) ||
-    (prevColumn && !prevColumn.fixed) ||
-    columns.every(col => col.fixed === 'left');
+  // Check if scrollLeft will show the shadow
+  let offsetFixedStartShadow = 0;
+  let offsetFixedEndShadow = 0;
 
-  if (direction === 'rtl') {
-    if (fixLeft !== undefined) {
-      const prevFixLeft = prevColumn && prevColumn.fixed === 'left';
-      firstFixLeft = !prevFixLeft && canLastFix;
-    } else if (fixRight !== undefined) {
-      const nextFixRight = nextColumn && nextColumn.fixed === 'right';
-      lastFixRight = !nextFixRight && canLastFix;
+  if (fixedStartShadow) {
+    for (let i = 0; i < colStart; i += 1) {
+      if (!isFixedStart(columns[i])) {
+        offsetFixedStartShadow += stickyOffsets.widths[i] || 0;
+      }
     }
-  } else if (fixLeft !== undefined) {
-    const nextFixLeft = nextColumn && nextColumn.fixed === 'left';
-    lastFixLeft = !nextFixLeft && canLastFix;
-  } else if (fixRight !== undefined) {
-    const prevFixRight = prevColumn && prevColumn.fixed === 'right';
-    firstFixRight = !prevFixRight && canLastFix;
+  }
+  if (fixedEndShadow) {
+    for (let i = columns.length - 1; i > colEnd; i -= 1) {
+      if (!isFixedEnd(columns[i])) {
+        offsetFixedEndShadow += stickyOffsets.widths[i] || 0;
+      }
+    }
   }
 
   return {
-    fixLeft,
-    fixRight,
-    lastFixLeft,
-    firstFixRight,
-    lastFixRight,
-    firstFixLeft,
+    fixStart,
+    fixEnd,
+    fixedStartShadow,
+    fixedEndShadow,
+    offsetFixedStartShadow,
+    offsetFixedEndShadow,
     isSticky: stickyOffsets.isSticky,
+    zIndex,
+    zIndexReverse,
   };
 }

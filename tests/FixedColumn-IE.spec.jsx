@@ -1,12 +1,11 @@
-import { mount } from 'enzyme';
-import { spyElementPrototype } from 'rc-util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import RcResizeObserver from 'rc-resize-observer';
+import { render, act } from '@testing-library/react';
 import Table from '../src';
+// 保留 spyElementPrototype 的相关逻辑
+import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
+import RcResizeObserver from '@rc-component/resize-observer';
 
-vi.mock('rc-util/lib/Dom/styleChecker', () => {
+vi.mock('@rc-component/util/lib/Dom/styleChecker', () => {
   return {
     isStyleSupport: (name, val) => val !== 'sticky',
   };
@@ -43,28 +42,15 @@ describe('Table.FixedColumn', () => {
 
   it('not sticky', async () => {
     vi.useFakeTimers();
-    const wrapper = mount(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
+    const { container } = render(<Table columns={columns} data={data} scroll={{ x: 1200 }} />);
 
-    act(() => {
-      wrapper
-        .find(RcResizeObserver.Collection)
-        .first()
-        .props()
-        .onBatchResize([
-          {
-            data: wrapper.find('table ResizeObserver').first().props().data,
-            size: { width: 93, offsetWidth: 93 },
-          },
-        ]);
-    });
-
+    // 模拟时间流逝，触发 Table 内部的更新逻辑
     await act(async () => {
       vi.runAllTimers();
       await Promise.resolve();
-      wrapper.update();
     });
 
-    expect(wrapper.exists('.rc-table-cell-fix-left')).toBeFalsy();
-    expect(wrapper.exists('.rc-table-cell-fix-right')).toBeFalsy();
+    expect(container.querySelector('.rc-table-cell-fix-left')).toBeNull();
+    expect(container.querySelector('.rc-table-cell-fix-right')).toBeNull();
   });
 });

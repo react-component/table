@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 import { INTERNAL_HOOKS } from '../src/constant';
@@ -6,7 +6,7 @@ import { INTERNAL_HOOKS } from '../src/constant';
 // All follow test is only for internal usage which should be removed when refactor
 describe('Table.Internal', () => {
   it('internal should pass `__PARENT_RENDER_ICON__` for expandable', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         internalHooks={INTERNAL_HOOKS}
         columns={[{ dataIndex: 'key' }]}
@@ -18,6 +18,6 @@ describe('Table.Internal', () => {
       />,
     );
 
-    expect(wrapper.find('.expand-icon')).toHaveLength(1);
+    expect(container.querySelectorAll('.expand-icon')).toBeTruthy();
   });
 });

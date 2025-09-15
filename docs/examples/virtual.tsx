@@ -189,7 +189,7 @@ const data: RecordType[] = new Array(4 * 10000).fill(null).map((_, index) => ({
 }));
 
 const Demo: React.FC = () => {
-  const tableRef = React.useRef<Reference>();
+  const tableRef = React.useRef<Reference>(null);
   return (
     <div style={{ width: 800, padding: `0 64px` }}>
       <button onClick={() => tableRef.current?.scrollTo({ top: 9999999999999 })}>
@@ -198,6 +198,12 @@ const Demo: React.FC = () => {
       <button onClick={() => tableRef.current?.scrollTo({ top: 0 })}>Scroll To Start</button>
       <button onClick={() => tableRef.current?.scrollTo({ index: data.length - 1 })}>
         Scroll To Key
+      </button>
+      <button onClick={() => tableRef.current?.scrollTo({ index: 10, offset: -10 })}>
+        Scroll To Index 10 + Offset -10
+      </button>
+      <button onClick={() => tableRef.current?.scrollTo({ key: '50', offset: -10 })}>
+        Scroll To Key 50 + Offset -10
       </button>
       <VirtualTable
         style={{ marginTop: 16 }}

@@ -14,7 +14,7 @@ export interface FooterProps<RecordType> {
   flattenColumns: FlattenColumns<RecordType>;
 }
 
-function Footer<RecordType>(props: FooterProps<RecordType>) {
+const Footer = <RecordType,>(props: FooterProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -40,7 +40,7 @@ function Footer<RecordType>(props: FooterProps<RecordType>) {
       <tfoot className={`${prefixCls}-summary`}>{children}</tfoot>
     </SummaryContext.Provider>
   );
-}
+};
 
 export default responseImmutable(Footer);
 

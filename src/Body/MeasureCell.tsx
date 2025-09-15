@@ -1,16 +1,17 @@
 import * as React from 'react';
-import ResizeObserver from 'rc-resize-observer';
-import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
-import type { ColumnType } from '../interface';
+import ResizeObserver from '@rc-component/resize-observer';
+import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
   onColumnResize: (key: React.Key, width: number) => void;
-  column?: ColumnType<any>;
+  title?: React.ReactNode;
 }
 
-export default function MeasureCell({ columnKey, onColumnResize, column }: MeasureCellProps) {
-  const cellRef = React.useRef<HTMLTableCellElement>();
+const MeasureCell: React.FC<MeasureCellProps> = props => {
+  const { columnKey, onColumnResize, title } = props;
+
+  const cellRef = React.useRef<HTMLTableCellElement>(null);
 
   useLayoutEffect(() => {
     if (cellRef.current) {
@@ -24,10 +25,10 @@ export default function MeasureCell({ columnKey, onColumnResize, column }: Measu
         ref={cellRef}
         style={{ paddingTop: 0, paddingBottom: 0, borderTop: 0, borderBottom: 0, height: 0 }}
       >
-        <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>
-          {column?.title || '\xa0'}
-        </div>
+        <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>{title || '\xa0'}</div>
       </td>
     </ResizeObserver>
   );
-}
+};
+
+export default MeasureCell;

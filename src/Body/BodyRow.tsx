@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import cls from 'classnames';
 import * as React from 'react';
 import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
@@ -6,7 +6,9 @@ import devRenderTimes from '../hooks/useRenderTimes';
 import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
+import type { ExpandedRowProps } from './ExpandedRow';
 import { computedExpandedClassName } from '../utils/expandUtil';
+import type { TableProps } from '..';
 
 export interface BodyRowProps<RecordType> {
   record: RecordType;
@@ -14,6 +16,8 @@ export interface BodyRowProps<RecordType> {
   renderIndex: number;
   className?: string;
   style?: React.CSSProperties;
+  classNames: TableProps['classNames']['body'];
+  styles: TableProps['styles']['body'];
   rowComponent: CustomizeComponent;
   cellComponent: CustomizeComponent;
   scopeCellComponent: CustomizeComponent;
@@ -112,9 +116,9 @@ export function getCellProps<RecordType>(
 // ==================================================================================
 // ==                                 getCellProps                                 ==
 // ==================================================================================
-function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
+const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
   props: BodyRowProps<RecordType>,
-) {
+) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -122,6 +126,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   const {
     className,
     style,
+    classNames,
+    styles,
     record,
     index,
     renderIndex,
@@ -133,6 +139,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     scopeCellComponent,
     expandedRowInfo,
   } = props;
+
   const rowInfo = useRowInfo(record, rowKey, index, indent);
   const {
     prefixCls,
@@ -163,16 +170,21 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
     <RowComponent
       {...rowProps}
       data-row-key={rowKey}
-      className={classNames(
+      className={cls(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
+        classNames.row,
         {
           [expandedClsName]: indent >= 1,
         },
       )}
-      style={{ ...style, ...rowProps?.style }}
+      style={{
+        ...style,
+        ...rowProps?.style,
+        ...styles.row,
+      }}
     >
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
@@ -189,7 +201,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
 
         return (
           <Cell<RecordType>
-            className={columnClassName}
+            className={cls(columnClassName, classNames.cell)}
+            style={styles.cell}
             ellipsis={column.ellipsis}
             align={column.align}
             scope={column.rowScope}
@@ -212,14 +225,14 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
   );
 
   // ======================== Expand Row =========================
-  let expandRowNode: React.ReactElement;
+  let expandRowNode: React.ReactElement<ExpandedRowProps>;
   if (rowSupportExpand && (expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
-        className={classNames(
+        className={cls(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
           expandedClsName,
@@ -228,8 +241,8 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
         component={RowComponent}
         cellComponent={cellComponent}
         colSpan={expandedRowInfo ? expandedRowInfo.colSpan : flattenColumns.length}
-        stickyOffset={expandedRowInfo?.sticky}
         isEmpty={false}
+        stickyOffset={expandedRowInfo?.sticky}
       >
         {expandContent}
       </ExpandedRow>
@@ -242,7 +255,7 @@ function BodyRow<RecordType extends { children?: readonly RecordType[] }>(
       {expandRowNode}
     </>
   );
-}
+};
 
 if (process.env.NODE_ENV !== 'production') {
   BodyRow.displayName = 'BodyRow';

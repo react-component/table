@@ -3,7 +3,7 @@ import React from 'react';
 import '../../assets/index.less';
 
 const data = [];
-for (let i = 0; i < 10; i += 1) {
+for (let i = 0; i < 20; i += 1) {
   data.push({
     key: i,
     a: `a${i}`,
@@ -13,7 +13,7 @@ for (let i = 0; i < 10; i += 1) {
 }
 
 const Test = () => {
-  const tblRef = React.useRef<Reference>();
+  const tblRef = React.useRef<Reference>(null);
   const [showBody, setShowBody] = React.useState(true);
 
   const toggleBody = () => {
@@ -68,13 +68,33 @@ const Test = () => {
       >
         Scroll To top
       </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            index: 5,
+            offset: -10,
+          });
+        }}
+      >
+        Scroll To Index 5 + Offset -10
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 6,
+            offset: -10,
+          });
+        }}
+      >
+        Scroll To Key 6 + Offset -10
+      </button>
       <Table
         ref={tblRef}
         columns={columns}
         data={data}
         scroll={{ y: 300 }}
         rowKey={record => record.key}
-        onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
+        onRow={() => ({ style: { backgroundColor: 'red' } })}
       />
       <h3>Column align issue</h3>
       <p>https://github.com/ant-design/ant-design/issues/54889</p>

@@ -1,13 +1,17 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import getScrollBarSize from 'rc-util/lib/getScrollBarSize';
+import getScrollBarSize from '@rc-component/util/lib/getScrollBarSize';
 import * as React from 'react';
 import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
-import raf from 'rc-util/lib/raf';
+import raf from '@rc-component/util/lib/raf';
 import { getOffset } from './utils/offsetUtil';
-import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
+import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
+
+const MOUSEUP_EVENT: keyof WindowEventMap = 'mouseup';
+const MOUSEMOVE_EVENT: keyof WindowEventMap = 'mousemove';
+const SCROLL_EVENT: keyof WindowEventMap = 'scroll';
+const RESIZE_EVENT: keyof WindowEventMap = 'resize';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
@@ -18,29 +22,21 @@ interface StickyScrollBarProps {
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container, direction },
+  props,
   ref,
 ) => {
+  const { scrollBodyRef, onScroll, offsetScroll, container, direction } = props;
   const prefixCls = useContext(TableContext, 'prefixCls');
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
-  const scrollBarRef = React.useRef<HTMLDivElement>();
+  const scrollBarRef = React.useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useLayoutState<{
     scrollLeft: number;
     isHiddenScrollBar: boolean;
-  }>({
-    scrollLeft: 0,
-    isHiddenScrollBar: true,
-  });
-  const refState = React.useRef<{
-    delta: number;
-    x: number;
-  }>({
-    delta: 0,
-    x: 0,
-  });
+  }>({ scrollLeft: 0, isHiddenScrollBar: true });
+  const refState = React.useRef<{ delta: number; x: number }>({ delta: 0, x: 0 });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
 
@@ -51,11 +47,11 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     [],
   );
 
-  const onMouseUp: React.MouseEventHandler<HTMLDivElement> = () => {
+  const onMouseUp = () => {
     setActive(false);
   };
 
-  const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
+  const onMouseDown = (event: React.MouseEvent) => {
     event.persist();
     refState.current.delta = event.pageX - scrollState.scrollLeft;
     refState.current.x = 0;
@@ -63,7 +59,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     event.preventDefault();
   };
 
-  const onMouseMove: React.MouseEventHandler<HTMLDivElement> = event => {
+  const onMouseMove = (event: any) => {
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
     const { buttons } = event || (window?.event as any);
     if (!isActive || buttons === 0) {
@@ -73,8 +69,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       }
       return;
     }
-    let left: number =
-      refState.current.x + event.pageX - refState.current.x - refState.current.delta;
+    let left = refState.current.x + event.pageX - refState.current.x - refState.current.delta;
 
     const isRTL = direction === 'rtl';
     // Limit scroll range
@@ -105,20 +100,31 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
         container === window
           ? document.documentElement.scrollTop + window.innerHeight
           : getOffset(container).top + (container as HTMLElement).clientHeight;
-      setScrollState(state => ({
-        ...state,
-        isHiddenScrollBar:
-          tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
-          tableOffsetTop >= currentClientOffset - offsetScroll,
-      }));
+
+      if (
+        tableBottomOffset - getScrollBarSize() <= currentClientOffset ||
+        tableOffsetTop >= currentClientOffset - offsetScroll
+      ) {
+        setScrollState(state => ({
+          ...state,
+          isHiddenScrollBar: true,
+        }));
+      } else {
+        setScrollState(state => ({
+          ...state,
+          isHiddenScrollBar: false,
+        }));
+      }
     });
   };
 
   const setScrollLeft = (left: number) => {
-    setScrollState(state => ({
-      ...state,
-      scrollLeft: bodyScrollWidth ? (left / bodyScrollWidth) * bodyWidth : 0,
-    }));
+    setScrollState(state => {
+      return {
+        ...state,
+        scrollLeft: (left / bodyScrollWidth) * bodyWidth || 0,
+      };
+    });
   };
 
   React.useImperativeHandle(ref, () => ({
@@ -127,37 +133,39 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   }));
 
   React.useEffect(() => {
-    const onMouseUpListener = addEventListener(document.body, 'mouseup', onMouseUp, false);
-    const onMouseMoveListener = addEventListener(document.body, 'mousemove', onMouseMove, false);
+    document.body.addEventListener(MOUSEUP_EVENT, onMouseUp, false);
+    document.body.addEventListener(MOUSEMOVE_EVENT, onMouseMove, false);
     checkScrollBarVisible();
     return () => {
-      onMouseUpListener.remove();
-      onMouseMoveListener.remove();
+      document.body.removeEventListener(MOUSEUP_EVENT, onMouseUp);
+      document.body.removeEventListener(MOUSEMOVE_EVENT, onMouseMove);
     };
   }, [scrollBarWidth, isActive]);
 
   // Loop for scroll event check
   React.useEffect(() => {
-    if (!scrollBodyRef.current) return;
-
-    const scrollParents: (HTMLElement | SVGElement)[] = [];
-    let parent = getDOM(scrollBodyRef.current);
-    while (parent) {
-      scrollParents.push(parent);
-      parent = parent.parentElement;
+    if (scrollBodyRef.current) {
+      const scrollParents: (HTMLElement | SVGElement)[] = [];
+      let parent = getDOM(scrollBodyRef.current);
+      while (parent) {
+        scrollParents.push(parent);
+        parent = parent.parentElement;
+      }
+      scrollParents.forEach(p => {
+        p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      });
+      window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
+      window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      return () => {
+        scrollParents.forEach(p => {
+          p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        });
+        window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
+        window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+      };
     }
-
-    scrollParents.forEach(p => p.addEventListener('scroll', checkScrollBarVisible, false));
-    window.addEventListener('resize', checkScrollBarVisible, false);
-    window.addEventListener('scroll', checkScrollBarVisible, false);
-    container.addEventListener('scroll', checkScrollBarVisible, false);
-
-    return () => {
-      scrollParents.forEach(p => p.removeEventListener('scroll', checkScrollBarVisible));
-      window.removeEventListener('resize', checkScrollBarVisible);
-      window.removeEventListener('scroll', checkScrollBarVisible);
-      container.removeEventListener('scroll', checkScrollBarVisible);
-    };
   }, [container]);
 
   React.useEffect(() => {
@@ -173,6 +181,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
         };
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollState.isHiddenScrollBar]);
 
   if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
@@ -181,11 +190,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   return (
     <div
-      style={{
-        height: getScrollBarSize(),
-        width: bodyWidth,
-        bottom: offsetScroll,
-      }}
+      style={{ height: getScrollBarSize(), width: bodyWidth, bottom: offsetScroll }}
       className={`${prefixCls}-sticky-scroll`}
     >
       <div

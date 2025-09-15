@@ -1,7 +1,7 @@
 import React from 'react';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import { render, act } from '@testing-library/react';
-import { _rs } from 'rc-resize-observer';
+import { _rs } from '@rc-component/resize-observer';
 import Table, { type ColumnsType } from '../src';
 
 async function triggerResize(ele: HTMLElement) {

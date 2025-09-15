@@ -20,16 +20,29 @@ import type { DeepNamePath } from './namePathType';
 
 export type Key = React.Key;
 
-export type FixedType = 'left' | 'right' | boolean;
+/**
+ * Use `start` or `end` instead. `left` or `right` is deprecated.
+ */
+export type FixedType = 'start' | 'end' | 'left' | 'right' | boolean;
 
 export type DefaultRecordType = Record<string, any>;
 
 export type TableLayout = 'auto' | 'fixed';
 
 export type ScrollConfig = {
+  /** The index of the row to scroll to */
   index?: number;
+  /** The key of the row to scroll to */
   key?: Key;
+  /** The absolute scroll position from top */
   top?: number;
+  /**
+   * Additional offset in pixels to apply to the scroll position.
+   * Only effective when using `key` or `index` mode.
+   * Ignored when using `top` mode.
+   * When offset is set, the target element will always be aligned to the top of the container.
+   */
+  offset?: number;
 };
 
 export type Reference = {
@@ -68,7 +81,7 @@ export interface RenderedCell<RecordType> {
 export type Direction = 'ltr' | 'rtl';
 
 // SpecialString will be removed in antd@6
-export type SpecialString<T> = T | (string & {});
+export type SpecialString<T> = T | (string & unknown);
 
 export type DataIndex<T = any> =
   | DeepNamePath<T>
@@ -128,8 +141,9 @@ export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
 
 // ================= Fix Column =================
 export interface StickyOffsets {
-  left: readonly number[];
-  right: readonly number[];
+  start: readonly number[];
+  end: readonly number[];
+  widths: readonly number[];
   isSticky?: boolean;
 }
 

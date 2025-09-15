@@ -1,7 +1,7 @@
-import { mount } from 'enzyme';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { render, fireEvent } from '@testing-library/react';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 import Table from '../src';
 
 describe('Table.Scroll', () => {
@@ -21,32 +21,37 @@ describe('Table.Scroll', () => {
       return <Table data={data} {...props} />;
     };
 
-    const wrapper = mount(createTable({ scroll: { x: true } }));
+    const { container } = render(createTable({ scroll: { x: true } }));
 
-    expect(wrapper.find('.rc-table-tbody').hostNodes().text()).toContain('No Data');
+    expect(container.querySelector('.rc-table-tbody').textContent).toContain('No Data');
   });
 
   it('renders scroll.x is true', () => {
-    const wrapper = mount(createTable({ scroll: { x: true } }));
-    expect(wrapper.find('table').props().style.width).toEqual('auto');
-    expect(wrapper.find('.rc-table-content').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-content').props().style.overflowY).toEqual('hidden');
+    const { container } = render(createTable({ scroll: { x: true } }));
+    const table = container.querySelector('table');
+    const content = container.querySelector('.rc-table-content');
+    expect(table.style.width).toEqual('auto');
+    expect(content.style.overflowX).toEqual('auto');
+    expect(content.style.overflowY).toEqual('hidden');
   });
 
   it('renders scroll.x is a number', () => {
-    const wrapper = mount(createTable({ scroll: { x: 200 } }));
-    expect(wrapper.find('table').props().style.width).toEqual(200);
+    const { container } = render(createTable({ scroll: { x: 200 } }));
+    const table = container.querySelector('table');
+    expect(table.style.width).toEqual('200px');
   });
 
   it('renders scroll.y is a number', () => {
-    const wrapper = mount(createTable({ scroll: { y: 200 } }));
-    expect(wrapper.find('.rc-table-body').props().style.maxHeight).toEqual(200);
+    const { container } = render(createTable({ scroll: { y: 200 } }));
+    const body = container.querySelector('.rc-table-body');
+    expect(body.style.maxHeight).toEqual('200px');
   });
 
   it('renders scroll.x and scroll.y are both true', () => {
-    const wrapper = mount(createTable({ scroll: { x: true, y: 200 } }));
-    expect(wrapper.find('.rc-table-body').props().style.overflowX).toEqual('auto');
-    expect(wrapper.find('.rc-table-body').props().style.overflowY).toEqual('scroll');
+    const { container } = render(createTable({ scroll: { x: true, y: 200 } }));
+    const body = container.querySelector('.rc-table-body');
+    expect(body.style.overflowX).toEqual('auto');
+    expect(body.style.overflowY).toEqual('scroll');
   });
 
   it('fire scroll event', () => {
@@ -88,7 +93,7 @@ describe('Table.Scroll', () => {
       { a: '123', b: 'xxxxxxxx', c: 3, d: 'hehe', key: '1' },
       { a: 'cdd', b: 'edd12221', c: 3, d: 'haha', key: '2' },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={newColumns}
         data={newData}
@@ -99,10 +104,13 @@ describe('Table.Scroll', () => {
       />,
     );
 
-    vi.runAllTimers();
+    act(() => {
+      vi.runAllTimers();
+    });
+
     // Use `onScroll` directly since simulate not support `currentTarget`
     act(() => {
-      const headerDiv = wrapper.find('div.rc-table-header').instance();
+      const headerDiv = container.querySelector('div.rc-table-header');
 
       const wheelEvent = new WheelEvent('wheel');
       Object.defineProperty(wheelEvent, 'deltaX', {
@@ -117,18 +125,25 @@ describe('Table.Scroll', () => {
     setScrollLeft.mockReset();
 
     act(() => {
-      wrapper
-        .find('.rc-table-body')
-        .props()
-        .onScroll({
-          currentTarget: {
-            scrollLeft: 33,
-            scrollWidth: 200,
-            clientWidth: 100,
-          },
-        });
+      const body = container.querySelector('.rc-table-body');
+
+      Object.defineProperty(body, 'scrollLeft', {
+        get: () => 33,
+      });
+      Object.defineProperty(body, 'scrollWidth', {
+        get: () => 200,
+      });
+      Object.defineProperty(body, 'clientWidth', {
+        get: () => 100,
+      });
+
+      fireEvent.scroll(body);
     });
-    vi.runAllTimers();
+
+    act(() => {
+      vi.runAllTimers();
+    });
+
     expect(setScrollLeft).toHaveBeenCalledWith(undefined, 33);
     setScrollLeft.mockReset();
 
@@ -146,7 +161,7 @@ describe('Table.Scroll', () => {
 
     const tRef = React.createRef();
 
-    const wrapper = mount(createTable({ ref: tRef }));
+    const { container } = render(createTable({ ref: tRef }));
 
     tRef.current.scrollTo({
       top: 0,

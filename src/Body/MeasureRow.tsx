@@ -1,7 +1,7 @@
 import * as React from 'react';
-import ResizeObserver from 'rc-resize-observer';
+import ResizeObserver from '@rc-component/resize-observer';
 import MeasureCell from './MeasureCell';
-import isVisible from 'rc-util/lib/Dom/isVisible';
+import isVisible from '@rc-component/util/lib/Dom/isVisible';
 import { useContext } from '@rc-component/context';
 import TableContext from '../context/TableContext';
 import type { ColumnType } from '../interface';
@@ -13,13 +13,14 @@ export interface MeasureRowProps {
   columns: readonly ColumnType<any>[];
 }
 
-export default function MeasureRow({
+const MeasureRow: React.FC<MeasureRowProps> = ({
   prefixCls,
   columnsKey,
   onColumnResize,
   columns,
-}: MeasureRowProps) {
+}) => {
   const ref = React.useRef<HTMLTableRowElement>(null);
+
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
   const measureRow = (
@@ -40,7 +41,7 @@ export default function MeasureRow({
               key={columnKey}
               columnKey={columnKey}
               onColumnResize={onColumnResize}
-              column={column}
+              title={column?.title}
             />
           );
         })}
@@ -48,5 +49,7 @@ export default function MeasureRow({
     </tr>
   );
 
-  return measureRowRender ? measureRowRender(measureRow) : measureRow;
-}
+  return typeof measureRowRender === 'function' ? measureRowRender(measureRow) : measureRow;
+};
+
+export default MeasureRow;

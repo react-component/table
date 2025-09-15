@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import cls from 'classnames';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -14,11 +14,12 @@ import type {
 } from '../interface';
 import useCellRender from './useCellRender';
 import useHoverState from './useHoverState';
-import { useEvent } from 'rc-util';
+import { useEvent } from '@rc-component/util';
 
 export interface CellProps<RecordType extends DefaultRecordType> {
   prefixCls?: string;
   className?: string;
+  style?: React.CSSProperties;
   record?: RecordType;
   /** `column` index is the real show rowIndex */
   index?: number;
@@ -37,12 +38,14 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   shouldCellUpdate?: (record: RecordType, prevRecord: RecordType) => boolean;
 
   // Fixed
-  fixLeft?: number | false;
-  fixRight?: number | false;
-  firstFixLeft?: boolean;
-  lastFixLeft?: boolean;
-  firstFixRight?: boolean;
-  lastFixRight?: boolean;
+  fixStart?: number | false;
+  fixEnd?: number | false;
+  fixedStartShadow?: boolean;
+  fixedEndShadow?: boolean;
+  offsetFixedStartShadow?: number;
+  offsetFixedEndShadow?: number;
+  zIndex?: number;
+  zIndexReverse?: number;
   allColsFixedLeft?: boolean;
 
   // ====================== Private Props ======================
@@ -65,14 +68,17 @@ const getTitleFromCellRenderChildren = ({
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
     if (typeof children === 'string' || typeof children === 'number') {
       title = children.toString();
-    } else if (React.isValidElement(children) && typeof children.props.children === 'string') {
-      title = children.props.children;
+    } else if (
+      React.isValidElement<any>(children) &&
+      typeof (children.props as any)?.children === 'string'
+    ) {
+      title = (children.props as any)?.children;
     }
   }
   return title;
 };
 
-function Cell<RecordType>(props: CellProps<RecordType>) {
+const Cell = <RecordType,>(props: CellProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -86,6 +92,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     // Style
     prefixCls,
     className,
+    style,
     align,
 
     // Value
@@ -104,12 +111,14 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     rowSpan,
 
     // Fixed
-    fixLeft,
-    fixRight,
-    firstFixLeft,
-    lastFixLeft,
-    firstFixRight,
-    lastFixRight,
+    fixStart,
+    fixEnd,
+    fixedStartShadow,
+    fixedEndShadow,
+    offsetFixedStartShadow,
+    offsetFixedEndShadow,
+    zIndex,
+    zIndexReverse,
 
     // Private
     appendNode,
@@ -118,8 +127,8 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
   } = props;
 
   const cellPrefixCls = `${prefixCls}-cell`;
-  const { supportSticky, allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
-    'supportSticky',
+
+  const { allColumnsFixedLeft, rowHoverable } = useContext(TableContext, [
     'allColumnsFixedLeft',
     'rowHoverable',
   ]);
@@ -136,16 +145,39 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // ====================== Fixed =======================
   const fixedStyle: React.CSSProperties = {};
-  const isFixLeft = typeof fixLeft === 'number' && supportSticky;
-  const isFixRight = typeof fixRight === 'number' && supportSticky;
+  const isFixStart = typeof fixStart === 'number' && !allColumnsFixedLeft;
+  const isFixEnd = typeof fixEnd === 'number' && !allColumnsFixedLeft;
 
-  if (isFixLeft) {
-    fixedStyle.position = 'sticky';
-    fixedStyle.left = fixLeft as number;
+  const [showFixStartShadow, showFixEndShadow] = useContext(TableContext, ({ scrollInfo }) => {
+    if (!isFixStart && !isFixEnd) {
+      return [false, false];
+    }
+
+    const [absScroll, scrollWidth] = scrollInfo;
+
+    const showStartShadow =
+      (isFixStart && fixedStartShadow && absScroll) -
+        // For precision, we not show shadow by default which has better user experience.
+        (offsetFixedStartShadow as number) >=
+      1;
+    const showEndShadow =
+      (isFixEnd && fixedEndShadow && scrollWidth - absScroll) -
+        // Same as above
+        (offsetFixedEndShadow as number) >=
+      1;
+
+    return [showStartShadow, showEndShadow];
+  });
+
+  if (isFixStart) {
+    fixedStyle.insetInlineStart = fixStart as number;
+    fixedStyle['--z-offset'] = zIndex;
+    fixedStyle['--z-offset-reverse'] = zIndexReverse;
   }
-  if (isFixRight) {
-    fixedStyle.position = 'sticky';
-    fixedStyle.right = fixRight as number;
+  if (isFixEnd) {
+    fixedStyle.insetInlineEnd = fixEnd as number;
+    fixedStyle['--z-offset'] = zIndex;
+    fixedStyle['--z-offset-reverse'] = zIndexReverse;
   }
 
   // ================ RowSpan & ColSpan =================
@@ -186,20 +218,24 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     });
 
   // >>>>> ClassName
-  const mergedClassName = classNames(
+  const mergedClassName = cls(
     cellPrefixCls,
     className,
     {
-      [`${cellPrefixCls}-fix-left`]: isFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-first`]: firstFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-last`]: lastFixLeft && supportSticky,
-      [`${cellPrefixCls}-fix-left-all`]: lastFixLeft && allColumnsFixedLeft && supportSticky,
-      [`${cellPrefixCls}-fix-right`]: isFixRight && supportSticky,
-      [`${cellPrefixCls}-fix-right-first`]: firstFixRight && supportSticky,
-      [`${cellPrefixCls}-fix-right-last`]: lastFixRight && supportSticky,
+      // Fixed
+      [`${cellPrefixCls}-fix`]: isFixStart || isFixEnd,
+      [`${cellPrefixCls}-fix-start`]: isFixStart,
+      [`${cellPrefixCls}-fix-end`]: isFixEnd,
+
+      // Fixed shadow
+      [`${cellPrefixCls}-fix-start-shadow`]: fixedStartShadow,
+      [`${cellPrefixCls}-fix-start-shadow-show`]: fixedStartShadow && showFixStartShadow,
+      [`${cellPrefixCls}-fix-end-shadow`]: fixedEndShadow,
+      [`${cellPrefixCls}-fix-end-shadow-show`]: fixedEndShadow && showFixEndShadow,
+
       [`${cellPrefixCls}-ellipsis`]: ellipsis,
       [`${cellPrefixCls}-with-append`]: appendNode,
-      [`${cellPrefixCls}-fix-sticky`]: (isFixLeft || isFixRight) && isSticky && supportSticky,
+      [`${cellPrefixCls}-fix-sticky`]: (isFixStart || isFixEnd) && isSticky,
       [`${cellPrefixCls}-row-hover`]: !legacyCellProps && hovering,
     },
     additionalProps.className,
@@ -214,11 +250,12 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // The order is important since user can overwrite style.
   // For example ant-design/ant-design#51763
-  const mergedStyle = {
+  const mergedStyle: React.CSSProperties = {
     ...legacyCellProps?.style,
     ...fixedStyle,
     ...alignStyle,
     ...additionalProps.style,
+    ...style,
   };
 
   // >>>>> Children Node
@@ -233,7 +270,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     mergedChildNode = null;
   }
 
-  if (ellipsis && (lastFixLeft || firstFixRight)) {
+  if (ellipsis && (fixedStartShadow || fixedEndShadow)) {
     mergedChildNode = <span className={`${cellPrefixCls}-content`}>{mergedChildNode}</span>;
   }
 
@@ -257,6 +294,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       {mergedChildNode}
     </Component>
   );
-}
+};
 
 export default React.memo(Cell) as typeof Cell;

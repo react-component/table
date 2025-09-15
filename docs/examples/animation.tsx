@@ -1,7 +1,7 @@
 import React from 'react';
 import CSSMotionList from 'rc-animate/lib/CSSMotionList';
 import classNames from 'classnames';
-import toArray from 'rc-util/lib/Children/toArray';
+import toArray from '@rc-component/util/lib/Children/toArray';
 import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
@@ -11,7 +11,7 @@ type MotionBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
 const MotionBody: React.FC<MotionBodyProps> = ({ children, ...props }) => {
   const nodeList = toArray(children);
-  const nodesRef = React.useRef<Record<string, React.ReactElement>>({});
+  const nodesRef = React.useRef<Record<string, React.ReactElement<any>>>({});
 
   // Better apply clean up logic to avoid OOM
   const keys: React.Key[] = [];
@@ -26,7 +26,7 @@ const MotionBody: React.FC<MotionBodyProps> = ({ children, ...props }) => {
       <CSSMotionList keys={keys} component={false} motionName="move">
         {({ key, className }) => {
           const node = nodesRef.current[key];
-          return React.cloneElement(node, {
+          return React.cloneElement<any>(node, {
             className: classNames(node.props.className, className),
           });
         }}

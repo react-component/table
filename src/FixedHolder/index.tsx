@@ -1,6 +1,6 @@
 import { useContext } from '@rc-component/context';
 import classNames from 'classnames';
-import { fillRef } from 'rc-util/lib/ref';
+import { fillRef } from '@rc-component/util/lib/ref';
 import * as React from 'react';
 import { useMemo } from 'react';
 import ColGroup from '../ColGroup';
@@ -26,7 +26,9 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
+  style?: React.CSSProperties;
   noData: boolean;
+  maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
   direction: Direction;
@@ -38,7 +40,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
-  colGroup?: React.ReactNode;
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
@@ -48,11 +49,11 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const {
     className,
+    style,
     noData,
     columns,
     flattenColumns,
     colWidths,
-    colGroup,
     columCount,
     stickyOffsets,
     direction,
@@ -63,6 +64,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     scrollX,
     tableLayout = 'fixed',
     onScroll,
+    maxContentScroll,
     children,
     ...restProps
   } = props;
@@ -73,6 +75,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     'isSticky',
     'getComponent',
   ]);
+
   const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
@@ -89,7 +92,22 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     function onWheel(e: WheelEvent) {
       const { currentTarget, deltaX } = e as unknown as React.WheelEvent<HTMLDivElement>;
       if (deltaX) {
-        onScroll({ currentTarget, scrollLeft: currentTarget.scrollLeft + deltaX });
+        const { scrollLeft, scrollWidth, clientWidth } = currentTarget;
+        const maxScrollWidth = scrollWidth - clientWidth;
+        let nextScroll = scrollLeft + deltaX;
+
+        if (direction === 'rtl') {
+          nextScroll = Math.max(-maxScrollWidth, nextScroll);
+          nextScroll = Math.min(0, nextScroll);
+        } else {
+          nextScroll = Math.min(maxScrollWidth, nextScroll);
+          nextScroll = Math.max(0, nextScroll);
+        }
+
+        onScroll({
+          currentTarget,
+          scrollLeft: nextScroll,
+        });
         e.preventDefault();
       }
     }
@@ -124,13 +142,15 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   // Calculate the sticky offsets
   const headerStickyOffsets = useMemo(() => {
-    const { right, left } = stickyOffsets;
+    const { start, end } = stickyOffsets;
     return {
       ...stickyOffsets,
-      left:
-        direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
-      right:
-        direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      // left:
+      //   direction === 'rtl' ? [...left.map(width => width + combinationScrollBarSize), 0] : left,
+      // right:
+      //   direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
+      start: start,
+      end: [...end.map(width => width + combinationScrollBarSize), 0],
       isSticky,
     };
   }, [combinationScrollBarSize, stickyOffsets, isSticky]);
@@ -150,6 +170,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       style={{
         overflow: 'hidden',
         ...(isSticky ? { top: stickyTopOffset, bottom: stickyBottomOffset } : {}),
+        ...style,
       }}
       ref={setScrollRef}
       className={classNames(className, {

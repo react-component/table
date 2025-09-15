@@ -1,6 +1,6 @@
-import { getDOM } from 'rc-util/lib/Dom/findDOMNode';
+import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
 
-// Copy from `rc-util/Dom/css.js`
+// Copy from `rc-component/util/Dom/css.js`
 export function getOffset(node: HTMLElement | Window) {
   const element = getDOM(node);
   const box = element.getBoundingClientRect();

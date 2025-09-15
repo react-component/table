@@ -1,1550 +1,1280 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Table.Expand > childrenColumnName 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Age
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-1"
+            data-row-key="2"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-expanded"
-                />
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-1"
-              data-row-key="2"
+              <span
+                class="rc-table-row-indent indent-level-1"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jim
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-1"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jim
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                1
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              1
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > does not crash if scroll is not set 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
-      <div
-        class="rc-table-content"
-        style="overflow-x: auto; overflow-y: hidden;"
+      <table
+        style="min-width: 100%; table-layout: fixed;"
       >
-        <table
-          style="min-width: 100%; table-layout: fixed;"
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              class="rc-table-expand-icon-col"
+          <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Gender
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
           >
-            <tr>
-              <th
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              />
-              <th
-                class="rc-table-cell"
-                scope="col"
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                F
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                M
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              27
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              F
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > does not crash if scroll is not set 2`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
-      <div
-        class="rc-table-content"
-        style="overflow-x: auto; overflow-y: hidden;"
+      <table
+        style="min-width: 100%; table-layout: fixed;"
       >
-        <table
-          style="min-width: 100%; table-layout: fixed;"
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              class="rc-table-expand-icon-col"
+          <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Gender
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
           >
-            <tr>
-              <th
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              />
-              <th
-                class="rc-table-cell"
-                scope="col"
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                F
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                M
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              27
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              F
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > not use nest when children is invalidate 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Age
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="4"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="2"
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="4"
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="5"
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="5"
+          >
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > renders fixed column correctly > work 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left rc-table-has-fix-right"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start rc-table-has-fix-end"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
-      <div
-        class="rc-table-content"
-        style="overflow-x: auto; overflow-y: hidden;"
+      <table
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
       >
-        <table
-          style="width: 903px; min-width: 100%; table-layout: fixed;"
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              class="rc-table-expand-icon-col"
+          <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              scope="col"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              scope="col"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
+            >
+              Gender
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
           >
-            <tr>
-              <th
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-                style="position: sticky; left: 0px;"
-              />
-              <th
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                scope="col"
-                style="position: sticky; left: 0px;"
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                scope="col"
-                style="position: sticky; right: 0px;"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-expanded"
-                />
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                style="position: sticky; right: 0px;"
-              >
-                F
-              </td>
-            </tr>
-            <tr
-              class="rc-table-expanded-row rc-table-expanded-row-level-1"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-                colspan="4"
-              >
-                <div
-                  class="rc-table-expanded-row-fixed"
-                  style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
-                >
-                  <p>
-                    extra data
-                  </p>
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              27
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-expanded"
-                />
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-              <td
-                class="rc-table-cell rc-table-cell-fix-right rc-table-cell-fix-right-first"
-                style="position: sticky; right: 0px;"
-              >
-                M
-              </td>
-            </tr>
-            <tr
-              class="rc-table-expanded-row rc-table-expanded-row-level-1"
+              F
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
+          >
+            <td
+              class="rc-table-cell"
+              colspan="4"
             >
-              <td
-                class="rc-table-cell"
-                colspan="4"
+              <div
+                class="rc-table-expanded-row-fixed"
+                style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
               >
-                <div
-                  class="rc-table-expanded-row-fixed"
-                  style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
-                >
-                  <p>
-                    extra data
-                  </p>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                <p>
+                  extra data
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 7; --z-offset-reverse: 5;"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
+              style="inset-inline-end: 0; --z-offset: 3; --z-offset-reverse: 1;"
+            >
+              M
+            </td>
+          </tr>
+          <tr
+            class="rc-table-expanded-row rc-table-expanded-row-level-1"
+          >
+            <td
+              class="rc-table-cell"
+              colspan="4"
+            >
+              <div
+                class="rc-table-expanded-row-fixed"
+                style="width: 1128px; position: sticky; left: 0px; overflow: hidden;"
+              >
+                <p>
+                  extra data
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > renders tree row correctly 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Age
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-expanded"
+              />
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-1"
+            data-row-key="2"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-expanded"
-                />
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-1"
-              data-row-key="2"
+              <span
+                class="rc-table-row-indent indent-level-1"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jim
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-1"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jim
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                1
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              1
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > renders tree row correctly with different children 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table"
+<div
+  class="rc-table"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
     >
-      <div
-        class="rc-table-content"
+      <table
+        style="table-layout: auto;"
       >
-        <table
-          style="table-layout: auto;"
+        <thead
+          class="rc-table-thead"
         >
-          <thead
-            class="rc-table-thead"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
-              >
-                Age
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              27
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
           >
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="2"
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="2"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="3"
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="4"
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="3"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="5"
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-cell-with-append"
-              >
-                <span
-                  class="rc-table-row-indent indent-level-0"
-                />
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-spaced"
-                />
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="4"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="5"
+          >
+            <td
+              class="rc-table-cell rc-table-cell-with-append"
+            >
+              <span
+                class="rc-table-row-indent indent-level-0"
+              />
+              <span
+                class="rc-table-row-expand-icon rc-table-row-spaced"
+              />
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > work in expandable fix 1`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-left"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal rc-table-has-fix-start"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
-      <div
-        class="rc-table-content"
-        style="overflow-x: auto; overflow-y: hidden;"
+      <table
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
       >
-        <table
-          style="width: 903px; min-width: 100%; table-layout: fixed;"
+        <colgroup>
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col
-              class="rc-table-expand-icon-col"
+          <tr>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Gender
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
           >
-            <tr>
-              <th
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              />
-              <th
-                class="rc-table-cell"
-                scope="col"
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
+              >
+                 
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                   
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                F
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                M
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              27
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              F
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 8; --z-offset-reverse: 4;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;
 
 exports[`Table.Expand > work in expandable fix 2`] = `
-LoadedCheerio {
-  "0": <div
-    class="rc-table rc-table-fixed-column rc-table-fixed-column-gapped rc-table-scroll-horizontal"
+<div
+  class="rc-table rc-table-fix-start-shadow rc-table-fix-end-shadow rc-table-fixed-column rc-table-scroll-horizontal"
+>
+  <div
+    class="rc-table-container"
   >
     <div
-      class="rc-table-container"
+      class="rc-table-content"
+      style="overflow-x: auto; overflow-y: hidden;"
     >
-      <div
-        class="rc-table-content"
-        style="overflow-x: auto; overflow-y: hidden;"
+      <table
+        style="width: 903px; min-width: 100%; table-layout: fixed;"
       >
-        <table
-          style="width: 903px; min-width: 100%; table-layout: fixed;"
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col
+            class="rc-table-expand-icon-col"
+          />
+        </colgroup>
+        <thead
+          class="rc-table-thead"
         >
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col
-              class="rc-table-expand-icon-col"
+          <tr>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Age
+            </th>
+            <th
+              class="rc-table-cell"
+              scope="col"
+            >
+              Gender
+            </th>
+            <th
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
             />
-          </colgroup>
-          <thead
-            class="rc-table-thead"
+          </tr>
+        </thead>
+        <tbody
+          class="rc-table-tbody"
+        >
+          <tr
+            aria-hidden="true"
+            class="rc-table-measure-row"
+            style="height: 0px;"
           >
-            <tr>
-              <th
-                class="rc-table-cell"
-                scope="col"
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Name
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Age
-              </th>
-              <th
-                class="rc-table-cell"
-                scope="col"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
               >
                 Gender
-              </th>
-              <th
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              />
-            </tr>
-          </thead>
-          <tbody
-            class="rc-table-tbody"
+              </div>
+            </td>
+            <td
+              style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+            >
+              <div
+                style="height: 0px; overflow: hidden; font-weight: bold;"
+              >
+                 
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="0"
           >
-            <tr
-              aria-hidden="true"
-              class="rc-table-measure-row"
-              style="height: 0px;"
+            <td
+              class="rc-table-cell"
             >
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Name
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Age
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                  Gender
-                </div>
-              </td>
-              <td
-                style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
-              >
-                <div
-                  style="height: 0px; overflow: hidden; font-weight: bold;"
-                >
-                   
-                </div>
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="0"
+              Lucy
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Lucy
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                27
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                F
-              </td>
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-            </tr>
-            <tr
-              class="rc-table-row rc-table-row-level-0"
-              data-row-key="1"
+              27
+            </td>
+            <td
+              class="rc-table-cell"
             >
-              <td
-                class="rc-table-cell"
-              >
-                Jack
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                28
-              </td>
-              <td
-                class="rc-table-cell"
-              >
-                M
-              </td>
-              <td
-                class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix-left rc-table-cell-fix-left-last"
-                style="position: sticky; left: 0px;"
-              >
-                <span
-                  class="rc-table-row-expand-icon rc-table-row-collapsed"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              F
+            </td>
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+          </tr>
+          <tr
+            class="rc-table-row rc-table-row-level-0"
+            data-row-key="1"
+          >
+            <td
+              class="rc-table-cell"
+            >
+              Jack
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              28
+            </td>
+            <td
+              class="rc-table-cell"
+            >
+              M
+            </td>
+            <td
+              class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
+              style="inset-inline-start: 0; --z-offset: 5; --z-offset-reverse: 7;"
+            >
+              <span
+                class="rc-table-row-expand-icon rc-table-row-collapsed"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>,
-  "_root": LoadedCheerio {
-    "0": Document {
-      "children": [
-        <html>
-          <head />
-          <body />
-        </html>,
-      ],
-      "endIndex": null,
-      "next": null,
-      "parent": null,
-      "prev": null,
-      "startIndex": null,
-      "type": "root",
-      "x-mode": "quirks",
-    },
-    "_root": [Circular],
-    "length": 1,
-    "options": {
-      "decodeEntities": true,
-      "xml": false,
-    },
-  },
-  "length": 1,
-  "options": {
-    "decodeEntities": true,
-    "xml": false,
-  },
-}
+  </div>
+</div>
 `;

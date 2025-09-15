@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import Table, { type Reference } from '../src';
 
@@ -61,5 +61,52 @@ describe('Table.Ref', () => {
       key: 'bamboo',
     });
     expect(scrollIntoViewElement.textContent).toEqual('bamboo');
+  });
+
+  it('support scrollTo with offset', () => {
+    const ref = React.createRef<Reference>();
+
+    render(
+      <Table
+        data={[{ key: 'light' }, { key: 'bamboo' }]}
+        columns={[
+          {
+            dataIndex: 'key',
+          },
+        ]}
+        ref={ref}
+        scroll={{
+          y: 10,
+        }}
+      />,
+    );
+
+    // Scroll To top with offset should ignore offset
+    ref.current.scrollTo({
+      top: 100,
+      offset: 50,
+    });
+    expect(scrollParam.top).toEqual(100); // offset ignored
+
+    // Scroll index with offset
+    ref.current.scrollTo({
+      index: 0,
+      offset: 30,
+    });
+    expect(scrollParam.top).toEqual(30); // offsetTop (0) + offset (30)
+
+    // Scroll key with offset
+    ref.current.scrollTo({
+      key: 'bamboo',
+      offset: 20,
+    });
+    expect(scrollParam.top).toEqual(20); // offsetTop (0) + offset (20)
+
+    // Scroll index without offset should use scrollIntoView
+    scrollIntoViewElement = null;
+    ref.current.scrollTo({
+      index: 0,
+    });
+    expect(scrollIntoViewElement.textContent).toEqual('light');
   });
 });

@@ -1,15 +1,19 @@
-import useMemo from 'rc-util/lib/hooks/useMemo';
-import isEqual from 'rc-util/lib/isEqual';
-import type { ColumnType, Direction, StickyOffsets } from '../interface';
+import useMemo from '@rc-component/util/lib/hooks/useMemo';
+import isEqual from '@rc-component/util/lib/isEqual';
+import type { ColumnType, StickyOffsets } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
+import * as React from 'react';
 
 export default function useFixedInfo<RecordType>(
   flattenColumns: readonly ColumnType<RecordType>[],
   stickyOffsets: StickyOffsets,
-  direction: Direction,
 ) {
-  const fixedInfoList = flattenColumns.map((_, colIndex) =>
-    getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction),
+  const fixedInfoList = React.useMemo(
+    () =>
+      flattenColumns.map((_, colIndex) =>
+        getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets),
+      ),
+    [flattenColumns, stickyOffsets],
   );
 
   return useMemo(
