@@ -1,5 +1,4 @@
 import React from 'react';
-import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
 import '../../assets/index.less';
 import type { ColumnsType } from '@/interface';

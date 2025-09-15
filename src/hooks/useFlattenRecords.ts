@@ -62,7 +62,7 @@ export default function useFlattenRecords<T>(
   expandedKeys: Set<Key>,
   getRowKey: GetRowKey<T>,
 ): FlattenData<T>[] {
-  const arr: FlattenData<T>[] = React.useMemo(() => {
+  const arr = React.useMemo<FlattenData<T>[]>(() => {
     if (expandedKeys?.size) {
       const list: FlattenData<T>[] = [];
 

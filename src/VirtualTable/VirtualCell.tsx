@@ -36,7 +36,7 @@ export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset:
   return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
 }
 
-function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
+const VirtualCell = <RecordType,>(props: VirtualCellProps<RecordType>) => {
   const {
     rowInfo,
     column,
@@ -135,6 +135,6 @@ function VirtualCell<RecordType = any>(props: VirtualCellProps<RecordType>) {
       }}
     />
   );
-}
+};
 
 export default VirtualCell;

@@ -39,7 +39,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   // ========================== Expand ==========================
   const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
 
-  let expandRowNode: React.ReactElement;
+  let expandRowNode: React.ReactElement<any>;
   if (rowSupportExpand && expanded) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
