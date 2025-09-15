@@ -33,13 +33,10 @@ const Cell = ({ columnIndex, rowIndex, style }) => (
 );
 
 const Demo = () => {
-  const gridRef = React.useRef<any>();
+  const gridRef = React.useRef<any>(null);
 
   React.useEffect(() => {
-    gridRef.current.resetAfterIndices({
-      columnIndex: 0,
-      shouldForceUpdate: false,
-    });
+    gridRef.current.resetAfterIndices({ columnIndex: 0, shouldForceUpdate: false });
   }, []);
 
   const renderVirtualList = (rawData: object[], { scrollbarSize }: any) => (
