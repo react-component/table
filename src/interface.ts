@@ -81,7 +81,7 @@ export interface RenderedCell<RecordType> {
 export type Direction = 'ltr' | 'rtl';
 
 // SpecialString will be removed in antd@6
-export type SpecialString<T> = T | (string & unknown);
+export type SpecialString<T> = T | (string & NonNullable<unknown>);
 
 export type DataIndex<T = any> =
   | DeepNamePath<T>
