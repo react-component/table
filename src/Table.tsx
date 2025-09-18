@@ -741,6 +741,7 @@ const Table = <RecordType extends DefaultRecordType>(
             stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -756,6 +757,7 @@ const Table = <RecordType extends DefaultRecordType>(
             stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedFooterTable}
           </FixedHolder>
