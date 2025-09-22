@@ -35,13 +35,17 @@ export default function MeasureRow({
       >
         {columnsKey.map(columnKey => {
           const column = columns.find(col => col.key === columnKey);
+          const rawTitle = column?.title;
+          const titleForMeasure = React.isValidElement<React.RefAttributes<any>>(rawTitle)
+            ? React.cloneElement(rawTitle, { ref: null })
+            : rawTitle;
           return (
             <MeasureCell
               prefixCls={prefixCls}
               key={columnKey}
               columnKey={columnKey}
               onColumnResize={onColumnResize}
-              column={column}
+              title={titleForMeasure}
             />
           );
         })}
