@@ -219,6 +219,20 @@
     }
   }
 
+  th&-measure-cell {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  &-measure-cell-content {
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   &-content {
     .tableBorder();
     border-radius: 5px 0 0 0;
