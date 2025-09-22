@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
-import type { ColumnType } from '../interface';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
