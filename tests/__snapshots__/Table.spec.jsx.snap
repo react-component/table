@@ -275,27 +275,21 @@ LoadedCheerio {
               >
                 <div
                   class="rc-table-measure-cell-content"
-                >
-                  Name
-                </div>
+                />
               </th>
               <th
                 class="rc-table-measure-cell"
               >
                 <div
                   class="rc-table-measure-cell-content"
-                >
-                  Age
-                </div>
+                />
               </th>
               <th
                 class="rc-table-measure-cell"
               >
                 <div
                   class="rc-table-measure-cell-content"
-                >
-                  Gender
-                </div>
+                />
               </th>
             </tr>
             <tr
