@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ResizeObserver from 'rc-resize-observer';
 import useLayoutEffect from 'rc-util/lib/hooks/useLayoutEffect';
+import ShadowComponent from './ShadowComponent';
 import type { ColumnType } from '../interface';
 
 export interface MeasureCellProps {
@@ -27,7 +28,9 @@ export default function MeasureCell({
   return (
     <ResizeObserver data={columnKey}>
       <th ref={cellRef} className={`${prefixCls}-measure-cell`}>
-        <div className={`${prefixCls}-measure-cell-content`}>{column?.title || '\xa0'}</div>
+        <ShadowComponent className={`${prefixCls}-measure-cell-content`}>
+          {column?.title || '\xa0'}
+        </ShadowComponent>
       </th>
     </ResizeObserver>
   );
