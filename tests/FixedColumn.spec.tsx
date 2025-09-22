@@ -240,11 +240,11 @@ describe('Table.FixedColumn', () => {
   it('not break measure count', async () => {
     const wrapper = mount(<Table columns={columns.slice(0, 5)} data={data} scroll={{ x: 1000 }} />);
     await safeAct(wrapper);
-    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(5);
+    expect(wrapper.find('.rc-table-measure-row th')).toHaveLength(5);
 
     wrapper.setProps({ columns: columns.slice(0, 4) });
     wrapper.update();
-    expect(wrapper.find('.rc-table-measure-row td')).toHaveLength(4);
+    expect(wrapper.find('.rc-table-measure-row th')).toHaveLength(4);
   });
 
   it('when all columns fixed left,cell should has classname rc-table-cell-fix-left-all', async () => {
