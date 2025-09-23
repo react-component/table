@@ -24,7 +24,7 @@ const MeasureCell: React.FC<MeasureCellProps> = props => {
     if (cellRef.current) {
       onColumnResize(columnKey, cellRef.current.offsetWidth);
     }
-  }, [columnIndex]);
+  }, []);
 
   return (
     <ResizeObserver data={columnKey}>
