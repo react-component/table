@@ -35,17 +35,13 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
         }}
       >
         {columnsKey.map(columnKey => {
-          const column = columns.find(col => col.key === columnKey);
-          const rawTitle = column?.title;
-          const titleForMeasure = React.isValidElement<React.RefAttributes<any>>(rawTitle)
-            ? React.cloneElement(rawTitle, { ref: null })
-            : rawTitle;
+          const columnIndex = columns.findIndex(col => col.key === columnKey);
           return (
             <MeasureCell
               key={columnKey}
+              columnIndex={columnIndex}
               columnKey={columnKey}
               onColumnResize={onColumnResize}
-              title={titleForMeasure}
             />
           );
         })}

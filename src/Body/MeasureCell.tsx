@@ -5,19 +5,26 @@ import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 export interface MeasureCellProps {
   columnKey: React.Key;
   onColumnResize: (key: React.Key, width: number) => void;
-  title?: React.ReactNode;
+  columnIndex?: number;
 }
 
 const MeasureCell: React.FC<MeasureCellProps> = props => {
-  const { columnKey, onColumnResize, title } = props;
-
+  const { columnKey, onColumnResize, columnIndex } = props;
+  const [width, setWidth] = React.useState(0);
   const cellRef = React.useRef<HTMLTableCellElement>(null);
 
   useLayoutEffect(() => {
+    if (columnIndex !== undefined) {
+      setWidth(
+        document
+          .querySelectorAll('.rc-table-thead >tr > .rc-table-cell')
+          [columnIndex]?.getClientRects()[0].width || 0,
+      );
+    }
     if (cellRef.current) {
       onColumnResize(columnKey, cellRef.current.offsetWidth);
     }
-  }, []);
+  }, [columnIndex]);
 
   return (
     <ResizeObserver data={columnKey}>
@@ -25,7 +32,9 @@ const MeasureCell: React.FC<MeasureCellProps> = props => {
         ref={cellRef}
         style={{ paddingTop: 0, paddingBottom: 0, borderTop: 0, borderBottom: 0, height: 0 }}
       >
-        <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>{title || '\xa0'}</div>
+        <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold', width: `${width}px` }}>
+          {'\xa0'}
+        </div>
       </td>
     </ResizeObserver>
   );
