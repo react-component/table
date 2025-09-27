@@ -25,7 +25,7 @@
  */
 
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
-import cls from 'classnames';
+import { clsx } from 'clsx';
 import ResizeObserver from '@rc-component/resize-observer';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
@@ -779,12 +779,8 @@ const Table = <RecordType extends DefaultRecordType>(
     // >>>>>> Unique table
     groupTableNode = (
       <div
-        style={{
-          ...scrollXStyle,
-          ...scrollYStyle,
-          ...styles?.content,
-        }}
-        className={cls(`${prefixCls}-content`, classNames?.content)}
+        style={{ ...scrollXStyle, ...scrollYStyle, ...styles?.content }}
+        className={clsx(`${prefixCls}-content`, classNames?.content)}
         onScroll={onInternalScroll}
         ref={scrollBodyRef}
       >
@@ -817,7 +813,7 @@ const Table = <RecordType extends DefaultRecordType>(
 
   let fullTable = (
     <div
-      className={cls(prefixCls, className, {
+      className={clsx(prefixCls, className, {
         [`${prefixCls}-rtl`]: direction === 'rtl',
         [`${prefixCls}-fix-start-shadow`]: horizonScroll,
         [`${prefixCls}-fix-end-shadow`]: horizonScroll,
@@ -837,19 +833,19 @@ const Table = <RecordType extends DefaultRecordType>(
       {...dataProps}
     >
       {title && (
-        <Panel className={cls(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
+        <Panel className={clsx(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
           {title(mergedData)}
         </Panel>
       )}
       <div
         ref={scrollBodyContainerRef}
-        className={cls(`${prefixCls}-container`, classNames?.section)}
+        className={clsx(`${prefixCls}-container`, classNames?.section)}
         style={styles?.section}
       >
         {groupTableNode}
       </div>
       {footer && (
-        <Panel className={cls(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
+        <Panel className={clsx(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
           {footer(mergedData)}
         </Panel>
       )}

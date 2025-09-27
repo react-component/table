@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import cls from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -218,7 +218,7 @@ const Cell = <RecordType,>(props: CellProps<RecordType>) => {
     });
 
   // >>>>> ClassName
-  const mergedClassName = cls(
+  const mergedClassName = clsx(
     cellPrefixCls,
     className,
     {

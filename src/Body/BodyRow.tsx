@@ -1,4 +1,4 @@
-import cls from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 import Cell from '../Cell';
 import { responseImmutable } from '../context/TableContext';
@@ -170,15 +170,13 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
     <RowComponent
       {...rowProps}
       data-row-key={rowKey}
-      className={cls(
+      className={clsx(
         className,
         `${prefixCls}-row`,
         `${prefixCls}-row-level-${indent}`,
         rowProps?.className,
         classNames.row,
-        {
-          [expandedClsName]: indent >= 1,
-        },
+        { [expandedClsName]: indent >= 1 },
       )}
       style={{
         ...style,
@@ -201,7 +199,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
 
         return (
           <Cell<RecordType>
-            className={cls(columnClassName, classNames.cell)}
+            className={clsx(columnClassName, classNames.cell)}
             style={styles.cell}
             ellipsis={column.ellipsis}
             align={column.align}
@@ -232,7 +230,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
     expandRowNode = (
       <ExpandedRow
         expanded={expanded}
-        className={cls(
+        className={clsx(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
           expandedClsName,

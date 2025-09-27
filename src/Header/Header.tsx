@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { clsx } from 'clsx';
 import { useContext } from '@rc-component/context';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -11,7 +12,6 @@ import type {
   StickyOffsets,
 } from '../interface';
 import HeaderRow from './HeaderRow';
-import cls from 'classnames';
 import type { TableProps } from '..';
 
 function parseHeaderRows<RecordType>(
@@ -33,7 +33,7 @@ function parseHeaderRows<RecordType>(
     const colSpans: number[] = columns.filter(Boolean).map(column => {
       const cell: CellType<RecordType> = {
         key: column.key,
-        className: cls(column.className, classNames.cell) || '',
+        className: clsx(column.className, classNames.cell) || '',
         style: styles.cell,
         children: column.title,
         column,
@@ -121,7 +121,7 @@ const Header = <RecordType extends any>(props: HeaderProps<RecordType>) => {
 
   return (
     <WrapperComponent
-      className={cls(`${prefixCls}-thead`, headerCls.wrapper)}
+      className={clsx(`${prefixCls}-thead`, headerCls.wrapper)}
       style={headerStyles.wrapper}
     >
       {rows.map((row, rowIndex) => {

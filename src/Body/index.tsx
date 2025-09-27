@@ -1,5 +1,6 @@
 import { useContext } from '@rc-component/context';
 import * as React from 'react';
+import { clsx } from 'clsx';
 import type { PerfRecord } from '../context/PerfContext';
 import PerfContext from '../context/PerfContext';
 import TableContext, { responseImmutable } from '../context/TableContext';
@@ -9,7 +10,6 @@ import { getColumnsKey } from '../utils/valueUtil';
 import BodyRow from './BodyRow';
 import ExpandedRow from './ExpandedRow';
 import MeasureRow from './MeasureRow';
-import cls from 'classnames';
 
 export interface BodyProps<RecordType> {
   data: readonly RecordType[];
@@ -136,7 +136,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     <PerfContext.Provider value={perfRef.current}>
       <WrapperComponent
         style={bodyStyles.wrapper}
-        className={cls(`${prefixCls}-tbody`, bodyCls.wrapper)}
+        className={clsx(`${prefixCls}-tbody`, bodyCls.wrapper)}
       >
         {/* Measure body column width with additional hidden col */}
         {measureColumnWidth && (

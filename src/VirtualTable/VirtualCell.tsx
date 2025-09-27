@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 import { getCellProps } from '../Body/BodyRow';
 import Cell from '../Cell';
@@ -113,7 +113,7 @@ const VirtualCell = <RecordType,>(props: VirtualCellProps<RecordType>) => {
 
   return (
     <Cell
-      className={classNames(columnClassName, className)}
+      className={clsx(columnClassName, className)}
       ellipsis={column.ellipsis}
       align={column.align}
       scope={column.rowScope}
