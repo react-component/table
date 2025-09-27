@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { VariableSizeGrid as Grid } from 'react-window';
 import Table from 'rc-table';
 import '../../assets/index.less';
@@ -23,7 +23,7 @@ for (let i = 0; i < 100000; i += 1) {
 
 const Cell = ({ columnIndex, rowIndex, style }) => (
   <div
-    className={classNames('virtual-cell', {
+    className={clsx('virtual-cell', {
       'virtual-cell-last': columnIndex === columns.length - 1,
     })}
     style={style}
