@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { fillRef } from '@rc-component/util/lib/ref';
 import * as React from 'react';
 import { useMemo } from 'react';
@@ -175,7 +175,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         ...style,
       }}
       ref={setScrollRef}
-      className={classNames(className, {
+      className={clsx(className, {
         [stickyClassName]: !!stickyClassName,
       })}
     >

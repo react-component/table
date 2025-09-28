@@ -1,5 +1,5 @@
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { useEvent, warning } from '@rc-component/util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
@@ -74,11 +74,8 @@ const VirtualTable = <RecordType,>(
     <StaticContext.Provider value={context}>
       <Table
         {...props}
-        className={classNames(className, `${prefixCls}-virtual`)}
-        scroll={{
-          ...scroll,
-          x: scrollX,
-        }}
+        className={clsx(className, `${prefixCls}-virtual`)}
+        scroll={{ ...scroll, x: scrollX }}
         components={{
           ...components,
           // fix https://github.com/ant-design/ant-design/issues/48991

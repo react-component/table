@@ -1,6 +1,6 @@
 import React from 'react';
 import CSSMotionList from 'rc-animate/lib/CSSMotionList';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import toArray from '@rc-component/util/lib/Children/toArray';
 import type { TableProps } from 'rc-table';
 import Table from 'rc-table';
@@ -27,7 +27,7 @@ const MotionBody: React.FC<MotionBodyProps> = ({ children, ...props }) => {
         {({ key, className }) => {
           const node = nodesRef.current[key];
           return React.cloneElement<any>(node, {
-            className: classNames(node.props.className, className),
+            className: clsx(node.props.className, className),
           });
         }}
       </CSSMotionList>

@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import getScrollBarSize from '@rc-component/util/lib/getScrollBarSize';
 import * as React from 'react';
 import TableContext from './context/TableContext';
@@ -196,7 +196,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       <div
         onMouseDown={onMouseDown}
         ref={scrollBarRef}
-        className={classNames(`${prefixCls}-sticky-scroll-bar`, {
+        className={clsx(`${prefixCls}-sticky-scroll-bar`, {
           [`${prefixCls}-sticky-scroll-bar-active`]: isActive,
         })}
         style={{
