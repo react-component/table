@@ -5,9 +5,12 @@ import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 export interface MeasureCellProps {
   columnKey: React.Key;
   onColumnWidthChange: (key: React.Key, width: number) => void;
+  title?: React.ReactNode;
 }
 
-const MeasureCell: React.FC<MeasureCellProps> = ({ columnKey, onColumnWidthChange }) => {
+const MeasureCell: React.FC<MeasureCellProps> = (props) => {
+
+  const { columnKey, onColumnWidthChange, title } = props;
   
   const cellRef = React.useRef<HTMLTableCellElement>(null);
 
