@@ -13,11 +13,9 @@ export interface MeasureRowProps {
   columns: readonly ColumnType<any>[];
 }
 
-const MeasureRow = ({
-  prefixCls,
-  columnsKey,
-  onColumnWidthChange,
-}: MeasureCellProps) => {
+const MeasureRow: React.FC<MeasureCellProps> = (props) => {
+
+  const { prefixCls, columnsKey, onColumnWidthChange, columns } = props;
   
   const ref = React.useRef<HTMLTableRowElement>(null);
 
