@@ -81,7 +81,7 @@ export interface RenderedCell<RecordType> {
 export type Direction = 'ltr' | 'rtl';
 
 // SpecialString will be removed in antd@6
-export type SpecialString<T> = T | (string & {});
+export type SpecialString<T> = T | (string & NonNullable<unknown>);
 
 export type DataIndex<T = any> =
   | DeepNamePath<T>
@@ -158,7 +158,7 @@ type Component<P> =
   | React.ComponentType<P>
   | React.ForwardRefExoticComponent<P>
   | React.FC<P>
-  | keyof React.ReactHTML;
+  | keyof React.JSX.IntrinsicElements;
 
 export type CustomizeComponent = Component<any>;
 

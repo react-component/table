@@ -40,6 +40,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'scrollX',
     'direction',
   ]);
+
   const {
     sticky,
     scrollY,
@@ -49,7 +50,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   } = useContext(StaticContext);
 
   // =========================== Ref ============================
-  const listRef = React.useRef<ListRef>();
+  const listRef = React.useRef<ListRef>(null);
 
   // =========================== Data ===========================
   const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
@@ -57,9 +58,10 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number, total: number][]>(() => {
     let total = 0;
-    return flattenColumns.map(({ width, key }) => {
-      total += width as number;
-      return [key, width as number, total];
+    return flattenColumns.map(({ width, minWidth, key }) => {
+      const finalWidth = Math.max((width as number) || 0, (minWidth as number) || 0);
+      total += finalWidth;
+      return [key, finalWidth, total];
     });
   }, [flattenColumns]);
 
@@ -82,11 +84,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
         // If offset is provided, force align to 'top' for consistent behavior
         if (offset) {
-          listRef.current?.scrollTo({
-            ...restConfig,
-            offset,
-            align: 'top',
-          });
+          listRef.current?.scrollTo({ ...restConfig, offset, align: 'top' });
         } else {
           listRef.current?.scrollTo(config);
         }
@@ -100,6 +98,17 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       set: (value: number) => {
         listRef.current?.scrollTo({
           left: value,
+        });
+      },
+    });
+
+    // https://github.com/ant-design/ant-design/issues/54734
+    Object.defineProperty(obj, 'scrollTop', {
+      get: () => listRef.current?.getScrollInfo().y || 0,
+
+      set: (value: number) => {
+        listRef.current?.scrollTo({
+          top: value,
         });
       },
     });
@@ -176,7 +185,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     }
 
     // Patch extra line on the page
-    const nodes: React.ReactElement[] = spanLines.map(index => {
+    const nodes = spanLines.map<React.ReactElement<any>>(index => {
       const item = flattenData[index];
 
       const rowKey = getRowKey(item.record, index);

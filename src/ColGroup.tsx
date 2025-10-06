@@ -10,10 +10,12 @@ export interface ColGroupProps<RecordType> {
   columCount?: number;
 }
 
-function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<RecordType>) {
+const ColGroup = <RecordType,>(props: ColGroupProps<RecordType>) => {
+  const { colWidths, columns, columCount } = props;
+
   const { tableLayout } = useContext(TableContext, ['tableLayout']);
 
-  const cols: React.ReactElement[] = [];
+  const cols: React.ReactElement<any>[] = [];
   const len = columCount || columns.length;
 
   // Only insert col with width & additional props
@@ -22,7 +24,7 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
   for (let i = len - 1; i >= 0; i -= 1) {
     const width = colWidths[i];
     const column = columns && columns[i];
-    let additionalProps;
+    let additionalProps: Record<string, unknown>;
     let minWidth: number;
     if (column) {
       additionalProps = column[INTERNAL_COL_DEFINE];
@@ -40,7 +42,7 @@ function ColGroup<RecordType>({ colWidths, columns, columCount }: ColGroupProps<
     }
   }
 
-  return <colgroup>{cols}</colgroup>;
-}
+  return cols.length > 0 ? <colgroup>{cols}</colgroup> : null;
+};
 
 export default ColGroup;

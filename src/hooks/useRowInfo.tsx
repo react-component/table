@@ -3,7 +3,7 @@ import type { TableContextProps } from '../context/TableContext';
 import TableContext from '../context/TableContext';
 import { getColumnsKey } from '../utils/valueUtil';
 import { useEvent } from '@rc-component/util';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 
 export default function useRowInfo<RecordType>(
   record: RecordType,
@@ -116,7 +116,7 @@ export default function useRowInfo<RecordType>(
     expandable: mergedExpandable,
     rowProps: {
       ...rowProps,
-      className: classNames(computeRowClassName, rowProps?.className),
+      className: clsx(computeRowClassName, rowProps?.className),
       onClick,
     },
   };

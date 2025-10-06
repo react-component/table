@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext, { responseImmutable } from '../context/TableContext';
@@ -39,7 +39,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   // ========================== Expand ==========================
   const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
 
-  let expandRowNode: React.ReactElement;
+  let expandRowNode: React.ReactElement<any>;
   if (rowSupportExpand && expanded) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
@@ -58,7 +58,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
 
     expandRowNode = (
       <RowComponent
-        className={classNames(
+        className={clsx(
           `${prefixCls}-expanded-row`,
           `${prefixCls}-expanded-row-level-${indent + 1}`,
           expandedClsName,
@@ -67,9 +67,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
         <Cell
           component={cellComponent}
           prefixCls={prefixCls}
-          className={classNames(rowCellCls, {
-            [`${rowCellCls}-fixed`]: fixColumn,
-          })}
+          className={clsx(rowCellCls, { [`${rowCellCls}-fixed`]: fixColumn })}
           additionalProps={additionalProps}
         >
           {expandContent}
@@ -95,7 +93,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       {...restProps}
       data-row-key={rowKey}
       ref={rowSupportExpand ? null : ref}
-      className={classNames(className, `${prefixCls}-row`, rowProps?.className, {
+      className={clsx(className, `${prefixCls}-row`, rowProps?.className, {
         [`${prefixCls}-row-extra`]: extra,
       })}
       style={{ ...rowStyle, ...rowProps?.style }}

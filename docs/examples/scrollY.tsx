@@ -13,7 +13,7 @@ for (let i = 0; i < 20; i += 1) {
 }
 
 const Test = () => {
-  const tblRef = React.useRef<Reference>();
+  const tblRef = React.useRef<Reference>(null);
   const [showBody, setShowBody] = React.useState(true);
 
   const toggleBody = () => {
@@ -94,8 +94,11 @@ const Test = () => {
         data={data}
         scroll={{ y: 300 }}
         rowKey={record => record.key}
-        onRow={(record, index) => ({ style: { backgroundColor: 'red' } })}
+        onRow={() => ({ style: { backgroundColor: 'red' } })}
       />
+      <h3>Column align issue</h3>
+      <p>https://github.com/ant-design/ant-design/issues/54889</p>
+      <Table columns={columns} data={data} sticky scroll={{ y: 300, x: 2000 }} />
     </div>
   );
 };

@@ -17,7 +17,7 @@ export interface ExpandedRowProps {
   stickyOffset?: number;
 }
 
-function ExpandedRow(props: ExpandedRowProps) {
+const ExpandedRow: React.FC<ExpandedRowProps> = props => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -59,17 +59,12 @@ function ExpandedRow(props: ExpandedRowProps) {
   }
 
   return (
-    <Component
-      className={className}
-      style={{
-        display: expanded ? null : 'none',
-      }}
-    >
+    <Component className={className} style={{ display: expanded ? null : 'none' }}>
       <Cell component={cellComponent} prefixCls={prefixCls} colSpan={colSpan}>
         {contentNode}
       </Cell>
     </Component>
   );
-}
+};
 
 export default ExpandedRow;

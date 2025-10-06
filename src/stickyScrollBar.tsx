@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import getScrollBarSize from '@rc-component/util/lib/getScrollBarSize';
 import * as React from 'react';
 import TableContext from './context/TableContext';
@@ -22,29 +22,21 @@ interface StickyScrollBarProps {
 }
 
 const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarProps> = (
-  { scrollBodyRef, onScroll, offsetScroll, container, direction },
+  props,
   ref,
 ) => {
+  const { scrollBodyRef, onScroll, offsetScroll, container, direction } = props;
   const prefixCls = useContext(TableContext, 'prefixCls');
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
   const scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
 
-  const scrollBarRef = React.useRef<HTMLDivElement>();
+  const scrollBarRef = React.useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useLayoutState<{
     scrollLeft: number;
     isHiddenScrollBar: boolean;
-  }>({
-    scrollLeft: 0,
-    isHiddenScrollBar: true,
-  });
-  const refState = React.useRef<{
-    delta: number;
-    x: number;
-  }>({
-    delta: 0,
-    x: 0,
-  });
+  }>({ scrollLeft: 0, isHiddenScrollBar: true });
+  const refState = React.useRef<{ delta: number; x: number }>({ delta: 0, x: 0 });
   const [isActive, setActive] = React.useState(false);
   const rafRef = React.useRef<number | null>(null);
 
@@ -152,26 +144,28 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
 
   // Loop for scroll event check
   React.useEffect(() => {
-    if (!scrollBodyRef.current) return;
-
-    const scrollParents: (HTMLElement | SVGElement)[] = [];
-    let parent = getDOM(scrollBodyRef.current);
-    while (parent) {
-      scrollParents.push(parent);
-      parent = parent.parentElement;
+    if (scrollBodyRef.current) {
+      const scrollParents: (HTMLElement | SVGElement)[] = [];
+      let parent = getDOM(scrollBodyRef.current);
+      while (parent) {
+        scrollParents.push(parent);
+        parent = parent.parentElement;
+      }
+      scrollParents.forEach(p => {
+        p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      });
+      window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
+      window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
+      return () => {
+        scrollParents.forEach(p => {
+          p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        });
+        window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
+        window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+        container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
+      };
     }
-
-    scrollParents.forEach(p => p.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false));
-    window.addEventListener(RESIZE_EVENT, checkScrollBarVisible, false);
-    window.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-    container.addEventListener(SCROLL_EVENT, checkScrollBarVisible, false);
-
-    return () => {
-      scrollParents.forEach(p => p.removeEventListener(SCROLL_EVENT, checkScrollBarVisible));
-      window.removeEventListener(RESIZE_EVENT, checkScrollBarVisible);
-      window.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
-      container.removeEventListener(SCROLL_EVENT, checkScrollBarVisible);
-    };
   }, [container]);
 
   React.useEffect(() => {
@@ -202,7 +196,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
       <div
         onMouseDown={onMouseDown}
         ref={scrollBarRef}
-        className={classNames(`${prefixCls}-sticky-scroll-bar`, {
+        className={clsx(`${prefixCls}-sticky-scroll-bar`, {
           [`${prefixCls}-sticky-scroll-bar-active`]: isActive,
         })}
         style={{

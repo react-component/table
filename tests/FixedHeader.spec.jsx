@@ -1,6 +1,6 @@
-import { render, act, fireEvent } from '@testing-library/react';
-import RcResizeObserver, { _rs } from '@rc-component/resize-observer';
-import { spyElementPrototype, spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
+import { render, act } from '@testing-library/react';
+import { _rs } from '@rc-component/resize-observer';
+import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { safeAct } from './utils';
@@ -42,7 +42,7 @@ describe('Table.FixedHeader', () => {
     const col1 = { dataIndex: 'light', width: 100 };
     const col2 = { dataIndex: 'bamboo', width: 200 };
     const col3 = { dataIndex: 'empty', width: 0 };
-    const { container, rerender } = render(
+    const { container } = render(
       <Table
         columns={[col1, col2, col3]}
         data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
@@ -91,26 +91,13 @@ describe('Table.FixedHeader', () => {
     expect(tables[0].querySelector('colgroup col').className).toEqual('test-internal');
   });
 
-  it('show header when data is null', async () => {
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-      },
-    ];
-
+  it('rtl', async () => {
     const { container } = render(
       <Table
-        columns={columns}
-        data={[]}
+        columns={[{ dataIndex: 'light', width: 100 }]}
+        data={[{ key: 0, light: 'bamboo' }]}
+        direction="rtl"
         scroll={{
-          x: true,
           y: 100,
         }}
       />,
@@ -207,5 +194,63 @@ describe('Table.FixedHeader', () => {
     });
     expect(container.querySelectorAll('th.rc-table-cell-fix-start')).toHaveLength(2);
     expect(container.querySelectorAll('th.rc-table-cell-fix-end')).toHaveLength(1);
+  });
+
+  it('should support measureRowRender to wrap MeasureRow with custom provider', async () => {
+    const FilterDropdown = ({ visible, onVisibleChange }) => (
+      <div className="test-filter-dropdown" style={{ display: visible ? 'block' : 'none' }}>
+        Filter Content
+        <button onClick={() => onVisibleChange && onVisibleChange(!visible)}>Toggle</button>
+      </div>
+    );
+
+    const columns = [
+      {
+        title: (
+          <div>
+            Name
+            <FilterDropdown visible={true} onVisibleChange={() => {}} />
+          </div>
+        ),
+        dataIndex: 'name',
+        key: 'name',
+        width: 100,
+      },
+    ];
+
+    const data = [
+      {
+        key: 1,
+        name: 'Jack',
+      },
+    ];
+
+    // Mock ConfigProvider-like wrapper
+    const measureRowRender = measureRow => (
+      <div data-testid="measure-row-wrapper" style={{ display: 'none' }}>
+        {measureRow}
+      </div>
+    );
+
+    const { container } = render(
+      <Table
+        columns={columns}
+        data={data}
+        sticky
+        scroll={{ x: true }}
+        measureRowRender={measureRowRender}
+      />,
+    );
+
+    await safeAct(container);
+
+    // Check that measureRowRender wrapper is applied
+    const measureRowWrapper = container.querySelectorAll('[data-testid="measure-row-wrapper"]');
+    expect(measureRowWrapper).toHaveLength(1);
+    expect(measureRowWrapper[0].style.display).toBe('none');
+
+    // Check that MeasureRow is inside the wrapper
+    const measureRowInWrapper = measureRowWrapper[0].querySelectorAll('.rc-table-measure-row');
+    expect(measureRowInWrapper).toHaveLength(1);
   });
 });

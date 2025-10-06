@@ -25,7 +25,7 @@
  */
 
 import type { CompareProps } from '@rc-component/context/lib/Immutable';
-import cls from 'classnames';
+import { clsx } from 'clsx';
 import ResizeObserver from '@rc-component/resize-observer';
 import { getTargetScrollBarSize } from '@rc-component/util/lib/getScrollBarSize';
 import useEvent from '@rc-component/util/lib/hooks/useEvent';
@@ -87,6 +87,7 @@ const EMPTY_SCROLL_TARGET = {};
 
 export type SemanticName = 'section' | 'title' | 'footer' | 'content';
 export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
+
 export interface TableProps<RecordType = any>
   extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
   prefixCls?: string;
@@ -183,16 +184,22 @@ export interface TableProps<RecordType = any>
   internalRefs?: {
     body: React.MutableRefObject<HTMLDivElement>;
   };
+  /**
+   * @private Internal usage, may remove by refactor.
+   *
+   * !!! DO NOT USE IN PRODUCTION ENVIRONMENT !!!
+   */
+  measureRowRender?: (measureRow: React.ReactNode) => React.ReactNode;
 }
 
 function defaultEmpty() {
   return 'No Data';
 }
 
-function Table<RecordType extends DefaultRecordType>(
+const Table = <RecordType extends DefaultRecordType>(
   tableProps: TableProps<RecordType>,
   ref: React.Ref<Reference>,
-) {
+) => {
   const props = {
     rowKey: 'key',
     prefixCls: DEFAULT_PREFIX,
@@ -226,6 +233,9 @@ function Table<RecordType extends DefaultRecordType>(
     emptyText,
     onRow,
     onHeaderRow,
+
+    // Measure Row
+    measureRowRender,
 
     // Events
     onScroll,
@@ -329,18 +339,15 @@ function Table<RecordType extends DefaultRecordType>(
   const mergedScrollX = flattenScrollX ?? scrollX;
 
   const columnContext = React.useMemo(
-    () => ({
-      columns,
-      flattenColumns,
-    }),
+    () => ({ columns, flattenColumns }),
     [columns, flattenColumns],
   );
 
   // ======================= Refs =======================
-  const fullTableRef = React.useRef<HTMLDivElement>();
-  const scrollHeaderRef = React.useRef<HTMLDivElement>();
-  const scrollBodyRef = React.useRef<HTMLDivElement>();
-  const scrollBodyContainerRef = React.useRef<HTMLDivElement>();
+  const fullTableRef = React.useRef<HTMLDivElement>(null);
+  const scrollHeaderRef = React.useRef<HTMLDivElement>(null);
+  const scrollBodyRef = React.useRef<HTMLDivElement>(null);
+  const scrollBodyContainerRef = React.useRef<HTMLDivElement>(null);
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -378,7 +385,7 @@ function Table<RecordType extends DefaultRecordType>(
   });
 
   // ====================== Scroll ======================
-  const scrollSummaryRef = React.useRef<HTMLDivElement>();
+  const scrollSummaryRef = React.useRef<HTMLDivElement>(null);
   const [shadowStart, setShadowStart] = React.useState(false);
   const [shadowEnd, setShadowEnd] = React.useState(false);
   const [colsWidths, updateColsWidths] = React.useState(new Map<React.Key, number>());
@@ -398,7 +405,8 @@ function Table<RecordType extends DefaultRecordType>(
   const stickyRef = React.useRef<{
     setScrollLeft: (left: number) => void;
     checkScrollBarVisible: () => void;
-  }>();
+  }>(null);
+
   const { isSticky, offsetHeader, offsetSummary, offsetScroll, stickyClassName, container } =
     useSticky(sticky, prefixCls);
 
@@ -634,7 +642,7 @@ function Table<RecordType extends DefaultRecordType>(
   };
 
   // Empty
-  const emptyNode: React.ReactNode = React.useMemo(() => {
+  const emptyNode = React.useMemo<React.ReactNode>(() => {
     if (hasData) {
       return null;
     }
@@ -727,6 +735,8 @@ function Table<RecordType extends DefaultRecordType>(
       ...columnContext,
       direction,
       stickyClassName,
+      scrollX: mergedScrollX,
+      tableLayout: mergedTableLayout,
       onScroll: onInternalScroll,
     };
 
@@ -739,6 +749,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -754,6 +765,7 @@ function Table<RecordType extends DefaultRecordType>(
             stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
+            colGroup={bodyColGroup}
           >
             {renderFixedFooterTable}
           </FixedHolder>
@@ -775,12 +787,8 @@ function Table<RecordType extends DefaultRecordType>(
     // >>>>>> Unique table
     groupTableNode = (
       <div
-        style={{
-          ...scrollXStyle,
-          ...scrollYStyle,
-          ...styles?.content,
-        }}
-        className={cls(`${prefixCls}-content`, classNames?.content)}
+        style={{ ...scrollXStyle, ...scrollYStyle, ...styles?.content }}
+        className={clsx(`${prefixCls}-content`, classNames?.content)}
         onScroll={onInternalScroll}
         ref={scrollBodyRef}
       >
@@ -813,7 +821,7 @@ function Table<RecordType extends DefaultRecordType>(
 
   let fullTable = (
     <div
-      className={cls(prefixCls, className, {
+      className={clsx(prefixCls, className, {
         [`${prefixCls}-rtl`]: direction === 'rtl',
         [`${prefixCls}-fix-start-shadow`]: horizonScroll,
         [`${prefixCls}-fix-end-shadow`]: horizonScroll,
@@ -834,19 +842,19 @@ function Table<RecordType extends DefaultRecordType>(
       {...dataProps}
     >
       {title && (
-        <Panel className={cls(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
+        <Panel className={clsx(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>
           {title(mergedData)}
         </Panel>
       )}
       <div
         ref={scrollBodyContainerRef}
-        className={cls(`${prefixCls}-container`, classNames?.section)}
+        className={clsx(`${prefixCls}-container`, classNames?.section)}
         style={styles?.section}
       >
         {groupTableNode}
       </div>
       {footer && (
-        <Panel className={cls(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
+        <Panel className={clsx(`${prefixCls}-footer`, classNames?.footer)} style={styles?.footer}>
           {footer(mergedData)}
         </Panel>
       )}
@@ -923,11 +931,14 @@ function Table<RecordType extends DefaultRecordType>(
       colsKeys,
       onColumnResizeEnd,
       onResizingChange: setIsResizing,
+      measureRowRender,
     }),
     [
       // Scroll
       mergedScrollX,
       scrollInfo,
+      classNames,
+      styles,
 
       // Table
       prefixCls,
@@ -980,15 +991,17 @@ function Table<RecordType extends DefaultRecordType>(
       mergedChildrenColumnName,
 
       rowHoverable,
+
+      measureRowRender,
     ],
   );
 
   return <TableContext.Provider value={TableContextValue}>{fullTable}</TableContext.Provider>;
-}
+};
 
 export type ForwardGenericTable = (<RecordType extends DefaultRecordType = any>(
   props: TableProps<RecordType> & React.RefAttributes<Reference>,
-) => React.ReactElement) & { displayName?: string };
+) => React.ReactElement<any>) & { displayName?: string };
 
 const RefTable = React.forwardRef(Table) as ForwardGenericTable;
 
@@ -996,11 +1009,12 @@ if (process.env.NODE_ENV !== 'production') {
   RefTable.displayName = 'Table';
 }
 
-export function genTable(shouldTriggerRender?: CompareProps<typeof Table>) {
-  return makeImmutable(RefTable, shouldTriggerRender) as ForwardGenericTable;
-}
+export const genTable = (shouldTriggerRender?: CompareProps<ForwardGenericTable>) => {
+  return makeImmutable(RefTable, shouldTriggerRender);
+};
 
 const ImmutableTable = genTable();
+
 type ImmutableTableType = typeof ImmutableTable & {
   EXPAND_COLUMN: typeof EXPAND_COLUMN;
   INTERNAL_HOOKS: typeof INTERNAL_HOOKS;

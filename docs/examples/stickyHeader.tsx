@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import Table from 'rc-table';
 import '../../assets/index.less';
-import type { ColumnType } from '@/interface';
+import type { ColumnType, ColumnsType } from '@/interface';
 
 interface RecordType {
   a?: string;
@@ -79,6 +79,41 @@ const columns: ColumnType<RecordType>[] = [
   },
 ];
 
+const columnsWithWidth: ColumnType<RecordType>[] = [
+  { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
+  { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
+  { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
+  { title: 'title4', dataIndex: 'd', key: 'd', width: 100 },
+];
+
+const columnsGrouped: ColumnsType<any> = [
+  {
+    title: '',
+    dataIndex: 'productType',
+    key: 'productType',
+    rowSpan: 2,
+    rowScope: 'row',
+  },
+  {
+    title: 'Mars',
+    dataIndex: 'mars',
+    key: 'mars',
+    children: [
+      { title: 'ProducedProducedProduced', dataIndex: 'producedMars', key: 'producedMars' },
+      { title: 'Sold', dataIndex: 'soldMars', key: 'soldMars' },
+    ],
+  },
+  {
+    title: 'Venus',
+    dataIndex: 'venus',
+    key: 'venus',
+    children: [
+      { title: 'Produced Produced', dataIndex: 'producedVenus', key: 'producedVenus' },
+      { title: 'Sold Sold Sold Sold', dataIndex: 'soldVenus', key: 'soldVenus' },
+    ],
+  },
+];
+
 const data = [
   { a: '123', key: '1' },
   { a: 'cdd', b: 'edd', key: '2' },
@@ -102,14 +137,38 @@ const data = [
   { a: '1333', c: 'eee', d: 2, key: '20' },
 ];
 
+const columns3: ColumnType<RecordType>[] = [
+  { title: '', dataIndex: 'name', key: '0' },
+  { title: 'First column', dataIndex: 'name', key: '1' },
+  { title: 'Second column', dataIndex: 'address', key: '2' },
+  { title: 'Third column', dataIndex: 'age', key: '3' },
+  { title: 'Another column', dataIndex: 'address', key: '4' },
+  { title: 'Extra column', dataIndex: 'name', key: '5' },
+  { title: 'And yet another column', dataIndex: 'address', key: '6' },
+  {
+    title: 'Column 7 with extraaaaaaaaa long word',
+    dataIndex: 'age',
+    key: '7',
+  },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  { title: 'Column 9', dataIndex: 'name', key: '9' },
+  { title: 'Column 10', dataIndex: 'address', key: '10' },
+  { title: 'Column 11', dataIndex: 'address', key: '11' },
+  { title: 'Column 12', dataIndex: 'age', key: '12' },
+  { title: 'Column 13', dataIndex: 'address', key: '13' },
+  { title: 'Column 14', dataIndex: 'name', key: '14' },
+  { title: 'Column 15', dataIndex: 'address', key: '15' },
+  { title: 'Column 16', dataIndex: 'address', key: '16' },
+  { title: 'Column 17', dataIndex: 'name', key: '17' },
+  { title: 'Column 18', dataIndex: 'address', key: '18' },
+  { title: 'Column 19', dataIndex: 'address', key: '19' },
+  { title: 'Column 20', dataIndex: 'age', key: '20' },
+];
+
 const Demo = () => {
-  const container = useRef();
+  const container = useRef(null);
   return (
-    <div
-      style={{
-        height: 10000,
-      }}
-    >
+    <div>
       <h2>Sticky</h2>
       <Table<RecordType>
         columns={columns}
@@ -212,6 +271,93 @@ const Demo = () => {
         suscipit asperiores, id ullam in iste soluta dignissimos vero incidunt, rem ex consectetur
         beatae totam aperiam. Sunt, laudantium?
       </div>
+
+      <h2>Sticky header with empty data</h2>
+      <Table
+        columns={fixedColumns}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns}
+        data={[]}
+        scroll={{
+          x: 1200,
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsWithWidth}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns}
+        data={[{ key: '1' }]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsWithWidth}
+        data={[{ key: '1' }]}
+        scroll={{
+          x: 1200,
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={fixedColumns.map(column => ({ ...column, width: undefined }))}
+        data={[{ key: '1' }]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <Table
+        columns={columnsGrouped}
+        data={[{ key: '1' }, { key: '2' }]}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky
+      />
+      <br />
+      <h3>scroll.x is true</h3>
+      <p>https://github.com/ant-design/ant-design/issues/54894</p>
+      <Table
+        columns={columns3}
+        data={
+          [
+            { key: '1', name: 'Test', age: 1, address: '2' },
+            { key: '2', name: '0', age: 1, address: '2' },
+          ] as any
+        }
+        sticky
+        scroll={{ x: true }}
+      />
     </div>
   );
 };

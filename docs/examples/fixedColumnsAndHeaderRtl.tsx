@@ -37,7 +37,7 @@ const useColumn = (
   ellipsis: boolean,
   percentage: boolean,
 ) => {
-  const columns: ColumnsType<RecordType> = React.useMemo(
+  const columns = React.useMemo<ColumnsType<RecordType>>(
     () => [
       {
         title: 'title1',

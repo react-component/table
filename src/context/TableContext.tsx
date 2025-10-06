@@ -15,7 +15,7 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { FixedInfo } from '../utils/fixUtil';
-import { TableProps } from '../Table';
+import type { TableProps } from '../Table';
 
 const { makeImmutable, responseImmutable, useImmutableMark } = createImmutable();
 export { makeImmutable, responseImmutable, useImmutableMark };
@@ -85,6 +85,9 @@ export interface TableContextProps<RecordType = any> {
   }) => void;
   onResizingChange: (value: boolean) => void;
   expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
+
+  // Measure Row
+  measureRowRender?: (measureRow: React.ReactNode) => React.ReactNode;
 }
 
 const TableContext = createContext<TableContextProps>();

@@ -20,8 +20,9 @@ export function convertChildrenToColumns<RecordType>(
   children: React.ReactNode,
 ): ColumnsType<RecordType> {
   return toArray(children)
-    .filter(node => React.isValidElement(node))
-    .map(({ key, props }: React.ReactElement) => {
+    .filter(node => React.isValidElement<any>(node))
+    .map(node => {
+      const { key, props } = node as React.ReactElement<any>;
       const { children: nodeChildren, ...restProps } = props;
       const column = {
         key,
@@ -72,8 +73,8 @@ function flatColumns<RecordType>(
         return [
           ...list,
           ...flatColumns(subColumns, mergedKey).map(subColum => ({
-            fixed: parsedFixed,
             ...subColum,
+            fixed: subColum.fixed ?? parsedFixed,
           })),
         ];
       }
@@ -159,14 +160,12 @@ function useColumns<RecordType>(
       // >>> Insert expand column if not exist
       if (!cloneColumns.includes(EXPAND_COLUMN)) {
         const expandColIndex = expandIconColumnIndex || 0;
-        if (
-          expandColIndex >= 0 &&
-          (expandColIndex || fixed === 'left' || fixed === 'start' || !fixed)
-        ) {
-          cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
-        }
-        if (fixed === 'right' || fixed === 'end') {
-          cloneColumns.splice(baseColumns.length, 0, EXPAND_COLUMN);
+        const insertIndex =
+          expandColIndex === 0 && (fixed === 'right' || fixed === 'end')
+            ? baseColumns.length
+            : expandColIndex;
+        if (insertIndex >= 0) {
+          cloneColumns.splice(insertIndex, 0, EXPAND_COLUMN);
         }
       }
 

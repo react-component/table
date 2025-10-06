@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import cls from 'classnames';
+import { clsx } from 'clsx';
 import * as React from 'react';
 import TableContext from '../context/TableContext';
 import devRenderTimes from '../hooks/useRenderTimes';
@@ -68,14 +68,17 @@ const getTitleFromCellRenderChildren = ({
   if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === 'header')) {
     if (typeof children === 'string' || typeof children === 'number') {
       title = children.toString();
-    } else if (React.isValidElement(children) && typeof children.props.children === 'string') {
-      title = children.props.children;
+    } else if (
+      React.isValidElement<any>(children) &&
+      typeof (children.props as any)?.children === 'string'
+    ) {
+      title = (children.props as any)?.children;
     }
   }
   return title;
 };
 
-function Cell<RecordType>(props: CellProps<RecordType>) {
+const Cell = <RecordType,>(props: CellProps<RecordType>) => {
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
   }
@@ -215,7 +218,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
     });
 
   // >>>>> ClassName
-  const mergedClassName = cls(
+  const mergedClassName = clsx(
     cellPrefixCls,
     className,
     {
@@ -247,7 +250,7 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
 
   // The order is important since user can overwrite style.
   // For example ant-design/ant-design#51763
-  const mergedStyle = {
+  const mergedStyle: React.CSSProperties = {
     ...legacyCellProps?.style,
     ...fixedStyle,
     ...alignStyle,
@@ -291,6 +294,6 @@ function Cell<RecordType>(props: CellProps<RecordType>) {
       {mergedChildNode}
     </Component>
   );
-}
+};
 
 export default React.memo(Cell) as typeof Cell;

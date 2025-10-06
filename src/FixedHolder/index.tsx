@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { fillRef } from '@rc-component/util/lib/ref';
 import * as React from 'react';
 import { useMemo } from 'react';
@@ -7,7 +7,7 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, Direction } from '../interface';
+import type { ColumnsType, ColumnType, Direction, TableLayout } from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -36,8 +36,11 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyTopOffset?: number;
   stickyBottomOffset?: number;
   stickyClassName?: string;
+  scrollX?: number | string | true;
+  tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
+  colGroup?: React.ReactNode;
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
@@ -52,6 +55,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     columns,
     flattenColumns,
     colWidths,
+    colGroup,
     columCount,
     stickyOffsets,
     direction,
@@ -59,6 +63,8 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     stickyTopOffset,
     stickyBottomOffset,
     stickyClassName,
+    scrollX,
+    tableLayout = 'fixed',
     onScroll,
     maxContentScroll,
     children,
@@ -71,6 +77,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     'isSticky',
     'getComponent',
   ]);
+
   const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
@@ -115,12 +122,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     };
   }, [direction]);
 
-  // Check if all flattenColumns has width
-  const allFlattenColumnsWithWidth = React.useMemo(
-    () => flattenColumns.every(column => column.width),
-    [flattenColumns],
-  );
-
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
   const ScrollBarColumn: ColumnType<unknown> & { scrollbar: true } = {
@@ -158,6 +159,14 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
+  const isColGroupEmpty = useMemo<boolean>(() => {
+    // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
+    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
+    const noWidth =
+      !mergedColumnWidth || !mergedColumnWidth.length || mergedColumnWidth.every(w => !w);
+    return noData || noWidth;
+  }, [noData, mergedColumnWidth]);
+
   return (
     <div
       style={{
@@ -166,19 +175,23 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         ...style,
       }}
       ref={setScrollRef}
-      className={classNames(className, {
+      className={clsx(className, {
         [stickyClassName]: !!stickyClassName,
       })}
     >
       <TableComponent
         style={{
-          tableLayout: 'fixed',
-          visibility: noData || mergedColumnWidth ? null : 'hidden',
+          tableLayout,
+          minWidth: '100%',
+          // https://github.com/ant-design/ant-design/issues/54894
+          width: scrollX,
         }}
       >
-        {(!noData || !maxContentScroll || allFlattenColumnsWithWidth) && (
+        {isColGroupEmpty ? (
+          colGroup
+        ) : (
           <ColGroup
-            colWidths={mergedColumnWidth ? [...mergedColumnWidth, combinationScrollBarSize] : []}
+            colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
             columCount={columCount + 1}
             columns={flattenColumnsWithScrollbar}
           />

@@ -7,8 +7,9 @@ export interface MeasureCellProps {
   onColumnWidthChange: (key: React.Key, width: number) => void;
 }
 
-export default function MeasureCell({ columnKey, onColumnWidthChange }: MeasureCellProps) {
-  const cellRef = React.useRef<HTMLTableCellElement>();
+const MeasureCell: React.FC<MeasureCellProps> = ({ columnKey, onColumnWidthChange }) => {
+  
+  const cellRef = React.useRef<HTMLTableCellElement>(null);
 
   useLayoutEffect(() => {
     if (cellRef.current) {
@@ -18,9 +19,14 @@ export default function MeasureCell({ columnKey, onColumnWidthChange }: MeasureC
 
   return (
     <ResizeObserver data={columnKey}>
-      <td ref={cellRef} style={{ padding: 0, border: 0, height: 0 }}>
-        <div style={{ height: 0, overflow: 'hidden' }}>&nbsp;</div>
+      <td
+        ref={cellRef}
+        style={{ paddingTop: 0, paddingBottom: 0, borderTop: 0, borderBottom: 0, height: 0 }}
+      >
+        <div style={{ height: 0, overflow: 'hidden', fontWeight: 'bold' }}>{title || '\xa0'}</div>
       </td>
     </ResizeObserver>
   );
-}
+};
+
+export default MeasureCell;
