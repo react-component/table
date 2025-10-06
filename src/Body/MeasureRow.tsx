@@ -13,7 +13,7 @@ export interface MeasureRowProps {
   columns: readonly ColumnType<any>[];
 }
 
-const MeasureRow: React.FC<MeasureCellProps> = (props) => {
+const MeasureRow: React.FC<MeasureRowProps> = (props) => {
 
   const { prefixCls, columnsKey, onColumnWidthChange, columns } = props;
   
