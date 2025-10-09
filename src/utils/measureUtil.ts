@@ -58,6 +58,9 @@ export function filterMeasureProps<T = any>(
     filteredProps[prop] = undefined;
   });
 
+  // Nullify ref to avoid warnings and conflicts
+  filteredProps.ref = null;
+
   // Recursively filter children if deep filtering is enabled
   if (deep && filteredProps.children) {
     filteredProps.children = filterMeasureChildren(filteredProps.children);
