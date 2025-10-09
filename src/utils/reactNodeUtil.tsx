@@ -9,6 +9,7 @@ const stripProps = (props: Record<string, any>) => {
       key === 'ref' ||
       key === 'onFocus' ||
       key === 'onBlur' ||
+      key === 'tabIndex' ||
       key.startsWith('data-')
     )
       continue;
