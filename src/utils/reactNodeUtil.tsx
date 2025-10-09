@@ -1,86 +1,76 @@
 import React, { cloneElement, isValidElement } from 'react';
 
-// Predefined set of props to strip for better lookup performance
-const STRIP_PROPS = new Set(['id', 'ref', 'onFocus', 'onBlur', 'tabIndex']);
+// Props 类型定义
+type Props = Record<string, unknown>;
 
-// Use WeakMap to cache processed props and avoid duplicate calculations
-const propsCache = new WeakMap<Record<string, unknown>, Record<string, unknown>>();
+// 缓存已处理的 props，避免重复计算
+const propsCache = new WeakMap<Props, Props>();
 
-const stripProps = (props: Record<string, unknown>) => {
-  // Check cache first
-  const cached = propsCache.get(props);
-  if (cached) {
-    return cached;
+// 需要过滤的属性集合，使用 Set 提高查找性能
+const FILTERED_PROPS = new Set(['id', 'ref', 'onFocus', 'onBlur', 'tabIndex']);
+
+const stripProps = (props: Props) => {
+  // 检查缓存
+  if (propsCache.has(props)) {
+    const cachedProps = propsCache.get(props);
+    return cachedProps || props;
   }
 
-  let hasChanges = false;
-  const result: Record<string, unknown> = {};
+  const result: Props = {};
+  let hasFilteredProps = false;
 
   for (const key in props) {
-    // Use Set for O(1) lookup, optimize data-* attribute checking
-    if (STRIP_PROPS.has(key) || key.startsWith('data-')) {
-      hasChanges = true;
+    // 使用 Set 快速查找，避免多个 || 判断
+    if (FILTERED_PROPS.has(key) || key.startsWith('data-')) {
+      hasFilteredProps = true;
       continue;
     }
     result[key] = props[key];
   }
 
-  // If no props need to be stripped, return original object directly
-  const finalResult = hasChanges ? result : props;
+  // 如果没有需要过滤的属性，直接返回原 props
+  if (!hasFilteredProps) {
+    propsCache.set(props, props);
+    return props;
+  }
 
-  // Cache the result
-  propsCache.set(props, finalResult);
-
-  return finalResult;
+  // 缓存结果
+  propsCache.set(props, result);
+  return result;
 };
-
-// Use WeakMap to cache processed nodes and avoid duplicate processing
-const nodeCache = new WeakMap<React.ReactElement, React.ReactNode>();
 
 /**
  * Recursively clone ReactNode and remove data-*, id, ref, onFocus, onBlur props
  * to avoid potential issues with nested elements in table cells.
- *
- * Optimization features:
- * 1. Caching mechanism to avoid reprocessing the same nodes
- * 2. Early exit conditions to reduce unnecessary recursion
- * 3. Shallow optimization: return original node directly if props haven't changed
+ * @param node - React node to sanitize
+ * @param depth - Current recursion depth (for performance control)
+ * @param maxDepth - Maximum recursion depth to prevent stack overflow
  */
-const sanitizeCloneElement = (node: React.ReactNode): React.ReactNode => {
-  if (!isValidElement(node)) {
+const sanitizeCloneElement = (
+  node: React.ReactNode,
+  depth: number = 0,
+  maxDepth: number = 10,
+): React.ReactNode => {
+  // 限制递归深度，防止性能问题和堆栈溢出
+  if (depth >= maxDepth || !isValidElement(node)) {
     return node;
   }
 
-  // Check cache first
-  const cached = nodeCache.get(node);
-  if (cached) {
-    return cached;
-  }
+  const cleanedProps = stripProps(node.props);
 
-  const cleanedProps = stripProps(node.props as Record<string, unknown>);
-
-  // If props haven't changed and no children need processing, return original node directly
+  // 如果 props 没有变化且没有 children，直接返回原节点
   if (cleanedProps === node.props && !cleanedProps.children) {
-    nodeCache.set(node, node);
     return node;
   }
 
-  let processedChildren = cleanedProps.children;
+  // 处理 children
   if (cleanedProps.children) {
-    processedChildren = React.Children.map(cleanedProps.children as React.ReactNode, child =>
-      sanitizeCloneElement(child),
+    cleanedProps.children = React.Children.map(cleanedProps.children, (child: React.ReactNode) =>
+      sanitizeCloneElement(child, depth + 1, maxDepth),
     );
   }
 
-  const result = cloneElement(node, {
-    ...cleanedProps,
-    children: processedChildren,
-  } as React.Attributes);
-
-  // Cache the result
-  nodeCache.set(node, result);
-
-  return result;
+  return cloneElement(node, cleanedProps);
 };
 
 export { sanitizeCloneElement };
