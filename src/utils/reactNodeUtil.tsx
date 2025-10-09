@@ -1,13 +1,13 @@
 import React, { cloneElement, isValidElement } from 'react';
 
-// 预定义需要剥离的属性集合，提高查找性能
+// Predefined set of props to strip for better lookup performance
 const STRIP_PROPS = new Set(['id', 'ref', 'onFocus', 'onBlur', 'tabIndex']);
 
-// 使用 WeakMap 缓存已处理的 props，避免重复计算
+// Use WeakMap to cache processed props and avoid duplicate calculations
 const propsCache = new WeakMap<Record<string, unknown>, Record<string, unknown>>();
 
 const stripProps = (props: Record<string, unknown>) => {
-  // 检查缓存
+  // Check cache first
   const cached = propsCache.get(props);
   if (cached) {
     return cached;
@@ -17,7 +17,7 @@ const stripProps = (props: Record<string, unknown>) => {
   const result: Record<string, unknown> = {};
 
   for (const key in props) {
-    // 使用 Set 进行 O(1) 查找，优化 data-* 属性检查
+    // Use Set for O(1) lookup, optimize data-* attribute checking
     if (STRIP_PROPS.has(key) || key.startsWith('data-')) {
       hasChanges = true;
       continue;
@@ -25,33 +25,33 @@ const stripProps = (props: Record<string, unknown>) => {
     result[key] = props[key];
   }
 
-  // 如果没有需要剥离的属性，直接返回原对象
+  // If no props need to be stripped, return original object directly
   const finalResult = hasChanges ? result : props;
 
-  // 缓存结果
+  // Cache the result
   propsCache.set(props, finalResult);
 
   return finalResult;
 };
 
-// 使用 WeakMap 缓存已处理的节点，避免重复处理
+// Use WeakMap to cache processed nodes and avoid duplicate processing
 const nodeCache = new WeakMap<React.ReactElement, React.ReactNode>();
 
 /**
  * Recursively clone ReactNode and remove data-*, id, ref, onFocus, onBlur props
  * to avoid potential issues with nested elements in table cells.
  *
- * 优化特性：
- * 1. 缓存机制避免重复处理相同节点
- * 2. 提前退出条件减少不必要的递归
- * 3. 浅层优化：如果props没有变化，直接返回原节点
+ * Optimization features:
+ * 1. Caching mechanism to avoid reprocessing the same nodes
+ * 2. Early exit conditions to reduce unnecessary recursion
+ * 3. Shallow optimization: return original node directly if props haven't changed
  */
 const sanitizeCloneElement = (node: React.ReactNode): React.ReactNode => {
   if (!isValidElement(node)) {
     return node;
   }
 
-  // 检查缓存
+  // Check cache first
   const cached = nodeCache.get(node);
   if (cached) {
     return cached;
@@ -59,7 +59,7 @@ const sanitizeCloneElement = (node: React.ReactNode): React.ReactNode => {
 
   const cleanedProps = stripProps(node.props as Record<string, unknown>);
 
-  // 如果props没有变化且没有children需要处理，直接返回原节点
+  // If props haven't changed and no children need processing, return original node directly
   if (cleanedProps === node.props && !cleanedProps.children) {
     nodeCache.set(node, node);
     return node;
@@ -77,7 +77,7 @@ const sanitizeCloneElement = (node: React.ReactNode): React.ReactNode => {
     children: processedChildren,
   } as React.Attributes);
 
-  // 缓存结果
+  // Cache the result
   nodeCache.set(node, result);
 
   return result;
