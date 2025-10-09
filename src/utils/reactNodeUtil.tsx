@@ -1,16 +1,16 @@
 import React, { cloneElement, isValidElement } from 'react';
 
-// Props 类型定义
+// Props type definition
 type Props = Record<string, unknown>;
 
-// 缓存已处理的 props，避免重复计算
+// Cache processed props to avoid redundant calculations
 const propsCache = new WeakMap<Props, Props>();
 
-// 需要过滤的属性集合，使用 Set 提高查找性能
+// Set of properties to filter, using Set for better lookup performance
 const FILTERED_PROPS = new Set(['id', 'ref', 'onFocus', 'onBlur', 'tabIndex']);
 
 const stripProps = (props: Props) => {
-  // 检查缓存
+  // Check cache first
   if (propsCache.has(props)) {
     const cachedProps = propsCache.get(props);
     return cachedProps || props;
@@ -20,7 +20,7 @@ const stripProps = (props: Props) => {
   let hasFilteredProps = false;
 
   for (const key in props) {
-    // 使用 Set 快速查找，避免多个 || 判断
+    // Use Set for fast lookup, avoiding multiple || conditions
     if (FILTERED_PROPS.has(key) || key.startsWith('data-')) {
       hasFilteredProps = true;
       continue;
@@ -28,13 +28,13 @@ const stripProps = (props: Props) => {
     result[key] = props[key];
   }
 
-  // 如果没有需要过滤的属性，直接返回原 props
+  // If no props need filtering, return original props directly
   if (!hasFilteredProps) {
     propsCache.set(props, props);
     return props;
   }
 
-  // 缓存结果
+  // Cache the result
   propsCache.set(props, result);
   return result;
 };
@@ -51,19 +51,19 @@ const sanitizeCloneElement = (
   depth: number = 0,
   maxDepth: number = 10,
 ): React.ReactNode => {
-  // 限制递归深度，防止性能问题和堆栈溢出
+  // Limit recursion depth to prevent performance issues and stack overflow
   if (depth >= maxDepth || !isValidElement(node)) {
     return node;
   }
 
   const cleanedProps = stripProps(node.props);
 
-  // 如果 props 没有变化且没有 children，直接返回原节点
+  // If props haven't changed and no children, return original node directly
   if (cleanedProps === node.props && !cleanedProps.children) {
     return node;
   }
 
-  // 处理 children
+  // Process children
   if (cleanedProps.children) {
     cleanedProps.children = React.Children.map(cleanedProps.children, (child: React.ReactNode) =>
       sanitizeCloneElement(child, depth + 1, maxDepth),
