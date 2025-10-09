@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, memo } from 'react';
+import React, { cloneElement, isValidElement } from 'react';
 
 const stripProps = (props: Record<string, any>) => {
   const result: Record<string, any> = {};
@@ -22,7 +22,7 @@ const stripProps = (props: Record<string, any>) => {
  * Recursively clone ReactNode and remove data-*, id, ref, onFocus, onBlur props
  * to avoid potential issues with nested elements in table cells.
  */
-const sanitizeCloneElement = memo((node: React.ReactNode): React.ReactNode => {
+const sanitizeCloneElement = (node: React.ReactNode): React.ReactNode => {
   if (!isValidElement(node)) {
     return node;
   }
@@ -33,6 +33,6 @@ const sanitizeCloneElement = memo((node: React.ReactNode): React.ReactNode => {
     );
   }
   return cloneElement(node, cleanedProps);
-});
+};
 
 export { sanitizeCloneElement };
