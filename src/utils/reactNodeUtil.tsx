@@ -21,7 +21,7 @@ const stripProps = (props: Record<string, any>) => {
  * Recursively clone ReactNode and remove data-*, id, ref, onFocus, onBlur props
  * to avoid potential issues with nested elements in table cells.
  */
-export const sanitizeCloneElement = memo(function sanitizeCloneElement(
+export const sanitizeCloneElement = memo(function sanitizeClone(
   node: React.ReactNode,
 ): React.ReactNode {
   if (!isValidElement(node)) {
@@ -30,7 +30,7 @@ export const sanitizeCloneElement = memo(function sanitizeCloneElement(
   const cleanedProps = stripProps(node.props);
   if (cleanedProps.children) {
     cleanedProps.children = React.Children.map(cleanedProps.children, child =>
-      sanitizeCloneElement(child),
+      sanitizeClone(child),
     );
   }
   return cloneElement(node, cleanedProps);
