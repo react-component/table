@@ -5,7 +5,6 @@ import isVisible from '@rc-component/util/lib/Dom/isVisible';
 import { useContext } from '@rc-component/context';
 import TableContext from '../context/TableContext';
 import type { ColumnType } from '../interface';
-import { cleanMeasureRowAttributes } from '../utils/measureUtil';
 
 export interface MeasureRowProps {
   prefixCls: string;
@@ -23,12 +22,6 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
   const ref = React.useRef<HTMLTableRowElement>(null);
 
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
-
-  React.useLayoutEffect(() => {
-    if (ref.current) {
-      cleanMeasureRowAttributes(ref.current);
-    }
-  }, [columnsKey, columns]);
 
   const measureRow = (
     <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
