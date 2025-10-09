@@ -5,6 +5,7 @@ import isVisible from 'rc-util/lib/Dom/isVisible';
 import { useContext } from '@rc-component/context';
 import TableContext from '../context/TableContext';
 import type { ColumnType } from '../interface';
+import { prepareMeasureTitle } from '../utils/measureUtil';
 
 export interface MeasureRowProps {
   prefixCls: string;
@@ -36,9 +37,8 @@ export default function MeasureRow({
         {columnsKey.map(columnKey => {
           const column = columns.find(col => col.key === columnKey);
           const rawTitle = column?.title;
-          const titleForMeasure = React.isValidElement<React.RefAttributes<any>>(rawTitle)
-            ? React.cloneElement(rawTitle, { ref: null })
-            : rawTitle;
+          const titleForMeasure = prepareMeasureTitle(rawTitle);
+
           return (
             <MeasureCell
               prefixCls={prefixCls}
