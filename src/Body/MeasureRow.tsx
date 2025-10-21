@@ -40,6 +40,7 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
           const titleForMeasure = React.isValidElement<React.RefAttributes<any>>(rawTitle)
             ? React.cloneElement(rawTitle, { ref: null })
             : rawTitle;
+
           return (
             <MeasureCell
               key={columnKey}
