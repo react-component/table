@@ -120,7 +120,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     return () => {
       scrollEle?.removeEventListener('wheel', onWheel);
     };
-  }, []);
+  }, [direction]);
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];

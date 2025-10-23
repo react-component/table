@@ -26,7 +26,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
   const {
     prefixCls,
     getComponent,
-    onColumnResize,
+    onColumnWidthChange,
     flattenColumns,
     getRowKey,
     expandedKeys,
@@ -39,7 +39,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
-    'onColumnResize',
+    'onColumnWidthChange',
     'flattenColumns',
     'getRowKey',
     'expandedKeys',
@@ -143,7 +143,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
           <MeasureRow
             prefixCls={prefixCls}
             columnsKey={columnsKey}
-            onColumnResize={onColumnResize}
+            onColumnWidthChange={onColumnWidthChange}
             columns={flattenColumns}
           />
         )}
