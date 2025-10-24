@@ -267,6 +267,7 @@ export interface ExpandableConfig<RecordType> {
   columnWidth?: number | string;
   fixed?: FixedType;
   expandedRowOffset?: number;
+  forceRender?: boolean|((record: RecordType) => boolean);
 }
 
 // =================== Render ===================
