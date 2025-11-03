@@ -49,7 +49,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@rc-component/context": "^1.4.0",
+    "@rc-component/context": "^2.0.1",
     "@rc-component/resize-observer": "^1.0.0",
     "@rc-component/util": "^1.1.0",
     "clsx": "^2.1.1",
