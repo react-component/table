@@ -163,8 +163,8 @@ const Cell = <RecordType,>(props: CellProps<RecordType>) => {
     const showEndShadow =
       (isFixEnd && fixedEndShadow && scrollWidth - absScroll) -
         // Same as above
-        (offsetFixedEndShadow as number) >=
-      2;
+        (offsetFixedEndShadow as number) >
+      1;
 
     return [showStartShadow, showEndShadow];
   });
