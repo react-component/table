@@ -507,7 +507,7 @@ const Table = <RecordType extends DefaultRecordType>(
           return;
         }
         setShadowStart(absScrollStart > 0);
-        setShadowEnd(absScrollStart < scrollWidth - clientWidth);
+        setShadowEnd(absScrollStart < scrollWidth - clientWidth - 1);
       }
     },
   );
