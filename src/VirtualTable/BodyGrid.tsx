@@ -6,6 +6,7 @@ import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords'
 import type { ColumnType, OnCustomizeScroll, ScrollConfig } from '../interface';
 import BodyLine from './BodyLine';
 import { GridContext, StaticContext } from './context';
+import { getColumnsKey } from '../utils/valueUtil';
 
 export interface GridProps<RecordType = any> {
   data: RecordType[];
@@ -58,7 +59,9 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number, total: number][]>(() => {
     let total = 0;
-    return flattenColumns.map(({ width, minWidth, key }) => {
+    const columnKeys = getColumnsKey(flattenColumns);
+    return flattenColumns.map(({ width, minWidth }, index) => {
+      const key = columnKeys[index];
       const finalWidth = Math.max((width as number) || 0, (minWidth as number) || 0);
       total += finalWidth;
       return [key, finalWidth, total];
