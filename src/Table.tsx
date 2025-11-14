@@ -131,6 +131,8 @@ export interface TableProps<RecordType = any>
 
   direction?: Direction;
 
+  stripe?: boolean;
+
   sticky?: boolean | TableSticky;
 
   rowHoverable?: boolean;
@@ -214,6 +216,7 @@ const Table = <RecordType extends DefaultRecordType>(
     scroll,
     tableLayout,
     direction,
+    stripe,
 
     // Additional Part
     title,
@@ -647,7 +650,7 @@ const Table = <RecordType extends DefaultRecordType>(
 
   // Body
   const bodyTable = (
-    <Body data={mergedData} measureColumnWidth={fixHeader || horizonScroll || isSticky} />
+    <Body data={mergedData} stripe={stripe} measureColumnWidth={fixHeader || horizonScroll || isSticky} />
   );
 
   const bodyColGroup = (
