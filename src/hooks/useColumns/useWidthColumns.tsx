@@ -9,6 +9,18 @@ function parseColWidth(totalWidth: number, width: string | number = '') {
   if (width.endsWith('%')) {
     return (totalWidth * parseFloat(width)) / 100;
   }
+
+  /**
+   * Column width supports this type of writing, such as '100' and '100px'
+   */
+  if (isNaN(Number(width))) {
+    if (width.endsWith('px')) {
+      return Number(width.replace(/px/, ''));
+    }
+  } else {
+    return Number(width);
+  }
+
   return null;
 }
 
