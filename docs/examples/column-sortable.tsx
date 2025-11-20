@@ -69,8 +69,8 @@ const Demo = () => {
     const { active, over } = e;
     if (over) {
       setColumns(prevColumns => {
-        const activeIndex = prevColumns.findIndex(col => col.key === active.id);
-        const overIndex = prevColumns.findIndex(col => col.key === over.id);
+        const activeIndex = prevColumns.findIndex(col => col.dataIndex === active.id);
+        const overIndex = prevColumns.findIndex(col => col.dataIndex === over.id);
         if (activeIndex === -1 || overIndex === -1) {
           return prevColumns;
         }
