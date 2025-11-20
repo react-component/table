@@ -49,7 +49,7 @@ const Demo = () => {
     return columns.map(col => ({
       ...col,
       onHeaderCell: () => ({
-        id: col.dataIndex?.toString(),
+        id: col.dataIndex,
       }),
     }));
   }, [columns]);
@@ -80,10 +80,7 @@ const Demo = () => {
       onDragEnd={handleDragEnd}
       modifiers={[restrictToHorizontalAxis]}
     >
-      <SortableContext
-        items={columns.map(col => col.dataIndex?.toString())}
-        strategy={rectSwappingStrategy}
-      >
+      <SortableContext items={columns.map(col => col.dataIndex)} strategy={rectSwappingStrategy}>
         <Table {...tableProps} />;
       </SortableContext>
     </DndContext>
