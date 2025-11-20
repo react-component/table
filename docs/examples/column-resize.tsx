@@ -11,7 +11,7 @@ const ResizableTitle = props => {
     return <th {...restProps} />;
   }
   return (
-    <Resizable width={width} onResize={onResize}>
+    <Resizable width={width} height={0} onResize={onResize}>
       <th {...restProps} />
     </Resizable>
   );
@@ -32,7 +32,7 @@ const Demo = () => {
     { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
     {
       title: 'Operations',
-      dataIndex: '',
+      dataIndex: 'd',
       key: 'd',
       render() {
         return <a href="#">Operations</a>;

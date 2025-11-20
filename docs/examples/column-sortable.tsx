@@ -1,15 +1,14 @@
 import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext, closestCenter } from '@dnd-kit/core';
-import { SortableContext, arrayMove, useSortable, rectSwappingStrategy } from '@dnd-kit/sortable';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
+import { SortableContext, arrayMove, rectSwappingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { ColumnType } from 'rc-table';
 import Table from 'rc-table';
 import React, { useCallback, useMemo, useState } from 'react';
 import 'react-resizable/css/styles.css';
 import '../../assets/index.less';
-import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 const SortableHeaderCell = props => {
-  const { width, style: styleProps, ...restProps } = props;
+  const { style: styleProps, ...restProps } = props;
 
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: props.id as string,
@@ -38,7 +37,7 @@ const Demo = () => {
     { title: 'title3', dataIndex: 'c', key: 'c', width: 200 },
     {
       title: 'Operations',
-      dataIndex: 's',
+      dataIndex: 'd',
       key: 'd',
       render() {
         return <a href="#">Operations</a>;
@@ -50,9 +49,6 @@ const Demo = () => {
     return columns.map(col => ({
       ...col,
       onHeaderCell: () => ({
-        id: col.dataIndex?.toString(),
-      }),
-      onCell: () => ({
         id: col.dataIndex?.toString(),
       }),
     }));
