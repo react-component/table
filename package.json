@@ -93,7 +93,7 @@
     "regenerator-runtime": "^0.14.0",
     "styled-components": "^6.1.1",
     "typescript": "~5.9.2",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.14"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
