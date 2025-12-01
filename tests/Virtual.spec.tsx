@@ -11,8 +11,8 @@ const identity = (value: any) => value;
 global.scrollToConfig = null;
 global.collectGetScrollInfoReturn = identity;
 
-vi.mock('rc-virtual-list', async () => {
-  const RealVirtualList = ((await vi.importActual('rc-virtual-list')) as any).default;
+vi.mock('@rc-component/virtual-list', async () => {
+  const RealVirtualList = ((await vi.importActual('@rc-component/virtual-list')) as any).default;
 
   const WrapperVirtualList = React.forwardRef((props: any, ref) => {
     const myRef = React.useRef(null);
