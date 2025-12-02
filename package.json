@@ -52,8 +52,8 @@
     "@rc-component/context": "^2.0.1",
     "@rc-component/resize-observer": "^1.0.0",
     "@rc-component/util": "^1.1.0",
-    "clsx": "^2.1.1",
-    "rc-virtual-list": "^3.14.2"
+    "@rc-component/virtual-list": "^1.0.1",
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^2.0.1",
