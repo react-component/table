@@ -4,18 +4,19 @@ import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
 
 export interface MeasureCellProps {
   columnKey: React.Key;
-  onColumnResize: (key: React.Key, width: number) => void;
+  onColumnWidthChange: (key: React.Key, width: number) => void;
   title?: React.ReactNode;
 }
 
-const MeasureCell: React.FC<MeasureCellProps> = props => {
-  const { columnKey, onColumnResize, title } = props;
+const MeasureCell: React.FC<MeasureCellProps> = (props) => {
 
+  const { columnKey, onColumnWidthChange, title } = props;
+  
   const cellRef = React.useRef<HTMLTableCellElement>(null);
 
   useLayoutEffect(() => {
     if (cellRef.current) {
-      onColumnResize(columnKey, cellRef.current.offsetWidth);
+      onColumnWidthChange(columnKey, cellRef.current.offsetWidth);
     }
   }, []);
 

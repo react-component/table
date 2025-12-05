@@ -88,7 +88,6 @@
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^19.1.1",
-    "react-resizable": "^3.0.5",
     "react-window": "^1.8.5",
     "regenerator-runtime": "^0.14.0",
     "styled-components": "^6.1.1",

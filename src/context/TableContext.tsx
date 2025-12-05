@@ -61,7 +61,7 @@ export interface TableContextProps<RecordType = any> {
   // Column
   columns: ColumnsType<RecordType>;
   flattenColumns: readonly ColumnType<RecordType>[];
-  onColumnResize: (columnKey: React.Key, width: number) => void;
+  onColumnWidthChange: (columnKey: React.Key, width: number) => void;
   colWidths: number[];
 
   // Row
@@ -75,7 +75,15 @@ export interface TableContextProps<RecordType = any> {
   childrenColumnName: string;
 
   rowHoverable?: boolean;
-
+  fullTableRef: React.MutableRefObject<HTMLDivElement>;
+  colsWidths: Map<React.Key, number>;
+  colsKeys: React.Key[];
+  onColumnResizeEnd?: (info: {
+    columnKey: React.Key;
+    width: number;
+    columnWidths: { columnKey: React.Key; width: number }[];
+  }) => void;
+  onResizingChange: (value: boolean) => void;
   expandedRowOffset: ExpandableConfig<RecordType>['expandedRowOffset'];
 
   // Measure Row
