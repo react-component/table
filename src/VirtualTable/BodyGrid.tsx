@@ -1,5 +1,5 @@
 import { useContext } from '@rc-component/context';
-import VirtualList, { type ListProps, type ListRef } from 'rc-virtual-list';
+import VirtualList, { type ListProps, type ListRef } from '@rc-component/virtual-list';
 import * as React from 'react';
 import TableContext, { responseImmutable } from '../context/TableContext';
 import useFlattenRecords, { type FlattenData } from '../hooks/useFlattenRecords';
@@ -224,7 +224,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
-  // default 'div' in rc-virtual-list
+  // default 'div' in @rc-component/virtual-list
   const wrapperComponent = getComponent(['body', 'wrapper']);
 
   // ========================== Sticky Scroll Bar ==========================

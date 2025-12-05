@@ -6,8 +6,8 @@ React table component with useful functions.
 
 [npm-image]: http://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/@rc-component/table
-[github-actions-image]: https://github.com/react-component/table/workflows/CI/badge.svg
-[github-actions-url]: https://github.com/react-component/table/actions
+[github-actions-image]: https://github.com/react-component/table/actions/workflows/main.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/table/actions/workflows/main.yml
 [coveralls-image]: https://img.shields.io/coveralls/react-component/table.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/react-component/table?branch=master
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square
