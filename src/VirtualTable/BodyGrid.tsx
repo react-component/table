@@ -132,7 +132,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     const { start, end, getSize, offsetY } = info;
 
     // Do nothing if no data
-    if (end < 0) {
+    if (end <= 0) {
       return null;
     }
 
@@ -152,26 +152,10 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       }
     }
 
-    // Find last rowSpan column
-    let lastRowSpanColumns = flattenColumns.filter(
-      // rowSpan is not 1
-      column => getRowSpan(column, end) !== 1,
-    );
-
-    let endIndex = end;
-    for (let i = end; i < flattenData.length; i += 1) {
-      lastRowSpanColumns = lastRowSpanColumns.filter(column => getRowSpan(column, i) !== 1);
-
-      if (!lastRowSpanColumns.length) {
-        endIndex = Math.max(i - 1, end);
-        break;
-      }
-    }
-
     // Collect the line who has rowSpan
     const spanLines: number[] = [];
 
-    for (let i = startIndex; i <= endIndex; i += 1) {
+    for (let i = startIndex; i <= end; i += 1) {
       const item = flattenData[i];
 
       // This code will never reach, just incase
