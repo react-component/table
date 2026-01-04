@@ -636,4 +636,85 @@ describe('Table.Virtual', () => {
       top: 200,
     });
   });
+
+  it('should not crash when pageSize shrinks after scrolled to bottom (rowSpan)', async () => {
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const tblRef = React.createRef<Reference>();
+
+    const makeData = (len: number) =>
+      Array.from({ length: len }).map((_, id) => ({
+        id,
+        firstName: `First_${id.toString(16)}`,
+        lastName: `Last_${id.toString(16)}`,
+        age: 20 + (id % 30),
+        address: `Address_${id}`,
+      }));
+
+    const data = makeData(10000);
+
+    const columns = [
+      { dataIndex: 'id', width: 100, fixed: 'left' },
+      { dataIndex: 'firstName', width: 140, fixed: 'left' },
+      { dataIndex: 'lastName', width: 140 },
+      {
+        dataIndex: 'group',
+        width: 160,
+        render: (_: any, record: any) => `Group ${Math.floor(record.id / 4)}`,
+        onCell: (record: any) => ({
+          rowSpan: record.id % 4 === 0 ? 4 : 0,
+        }),
+      },
+      {
+        dataIndex: 'age',
+        width: 120,
+        onCell: (record: any) => ({
+          colSpan: record.id % 4 === 0 ? 2 : 1,
+        }),
+      },
+      {
+        dataIndex: 'address',
+        width: 220,
+        onCell: (record: any) => ({
+          colSpan: record.id % 4 === 0 ? 0 : 1,
+        }),
+      },
+    ];
+
+    const renderTable = (pageSize: number) => (
+      <VirtualTable
+        ref={tblRef}
+        columns={columns as any}
+        rowKey="id"
+        scroll={{ x: 900, y: 200 }}
+        data={data.slice(0, pageSize)}
+      />
+    );
+
+    const { rerender } = render(renderTable(200));
+
+    await waitFakeTimer();
+
+    // 模拟滚到底
+    act(() => {
+      tblRef.current?.scrollTo?.({ top: 10 ** 10 });
+    });
+
+    await waitFakeTimer();
+
+    // 切到 pageSize=10（slice 模拟分页）
+    expect(() => {
+      rerender(renderTable(10));
+    }).not.toThrow();
+
+    // flush timers to cover transient render
+    vi.runAllTimers();
+    await waitFakeTimer();
+
+    // 不应出现 record undefined 相关错误
+    const errorText = errSpy.mock.calls.map(args => String(args[0] ?? '')).join('\n');
+    expect(errorText).not.toContain('Cannot read properties of undefined');
+    expect(errorText).not.toContain("reading 'record'");
+
+    errSpy.mockRestore();
+  });
 });

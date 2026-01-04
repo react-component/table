@@ -192,7 +192,19 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
 
       const getHeight = (rowSpan: number) => {
         const endItemIndex = index + rowSpan - 1;
-        const endItemKey = getRowKey(flattenData[endItemIndex].record, endItemIndex);
+        const endItem = flattenData[endItemIndex];
+
+        if (!endItem || !endItem.record) {
+          // clamp 到当前可用的最后一行，或退化为默认高度
+          const safeEndIndex = Math.min(endItemIndex, flattenData.length - 1);
+          const safeEndItem = flattenData[safeEndIndex];
+
+          const endItemKey = getRowKey(safeEndItem.record, safeEndIndex);
+          const sizeInfo = getSize(rowKey, endItemKey);
+          return sizeInfo.bottom - sizeInfo.top;
+        }
+
+        const endItemKey = getRowKey(endItem.record, endItemIndex);
 
         const sizeInfo = getSize(rowKey, endItemKey);
         return sizeInfo.bottom - sizeInfo.top;
