@@ -199,12 +199,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           const safeEndIndex = Math.min(endItemIndex, flattenData.length - 1);
           const safeEndItem = flattenData[safeEndIndex];
 
-          if (!safeEndItem || !safeEndItem.record) {
-            // 兜底：没有任何安全 endItem，就返回单行高度
-            const single = getSize(rowKey);
-            return single.bottom - single.top;
-          }
-
           const endItemKey = getRowKey(safeEndItem.record, safeEndIndex);
           const sizeInfo = getSize(rowKey, endItemKey);
           return sizeInfo.bottom - sizeInfo.top;
