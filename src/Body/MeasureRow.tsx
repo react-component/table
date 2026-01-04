@@ -8,17 +8,15 @@ import type { ColumnType } from '../interface';
 
 export interface MeasureRowProps {
   prefixCls: string;
-  onColumnResize: (key: React.Key, width: number) => void;
+  onColumnWidthChange: (key: React.Key, width: number) => void;
   columnsKey: React.Key[];
   columns: readonly ColumnType<any>[];
 }
 
-const MeasureRow: React.FC<MeasureRowProps> = ({
-  prefixCls,
-  columnsKey,
-  onColumnResize,
-  columns,
-}) => {
+const MeasureRow: React.FC<MeasureRowProps> = (props) => {
+
+  const { prefixCls, columnsKey, onColumnWidthChange, columns } = props;
+  
   const ref = React.useRef<HTMLTableRowElement>(null);
 
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
@@ -29,7 +27,7 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
         onBatchResize={infoList => {
           if (isVisible(ref.current)) {
             infoList.forEach(({ data: columnKey, size }) => {
-              onColumnResize(columnKey, size.offsetWidth);
+              onColumnWidthChange(columnKey, size.offsetWidth);
             });
           }
         }}
@@ -44,7 +42,7 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
             <MeasureCell
               key={columnKey}
               columnKey={columnKey}
-              onColumnResize={onColumnResize}
+              onColumnWidthChange={onColumnWidthChange}
               title={titleForMeasure}
             />
           );

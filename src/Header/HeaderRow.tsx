@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import { useContext } from '@rc-component/context';
 import type {
@@ -11,6 +10,7 @@ import type {
 } from '../interface';
 import { getCellFixedInfo } from '../utils/fixUtil';
 import { getColumnsKey } from '../utils/valueUtil';
+import HeaderCell from './HeaderCell';
 import type { TableProps } from '..';
 
 export interface RowProps<RecordType> {
@@ -56,8 +56,12 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
 
         const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell?.(column) || {};
 
+        // Whether this cell is in the previous cell of the scrollbar
+        const isScrollBarPreviousCell =
+          cells[cells.length - 1]?.column.scrollbar && cellIndex === cells.length - 2;
+
         return (
-          <Cell
+          <HeaderCell
             {...cell}
             scope={column.title ? (colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
@@ -68,6 +72,10 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
             {...fixedInfo}
             additionalProps={additionalProps}
             rowType="header"
+            columnKey={columnsKey[cellIndex]}
+            isScrollBarPreviousCell={isScrollBarPreviousCell}
+            resizable={column.scrollbar ? false : (column as ColumnType<RecordType>).resizable}
+            minWidth={(column as ColumnType<RecordType>).minWidth}
           />
         );
       })}
