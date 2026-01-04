@@ -686,7 +686,6 @@ describe('Table.Virtual', () => {
         columns={columns as any}
         rowKey="id"
         scroll={{ x: 900, y: 200 }}
-        listItemHeight={20}
         data={data.slice(0, pageSize)}
       />
     );
