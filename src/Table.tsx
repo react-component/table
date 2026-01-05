@@ -449,7 +449,7 @@ const Table = <RecordType extends DefaultRecordType>(
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
 
-  function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
+  function forceScroll(scrollLeft: number, target: HTMLDivElement & {_scrollTimeout?: number | null} | ((left: number) => void)) {
     if (!target) {
       return;
     }
@@ -458,11 +458,17 @@ const Table = <RecordType extends DefaultRecordType>(
     } else if (target.scrollLeft !== scrollLeft) {
       target.scrollLeft = scrollLeft;
 
+      if (target._scrollTimeout) {
+        window.clearTimeout(target._scrollTimeout);
+        target._scrollTimeout = null;
+      }
+
       // Delay to force scroll position if not sync
       // ref: https://github.com/ant-design/ant-design/issues/37179
       if (target.scrollLeft !== scrollLeft) {
-        setTimeout(() => {
+        target._scrollTimeout = setTimeout(() => {
           target.scrollLeft = scrollLeft;
+          target._scrollTimeout = null;
         }, 0);
       }
     }
