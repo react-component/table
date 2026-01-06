@@ -31,6 +31,7 @@ export interface BodyRowProps<RecordType> {
     colSpan: number;
     sticky: number;
   };
+  forceRender?: boolean | ((record: RecordType, index: number) => boolean);
 }
 
 // ==================================================================================
@@ -138,6 +139,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
     cellComponent,
     scopeCellComponent,
     expandedRowInfo,
+    forceRender,
   } = props;
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
@@ -156,6 +158,13 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
   // Force render expand row if expanded before
   const expandedRef = React.useRef(false);
   expandedRef.current ||= expanded;
+
+  const shouldForceRender = () => {
+    if (typeof forceRender === 'function') {
+      return forceRender(record, index);
+    }
+    return !!forceRender;
+  };
 
   if (process.env.NODE_ENV !== 'production') {
     devRenderTimes(props);
@@ -224,7 +233,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement<ExpandedRowProps>;
-  if (rowSupportExpand && (expandedRef.current || expanded)) {
+  if (rowSupportExpand && (expandedRef.current || expanded || shouldForceRender?.())) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
     expandRowNode = (

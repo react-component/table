@@ -146,6 +146,9 @@ const Demo = () => {
           rowExpandable,
           expandIconColumnIndex: expandIconPosition ? 1 : null,
           fixed: fixExpand,
+          forceRender: record => {
+            return record?.key === 0;
+          },
         }}
         scroll={{ x: fixColumns || scrollX ? 2000 : null, y: fixHeader ? 300 : null }}
         data={data}
