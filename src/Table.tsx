@@ -88,8 +88,10 @@ const EMPTY_SCROLL_TARGET = {};
 export type SemanticName = 'section' | 'title' | 'footer' | 'content';
 export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
 
-export interface TableProps<RecordType = any>
-  extends Omit<LegacyExpandableProps<RecordType>, 'showExpandColumn'> {
+export interface TableProps<RecordType = any> extends Omit<
+  LegacyExpandableProps<RecordType>,
+  'showExpandColumn'
+> {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -349,7 +351,7 @@ const Table = <RecordType extends DefaultRecordType>(
       scrollTo: config => {
         if (scrollBodyRef.current instanceof HTMLElement) {
           // Native scroll
-          const { index, top, key, offset } = config;
+          const { index, top, key, offset, align = 'nearest' } = config;
 
           if (validNumberValue(top)) {
             // In top mode, offset is ignored
@@ -361,12 +363,21 @@ const Table = <RecordType extends DefaultRecordType>(
             );
             if (targetElement) {
               if (!offset) {
-                // No offset, use scrollIntoView for default behavior
-                targetElement.scrollIntoView();
+                targetElement.scrollIntoView({ block: align });
               } else {
-                // With offset, use element's offsetTop + offset
+                const container = scrollBodyRef.current;
                 const elementTop = (targetElement as HTMLElement).offsetTop;
-                scrollBodyRef.current.scrollTo({ top: elementTop + offset });
+                const elementHeight = (targetElement as HTMLElement).offsetHeight;
+                const containerHeight = container.clientHeight;
+
+                const alignMap: Record<string, number> = {
+                  start: elementTop,
+                  end: elementTop + elementHeight - containerHeight,
+                  center: elementTop + (elementHeight - containerHeight) / 2,
+                  nearest: elementTop,
+                };
+                const targetTop = alignMap[align] ?? elementTop;
+                container.scrollTo({ top: targetTop + offset });
               }
             }
           }

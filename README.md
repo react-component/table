@@ -119,6 +119,25 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
 | rowHoverable | boolean | true | Table hover interaction |
 
+### Methods
+
+#### scrollTo
+
+Table 组件暴露 `scrollTo` 方法用于滚动到指定位置：
+
+```js
+const tblRef = useRef();
+tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
+```
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| index | number | - | Row index to scroll to |
+| top | number | - | Scroll to specific top position (in px) |
+| key | string | - | Scroll to row by row key |
+| offset | number | - | Additional offset from target position |
+| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | Alignment of the target element within the scroll container. `start` aligns to top, `center` to middle, `end` to bottom, `nearest` automatically chooses the closest alignment |
+
 ## Column Props
 
 | Name | Type | Default | Description |

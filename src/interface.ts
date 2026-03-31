@@ -43,6 +43,8 @@ export type ScrollConfig = {
    * When offset is set, the target element will always be aligned to the top of the container.
    */
   offset?: number;
+
+  align?: ScrollLogicalPosition;
 };
 
 export type Reference = {

@@ -21,6 +21,7 @@ describe('Table.Ref', () => {
 
   beforeEach(() => {
     scrollParam = null;
+    scrollIntoViewElement = null;
   });
 
   it('support reference', () => {
@@ -108,5 +109,79 @@ describe('Table.Ref', () => {
       index: 0,
     });
     expect(scrollIntoViewElement.textContent).toEqual('light');
+  });
+
+  it('support scrollTo with align', () => {
+    const ref = React.createRef<Reference>();
+
+    render(
+      <Table
+        data={[{ key: 'light' }, { key: 'bamboo' }]}
+        columns={[
+          {
+            dataIndex: 'key',
+          },
+        ]}
+        ref={ref}
+        scroll={{
+          y: 10,
+        }}
+      />,
+    );
+
+    // Default behavior: uses scrollIntoView (not scrollTo)
+    ref.current.scrollTo({ index: 0 });
+    expect(scrollIntoViewElement).not.toBeNull();
+    expect(scrollIntoViewElement.textContent).toEqual('light');
+
+    // Align start - should use scrollIntoView
+    scrollIntoViewElement = null;
+    ref.current.scrollTo({ index: 0, align: 'start' });
+    expect(scrollIntoViewElement.textContent).toEqual('light');
+
+    // Align center - should use scrollIntoView
+    ref.current.scrollTo({ index: 1, align: 'center' });
+    expect(scrollIntoViewElement.textContent).toEqual('bamboo');
+
+    // Align end - should use scrollIntoView
+    scrollIntoViewElement = null;
+    ref.current.scrollTo({ key: 'bamboo', align: 'end' });
+    expect(scrollIntoViewElement.textContent).toEqual('bamboo');
+  });
+
+  it('support scrollTo with align and offset', () => {
+    const ref = React.createRef<Reference>();
+
+    render(
+      <Table
+        data={[{ key: 'light' }, { key: 'bamboo' }]}
+        columns={[
+          {
+            dataIndex: 'key',
+          },
+        ]}
+        ref={ref}
+        scroll={{
+          y: 10,
+        }}
+      />,
+    );
+
+    // align start + offset 20 = 0 + 20 = 20
+    ref.current.scrollTo({ index: 0, align: 'start', offset: 20 });
+    expect(scrollIntoViewElement).toBeNull();
+    expect(scrollParam.top).toEqual(20);
+
+    // align center + offset 30 = 0 + 30 = 30
+    ref.current.scrollTo({ index: 1, align: 'center', offset: 30 });
+    expect(scrollParam.top).toEqual(30);
+
+    // align end + offset 10 = 0 + 10 = 10
+    ref.current.scrollTo({ key: 'bamboo', align: 'end', offset: 10 });
+    expect(scrollParam.top).toEqual(10);
+
+    // align nearest + offset 50 = 0 + 50 = 50
+    ref.current.scrollTo({ index: 0, align: 'nearest', offset: 50 });
+    expect(scrollParam.top).toEqual(50);
   });
 });

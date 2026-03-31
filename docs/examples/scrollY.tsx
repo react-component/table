@@ -88,6 +88,36 @@ const Test = () => {
       >
         Scroll To Key 6 + Offset -10
       </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 9,
+            align: 'start',
+          });
+        }}
+      >
+        Scroll To key 9 (align: start)
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 9,
+            align: 'center',
+          });
+        }}
+      >
+        Scroll To key 9 (align: center)
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 9,
+            align: 'end',
+          });
+        }}
+      >
+        Scroll To key 9 (align: end)
+      </button>
       <Table
         ref={tblRef}
         columns={columns}
