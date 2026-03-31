@@ -123,7 +123,7 @@ React.render(<Table columns={columns} data={data} />, mountNode);
 
 #### scrollTo
 
-Table 组件暴露 `scrollTo` 方法用于滚动到指定位置：
+Table component exposes `scrollTo` method to scroll to a specific position:
 
 ```js
 const tblRef = useRef();
