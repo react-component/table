@@ -370,7 +370,7 @@ const Table = <RecordType extends DefaultRecordType>(
                 const elementHeight = (targetElement as HTMLElement).offsetHeight;
                 const containerHeight = container.clientHeight;
 
-                const alignMap: Record<string, number> = {
+                const alignMap: Record<ScrollLogicalPosition, number> = {
                   start: elementTop,
                   end: elementTop + elementHeight - containerHeight,
                   center: elementTop + (elementHeight - containerHeight) / 2,
