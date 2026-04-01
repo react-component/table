@@ -93,7 +93,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
           nearest: 'auto',
         };
 
-        const virtualAlign = align ? alignMap[align] : offset ? 'top' : 'auto';
+        const virtualAlign = alignMap[align] ?? (offset ? 'top' : 'auto');
 
         listRef.current?.scrollTo({
           ...restConfig,
