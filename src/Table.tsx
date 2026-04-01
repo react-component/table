@@ -351,7 +351,7 @@ const Table = <RecordType extends DefaultRecordType>(
       scrollTo: config => {
         if (scrollBodyRef.current instanceof HTMLElement) {
           // Native scroll
-          const { index, top, key, offset, align = 'nearest' } = config;
+          const { index, top, key, offset, align } = config;
 
           if (validNumberValue(top)) {
             // In top mode, offset is ignored
@@ -363,21 +363,38 @@ const Table = <RecordType extends DefaultRecordType>(
             );
             if (targetElement) {
               if (!offset) {
-                targetElement.scrollIntoView({ block: align });
+                targetElement.scrollIntoView({ block: align ?? 'nearest' });
               } else {
                 const container = scrollBodyRef.current;
                 const elementTop = (targetElement as HTMLElement).offsetTop;
                 const elementHeight = (targetElement as HTMLElement).offsetHeight;
                 const containerHeight = container.clientHeight;
+                const currentTop = container.scrollTop;
+                const elementBottom = elementTop + elementHeight;
+                const viewportBottom = currentTop + containerHeight;
+                let targetTop: number;
 
-                const alignMap: Record<ScrollLogicalPosition, number> = {
-                  start: elementTop,
-                  end: elementTop + elementHeight - containerHeight,
-                  center: elementTop + (elementHeight - containerHeight) / 2,
-                  nearest: elementTop,
-                };
-                const targetTop = alignMap[align] ?? elementTop;
-                container.scrollTo({ top: targetTop + offset });
+                if (align === 'nearest') {
+                  const targetWithOffset = elementTop + offset;
+                  const targetBottomWithOffset = elementBottom + offset;
+
+                  if (targetWithOffset < currentTop) {
+                    targetTop = targetWithOffset;
+                  } else if (targetBottomWithOffset > viewportBottom) {
+                    targetTop = targetBottomWithOffset - containerHeight;
+                  } else {
+                    targetTop = currentTop;
+                  }
+                } else {
+                  const alignMap: Record<string, number> = {
+                    start: elementTop,
+                    end: elementBottom - containerHeight,
+                    center: elementTop - (containerHeight - elementHeight) / 2,
+                  };
+                  targetTop = alignMap[align ?? 'start'] + offset;
+                }
+
+                container.scrollTo({ top: targetTop });
               }
             }
           }

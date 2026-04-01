@@ -118,6 +118,27 @@ const Test = () => {
       >
         Scroll To key 9 (align: end)
       </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            key: 9,
+            align: 'nearest',
+          });
+        }}
+      >
+        Scroll To key 9 (align: nearest)
+      </button>
+      <button
+        onClick={() => {
+          tblRef.current?.scrollTo({
+            index: 9,
+            offset: 50,
+            align: 'nearest',
+          });
+        }}
+      >
+        Scroll To index 9 + offset 50 (align: nearest)
+      </button>
       <Table
         ref={tblRef}
         columns={columns}
