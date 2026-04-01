@@ -40,11 +40,15 @@ export type ScrollConfig = {
    * Additional offset in pixels to apply to the scroll position.
    * Only effective when using `key` or `index` mode.
    * Ignored when using `top` mode.
-   * When offset is set, the target element will be aligned according to the `align` parameter.
+   * In `key` / `index` mode, `offset` is added to the position resolved by `align`.
    */
   offset?: number;
 
   align?: ScrollLogicalPosition;
+};
+
+export type VirtualScrollConfig = ScrollConfig & {
+  align?: Exclude<ScrollLogicalPosition, 'center'>;
 };
 
 export type Reference = {

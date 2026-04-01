@@ -373,6 +373,7 @@ describe('Table.Virtual', () => {
 
     expect(global.scrollToConfig).toEqual({
       index: 99,
+      align: 'auto',
     });
   });
 
@@ -421,6 +422,31 @@ describe('Table.Virtual', () => {
       offset: 30,
       align: 'top',
     });
+  });
+
+  it('scrollTo with align should pass', async () => {
+    const tblRef = React.createRef<Reference>();
+    getTable({ ref: tblRef });
+
+    // align start -> top
+    tblRef.current.scrollTo({ index: 50, align: 'start' });
+    await waitFakeTimer();
+    expect(global.scrollToConfig).toEqual({ index: 50, align: 'top' });
+
+    // align end -> bottom
+    tblRef.current.scrollTo({ index: 50, align: 'end' });
+    await waitFakeTimer();
+    expect(global.scrollToConfig).toEqual({ index: 50, align: 'bottom' });
+
+    // align nearest -> auto
+    tblRef.current.scrollTo({ index: 50, align: 'nearest' });
+    await waitFakeTimer();
+    expect(global.scrollToConfig).toEqual({ index: 50, align: 'auto' });
+
+    // offset + align
+    tblRef.current.scrollTo({ index: 50, offset: 20, align: 'end' });
+    await waitFakeTimer();
+    expect(global.scrollToConfig).toEqual({ index: 50, offset: 20, align: 'bottom' });
   });
 
   describe('auto width', () => {
