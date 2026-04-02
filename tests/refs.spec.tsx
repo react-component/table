@@ -184,4 +184,28 @@ describe('Table.Ref', () => {
     ref.current.scrollTo({ index: 0, align: 'nearest', offset: 50 });
     expect(scrollParam.top).toEqual(50);
   });
+
+  it('support scrollTo with align nearest and element above viewport', () => {
+    const ref = React.createRef<Reference>();
+
+    render(
+      <Table
+        data={[{ key: 'light' }, { key: 'bamboo' }]}
+        columns={[
+          {
+            dataIndex: 'key',
+          },
+        ]}
+        ref={ref}
+        scroll={{
+          y: 100,
+        }}
+      />,
+    );
+
+    ref.current.scrollTo({ top: 50 });
+
+    ref.current.scrollTo({ index: 0, align: 'nearest', offset: -10 });
+    expect(scrollParam.top).toEqual(-10);
+  });
 });
