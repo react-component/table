@@ -369,29 +369,34 @@ const Table = <RecordType extends DefaultRecordType>(
                 const elementTop = (targetElement as HTMLElement).offsetTop;
                 const elementHeight = (targetElement as HTMLElement).offsetHeight;
                 const containerHeight = container.clientHeight;
-                const currentTop = container.scrollTop;
                 const elementBottom = elementTop + elementHeight;
-                const viewportBottom = currentTop + containerHeight;
                 let targetTop: number;
 
-                if (align === 'nearest') {
-                  const targetWithOffset = elementTop + offset;
-                  const targetBottomWithOffset = elementBottom + offset;
+                switch (align) {
+                  case 'nearest': {
+                    const currentTop = container.scrollTop;
+                    const viewportBottom = currentTop + containerHeight;
+                    const targetWithOffset = elementTop + offset;
+                    const targetBottomWithOffset = elementBottom + offset;
 
-                  if (targetWithOffset < currentTop) {
-                    targetTop = targetWithOffset;
-                  } else if (targetBottomWithOffset > viewportBottom) {
-                    targetTop = targetBottomWithOffset - containerHeight;
-                  } else {
-                    targetTop = currentTop;
+                    if (targetWithOffset < currentTop) {
+                      targetTop = targetWithOffset;
+                    } else if (targetBottomWithOffset > viewportBottom) {
+                      targetTop = targetBottomWithOffset - containerHeight;
+                    } else {
+                      targetTop = currentTop;
+                    }
+                    break;
                   }
-                } else {
-                  const alignMap: Record<string, number> = {
-                    start: elementTop,
-                    end: elementBottom - containerHeight,
-                    center: elementTop - (containerHeight - elementHeight) / 2,
-                  };
-                  targetTop = alignMap[align ?? 'start'] + offset;
+                  case 'end':
+                    targetTop = elementBottom - containerHeight + offset;
+                    break;
+                  case 'center':
+                    targetTop = elementTop - (containerHeight - elementHeight) / 2 + offset;
+                    break;
+                  case 'start':
+                  default:
+                    targetTop = elementTop + offset;
                 }
 
                 container.scrollTo({ top: targetTop });

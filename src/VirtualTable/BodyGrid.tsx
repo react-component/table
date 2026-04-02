@@ -12,6 +12,12 @@ import type {
 import BodyLine from './BodyLine';
 import { GridContext, StaticContext } from './context';
 
+const ALIGN_MAP: Record<string, 'top' | 'bottom' | 'auto'> = {
+  start: 'top',
+  end: 'bottom',
+  nearest: 'auto',
+};
+
 export interface GridProps<RecordType = any> {
   data: RecordType[];
   onScroll: OnCustomizeScroll;
@@ -87,13 +93,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
       scrollTo: (config: VirtualScrollConfig) => {
         const { align, offset, ...restConfig } = config;
 
-        const alignMap: Record<string, 'top' | 'bottom' | 'auto'> = {
-          start: 'top',
-          end: 'bottom',
-          nearest: 'auto',
-        };
-
-        const virtualAlign = alignMap[align] ?? (offset ? 'top' : 'auto');
+        const virtualAlign = ALIGN_MAP[align] ?? (offset ? 'top' : 'auto');
 
         listRef.current?.scrollTo({
           ...restConfig,
