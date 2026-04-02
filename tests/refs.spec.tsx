@@ -169,7 +169,6 @@ describe('Table.Ref', () => {
 
     // align start + offset 20 = 0 + 20 = 20
     ref.current.scrollTo({ index: 0, align: 'start', offset: 20 });
-    expect(scrollIntoViewElement).toBeNull();
     expect(scrollParam.top).toEqual(20);
 
     // align center + offset 30 = 0 + 30 = 30

@@ -351,7 +351,7 @@ const Table = <RecordType extends DefaultRecordType>(
       scrollTo: config => {
         if (scrollBodyRef.current instanceof HTMLElement) {
           // Native scroll
-          const { index, top, key, offset, align } = config;
+          const { index, top, key, offset, align = 'nearest' } = config;
 
           if (validNumberValue(top)) {
             // In top mode, offset is ignored
@@ -362,16 +362,14 @@ const Table = <RecordType extends DefaultRecordType>(
               `[data-row-key="${mergedKey}"]`,
             );
             if (targetElement) {
-              if (!offset) {
-                targetElement.scrollIntoView({ block: align ?? 'nearest' });
-              } else {
+              targetElement.scrollIntoView({ block: align });
+              if (offset) {
                 const container = scrollBodyRef.current;
                 const elementTop = (targetElement as HTMLElement).offsetTop;
                 const elementHeight = (targetElement as HTMLElement).offsetHeight;
                 const containerHeight = container.clientHeight;
                 const elementBottom = elementTop + elementHeight;
                 let targetTop: number;
-
                 switch (align) {
                   case 'nearest': {
                     const currentTop = container.scrollTop;

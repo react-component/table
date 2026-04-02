@@ -136,7 +136,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | top | number | - | Scroll to specific top position (in px) |
 | key | string | - | Scroll to row by row key |
 | offset | number | - | Additional offset from target position |
-| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | Alignment of the target element within the scroll container. `start` aligns to top, `center` to middle, `end` to bottom, `nearest` automatically chooses the closest alignment |
+| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | Alignment of the target element within the scroll container. `start` aligns to top, `center` to middle, `end` to bottom, `nearest` automatically chooses the closest alignment. Note: Virtual table does not support `center`. |
 
 ## Column Props
 

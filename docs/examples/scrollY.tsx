@@ -41,103 +41,35 @@ const Test = () => {
   return (
     <div>
       <h2>scroll body table</h2>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            top: 9999,
-          });
-        }}
-      >
-        Scroll To End
+      <button onClick={() => tblRef.current?.scrollTo({ top: 0 })}>Top</button>
+      <button onClick={() => tblRef.current?.scrollTo({ top: 9999 })}>End</button>
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9 })}>Key 9</button>
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'start' })}>
+        Key 9 align: start
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 9,
-          });
-        }}
-      >
-        Scroll To key 9
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'center' })}>
+        Key 9 align: center
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            top: 0,
-          });
-        }}
-      >
-        Scroll To top
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'end' })}>
+        Key 9 align: end
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            index: 5,
-            offset: -10,
-          });
-        }}
-      >
-        Scroll To Index 5 + Offset -10
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'nearest' })}>
+        Key 9 align: nearest
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 6,
-            offset: -10,
-          });
-        }}
-      >
-        Scroll To Key 6 + Offset -10
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'start', offset: 20 })}>
+        Key 9 start offset20
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 9,
-            align: 'start',
-          });
-        }}
-      >
-        Scroll To key 9 (align: start)
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'center', offset: 20 })}>
+        Key 9 center offset20
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 9,
-            align: 'center',
-          });
-        }}
-      >
-        Scroll To key 9 (align: center)
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'end', offset: 20 })}>
+        Key 9 end offset20
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 9,
-            align: 'end',
-          });
-        }}
-      >
-        Scroll To key 9 (align: end)
+      <button onClick={() => tblRef.current?.scrollTo({ key: 9, align: 'nearest', offset: 20 })}>
+        Key 9 nearest offset20
       </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            key: 9,
-            align: 'nearest',
-          });
-        }}
-      >
-        Scroll To key 9 (align: nearest)
-      </button>
-      <button
-        onClick={() => {
-          tblRef.current?.scrollTo({
-            index: 9,
-            offset: 50,
-            align: 'nearest',
-          });
-        }}
-      >
-        Scroll To index 9 + offset 50 (align: nearest)
+      <button onClick={() => tblRef.current?.scrollTo({ index: 5, offset: 50 })}>
+        Index 5 + Offset 50
       </button>
       <Table
         ref={tblRef}
