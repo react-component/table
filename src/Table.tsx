@@ -365,39 +365,7 @@ const Table = <RecordType extends DefaultRecordType>(
               targetElement.scrollIntoView({ block: align });
               if (offset) {
                 const container = scrollBodyRef.current;
-                const elementTop = (targetElement as HTMLElement).offsetTop;
-                const elementHeight = (targetElement as HTMLElement).offsetHeight;
-                const containerHeight = container.clientHeight;
-                const elementBottom = elementTop + elementHeight;
-                let targetTop: number;
-                switch (align) {
-                  case 'nearest': {
-                    const currentTop = container.scrollTop;
-                    const viewportBottom = currentTop + containerHeight;
-                    const targetWithOffset = elementTop + offset;
-                    const targetBottomWithOffset = elementBottom + offset;
-
-                    if (targetWithOffset < currentTop) {
-                      targetTop = targetWithOffset;
-                    } else if (targetBottomWithOffset > viewportBottom) {
-                      targetTop = targetBottomWithOffset - containerHeight;
-                    } else {
-                      targetTop = currentTop;
-                    }
-                    break;
-                  }
-                  case 'end':
-                    targetTop = elementBottom - containerHeight + offset;
-                    break;
-                  case 'center':
-                    targetTop = elementTop - (containerHeight - elementHeight) / 2 + offset;
-                    break;
-                  case 'start':
-                  default:
-                    targetTop = elementTop + offset;
-                }
-
-                container.scrollTo({ top: targetTop });
+                container.scrollTo({ top: container.scrollTop + offset });
               }
             }
           }
