@@ -131,15 +131,16 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       className: `${prefixCls}-cell-scrollbar`,
     }),
   };
+  const shouldAppendScrollBarColumn = combinationScrollBarSize && !noData;
 
   const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
-    () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
-    [combinationScrollBarSize, columns],
+    () => (shouldAppendScrollBarColumn ? [...columns, ScrollBarColumn] : columns),
+    [shouldAppendScrollBarColumn, columns],
   );
 
   const flattenColumnsWithScrollbar = useMemo(
-    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-    [combinationScrollBarSize, flattenColumns],
+    () => (shouldAppendScrollBarColumn ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
+    [shouldAppendScrollBarColumn, flattenColumns],
   );
 
   // Calculate the sticky offsets
