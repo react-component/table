@@ -2796,7 +2796,7 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
             <th
               class="rc-table-cell rc-table-cell-fix rc-table-cell-fix-end rc-table-cell-fix-end-shadow"
               scope="col"
-              style="inset-inline-end: 15px; --z-offset: 11; --z-offset-reverse: 1;"
+              style="inset-inline-end: 0px; --z-offset: 11; --z-offset-reverse: 1;"
             >
               title12
             </th>

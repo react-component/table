@@ -146,6 +146,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   // Calculate the sticky offsets
   const headerStickyOffsets = useMemo(() => {
     const { start, end } = stickyOffsets;
+    const scrollbarOffset = shouldAppendScrollBarColumn ? combinationScrollBarSize : 0;
     return {
       ...stickyOffsets,
       // left:
@@ -153,10 +154,10 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       // right:
       //   direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
       start: start,
-      end: [...end.map(width => width + combinationScrollBarSize), 0],
+      end: [...end.map(width => width + scrollbarOffset), 0],
       isSticky,
     };
-  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+  }, [shouldAppendScrollBarColumn, combinationScrollBarSize, stickyOffsets, isSticky]);
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
