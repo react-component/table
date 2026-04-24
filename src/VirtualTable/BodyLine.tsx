@@ -39,11 +39,11 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   // ========================== Expand ==========================
   const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
 
+  const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
+
   let expandRowNode: React.ReactElement<any>;
   if (rowSupportExpand && expanded) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
-
-    const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
     let additionalProps: React.TdHTMLAttributes<HTMLElement> = {};
     if (fixColumn) {
@@ -94,6 +94,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       data-row-key={rowKey}
       ref={rowSupportExpand ? null : ref}
       className={clsx(className, `${prefixCls}-row`, rowProps?.className, {
+        [expandedClsName]: indent >= 1,
         [`${prefixCls}-row-extra`]: extra,
       })}
       style={{ ...rowStyle, ...rowProps?.style }}

@@ -183,6 +183,32 @@ describe('Table.Virtual', () => {
       });
     });
 
+    it('applies expanded row class to tree rows', () => {
+      const { container } = getTable({
+        data: [
+          {
+            name: 'parent',
+            age: 0,
+            address: 'address0',
+            children: [
+              {
+                name: 'child',
+                age: 1,
+                address: 'address1',
+              },
+            ],
+          },
+        ],
+        expandable: {
+          expandedRowKeys: ['parent'],
+          expandedRowClassName: 'bamboo',
+          expandIcon: () => <span className="custom-expand-icon" />,
+        },
+      });
+
+      expect(container.querySelector('[data-row-key="child"]')).toHaveClass('bamboo');
+    });
+
     it('fixed', () => {
       const { container } = getTable({
         columns: [
