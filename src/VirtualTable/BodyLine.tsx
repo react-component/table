@@ -25,10 +25,16 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const { data, index, className, rowKey, style, extra, getHeight, ...restProps } = props;
   const { record, indent, index: renderIndex } = data;
 
-  const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth, classNames } = useContext(
-    TableContext,
-    ['prefixCls', 'flattenColumns', 'fixColumn', 'componentWidth', 'scrollX', 'classNames'],
-  );
+  const { scrollX, flattenColumns, prefixCls, fixColumn, componentWidth, classNames, styles } =
+    useContext(TableContext, [
+      'prefixCls',
+      'flattenColumns',
+      'fixColumn',
+      'componentWidth',
+      'scrollX',
+      'classNames',
+      'styles',
+    ]);
   const { getComponent } = useContext(StaticContext, ['getComponent']);
 
   const rowInfo = useRowInfo(record, rowKey, index, indent);
@@ -104,6 +110,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
           <VirtualCell
             key={colIndex}
             className={classNames?.body?.cell}
+            style={styles?.body?.cell}
             component={cellComponent}
             rowInfo={rowInfo}
             column={column}
