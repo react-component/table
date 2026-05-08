@@ -99,11 +99,11 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       {...restProps}
       data-row-key={rowKey}
       ref={rowSupportExpand ? null : ref}
-      className={clsx(className, `${prefixCls}-row`, rowProps?.className, {
+      className={clsx(className, `${prefixCls}-row`, rowProps?.className, classNames?.body?.row, {
         [expandedClsName]: indent >= 1,
         [`${prefixCls}-row-extra`]: extra,
       })}
-      style={{ ...rowStyle, ...rowProps?.style }}
+      style={{ ...rowStyle, ...rowProps?.style, ...styles?.body?.row }}
     >
       {flattenColumns.map((column, colIndex) => {
         return (
