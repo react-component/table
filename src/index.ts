@@ -13,7 +13,7 @@ import type {
 } from './interface';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import type { CompareProps, TableProps } from './Table';
+import type { TableProps } from './Table';
 import Table, { genTable } from './Table';
 import { INTERNAL_COL_DEFINE } from './utils/legacyUtil';
 import type { VirtualTableProps } from './VirtualTable';
@@ -27,7 +27,6 @@ export {
   Column,
   ColumnGroup,
   type TableProps,
-  type CompareProps,
   INTERNAL_COL_DEFINE,
   EXPAND_COLUMN,
   INTERNAL_HOOKS,
