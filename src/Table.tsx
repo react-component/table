@@ -78,7 +78,7 @@ import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
 import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
 
-type CompareProps<T extends React.ComponentType<any>> = (
+export type CompareProps<T extends React.ComponentType<any>> = (
   prevProps: Readonly<React.ComponentProps<T>>,
   nextProps: Readonly<React.ComponentProps<T>>,
 ) => boolean;

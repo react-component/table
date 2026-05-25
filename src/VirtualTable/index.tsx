@@ -4,14 +4,9 @@ import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import { makeImmutable } from '../context/TableContext';
 import type { CustomizeScrollBody, GetComponent, Reference } from '../interface';
-import Table, { DEFAULT_PREFIX, type TableProps } from '../Table';
+import Table, { DEFAULT_PREFIX, type CompareProps, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
-
-type CompareProps<T extends React.ComponentType<any>> = (
-  prevProps: Readonly<React.ComponentProps<T>>,
-  nextProps: Readonly<React.ComponentProps<T>>,
-) => boolean;
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
