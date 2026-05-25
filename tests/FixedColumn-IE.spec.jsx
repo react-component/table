@@ -2,7 +2,7 @@ import React from 'react';
 import { render, act } from '@testing-library/react';
 import Table from '../src';
 // 保留 spyElementPrototype 的相关逻辑
-import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
+import { spyElementPrototype } from '@rc-component/util';
 import RcResizeObserver from '@rc-component/resize-observer';
 
 vi.mock('@rc-component/util/lib/Dom/styleChecker', () => {

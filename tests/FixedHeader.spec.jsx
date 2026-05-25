@@ -1,6 +1,6 @@
 import { render, act } from '@testing-library/react';
 import { _rs } from '@rc-component/resize-observer';
-import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
+import { spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import Table, { INTERNAL_COL_DEFINE } from '../src';
 import { safeAct } from './utils';

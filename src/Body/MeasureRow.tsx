@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ResizeObserver from '@rc-component/resize-observer';
 import MeasureCell from './MeasureCell';
-import isVisible from '@rc-component/util/lib/Dom/isVisible';
+import { isVisible } from '@rc-component/util';
 import { useContext } from '@rc-component/context';
 import TableContext from '../context/TableContext';
 import type { ColumnType } from '../interface';
