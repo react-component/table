@@ -85,6 +85,7 @@ export function getCellProps<RecordType>(
   }
 
   const additionalCellProps = column.onCell?.(record, index) || {};
+  let hoverRowSpan: number | undefined;
 
   // Expandable row has offset
   if (expandedRowOffset) {
@@ -93,6 +94,7 @@ export function getCellProps<RecordType>(
     // For expandable row with rowSpan,
     // We should increase the rowSpan if the row is expanded
     if (expandable && rowSpan && colIndex < expandedRowOffset) {
+      hoverRowSpan = rowSpan;
       let currentRowSpan = rowSpan;
 
       for (let i = index; i < index + rowSpan; i += 1) {
@@ -110,6 +112,7 @@ export function getCellProps<RecordType>(
     fixedInfo,
     appendCellNode,
     additionalCellProps: additionalCellProps,
+    hoverRowSpan,
   };
 }
 
@@ -187,7 +190,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
       {flattenColumns.map((column: ColumnType<RecordType>, colIndex) => {
         const { render, dataIndex, className: columnClassName } = column;
 
-        const { key, fixedInfo, appendCellNode, additionalCellProps } = getCellProps(
+        const { key, fixedInfo, appendCellNode, additionalCellProps, hoverRowSpan } = getCellProps(
           rowInfo,
           column,
           colIndex,
@@ -216,6 +219,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
             {...fixedInfo}
             appendNode={appendCellNode}
             additionalProps={additionalCellProps}
+            hoverRowSpan={hoverRowSpan}
           />
         );
       })}
