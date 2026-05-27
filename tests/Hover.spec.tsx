@@ -1,6 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import toArray from '@rc-component/util/lib/Children/toArray';
-import { resetWarned } from '@rc-component/util/lib/warning';
+import { resetWarned, toArray } from '@rc-component/util';
 import React from 'react';
 import Table from '../src';
 import type { TableProps } from '../src/Table';

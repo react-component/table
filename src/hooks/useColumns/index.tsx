@@ -1,5 +1,4 @@
-import toArray from '@rc-component/util/lib/Children/toArray';
-import warning from '@rc-component/util/lib/warning';
+import { toArray, warning } from '@rc-component/util';
 import * as React from 'react';
 import { EXPAND_COLUMN } from '../../constant';
 import type {

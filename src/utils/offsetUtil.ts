@@ -1,4 +1,4 @@
-import { getDOM } from '@rc-component/util/lib/Dom/findDOMNode';
+import { getDOM } from '@rc-component/util';
 
 // Copy from `rc-component/util/Dom/css.js`
 export function getOffset(node: HTMLElement | Window) {

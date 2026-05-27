@@ -1,5 +1,5 @@
 import { render, fireEvent, createEvent } from '@testing-library/react';
-import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
+import { spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import { act } from '@testing-library/react';
 import Table from '../src';

@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { resetWarned } from '@rc-component/util/lib/warning';
+import { resetWarned } from '@rc-component/util';
 import React from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import Table, { INTERNAL_COL_DEFINE } from '../src';

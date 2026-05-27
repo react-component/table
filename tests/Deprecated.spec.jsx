@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { resetWarned } from '@rc-component/util/lib/warning';
+import { resetWarned } from '@rc-component/util';
 import Table from '../src';
 
 describe('Table.Deprecated', () => {

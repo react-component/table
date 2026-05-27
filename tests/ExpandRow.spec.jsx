@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { spyElementPrototype } from '@rc-component/util/lib/test/domHook';
-import { resetWarned } from '@rc-component/util/lib/warning';
+import { resetWarned, spyElementPrototype } from '@rc-component/util';
 import Table from '../src';
 
 describe('Table.Expand', () => {

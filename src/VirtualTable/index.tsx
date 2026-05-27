@@ -1,14 +1,12 @@
-import type { CompareProps } from '@rc-component/context/lib/Immutable';
 import { clsx } from 'clsx';
-import { useEvent, warning } from '@rc-component/util';
+import { get as getValue, useEvent, warning } from '@rc-component/util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import { makeImmutable } from '../context/TableContext';
 import type { CustomizeScrollBody, GetComponent, Reference } from '../interface';
-import Table, { DEFAULT_PREFIX, type TableProps } from '../Table';
+import Table, { DEFAULT_PREFIX, type CompareProps, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
-import getValue from '@rc-component/util/lib/utils/get';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
   const { ref, onScroll } = props;
