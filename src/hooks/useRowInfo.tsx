@@ -15,6 +15,7 @@ export default function useRowInfo<RecordType>(
   | 'prefixCls'
   | 'fixedInfoList'
   | 'flattenColumns'
+  | 'colWidths'
   | 'expandableType'
   | 'expandRowByClick'
   | 'onTriggerExpand'
@@ -41,6 +42,7 @@ export default function useRowInfo<RecordType>(
     'prefixCls',
     'fixedInfoList',
     'flattenColumns',
+    'colWidths',
     'expandableType',
     'expandRowByClick',
     'onTriggerExpand',
