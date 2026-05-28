@@ -51,7 +51,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const {
     className,
     style,
-    noData,
     columns,
     flattenColumns,
     colWidths,
