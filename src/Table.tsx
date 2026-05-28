@@ -145,6 +145,11 @@ export interface TableProps<RecordType = any> extends Omit<
 
   // Events
   onScroll?: React.UIEventHandler<HTMLDivElement>;
+  onColumnResizeEnd?: (info: {
+    columnKey: React.Key;
+    width: number;
+    columnWidths: { columnKey: React.Key; width: number }[];
+  }) => void;
 
   // =================================== Internal ===================================
   /**
@@ -242,6 +247,7 @@ const Table = <RecordType extends DefaultRecordType>(
 
     // Events
     onScroll,
+    onColumnResizeEnd,
 
     // Internal
     internalHooks,
@@ -388,9 +394,11 @@ const Table = <RecordType extends DefaultRecordType>(
   const [shadowStart, setShadowStart] = React.useState(false);
   const [shadowEnd, setShadowEnd] = React.useState(false);
   const [colsWidths, updateColsWidths] = React.useState(new Map<React.Key, number>());
+  const [isResizing, setIsResizing] = React.useState(false);
 
   // Convert map to number width
-  const colsKeys = getColumnsKey(flattenColumns);
+  const pureColsKeys = getColumnsKey(flattenColumns);
+  const colsKeys = React.useMemo(() => pureColsKeys, [pureColsKeys.join('_')]);
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns);
@@ -441,7 +449,7 @@ const Table = <RecordType extends DefaultRecordType>(
     };
   }
 
-  const onColumnResize = React.useCallback((columnKey: React.Key, width: number) => {
+  const onColumnWidthChange = React.useCallback((columnKey: React.Key, width: number) => {
     updateColsWidths(widths => {
       if (widths.get(columnKey) !== width) {
         const newWidths = new Map(widths);
@@ -831,6 +839,7 @@ const Table = <RecordType extends DefaultRecordType>(
         [`${prefixCls}-scroll-horizontal`]: horizonScroll,
         [`${prefixCls}-has-fix-start`]: flattenColumns[0]?.fixed,
         [`${prefixCls}-has-fix-end`]: flattenColumns[flattenColumns.length - 1]?.fixed === 'end',
+        [`${prefixCls}-column-resizing`]: isResizing,
       })}
       style={tableStyle}
       id={id}
@@ -907,7 +916,7 @@ const Table = <RecordType extends DefaultRecordType>(
       // Column
       columns,
       flattenColumns,
-      onColumnResize,
+      onColumnWidthChange,
       colWidths,
 
       // Row
@@ -922,8 +931,11 @@ const Table = <RecordType extends DefaultRecordType>(
       childrenColumnName: mergedChildrenColumnName,
 
       rowHoverable,
-
-      // Measure Row
+      fullTableRef,
+      colsWidths,
+      colsKeys,
+      onColumnResizeEnd,
+      onResizingChange: setIsResizing,
       measureRowRender,
     }),
     [
@@ -940,6 +952,7 @@ const Table = <RecordType extends DefaultRecordType>(
       direction,
       fixedInfoList,
       isSticky,
+      fullTableRef,
 
       componentWidth,
       fixHeader,
@@ -963,7 +976,12 @@ const Table = <RecordType extends DefaultRecordType>(
       // Column
       columns,
       flattenColumns,
-      onColumnResize,
+      onColumnWidthChange,
+      colsWidths,
+      colsKeys,
+      colWidths,
+      onColumnResizeEnd,
+      setIsResizing,
       colWidths,
 
       // Row
