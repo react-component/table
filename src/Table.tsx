@@ -897,6 +897,7 @@ const Table = <RecordType extends DefaultRecordType>(
       expandableType,
       expandRowByClick: expandableConfig.expandRowByClick,
       expandedRowRender: expandableConfig.expandedRowRender,
+      forceRender: expandableConfig.forceRender,
       expandedRowOffset: expandableConfig.expandedRowOffset,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
@@ -958,6 +959,8 @@ const Table = <RecordType extends DefaultRecordType>(
       onTriggerExpand,
       expandableConfig.expandIconColumnIndex,
       expandableConfig.indentSize,
+      expandableConfig.forceRender,
+      expandableConfig,
       emptyNode,
 
       // Column
