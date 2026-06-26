@@ -1,6 +1,5 @@
-# @rc-component/table
-
 <div align="center">
+  <h1>@rc-component/table</h1>
   <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/bmw-prod/ae669a89-0c24-40ff-a91d-2b83497170f6.svg" />
   <p>Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
 </div>
