@@ -8,6 +8,10 @@ permissions:
   contents: read
   pull-requests: write
 
+concurrency:
+  group: react-doctor-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   react-doctor:
     runs-on: ubuntu-latest
@@ -16,4 +20,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: ant-design/react-doctor-action@0b4f4f4bd248a154e64eb508a48347f71154b3f3
+      - uses: millionco/react-doctor@0b4f4f4bd248a154e64eb508a48347f71154b3f3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
