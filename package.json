@@ -1,7 +1,7 @@
 {
   "name": "@rc-component/table",
   "version": "1.10.2",
-  "description": "table ui component for react",
+  "description": "📋 Data table component for React",
   "engines": {
     "node": ">=8.x"
   },
@@ -35,17 +35,17 @@
   "license": "MIT",
   "scripts": {
     "start": "dumi dev",
+    "build": "npm run docs:build",
     "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d .doc",
+    "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "vitest --watch false",
-    "coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run compile && rc-np",
     "lint": "eslint src",
     "tsc": "tsc -p tsconfig.json --noEmit",
-    "now-build": "npm run docs:build",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run compile && rc-np",
     "prepare": "husky"
   },
   "dependencies": {
@@ -56,9 +56,12 @@
     "clsx": "^2.1.1"
   },
   "devDependencies": {
+    "@rc-component/dropdown": "^1.0.2",
     "@rc-component/father-plugin": "^2.2.0",
+    "@rc-component/menu": "^1.4.1",
     "@rc-component/motion": "^1.3.2",
     "@rc-component/np": "^1.0.3",
+    "@rc-component/tooltip": "^1.4.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^16.3.0",
@@ -81,9 +84,6 @@
     "less": "^4.1.3",
     "lint-staged": "^16.1.5",
     "prettier": "^3.1.0",
-    "rc-dropdown": "~4.0.1",
-    "rc-menu": "~9.16.1",
-    "rc-tooltip": "^6.2.0",
     "react": "^19.1.1",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",

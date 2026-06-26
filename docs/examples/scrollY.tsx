@@ -1,4 +1,4 @@
-import Table, { type Reference } from 'rc-table';
+import Table, { type Reference } from '@rc-component/table';
 import React from 'react';
 import '../../assets/index.less';
 

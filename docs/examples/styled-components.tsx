@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import type { TableProps } from 'rc-table';
-import Table from 'rc-table';
+import type { TableProps } from '@rc-component/table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 
 const columns: TableProps['columns'] = [

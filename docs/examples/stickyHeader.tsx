@@ -1,6 +1,6 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp */
 import React, { useRef } from 'react';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 import type { ColumnType, ColumnsType } from '@/interface';
 

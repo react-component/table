@@ -1,0 +1,33 @@
+name: Surge Preview
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
+concurrency:
+  group: surge-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --loglevel=warn
+
+      - uses: afc163/surge-preview@bf90a5a86111f6311ca42f0a5a0f80fb0fb03cec
+        with:
+          build: npm run build
+          dist: docs-dist
+          failOnError: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          surge_token: ${{ secrets.SURGE_TOKEN }}

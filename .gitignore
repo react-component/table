@@ -23,6 +23,7 @@ Thumbs.db
 node_modules
 .cache
 dist
+docs-dist
 assets/**/*.css
 build
 lib
@@ -43,7 +44,8 @@ examples/debug.tsx
 .umi-production
 .umi-test
 .env.local
-.dumi
+.dumi/tmp*
+.vercel
 
 bun.lockb
 pnpm-lock.yaml

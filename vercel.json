@@ -1,3 +1,6 @@
 {
-  "framework": "umijs"
+  "buildCommand": "npm run build",
+  "outputDirectory": "docs-dist",
+  "installCommand": "npm install --ignore-scripts --no-audit --loglevel=warn",
+  "framework": null
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 
 const data = [];
 for (let i = 0; i < 100; i += 1) {

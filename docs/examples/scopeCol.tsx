@@ -1,5 +1,5 @@
 import type { ColumnsType } from '@/interface';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import React from 'react';
 import '../../assets/index.less';
 

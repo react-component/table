@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import type { TableProps } from 'rc-table';
-import Table from 'rc-table';
+import type { TableProps } from '@rc-component/table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 import type { ColumnType } from '@/interface';
 
