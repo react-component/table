@@ -30,5 +30,5 @@
     "./tests/**/*.tsx",
     "tests/__mocks__/shadowTest.tsx"
   ],
-  "exclude": ["./vitest.config.ts", "docs-dist", "lib", "es"]
+  "exclude": ["./vitest.config.mts", "docs-dist", "lib", "es"]
 }
