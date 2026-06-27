@@ -1,11 +1,11 @@
 <div align="center">
   <h1>@rc-component/table</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
+  <p><sub>Ant Design 生态的一部分。</sub></p>
   <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-  <p>Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
+  <p>📋 React 底层表格基础组件，服务于复杂数据展示。</p>
 </div>
 
-<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
 
 <div align="center">
@@ -14,19 +14,19 @@
 
 </div>
 
-## Highlights
+## 特性
 
 - Flexible column, summary, fixed header, sticky, expandable row, and virtual table support.
 - TypeScript-first API designed for composition in design systems.
-- Used by Ant Design Table and other React data display experiences.
+- 被 Ant Design 使用 Table and other React data display experiences.
 
-## Install
+## 安装
 
 ```bash
 npm install @rc-component/table
 ```
 
-## Usage
+## 使用
 
 ```tsx
 import Table from '@rc-component/table';
@@ -53,16 +53,16 @@ const data: User[] = [
 export default () => <Table columns={columns} data={data} />;
 ```
 
-## Examples
+## 示例
 
-- Local docs: run `npm start` and open the printed dumi URL.
+- 本地文档：运行 `npm start`，并打开终端输出的 dumi 地址。
 - Preview site: https://table-react-component.vercel.app/
 
 ## API
 
 ### Properties
 
-| Name | Type | Default | Description |
+| 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | tableLayout | `auto` \| `fixed` | `auto` \| `fixed` for any columns is fixed or ellipsis or header is fixed | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
 | prefixCls | String | `rc-table` |  |
@@ -112,7 +112,7 @@ const tblRef = useRef();
 tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 ```
 
-| Name | Type | Default | Description |
+| 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | index | number | - | Row index to scroll to |
 | top | number | - | Scroll to specific top position (in px) |
@@ -122,7 +122,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 
 ## Column Props
 
-| Name | Type | Default | Description |
+| 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | key of this column |
 | className | String |  | className of this column |
@@ -143,21 +143,21 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 
 ### Table.Summary
 
-| Name | Type | Default | Description |
+| 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | key of this summary |
 | fixed | boolean \| 'top' \| 'bottom' | - | `true` fixes the summary row at the bottom of the table. `top` fixes the summary row at the top of the table, while `bottom` fixes it at the bottom. `undefined` or `false` makes the summary row scrollable along with the table. |
 
 ### Table.Summary.Row
 
-| Name | Type | Default | Description |
+| 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | key of this summary |
 | className | String | - | className of this summary row |
 | style | React.CSSProperties | - | style of this summary row |
 | onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
-## Development
+## 本地开发
 
 ```bash
 npm install
@@ -173,7 +173,7 @@ npm test
 npm run build
 ```
 
-## Release
+## 发布
 
 ```bash
 npm run prepublishOnly
@@ -182,9 +182,9 @@ npm run prepublishOnly
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 ## Ecosystem
 
-This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.
+该包属于 React Component 组织，并与 Ant Design 一同维护。 上方 Ant Design 标识仅用于说明生态归属；组件本身仍保持框架级、低样式耦合的定位。
 
-## License
+## 许可证
 
 @rc-component/table is released under the [MIT](./LICENSE.md) license.
 
