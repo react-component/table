@@ -1,6 +1,9 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
+const basePath = process.env.GH_PAGES ? '/table/' : '/';
+const publicPath = basePath;
+
 export default defineConfig({
   alias: {
     '@rc-component/table$': path.resolve(__dirname, 'src'),
@@ -19,6 +22,8 @@ export default defineConfig({
   },
   favicons: ['https://avatars0.githubusercontent.com/u/9441414?s=200&v=4'],
   outputPath: 'docs-dist',
+  base: basePath,
+  publicPath,
   themeConfig: {
     name: 'Table',
     logo: 'https://avatars0.githubusercontent.com/u/9441414?s=200&v=4',

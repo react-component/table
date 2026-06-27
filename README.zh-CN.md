@@ -54,8 +54,14 @@ export default () => <Table columns={columns} data={data} />;
 
 ## 示例
 
-- 本地文档：运行 `npm start`，并打开终端输出的 dumi 地址。
-- Preview site: https://table-react-component.vercel.app/
+运行本地 dumi 站点：
+
+```bash
+npm install
+npm start
+```
+
+然后打开 `http://localhost:8000`。
 
 ## API
 

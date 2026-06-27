@@ -54,8 +54,14 @@ export default () => <Table columns={columns} data={data} />;
 
 ## Examples
 
-- Local docs: run `npm start` and open the printed dumi URL.
-- Preview site: https://table-react-component.vercel.app/
+Run the local dumi site:
+
+```bash
+npm install
+npm start
+```
+
+Then open `http://localhost:8000`.
 
 ## API
 
