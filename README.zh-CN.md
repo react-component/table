@@ -1,7 +1,6 @@
 <div align="center">
   <h1>@rc-component/table</h1>
-  <p><sub>Ant Design 生态的一部分。</sub></p>
-  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
   <p>📋 React 底层表格基础组件，服务于复杂数据展示。</p>
 </div>
 
@@ -16,9 +15,9 @@
 
 ## 特性
 
-- Flexible column, summary, fixed header, sticky, expandable row, and virtual table support.
-- TypeScript-first API designed for composition in design systems.
-- 被 Ant Design 使用 Table and other React data display experiences.
+- 灵活的列、摘要、固定标题、粘性、可扩展行和虚拟表支持。
+- TypeScript-first API 专为设计系统中的组合而设计。
+- 被 Ant Design 使用 Table 等 React 数据展示体验。
 
 ## 安装
 
@@ -64,48 +63,48 @@ export default () => <Table columns={columns} data={data} />;
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| tableLayout | `auto` \| `fixed` | `auto` \| `fixed` for any columns is fixed or ellipsis or header is fixed | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
+| tableLayout | `auto` \| `fixed` | `auto` \|  任何列的 `fixed` 都是固定的，或者省略号或标题是固定的 | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
 | prefixCls | String | `rc-table` |  |
 | className | String |  | additional className |
-| id | String |  | identifier of the container div |
-| useFixedHeader | Boolean | false | whether use separator table for header. better set width for columns |
-| scroll | Object | {x: false, y: false} | whether table can be scroll in x/y direction, `x` or `y` can be a number that indicated the width and height of table body |
-| expandable | Object |  | Config expand props |
+| id | String |  | 容器div的标识符 |
+| useFixedHeader | Boolean | false | 是否对标题使用分隔符表。更好地设置列宽度 |
+| 滚动 | Object | {x: false, y: false} | 表格是否可以在x/y方向滚动，`x`或`y`可以是一个数字，表示表格主体的宽度和高度 |
+| expandable | Object |  | 配置展开道具 |
 | expandable.defaultExpandAllRows | Boolean | false | Expand All Rows initially |
-| expandable.defaultExpandedRowKeys | String[] | [] | initial expanded rows keys |
-| expandable.expandedRowKeys | String[] |  | current expanded rows keys |
-| expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | Content render to expanded row |
-| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | get expanded row's className |
-| expandable.expandRowByClick | boolean |  | Support expand by click row |
-| expandable.expandIconColumnIndex | Number | 0 | The index of expandIcon which column will be inserted when expandIconAsCell is false |
+| expandable.defaultExpandedRowKeys | String[] | [] | 初始扩展行键 |
+| expandable.expandedRowKeys | String[] |  | 当前扩展行键 |
+| expandable.expandedRowRender | 功能（重新编码、索引、缩进、扩展）：ReactNode |  | 内容渲染到扩展行 |
+| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的className |
+| expandable.expandRowByClick | boolean |  | 支持点击行展开 |
+| expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
 | expandable.expandIcon | props => ReactNode |  | Customize expand icon |
-| expandable.indentSize | Number | 15 | indentSize for every level of data.i.children, better using with column.width specified |
-| expandable.rowExpandable | (record) => boolean |  | Config row support expandable |
-| expandable.onExpand | Function(expanded, record) |  | function to call when click expand icon |
-| expandable.onExpandedRowsChange | Function(expandedRows) |  | function to call when the expanded rows change |
-| expandable.fixed | String \| Boolean | - | this expand icon will be fixed when table scroll horizontally: true or `left` or `right` and `expandIconColumnIndex` need to stay first or last |
-| rowKey | string or Function(record, index):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record, index)` will be use as key. |
-| rowClassName | string or Function(record, index, indent):string |  | get row's className |
-| rowRef | Function(record, index, indent):string |  | get row's ref key |
-| data | Object[] |  | data record array to be rendered |
-| onRow | Function(record, index) |  | Set custom props per each row. |
-| onHeaderRow | Function(record, index) |  | Set custom props per each header row. |
-| showHeader | Boolean | true | whether table head is shown |
+| expandable.indentSize | Number | 15 | 每一级 `data[i].children` 的缩进尺寸，建议配合指定的 `column.width` 使用 |
+| expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
+| expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
+| expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
+| expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
+| rowKey | 字符串或函数（记录，索引）：字符串 | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
+| rowClassName | 字符串或函数（记录、索引、缩进）：字符串 |  | 获取行的className |
+| rowRef | 函数（记录、索引、缩进）：字符串 |  | get row's ref key |
+| 数据 | Object[] |  | 要呈现的数据记录数组 |
+| onRow | Function(record, index) |  | 每行设置自定义道具。 |
+| onHeaderRow | Function(record, index) |  | 为每个标题行设置自定义道具。 |
+| showHeader | Boolean | true | 是否显示表头 |
 | hidden | Boolean | `false` | Hidden column. |
-| title | Function(currentData) |  | table title render function |
-| footer | Function(currentData) |  | table footer render function |
-| emptyText | React.Node or Function | `No Data` | Display text when data is empty |
-| columns | Object[] |  | The columns config of table, see table below |
-| components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
-| sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
-| summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
-| rowHoverable | boolean | true | Table hover interaction |
+| title | Function(currentData) |  | 表格标题渲染函数 |
+| footer | Function(currentData) |  | 表页脚渲染函数 |
+| emptyText | React.Node 或函数 | `No Data` | 数据为空时显示文本 |
+| columns | Object[] |  | 表的列配置见下表 |
+| components | Object |  | 覆盖表元素，请参阅 [#171](https://github.com/react-component/table/pull/171) 了解更多详细信息 |
+| sticky | 布尔值\| {offsetHeader?: 数字, offsetScroll?: 数字, getContainer?: () => 窗口 \| HTML 元素 } | false | 粘贴标题和滚动条 |
+| summary | （数据：只读 RecordType[]）=> React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
+| rowHoverable | boolean | true | 表格 hover 交互 |
 
-### Methods
+### 方法
 
 #### scrollTo
 
-Table component exposes `scrollTo` method to scroll to a specific position:
+Table 组件公开 `scrollTo` 方法来滚动到特定位置：
 
 ```js
 const tblRef = useRef();
@@ -114,30 +113,30 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| index | number | - | Row index to scroll to |
-| top | number | - | Scroll to specific top position (in px) |
-| key | string | - | Scroll to row by row key |
-| offset | number | - | Additional offset from target position |
-| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | Alignment of the target element within the scroll container. `start` aligns to top, `center` to middle, `end` to bottom, `nearest` automatically chooses the closest alignment. Note: Virtual table does not support `center`. |
+| index | number | - | 要滚动到的行索引 |
+| top | number | - | 滚动到特定顶部位置（以像素为单位） |
+| key | string | - | 按行键滚动至行 |
+| offset | number | - | 与目标位置的额外偏移 |
+| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | 滚动容器内目标元素的对齐方式。  `start` 对齐到顶部，`center` 对齐到中间，`end` 对齐到底部，`nearest` 自动选择最接近的对齐方式。注意：虚拟表不支持 `center`。 |
 
 ## Column Props
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| key | String |  | key of this column |
-| className | String |  | className of this column |
-| colSpan | Number |  | thead colSpan of this column |
-| title | React Node |  | title of this column |
-| dataIndex | String |  | display field of the data record |
-| width | String \| Number |  | width of the specific proportion calculation according to the width of the columns |
-| minWidth | Number |  | the minimum width of the column, only worked when tableLayout is auto |
-| fixed | String \| Boolean |  | this column will be fixed when table scroll horizontally: true or 'left' or 'right' |
-| align | String |  | specify how cell content is aligned |
-| ellipsis | Boolean |  | specify whether cell content be ellipsized |
-| rowScope | 'row' \| 'rowgroup' |  | Set scope attribute for all cells in this column |
-| onCell | Function(record, index) |  | Set custom props per each cell. |
-| onHeaderCell | Function(record) |  | Set custom props per each header cell. |
-| render | Function(value, row, index) |  | The render function of cell, has three params: the text of this cell, the record of this row, the index of this row, it's return an object:{ children: value, props: { colSpan: 1, rowSpan:1 } } ==> 'children' is the text of this cell, props is some setting of this cell, eg: 'colspan' set td colspan, 'rowspan' set td rowspan |
+| key | String |  | 本栏目关键 |
+| className | String |  | 该列的className |
+| colSpan | Number |  | 该列的 head colSpan |
+| title | React节点 |  | 本栏目标题 |
+| dataIndex | String |  | 数据记录的显示字段 |
+| 宽度 | String \| Number |  | 宽度具体比例根据柱子的宽度计算 |
+| minWidth | Number |  | 列的最小宽度，仅当 tableLayout 为 auto 时有效 |
+| fixed | String \| Boolean |  | 当表格水平滚动时此列将被固定： true 或 'left' 或 'right' |
+| align | String |  | 指定单元格内容的对齐方式 |
+| ellipsis | Boolean |  | 指定单元格内容是否省略 |
+| rowScope | 'row' \| 'rowgroup' |  | 设置此列中所有单元格的范围属性 |
+| onCell | Function(record, index) |  | 为每个单元格设置自定义道具。 |
+| onHeaderCell | Function(record) |  | 为每个标题单元格设置自定义属性。 |
+| 使成为 | 函数（值、行、索引） |  | 单元格渲染函数，参数为单元格文本、当前行记录和行索引。可返回 `{ children: value, props: { colSpan: 1, rowSpan: 1 } }`，其中 `children` 是单元格文本，`props` 是单元格设置，例如 `colSpan` 设置 td colspan，`rowSpan` 设置 td rowspan |
 
 ## Summary Props
 
@@ -145,17 +144,17 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| key | String |  | key of this summary |
-| fixed | boolean \| 'top' \| 'bottom' | - | `true` fixes the summary row at the bottom of the table. `top` fixes the summary row at the top of the table, while `bottom` fixes it at the bottom. `undefined` or `false` makes the summary row scrollable along with the table. |
+| key | String |  | 本摘要的关键 |
+| fixed | boolean \| 'top' \| 'bottom' | - | `true` 修复了表格底部的汇总行。  `top` 将汇总行固定在表格顶部，而 `bottom` 将其固定在底部。  `undefined` 或 `false` 使摘要行可随表格一起滚动。 |
 
 ### Table.Summary.Row
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| key | String |  | key of this summary |
-| className | String | - | className of this summary row |
-| style | React.CSSProperties | - | style of this summary row |
-| onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
+| key | String |  | 本摘要的关键 |
+| className | String | - | 此摘要行的className |
+| 风格 | React.CSSProperties | - | 此摘要行的样式 |
+| onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | `Table.Summary.Row` 组件中的 `onClick` 属性可用于设置汇总行的单击事件处理程序。 |
 
 ## 本地开发
 
@@ -164,7 +163,7 @@ npm install
 npm start
 ```
 
-Run checks before sending a pull request:
+在发送拉取请求之前运行检查：
 
 ```bash
 npm run lint
@@ -179,14 +178,14 @@ npm run build
 npm run prepublishOnly
 ```
 
-The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+包构建完成后，发布流程由 `@rc-component/np` 通过 `rc-np` 命令处理。
 ## Ecosystem
 
 该包属于 React Component 组织，并与 Ant Design 一同维护。 上方 Ant Design 标识仅用于说明生态归属；组件本身仍保持框架级、低样式耦合的定位。
 
 ## 许可证
 
-@rc-component/table is released under the [MIT](./LICENSE.md) license.
+@rc-component/table 基于 [MIT](./LICENSE.md) 许可证发布。
 
 [npm-image]: https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@rc-component/table

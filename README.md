@@ -1,8 +1,7 @@
 <div align="center">
   <h1>@rc-component/table</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
-  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-  <p>Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Part of the Ant Design ecosystem.</sub></p>
+  <p>📋 Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
 </div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
