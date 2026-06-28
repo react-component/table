@@ -191,7 +191,7 @@ npm run prepublishOnly
 
 ## 许可证
 
-@rc-component/table 基于 [MIT](./LICENSE.md) 许可证发布。
+@rc-component/table 基于 [MIT](./LICENSE) 许可证发布。
 
 [npm-image]: https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@rc-component/table
