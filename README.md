@@ -2,15 +2,18 @@
   <h1>@rc-component/table</h1>
   <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Part of the Ant Design ecosystem.</sub></p>
   <p>📋 Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
+
+  <p>
+    <a href="https://npmjs.org/package/@rc-component/table"><img alt="NPM version" src="https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square"></a>
+    <a href="https://npmjs.org/package/@rc-component/table"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@rc-component/table.svg?style=flat-square"></a>
+    <a href="https://github.com/react-component/table/actions/workflows/main.yml"><img alt="build status" src="https://github.com/react-component/table/actions/workflows/main.yml/badge.svg"></a>
+    <a href="https://codecov.io/gh/react-component/table/branch/master"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square"></a>
+    <a href="https://bundlephobia.com/result?p=@rc-component/table"><img alt="bundle size" src="https://badgen.net/bundlephobia/minzip/@rc-component/table"></a>
+    <a href="https://github.com/umijs/dumi"><img alt="dumi" src="https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square"></a>
+  </p>
 </div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
-
-<div align="center">
-
-[![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
-
-</div>
 
 ## Highlights
 
@@ -194,16 +197,3 @@ This package is part of the React Component organization and is maintained along
 ## License
 
 @rc-component/table is released under the [MIT](./LICENSE) license.
-
-[npm-image]: https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/@rc-component/table
-[github-actions-image]: https://github.com/react-component/table/actions/workflows/main.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/table/actions/workflows/main.yml
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/react-component/table/branch/master
-[download-image]: https://img.shields.io/npm/dm/@rc-component/table.svg?style=flat-square
-[download-url]: https://npmjs.org/package/@rc-component/table
-[bundlephobia-url]: https://bundlephobia.com/result?p=@rc-component/table
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/table
-[dumi-url]: https://github.com/umijs/dumi
-[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
