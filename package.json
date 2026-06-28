@@ -101,9 +101,7 @@
     "react-dom": ">=18.0.0"
   },
   "lint-staged": {
-    "**/*.{js,jsx,tsx,ts,md,json}": [
-      "prettier --write"
-    ]
+    "*": "prettier --write --ignore-unknown"
   },
   "publishConfig": {
     "access": "public"
