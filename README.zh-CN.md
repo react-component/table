@@ -6,7 +6,6 @@
 
 <p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
-
 <div align="center">
 
 [![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
@@ -69,17 +68,17 @@ npm start
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| tableLayout | `auto` \| `fixed` | `auto` \|  任何列的 `fixed` 都是固定的，或者省略号或标题是固定的 | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
+| tableLayout | `auto` \| `fixed` | `auto` \| 任何列的 `fixed` 都是固定的，或者省略号或标题是固定的 | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
 | prefixCls | String | `rc-table` |  |
 | className | String |  | additional className |
 | id | String |  | 容器div的标识符 |
 | useFixedHeader | Boolean | false | 是否对标题使用分隔符表。更好地设置列宽度 |
-| 滚动 | Object | {x: false, y: false} | 表格是否可以在x/y方向滚动，`x`或`y`可以是一个数字，表示表格主体的宽度和高度 |
+| scroll | Object | {x: false, y: false} | 表格是否可以在x/y方向滚动，`x`或`y`可以是一个数字，表示表格主体的宽度和高度 |
 | expandable | Object |  | 配置展开道具 |
 | expandable.defaultExpandAllRows | Boolean | false | Expand All Rows initially |
 | expandable.defaultExpandedRowKeys | String[] | [] | 初始扩展行键 |
 | expandable.expandedRowKeys | String[] |  | 当前扩展行键 |
-| expandable.expandedRowRender | 功能（重新编码、索引、缩进、扩展）：ReactNode |  | 内容渲染到扩展行 |
+| expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的className |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
@@ -89,21 +88,21 @@ npm start
 | expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
-| rowKey | 字符串或函数（记录，索引）：字符串 | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
-| rowClassName | 字符串或函数（记录、索引、缩进）：字符串 |  | 获取行的className |
-| rowRef | 函数（记录、索引、缩进）：字符串 |  | get row's ref key |
-| 数据 | Object[] |  | 要呈现的数据记录数组 |
+| rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
+| rowClassName | string or Function(record, index, indent):string |  | 获取行的className |
+| rowRef | Function(record, index, indent):string |  | get row's ref key |
+| data | Object[] |  | 要呈现的数据记录数组 |
 | onRow | Function(record, index) |  | 每行设置自定义道具。 |
 | onHeaderRow | Function(record, index) |  | 为每个标题行设置自定义道具。 |
 | showHeader | Boolean | true | 是否显示表头 |
 | hidden | Boolean | `false` | Hidden column. |
 | title | Function(currentData) |  | 表格标题渲染函数 |
 | footer | Function(currentData) |  | 表页脚渲染函数 |
-| emptyText | React.Node 或函数 | `No Data` | 数据为空时显示文本 |
+| emptyText | React.Node or Function | `No Data` | 数据为空时显示文本 |
 | columns | Object[] |  | 表的列配置见下表 |
 | components | Object |  | 覆盖表元素，请参阅 [#171](https://github.com/react-component/table/pull/171) 了解更多详细信息 |
-| sticky | 布尔值\| {offsetHeader?: 数字, offsetScroll?: 数字, getContainer?: () => 窗口 \| HTML 元素 } | false | 粘贴标题和滚动条 |
-| summary | （数据：只读 RecordType[]）=> React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
+| sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | 粘贴标题和滚动条 |
+| summary | (data: readonly RecordType[]) => React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
 | rowHoverable | boolean | true | 表格 hover 交互 |
 
 ### 方法
@@ -123,7 +122,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | top | number | - | 滚动到特定顶部位置（以像素为单位） |
 | key | string | - | 按行键滚动至行 |
 | offset | number | - | 与目标位置的额外偏移 |
-| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | 滚动容器内目标元素的对齐方式。  `start` 对齐到顶部，`center` 对齐到中间，`end` 对齐到底部，`nearest` 自动选择最接近的对齐方式。注意：虚拟表不支持 `center`。 |
+| align | `start` \| `center` \| `end` \| `nearest` | `nearest` | 滚动容器内目标元素的对齐方式。 `start` 对齐到顶部，`center` 对齐到中间，`end` 对齐到底部，`nearest` 自动选择最接近的对齐方式。注意：虚拟表不支持 `center`。 |
 
 ## Column Props
 
@@ -151,7 +150,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | 本摘要的关键 |
-| fixed | boolean \| 'top' \| 'bottom' | - | `true` 修复了表格底部的汇总行。  `top` 将汇总行固定在表格顶部，而 `bottom` 将其固定在底部。  `undefined` 或 `false` 使摘要行可随表格一起滚动。 |
+| fixed | boolean \| 'top' \| 'bottom' | - | `true` 修复了表格底部的汇总行。 `top` 将汇总行固定在表格顶部，而 `bottom` 将其固定在底部。 `undefined` 或 `false` 使摘要行可随表格一起滚动。 |
 
 ### Table.Summary.Row
 
@@ -185,6 +184,7 @@ npm run prepublishOnly
 ```
 
 包构建完成后，发布流程由 `@rc-component/np` 通过 `rc-np` 命令处理。
+
 ## Ecosystem
 
 该包属于 React Component 组织，并与 Ant Design 一同维护。 上方 Ant Design 标识仅用于说明生态归属；组件本身仍保持框架级、低样式耦合的定位。
