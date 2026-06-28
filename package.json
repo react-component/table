@@ -20,17 +20,17 @@
   "main": "./lib/index",
   "module": "./es/index",
   "types": "./lib/index.d.ts",
-  "homepage": "http://github.com/react-component/table",
+  "homepage": "https://react-component.github.io/table",
   "maintainers": [
     "yiminghe@gmail.com",
     "afc163@gmail.com"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/table.git"
+    "url": "https://github.com/react-component/table.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/table/issues"
+    "url": "https://github.com/react-component/table/issues"
   },
   "license": "MIT",
   "scripts": {
@@ -104,5 +104,8 @@
     "**/*.{js,jsx,tsx,ts,md,json}": [
       "prettier --write"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
