@@ -9,3 +9,15 @@ package.json
 .umi
 .umi-production
 .umi-test
+node_modules
+coverage
+docs-dist
+dist
+.dumi/tmp
+.dumi/tmp-production
+.vercel
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
+*.log
