@@ -79,7 +79,7 @@ npm start
 | expandable.defaultExpandedRowKeys | String[] | [] | 初始扩展行键 |
 | expandable.expandedRowKeys | String[] |  | 当前扩展行键 |
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
-| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的className |
+| expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的 className |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
 | expandable.expandIcon | props => ReactNode |  | 自定义展开图标 |
@@ -89,7 +89,7 @@ npm start
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
 | rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
-| rowClassName | string or Function(record, index, indent):string |  | 获取行的className |
+| rowClassName | string or Function(record, index, indent):string |  | 获取行的 className |
 | rowRef | Function(record, index, indent):string |  | 获取行 ref key |
 | data | Object[] |  | 要呈现的数据记录数组 |
 | onRow | Function(record, index) |  | 每行设置自定义道具。 |
@@ -129,7 +129,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | 本栏目关键 |
-| className | String |  | 该列的className |
+| className | String |  | 该列的 className |
 | colSpan | Number |  | 该列的 head colSpan |
 | title | React节点 |  | 本栏目标题 |
 | dataIndex | String |  | 数据记录的显示字段 |
@@ -157,7 +157,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | key | String |  | 本摘要的关键 |
-| className | String | - | 此摘要行的className |
+| className | String | - | 此摘要行的 className |
 | 风格 | React.CSSProperties | - | 此摘要行的样式 |
 | onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | `Table.Summary.Row` 组件中的 `onClick` 属性可用于设置汇总行的单击事件处理程序。 |
 
