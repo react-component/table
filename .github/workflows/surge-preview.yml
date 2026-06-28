@@ -32,6 +32,7 @@ jobs:
           fi
 
       - name: Install dependencies
+        if: ${{ steps.surge-token.outputs.enabled == 'true' }}
         run: npm install --ignore-scripts --no-audit --loglevel=warn
 
       - name: Build preview
