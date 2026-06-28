@@ -6,7 +6,6 @@
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
 
-
 <div align="center">
 
 [![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
@@ -169,6 +168,8 @@ npm install
 npm start
 ```
 
+The dumi site runs at `http://localhost:8000` by default.
+
 Run checks before sending a pull request:
 
 ```bash
@@ -185,6 +186,7 @@ npm run prepublishOnly
 ```
 
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+
 ## Ecosystem
 
 This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.

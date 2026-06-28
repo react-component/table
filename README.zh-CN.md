@@ -168,6 +168,8 @@ npm install
 npm start
 ```
 
+dumi 站点默认运行在 `http://localhost:8000`。
+
 在发送拉取请求之前运行检查：
 
 ```bash
