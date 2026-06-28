@@ -70,19 +70,19 @@ npm start
 | --- | --- | --- | --- |
 | tableLayout | `auto` \| `fixed` | `auto` \| 任何列的 `fixed` 都是固定的，或者省略号或标题是固定的 | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout |
 | prefixCls | String | `rc-table` |  |
-| className | String |  | additional className |
+| className | String |  | 附加 className |
 | id | String |  | 容器div的标识符 |
 | useFixedHeader | Boolean | false | 是否对标题使用分隔符表。更好地设置列宽度 |
 | scroll | Object | {x: false, y: false} | 表格是否可以在x/y方向滚动，`x`或`y`可以是一个数字，表示表格主体的宽度和高度 |
 | expandable | Object |  | 配置展开道具 |
-| expandable.defaultExpandAllRows | Boolean | false | Expand All Rows initially |
+| expandable.defaultExpandAllRows | Boolean | false | 初始展开所有行 |
 | expandable.defaultExpandedRowKeys | String[] | [] | 初始扩展行键 |
 | expandable.expandedRowKeys | String[] |  | 当前扩展行键 |
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的className |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
-| expandable.expandIcon | props => ReactNode |  | Customize expand icon |
+| expandable.expandIcon | props => ReactNode |  | 自定义展开图标 |
 | expandable.indentSize | Number | 15 | 每一级 `data[i].children` 的缩进尺寸，建议配合指定的 `column.width` 使用 |
 | expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
 | expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
@@ -90,12 +90,12 @@ npm start
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
 | rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
 | rowClassName | string or Function(record, index, indent):string |  | 获取行的className |
-| rowRef | Function(record, index, indent):string |  | get row's ref key |
+| rowRef | Function(record, index, indent):string |  | 获取行 ref key |
 | data | Object[] |  | 要呈现的数据记录数组 |
 | onRow | Function(record, index) |  | 每行设置自定义道具。 |
 | onHeaderRow | Function(record, index) |  | 为每个标题行设置自定义道具。 |
 | showHeader | Boolean | true | 是否显示表头 |
-| hidden | Boolean | `false` | Hidden column. |
+| hidden | Boolean | `false` | 隐藏列。 |
 | title | Function(currentData) |  | 表格标题渲染函数 |
 | footer | Function(currentData) |  | 表页脚渲染函数 |
 | emptyText | React.Node or Function | `No Data` | 数据为空时显示文本 |
