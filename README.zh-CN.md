@@ -124,7 +124,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | offset | number | - | 与目标位置的额外偏移 |
 | align | `start` \| `center` \| `end` \| `nearest` | `nearest` | 滚动容器内目标元素的对齐方式。 `start` 对齐到顶部，`center` 对齐到中间，`end` 对齐到底部，`nearest` 自动选择最接近的对齐方式。注意：虚拟表不支持 `center`。 |
 
-## Column Props
+## Column 属性
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
