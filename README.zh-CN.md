@@ -7,8 +7,8 @@
     <a href="https://npmjs.org/package/@rc-component/table"><img alt="NPM version" src="https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square"></a>
     <a href="https://npmjs.org/package/@rc-component/table"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@rc-component/table.svg?style=flat-square"></a>
     <a href="https://github.com/react-component/table/actions/workflows/main.yml"><img alt="build status" src="https://github.com/react-component/table/actions/workflows/main.yml/badge.svg"></a>
-    <a href="https://codecov.io/gh/react-component/table/branch/master"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square"></a>
-    <a href="https://bundlephobia.com/result?p=@rc-component/table"><img alt="bundle size" src="https://badgen.net/bundlephobia/minzip/@rc-component/table"></a>
+    <a href="https://app.codecov.io/gh/react-component/table"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square"></a>
+    <a href="https://bundlephobia.com/package/@rc-component/table"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/@rc-component/table?style=flat-square"></a>
     <a href="https://github.com/umijs/dumi"><img alt="dumi" src="https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square"></a>
   </p>
 </div>
