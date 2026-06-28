@@ -49,3 +49,5 @@ examples/debug.tsx
 
 bun.lockb
 pnpm-lock.yaml
+.dumi/tmp
+.dumi/tmp-production
