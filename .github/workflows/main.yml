@@ -10,5 +10,5 @@ permissions:
 
 jobs:
   test:
-    uses: react-component/rc-test/.github/workflows/test-utoo.yml@b8ebddc81ef706b50faff0242ab34ad8ecdd9a59
+    uses: react-component/rc-test/.github/workflows/test-utoo.yml@main
     secrets: inherit
