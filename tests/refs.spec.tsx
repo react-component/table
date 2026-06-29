@@ -14,7 +14,7 @@ describe('Table.Ref', () => {
       },
       scrollIntoView() {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
-        scrollIntoViewElement = this;
+        scrollIntoViewElement = this as unknown as HTMLElement;
       },
     });
   });
