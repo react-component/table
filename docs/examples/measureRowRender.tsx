@@ -1,6 +1,6 @@
 import React from 'react';
-import Table from 'rc-table';
-import type { TableProps } from 'rc-table';
+import Table from '@rc-component/table';
+import type { TableProps } from '@rc-component/table';
 
 const columns = [
   {

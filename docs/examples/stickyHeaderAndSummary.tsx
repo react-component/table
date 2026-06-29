@@ -1,6 +1,6 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp, no-nested-ternary */
 import React from 'react';
-import Table from 'rc-table';
+import Table, { Summary } from '@rc-component/table';
 import '../../assets/index.less';
 import type { ColumnType } from '@/interface';
 
@@ -89,20 +89,20 @@ const Demo = () => {
         scroll={{ x: 1200, y: sticky ? null : 800 }}
         data={data}
         summary={() => (
-          <Table.Summary fixed={stickyTop ? 'top' : 'bottom'}>
-            <Table.Summary.Row>
-              <Table.Summary.Cell index={0} />
-              <Table.Summary.Cell index={1} colSpan={2}>
+          <Summary fixed={stickyTop ? 'top' : 'bottom'}>
+            <Summary.Row>
+              <Summary.Cell index={0} />
+              <Summary.Cell index={1} colSpan={2}>
                 Summary
-              </Table.Summary.Cell>
-              <Table.Summary.Cell index={3} colSpan={8}>
+              </Summary.Cell>
+              <Summary.Cell index={3} colSpan={8}>
                 Content
-              </Table.Summary.Cell>
-              <Table.Summary.Cell index={11} colSpan={2}>
+              </Summary.Cell>
+              <Summary.Cell index={11} colSpan={2}>
                 Right
-              </Table.Summary.Cell>
-            </Table.Summary.Row>
-          </Table.Summary>
+              </Summary.Cell>
+            </Summary.Row>
+          </Summary>
         )}
       />
     </div>

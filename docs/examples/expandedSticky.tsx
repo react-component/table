@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { ColumnType } from 'rc-table';
-import Table from 'rc-table';
+import type { ColumnType } from '@rc-component/table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 
 // 合并单元格

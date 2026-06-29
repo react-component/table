@@ -1,7 +1,7 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import { VariableSizeGrid as Grid } from 'react-window';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 import './virtual-list.less';
 

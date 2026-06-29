@@ -1,7 +1,7 @@
 {
   "name": "@rc-component/table",
   "version": "1.10.2",
-  "description": "table ui component for react",
+  "description": "📋 Data table component for React",
   "engines": {
     "node": ">=8.x"
   },
@@ -19,34 +19,35 @@
   ],
   "main": "./lib/index",
   "module": "./es/index",
-  "types": "./lib/index.d.ts",
-  "homepage": "http://github.com/react-component/table",
+  "types": "./es/index.d.ts",
+  "homepage": "https://react-component.github.io/table",
   "maintainers": [
     "yiminghe@gmail.com",
     "afc163@gmail.com"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/table.git"
+    "url": "https://github.com/react-component/table.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/table/issues"
+    "url": "https://github.com/react-component/table/issues"
   },
   "license": "MIT",
   "scripts": {
     "start": "dumi dev",
+    "build": "npm run docs:build",
     "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d .doc",
+    "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "deploy": "npm run docs:build && npm run docs:deploy",
+    "deploy": "npm run docs:build:gh-pages && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "vitest --watch false",
-    "coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run compile && rc-np",
     "lint": "eslint src",
     "tsc": "tsc -p tsconfig.json --noEmit",
-    "now-build": "npm run docs:build",
-    "prepare": "husky"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run compile && rc-np",
+    "prepare": "husky",
+    "docs:build:gh-pages": "GH_PAGES=1 npm run docs:build"
   },
   "dependencies": {
     "@rc-component/context": "^2.0.1",
@@ -56,52 +57,53 @@
     "clsx": "^2.1.1"
   },
   "devDependencies": {
+    "@rc-component/dropdown": "^1.0.2",
     "@rc-component/father-plugin": "^2.2.0",
+    "@rc-component/menu": "^1.4.1",
     "@rc-component/motion": "^1.3.2",
-    "@rc-component/np": "^1.0.3",
+    "@rc-component/np": "^1.0.4",
+    "@rc-component/tooltip": "^1.4.0",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.4.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^25.2.1",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^15.0.7",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^26.0.1",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
     "@types/responselike": "^1.0.0",
     "@types/styled-components": "^5.1.32",
     "@umijs/fabric": "^4.0.1",
-    "@vitest/coverage-v8": "^3.2.4",
-    "dumi": "^2.1.3",
-    "eslint": "^8.54.0",
-    "father": "^4.0.0",
-    "gh-pages": "^6.1.0",
-    "glob": "^11.0.0",
-    "husky": "^9.0.11",
+    "@vitest/coverage-v8": "^4.1.9",
+    "dumi": "^2.4.35",
+    "eslint": "^8.57.1",
+    "father": "^4.6.23",
+    "gh-pages": "^6.3.0",
+    "glob": "^13.0.6",
+    "husky": "^9.1.7",
     "immutability-helper": "^3.0.0",
-    "jsdom": "^28.0.0",
-    "less": "^4.1.3",
-    "lint-staged": "^16.1.5",
-    "prettier": "^3.1.0",
-    "rc-dropdown": "~4.0.1",
-    "rc-menu": "~9.16.1",
-    "rc-tooltip": "^6.2.0",
-    "react": "^19.1.1",
+    "jsdom": "^29.1.1",
+    "less": "^4.6.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.9.0",
+    "react": "^18.3.1",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^19.1.1",
+    "react-dom": "^18.3.1",
     "react-resizable": "^3.0.5",
     "react-window": "^1.8.5",
     "regenerator-runtime": "^0.14.0",
     "styled-components": "^6.1.1",
-    "typescript": "~5.9.2",
-    "vitest": "^3.2.4"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "lint-staged": {
-    "**/*.{js,jsx,tsx,ts,md,json}": [
-      "prettier --write"
-    ]
+    "*": "prettier --write --ignore-unknown"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

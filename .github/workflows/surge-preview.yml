@@ -1,0 +1,49 @@
+name: Surge Preview
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
+concurrency:
+  group: surge-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Check Surge token
+        id: surge-token
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: |
+          if [ -n "$SURGE_TOKEN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: ${{ steps.surge-token.outputs.enabled == 'true' }}
+        run: npm install --ignore-scripts --no-audit --loglevel=warn
+
+      - name: Build preview
+        if: ${{ steps.surge-token.outputs.enabled == 'true' }}
+        run: npm run build
+      - uses: afc163/surge-preview@bf90a5a86111f6311ca42f0a5a0f80fb0fb03cec
+        if: ${{ steps.surge-token.outputs.enabled == 'true' }}
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        with:
+          dist: docs-dist
+          failOnError: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          surge_token: ${{ env.SURGE_TOKEN }}

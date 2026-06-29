@@ -8,12 +8,53 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": [".dumi/tmp/*"],
-      "rc-table": ["src/index.ts"]
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        ".dumi/tmp/*"
+      ],
+      "@rc-component/table": [
+        "src/index.ts"
+      ],
+      "@rc-component/table/es": [
+        "src"
+      ],
+      "@rc-component/table/es/*": [
+        "src/*"
+      ],
+      "rc-table": [
+        "src/index.ts"
+      ],
+      "rc-table/es": [
+        "src"
+      ],
+      "rc-table/es/*": [
+        "src/*"
+      ]
     },
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ],
+    "ignoreDeprecations": "5.0"
   },
-  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx", "tests/__mocks__/shadowTest.tsx"],
-  "exclude": ["./vitest.config.ts"]
+  "include": [
+    ".fatherrc.ts",
+    ".dumirc.ts",
+    "typings.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./docs/**/*.ts",
+    "./docs/**/*.tsx",
+    "./tests/**/*.ts",
+    "./tests/**/*.tsx",
+    "tests/__mocks__/shadowTest.tsx"
+  ],
+  "exclude": [
+    "./vitest.config.mts",
+    "docs-dist",
+    "lib",
+    "es"
+  ]
 }

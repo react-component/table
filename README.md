@@ -1,80 +1,69 @@
-# @rc-component/table
+<div align="center">
+  <h1>@rc-component/table</h1>
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Part of the Ant Design ecosystem.</sub></p>
+  <p>📋 Low-level table primitives for React, maintained in the Ant Design ecosystem.</p>
 
-React table component with useful functions.
+  <p>
+    <a href="https://npmjs.org/package/@rc-component/table"><img alt="NPM version" src="https://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square"></a>
+    <a href="https://npmjs.org/package/@rc-component/table"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@rc-component/table.svg?style=flat-square"></a>
+    <a href="https://github.com/react-component/table/actions/workflows/main.yml"><img alt="build status" src="https://github.com/react-component/table/actions/workflows/main.yml/badge.svg"></a>
+    <a href="https://app.codecov.io/gh/react-component/table"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square"></a>
+    <a href="https://bundlephobia.com/package/@rc-component/table"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/@rc-component/table?style=flat-square"></a>
+    <a href="https://github.com/umijs/dumi"><img alt="dumi" src="https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square"></a>
+  </p>
+</div>
 
-[![NPM version][npm-image]][npm-url] [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi) [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url] [![bundle size][bundlephobia-image]][bundlephobia-url]
+<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
 
-[npm-image]: http://img.shields.io/npm/v/@rc-component/table.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/@rc-component/table
-[github-actions-image]: https://github.com/react-component/table/actions/workflows/main.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/table/actions/workflows/main.yml
-[coveralls-image]: https://img.shields.io/coveralls/react-component/table.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/table?branch=master
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/table/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/react-component/table/branch/master
-[david-url]: https://david-dm.org/react-component/table
-[david-image]: https://david-dm.org/react-component/table/status.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/react-component/table?type=dev
-[david-dev-image]: https://david-dm.org/react-component/table/dev-status.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/@rc-component/table.svg?style=flat-square
-[download-url]: https://npmjs.org/package/@rc-component/table
-[bundlephobia-url]: https://bundlephobia.com/result?p=@rc-component/table
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/table
+## Highlights
 
-## install
+- Flexible column, summary, fixed header, sticky, expandable row, and virtual table support.
+- TypeScript-first API designed for composition in design systems.
+- Used by Ant Design Table and other React data display experiences.
 
-[![@rc-component/table](https://nodei.co/npm/@rc-component/table.png)](https://npmjs.org/package/@rc-component/table)
+## Install
 
-## Development
-
+```bash
+npm install @rc-component/table
 ```
+
+## Usage
+
+```tsx
+import Table from '@rc-component/table';
+import type { ColumnsType } from '@rc-component/table';
+
+interface User {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
+
+const columns: ColumnsType<User> = [
+  { title: 'Name', dataIndex: 'name', key: 'name', width: 120 },
+  { title: 'Age', dataIndex: 'age', key: 'age', width: 80 },
+  { title: 'Address', dataIndex: 'address', key: 'address' },
+];
+
+const data: User[] = [
+  { key: '1', name: 'Jack', age: 28, address: 'Somewhere' },
+  { key: '2', name: 'Rose', age: 36, address: 'Somewhere else' },
+];
+
+export default () => <Table columns={columns} data={data} />;
+```
+
+## Examples
+
+Run the local dumi site:
+
+```bash
 npm install
 npm start
 ```
 
-## Example
-
-https://table-react-component.vercel.app/
-
-## Usage
-
-```js
-import Table from '@rc-component/table';
-
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-    width: 100,
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-    width: 200,
-  },
-  {
-    title: 'Operations',
-    dataIndex: '',
-    key: 'operations',
-    render: () => <a href="#">Delete</a>,
-  },
-];
-
-const data = [
-  { name: 'Jack', age: 28, address: 'some where', key: '1' },
-  { name: 'Rose', age: 36, address: 'some where', key: '2' },
-];
-
-React.render(<Table columns={columns} data={data} />, mountNode);
-```
+Then open `http://localhost:8000`.
 
 ## API
 
@@ -175,6 +164,36 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 | style | React.CSSProperties | - | style of this summary row |
 | onClick | (e?: React.MouseEvent\<HTMLElement>) => void | - | The `onClick` attribute in `Table.Summary.Row` component can be used to set a click event handler for the summary row. |
 
+## Development
+
+```bash
+npm install
+npm start
+```
+
+The dumi site runs at `http://localhost:8000` by default.
+
+Run checks before sending a pull request:
+
+```bash
+npm run lint
+npm run tsc
+npm test
+npm run build
+```
+
+## Release
+
+```bash
+npm run prepublishOnly
+```
+
+The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+
+## Ecosystem
+
+This package is part of the React Component organization and is maintained alongside Ant Design. The Ant Design mark above is used only as ecosystem context; the package itself stays framework-level and unstyled except for its bundled assets.
+
 ## License
 
-@rc-component/table is released under the MIT license.
+@rc-component/table is released under the [MIT](./LICENSE) license.
