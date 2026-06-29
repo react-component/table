@@ -75,7 +75,7 @@
     "@umijs/fabric": "^4.0.1",
     "@vitest/coverage-v8": "^4.1.9",
     "dumi": "^2.4.35",
-    "eslint": "^8.57.1",
+    "eslint": "^10.6.0",
     "father": "^4.6.23",
     "gh-pages": "^6.3.0",
     "glob": "^13.0.6",
