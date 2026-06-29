@@ -83,7 +83,7 @@
     "immutability-helper": "^3.0.0",
     "jsdom": "^29.1.1",
     "less": "^4.6.7",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.0.8",
     "prettier": "^3.9.0",
     "react": "^18.3.1",
     "react-dnd": "^2.5.4",
