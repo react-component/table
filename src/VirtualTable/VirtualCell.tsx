@@ -31,9 +31,15 @@ export interface VirtualCellProps<RecordType> {
  * Return the width of the column by `colSpan`.
  * When `colSpan` is `0` will be trade as `1`.
  */
-export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset: number[]) {
+export function getColumnWidth(colIndex: number, colSpan: number, columnsOffset: number[]): number {
   const mergedColSpan = colSpan || 1;
-  return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
+
+  const startIndex = Math.max(colIndex, 0);
+  const endIndex = Math.min(startIndex + mergedColSpan, columnsOffset.length - 1);
+
+  const startOffset = columnsOffset[startIndex] || 0;
+  const endOffset = columnsOffset[endIndex] || startOffset;
+  return Math.max(endOffset - startOffset, 0);
 }
 
 const VirtualCell = <RecordType,>(props: VirtualCellProps<RecordType>) => {
