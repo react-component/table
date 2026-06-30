@@ -36,6 +36,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     styles,
     expandedRowOffset = 0,
     colWidths,
+    forceRender
   } = useContext(TableContext, [
     'prefixCls',
     'getComponent',
@@ -50,6 +51,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     'expandedRowOffset',
     'fixedInfoList',
     'colWidths',
+    'forceRender'
   ]);
   const { body: bodyCls = {} } = classNames || {};
   const { body: bodyStyles = {} } = styles || {};
@@ -111,6 +113,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
           indent={indent}
           // Expanded row info
           expandedRowInfo={expandedRowInfo}
+          forceRender={forceRender}
         />
       );
     });
