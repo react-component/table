@@ -131,20 +131,22 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       className: `${prefixCls}-cell-scrollbar`,
     }),
   };
+  const shouldAppendScrollBarColumn = combinationScrollBarSize && !noData;
 
   const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
-    () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
-    [combinationScrollBarSize, columns],
+    () => (shouldAppendScrollBarColumn ? [...columns, ScrollBarColumn] : columns),
+    [shouldAppendScrollBarColumn, columns],
   );
 
   const flattenColumnsWithScrollbar = useMemo(
-    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-    [combinationScrollBarSize, flattenColumns],
+    () => (shouldAppendScrollBarColumn ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
+    [shouldAppendScrollBarColumn, flattenColumns],
   );
 
   // Calculate the sticky offsets
   const headerStickyOffsets = useMemo(() => {
     const { start, end } = stickyOffsets;
+    const scrollbarOffset = shouldAppendScrollBarColumn ? combinationScrollBarSize : 0;
     return {
       ...stickyOffsets,
       // left:
@@ -152,10 +154,10 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       // right:
       //   direction === 'rtl' ? right : [...right.map(width => width + combinationScrollBarSize), 0],
       start: start,
-      end: [...end.map(width => width + combinationScrollBarSize), 0],
+      end: [...end.map(width => width + scrollbarOffset), 0],
       isSticky,
     };
-  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+  }, [shouldAppendScrollBarColumn, combinationScrollBarSize, stickyOffsets, isSticky]);
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
