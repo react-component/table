@@ -1,4 +1,5 @@
-import { render, act, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/dom';
+import { render, act } from '@testing-library/react';
 import React from 'react';
 import Table from '../src';
 

@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/dom';
+import { render } from '@testing-library/react';
 import { spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import { act } from '@testing-library/react';

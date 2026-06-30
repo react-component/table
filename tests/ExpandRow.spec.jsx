@@ -1,5 +1,6 @@
+import { fireEvent } from '@testing-library/dom';
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import { resetWarned, spyElementPrototype } from '@rc-component/util';
 import Table from '../src';
 

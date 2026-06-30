@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/dom';
+import { render } from '@testing-library/react';
 import { resetWarned, toArray } from '@rc-component/util';
 import React from 'react';
 import Table from '../src';
