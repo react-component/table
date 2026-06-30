@@ -12,9 +12,9 @@ describe('Table.Ref', () => {
       scrollTo: (_: any, param: any) => {
         scrollParam = param;
       },
-      scrollIntoView() {
+      scrollIntoView(this: HTMLElement) {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
-        scrollIntoViewElement = this as unknown as HTMLElement;
+        scrollIntoViewElement = this;
       },
     });
   });
