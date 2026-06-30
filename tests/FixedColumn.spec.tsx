@@ -1,6 +1,5 @@
-import { fireEvent } from '@testing-library/dom';
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { _rs } from '@rc-component/resize-observer';
 import Table, { type ColumnsType } from '../src';
 import { RowColSpanWithFixed, RowColSpanWithFixed2 } from './__mocks__/shadowTest';

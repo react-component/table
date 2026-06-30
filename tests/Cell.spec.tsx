@@ -1,6 +1,5 @@
-import { fireEvent } from '@testing-library/dom';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Table from '../src';
 
 describe('Table.Cell', () => {

@@ -1,5 +1,4 @@
-import { fireEvent } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { resetWarned } from '@rc-component/util';
 import React from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
