@@ -25,16 +25,8 @@ function normalizeConfig(config) {
   const next = { ...config };
 
   if (next.plugins?.['@typescript-eslint']) {
-    next.plugins = {
-      ...next.plugins,
-      '@typescript-eslint': {
-        ...next.plugins['@typescript-eslint'],
-        rules: {
-          ...next.plugins['@typescript-eslint'].rules,
-          'ban-types': noopRule,
-        },
-      },
-    };
+    next.plugins = { ...next.plugins };
+    delete next.plugins['@typescript-eslint'];
   }
 
   if (next.rules) {
@@ -66,6 +58,18 @@ export default [
       '.eslintrc.js',
       'src/index.d.ts',
     ],
+  },
+  {
+    plugins: {
+      '@typescript-eslint': {
+        ...tsEslintPlugin,
+        rules: {
+          ...tsEslintPlugin.rules,
+          'ban-types': noopRule,
+          'consistent-type-exports': noopRule,
+        },
+      },
+    },
   },
   ...compat.config(require('./.eslintrc.js')).map(normalizeConfig),
   {

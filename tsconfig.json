@@ -1,30 +1,29 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "moduleResolution": "node",
-    "baseUrl": "./",
+    "moduleResolution": "bundler",
     "jsx": "react",
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": [".dumi/tmp/*"],
-      "@rc-component/table": ["src/index.ts"],
-      "@rc-component/table/es": ["src"],
-      "@rc-component/table/es/*": ["src/*"],
-      "rc-table": ["src/index.ts"],
-      "rc-table/es": ["src"],
-      "rc-table/es/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["./.dumi/tmp/*"],
+      "@rc-component/table": ["./src/index.ts"],
+      "@rc-component/table/es": ["./src"],
+      "@rc-component/table/es/*": ["./src/*"],
+      "rc-table": ["./src/index.ts"],
+      "rc-table/es": ["./src"],
+      "rc-table/es/*": ["./src/*"]
     },
-    "ignoreDeprecations": "6.0",
     "noImplicitAny": false,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "strictFunctionTypes": false,
     "strict": false,
     "noImplicitThis": false,
-    "strictBindCallApply": false
+    "strictBindCallApply": false,
+    "module": "ESNext"
   },
   "include": [
     "react-compat.d.ts",
