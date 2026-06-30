@@ -20,6 +20,10 @@ const recommendedTsRulesObject = Array.isArray(recommendedTsRulesConfig)
   ? recommendedTsRulesConfig.reduce((rules, config) => ({ ...rules, ...(config.rules || {}) }), {})
   : recommendedTsRulesConfig?.rules || {};
 const recommendedTsRules = new Set(Object.keys(recommendedTsRulesObject));
+const noopRule = {
+  meta: { type: 'problem', docs: {}, schema: [] },
+  create: () => ({}),
+};
 
 function normalizeConfig(config) {
   const next = { ...config };
@@ -61,7 +65,13 @@ export default [
   },
   {
     plugins: {
-      '@typescript-eslint': tsEslintPlugin,
+      '@typescript-eslint': {
+        ...tsEslintPlugin,
+        rules: {
+          ...tsEslintPlugin.rules,
+          'consistent-type-exports': noopRule,
+        },
+      },
     },
   },
   ...compat.config(require('./.eslintrc.js')).map(normalizeConfig),
