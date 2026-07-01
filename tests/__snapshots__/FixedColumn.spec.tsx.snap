@@ -2698,22 +2698,43 @@ exports[`Table.FixedColumn > renders correctly > scrollXY - without data 1`] = `
       >
         <colgroup>
           <col
-            style="width: 100px;"
+            style="width: 1000px;"
           />
           <col
-            style="width: 100px;"
+            style="width: 1000px;"
           />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
           <col
-            style="width: 100px;"
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 1000px;"
+          />
+          <col
+            style="width: 15px;"
           />
         </colgroup>
         <thead

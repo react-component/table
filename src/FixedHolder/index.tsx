@@ -51,7 +51,6 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const {
     className,
     style,
-    noData,
     columns,
     flattenColumns,
     colWidths,
@@ -160,12 +159,14 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
   const isColGroupEmpty = useMemo<boolean>(() => {
-    // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
-    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
+    // ColGroup should be rendered as long as column widths are available,
+    // even if there is no data. This maintains layout consistency between
+    // Header, Body, and Summary sections.
+    // Ref: https://github.com/ant-design/ant-design/issues/57916
     const noWidth =
       !mergedColumnWidth || !mergedColumnWidth.length || mergedColumnWidth.every(w => !w);
-    return noData || noWidth;
-  }, [noData, mergedColumnWidth]);
+    return noWidth;
+  }, [mergedColumnWidth]);
 
   return (
     <div
