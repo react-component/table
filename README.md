@@ -59,7 +59,7 @@ export default () => <Table columns={columns} data={data} />;
 Run the local dumi site:
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
@@ -167,7 +167,7 @@ tblRef.current?.scrollTo({ key: 'rowKey', align: 'start' });
 ## Development
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
