@@ -108,8 +108,8 @@
     "vitest": "^4.1.9"
   },
   "peerDependencies": {
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
