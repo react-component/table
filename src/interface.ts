@@ -90,10 +90,7 @@ export type Direction = 'ltr' | 'rtl';
 export type SpecialString<T> = T | (string & NonNullable<unknown>);
 
 export type DataIndex<T = any> =
-  | DeepNamePath<T>
-  | SpecialString<T>
-  | number
-  | (SpecialString<T> | number)[];
+  DeepNamePath<T> | SpecialString<T> | number | (SpecialString<T> | number)[];
 
 export type CellEllipsisType = { showTitle?: boolean } | boolean;
 
@@ -139,8 +136,7 @@ export interface ColumnType<RecordType> extends ColumnSharedType<RecordType> {
 }
 
 export type ColumnsType<RecordType = unknown> = readonly (
-  | ColumnGroupType<RecordType>
-  | ColumnType<RecordType>
+  ColumnGroupType<RecordType> | ColumnType<RecordType>
 )[];
 
 export type GetRowKey<RecordType> = (record: RecordType, index?: number) => Key;
@@ -167,9 +163,12 @@ type Component<P> =
 
 export type CustomizeComponent = Component<any>;
 
+export type ScrollSource = 'body' | 'header' | 'summary' | 'sticky';
+
 export type OnCustomizeScroll = (info: {
   currentTarget?: HTMLElement;
   scrollLeft?: number;
+  source?: ScrollSource;
 }) => void;
 
 export type CustomizeScrollBody<RecordType> = (
@@ -178,6 +177,7 @@ export type CustomizeScrollBody<RecordType> = (
     scrollbarSize: number;
     ref: React.Ref<{ scrollLeft: number; scrollTo?: (scrollConfig: ScrollConfig) => void }>;
     onScroll: OnCustomizeScroll;
+    onMouseEnter?: React.MouseEventHandler;
   },
 ) => React.ReactNode;
 

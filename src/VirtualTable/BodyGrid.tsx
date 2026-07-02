@@ -21,6 +21,7 @@ const ALIGN_MAP: Record<string, 'top' | 'bottom' | 'auto'> = {
 export interface GridProps<RecordType = any> {
   data: RecordType[];
   onScroll: OnCustomizeScroll;
+  onMouseEnter?: React.MouseEventHandler;
 }
 
 export interface GridRef {
@@ -30,7 +31,7 @@ export interface GridRef {
 }
 
 const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
-  const { data, onScroll } = props;
+  const { data, onScroll, onMouseEnter } = props;
 
   const {
     flattenColumns,
@@ -276,10 +277,12 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         component={wrapperComponent}
         scrollWidth={scrollX as number}
         direction={direction}
+        onMouseEnter={onMouseEnter}
         onVirtualScroll={({ x }) => {
           onScroll({
             currentTarget: listRef.current?.nativeElement,
             scrollLeft: x,
+            source: 'body',
           });
         }}
         onScroll={onTablePropScroll}

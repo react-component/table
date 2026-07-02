@@ -7,7 +7,14 @@ import ColGroup from '../ColGroup';
 import TableContext from '../context/TableContext';
 import type { HeaderProps } from '../Header/Header';
 import devRenderTimes from '../hooks/useRenderTimes';
-import type { ColumnsType, ColumnType, Direction, TableLayout } from '../interface';
+import type {
+  ColumnsType,
+  ColumnType,
+  Direction,
+  OnCustomizeScroll,
+  ScrollSource,
+  TableLayout,
+} from '../interface';
 
 function useColumnWidth(colWidths: readonly number[], columCount: number) {
   return useMemo(() => {
@@ -38,7 +45,9 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   stickyClassName?: string;
   scrollX?: number | string | true;
   tableLayout?: TableLayout;
-  onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
+  onScroll: OnCustomizeScroll;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  scrollSource: Extract<ScrollSource, 'header' | 'summary'>;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
   colGroup?: React.ReactNode;
 }
@@ -66,6 +75,8 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     scrollX,
     tableLayout = 'fixed',
     onScroll,
+    onMouseEnter,
+    scrollSource,
     maxContentScroll,
     children,
     ...restProps
@@ -109,6 +120,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         onScroll({
           currentTarget,
           scrollLeft: nextScroll,
+          source: scrollSource,
         });
         e.preventDefault();
       }
@@ -120,7 +132,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
     return () => {
       scrollEle?.removeEventListener('wheel', onWheel);
     };
-  }, []);
+  }, [direction, onScroll, scrollSource]);
 
   // Add scrollbar column
   const lastColumn = flattenColumns[flattenColumns.length - 1];
@@ -175,6 +187,7 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
         ...style,
       }}
       ref={setScrollRef}
+      onMouseEnter={onMouseEnter}
       className={clsx(className, {
         [stickyClassName]: !!stickyClassName,
       })}

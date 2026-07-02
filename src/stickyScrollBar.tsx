@@ -4,6 +4,7 @@ import { getDOM, getScrollBarSize, raf } from '@rc-component/util';
 import * as React from 'react';
 import TableContext from './context/TableContext';
 import { useLayoutState } from './hooks/useFrame';
+import type { OnCustomizeScroll } from './interface';
 import { getOffset } from './utils/offsetUtil';
 
 const MOUSEUP_EVENT: keyof WindowEventMap = 'mouseup';
@@ -13,7 +14,8 @@ const RESIZE_EVENT: keyof WindowEventMap = 'resize';
 
 interface StickyScrollBarProps {
   scrollBodyRef: React.RefObject<HTMLDivElement>;
-  onScroll: (params: { scrollLeft?: number }) => void;
+  onScroll: OnCustomizeScroll;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
   offsetScroll: number;
   container: HTMLElement | Window;
   direction: string;
@@ -23,7 +25,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
   props,
   ref,
 ) => {
-  const { scrollBodyRef, onScroll, offsetScroll, container, direction } = props;
+  const { scrollBodyRef, onScroll, onMouseEnter, offsetScroll, container, direction } = props;
   const prefixCls = useContext(TableContext, 'prefixCls');
   const bodyScrollWidth = scrollBodyRef.current?.scrollWidth || 0;
   const bodyWidth = scrollBodyRef.current?.clientWidth || 0;
@@ -80,6 +82,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     if (shouldScroll) {
       onScroll({
         scrollLeft: (left / bodyWidth) * (bodyScrollWidth + 2),
+        source: 'sticky',
       });
       refState.current.x = event.pageX;
     }
@@ -190,6 +193,7 @@ const StickyScrollBar: React.ForwardRefRenderFunction<unknown, StickyScrollBarPr
     <div
       style={{ height: getScrollBarSize(), width: bodyWidth, bottom: offsetScroll }}
       className={`${prefixCls}-sticky-scroll`}
+      onMouseEnter={onMouseEnter}
     >
       <div
         onMouseDown={onMouseDown}

@@ -247,6 +247,42 @@ describe('Table.Virtual', () => {
     expect(scrollLeftCalled).toBeTruthy();
   });
 
+  it('should skip scroll from non-hovered source', () => {
+    const { container } = getTable();
+
+    resize(container.querySelector('.rc-table')!);
+
+    fireEvent.mouseEnter(container.querySelector('.rc-table-header')!);
+
+    setScrollLeft.mockClear();
+
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
+      deltaX: 10,
+    });
+
+    expect(setScrollLeft).not.toHaveBeenCalled();
+  });
+
+  it('should use hovered body as scroll source even when header is locked', () => {
+    const { container } = getTable();
+
+    resize(container.querySelector('.rc-table')!);
+
+    fireEvent.mouseEnter(container.querySelector('.rc-table-header')!);
+    fireEvent.wheel(container.querySelector('.rc-table-header')!, {
+      deltaX: 10,
+    });
+
+    setScrollLeft.mockClear();
+
+    fireEvent.mouseEnter(container.querySelector('.rc-table-tbody-virtual')!);
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
+      deltaX: 10,
+    });
+
+    expect(setScrollLeft).toHaveBeenCalled();
+  });
+
   it('should not reset scroll when data changed', async () => {
     const { container, rerender } = getTable();
 
