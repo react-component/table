@@ -9,8 +9,10 @@ import Grid from './BodyGrid';
 import { StaticContext } from './context';
 
 const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
-  const { ref, onScroll } = props;
-  return <Grid ref={ref as any} data={rawData as any} onScroll={onScroll} />;
+  const { ref, onScroll, onMouseEnter } = props;
+  return (
+    <Grid ref={ref as any} data={rawData as any} onScroll={onScroll} onMouseEnter={onMouseEnter} />
+  );
 };
 
 export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {

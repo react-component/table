@@ -68,6 +68,7 @@ import type {
   PanelRender,
   Reference,
   RowClassName,
+  ScrollSource,
   TableComponents,
   TableLayout,
   TableSticky,
@@ -90,6 +91,18 @@ const EMPTY_DATA = [];
 
 // Used for customize scroll
 const EMPTY_SCROLL_TARGET = {};
+
+const getScrollSource = (
+  source: ScrollSource | undefined,
+  currentTarget: HTMLElement | undefined,
+  refs: Record<ScrollSource, HTMLElement | null | undefined>,
+): ScrollSource | undefined => {
+  if (source) {
+    return source;
+  }
+
+  return (Object.keys(refs) as ScrollSource[]).find(key => refs[key] === currentTarget);
+};
 
 export type SemanticName = 'section' | 'title' | 'footer' | 'content';
 export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
@@ -350,6 +363,13 @@ const Table = <RecordType extends DefaultRecordType>(
   const scrollHeaderRef = React.useRef<HTMLDivElement>(null);
   const scrollBodyRef = React.useRef<HTMLDivElement>(null);
   const scrollBodyContainerRef = React.useRef<HTMLDivElement>(null);
+  const [hoverEle, setHoverEle] = React.useState<ScrollSource | null>(null);
+  const onHoverScrollSource = React.useCallback(
+    (source: ScrollSource) => () => {
+      setHoverEle(source);
+    },
+    [],
+  );
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -476,12 +496,32 @@ const Table = <RecordType extends DefaultRecordType>(
   const [scrollInfo, setScrollInfo] = React.useState<ScrollInfoType>([0, 0]);
 
   const onInternalScroll = useEvent(
-    ({ currentTarget, scrollLeft }: { currentTarget: HTMLElement; scrollLeft?: number }) => {
+    ({
+      currentTarget,
+      scrollLeft,
+      source,
+    }: {
+      currentTarget?: HTMLElement;
+      scrollLeft?: number;
+      source?: ScrollSource;
+    }) => {
+      const scrollSource = getScrollSource(source, currentTarget, {
+        body: getDOM(scrollBodyRef.current) as HTMLElement,
+        header: scrollHeaderRef.current,
+        summary: scrollSummaryRef.current,
+        sticky: undefined,
+      });
+
+      if (source && hoverEle && scrollSource && hoverEle !== scrollSource) {
+        return;
+      }
+
       const mergedScrollLeft =
-        typeof scrollLeft === 'number' ? scrollLeft : currentTarget.scrollLeft;
+        typeof scrollLeft === 'number' ? scrollLeft : (currentTarget?.scrollLeft ?? 0);
 
       const compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
-      if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+      const isHoverSource = hoverEle && scrollSource && hoverEle === scrollSource;
+      if (isHoverSource || !getScrollTarget() || getScrollTarget() === compareTarget) {
         setScrollTarget(compareTarget);
 
         forceScroll(mergedScrollLeft, scrollHeaderRef.current);
@@ -517,8 +557,12 @@ const Table = <RecordType extends DefaultRecordType>(
     },
   );
 
+  const onBodyInternalScroll = useEvent((e: React.UIEvent<HTMLDivElement>) => {
+    onInternalScroll({ currentTarget: e.currentTarget, source: 'body' });
+  });
+
   const onBodyScroll = useEvent((e: React.UIEvent<HTMLDivElement>) => {
-    onInternalScroll(e);
+    onBodyInternalScroll(e);
     onScroll?.(e);
   });
 
@@ -676,6 +720,7 @@ const Table = <RecordType extends DefaultRecordType>(
         scrollbarSize,
         ref: scrollBodyRef,
         onScroll: onInternalScroll,
+        onMouseEnter: onHoverScrollSource('body'),
       });
 
       headerProps.colWidths = flattenColumns.map(({ width }, index) => {
@@ -701,6 +746,7 @@ const Table = <RecordType extends DefaultRecordType>(
             ...scrollYStyle,
           }}
           onScroll={onBodyScroll}
+          onMouseEnter={onHoverScrollSource('body')}
           ref={scrollBodyRef}
           className={`${prefixCls}-body`}
         >
@@ -747,6 +793,8 @@ const Table = <RecordType extends DefaultRecordType>(
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
             colGroup={bodyColGroup}
+            scrollSource="header"
+            onMouseEnter={onHoverScrollSource('header')}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -763,6 +811,8 @@ const Table = <RecordType extends DefaultRecordType>(
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
             colGroup={bodyColGroup}
+            scrollSource="summary"
+            onMouseEnter={onHoverScrollSource('summary')}
           >
             {renderFixedFooterTable}
           </FixedHolder>
@@ -774,6 +824,7 @@ const Table = <RecordType extends DefaultRecordType>(
             offsetScroll={offsetScroll}
             scrollBodyRef={scrollBodyRef}
             onScroll={onInternalScroll}
+            onMouseEnter={onHoverScrollSource('sticky')}
             container={container}
             direction={direction}
           />
@@ -786,7 +837,8 @@ const Table = <RecordType extends DefaultRecordType>(
       <div
         style={{ ...scrollXStyle, ...scrollYStyle, ...styles?.content }}
         className={clsx(`${prefixCls}-content`, classNames?.content)}
-        onScroll={onInternalScroll}
+        onScroll={onBodyInternalScroll}
+        onMouseEnter={onHoverScrollSource('body')}
         ref={scrollBodyRef}
       >
         <TableComponent
