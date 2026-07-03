@@ -1,45 +1,26 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "moduleResolution": "node",
-    "baseUrl": "./",
+    "moduleResolution": "bundler",
     "jsx": "react",
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@@/*": [
-        ".dumi/tmp/*"
-      ],
-      "@rc-component/table": [
-        "src/index.ts"
-      ],
-      "@rc-component/table/es": [
-        "src"
-      ],
-      "@rc-component/table/es/*": [
-        "src/*"
-      ],
-      "rc-table": [
-        "src/index.ts"
-      ],
-      "rc-table/es": [
-        "src"
-      ],
-      "rc-table/es/*": [
-        "src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@@/*": ["./.dumi/tmp/*"],
+      "@rc-component/table": ["./src/index.ts"],
+      "@rc-component/table/es": ["./src"],
+      "@rc-component/table/es/*": ["./src/*"],
+      "rc-table": ["./src/index.ts"],
+      "rc-table/es": ["./src"],
+      "rc-table/es/*": ["./src/*"]
     },
-    "types": [
-      "vitest/globals",
-      "@testing-library/jest-dom"
-    ],
-    "ignoreDeprecations": "5.0"
+    "strict": false,
+    "module": "ESNext"
   },
   "include": [
+    "global.d.ts",
     ".fatherrc.ts",
     ".dumirc.ts",
     "typings.d.ts",
@@ -51,10 +32,5 @@
     "./tests/**/*.tsx",
     "tests/__mocks__/shadowTest.tsx"
   ],
-  "exclude": [
-    "./vitest.config.mts",
-    "docs-dist",
-    "lib",
-    "es"
-  ]
+  "exclude": ["./vitest.config.mts", "docs-dist", "lib", "es"]
 }
