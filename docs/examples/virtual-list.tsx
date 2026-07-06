@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { VariableSizeGrid as Grid } from 'react-window';
+import { Grid, type CellComponentProps } from 'react-window';
 import Table from '@rc-component/table';
 import '../../assets/index.less';
 import './virtual-list.less';
@@ -21,8 +21,9 @@ for (let i = 0; i < 100000; i += 1) {
   });
 }
 
-const Cell = ({ columnIndex, rowIndex, style }) => (
+const Cell = ({ ariaAttributes, columnIndex, rowIndex, style }: CellComponentProps) => (
   <div
+    {...ariaAttributes}
     className={clsx('virtual-cell', {
       'virtual-cell-last': columnIndex === columns.length - 1,
     })}
@@ -35,26 +36,21 @@ const Cell = ({ columnIndex, rowIndex, style }) => (
 const Demo = () => {
   const gridRef = React.useRef<any>(null);
 
-  React.useEffect(() => {
-    gridRef.current.resetAfterIndices({ columnIndex: 0, shouldForceUpdate: false });
-  }, []);
-
   const renderVirtualList = (rawData: object[], { scrollbarSize }: any) => (
     <Grid
-      ref={gridRef}
+      gridRef={gridRef}
       className="virtual-grid"
+      cellComponent={Cell}
+      cellProps={{}}
       columnCount={columns.length}
       columnWidth={index => {
         const { width } = columns[index];
         return index === columns.length - 1 ? width - scrollbarSize - 1 : width;
       }}
-      height={300}
       rowCount={rawData.length}
-      rowHeight={() => 50}
-      width={301}
-    >
-      {Cell}
-    </Grid>
+      rowHeight={50}
+      style={{ height: 300, width: 301 }}
+    />
   );
 
   return (

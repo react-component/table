@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.surge-token.outputs.enabled == 'true' }}
-        run: npm install --ignore-scripts --no-audit --loglevel=warn
+        run: npm install --legacy-peer-deps --ignore-scripts --no-audit --loglevel=warn
 
       - name: Build preview
         if: ${{ steps.surge-token.outputs.enabled == 'true' }}
