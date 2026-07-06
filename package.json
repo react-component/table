@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@eslint/compat": "^2.1.0",
     "@rc-component/dropdown": "^1.0.2",
     "@rc-component/father-plugin": "^2.2.0",
     "@rc-component/menu": "^1.4.1",
