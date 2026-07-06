@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { VariableSizeGrid as Grid } from 'react-window';
+import { Grid, type CellComponentProps, type GridImperativeAPI } from 'react-window';
 import Table from '@rc-component/table';
 import '../../assets/index.less';
 import './virtual-list.less';
@@ -22,65 +22,54 @@ for (let i = 0; i < 100000; i += 1) {
     d: `d${i}`,
   });
 }
+const Cell = ({ ariaAttributes, columnIndex, rowIndex, style }: CellComponentProps) => (
+  <div
+    {...ariaAttributes}
+    className={clsx('virtual-cell', {
+      'virtual-cell-last': columnIndex === columns.length - 1,
+    })}
+    style={style}
+  >
+    r{rowIndex}, c{columnIndex}
+  </div>
+);
 const Demo = () => {
-  const gridRef = React.useRef<any>(null);
+  const gridRef = React.useRef<GridImperativeAPI>(null);
   const [connectObject] = React.useState<any>(() => {
     const obj = {};
     Object.defineProperty(obj, 'scrollLeft', {
       get: () => {
-        if (gridRef.current) {
-          return gridRef.current?.state?.scrollLeft;
-        }
-        return null;
+        return gridRef.current?.element?.scrollLeft ?? null;
       },
       set: (scrollLeft: number) => {
-        if (gridRef.current) {
-          gridRef.current.scrollTo({ scrollLeft });
-        }
+        gridRef.current?.element?.scrollTo({ left: scrollLeft });
       },
     });
 
     return obj;
   });
 
-  React.useEffect(() => {
-    gridRef.current.resetAfterIndices({
-      columnIndex: 0,
-      shouldForceUpdate: false,
-    });
-  }, []);
-
   const renderVirtualList = (rawData: object[], { scrollbarSize, ref, onScroll }: any) => {
     ref.current = connectObject;
 
     return (
       <Grid
-        ref={gridRef}
+        gridRef={gridRef}
         className="virtual-grid"
+        cellComponent={Cell}
+        cellProps={{}}
         columnCount={columns.length}
         columnWidth={index => {
           const { width } = columns[index];
           return index === columns.length - 1 ? width - scrollbarSize - 1 : width;
         }}
-        height={300}
         rowCount={rawData.length}
-        rowHeight={() => 50}
-        width={301}
-        onScroll={({ scrollLeft }) => {
-          onScroll({ scrollLeft });
+        rowHeight={50}
+        style={{ height: 300, width: 301 }}
+        onScroll={event => {
+          onScroll({ scrollLeft: event.currentTarget.scrollLeft });
         }}
-      >
-        {({ columnIndex, rowIndex, style }) => (
-          <div
-            className={clsx('virtual-cell', {
-              'virtual-cell-last': columnIndex === columns.length - 1,
-            })}
-            style={style}
-          >
-            r{rowIndex}, c{columnIndex}
-          </div>
-        )}
-      </Grid>
+      />
     );
   };
 
