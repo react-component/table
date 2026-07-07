@@ -465,11 +465,11 @@ const Table = <RecordType extends DefaultRecordType>(
 
       // Delay to force scroll position if not sync
       // ref: https://github.com/ant-design/ant-design/issues/37179
-      if (target.scrollLeft !== scrollLeft) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (target.scrollLeft !== scrollLeft) {
           target.scrollLeft = scrollLeft;
-        }, 0);
-      }
+        }
+      }, 0);
     }
   }
 

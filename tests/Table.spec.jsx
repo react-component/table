@@ -1322,4 +1322,47 @@ describe('Table.Basic', () => {
     fireEvent.scroll(tableBody);
     expect(onScroll).toHaveBeenCalled();
   });
+
+  it('does not retry stale scrollLeft sync', () => {
+    vi.useFakeTimers();
+
+    try {
+      const { container } = render(
+        createTable({
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+
+      const tableHeader = container.querySelector('.rc-table-header');
+      const tableBody = container.querySelector('.rc-table-body');
+      let headerScrollLeft = 0;
+      let bodyScrollLeft = 0;
+
+      Object.defineProperty(tableHeader, 'scrollLeft', {
+        get() {
+          return headerScrollLeft;
+        },
+        set(value) {
+          headerScrollLeft = Math.trunc(value);
+        },
+      });
+      Object.defineProperty(tableBody, 'scrollLeft', {
+        get() {
+          return bodyScrollLeft;
+        },
+      });
+
+      bodyScrollLeft = 794.171875;
+      fireEvent.scroll(tableBody);
+
+      bodyScrollLeft = 0;
+      fireEvent.scroll(tableBody);
+
+      vi.runAllTimers();
+
+      expect(headerScrollLeft).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
