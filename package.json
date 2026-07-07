@@ -1,6 +1,6 @@
 {
   "name": "@rc-component/table",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "description": "📋 Data table component for React",
   "engines": {
     "node": ">=8.x"
