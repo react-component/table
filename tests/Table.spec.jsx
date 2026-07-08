@@ -1365,4 +1365,48 @@ describe('Table.Basic', () => {
       vi.useRealTimers();
     }
   });
+
+  it('cancels stale scrollLeft retry when target already synced', () => {
+    vi.useFakeTimers();
+
+    try {
+      const { container } = render(
+        createTable({
+          scroll: { x: 100, y: 100 },
+        }),
+      );
+
+      const tableHeader = container.querySelector('.rc-table-header');
+      const tableBody = container.querySelector('.rc-table-body');
+      let headerScrollLeft = 0;
+      let bodyScrollLeft = 0;
+
+      Object.defineProperty(tableHeader, 'scrollLeft', {
+        get() {
+          return headerScrollLeft;
+        },
+        set(value) {
+          headerScrollLeft = value;
+        },
+      });
+      Object.defineProperty(tableBody, 'scrollLeft', {
+        get() {
+          return bodyScrollLeft;
+        },
+      });
+
+      bodyScrollLeft = 100;
+      fireEvent.scroll(tableBody);
+
+      headerScrollLeft = 50;
+      bodyScrollLeft = 50;
+      fireEvent.scroll(tableBody);
+
+      vi.runAllTimers();
+
+      expect(headerScrollLeft).toBe(50);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
