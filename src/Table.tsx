@@ -453,6 +453,9 @@ const Table = <RecordType extends DefaultRecordType>(
   }, []);
 
   const [setScrollTarget, getScrollTarget] = useTimeoutLock(null);
+  const [scrollRetryTimeoutMap] = React.useState(
+    () => new WeakMap<HTMLDivElement, ReturnType<typeof setTimeout>>(),
+  );
 
   function forceScroll(scrollLeft: number, target: HTMLDivElement | ((left: number) => void)) {
     if (!target) {
@@ -460,16 +463,26 @@ const Table = <RecordType extends DefaultRecordType>(
     }
     if (typeof target === 'function') {
       target(scrollLeft);
-    } else if (target.scrollLeft !== scrollLeft) {
+      return;
+    }
+
+    const scrollRetryTimeout = scrollRetryTimeoutMap.get(target);
+    if (scrollRetryTimeout) {
+      clearTimeout(scrollRetryTimeout);
+    }
+
+    if (target.scrollLeft !== scrollLeft) {
       target.scrollLeft = scrollLeft;
 
       // Delay to force scroll position if not sync
       // ref: https://github.com/ant-design/ant-design/issues/37179
-      setTimeout(() => {
+      const retryTimeout = setTimeout(() => {
         if (target.scrollLeft !== scrollLeft) {
           target.scrollLeft = scrollLeft;
         }
       }, 0);
+
+      scrollRetryTimeoutMap.set(target, retryTimeout);
     }
   }
 
