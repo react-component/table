@@ -20,6 +20,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: millionco/react-doctor@ced746f518f11e8283d488c4ff31c44e478bb0e5
+      - uses: millionco/react-doctor@01820bb4fd4d0a4aebcd8df2b2a143a098649cb2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
