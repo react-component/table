@@ -63,6 +63,11 @@ describe('Table.Expand', () => {
 
     expect(expandedRows[0]).not.toHaveStyle({ display: 'none' });
     expect(expandedRows[1]).toHaveStyle({ display: 'none' });
+
+    fireEvent.click(container.querySelector('.rc-table-row-expand-icon'));
+
+    expect(expandedRows[0]).toHaveStyle({ display: 'none' });
+    expect(expandedRows[1]).toHaveStyle({ display: 'none' });
   });
 
   it('renders tree row correctly', () => {

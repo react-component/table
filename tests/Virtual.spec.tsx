@@ -203,6 +203,12 @@ describe('Table.Virtual', () => {
       expect(container.querySelector('.rc-table-expanded-row')).not.toHaveStyle({
         display: 'none',
       });
+
+      fireEvent.click(container.querySelector('.rc-table-row-expand-icon')!);
+
+      expect(container.querySelector('.rc-table-expanded-row')).toHaveStyle({
+        display: 'none',
+      });
     });
 
     it('applies expanded row class to tree rows', () => {
