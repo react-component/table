@@ -180,6 +180,31 @@ describe('Table.Virtual', () => {
       });
     });
 
+    it('force renders expanded rows before expansion', () => {
+      const expandedRowRender = vi.fn((record: { name: string }) => record.name);
+      const { container } = getTable({
+        data: [{ name: 'name0', age: 0, address: 'address0' }],
+        expandable: {
+          expandedRowRender,
+          forceRender: true,
+        },
+      });
+
+      expect(expandedRowRender).toHaveBeenCalledWith(
+        { name: 'name0', age: 0, address: 'address0' },
+        0,
+        1,
+        false,
+      );
+      expect(container.querySelector('.rc-table-expanded-row')).toHaveStyle({ display: 'none' });
+
+      fireEvent.click(container.querySelector('.rc-table-row-expand-icon')!);
+
+      expect(container.querySelector('.rc-table-expanded-row')).not.toHaveStyle({
+        display: 'none',
+      });
+    });
+
     it('applies expanded row class to tree rows', () => {
       const { container } = getTable({
         data: [
