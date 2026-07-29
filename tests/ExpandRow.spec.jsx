@@ -632,6 +632,169 @@ describe('Table.Expand', () => {
     expect(container.querySelectorAll('thead tr th')[0].innerHTML).toContain('column title');
   });
 
+  describe('expand all', () => {
+    const expandAllIcon = ({ expanded, expandable, onExpand }) => (
+      <button
+        type="button"
+        className="expand-all-icon"
+        data-expanded={expanded}
+        disabled={!expandable}
+        onClick={onExpand}
+      />
+    );
+
+    it('renders the default expand all icon only when enabled', () => {
+      const { container, rerender } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+          },
+        }),
+      );
+
+      expect(
+        container.querySelector('thead .rc-table-row-expand-icon-cell .rc-table-row-expand-icon'),
+      ).toBeFalsy();
+
+      rerender(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+          },
+        }),
+      );
+
+      const icon = container.querySelector(
+        'thead .rc-table-row-expand-icon-cell .rc-table-row-expand-icon',
+      );
+      expect(icon.classList.contains('rc-table-row-collapsed')).toBeTruthy();
+
+      fireEvent.click(icon);
+      expect(icon.classList.contains('rc-table-row-expanded')).toBeTruthy();
+    });
+
+    it('expands and collapses all rows from the expand column header', () => {
+      const onExpandAll = vi.fn();
+      const onExpandedRowsChange = vi.fn();
+      const { container } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            expandAllIcon,
+            onExpandAll,
+            onExpandedRowsChange,
+          },
+        }),
+      );
+
+      const icon = container.querySelector('.expand-all-icon');
+      expect(icon.getAttribute('data-expanded')).toBe('false');
+
+      fireEvent.click(icon);
+      expect(icon.getAttribute('data-expanded')).toBe('true');
+      expect(onExpandAll).toHaveBeenLastCalledWith(true, sampleData);
+      expect(onExpandedRowsChange).toHaveBeenLastCalledWith([0, 1]);
+      expect(
+        [...container.querySelectorAll('.rc-table-expanded-row')].every(
+          row => row.style.display === '',
+        ),
+      ).toBeTruthy();
+
+      fireEvent.click(icon);
+      expect(icon.getAttribute('data-expanded')).toBe('false');
+      expect(onExpandAll).toHaveBeenLastCalledWith(false, sampleData);
+      expect(onExpandedRowsChange).toHaveBeenLastCalledWith([]);
+      expect(
+        [...container.querySelectorAll('.rc-table-expanded-row')].every(
+          row => row.style.display === 'none',
+        ),
+      ).toBeTruthy();
+    });
+
+    it('only expands rows allowed by rowExpandable', () => {
+      const onExpandAll = vi.fn();
+      const onExpandedRowsChange = vi.fn();
+      const { container } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            expandAllIcon,
+            onExpandAll,
+            onExpandedRowsChange,
+            rowExpandable: ({ key }) => key === 1,
+          },
+        }),
+      );
+
+      fireEvent.click(container.querySelector('.expand-all-icon'));
+
+      expect(onExpandAll).toHaveBeenCalledWith(true, [sampleData[1]]);
+      expect(onExpandedRowsChange).toHaveBeenCalledWith([1]);
+    });
+
+    it('supports controlled expandedRowKeys and preserves unrelated keys', () => {
+      const onExpandedRowsChange = vi.fn();
+      const expandable = {
+        expandedRowRender,
+        showExpandAll: true,
+        expandAllIcon,
+        onExpandedRowsChange,
+      };
+      const { container, rerender } = render(
+        createTable({
+          expandable: {
+            ...expandable,
+            expandedRowKeys: [10],
+          },
+        }),
+      );
+
+      const icon = container.querySelector('.expand-all-icon');
+      fireEvent.click(icon);
+      expect(onExpandedRowsChange).toHaveBeenLastCalledWith([10, 0, 1]);
+      expect(icon.getAttribute('data-expanded')).toBe('false');
+
+      rerender(
+        createTable({
+          expandable: {
+            ...expandable,
+            expandedRowKeys: [10, 0, 1],
+          },
+        }),
+      );
+      expect(icon.getAttribute('data-expanded')).toBe('true');
+
+      fireEvent.click(icon);
+      expect(onExpandedRowsChange).toHaveBeenLastCalledWith([10]);
+    });
+
+    it('provides the expand all icon to a columnTitle render function', () => {
+      const columnTitle = vi.fn(originalNode => (
+        <div className="custom-expand-title">
+          {originalNode}
+          <span>Details</span>
+        </div>
+      ));
+      const { container } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            expandAllIcon,
+            columnTitle,
+          },
+        }),
+      );
+
+      expect(columnTitle).toHaveBeenCalled();
+      expect(container.querySelector('.custom-expand-title .expand-all-icon')).toBeTruthy();
+      expect(container.querySelector('.custom-expand-title').textContent).toContain('Details');
+    });
+  });
+
   it('fires expand change event', () => {
     const onExpand = vi.fn();
     const { container } = render(createTable({ expandable: { expandedRowRender, onExpand } }));

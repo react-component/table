@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { clsx } from 'clsx';
-import type { RenderExpandIconProps, Key, GetRowKey, ExpandableConfig } from '../interface';
+import type {
+  RenderExpandAllIconProps,
+  RenderExpandIconProps,
+  Key,
+  GetRowKey,
+  ExpandableConfig,
+} from '../interface';
 
 export function renderExpandIcon<RecordType>({
   prefixCls,
@@ -17,6 +23,34 @@ export function renderExpandIcon<RecordType>({
 
   const onClick: React.MouseEventHandler<HTMLElement> = event => {
     onExpand(record, event);
+    event.stopPropagation();
+  };
+
+  return (
+    <span
+      className={clsx(expandClassName, {
+        [`${prefixCls}-row-expanded`]: expanded,
+        [`${prefixCls}-row-collapsed`]: !expanded,
+      })}
+      onClick={onClick}
+    />
+  );
+}
+
+export function renderExpandAllIcon({
+  prefixCls,
+  onExpand,
+  expanded,
+  expandable,
+}: RenderExpandAllIconProps) {
+  const expandClassName = `${prefixCls}-row-expand-icon`;
+
+  if (!expandable) {
+    return <span className={clsx(expandClassName, `${prefixCls}-row-spaced`)} />;
+  }
+
+  const onClick: React.MouseEventHandler<HTMLElement> = event => {
+    onExpand(event);
     event.stopPropagation();
   };
 

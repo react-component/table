@@ -249,21 +249,33 @@ export type RenderExpandIcon<RecordType> = (
   props: RenderExpandIconProps<RecordType>,
 ) => React.ReactNode;
 
+export interface RenderExpandAllIconProps {
+  prefixCls: string;
+  expanded: boolean;
+  expandable: boolean;
+  onExpand: React.MouseEventHandler<HTMLElement>;
+}
+
+export type RenderExpandAllIcon = (props: RenderExpandAllIconProps) => React.ReactNode;
+
 export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
   defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
   forceRender?: boolean;
-  columnTitle?: React.ReactNode;
+  columnTitle?: React.ReactNode | ((originalNode: React.ReactNode) => React.ReactNode);
   expandRowByClick?: boolean;
   expandIcon?: RenderExpandIcon<RecordType>;
+  expandAllIcon?: RenderExpandAllIcon;
   onExpand?: (expanded: boolean, record: RecordType) => void;
+  onExpandAll?: (expanded: boolean, records: readonly RecordType[]) => void;
   onExpandedRowsChange?: (expandedKeys: readonly Key[]) => void;
   defaultExpandAllRows?: boolean;
   indentSize?: number;
   /** @deprecated Please use `EXPAND_COLUMN` in `columns` directly */
   expandIconColumnIndex?: number;
   showExpandColumn?: boolean;
+  showExpandAll?: boolean;
   expandedRowClassName?: string | RowClassName<RecordType>;
   childrenColumnName?: string;
   rowExpandable?: (record: RecordType) => boolean;

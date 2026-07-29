@@ -84,12 +84,16 @@ npm start
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
 | expandable.forceRender | Boolean | false | 在展开前强制渲染展开行内容。虚拟模式下，仅强制渲染虚拟列表当前挂载的行；屏幕外的行仍可能被卸载 |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的 className |
+| expandable.columnTitle | ReactNode \| Function(originalNode) |  | 自定义展开列表头 |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
 | expandable.expandIcon | props => ReactNode |  | 自定义展开图标 |
+| expandable.expandAllIcon | props => ReactNode |  | 自定义启用 `showExpandAll` 时显示的全部展开图标 |
 | expandable.indentSize | Number | 15 | 每一级 `data[i].children` 的缩进尺寸，建议配合指定的 `column.width` 使用 |
 | expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
+| expandable.showExpandAll | Boolean | false | 使用 `expandedRowRender` 时在展开列的表头中显示全部展开图标 |
 | expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
+| expandable.onExpandAll | Function(expanded, records) |  | 单击全部展开图标时调用的函数 |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
 | rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |

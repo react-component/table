@@ -6,11 +6,13 @@ import type {
   ExpandableType,
   GetRowKey,
   Key,
+  RenderExpandAllIcon,
+  RenderExpandAllIconProps,
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../interface';
 import type { TableProps } from '../Table';
-import { findAllChildrenKeys, renderExpandIcon } from '../utils/expandUtil';
+import { findAllChildrenKeys, renderExpandAllIcon, renderExpandIcon } from '../utils/expandUtil';
 import { getExpandableProps } from '../utils/legacyUtil';
 
 export default function useExpand<RecordType>(
@@ -22,20 +24,26 @@ export default function useExpand<RecordType>(
   expandableType: ExpandableType,
   expandedKeys: Set<Key>,
   expandIcon: RenderExpandIcon<RecordType>,
+  expandAllIcon: RenderExpandAllIcon | undefined,
   childrenColumnName: string,
   onTriggerExpand: TriggerEventHandler<RecordType>,
+  expandAllInfo: Omit<RenderExpandAllIconProps, 'prefixCls'>,
 ] {
   const expandableConfig = getExpandableProps(props);
 
   const {
     expandIcon,
+    expandAllIcon,
     expandedRowKeys,
     defaultExpandedRowKeys,
     defaultExpandAllRows,
     expandedRowRender,
     onExpand,
+    onExpandAll,
     onExpandedRowsChange,
     childrenColumnName,
+    rowExpandable,
+    showExpandAll,
   } = expandableConfig;
 
   const mergedExpandIcon = expandIcon || renderExpandIcon;
@@ -66,6 +74,8 @@ export default function useExpand<RecordType>(
     /* eslint-enable */
     return false;
   }, [!!expandedRowRender, mergedData]);
+  const mergedExpandAllIcon =
+    showExpandAll && expandableType === 'row' ? expandAllIcon || renderExpandAllIcon : undefined;
 
   const [innerExpandedKeys, setInnerExpandedKeys] = React.useState(() => {
     if (defaultExpandedRowKeys) {
@@ -80,6 +90,25 @@ export default function useExpand<RecordType>(
     () => new Set(expandedRowKeys || innerExpandedKeys || []),
     [expandedRowKeys, innerExpandedKeys],
   );
+
+  const expandableRows = React.useMemo(() => {
+    if (!showExpandAll || expandableType !== 'row') {
+      return [];
+    }
+
+    return mergedData.reduce<{ key: Key; record: RecordType }[]>((rows, record, index) => {
+      if (!rowExpandable || rowExpandable(record)) {
+        rows.push({
+          key: getRowKey(record, index),
+          record,
+        });
+      }
+      return rows;
+    }, []);
+  }, [expandableType, getRowKey, mergedData, rowExpandable, showExpandAll]);
+
+  const allExpanded =
+    expandableRows.length > 0 && expandableRows.every(({ key }) => mergedExpandedKeys.has(key));
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
@@ -105,6 +134,40 @@ export default function useExpand<RecordType>(
     [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
   );
 
+  const onTriggerExpandAll: React.MouseEventHandler<HTMLElement> = React.useCallback(() => {
+    if (!expandableRows.length) {
+      return;
+    }
+
+    const nextExpanded = !allExpanded;
+    const nextExpandedKeys = new Set(mergedExpandedKeys);
+
+    expandableRows.forEach(({ key }) => {
+      if (nextExpanded) {
+        nextExpandedKeys.add(key);
+      } else {
+        nextExpandedKeys.delete(key);
+      }
+    });
+
+    const keys = [...nextExpandedKeys];
+    setInnerExpandedKeys(keys);
+    onExpandAll?.(
+      nextExpanded,
+      expandableRows.map(({ record }) => record),
+    );
+    onExpandedRowsChange?.(keys);
+  }, [allExpanded, expandableRows, mergedExpandedKeys, onExpandAll, onExpandedRowsChange]);
+
+  const expandAllInfo = React.useMemo<Omit<RenderExpandAllIconProps, 'prefixCls'>>(
+    () => ({
+      expanded: allExpanded,
+      expandable: expandableRows.length > 0,
+      onExpand: onTriggerExpandAll,
+    }),
+    [allExpanded, expandableRows.length, onTriggerExpandAll],
+  );
+
   // Warning if use `expandedRowRender` and nest children in the same time
   if (
     process.env.NODE_ENV !== 'production' &&
@@ -121,7 +184,9 @@ export default function useExpand<RecordType>(
     expandableType,
     mergedExpandedKeys,
     mergedExpandIcon,
+    mergedExpandAllIcon,
     mergedChildrenColumnName,
     onTriggerExpand,
+    expandAllInfo,
   ];
 }
