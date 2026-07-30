@@ -70,6 +70,65 @@ describe('Table.Expand', () => {
     expect(expandedRows[1]).toHaveStyle({ display: 'none' });
   });
 
+  it('keeps force-rendered expanded content mounted across expand and collapse', () => {
+    const onMount = vi.fn();
+    const onUnmount = vi.fn();
+
+    class StatefulContent extends React.Component {
+      state = { count: 0 };
+
+      componentDidMount() {
+        onMount();
+      }
+
+      componentWillUnmount() {
+        onUnmount();
+      }
+
+      render() {
+        return (
+          <button
+            type="button"
+            className="stateful-expanded-content"
+            onClick={() => this.setState(({ count }) => ({ count: count + 1 }))}
+          >
+            {this.state.count}
+          </button>
+        );
+      }
+    }
+
+    const { container } = render(
+      createTable({
+        data: [sampleData[0]],
+        expandable: {
+          expandedRowRender: () => <StatefulContent />,
+          forceRender: true,
+        },
+      }),
+    );
+
+    const expandIcon = container.querySelector('.rc-table-row-expand-icon');
+    const content = container.querySelector('.stateful-expanded-content');
+
+    expect(onMount).toHaveBeenCalledTimes(1);
+    expect(onUnmount).not.toHaveBeenCalled();
+
+    fireEvent.click(expandIcon);
+    fireEvent.click(content);
+    expect(content).toHaveTextContent('1');
+
+    fireEvent.click(expandIcon);
+    expect(container.querySelector('.stateful-expanded-content')).toBe(content);
+    expect(onUnmount).not.toHaveBeenCalled();
+
+    fireEvent.click(expandIcon);
+    expect(container.querySelector('.stateful-expanded-content')).toBe(content);
+    expect(content).toHaveTextContent('1');
+    expect(onMount).toHaveBeenCalledTimes(1);
+    expect(onUnmount).not.toHaveBeenCalled();
+  });
+
   it('renders tree row correctly', () => {
     const data = [
       {

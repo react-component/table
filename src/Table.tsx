@@ -910,7 +910,7 @@ const Table = <RecordType extends DefaultRecordType>(
       expandableType,
       expandRowByClick: expandableConfig.expandRowByClick,
       expandedRowRender: expandableConfig.expandedRowRender,
-      forceRender: expandableConfig.forceRender,
+      forceRender: expandableConfig.forceRender ?? false,
       expandedRowOffset: expandableConfig.expandedRowOffset,
       onTriggerExpand,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
