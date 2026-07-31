@@ -674,6 +674,55 @@ describe('Table.Expand', () => {
       expect(icon.classList.contains('rc-table-row-expanded')).toBeTruthy();
     });
 
+    it('renders a spaced expand all icon when no rows are expandable', () => {
+      const { container } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            rowExpandable: () => false,
+          },
+        }),
+      );
+
+      expect(
+        container.querySelector(
+          'thead .rc-table-row-expand-icon-cell .rc-table-row-expand-icon.rc-table-row-spaced',
+        ),
+      ).toBeTruthy();
+    });
+
+    it('ignores custom expand all triggers when no rows are expandable', () => {
+      const onExpandAll = vi.fn();
+      const onExpandedRowsChange = vi.fn();
+      const { container } = render(
+        createTable({
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            rowExpandable: () => false,
+            expandAllIcon: ({ expandable, onExpand }) => (
+              <button
+                type="button"
+                className="expand-all-icon"
+                data-expandable={expandable}
+                onClick={onExpand}
+              />
+            ),
+            onExpandAll,
+            onExpandedRowsChange,
+          },
+        }),
+      );
+
+      const icon = container.querySelector('.expand-all-icon');
+      expect(icon.getAttribute('data-expandable')).toBe('false');
+
+      fireEvent.click(icon);
+      expect(onExpandAll).not.toHaveBeenCalled();
+      expect(onExpandedRowsChange).not.toHaveBeenCalled();
+    });
+
     it('expands and collapses all rows from the expand column header', () => {
       const onExpandAll = vi.fn();
       const onExpandedRowsChange = vi.fn();
