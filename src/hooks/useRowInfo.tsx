@@ -23,6 +23,7 @@ export default function useRowInfo<RecordType>(
   | 'indentSize'
   | 'expandIcon'
   | 'expandedRowRender'
+  | 'forceRender'
   | 'expandIconColumnIndex'
   | 'expandedKeys'
   | 'childrenColumnName'
@@ -49,6 +50,7 @@ export default function useRowInfo<RecordType>(
     'indentSize',
     'expandIcon',
     'expandedRowRender',
+    'forceRender',
     'expandIconColumnIndex',
     'expandedKeys',
     'childrenColumnName',
