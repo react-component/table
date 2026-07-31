@@ -643,7 +643,7 @@ describe('Table.Expand', () => {
       />
     );
 
-    it('renders the default expand all icon only when enabled', () => {
+    it('renders an accessible default expand all icon only when enabled', () => {
       const { container, rerender } = render(
         createTable({
           expandable: {
@@ -668,9 +668,20 @@ describe('Table.Expand', () => {
       const icon = container.querySelector(
         'thead .rc-table-row-expand-icon-cell .rc-table-row-expand-icon',
       );
+      expect(icon.tagName).toBe('BUTTON');
+      expect(icon).toHaveAttribute('type', 'button');
+      expect(icon).toHaveAttribute('aria-expanded', 'false');
+      expect(icon).toHaveAccessibleName('Expand all rows');
       expect(icon.classList.contains('rc-table-row-collapsed')).toBeTruthy();
 
-      fireEvent.click(icon);
+      icon.focus();
+      expect(icon).toHaveFocus();
+
+      fireEvent.keyDown(icon, { key: 'Enter', code: 'Enter' });
+      fireEvent.click(icon, { detail: 0 });
+      fireEvent.keyUp(icon, { key: 'Enter', code: 'Enter' });
+      expect(icon).toHaveAttribute('aria-expanded', 'true');
+      expect(icon).toHaveAccessibleName('Collapse all rows');
       expect(icon.classList.contains('rc-table-row-expanded')).toBeTruthy();
     });
 

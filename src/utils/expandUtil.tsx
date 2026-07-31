@@ -55,7 +55,10 @@ export function renderExpandAllIcon({
   };
 
   return (
-    <span
+    <button
+      type="button"
+      aria-expanded={expanded}
+      aria-label={expanded ? 'Collapse all rows' : 'Expand all rows'}
       className={clsx(expandClassName, {
         [`${prefixCls}-row-expanded`]: expanded,
         [`${prefixCls}-row-collapsed`]: !expanded,
