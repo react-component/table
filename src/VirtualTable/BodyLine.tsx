@@ -43,12 +43,19 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
   const cellComponent = getComponent(['body', 'cell'], 'div');
 
   // ========================== Expand ==========================
-  const { rowSupportExpand, expanded, rowProps, expandedRowRender, expandedRowClassName } = rowInfo;
+  const {
+    rowSupportExpand,
+    expanded,
+    rowProps,
+    expandedRowRender,
+    expandedRowClassName,
+    forceRender,
+  } = rowInfo;
 
   const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
   let expandRowNode: React.ReactElement<any>;
-  if (rowSupportExpand && expanded) {
+  if (!extra && rowSupportExpand && (forceRender || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
     let additionalProps: React.TdHTMLAttributes<HTMLElement> = {};
@@ -69,6 +76,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
           `${prefixCls}-expanded-row-level-${indent + 1}`,
           expandedClsName,
         )}
+        style={{ display: expanded ? undefined : 'none' }}
       >
         <Cell
           component={cellComponent}

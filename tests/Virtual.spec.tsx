@@ -180,6 +180,126 @@ describe('Table.Virtual', () => {
       });
     });
 
+    it('force renders expanded rows before expansion', () => {
+      const expandedRowRender = vi.fn((record: { name: string }) => record.name);
+      const { container } = getTable({
+        data: [{ name: 'name0', age: 0, address: 'address0' }],
+        expandable: {
+          expandedRowRender,
+          forceRender: true,
+        },
+      });
+
+      expect(expandedRowRender).toHaveBeenCalledWith(
+        { name: 'name0', age: 0, address: 'address0' },
+        0,
+        1,
+        false,
+      );
+      expect(container.querySelector('.rc-table-expanded-row')).toHaveStyle({ display: 'none' });
+
+      fireEvent.click(container.querySelector('.rc-table-row-expand-icon')!);
+
+      expect(container.querySelector('.rc-table-expanded-row')).not.toHaveStyle({
+        display: 'none',
+      });
+
+      fireEvent.click(container.querySelector('.rc-table-row-expand-icon')!);
+
+      expect(container.querySelector('.rc-table-expanded-row')).toHaveStyle({
+        display: 'none',
+      });
+    });
+
+    it('keeps force-rendered expanded content mounted across expand and collapse', () => {
+      const onMount = vi.fn();
+      const onUnmount = vi.fn();
+
+      class StatefulContent extends React.Component<unknown, { count: number }> {
+        state = { count: 0 };
+
+        componentDidMount() {
+          onMount();
+        }
+
+        componentWillUnmount() {
+          onUnmount();
+        }
+
+        render() {
+          return (
+            <button
+              type="button"
+              className="stateful-expanded-content"
+              onClick={() => this.setState(({ count }) => ({ count: count + 1 }))}
+            >
+              {this.state.count}
+            </button>
+          );
+        }
+      }
+
+      const { container } = getTable({
+        data: [{ name: 'name0', age: 0, address: 'address0' }],
+        expandable: {
+          expandedRowRender: () => <StatefulContent />,
+          forceRender: true,
+        },
+      });
+
+      const expandIcon = container.querySelector('.rc-table-row-expand-icon')!;
+      const content = container.querySelector('.stateful-expanded-content')!;
+
+      expect(onMount).toHaveBeenCalledTimes(1);
+      expect(onUnmount).not.toHaveBeenCalled();
+
+      fireEvent.click(expandIcon);
+      fireEvent.click(content);
+      expect(content).toHaveTextContent('1');
+
+      fireEvent.click(expandIcon);
+      expect(container.querySelector('.stateful-expanded-content')).toBe(content);
+      expect(onUnmount).not.toHaveBeenCalled();
+
+      fireEvent.click(expandIcon);
+      expect(container.querySelector('.stateful-expanded-content')).toBe(content);
+      expect(content).toHaveTextContent('1');
+      expect(onMount).toHaveBeenCalledTimes(1);
+      expect(onUnmount).not.toHaveBeenCalled();
+    });
+
+    it('does not duplicate force-rendered content for rowSpan overlay lines', () => {
+      const expandedRowRender = vi.fn((record: { name: string }) => (
+        <span data-expanded-record={record.name}>{record.name}</span>
+      ));
+      const data = [
+        { name: 'name0', age: 0, address: 'address0' },
+        { name: 'name1', age: 1, address: 'address1' },
+      ];
+      const { container } = getTable({
+        data,
+        columns: [
+          {
+            dataIndex: 'name',
+            onCell: (_, index) => ({
+              rowSpan: index === 0 ? 2 : 0,
+            }),
+          },
+        ],
+        expandable: {
+          expandedRowRender,
+          forceRender: true,
+        },
+      });
+
+      expect(container.querySelector('.rc-table-row-extra')).toBeTruthy();
+      expect(expandedRowRender).toHaveBeenCalledTimes(2);
+      expect(expandedRowRender).toHaveBeenNthCalledWith(1, data[0], 0, 1, false);
+      expect(expandedRowRender).toHaveBeenNthCalledWith(2, data[1], 1, 1, false);
+      expect(container.querySelectorAll('[data-expanded-record="name0"]')).toHaveLength(1);
+      expect(container.querySelectorAll('[data-expanded-record="name1"]')).toHaveLength(1);
+    });
+
     it('applies expanded row class to tree rows', () => {
       const { container } = getTable({
         data: [
