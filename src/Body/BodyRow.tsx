@@ -84,7 +84,7 @@ export function getCellProps<RecordType>(
     );
   }
 
-  const additionalCellProps = column.onCell?.(record, index) || {};
+  const additionalCellProps = { ...(column.onCell?.(record, index) || {}) };
   let hoverRowSpan: number | undefined;
 
   // Expandable row has offset

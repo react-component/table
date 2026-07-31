@@ -186,7 +186,7 @@ const Cell = <RecordType,>(props: CellProps<RecordType>) => {
   // ================ RowSpan & ColSpan =================
   const mergedColSpan = legacyCellProps?.colSpan ?? additionalProps.colSpan ?? colSpan ?? 1;
   const mergedRowSpan = legacyCellProps?.rowSpan ?? additionalProps.rowSpan ?? rowSpan ?? 1;
-  const mergedHoverRowSpan = hoverRowSpan ?? mergedRowSpan;
+  const mergedHoverRowSpan = legacyCellProps?.rowSpan ?? hoverRowSpan ?? mergedRowSpan;
 
   // ====================== Hover =======================
   const [hovering, onHover] = useHoverState(index, mergedHoverRowSpan);
