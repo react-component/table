@@ -1,8 +1,7 @@
 ---
 hero:
-  title: rc-table
-  description: React table component with useful functions
+  title: '@rc-component/table'
+  description: Data table component for React
 ---
-
 
 <embed src="../README.md"></embed>

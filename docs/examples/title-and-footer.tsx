@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import { useCheckbox } from './utils/useInput';
 import '../../assets/index.less';
 import type { ColumnType } from '@/interface';

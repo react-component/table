@@ -1,7 +1,4 @@
-import useMemo from '@rc-component/util/lib/hooks/useMemo';
-import isEqual from '@rc-component/util/lib/isEqual';
-import getValue from '@rc-component/util/lib/utils/get';
-import warning from '@rc-component/util/lib/warning';
+import { get as getValue, isEqual, useMemo, warning } from '@rc-component/util';
 import * as React from 'react';
 import PerfContext from '../context/PerfContext';
 import type { CellType, ColumnType, DataIndex, RenderedCell } from '../interface';

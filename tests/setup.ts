@@ -8,6 +8,20 @@ global.requestAnimationFrame = cb => setTimeout(cb, 0);
 require('regenerator-runtime');
 
 vi.mock('@rc-component/util/lib/getScrollBarSize');
+vi.mock('@rc-component/util', async importOriginal => {
+  const actual = await importOriginal<typeof import('@rc-component/util')>();
+
+  return {
+    ...actual,
+    getScrollBarSize: () => 15,
+    getTargetScrollBarSize: (target: HTMLElement) => {
+      if (!target || !(target instanceof Element)) {
+        return { width: 0, height: 0 };
+      }
+      return { width: 15, height: 15 };
+    },
+  };
+});
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver implements ResizeObserver {

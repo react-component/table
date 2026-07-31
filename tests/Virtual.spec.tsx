@@ -1,8 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react';
-import { _rs as onEsResize } from '@rc-component/resize-observer/es/utils/observerUtil';
-import { _rs as onLibResize } from '@rc-component/resize-observer/lib/utils/observerUtil';
-import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
-import { resetWarned } from '@rc-component/util/lib/warning';
+import { _rs as onResize } from '@rc-component/resize-observer';
+import { resetWarned, spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import { VirtualTable, type Reference, type VirtualTableProps } from '../src';
 
@@ -89,8 +87,7 @@ describe('Table.Virtual', () => {
 
   function resize(target: HTMLElement) {
     act(() => {
-      onLibResize([{ target } as any]);
-      onEsResize([{ target } as any]);
+      onResize([{ target } as any]);
     });
   }
 

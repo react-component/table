@@ -1,6 +1,6 @@
 /* eslint-disable no-console,func-names,react/no-multi-comp, no-nested-ternary */
 import type { ColumnType } from '@/interface';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import React from 'react';
 import '../../assets/index.less';
 

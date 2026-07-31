@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
+import { spyElementPrototypes } from '@rc-component/util';
 import React from 'react';
 import Table, { type Reference } from '../src';
 
@@ -12,7 +12,7 @@ describe('Table.Ref', () => {
       scrollTo: (_: any, param: any) => {
         scrollParam = param;
       },
-      scrollIntoView() {
+      scrollIntoView(this: HTMLElement) {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         scrollIntoViewElement = this;
       },

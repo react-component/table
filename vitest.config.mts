@@ -10,7 +10,20 @@ export default defineConfig({
     setupFiles: './tests/setup.ts',
     environment: 'jsdom',
     coverage: {
-      exclude: ['**/docs/**', '**/__mocks__/**', '**/coverage/**'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        '**/docs/**',
+        '**/__mocks__/**',
+        '**/coverage/**',
+        '**/.dumi/**',
+        '**/.vercel/**',
+        '**/es/**',
+        '**/lib/**',
+        '**/*.config.*',
+        '**/.dumirc.ts',
+        '**/.fatherrc.ts',
+        '**/*.d.ts',
+      ],
     },
   },
 });

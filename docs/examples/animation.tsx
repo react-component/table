@@ -1,9 +1,9 @@
 import React from 'react';
-import CSSMotionList from 'rc-animate/lib/CSSMotionList';
+import { CSSMotionList } from '@rc-component/motion';
 import { clsx } from 'clsx';
-import toArray from '@rc-component/util/lib/Children/toArray';
-import type { TableProps } from 'rc-table';
-import Table from 'rc-table';
+import { toArray } from '@rc-component/util';
+import type { TableProps } from '@rc-component/table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 import './animation.less';
 

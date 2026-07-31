@@ -1,6 +1,6 @@
 import React from 'react';
 import { Resizable } from 'react-resizable';
-import Table from 'rc-table';
+import Table from '@rc-component/table';
 import '../../assets/index.less';
 import 'react-resizable/css/styles.css';
 import type { ColumnType } from '@/interface';
