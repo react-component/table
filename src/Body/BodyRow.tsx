@@ -146,6 +146,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
     flattenColumns,
     expandedRowClassName,
     expandedRowRender,
+    forceRender,
     rowProps,
 
     // Misc
@@ -153,7 +154,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
     rowSupportExpand,
   } = rowInfo;
 
-  // Force render expand row if expanded before
+  // Keep the expanded row mounted after it has been expanded
   const expandedRef = React.useRef(false);
   expandedRef.current ||= expanded;
 
@@ -224,7 +225,7 @@ const BodyRow = <RecordType extends { children?: readonly RecordType[] }>(
 
   // ======================== Expand Row =========================
   let expandRowNode: React.ReactElement<ExpandedRowProps>;
-  if (rowSupportExpand && (expandedRef.current || expanded)) {
+  if (rowSupportExpand && (forceRender || expandedRef.current || expanded)) {
     const expandContent = expandedRowRender(record, index, indent + 1, expanded);
 
     expandRowNode = (
