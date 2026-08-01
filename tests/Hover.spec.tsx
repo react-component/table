@@ -211,6 +211,7 @@ describe('Table.Hover', () => {
         ]}
         expandable={{
           expandedRowOffset: 1,
+          defaultExpandAllRows: true,
           expandedRowRender: record => <span>expanded {record.key}</span>,
         }}
       />,
