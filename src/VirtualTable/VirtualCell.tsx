@@ -57,7 +57,7 @@ const VirtualCell = <RecordType,>(props: VirtualCellProps<RecordType>) => {
   const { columnsOffset } = useContext(GridContext, ['columnsOffset']);
 
   // TODO: support `expandableRowOffset`
-  const { key, fixedInfo, appendCellNode, additionalCellProps, hoverRowSpan } = getCellProps(
+  const { key, fixedInfo, appendCellNode, additionalCellProps, originRowSpan } = getCellProps(
     rowInfo,
     column,
     colIndex,
@@ -128,7 +128,7 @@ const VirtualCell = <RecordType,>(props: VirtualCellProps<RecordType>) => {
       shouldCellUpdate={column.shouldCellUpdate}
       {...fixedInfo}
       appendNode={appendCellNode}
-      hoverRowSpan={hoverRowSpan}
+      originRowSpan={originRowSpan}
       additionalProps={{
         ...additionalCellProps,
         style: mergedStyle,

@@ -52,8 +52,8 @@ export interface CellProps<RecordType extends DefaultRecordType> {
   /** @private Used for `expandable` with nest tree */
   appendNode?: React.ReactNode;
   additionalProps?: React.TdHTMLAttributes<HTMLTableCellElement>;
-  /** @private Keep hover range independent from layout rowSpan patched by expanded row */
-  hoverRowSpan?: number;
+  /** @private Original rowSpan before patching it for expanded rows */
+  originRowSpan?: number;
 
   rowType?: 'header' | 'body' | 'footer';
 
@@ -125,7 +125,7 @@ const Cell = <RecordType,>(props: CellProps<RecordType>) => {
     // Private
     appendNode,
     additionalProps = {},
-    hoverRowSpan,
+    originRowSpan,
     isSticky,
   } = props;
 
@@ -186,7 +186,7 @@ const Cell = <RecordType,>(props: CellProps<RecordType>) => {
   // ================ RowSpan & ColSpan =================
   const mergedColSpan = legacyCellProps?.colSpan ?? additionalProps.colSpan ?? colSpan ?? 1;
   const mergedRowSpan = legacyCellProps?.rowSpan ?? additionalProps.rowSpan ?? rowSpan ?? 1;
-  const mergedHoverRowSpan = legacyCellProps?.rowSpan ?? hoverRowSpan ?? mergedRowSpan;
+  const mergedHoverRowSpan = legacyCellProps?.rowSpan ?? originRowSpan ?? mergedRowSpan;
 
   // ====================== Hover =======================
   const [hovering, onHover] = useHoverState(index, mergedHoverRowSpan);
