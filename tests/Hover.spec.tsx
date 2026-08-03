@@ -5,6 +5,7 @@ import Table from '../src';
 import type { TableProps } from '../src/Table';
 
 describe('Table.Hover', () => {
+  const hoverClassName = 'rc-table-cell-row-hover';
   const data = [
     { key: 'key0', name: 'Lucy' },
     { key: 'key1', name: 'Jack' },
@@ -125,6 +126,166 @@ describe('Table.Hover', () => {
     // Mouse leave
     fireEvent.mouseLeave(tds[1]);
     expect(container.querySelector('.rc-table-cell-row-hover')).toBeFalsy();
+  });
+
+  it('does not let expanded row offset rowSpan affect hover range', () => {
+    const { container } = render(
+      <Table
+        rowKey="key"
+        columns={[
+          {
+            dataIndex: 'group',
+            onCell: (_, index) => {
+              if (index === 0) {
+                return { rowSpan: 2 };
+              }
+              if (index === 1) {
+                return { rowSpan: 0 };
+              }
+              return {};
+            },
+          },
+          Table.EXPAND_COLUMN,
+          {
+            dataIndex: 'name',
+          },
+        ]}
+        data={[
+          { key: 'a', group: 'Group 1', name: 'Alpha' },
+          { key: 'b', group: 'Group 1', name: 'Beta' },
+          { key: 'c', group: 'Group 2', name: 'Gamma' },
+        ]}
+        expandable={{
+          expandedRowOffset: 1,
+          expandedRowKeys: ['a'],
+          expandedRowRender: record => <span>expanded {record.key}</span>,
+        }}
+      />,
+    );
+
+    const getCell = (text: string) => {
+      const cell = Array.from(container.querySelectorAll<HTMLTableCellElement>('tbody td')).find(
+        cell => cell.textContent === text,
+      );
+      expect(cell).toBeTruthy();
+      return cell!;
+    };
+
+    const groupCell = getCell('Group 1');
+    const betaCell = getCell('Beta');
+    const gammaCell = getCell('Gamma');
+
+    expect(groupCell.getAttribute('rowspan')).toBe('3');
+
+    fireEvent.mouseEnter(groupCell);
+    expect(groupCell.classList.contains(hoverClassName)).toBe(true);
+    expect(betaCell.classList.contains(hoverClassName)).toBe(true);
+    expect(gammaCell.classList.contains(hoverClassName)).toBe(false);
+
+    fireEvent.mouseEnter(gammaCell);
+    expect(groupCell.classList.contains(hoverClassName)).toBe(false);
+    expect(gammaCell.classList.contains(hoverClassName)).toBe(true);
+  });
+
+  it('keeps legacy render rowSpan priority for hover range', () => {
+    const { container } = render(
+      <Table
+        rowKey="key"
+        columns={[
+          {
+            dataIndex: 'group',
+            render: (value, _, index) => ({
+              children: value,
+              props: { rowSpan: index === 0 ? 2 : 0 },
+            }),
+          },
+          Table.EXPAND_COLUMN,
+          {
+            dataIndex: 'name',
+          },
+        ]}
+        data={[
+          { key: 'a', group: 'Group 1', name: 'Alpha' },
+          { key: 'b', group: 'Group 1', name: 'Beta' },
+          { key: 'c', group: 'Group 2', name: 'Gamma' },
+        ]}
+        expandable={{
+          expandedRowOffset: 1,
+          defaultExpandAllRows: true,
+          expandedRowRender: record => <span>expanded {record.key}</span>,
+        }}
+      />,
+    );
+
+    const getCell = (text: string) => {
+      const cell = Array.from(container.querySelectorAll<HTMLTableCellElement>('tbody td')).find(
+        item => item.textContent === text,
+      );
+      expect(cell).toBeTruthy();
+      return cell!;
+    };
+
+    const groupCell = getCell('Group 1');
+    const alphaCell = getCell('Alpha');
+    const betaCell = getCell('Beta');
+    const gammaCell = getCell('Gamma');
+
+    expect(groupCell.getAttribute('rowspan')).toBe('2');
+
+    fireEvent.mouseEnter(groupCell);
+    expect(alphaCell.classList.contains(hoverClassName)).toBe(true);
+    expect(betaCell.classList.contains(hoverClassName)).toBe(true);
+    expect(gammaCell.classList.contains(hoverClassName)).toBe(false);
+  });
+
+  it('does not mutate stable onCell props across expanded row renders', () => {
+    const rowSpanProps = [{ rowSpan: 2 }, { rowSpan: 0 }, {}];
+    const dataSource = [
+      { key: 'a', group: 'Group 1', name: 'Alpha' },
+      { key: 'b', group: 'Group 1', name: 'Beta' },
+      { key: 'c', group: 'Group 2', name: 'Gamma' },
+    ];
+
+    const createTableWithExpandedKeys = (expandedRowKeys: React.Key[]) => (
+      <React.StrictMode>
+        <Table
+          rowKey="key"
+          columns={[
+            {
+              dataIndex: 'group',
+              onCell: (_, index) => rowSpanProps[index],
+            },
+            Table.EXPAND_COLUMN,
+            {
+              dataIndex: 'name',
+            },
+          ]}
+          data={dataSource}
+          expandable={{
+            expandedRowOffset: 1,
+            expandedRowKeys,
+            expandedRowRender: record => <span>expanded {record.key}</span>,
+          }}
+        />
+      </React.StrictMode>
+    );
+
+    const { container, rerender } = render(createTableWithExpandedKeys([]));
+    const getGroupCell = () =>
+      Array.from(container.querySelectorAll<HTMLTableCellElement>('tbody td')).find(
+        cell => cell.textContent === 'Group 1',
+      )!;
+
+    expect(rowSpanProps[0].rowSpan).toBe(2);
+    expect(getGroupCell().getAttribute('rowspan')).toBe('2');
+
+    rerender(createTableWithExpandedKeys(['a']));
+    expect(rowSpanProps[0].rowSpan).toBe(2);
+    expect(getGroupCell().getAttribute('rowspan')).toBe('3');
+
+    rerender(createTableWithExpandedKeys([]));
+    expect(rowSpanProps[0].rowSpan).toBe(2);
+    expect(getGroupCell().getAttribute('rowspan')).toBe('2');
   });
 
   describe('perf', () => {
