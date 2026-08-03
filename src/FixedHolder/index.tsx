@@ -27,7 +27,6 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
   style?: React.CSSProperties;
-  noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
@@ -40,7 +39,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
-  colGroup?: React.ReactNode;
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
@@ -51,11 +49,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const {
     className,
     style,
-    noData,
     columns,
     flattenColumns,
     colWidths,
-    colGroup,
     columCount,
     stickyOffsets,
     direction,
@@ -81,6 +77,11 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const TableComponent = getComponent(['header', 'table'], 'table');
 
   const combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
+  const hasScrollbarColumn = combinationScrollBarSize > 0;
+  const scrollbarAdjustedWidth =
+    hasScrollbarColumn && scrollX == null
+      ? `calc(100% - ${combinationScrollBarSize}px)`
+      : undefined;
 
   // Pass wheel to scroll event
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -133,13 +134,13 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   };
 
   const columnsWithScrollbar = useMemo<ColumnsType<unknown>>(
-    () => (combinationScrollBarSize ? [...columns, ScrollBarColumn] : columns),
-    [combinationScrollBarSize, columns],
+    () => (hasScrollbarColumn ? [...columns, ScrollBarColumn] : columns),
+    [hasScrollbarColumn, columns],
   );
 
   const flattenColumnsWithScrollbar = useMemo(
-    () => (combinationScrollBarSize ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
-    [combinationScrollBarSize, flattenColumns],
+    () => (hasScrollbarColumn ? [...flattenColumns, ScrollBarColumn] : flattenColumns),
+    [hasScrollbarColumn, flattenColumns],
   );
 
   // Calculate the sticky offsets
@@ -159,13 +160,17 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
 
-  const isColGroupEmpty = useMemo<boolean>(() => {
-    // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
-    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
-    const noWidth =
-      !mergedColumnWidth || !mergedColumnWidth.length || mergedColumnWidth.every(w => !w);
-    return noData || noWidth;
-  }, [noData, mergedColumnWidth]);
+  const noMeasuredColumnWidth =
+    !mergedColumnWidth ||
+    mergedColumnWidth.length !== columCount ||
+    mergedColumnWidth.every(width => !width);
+  const baseColumnWidths = noMeasuredColumnWidth
+    ? flattenColumns.map(({ width }) => width)
+    : mergedColumnWidth;
+  const headerColumnWidths = hasScrollbarColumn
+    ? [...baseColumnWidths, combinationScrollBarSize]
+    : baseColumnWidths;
+  const headerColumns = hasScrollbarColumn ? flattenColumnsWithScrollbar : flattenColumns;
 
   return (
     <div
@@ -182,20 +187,16 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
       <TableComponent
         style={{
           tableLayout,
-          minWidth: '100%',
+          minWidth: scrollbarAdjustedWidth || '100%',
           // https://github.com/ant-design/ant-design/issues/54894
-          width: scrollX,
+          width: scrollX ?? scrollbarAdjustedWidth,
         }}
       >
-        {isColGroupEmpty ? (
-          colGroup
-        ) : (
-          <ColGroup
-            colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
-            columCount={columCount + 1}
-            columns={flattenColumnsWithScrollbar}
-          />
-        )}
+        <ColGroup
+          colWidths={headerColumnWidths}
+          columCount={headerColumns.length}
+          columns={headerColumns}
+        />
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,
