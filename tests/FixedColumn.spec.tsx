@@ -119,6 +119,30 @@ describe('Table.FixedColumn', () => {
 
       expect(container.querySelector('colgroup')?.outerHTML).toMatchSnapshot();
     });
+
+    it('does not render scrollbar header cell when data is empty', async () => {
+      const { container } = render(
+        <Table columns={columns} data={[]} scroll={{ x: 1200, y: 100 }} />,
+      );
+
+      await triggerResize(container.querySelector<HTMLElement>('.rc-table'));
+
+      act(() => {
+        const coll = container.querySelector('.rc-table-resize-collection');
+        if (coll) {
+          triggerResize(coll as HTMLElement);
+        }
+      });
+
+      await act(async () => {
+        vi.runAllTimers();
+        await Promise.resolve();
+      });
+
+      expect(container.querySelectorAll('thead .rc-table-cell-scrollbar')).toHaveLength(0);
+      expect(container.querySelector('.rc-table-placeholder')).toBeTruthy();
+      vi.useRealTimers();
+    });
   });
 
   it('has correct scroll classNames when table resize', async () => {
