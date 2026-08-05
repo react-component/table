@@ -178,6 +178,7 @@ export type CustomizeScrollBody<RecordType> = (
 ) => React.ReactNode;
 
 export interface TableComponents<RecordType> {
+  ExpandIcon?: ExpandIconComponent<RecordType>;
   table?: CustomizeComponent;
   header?: {
     table?: CustomizeComponent;
@@ -211,7 +212,7 @@ export interface LegacyExpandableProps<RecordType> {
   expandedRowRender?: ExpandedRowRender<RecordType>;
   /** @deprecated Use `expandable.expandRowByClick` instead */
   expandRowByClick?: boolean;
-  /** @deprecated Use `expandable.expandIcon` instead */
+  /** @deprecated Use `components.ExpandIcon` instead */
   expandIcon?: RenderExpandIcon<RecordType>;
   /** @deprecated Use `expandable.onExpand` instead */
   onExpand?: (expanded: boolean, record: RecordType) => void;
@@ -249,14 +250,23 @@ export type RenderExpandIcon<RecordType> = (
   props: RenderExpandIconProps<RecordType>,
 ) => React.ReactNode;
 
-export interface RenderExpandAllIconProps {
+export type ExpandIconProps<RecordType> = {
   prefixCls: string;
   expanded: boolean;
   expandable: boolean;
-  onExpand: React.MouseEventHandler<HTMLElement>;
-}
+  onClick: React.MouseEventHandler<HTMLElement>;
+} & (
+  | {
+      type: 'row';
+      record: RecordType;
+    }
+  | {
+      type: 'all';
+      record?: never;
+    }
+);
 
-export type RenderExpandAllIcon = (props: RenderExpandAllIconProps) => React.ReactNode;
+export type ExpandIconComponent<RecordType> = React.ComponentType<ExpandIconProps<RecordType>>;
 
 export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
@@ -265,8 +275,8 @@ export interface ExpandableConfig<RecordType> {
   forceRender?: boolean;
   columnTitle?: React.ReactNode | ((originalNode: React.ReactNode) => React.ReactNode);
   expandRowByClick?: boolean;
+  /** @deprecated Please use `components.ExpandIcon` instead. This only customizes row icons. */
   expandIcon?: RenderExpandIcon<RecordType>;
-  expandAllIcon?: RenderExpandAllIcon;
   onExpand?: (expanded: boolean, record: RecordType) => void;
   onExpandAll?: (expanded: boolean, records: readonly RecordType[]) => void;
   onExpandedRowsChange?: (expandedKeys: readonly Key[]) => void;

@@ -491,7 +491,7 @@ describe('Table.Expand', () => {
     });
   });
 
-  it('renders a custom icon', () => {
+  it('supports deprecated expandable.expandIcon as a fallback', () => {
     function CustomExpandIcon(props) {
       return (
         <a className="expand-row-icon" onClick={e => props.onExpand(props.record, e)}>
@@ -510,6 +510,32 @@ describe('Table.Expand', () => {
       }),
     );
     expect(container.querySelector('a.expand-row-icon')).toBeTruthy();
+  });
+
+  it('uses components.ExpandIcon for nested rows', () => {
+    const data = [{ key: 0, name: 'Lucy', children: [{ key: 1, name: 'Jack' }] }];
+    const { container } = render(
+      createTable({
+        data,
+        components: {
+          ExpandIcon: ({ type, record, onClick }) =>
+            type === 'row' ? (
+              <button
+                type="button"
+                className="expand-row-icon"
+                data-record-key={record.key}
+                onClick={onClick}
+              />
+            ) : null,
+        },
+      }),
+    );
+
+    const expandIcon = container.querySelector('.expand-row-icon');
+    expect(expandIcon).toHaveAttribute('data-record-key', '0');
+
+    fireEvent.click(expandIcon);
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(2);
   });
 
   it('expand all rows by default', () => {
@@ -633,15 +659,45 @@ describe('Table.Expand', () => {
   });
 
   describe('expand all', () => {
-    const expandAllIcon = ({ expanded, expandable, onExpand }) => (
+    const ExpandIcon = ({ type, record, expanded, expandable, onClick }) => (
       <button
         type="button"
-        className="expand-all-icon"
+        className={type === 'all' ? 'expand-all-icon' : 'expand-row-icon'}
+        data-record-key={record?.key}
         data-expanded={expanded}
         disabled={!expandable}
-        onClick={onExpand}
+        onClick={onClick}
       />
     );
+
+    it('uses components.ExpandIcon for row and expand all controls', () => {
+      const { container } = render(
+        createTable({
+          components: { ExpandIcon },
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            expandIcon: () => <span className="legacy-expand-icon" />,
+          },
+        }),
+      );
+
+      const expandAllIcon = container.querySelector('.expand-all-icon');
+      const rowIcons = container.querySelectorAll('.expand-row-icon');
+
+      expect(expandAllIcon).toBeTruthy();
+      expect(expandAllIcon).not.toHaveAttribute('data-record-key');
+      expect(rowIcons).toHaveLength(2);
+      expect(rowIcons[0]).toHaveAttribute('data-record-key', '0');
+      expect(rowIcons[1]).toHaveAttribute('data-record-key', '1');
+      expect(container.querySelector('.legacy-expand-icon')).toBeFalsy();
+
+      fireEvent.click(rowIcons[0]);
+      expect(container.querySelectorAll('.rc-table-expanded-row')).toHaveLength(1);
+
+      fireEvent.click(expandAllIcon);
+      expect(container.querySelectorAll('.rc-table-expanded-row')).toHaveLength(2);
+    });
 
     it('renders an accessible default expand all icon only when enabled', () => {
       const { container, rerender } = render(
@@ -708,18 +764,21 @@ describe('Table.Expand', () => {
       const onExpandedRowsChange = vi.fn();
       const { container } = render(
         createTable({
+          components: {
+            ExpandIcon: ({ type, expandable, onClick }) =>
+              type === 'all' ? (
+                <button
+                  type="button"
+                  className="expand-all-icon"
+                  data-expandable={expandable}
+                  onClick={onClick}
+                />
+              ) : null,
+          },
           expandable: {
             expandedRowRender,
             showExpandAll: true,
             rowExpandable: () => false,
-            expandAllIcon: ({ expandable, onExpand }) => (
-              <button
-                type="button"
-                className="expand-all-icon"
-                data-expandable={expandable}
-                onClick={onExpand}
-              />
-            ),
             onExpandAll,
             onExpandedRowsChange,
           },
@@ -739,10 +798,10 @@ describe('Table.Expand', () => {
       const onExpandedRowsChange = vi.fn();
       const { container } = render(
         createTable({
+          components: { ExpandIcon },
           expandable: {
             expandedRowRender,
             showExpandAll: true,
-            expandAllIcon,
             onExpandAll,
             onExpandedRowsChange,
           },
@@ -778,10 +837,10 @@ describe('Table.Expand', () => {
       const onExpandedRowsChange = vi.fn();
       const { container } = render(
         createTable({
+          components: { ExpandIcon },
           expandable: {
             expandedRowRender,
             showExpandAll: true,
-            expandAllIcon,
             onExpandAll,
             onExpandedRowsChange,
             rowExpandable: ({ key }) => key === 1,
@@ -800,11 +859,11 @@ describe('Table.Expand', () => {
       const expandable = {
         expandedRowRender,
         showExpandAll: true,
-        expandAllIcon,
         onExpandedRowsChange,
       };
       const { container, rerender } = render(
         createTable({
+          components: { ExpandIcon },
           expandable: {
             ...expandable,
             expandedRowKeys: [10],
@@ -819,6 +878,7 @@ describe('Table.Expand', () => {
 
       rerender(
         createTable({
+          components: { ExpandIcon },
           expandable: {
             ...expandable,
             expandedRowKeys: [10, 0, 1],
@@ -840,10 +900,10 @@ describe('Table.Expand', () => {
       ));
       const { container } = render(
         createTable({
+          components: { ExpandIcon },
           expandable: {
             expandedRowRender,
             showExpandAll: true,
-            expandAllIcon,
             columnTitle,
           },
         }),

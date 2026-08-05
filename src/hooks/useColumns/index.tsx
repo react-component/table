@@ -6,14 +6,15 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandIconComponent,
+  ExpandIconProps,
   FixedType,
   GetRowKey,
   Key,
-  RenderExpandAllIcon,
-  RenderExpandAllIconProps,
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../../interface';
+import { DefaultExpandIcon, renderRowExpandIcon } from '../../utils/expandUtil';
 import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
 import useWidthColumns from './useWidthColumns';
 
@@ -104,7 +105,7 @@ function useColumns<RecordType>(
     getRowKey,
     onTriggerExpand,
     expandIcon,
-    expandAllIcon,
+    ExpandIcon,
     expandAllInfo,
     rowExpandable,
     expandIconColumnIndex,
@@ -124,9 +125,9 @@ function useColumns<RecordType>(
     columnTitle?: React.ReactNode | ((originalNode: React.ReactNode) => React.ReactNode);
     getRowKey: GetRowKey<RecordType>;
     onTriggerExpand: TriggerEventHandler<RecordType>;
-    expandIcon?: RenderExpandIcon<RecordType>;
-    expandAllIcon?: RenderExpandAllIcon;
-    expandAllInfo: Omit<RenderExpandAllIconProps, 'prefixCls'>;
+    expandIcon: RenderExpandIcon<RecordType>;
+    ExpandIcon?: ExpandIconComponent<RecordType>;
+    expandAllInfo?: Pick<ExpandIconProps<RecordType>, 'expanded' | 'expandable' | 'onClick'>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
     direction?: Direction;
@@ -196,10 +197,10 @@ function useColumns<RecordType>(
         fixedColumn = prevColumn ? prevColumn.fixed : null;
       }
 
-      const expandAllNode = expandAllIcon?.({
-        prefixCls,
-        ...expandAllInfo,
-      });
+      const MergedExpandIcon = ExpandIcon || DefaultExpandIcon;
+      const expandAllNode = expandAllInfo ? (
+        <MergedExpandIcon type="all" prefixCls={prefixCls} {...expandAllInfo} />
+      ) : undefined;
       const mergedColumnTitle =
         typeof columnTitle === 'function'
           ? columnTitle(expandAllNode)
@@ -220,7 +221,7 @@ function useColumns<RecordType>(
           const expanded = expandedKeys.has(rowKey);
           const recordExpandable = rowExpandable ? rowExpandable(record) : true;
 
-          const icon = expandIcon({
+          const icon = renderRowExpandIcon(ExpandIcon, expandIcon, {
             prefixCls,
             expanded,
             expandable: recordExpandable,
@@ -259,7 +260,7 @@ function useColumns<RecordType>(
     getRowKey,
     expandedKeys,
     expandIcon,
-    expandAllIcon,
+    ExpandIcon,
     expandAllInfo,
     columnTitle,
     direction,

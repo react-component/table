@@ -1,12 +1,47 @@
 import * as React from 'react';
 import { clsx } from 'clsx';
 import type {
-  RenderExpandAllIconProps,
+  ExpandIconComponent,
+  ExpandIconProps,
   RenderExpandIconProps,
+  RenderExpandIcon,
   Key,
   GetRowKey,
   ExpandableConfig,
 } from '../interface';
+
+export function DefaultExpandIcon<RecordType>({
+  prefixCls,
+  type,
+  onClick,
+  expanded,
+  expandable,
+}: ExpandIconProps<RecordType>) {
+  const expandClassName = `${prefixCls}-row-expand-icon`;
+
+  if (!expandable) {
+    return <span className={clsx(expandClassName, `${prefixCls}-row-spaced`)} />;
+  }
+
+  const className = clsx(expandClassName, {
+    [`${prefixCls}-row-expanded`]: expanded,
+    [`${prefixCls}-row-collapsed`]: !expanded,
+  });
+
+  if (type === 'all') {
+    return (
+      <button
+        type="button"
+        aria-expanded={expanded}
+        aria-label={expanded ? 'Collapse all rows' : 'Expand all rows'}
+        className={className}
+        onClick={onClick}
+      />
+    );
+  }
+
+  return <span className={className} onClick={onClick} />;
+}
 
 export function renderExpandIcon<RecordType>({
   prefixCls,
@@ -15,54 +50,45 @@ export function renderExpandIcon<RecordType>({
   expanded,
   expandable,
 }: RenderExpandIconProps<RecordType>) {
-  const expandClassName = `${prefixCls}-row-expand-icon`;
-
-  if (!expandable) {
-    return <span className={clsx(expandClassName, `${prefixCls}-row-spaced`)} />;
-  }
-
   const onClick: React.MouseEventHandler<HTMLElement> = event => {
     onExpand(record, event);
     event.stopPropagation();
   };
 
   return (
-    <span
-      className={clsx(expandClassName, {
-        [`${prefixCls}-row-expanded`]: expanded,
-        [`${prefixCls}-row-collapsed`]: !expanded,
-      })}
+    <DefaultExpandIcon
+      type="row"
+      prefixCls={prefixCls}
+      record={record}
+      expanded={expanded}
+      expandable={!!expandable}
       onClick={onClick}
     />
   );
 }
 
-export function renderExpandAllIcon({
-  prefixCls,
-  onExpand,
-  expanded,
-  expandable,
-}: RenderExpandAllIconProps) {
-  const expandClassName = `${prefixCls}-row-expand-icon`;
-
-  if (!expandable) {
-    return <span className={clsx(expandClassName, `${prefixCls}-row-spaced`)} />;
+export function renderRowExpandIcon<RecordType>(
+  ExpandIcon: ExpandIconComponent<RecordType> | undefined,
+  fallbackExpandIcon: RenderExpandIcon<RecordType>,
+  props: RenderExpandIconProps<RecordType>,
+) {
+  if (!ExpandIcon) {
+    return fallbackExpandIcon(props);
   }
 
+  const { prefixCls, record, onExpand, expanded, expandable } = props;
   const onClick: React.MouseEventHandler<HTMLElement> = event => {
-    onExpand(event);
+    onExpand(record, event);
     event.stopPropagation();
   };
 
   return (
-    <button
-      type="button"
-      aria-expanded={expanded}
-      aria-label={expanded ? 'Collapse all rows' : 'Expand all rows'}
-      className={clsx(expandClassName, {
-        [`${prefixCls}-row-expanded`]: expanded,
-        [`${prefixCls}-row-collapsed`]: !expanded,
-      })}
+    <ExpandIcon
+      type="row"
+      prefixCls={prefixCls}
+      record={record}
+      expanded={expanded}
+      expandable={!!expandable}
       onClick={onClick}
     />
   );

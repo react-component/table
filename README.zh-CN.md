@@ -87,8 +87,7 @@ npm start
 | expandable.columnTitle | ReactNode \| Function(originalNode) |  | 自定义展开列表头 |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
-| expandable.expandIcon | props => ReactNode |  | 自定义展开图标 |
-| expandable.expandAllIcon | props => ReactNode |  | 自定义启用 `showExpandAll` 时显示的全部展开图标 |
+| expandable.expandIcon | props => ReactNode |  | 已废弃。请使用 `components.ExpandIcon`；此配置仅作为行展开图标的后备方案保留 |
 | expandable.indentSize | Number | 15 | 每一级 `data[i].children` 的缩进尺寸，建议配合指定的 `column.width` 使用 |
 | expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
 | expandable.showExpandAll | Boolean | false | 使用 `expandedRowRender` 时在展开列的表头中显示全部展开图标 |
@@ -109,6 +108,7 @@ npm start
 | emptyText | React.Node or Function | `No Data` | 数据为空时显示文本 |
 | columns | Object[] |  | 表的列配置见下表 |
 | components | Object |  | 覆盖表元素，请参阅 [#171](https://github.com/react-component/table/pull/171) 了解更多详细信息 |
+| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | 自定义行展开和全部展开图标。接收 `type`（`row` 或 `all`）、`expanded`、`expandable`、`onClick`，仅行图标接收 `record` |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | 粘贴标题和滚动条 |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
 | rowHoverable | boolean | true | 表格 hover 交互 |
