@@ -84,7 +84,7 @@ npm start
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
 | expandable.forceRender | Boolean | false | 在展开前强制渲染展开行内容。虚拟模式下，仅强制渲染虚拟列表当前挂载的行；屏幕外的行仍可能被卸载 |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的 className |
-| expandable.columnTitle | ReactNode \| Function(originalNode) |  | 自定义展开列表头 |
+| expandable.columnTitle | ReactNode \| Function({ expandIcon }) |  | 自定义展开列表头 |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
 | expandable.expandIcon | props => ReactNode |  | 已废弃。请使用 `components.ExpandIcon`；此配置仅作为行展开图标的后备方案保留 |

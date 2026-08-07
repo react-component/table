@@ -891,10 +891,10 @@ describe('Table.Expand', () => {
       expect(onExpandedRowsChange).toHaveBeenLastCalledWith([10]);
     });
 
-    it('provides the expand all icon to a columnTitle render function', () => {
-      const columnTitle = vi.fn(originalNode => (
+    it('provides the expand all icon to columnTitle render props', () => {
+      const columnTitle = vi.fn(({ expandIcon }) => (
         <div className="custom-expand-title">
-          {originalNode}
+          {expandIcon}
           <span>Details</span>
         </div>
       ));
@@ -909,7 +909,7 @@ describe('Table.Expand', () => {
         }),
       );
 
-      expect(columnTitle).toHaveBeenCalled();
+      expect(columnTitle).toHaveBeenCalledWith({ expandIcon: expect.anything() });
       expect(container.querySelector('.custom-expand-title .expand-all-icon')).toBeTruthy();
       expect(container.querySelector('.custom-expand-title').textContent).toContain('Details');
     });

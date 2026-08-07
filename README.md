@@ -84,7 +84,7 @@ Then open `http://localhost:8000`.
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | Content render to expanded row |
 | expandable.forceRender | Boolean | false | Force render expanded row content before expansion. In virtual mode, only rows currently mounted by the virtual list are force-rendered; off-screen rows may still be unmounted |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | get expanded row's className |
-| expandable.columnTitle | ReactNode \| Function(originalNode) |  | Customize expand column title |
+| expandable.columnTitle | ReactNode \| Function({ expandIcon }) |  | Customize expand column title |
 | expandable.expandRowByClick | boolean |  | Support expand by click row |
 | expandable.expandIconColumnIndex | Number | 0 | The index of expandIcon which column will be inserted when expandIconAsCell is false |
 | expandable.expandIcon | props => ReactNode |  | Deprecated. Use `components.ExpandIcon`; retained as a row-only fallback |

@@ -6,6 +6,7 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandColumnTitle,
   ExpandIconComponent,
   ExpandIconProps,
   FixedType,
@@ -122,7 +123,7 @@ function useColumns<RecordType>(
     children?: React.ReactNode;
     expandable: boolean;
     expandedKeys: Set<Key>;
-    columnTitle?: React.ReactNode | ((originalNode: React.ReactNode) => React.ReactNode);
+    columnTitle?: ExpandColumnTitle;
     getRowKey: GetRowKey<RecordType>;
     onTriggerExpand: TriggerEventHandler<RecordType>;
     expandIcon: RenderExpandIcon<RecordType>;
@@ -203,7 +204,7 @@ function useColumns<RecordType>(
       ) : undefined;
       const mergedColumnTitle =
         typeof columnTitle === 'function'
-          ? columnTitle(expandAllNode)
+          ? columnTitle({ expandIcon: expandAllNode })
           : (columnTitle ?? expandAllNode);
 
       // >>> Create expandable column

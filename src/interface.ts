@@ -268,12 +268,19 @@ export type ExpandIconProps<RecordType> = {
 
 export type ExpandIconComponent<RecordType> = React.ComponentType<ExpandIconProps<RecordType>>;
 
+export interface ExpandColumnTitleProps {
+  expandIcon: React.ReactNode;
+}
+
+export type ExpandColumnTitle =
+  React.ReactNode | ((props: ExpandColumnTitleProps) => React.ReactNode);
+
 export interface ExpandableConfig<RecordType> {
   expandedRowKeys?: readonly Key[];
   defaultExpandedRowKeys?: readonly Key[];
   expandedRowRender?: ExpandedRowRender<RecordType>;
   forceRender?: boolean;
-  columnTitle?: React.ReactNode | ((originalNode: React.ReactNode) => React.ReactNode);
+  columnTitle?: ExpandColumnTitle;
   expandRowByClick?: boolean;
   /** @deprecated Please use `components.ExpandIcon` instead. This only customizes row icons. */
   expandIcon?: RenderExpandIcon<RecordType>;
