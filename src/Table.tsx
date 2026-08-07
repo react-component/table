@@ -314,6 +314,7 @@ const Table = <RecordType extends DefaultRecordType>(
     mergedExpandIcon,
     mergedChildrenColumnName,
     onTriggerExpand,
+    expandAllInfo,
   ] = useExpand(props, mergedData, getRowKey);
 
   // ====================== Column ======================
@@ -331,6 +332,8 @@ const Table = <RecordType extends DefaultRecordType>(
       // https://github.com/ant-design/ant-design/issues/23894
       onTriggerExpand,
       expandIcon: mergedExpandIcon,
+      ExpandIcon: components?.ExpandIcon,
+      expandAllInfo,
       expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
       direction,
       scrollWidth: useInternalHooks && tailor && typeof scrollX === 'number' ? scrollX : null,
@@ -907,6 +910,7 @@ const Table = <RecordType extends DefaultRecordType>(
       rowClassName,
       expandedRowClassName: expandableConfig.expandedRowClassName,
       expandIcon: mergedExpandIcon,
+      ExpandIcon: components?.ExpandIcon,
       expandableType,
       expandRowByClick: expandableConfig.expandRowByClick,
       expandedRowRender: expandableConfig.expandedRowRender,
@@ -965,6 +969,7 @@ const Table = <RecordType extends DefaultRecordType>(
       rowClassName,
       expandableConfig.expandedRowClassName,
       mergedExpandIcon,
+      components?.ExpandIcon,
       expandableType,
       expandableConfig.expandRowByClick,
       expandableConfig.expandedRowRender,

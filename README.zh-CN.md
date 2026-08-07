@@ -84,12 +84,15 @@ npm start
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | 内容渲染到扩展行 |
 | expandable.forceRender | Boolean | false | 在展开前强制渲染展开行内容。虚拟模式下，仅强制渲染虚拟列表当前挂载的行；屏幕外的行仍可能被卸载 |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | 获取扩展行的 className |
+| expandable.columnTitle | ReactNode \| Function({ expandIcon }) |  | 自定义展开列表头 |
 | expandable.expandRowByClick | boolean |  | 支持点击行展开 |
 | expandable.expandIconColumnIndex | Number | 0 | ExpandIconAsCell 为 false 时将插入哪一列的 ExpandIcon 索引 |
-| expandable.expandIcon | props => ReactNode |  | 自定义展开图标 |
+| expandable.expandIcon | props => ReactNode |  | 已废弃。请使用 `components.ExpandIcon`；此配置仅作为行展开图标的后备方案保留 |
 | expandable.indentSize | Number | 15 | 每一级 `data[i].children` 的缩进尺寸，建议配合指定的 `column.width` 使用 |
 | expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
+| expandable.showExpandAll | Boolean | false | 使用 `expandedRowRender` 时在展开列的表头中显示全部展开图标 |
 | expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
+| expandable.onExpandAll | Function(expanded, records) |  | 单击全部展开图标时调用的函数 |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
 | rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |
@@ -105,6 +108,7 @@ npm start
 | emptyText | React.Node or Function | `No Data` | 数据为空时显示文本 |
 | columns | Object[] |  | 表的列配置见下表 |
 | components | Object |  | 覆盖表元素，请参阅 [#171](https://github.com/react-component/table/pull/171) 了解更多详细信息 |
+| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | 自定义行展开和全部展开图标。接收 `type`（`row` 或 `all`）、`expanded`、`expandable`、`onClick`，仅行图标接收 `record` |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | 粘贴标题和滚动条 |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
 | rowHoverable | boolean | true | 表格 hover 交互 |

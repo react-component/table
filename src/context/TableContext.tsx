@@ -5,6 +5,7 @@ import type {
   Direction,
   ExpandableConfig,
   ExpandableType,
+  ExpandIconComponent,
   ExpandedRowRender,
   GetComponent,
   GetComponentProps,
@@ -55,6 +56,7 @@ export interface TableContextProps<RecordType = any> {
   expandedRowRender: ExpandedRowRender<RecordType>;
   forceRender: boolean;
   expandIcon: RenderExpandIcon<RecordType>;
+  ExpandIcon?: ExpandIconComponent<RecordType>;
   onTriggerExpand: TriggerEventHandler<RecordType>;
   expandIconColumnIndex: number;
   allColumnsFixedLeft: boolean;

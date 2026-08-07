@@ -84,12 +84,15 @@ Then open `http://localhost:8000`.
 | expandable.expandedRowRender | Function(recode, index, indent, expanded):ReactNode |  | Content render to expanded row |
 | expandable.forceRender | Boolean | false | Force render expanded row content before expansion. In virtual mode, only rows currently mounted by the virtual list are force-rendered; off-screen rows may still be unmounted |
 | expandable.expandedRowClassName | `string` \| `(recode, index, indent) => string` |  | get expanded row's className |
+| expandable.columnTitle | ReactNode \| Function({ expandIcon }) |  | Customize expand column title |
 | expandable.expandRowByClick | boolean |  | Support expand by click row |
 | expandable.expandIconColumnIndex | Number | 0 | The index of expandIcon which column will be inserted when expandIconAsCell is false |
-| expandable.expandIcon | props => ReactNode |  | Customize expand icon |
+| expandable.expandIcon | props => ReactNode |  | Deprecated. Use `components.ExpandIcon`; retained as a row-only fallback |
 | expandable.indentSize | Number | 15 | indentSize for every level of data.i.children, better using with column.width specified |
 | expandable.rowExpandable | (record) => boolean |  | Config row support expandable |
+| expandable.showExpandAll | Boolean | false | Show expand all icon in the expand column header when using `expandedRowRender` |
 | expandable.onExpand | Function(expanded, record) |  | function to call when click expand icon |
+| expandable.onExpandAll | Function(expanded, records) |  | function to call when click expand all icon |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | function to call when the expanded rows change |
 | expandable.fixed | String \| Boolean | - | this expand icon will be fixed when table scroll horizontally: true or `left` or `right` and `expandIconColumnIndex` need to stay first or last |
 | rowKey | string or Function(record, index):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record, index)` will be use as key. |
@@ -105,6 +108,7 @@ Then open `http://localhost:8000`.
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
+| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | Customize both row and expand-all icons. Receives `type` (`row` or `all`), `expanded`, `expandable`, `onClick`, and `record` for rows only |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
 | rowHoverable | boolean | true | Table hover interaction |
