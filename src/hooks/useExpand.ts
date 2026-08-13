@@ -52,7 +52,7 @@ export default function useExpand<RecordType>(
   const componentExpandIcon = React.useMemo<RenderExpandIcon<RecordType> | undefined>(
     () =>
       customizeExpandIcon
-        ? iconProps => renderRowExpandIcon(customizeExpandIcon, renderExpandIcon, iconProps)
+        ? iconProps => renderRowExpandIcon(customizeExpandIcon, iconProps)
         : undefined,
     [customizeExpandIcon],
   );

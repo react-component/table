@@ -4,7 +4,6 @@ import type {
   ExpandIconComponent,
   ExpandIconProps,
   RenderExpandIconProps,
-  RenderExpandIcon,
   Key,
   GetRowKey,
   ExpandableConfig,
@@ -68,14 +67,9 @@ export function renderExpandIcon<RecordType>({
 }
 
 export function renderRowExpandIcon<RecordType>(
-  ExpandIcon: ExpandIconComponent<RecordType> | undefined,
-  fallbackExpandIcon: RenderExpandIcon<RecordType>,
+  ExpandIcon: ExpandIconComponent<RecordType>,
   props: RenderExpandIconProps<RecordType>,
 ) {
-  if (!ExpandIcon) {
-    return fallbackExpandIcon(props);
-  }
-
   const { prefixCls, record, onExpand, expanded, expandable } = props;
   const onClick: React.MouseEventHandler<HTMLElement> = event => {
     onExpand(record, event);
