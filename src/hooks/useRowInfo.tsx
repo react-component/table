@@ -22,7 +22,6 @@ export default function useRowInfo<RecordType>(
   | 'expandedRowClassName'
   | 'indentSize'
   | 'expandIcon'
-  | 'ExpandIcon'
   | 'expandedRowRender'
   | 'forceRender'
   | 'expandIconColumnIndex'
@@ -50,7 +49,6 @@ export default function useRowInfo<RecordType>(
     'expandedRowClassName',
     'indentSize',
     'expandIcon',
-    'ExpandIcon',
     'expandedRowRender',
     'forceRender',
     'expandIconColumnIndex',

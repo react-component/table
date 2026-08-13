@@ -7,7 +7,7 @@ import useRowInfo from '../hooks/useRowInfo';
 import type { ColumnType, CustomizeComponent } from '../interface';
 import ExpandedRow from './ExpandedRow';
 import type { ExpandedRowProps } from './ExpandedRow';
-import { computedExpandedClassName, renderRowExpandIcon } from '../utils/expandUtil';
+import { computedExpandedClassName } from '../utils/expandUtil';
 import type { TableProps } from '..';
 
 export interface BodyRowProps<RecordType> {
@@ -54,7 +54,6 @@ export function getCellProps<RecordType>(
     nestExpandable,
     indentSize,
     expandIcon,
-    ExpandIcon,
     expanded,
     hasNestChildren,
     onTriggerExpand,
@@ -74,7 +73,7 @@ export function getCellProps<RecordType>(
           style={{ paddingLeft: `${indentSize * indent}px` }}
           className={`${prefixCls}-row-indent indent-level-${indent}`}
         />
-        {renderRowExpandIcon(ExpandIcon, expandIcon, {
+        {expandIcon({
           prefixCls,
           expanded,
           expandable: hasNestChildren,

@@ -11,7 +11,7 @@ import type {
   TriggerEventHandler,
 } from '../interface';
 import type { TableProps } from '../Table';
-import { findAllChildrenKeys, renderExpandIcon } from '../utils/expandUtil';
+import { findAllChildrenKeys, renderExpandIcon, renderRowExpandIcon } from '../utils/expandUtil';
 import { getExpandableProps } from '../utils/legacyUtil';
 
 type ExpandAllInfo<RecordType> = Pick<
@@ -48,7 +48,15 @@ export default function useExpand<RecordType>(
     showExpandAll,
   } = expandableConfig;
 
-  const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const customizeExpandIcon = props.components?.ExpandIcon;
+  const componentExpandIcon = React.useMemo<RenderExpandIcon<RecordType> | undefined>(
+    () =>
+      customizeExpandIcon
+        ? iconProps => renderRowExpandIcon(customizeExpandIcon, renderExpandIcon, iconProps)
+        : undefined,
+    [customizeExpandIcon],
+  );
+  const mergedExpandIcon = componentExpandIcon || expandIcon || renderExpandIcon;
   const mergedChildrenColumnName = childrenColumnName || 'children';
   const expandableType = React.useMemo<ExpandableType>(() => {
     if (expandedRowRender) {

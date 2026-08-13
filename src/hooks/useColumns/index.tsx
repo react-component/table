@@ -15,7 +15,7 @@ import type {
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../../interface';
-import { DefaultExpandIcon, renderRowExpandIcon } from '../../utils/expandUtil';
+import { DefaultExpandIcon } from '../../utils/expandUtil';
 import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
 import useWidthColumns from './useWidthColumns';
 
@@ -222,7 +222,7 @@ function useColumns<RecordType>(
           const expanded = expandedKeys.has(rowKey);
           const recordExpandable = rowExpandable ? rowExpandable(record) : true;
 
-          const icon = renderRowExpandIcon(ExpandIcon, expandIcon, {
+          const icon = expandIcon({
             prefixCls,
             expanded,
             expandable: recordExpandable,
