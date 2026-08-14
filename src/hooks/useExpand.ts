@@ -1,4 +1,4 @@
-import { warning } from '@rc-component/util';
+import { useEvent, warning } from '@rc-component/util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import type {
@@ -147,34 +147,31 @@ export default function useExpand<RecordType>(
     [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
   );
 
-  const onTriggerExpandAll: React.MouseEventHandler<HTMLElement> = React.useCallback(
-    event => {
-      event.stopPropagation();
-      if (!expandableRows.length) {
-        return;
+  const onTriggerExpandAll: React.MouseEventHandler<HTMLElement> = useEvent(event => {
+    event.stopPropagation();
+    if (!expandableRows.length) {
+      return;
+    }
+
+    const nextExpanded = !allExpanded;
+    const nextExpandedKeys = new Set(mergedExpandedKeys);
+
+    expandableRows.forEach(({ key }) => {
+      if (nextExpanded) {
+        nextExpandedKeys.add(key);
+      } else {
+        nextExpandedKeys.delete(key);
       }
+    });
 
-      const nextExpanded = !allExpanded;
-      const nextExpandedKeys = new Set(mergedExpandedKeys);
-
-      expandableRows.forEach(({ key }) => {
-        if (nextExpanded) {
-          nextExpandedKeys.add(key);
-        } else {
-          nextExpandedKeys.delete(key);
-        }
-      });
-
-      const keys = [...nextExpandedKeys];
-      setInnerExpandedKeys(keys);
-      onExpandAll?.(
-        nextExpanded,
-        expandableRows.map(({ record }) => record),
-      );
-      onExpandedRowsChange?.(keys);
-    },
-    [allExpanded, expandableRows, mergedExpandedKeys, onExpandAll, onExpandedRowsChange],
-  );
+    const keys = [...nextExpandedKeys];
+    setInnerExpandedKeys(keys);
+    onExpandAll?.(
+      nextExpanded,
+      expandableRows.map(({ record }) => record),
+    );
+    onExpandedRowsChange?.(keys);
+  });
 
   const expandAllInfo = React.useMemo<ExpandAllInfo<RecordType> | undefined>(
     () =>
