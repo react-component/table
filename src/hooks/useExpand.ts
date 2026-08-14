@@ -113,10 +113,15 @@ export default function useExpand<RecordType>(
       }
       return rows;
     }, []);
-  }, [expandableType, getRowKey, mergedData, rowExpandable, showExpandAll]);
+    // `rowExpandable` is intentionally omitted because it is commonly an unstable inline function.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expandableType, getRowKey, mergedData, showExpandAll]);
 
-  const allExpanded =
-    expandableRows.length > 0 && expandableRows.every(({ key }) => mergedExpandedKeys.has(key));
+  const allExpanded = React.useMemo(
+    () =>
+      expandableRows.length > 0 && expandableRows.every(({ key }) => mergedExpandedKeys.has(key)),
+    [expandableRows, mergedExpandedKeys],
+  );
 
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {

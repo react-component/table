@@ -854,6 +854,41 @@ describe('Table.Expand', () => {
       expect(onExpandedRowsChange).toHaveBeenCalledWith([1]);
     });
 
+    it('does not rescan data for unstable rowExpandable callbacks', () => {
+      const onExpandAll = vi.fn();
+      const onExpandedRowsChange = vi.fn();
+      const renderTable = (data, rowExpandable) =>
+        createTable({
+          data,
+          components: { ExpandIcon },
+          expandable: {
+            expandedRowRender,
+            showExpandAll: true,
+            rowExpandable,
+            onExpandAll,
+            onExpandedRowsChange,
+          },
+        });
+
+      const rowExpandable = vi.fn(({ key }) => key === 1);
+      const { container, rerender } = render(renderTable(sampleData, rowExpandable));
+      expect(rowExpandable).toHaveBeenCalled();
+
+      const nextRowExpandable = vi.fn(({ key }) => key === 1);
+      rerender(renderTable(sampleData, nextRowExpandable));
+      // Rows still evaluate the latest predicate once each without an additional full-data scan.
+      expect(nextRowExpandable).toHaveBeenCalledTimes(sampleData.length);
+
+      const filteredData = sampleData.filter(({ key }) => key === 1);
+      const filteredRowExpandable = vi.fn(() => true);
+      rerender(renderTable(filteredData, filteredRowExpandable));
+      expect(filteredRowExpandable).toHaveBeenCalledWith(sampleData[1]);
+
+      fireEvent.click(container.querySelector('.expand-all-icon'));
+      expect(onExpandAll).toHaveBeenLastCalledWith(true, filteredData);
+      expect(onExpandedRowsChange).toHaveBeenLastCalledWith([1]);
+    });
+
     it('supports controlled expandedRowKeys and preserves unrelated keys', () => {
       const onExpandedRowsChange = vi.fn();
       const expandable = {
