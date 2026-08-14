@@ -108,7 +108,7 @@ Then open `http://localhost:8000`.
 | emptyText | React.Node or Function | `No Data` | Display text when data is empty |
 | columns | Object[] |  | The columns config of table, see table below |
 | components | Object |  | Override table elements, see [#171](https://github.com/react-component/table/pull/171) for more details |
-| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | Customize both row and expand-all icons. Receives `type` (`row` or `all`), `expanded`, `expandable`, `onClick`, and `record` for rows only |
+| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | Customize both row and expand-all icons. Receives `type` (`row` or `all`), `prefixCls`, `expanded`, `expandable`, `onClick`, and `record` for rows only |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | stick header and scroll bar |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `summary` attribute in `table` component is used to define the summary row. |
 | rowHoverable | boolean | true | Table hover interaction |

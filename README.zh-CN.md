@@ -108,7 +108,7 @@ npm start
 | emptyText | React.Node or Function | `No Data` | 数据为空时显示文本 |
 | columns | Object[] |  | 表的列配置见下表 |
 | components | Object |  | 覆盖表元素，请参阅 [#171](https://github.com/react-component/table/pull/171) 了解更多详细信息 |
-| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | 自定义行展开和全部展开图标。接收 `type`（`row` 或 `all`）、`expanded`、`expandable`、`onClick`，仅行图标接收 `record` |
+| components.ExpandIcon | `React.ComponentType<ExpandIconProps>` |  | 自定义行展开和全部展开图标。接收 `type`（`row` 或 `all`）、`prefixCls`、`expanded`、`expandable`、`onClick`，仅行图标接收 `record` |
 | sticky | boolean \| {offsetHeader?: number, offsetScroll?: number, getContainer?: () => Window \| HTMLElement } | false | 粘贴标题和滚动条 |
 | summary | (data: readonly RecordType[]) => React.ReactNode | - | `table` 组件中的 `summary` 属性用于定义汇总行。 |
 | rowHoverable | boolean | true | 表格 hover 交互 |
