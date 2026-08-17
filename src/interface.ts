@@ -285,7 +285,7 @@ export interface ExpandableConfig<RecordType> {
   /** @deprecated Please use `components.ExpandIcon` instead. This only customizes row icons. */
   expandIcon?: RenderExpandIcon<RecordType>;
   onExpand?: (expanded: boolean, record: RecordType) => void;
-  onExpandAll?: (expanded: boolean, records: readonly RecordType[]) => void;
+  onExpandAll?: (expanded: boolean) => void;
   onExpandedRowsChange?: (expandedKeys: readonly Key[]) => void;
   defaultExpandAllRows?: boolean;
   indentSize?: number;

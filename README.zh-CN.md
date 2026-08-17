@@ -92,7 +92,7 @@ npm start
 | expandable.rowExpandable | (record) => boolean |  | 配置行支持可扩展 |
 | expandable.showExpandAll | Boolean | false | 使用 `expandedRowRender` 时在展开列的表头中显示全部展开图标 |
 | expandable.onExpand | Function(expanded, record) |  | 单击展开图标时调用的函数 |
-| expandable.onExpandAll | Function(expanded, records) |  | 单击全部展开图标时调用的函数 |
+| expandable.onExpandAll | Function(expanded) |  | 单击全部展开图标时调用的函数 |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | 扩展行更改时调用的函数 |
 | expandable.fixed | String \| Boolean | - | 当表格水平滚动时，此展开图标将被修复： true 或 `left` 或 `right` 和 `expandIconColumnIndex` 需要保留在第一个或最后一个 |
 | rowKey | string or Function(record, index):string | 'key' | 如果 rowKey 是字符串，则 `record[rowKey]` 将用作键。如果 rowKey 是函数，则 `rowKey(record, index)` 的返回值将用作 key。 |

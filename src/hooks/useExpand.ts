@@ -166,10 +166,7 @@ export default function useExpand<RecordType>(
 
     const keys = [...nextExpandedKeys];
     setInnerExpandedKeys(keys);
-    onExpandAll?.(
-      nextExpanded,
-      expandableRows.map(({ record }) => record),
-    );
+    onExpandAll?.(nextExpanded);
     onExpandedRowsChange?.(keys);
   });
 

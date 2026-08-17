@@ -813,7 +813,7 @@ describe('Table.Expand', () => {
 
       fireEvent.click(icon);
       expect(icon.getAttribute('data-expanded')).toBe('true');
-      expect(onExpandAll).toHaveBeenLastCalledWith(true, sampleData);
+      expect(onExpandAll).toHaveBeenLastCalledWith(true);
       expect(onExpandedRowsChange).toHaveBeenLastCalledWith([0, 1]);
       expect(
         [...container.querySelectorAll('.rc-table-expanded-row')].every(
@@ -823,7 +823,7 @@ describe('Table.Expand', () => {
 
       fireEvent.click(icon);
       expect(icon.getAttribute('data-expanded')).toBe('false');
-      expect(onExpandAll).toHaveBeenLastCalledWith(false, sampleData);
+      expect(onExpandAll).toHaveBeenLastCalledWith(false);
       expect(onExpandedRowsChange).toHaveBeenLastCalledWith([]);
       expect(
         [...container.querySelectorAll('.rc-table-expanded-row')].every(
@@ -850,7 +850,7 @@ describe('Table.Expand', () => {
 
       fireEvent.click(container.querySelector('.expand-all-icon'));
 
-      expect(onExpandAll).toHaveBeenCalledWith(true, [sampleData[1]]);
+      expect(onExpandAll).toHaveBeenCalledWith(true);
       expect(onExpandedRowsChange).toHaveBeenCalledWith([1]);
     });
 
@@ -885,7 +885,7 @@ describe('Table.Expand', () => {
       expect(filteredRowExpandable).toHaveBeenCalledWith(sampleData[1]);
 
       fireEvent.click(container.querySelector('.expand-all-icon'));
-      expect(onExpandAll).toHaveBeenLastCalledWith(true, filteredData);
+      expect(onExpandAll).toHaveBeenLastCalledWith(true);
       expect(onExpandedRowsChange).toHaveBeenLastCalledWith([1]);
     });
 

@@ -92,7 +92,7 @@ Then open `http://localhost:8000`.
 | expandable.rowExpandable | (record) => boolean |  | Config row support expandable |
 | expandable.showExpandAll | Boolean | false | Show expand all icon in the expand column header when using `expandedRowRender` |
 | expandable.onExpand | Function(expanded, record) |  | function to call when click expand icon |
-| expandable.onExpandAll | Function(expanded, records) |  | function to call when click expand all icon |
+| expandable.onExpandAll | Function(expanded) |  | function to call when click expand all icon |
 | expandable.onExpandedRowsChange | Function(expandedRows) |  | function to call when the expanded rows change |
 | expandable.fixed | String \| Boolean | - | this expand icon will be fixed when table scroll horizontally: true or `left` or `right` and `expandIconColumnIndex` need to stay first or last |
 | rowKey | string or Function(record, index):string | 'key' | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record, index)` will be use as key. |
