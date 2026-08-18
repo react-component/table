@@ -1,17 +1,23 @@
-import { warning } from '@rc-component/util';
+import { useEvent, warning } from '@rc-component/util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import type {
   ExpandableConfig,
   ExpandableType,
+  ExpandIconProps,
   GetRowKey,
   Key,
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../interface';
 import type { TableProps } from '../Table';
-import { findAllChildrenKeys, renderExpandIcon } from '../utils/expandUtil';
+import { findAllChildrenKeys, renderExpandIcon, renderRowExpandIcon } from '../utils/expandUtil';
 import { getExpandableProps } from '../utils/legacyUtil';
+
+type ExpandAllInfo<RecordType> = Pick<
+  ExpandIconProps<RecordType>,
+  'expanded' | 'expandable' | 'onClick'
+>;
 
 export default function useExpand<RecordType>(
   props: TableProps<RecordType>,
@@ -24,6 +30,7 @@ export default function useExpand<RecordType>(
   expandIcon: RenderExpandIcon<RecordType>,
   childrenColumnName: string,
   onTriggerExpand: TriggerEventHandler<RecordType>,
+  expandAllInfo: ExpandAllInfo<RecordType> | undefined,
 ] {
   const expandableConfig = getExpandableProps(props);
 
@@ -34,11 +41,22 @@ export default function useExpand<RecordType>(
     defaultExpandAllRows,
     expandedRowRender,
     onExpand,
+    onExpandAll,
     onExpandedRowsChange,
     childrenColumnName,
+    rowExpandable,
+    showExpandAll,
   } = expandableConfig;
 
-  const mergedExpandIcon = expandIcon || renderExpandIcon;
+  const customizeExpandIcon = props.components?.ExpandIcon;
+  const componentExpandIcon = React.useMemo<RenderExpandIcon<RecordType> | undefined>(
+    () =>
+      customizeExpandIcon
+        ? iconProps => renderRowExpandIcon(customizeExpandIcon, iconProps)
+        : undefined,
+    [customizeExpandIcon],
+  );
+  const mergedExpandIcon = componentExpandIcon || expandIcon || renderExpandIcon;
   const mergedChildrenColumnName = childrenColumnName || 'children';
   const expandableType = React.useMemo<ExpandableType>(() => {
     if (expandedRowRender) {
@@ -81,6 +99,30 @@ export default function useExpand<RecordType>(
     [expandedRowKeys, innerExpandedKeys],
   );
 
+  const expandableRows = React.useMemo(() => {
+    if (!showExpandAll || expandableType !== 'row') {
+      return [];
+    }
+
+    return mergedData.reduce<{ key: Key; record: RecordType }[]>((rows, record, index) => {
+      if (!rowExpandable || rowExpandable(record)) {
+        rows.push({
+          key: getRowKey(record, index),
+          record,
+        });
+      }
+      return rows;
+    }, []);
+    // `rowExpandable` is intentionally omitted because it is commonly an unstable inline function.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expandableType, getRowKey, mergedData, showExpandAll]);
+
+  const allExpanded = React.useMemo(
+    () =>
+      expandableRows.length > 0 && expandableRows.every(({ key }) => mergedExpandedKeys.has(key)),
+    [expandableRows, mergedExpandedKeys],
+  );
+
   const onTriggerExpand: TriggerEventHandler<RecordType> = React.useCallback(
     (record: RecordType) => {
       const key = getRowKey(record, mergedData.indexOf(record));
@@ -105,6 +147,41 @@ export default function useExpand<RecordType>(
     [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange],
   );
 
+  const onTriggerExpandAll: React.MouseEventHandler<HTMLElement> = useEvent(event => {
+    event.stopPropagation();
+    if (!expandableRows.length) {
+      return;
+    }
+
+    const nextExpanded = !allExpanded;
+    const nextExpandedKeys = new Set(mergedExpandedKeys);
+
+    expandableRows.forEach(({ key }) => {
+      if (nextExpanded) {
+        nextExpandedKeys.add(key);
+      } else {
+        nextExpandedKeys.delete(key);
+      }
+    });
+
+    const keys = [...nextExpandedKeys];
+    setInnerExpandedKeys(keys);
+    onExpandAll?.(nextExpanded);
+    onExpandedRowsChange?.(keys);
+  });
+
+  const expandAllInfo = React.useMemo<ExpandAllInfo<RecordType> | undefined>(
+    () =>
+      showExpandAll && expandableType === 'row'
+        ? {
+            expanded: allExpanded,
+            expandable: expandableRows.length > 0,
+            onClick: onTriggerExpandAll,
+          }
+        : undefined,
+    [allExpanded, expandableRows.length, expandableType, onTriggerExpandAll, showExpandAll],
+  );
+
   // Warning if use `expandedRowRender` and nest children in the same time
   if (
     process.env.NODE_ENV !== 'production' &&
@@ -123,5 +200,6 @@ export default function useExpand<RecordType>(
     mergedExpandIcon,
     mergedChildrenColumnName,
     onTriggerExpand,
+    expandAllInfo,
   ];
 }
