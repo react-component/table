@@ -596,6 +596,11 @@ const Table = <RecordType extends DefaultRecordType>(
     }
   }, []);
 
+  const emptyBodyTableStyle: React.CSSProperties =
+    fixHeader && !horizonScroll && !hasData && scrollbarSize
+      ? { width: `calc(100% - ${scrollbarSize}px)` }
+      : {};
+
   // ================== INTERNAL HOOKS ==================
   React.useEffect(() => {
     if (useInternalHooks && internalRefs) {
@@ -723,6 +728,7 @@ const Table = <RecordType extends DefaultRecordType>(
           <TableComponent
             style={{
               ...scrollTableStyle,
+              ...emptyBodyTableStyle,
               tableLayout: mergedTableLayout,
             }}
             {...ariaProps}
@@ -742,7 +748,6 @@ const Table = <RecordType extends DefaultRecordType>(
 
     // Fixed holder share the props
     const fixedHolderProps = {
-      noData: !mergedData.length,
       maxContentScroll: horizonScroll && mergedScrollX === 'max-content',
       ...headerProps,
       ...columnContext,
@@ -762,7 +767,6 @@ const Table = <RecordType extends DefaultRecordType>(
             stickyTopOffset={offsetHeader}
             className={`${prefixCls}-header`}
             ref={scrollHeaderRef}
-            colGroup={bodyColGroup}
           >
             {renderFixedHeaderTable}
           </FixedHolder>
@@ -778,7 +782,6 @@ const Table = <RecordType extends DefaultRecordType>(
             stickyBottomOffset={offsetSummary}
             className={`${prefixCls}-summary`}
             ref={scrollSummaryRef}
-            colGroup={bodyColGroup}
           >
             {renderFixedFooterTable}
           </FixedHolder>
