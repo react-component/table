@@ -6,12 +6,16 @@ import type {
   ColumnsType,
   ColumnType,
   Direction,
+  ExpandColumnTitle,
+  ExpandIconComponent,
+  ExpandIconProps,
   FixedType,
   GetRowKey,
   Key,
   RenderExpandIcon,
   TriggerEventHandler,
 } from '../../interface';
+import { DefaultExpandIcon } from '../../utils/expandUtil';
 import { INTERNAL_COL_DEFINE } from '../../utils/legacyUtil';
 import useWidthColumns from './useWidthColumns';
 
@@ -102,6 +106,8 @@ function useColumns<RecordType>(
     getRowKey,
     onTriggerExpand,
     expandIcon,
+    ExpandIcon,
+    expandAllInfo,
     rowExpandable,
     expandIconColumnIndex,
     expandedRowOffset = 0,
@@ -117,10 +123,12 @@ function useColumns<RecordType>(
     children?: React.ReactNode;
     expandable: boolean;
     expandedKeys: Set<Key>;
-    columnTitle?: React.ReactNode;
+    columnTitle?: ExpandColumnTitle;
     getRowKey: GetRowKey<RecordType>;
     onTriggerExpand: TriggerEventHandler<RecordType>;
-    expandIcon?: RenderExpandIcon<RecordType>;
+    expandIcon: RenderExpandIcon<RecordType>;
+    ExpandIcon?: ExpandIconComponent<RecordType>;
+    expandAllInfo?: Pick<ExpandIconProps<RecordType>, 'expanded' | 'expandable' | 'onClick'>;
     rowExpandable?: (record: RecordType) => boolean;
     expandIconColumnIndex?: number;
     direction?: Direction;
@@ -190,13 +198,22 @@ function useColumns<RecordType>(
         fixedColumn = prevColumn ? prevColumn.fixed : null;
       }
 
+      const MergedExpandIcon = ExpandIcon || DefaultExpandIcon;
+      const expandAllNode = expandAllInfo ? (
+        <MergedExpandIcon type="all" prefixCls={prefixCls} {...expandAllInfo} />
+      ) : undefined;
+      const mergedColumnTitle =
+        typeof columnTitle === 'function'
+          ? columnTitle({ expandIcon: expandAllNode })
+          : (columnTitle ?? expandAllNode);
+
       // >>> Create expandable column
       const expandColumn = {
         [INTERNAL_COL_DEFINE]: {
           className: `${prefixCls}-expand-icon-col`,
           columnType: 'EXPAND_COLUMN',
         },
-        title: columnTitle,
+        title: mergedColumnTitle,
         fixed: fixedColumn,
         className: `${prefixCls}-row-expand-icon-cell`,
         width: columnWidth,
@@ -238,7 +255,18 @@ function useColumns<RecordType>(
 
     return baseColumns.filter(col => col !== EXPAND_COLUMN);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction, expandedRowOffset]);
+  }, [
+    expandable,
+    baseColumns,
+    getRowKey,
+    expandedKeys,
+    expandIcon,
+    ExpandIcon,
+    expandAllInfo,
+    columnTitle,
+    direction,
+    expandedRowOffset,
+  ]);
 
   // ========================= Transform ========================
   const mergedColumns = React.useMemo(() => {
