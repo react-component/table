@@ -39,6 +39,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     expandedKeys,
     prefixCls,
     childrenColumnName,
+    rowExpandable,
     scrollX,
     direction,
   } = useContext(TableContext, [
@@ -48,6 +49,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     'prefixCls',
     'expandedKeys',
     'childrenColumnName',
+    'rowExpandable',
     'scrollX',
     'direction',
   ]);
@@ -64,7 +66,13 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   const listRef = React.useRef<ListRef>(null);
 
   // =========================== Data ===========================
-  const flattenData = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
+  const flattenData = useFlattenRecords(
+    data,
+    childrenColumnName,
+    expandedKeys,
+    getRowKey,
+    rowExpandable,
+  );
 
   // ========================== Column ==========================
   const columnsWidth = React.useMemo<[key: React.Key, width: number, total: number][]>(() => {

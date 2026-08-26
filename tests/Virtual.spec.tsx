@@ -163,6 +163,31 @@ describe('Table.Virtual', () => {
   });
 
   describe('expandable', () => {
+    it('honors rowExpandable for tree data', () => {
+      const { container } = getTable({
+        data: [
+          {
+            name: 'allowed',
+            children: [{ name: 'allowed-child' }],
+          },
+          {
+            name: 'blocked',
+            children: [{ name: 'blocked-child' }],
+          },
+        ],
+        expandable: {
+          expandedRowKeys: ['allowed', 'blocked'],
+          rowExpandable: record => record.name === 'allowed',
+        },
+      });
+
+      expect(container.querySelector('[data-row-key="allowed-child"]')).toBeTruthy();
+      expect(container.querySelector('[data-row-key="blocked-child"]')).toBeFalsy();
+      expect(
+        container.querySelector('[data-row-key="blocked"] .rc-table-row-expand-icon'),
+      ).toHaveClass('rc-table-row-spaced');
+    });
+
     it('basic', () => {
       (['bamboo', () => 'bamboo'] as const).forEach(cls => {
         const { container } = getTable({

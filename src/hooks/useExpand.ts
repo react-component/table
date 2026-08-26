@@ -90,7 +90,12 @@ export default function useExpand<RecordType>(
       return defaultExpandedRowKeys;
     }
     if (defaultExpandAllRows) {
-      return findAllChildrenKeys<RecordType>(mergedData, getRowKey, mergedChildrenColumnName);
+      return findAllChildrenKeys<RecordType>(
+        mergedData,
+        getRowKey,
+        mergedChildrenColumnName,
+        rowExpandable,
+      );
     }
     return [];
   });
