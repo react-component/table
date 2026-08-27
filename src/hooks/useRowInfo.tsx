@@ -87,13 +87,16 @@ export default function useRowInfo<RecordType>(
   const rowProps = onRow?.(record, recordIndex);
   const onRowClick = rowProps?.onClick;
 
-  const onClick: React.MouseEventHandler<HTMLElement> = (event, ...args) => {
-    if (expandRowByClick && mergedExpandable) {
-      onTriggerExpand(record, event);
-    }
+  const onClick: React.MouseEventHandler<HTMLElement> =
+    onRowClick || (expandRowByClick && mergedExpandable)
+      ? (event, ...args) => {
+          if (expandRowByClick && mergedExpandable) {
+            onTriggerExpand(record, event);
+          }
 
-    onRowClick?.(event, ...args);
-  };
+          onRowClick?.(event, ...args);
+        }
+      : undefined;
 
   // ====================== RowClassName ======================
   let computeRowClassName: string;
