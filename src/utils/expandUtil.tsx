@@ -39,7 +39,15 @@ export function DefaultExpandIcon<RecordType>({
     );
   }
 
-  return <span className={className} onClick={onClick} />;
+  return (
+    <button
+      type="button"
+      aria-expanded={expanded}
+      aria-label={expanded ? 'Collapse row' : 'Expand row'}
+      className={className}
+      onClick={onClick}
+    />
+  );
 }
 
 export function renderExpandIcon<RecordType>({
