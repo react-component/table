@@ -52,7 +52,7 @@
   "dependencies": {
     "@rc-component/context": "^2.0.1",
     "@rc-component/resize-observer": "^1.0.0",
-    "@rc-component/util": "^1.11.1",
+    "@rc-component/util": "^1.13.0",
     "@rc-component/virtual-list": "^1.0.1",
     "clsx": "^2.1.1"
   },
