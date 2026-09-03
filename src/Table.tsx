@@ -31,6 +31,8 @@ import {
   get as getValue,
   getTargetScrollBarSize,
   isEqual,
+  isNonNullable,
+  isReactRenderable,
   pickAttrs,
   useEvent,
   useLayoutEffect,
@@ -76,7 +78,7 @@ import Panel from './Panel';
 import StickyScrollBar from './stickyScrollBar';
 import Column from './sugar/Column';
 import ColumnGroup from './sugar/ColumnGroup';
-import { getColumnsKey, validateValue, validNumberValue } from './utils/valueUtil';
+import { getColumnsKey, validNumberValue } from './utils/valueUtil';
 
 export type CompareProps<T extends React.ComponentType<any>> = (
   prevProps: Readonly<React.ComponentProps<T>>,
@@ -397,8 +399,8 @@ const Table = <RecordType extends DefaultRecordType>(
   const pureColWidths = colsKeys.map(columnKey => colsWidths.get(columnKey));
   const colWidths = React.useMemo(() => pureColWidths, [pureColWidths.join('_')]);
   const stickyOffsets = useStickyOffsets(colWidths, flattenColumns);
-  const fixHeader = scroll && validateValue(scroll.y);
-  const horizonScroll = (scroll && validateValue(mergedScrollX)) || Boolean(expandableConfig.fixed);
+  const fixHeader = scroll && isNonNullable(scroll.y);
+  const horizonScroll = (scroll && isNonNullable(mergedScrollX)) || Boolean(expandableConfig.fixed);
   const fixColumn = horizonScroll && flattenColumns.some(({ fixed }) => fixed);
 
   // Sticky
@@ -675,10 +677,9 @@ const Table = <RecordType extends DefaultRecordType>(
     <ColGroup colWidths={flattenColumns.map(({ width }) => width)} columns={flattenColumns} />
   );
 
-  const captionElement =
-    caption !== null && caption !== undefined ? (
-      <caption className={`${prefixCls}-caption`}>{caption}</caption>
-    ) : undefined;
+  const captionElement = isNonNullable(caption) ? (
+    <caption className={`${prefixCls}-caption`}>{caption}</caption>
+  ) : undefined;
 
   const dataProps = pickAttrs(props, { data: true });
   const ariaProps = pickAttrs(props, { aria: true });
@@ -730,7 +731,7 @@ const Table = <RecordType extends DefaultRecordType>(
             {captionElement}
             {bodyColGroup}
             {bodyTable}
-            {!fixFooter && summaryNode && (
+            {!fixFooter && isReactRenderable(summaryNode) && (
               <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
                 {summaryNode}
               </Footer>
@@ -813,7 +814,7 @@ const Table = <RecordType extends DefaultRecordType>(
           {bodyColGroup}
           {showHeader !== false && <Header {...headerProps} {...columnContext} />}
           {bodyTable}
-          {summaryNode && (
+          {isReactRenderable(summaryNode) && (
             <Footer stickyOffsets={stickyOffsets} flattenColumns={flattenColumns}>
               {summaryNode}
             </Footer>

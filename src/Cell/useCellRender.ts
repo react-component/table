@@ -1,8 +1,7 @@
-import { get as getValue, isEqual, useMemo, warning } from '@rc-component/util';
+import { get as getValue, isEqual, isNonNullable, useMemo, warning } from '@rc-component/util';
 import * as React from 'react';
 import PerfContext from '../context/PerfContext';
 import type { CellType, ColumnType, DataIndex, RenderedCell } from '../interface';
-import { validateValue } from '../utils/valueUtil';
 import { useImmutableMark } from '../context/TableContext';
 
 function isRenderCell<RecordType>(
@@ -26,7 +25,7 @@ export default function useCellRender<RecordType>(
   // ======================== Render ========================
   const retData = useMemo<[React.ReactNode, CellType<RecordType>] | [React.ReactNode]>(
     () => {
-      if (validateValue(children)) {
+      if (isNonNullable(children)) {
         return [children];
       }
 
