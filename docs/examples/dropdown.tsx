@@ -18,13 +18,13 @@ for (let i = 0; i < 10; i += 1) {
 
 class Demo extends React.Component {
   state = {
-    visible: false,
+    open: false,
   };
 
   filters = [];
 
-  handleVisibleChange = visible => {
-    this.setState({ visible });
+  handleOpenChange = open => {
+    this.setState({ open });
   };
 
   handleSelect = selected => {
@@ -41,7 +41,7 @@ class Demo extends React.Component {
   confirmFilter = () => {
     console.log(this.filters.join(','));
     this.setState({
-      visible: false,
+      open: false,
     });
   };
 
@@ -80,8 +80,8 @@ class Demo extends React.Component {
             title1
             <DropDown
               trigger={['click']}
-              onVisibleChange={this.handleVisibleChange}
-              visible={this.state.visible}
+              onOpenChange={this.handleOpenChange}
+              open={this.state.open}
               overlay={menu}
             >
               <a href="#">filter</a>
