@@ -27,7 +27,6 @@ function useColumnWidth(colWidths: readonly number[], columCount: number) {
 export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   className: string;
   style?: React.CSSProperties;
-  noData: boolean;
   maxContentScroll: boolean;
   colWidths: readonly number[];
   columCount: number;
@@ -40,7 +39,6 @@ export interface FixedHeaderProps<RecordType> extends HeaderProps<RecordType> {
   tableLayout?: TableLayout;
   onScroll: (info: { currentTarget: HTMLDivElement; scrollLeft?: number }) => void;
   children: (info: HeaderProps<RecordType>) => React.ReactNode;
-  colGroup?: React.ReactNode;
 }
 
 const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((props, ref) => {
@@ -51,11 +49,9 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   const {
     className,
     style,
-    noData,
     columns,
     flattenColumns,
     colWidths,
-    colGroup,
     columCount,
     stickyOffsets,
     direction,
@@ -158,14 +154,16 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
   }, [combinationScrollBarSize, stickyOffsets, isSticky]);
 
   const mergedColumnWidth = useColumnWidth(colWidths, columCount);
+  const hasMergedColumnWidth = !!mergedColumnWidth && mergedColumnWidth.some(width => width);
 
-  const isColGroupEmpty = useMemo<boolean>(() => {
-    // use original ColGroup if no data or no calculated column width, otherwise use calculated column width
-    // Return original colGroup if no data, or mergedColumnWidth is empty, or all widths are falsy
-    const noWidth =
-      !mergedColumnWidth || !mergedColumnWidth.length || mergedColumnWidth.every(w => !w);
-    return noData || noWidth;
-  }, [noData, mergedColumnWidth]);
+  // Use the declared column width when the measured one is unavailable
+  // (e.g. there is no data to measure). Both cases always reserve the width
+  // of the trailing scrollbar column, so the extra header cell keeps a stable
+  // size and the table does not jump when data arrives.
+  const fallbackColWidths = React.useMemo(
+    () => flattenColumns.map(({ width }) => width),
+    [flattenColumns],
+  );
 
   return (
     <div
@@ -187,15 +185,14 @@ const FixedHolder = React.forwardRef<HTMLDivElement, FixedHeaderProps<any>>((pro
           width: scrollX,
         }}
       >
-        {isColGroupEmpty ? (
-          colGroup
-        ) : (
-          <ColGroup
-            colWidths={[...mergedColumnWidth, combinationScrollBarSize]}
-            columCount={columCount + 1}
-            columns={flattenColumnsWithScrollbar}
-          />
-        )}
+        <ColGroup
+          colWidths={[
+            ...(hasMergedColumnWidth ? mergedColumnWidth : fallbackColWidths),
+            combinationScrollBarSize,
+          ]}
+          columCount={columCount + 1}
+          columns={flattenColumnsWithScrollbar}
+        />
         {children({
           ...restProps,
           stickyOffsets: headerStickyOffsets,
