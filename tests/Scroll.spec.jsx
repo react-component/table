@@ -193,15 +193,41 @@ describe('Table.Scroll', () => {
       expect(headerTable.querySelectorAll('th.rc-table-cell-scrollbar')).toHaveLength(1);
     });
 
-    it('keep header colgroup stable between empty and filled data', () => {
-      const emptyRender = renderScrollTable([]);
-      const filledRender = renderScrollTable([{ key: 1, a: 'x', b: 'y' }]);
+    it('use measured widths and keep header colgroup stable between empty and filled data', () => {
+      // jsdom does not perform layout, so offsetWidth is always 0 and the measured
+      // width branch (hasMergedColumnWidth) is never exercised. Give the measure-row
+      // cells real widths to simulate the browser measurement. The values (120/240)
+      // intentionally differ from the declared widths (100/200) so the test proves
+      // the measured widths are used instead of the declared fallback.
+      const domSpy = spyElementPrototypes(HTMLTableCellElement, {
+        offsetWidth: {
+          get(originDescriptor) {
+            if (this.parentElement?.classList.contains('rc-table-measure-row')) {
+              return [120, 240][this.cellIndex] ?? 0;
+            }
+            return originDescriptor.get();
+          },
+        },
+      });
 
-      // Loaded data should not change the widths declared in the header colgroup,
-      // otherwise the columns visually jump when the table gets its first rows.
-      expect(serializeHeaderCols(emptyRender.container)).toEqual(
-        serializeHeaderCols(filledRender.container),
-      );
+      try {
+        const emptyRender = renderScrollTable([]);
+        const filledRender = renderScrollTable([{ key: 1, a: 'x', b: 'y' }]);
+
+        // Measured widths + the trailing scrollbar column are reserved in both cases.
+        // Loaded data should not change the header colgroup, otherwise the columns
+        // visually jump when the table gets its first rows.
+        expect(serializeHeaderCols(emptyRender.container)).toEqual([
+          'width: 120px;',
+          'width: 240px;',
+          'width: 15px;',
+        ]);
+        expect(serializeHeaderCols(filledRender.container)).toEqual(
+          serializeHeaderCols(emptyRender.container),
+        );
+      } finally {
+        domSpy.mockRestore();
+      }
     });
   });
 });
