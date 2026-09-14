@@ -168,4 +168,40 @@ describe('Table.Scroll', () => {
     });
     expect(isTriggerScroll).toEqual(true);
   });
+
+  describe('scrollbar placeholder colgroup', () => {
+    const scrollColumns = [
+      { title: 'A', dataIndex: 'a', key: 'a', width: 100 },
+      { title: 'B', dataIndex: 'b', key: 'b', width: 200 },
+    ];
+
+    const renderScrollTable = data =>
+      render(<Table columns={scrollColumns} data={data} scroll={{ y: 200 }} tableLayout="fixed" />);
+
+    const serializeHeaderCols = container =>
+      [...container.querySelectorAll('.rc-table-header col')].map(col => col.getAttribute('style'));
+
+    it('keep scrollbar column width in header colgroup when data is empty', () => {
+      const { container } = renderScrollTable([]);
+
+      const headerTable = container.querySelector('.rc-table-header table');
+      const cols = headerTable.querySelectorAll('col');
+
+      // Real columns + a trailing scrollbar column
+      expect(cols).toHaveLength(scrollColumns.length + 1);
+      expect(cols[scrollColumns.length]).toHaveStyle({ width: '15px' });
+      expect(headerTable.querySelectorAll('th.rc-table-cell-scrollbar')).toHaveLength(1);
+    });
+
+    it('keep header colgroup stable between empty and filled data', () => {
+      const emptyRender = renderScrollTable([]);
+      const filledRender = renderScrollTable([{ key: 1, a: 'x', b: 'y' }]);
+
+      // Loaded data should not change the widths declared in the header colgroup,
+      // otherwise the columns visually jump when the table gets its first rows.
+      expect(serializeHeaderCols(emptyRender.container)).toEqual(
+        serializeHeaderCols(filledRender.container),
+      );
+    });
+  });
 });
