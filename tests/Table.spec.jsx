@@ -503,6 +503,25 @@ describe('Table.Basic', () => {
   });
 
   describe('onRow', () => {
+    it('does not attach an inert click handler by default', () => {
+      const rowProps = [];
+      const Row = props => {
+        rowProps.push(props);
+        return <tr {...props} />;
+      };
+
+      render(
+        createTable({
+          components: { body: { row: Row } },
+        }),
+      );
+
+      expect(rowProps).not.toHaveLength(0);
+      rowProps.forEach(props => {
+        expect(props.onClick).toBeUndefined();
+      });
+    });
+
     it('renders onRow correctly', () => {
       const onRow = (record, index) => ({
         id: `row-${record.key}`,
