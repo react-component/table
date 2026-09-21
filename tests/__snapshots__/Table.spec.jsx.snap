@@ -87,6 +87,14 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
       <table
         style="table-layout: fixed; min-width: 100%; width: 100px;"
       >
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col
+            style="width: 15px;"
+          />
+        </colgroup>
         <thead
           class="rc-table-thead"
           name="my-header-wrapper"
@@ -753,7 +761,7 @@ exports[`Table.Basic > should get scrollbar size 1`] = `
       style="overflow: hidden;"
     >
       <table
-        style="table-layout: fixed; min-width: 100%;"
+        style="table-layout: fixed; min-width: calc(100% - 15px); width: calc(100% - 15px);"
       >
         <colgroup>
           <col
