@@ -162,6 +162,81 @@ describe('Table.Expand', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  it('honors rowExpandable for tree data', () => {
+    const onExpand = vi.fn();
+    const data = [
+      {
+        key: 'allowed',
+        name: 'Allowed parent',
+        children: [{ key: 'allowed-child', name: 'Allowed child' }],
+      },
+      {
+        key: 'blocked',
+        name: 'Blocked parent',
+        children: [{ key: 'blocked-child', name: 'Blocked child' }],
+      },
+      { key: 'empty', name: 'Empty parent', children: [] },
+    ];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: {
+          expandedRowKeys: ['allowed', 'blocked', 'empty'],
+          expandRowByClick: true,
+          onExpand,
+          rowExpandable: record => record.key === 'allowed',
+        },
+      }),
+    );
+
+    expect(container.querySelector('[data-row-key="allowed-child"]')).toBeTruthy();
+    expect(container.querySelector('[data-row-key="blocked-child"]')).toBeFalsy();
+
+    const allowedIcon = container.querySelector(
+      '[data-row-key="allowed"] .rc-table-row-expand-icon',
+    );
+    const blockedIcon = container.querySelector(
+      '[data-row-key="blocked"] .rc-table-row-expand-icon',
+    );
+    const emptyIcon = container.querySelector('[data-row-key="empty"] .rc-table-row-expand-icon');
+    expect(allowedIcon).toHaveClass('rc-table-row-expanded');
+    expect(blockedIcon).toHaveClass('rc-table-row-spaced');
+    expect(emptyIcon).toHaveClass('rc-table-row-spaced');
+
+    fireEvent.click(container.querySelector('[data-row-key="blocked"]'));
+    expect(onExpand).not.toHaveBeenCalled();
+  });
+
+  it('honors rowExpandable when expanding all tree rows by default', () => {
+    const data = [
+      {
+        key: 'allowed',
+        name: 'Allowed parent',
+        children: [{ key: 'allowed-child', name: 'Allowed child' }],
+      },
+      {
+        key: 'blocked',
+        name: 'Blocked parent',
+        children: [{ key: 'blocked-child', name: 'Blocked child' }],
+      },
+    ];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: {
+          defaultExpandAllRows: true,
+          rowExpandable: record => record.key === 'allowed',
+        },
+      }),
+    );
+
+    expect(container.querySelector('[data-row-key="allowed-child"]')).toBeTruthy();
+    expect(container.querySelector('[data-row-key="blocked-child"]')).toBeFalsy();
+    expect(
+      container.querySelector('[data-row-key="blocked"] .rc-table-row-expand-icon'),
+    ).toHaveClass('rc-table-row-spaced');
+  });
+
   it('not use nest when children is invalidate', () => {
     const data = [
       { key: 2, name: 'Jack', age: 28, children: null },

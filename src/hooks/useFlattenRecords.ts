@@ -10,6 +10,7 @@ function fillRecords<T>(
   expandedKeys: Set<Key>,
   getRowKey: GetRowKey<T>,
   index: number,
+  rowExpandable?: (record: T) => boolean,
 ) {
   const key = getRowKey(record, index);
 
@@ -22,7 +23,12 @@ function fillRecords<T>(
 
   const expanded = expandedKeys?.has(key);
 
-  if (record && Array.isArray(record[childrenColumnName]) && expanded) {
+  if (
+    record &&
+    (!rowExpandable || rowExpandable(record)) &&
+    Array.isArray(record[childrenColumnName]) &&
+    expanded
+  ) {
     // expanded state, flat record
     for (let i = 0; i < record[childrenColumnName].length; i += 1) {
       fillRecords(
@@ -33,6 +39,7 @@ function fillRecords<T>(
         expandedKeys,
         getRowKey,
         i,
+        rowExpandable,
       );
     }
   }
@@ -61,6 +68,7 @@ export default function useFlattenRecords<T>(
   childrenColumnName: string,
   expandedKeys: Set<Key>,
   getRowKey: GetRowKey<T>,
+  rowExpandable?: (record: T) => boolean,
 ): FlattenData<T>[] {
   const arr = React.useMemo<FlattenData<T>[]>(() => {
     if (expandedKeys?.size) {
@@ -71,7 +79,7 @@ export default function useFlattenRecords<T>(
         const record = data[i];
 
         // using array.push or spread operator may cause "Maximum call stack size exceeded" exception if array size is big enough.
-        fillRecords(list, record, 0, childrenColumnName, expandedKeys, getRowKey, i);
+        fillRecords(list, record, 0, childrenColumnName, expandedKeys, getRowKey, i, rowExpandable);
       }
 
       return list;
@@ -85,7 +93,7 @@ export default function useFlattenRecords<T>(
         rowKey: getRowKey(item, index),
       };
     });
-  }, [data, childrenColumnName, expandedKeys, getRowKey]);
+  }, [data, childrenColumnName, expandedKeys, getRowKey, rowExpandable]);
 
   return arr;
 }
