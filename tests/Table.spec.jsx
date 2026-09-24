@@ -1021,7 +1021,7 @@ describe('Table.Basic', () => {
         />,
       );
 
-      const getExpandIcons = () => container.querySelectorAll('span.rc-table-row-expand-icon');
+      const getExpandIcons = () => container.querySelectorAll('.rc-table-row-expand-icon');
 
       fireEvent.click(getExpandIcons()[0]);
       expect(getExpandIcons()[0].classList.contains('rc-table-row-expanded')).toBeTruthy();

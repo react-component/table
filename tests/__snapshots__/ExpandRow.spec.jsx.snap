@@ -44,8 +44,11 @@ exports[`Table.Expand > childrenColumnName 1`] = `
               <span
                 class="rc-table-row-indent indent-level-0"
               />
-              <span
+              <button
+                aria-expanded="true"
+                aria-label="Collapse row"
                 class="rc-table-row-expand-icon rc-table-row-expanded"
+                type="button"
               />
               Lucy
             </td>
@@ -204,8 +207,11 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -232,8 +238,11 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -359,8 +368,11 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -387,8 +399,11 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -602,8 +617,11 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="true"
+                aria-label="Collapse row"
                 class="rc-table-row-expand-icon rc-table-row-expanded"
+                type="button"
               />
             </td>
             <td
@@ -649,8 +667,11 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="true"
+                aria-label="Collapse row"
                 class="rc-table-row-expand-icon rc-table-row-expanded"
+                type="button"
               />
             </td>
             <td
@@ -739,8 +760,11 @@ exports[`Table.Expand > renders tree row correctly 1`] = `
               <span
                 class="rc-table-row-indent indent-level-0"
               />
-              <span
+              <button
+                aria-expanded="true"
+                aria-label="Collapse row"
                 class="rc-table-row-expand-icon rc-table-row-expanded"
+                type="button"
               />
               Lucy
             </td>
@@ -843,8 +867,11 @@ exports[`Table.Expand > renders tree row correctly with different children 1`] =
               <span
                 class="rc-table-row-indent indent-level-0"
               />
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
               Lucy
             </td>
@@ -906,8 +933,11 @@ exports[`Table.Expand > renders tree row correctly with different children 1`] =
               <span
                 class="rc-table-row-indent indent-level-0"
               />
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
               Jack
             </td>
@@ -1066,8 +1096,11 @@ exports[`Table.Expand > work in expandable fix 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -1094,8 +1127,11 @@ exports[`Table.Expand > work in expandable fix 1`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 8; --z-offset-reverse: 4;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
             <td
@@ -1239,8 +1275,11 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 5; --z-offset-reverse: 7;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
           </tr>
@@ -1267,8 +1306,11 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               class="rc-table-cell rc-table-row-expand-icon-cell rc-table-cell-fix rc-table-cell-fix-start rc-table-cell-fix-start-shadow"
               style="inset-inline-start: 0px; --z-offset: 5; --z-offset-reverse: 7;"
             >
-              <span
+              <button
+                aria-expanded="false"
+                aria-label="Expand row"
                 class="rc-table-row-expand-icon rc-table-row-collapsed"
+                type="button"
               />
             </td>
           </tr>
