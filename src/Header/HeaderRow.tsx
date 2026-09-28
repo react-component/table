@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { isReactRenderable } from '@rc-component/util';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
 import { useContext } from '@rc-component/context';
@@ -54,12 +55,13 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
         const { column, colStart, colEnd, colSpan } = cell;
         const fixedInfo = getCellFixedInfo(colStart, colEnd, flattenColumns, stickyOffsets);
 
-        const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell?.(column) || {};
+        const additionalProps: React.HTMLAttributes<HTMLElement> =
+          column?.onHeaderCell?.(column) || {};
 
         return (
           <Cell
             {...cell}
-            scope={column.title ? (colSpan > 1 ? 'colgroup' : 'col') : null}
+            scope={isReactRenderable(column.title) ? (colSpan > 1 ? 'colgroup' : 'col') : null}
             ellipsis={column.ellipsis}
             align={column.align}
             component={CellComponent}
