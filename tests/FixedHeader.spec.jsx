@@ -141,6 +141,46 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
+  it('re-measures when the column set changes', async () => {
+    const { container, rerender } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }]}
+        data={[{ light: 'bamboo', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    const headerCols = () =>
+      [...container.querySelectorAll('.rc-table-header table col')].map(col => col.style.width);
+    expect(headerCols()[0]).toEqual('100px');
+
+    // A wider column set must be measured again without waiting for a resize.
+    rerender(
+      <Table
+        columns={[{ dataIndex: 'light' }, { dataIndex: 'bamboo' }, { dataIndex: 'extra' }]}
+        data={[{ light: 'bamboo', bamboo: 'light', extra: '!', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = headerCols();
+    expect(widths).toHaveLength(4); // 3 measured columns + the scroll gutter
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+    expect(widths[2]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
   it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
