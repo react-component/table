@@ -23,12 +23,13 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
 
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
-  // Read every cell width in one synchronous pass. rc-table renders the
-  // measure row only with a fixed table layout (fixHeader, horizontal scroll
-  // or sticky), where a column width can only change when the row itself
-  // resizes or the column set changes, so one row-level observer plus a
-  // re-measure on column changes observes everything a per-cell
-  // ResizeObserver would, without one forced layout read per column (#1507).
+  // Read every cell width in one synchronous pass. The reads have no writes
+  // between them, so the row costs one layout instead of one per cell, and
+  // every onColumnResize call batches into a single state update (#1507).
+  // It covers mount and column-set changes; later width changes (a column
+  // gaining width while the table keeps its width, auto layout reacting to
+  // fonts or content) are reported by the per-cell observers below, which a
+  // row-level observer can not see.
   const measureColumns = useEvent(() => {
     const row = ref.current;
     if (!row || !isVisible(row)) {
@@ -43,7 +44,9 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
     });
   });
 
-  const columnsKeyStr = columnsKey.join('_');
+  // Serialize with separators: ['a_b', 'c'] and ['a', 'b_c'] are different
+  // column sets and must re-measure even though they join to the same string.
+  const columnsKeyStr = JSON.stringify(columnsKey);
 
   useLayoutEffect(() => {
     measureColumns();
@@ -52,18 +55,26 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
   }, [columnsKeyStr]);
 
   const measureRow = (
-    <ResizeObserver onResize={measureColumns}>
-      <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
+    <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
+      <ResizeObserver.Collection
+        onBatchResize={infoList => {
+          if (isVisible(ref.current)) {
+            infoList.forEach(({ data: columnKey, size }) => {
+              onColumnResize(columnKey, size.offsetWidth);
+            });
+          }
+        }}
+      >
         {columnsKey.map(columnKey => {
           const column = columns.find(col => col.key === columnKey);
           const rawTitle = column?.title;
           const titleForMeasure = React.isValidElement<React.RefAttributes<any>>(rawTitle)
             ? React.cloneElement(rawTitle, { ref: null })
             : rawTitle;
-          return <MeasureCell key={columnKey} title={titleForMeasure} />;
+          return <MeasureCell key={columnKey} columnKey={columnKey} title={titleForMeasure} />;
         })}
-      </tr>
-    </ResizeObserver>
+      </ResizeObserver.Collection>
+    </tr>
   );
 
   return typeof measureRowRender === 'function' ? measureRowRender(measureRow) : measureRow;
