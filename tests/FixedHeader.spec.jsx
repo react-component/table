@@ -141,6 +141,104 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
+  it('re-measures when the column set changes', async () => {
+    const { container, rerender } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }]}
+        data={[{ light: 'bamboo', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    const headerCols = () =>
+      [...container.querySelectorAll('.rc-table-header table col')].map(col => col.style.width);
+    expect(headerCols()[0]).toEqual('100px');
+
+    // A wider column set must be measured again without waiting for a resize.
+    rerender(
+      <Table
+        columns={[{ dataIndex: 'light' }, { dataIndex: 'bamboo' }, { dataIndex: 'extra' }]}
+        data={[{ light: 'bamboo', bamboo: 'light', extra: '!', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = headerCols();
+    expect(widths).toHaveLength(4); // 3 measured columns + the scroll gutter
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+    expect(widths[2]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('re-measures when new column keys collide in a joined identifier', async () => {
+    const { container, rerender } = render(
+      <Table columns={[{ key: 'a_b' }, { key: 'c' }]} data={[{ key: 1 }]} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    // ['a_b', 'c'] -> ['a', 'b_c'] keep the same joined form 'a_b_c'.
+    rerender(
+      <Table columns={[{ key: 'a' }, { key: 'b_c' }]} data={[{ key: 1 }]} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = [...container.querySelectorAll('.rc-table-header table col')].map(
+      col => col.style.width,
+    );
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('reports a cell resize when the row keeps its size', async () => {
+    const { container } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }, { dataIndex: 'bamboo' }]}
+        data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    const headerCols = () =>
+      [...container.querySelectorAll('.rc-table-header table col')].map(col => col.style.width);
+    expect(headerCols()[0]).toEqual('100px');
+
+    // Width moves between columns (fixed layout, constant table width):
+    // only cells change size, the measure row keeps its own size.
+    measureWidth = 80;
+    const cells = container.querySelectorAll('.rc-table-measure-row td');
+    await triggerResize(cells[0]);
+
+    expect(headerCols()[0]).toEqual('80px');
+    expect(headerCols()[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
   it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
