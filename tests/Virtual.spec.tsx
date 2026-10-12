@@ -163,6 +163,67 @@ describe('Table.Virtual', () => {
   });
 
   describe('expandable', () => {
+    it.each([false, true])(
+      'preserves cell state when rowExpandable changes from %s',
+      initialExpandable => {
+        const onMount = vi.fn();
+        const onUnmount = vi.fn();
+
+        const StatefulCell = () => {
+          const [value, setValue] = React.useState('');
+
+          React.useEffect(() => {
+            onMount();
+            return onUnmount;
+          }, []);
+
+          return <input value={value} onChange={event => setValue(event.target.value)} />;
+        };
+
+        const Demo = () => {
+          const [canExpand, setCanExpand] = React.useState(initialExpandable);
+
+          return (
+            <>
+              <button type="button" onClick={() => setCanExpand(!canExpand)}>
+                Toggle expandable
+              </button>
+              <VirtualTable
+                columns={[{ dataIndex: 'name', render: () => <StatefulCell /> }]}
+                data={[{ key: 'row', name: 'name0', canExpand }]}
+                scroll={{ x: 100, y: 100 }}
+                expandable={{
+                  rowExpandable: record => record.canExpand,
+                  expandedRowKeys: ['row'],
+                  expandedRowRender: () => 'Expanded content',
+                }}
+              />
+            </>
+          );
+        };
+
+        const { container, getByRole } = render(<Demo />);
+        const input = getByRole('textbox');
+        fireEvent.change(input, { target: { value: 'Edited value' } });
+
+        const expectState = (canExpand: boolean) => {
+          expect(getByRole('textbox')).toBe(input);
+          expect(input).toHaveValue('Edited value');
+          expect(onMount).toHaveBeenCalledTimes(1);
+          expect(onUnmount).not.toHaveBeenCalled();
+          expect(container.querySelectorAll('.rc-table-expanded-row')).toHaveLength(
+            canExpand ? 1 : 0,
+          );
+        };
+
+        expectState(initialExpandable);
+        fireEvent.click(getByRole('button', { name: 'Toggle expandable' }));
+        expectState(!initialExpandable);
+        fireEvent.click(getByRole('button', { name: 'Toggle expandable' }));
+        expectState(initialExpandable);
+      },
+    );
+
     it('basic', () => {
       (['bamboo', () => 'bamboo'] as const).forEach(cls => {
         const { container } = getTable({

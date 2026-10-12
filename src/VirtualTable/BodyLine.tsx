@@ -44,6 +44,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
 
   // ========================== Expand ==========================
   const {
+    expandableType,
     rowSupportExpand,
     expanded,
     rowProps,
@@ -51,6 +52,9 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     expandedRowClassName,
     forceRender,
   } = rowInfo;
+
+  // Keep the row structure stable when rowExpandable changes for a record.
+  const hasExpandRow = expandableType === 'row';
 
   const expandedClsName = computedExpandedClassName(expandedRowClassName, record, index, indent);
 
@@ -106,7 +110,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
       {...rowProps}
       {...restProps}
       data-row-key={rowKey}
-      ref={rowSupportExpand ? null : ref}
+      ref={hasExpandRow ? null : ref}
       className={clsx(className, `${prefixCls}-row`, rowProps?.className, classNames?.body?.row, {
         [expandedClsName]: indent >= 1,
         [`${prefixCls}-row-extra`]: extra,
@@ -135,7 +139,7 @@ const BodyLine = React.forwardRef<HTMLDivElement, BodyLineProps>((props, ref) =>
     </RowComponent>
   );
 
-  if (rowSupportExpand) {
+  if (hasExpandRow) {
     return (
       <div ref={ref}>
         {rowNode}
