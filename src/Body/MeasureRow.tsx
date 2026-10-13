@@ -46,6 +46,7 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
               columnKey={columnKey}
               onColumnResize={onColumnResize}
               title={titleForMeasure}
+              className={column?.className}
             />
           );
         })}
