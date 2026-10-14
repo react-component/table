@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import * as React from 'react';
 import Cell from '../Cell';
 import TableContext from '../context/TableContext';
@@ -49,12 +50,17 @@ const HeaderRow = <RecordType extends any>(props: RowProps<RecordType>) => {
   const columnsKey = getColumnsKey(cells.map(cell => cell.column));
 
   return (
-    <RowComponent {...rowProps} className={classNames.row} style={styles.row}>
+    <RowComponent
+      {...rowProps}
+      className={clsx(rowProps?.className, classNames.row) || undefined}
+      style={{ ...rowProps?.style, ...styles.row }}
+    >
       {cells.map((cell: CellType<RecordType>, cellIndex) => {
         const { column, colStart, colEnd, colSpan } = cell;
         const fixedInfo = getCellFixedInfo(colStart, colEnd, flattenColumns, stickyOffsets);
 
-        const additionalProps: React.HTMLAttributes<HTMLElement> = column?.onHeaderCell?.(column) || {};
+        const additionalProps: React.HTMLAttributes<HTMLElement> =
+          column?.onHeaderCell?.(column) || {};
 
         return (
           <Cell
