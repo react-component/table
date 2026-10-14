@@ -1,6 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
+import { fillRef } from '@rc-component/util';
 import React from 'react';
-import Table, { TableProps } from '../src';
+import Table, { TableProps, VirtualTable } from '../src';
 describe('support classNames and styles', () => {
   const columns: TableProps['columns'] = [
     {
@@ -116,5 +117,130 @@ describe('support classNames and styles', () => {
     expect(bodyCell).toHaveStyle(testStyles.body.cell);
     expect(bodyRow).toHaveClass(testClassNames.body.row);
     expect(bodyRow).toHaveStyle(testStyles.body.row);
+  });
+
+  describe.each([false, true])('scroll holders (virtual: %s)', virtual => {
+    const TableComponent: React.ComponentType<TableProps> = virtual ? VirtualTable : Table;
+
+    it.each([false, true])('supports holder semantics with empty data: %s', empty => {
+      const { container, rerender } = render(
+        <TableComponent
+          prefixCls="custom-table"
+          columns={columns}
+          data={empty ? [] : data}
+          scroll={{ x: 500, y: 100 }}
+          sticky={{ offsetHeader: 8 }}
+          classNames={{
+            content: 'content-only',
+            header: { holder: 'header-holder', wrapper: 'header-wrapper' },
+            body: { holder: 'body-holder' },
+          }}
+          styles={{
+            content: { outline: '3px solid red' },
+            header: { holder: { background: 'pink' } },
+            body: { holder: { background: 'cyan', overscrollBehavior: 'contain' } },
+          }}
+        />,
+      );
+      const bodySelector =
+        virtual && !empty ? '.custom-table-tbody-virtual-holder' : '.custom-table-body';
+      const header = container.querySelector('.custom-table-header');
+      const body = container.querySelector(bodySelector);
+
+      expect(header).toHaveClass('header-holder');
+      expect(header).toHaveStyle({ background: 'pink', top: '8px', overflow: 'hidden' });
+      expect(body).toHaveClass('body-holder');
+      expect(body).toHaveStyle({
+        background: 'cyan',
+        overscrollBehavior: 'contain',
+        maxHeight: '100px',
+      });
+      expect(container.querySelectorAll('.body-holder')).toHaveLength(1);
+      expect(container.querySelector('.custom-table-thead')).toHaveClass('header-wrapper');
+      expect(container.querySelector('.content-only')).toBeNull();
+
+      rerender(
+        <TableComponent
+          prefixCls="custom-table"
+          columns={columns}
+          data={empty ? [] : data}
+          scroll={{ x: 500, y: 100 }}
+          classNames={{ body: { holder: 'updated-holder' } }}
+          styles={{ body: { holder: { background: 'green', maxHeight: 80 } } }}
+        />,
+      );
+      expect(container.querySelector(bodySelector)).toBe(body);
+      expect(body).toHaveClass('updated-holder');
+      expect(body).not.toHaveClass('body-holder');
+      expect(body).toHaveStyle({ background: 'green', maxHeight: '80px' });
+      expect(container.querySelector('.header-holder')).toBeNull();
+      expect(header).not.toHaveStyle({ background: 'pink' });
+    });
+  });
+
+  it('keeps content semantics separate from sticky holders and fixed summaries', () => {
+    const props: TableProps = {
+      columns,
+      data,
+      classNames: {
+        content: 'content-only',
+        header: { holder: 'header-holder' },
+        body: { holder: 'body-holder' },
+      },
+      styles: { header: { holder: { background: 'pink' } } },
+      summary: () => (
+        <Table.Summary fixed>
+          <Table.Summary.Row>
+            <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
+          </Table.Summary.Row>
+        </Table.Summary>
+      ),
+    };
+    const { container, rerender } = render(<Table {...props} />);
+    expect(container.querySelector('.rc-table-content')).toHaveClass('content-only');
+    expect(container.querySelector('.header-holder')).toBeNull();
+    expect(container.querySelector('.body-holder')).toBeNull();
+
+    rerender(<Table {...props} sticky />);
+    expect(container.querySelector('.rc-table-header')).toHaveClass('header-holder');
+    expect(container.querySelector('.rc-table-body')).toHaveClass('body-holder');
+    expect(container.querySelector('.content-only')).toBeNull();
+    expect(container.querySelector('.rc-table-summary')).not.toHaveClass('header-holder');
+    expect(container.querySelector('.rc-table-summary')).not.toHaveStyle({ background: 'pink' });
+  });
+
+  it('preserves custom virtual wrappers, refs and scroll events', () => {
+    const onScroll = vi.fn();
+    let wrapperNode: HTMLDivElement;
+    const Wrapper = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+      (props, ref) => (
+        <div
+          {...props}
+          data-custom-holder
+          ref={node => {
+            wrapperNode = node;
+            fillRef(ref, node);
+          }}
+        />
+      ),
+    );
+    const { container } = render(
+      <VirtualTable
+        columns={columns}
+        data={data}
+        scroll={{ x: 500, y: 100 }}
+        components={{ body: { wrapper: Wrapper } }}
+        classNames={{ body: { holder: 'body-holder' } }}
+        styles={{ body: { holder: { background: 'cyan' } } }}
+        onScroll={onScroll}
+      />,
+    );
+    const holder = container.querySelector('.rc-table-tbody-virtual-holder');
+    expect(holder).toHaveAttribute('data-custom-holder');
+    expect(holder).toBe(wrapperNode);
+    expect(holder).toHaveClass('body-holder');
+    expect(holder).toHaveStyle({ background: 'cyan' });
+    fireEvent.scroll(holder, { target: { scrollTop: 20 } });
+    expect(onScroll).toHaveBeenCalled();
   });
 });

@@ -94,7 +94,7 @@ const EMPTY_DATA = [];
 const EMPTY_SCROLL_TARGET = {};
 
 export type SemanticName = 'section' | 'title' | 'footer' | 'content';
-export type ComponentsSemantic = 'wrapper' | 'cell' | 'row';
+export type ComponentsSemantic = 'holder' | 'wrapper' | 'cell' | 'row';
 
 export interface TableProps<RecordType = any> extends Omit<
   LegacyExpandableProps<RecordType>,
@@ -716,10 +716,11 @@ const Table = <RecordType extends DefaultRecordType>(
           style={{
             ...scrollXStyle,
             ...scrollYStyle,
+            ...styles?.body?.holder,
           }}
           onScroll={onBodyScroll}
           ref={scrollBodyRef}
-          className={`${prefixCls}-body`}
+          className={clsx(`${prefixCls}-body`, classNames?.body?.holder)}
         >
           <TableComponent
             style={{
@@ -761,7 +762,8 @@ const Table = <RecordType extends DefaultRecordType>(
           <FixedHolder
             {...fixedHolderProps}
             stickyTopOffset={offsetHeader}
-            className={`${prefixCls}-header`}
+            className={clsx(`${prefixCls}-header`, classNames?.header?.holder)}
+            style={styles?.header?.holder}
             ref={scrollHeaderRef}
             colGroup={bodyColGroup}
           >
