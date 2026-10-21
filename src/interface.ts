@@ -168,6 +168,9 @@ export type OnCustomizeScroll = (info: {
   scrollLeft?: number;
 }) => void;
 
+/** Virtual list scroll offset from `@rc-component/virtual-list` */
+export type OnVirtualScroll = (info: { x: number; y: number }) => void;
+
 export type CustomizeScrollBody<RecordType> = (
   data: readonly RecordType[],
   info: {

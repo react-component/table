@@ -9,6 +9,7 @@ import type {
   FixedType,
   GetComponentProps,
   GetRowKey,
+  OnVirtualScroll,
   Reference,
   RenderedCell,
 } from './interface';
@@ -43,6 +44,7 @@ export {
   type FixedType,
   type GetComponentProps,
   type GetRowKey,
+  type OnVirtualScroll,
   type RenderedCell,
 };
 

@@ -3,7 +3,7 @@ import { get as getValue, useEvent, warning } from '@rc-component/util';
 import * as React from 'react';
 import { INTERNAL_HOOKS } from '../constant';
 import { makeImmutable } from '../context/TableContext';
-import type { CustomizeScrollBody, GetComponent, Reference } from '../interface';
+import type { CustomizeScrollBody, GetComponent, OnVirtualScroll, Reference } from '../interface';
 import Table, { DEFAULT_PREFIX, type CompareProps, type TableProps } from '../Table';
 import Grid from './BodyGrid';
 import { StaticContext } from './context';
@@ -16,6 +16,12 @@ const renderBody: CustomizeScrollBody<any> = (rawData, props) => {
 export interface VirtualTableProps<RecordType> extends Omit<TableProps<RecordType>, 'scroll'> {
   listItemHeight?: number;
   scroll: { x?: number; y?: number };
+  /**
+   * Triggered when virtual list offset changes.
+   * Prefer this over native `onScroll` when you need the virtual horizontal offset `x`
+   * (virtual list may use margin/transform instead of DOM `scrollLeft`).
+   */
+  onVirtualScroll?: OnVirtualScroll;
 }
 
 const VirtualTable = <RecordType,>(
@@ -32,6 +38,7 @@ const VirtualTable = <RecordType,>(
     listItemHeight,
     components,
     onScroll,
+    onVirtualScroll,
   } = props;
 
   let { x: scrollX, y: scrollY } = scroll || {};
@@ -60,11 +67,19 @@ const VirtualTable = <RecordType,>(
 
   // Memo this
   const onInternalScroll = useEvent(onScroll);
+  const onInternalVirtualScroll = useEvent(onVirtualScroll);
 
   // ========================= Context ==========================
   const context = React.useMemo(
-    () => ({ sticky, scrollY, listItemHeight, getComponent, onScroll: onInternalScroll }),
-    [sticky, scrollY, listItemHeight, getComponent, onInternalScroll],
+    () => ({
+      sticky,
+      scrollY,
+      listItemHeight,
+      getComponent,
+      onScroll: onInternalScroll,
+      onVirtualScroll: onInternalVirtualScroll,
+    }),
+    [sticky, scrollY, listItemHeight, getComponent, onInternalScroll, onInternalVirtualScroll],
   );
 
   // ========================== Render ==========================
@@ -89,7 +104,7 @@ const VirtualTable = <RecordType,>(
 };
 
 export type ForwardGenericVirtualTable = (<RecordType>(
-  props: TableProps<RecordType> & React.RefAttributes<Reference>,
+  props: VirtualTableProps<RecordType> & React.RefAttributes<Reference>,
 ) => React.ReactElement<any>) & { displayName?: string };
 
 const RefVirtualTable = React.forwardRef(VirtualTable) as ForwardGenericVirtualTable;
