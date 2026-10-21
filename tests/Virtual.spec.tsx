@@ -722,12 +722,11 @@ describe('Table.Virtual', () => {
     });
 
     expect(onVirtualScroll).toHaveBeenCalled();
-    expect(onVirtualScroll.mock.calls[0][0]).toEqual(
-      expect.objectContaining({
-        x: expect.any(Number),
-        y: expect.any(Number),
-      }),
-    );
+    expect(
+      onVirtualScroll.mock.calls.some(
+        ([info]) => typeof info.x === 'number' && info.x > 0 && typeof info.y === 'number',
+      ),
+    ).toBe(true);
   });
 
   it('scrollable when empty', async () => {
