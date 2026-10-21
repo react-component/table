@@ -709,6 +709,27 @@ describe('Table.Virtual', () => {
     expect(onScroll).toHaveBeenCalled();
   });
 
+  it('onVirtualScroll event should work', async () => {
+    const onVirtualScroll = vi.fn();
+    const { container } = getTable({ onVirtualScroll });
+
+    await waitFakeTimer();
+
+    resize(container.querySelector('.rc-table')!);
+
+    fireEvent.wheel(container.querySelector('.rc-table-tbody-virtual-holder')!, {
+      deltaX: 10,
+    });
+
+    expect(onVirtualScroll).toHaveBeenCalled();
+    expect(onVirtualScroll.mock.calls[0][0]).toEqual(
+      expect.objectContaining({
+        x: expect.any(Number),
+        y: expect.any(Number),
+      }),
+    );
+  });
+
   it('scrollable when empty', async () => {
     const onScroll = vi.fn();
     const { container } = getTable({ data: [], onScroll });
