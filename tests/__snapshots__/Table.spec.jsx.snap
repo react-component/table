@@ -141,6 +141,7 @@ exports[`Table.Basic > custom components > renders fixed column and header corre
           <tr
             aria-hidden="true"
             class="rc-table-measure-row"
+            inert=""
             style="height: 0px; visibility: hidden;"
           >
             <td

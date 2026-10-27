@@ -23,6 +23,14 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
 
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
+  // inert also covers a title that sets visibility: visible on itself. It is set on the
+  // element because React 18 drops a boolean `inert` prop and React 19 reads `inert=""`
+  // as false.
+  const setRowRef = React.useCallback((row: HTMLTableRowElement | null) => {
+    ref.current = row;
+    row?.setAttribute('inert', '');
+  }, []);
+
   // The row holds copies of the column titles, which may contain controls such as a
   // select-all checkbox. aria-hidden alone leaves those focusable; visibility: hidden
   // takes them out of the tab order while the row still lays out for measuring.
@@ -31,7 +39,7 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
       aria-hidden="true"
       className={`${prefixCls}-measure-row`}
       style={{ height: 0, visibility: 'hidden' }}
-      ref={ref}
+      ref={setRowRef}
     >
       <ResizeObserver.Collection
         onBatchResize={infoList => {
