@@ -37,16 +37,26 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
     }
     const cells = row.children;
     columnsKey.forEach((columnKey, index) => {
-      const cell = cells[index];
+      const cell = cells[index] as HTMLTableCellElement;
       if (cell) {
-        onColumnResize(columnKey, (cell as HTMLTableCellElement).offsetWidth);
+        // Same width the per-cell observer reports: it hands over the fractional
+        // getBoundingClientRect width whenever offsetWidth is that width rounded.
+        // A cell that keeps its size never notifies again, so an integer read here
+        // would stick, and the rounding error of each column adds up against the
+        // header.
+        const { width } = cell.getBoundingClientRect();
+        const { offsetWidth } = cell;
+        onColumnResize(columnKey, offsetWidth === Math.round(width) ? width : offsetWidth);
       }
     });
   });
 
-  // Serialize with separators: ['a_b', 'c'] and ['a', 'b_c'] are different
-  // column sets and must re-measure even though they join to the same string.
-  const columnsKeyStr = JSON.stringify(columnsKey);
+  // Serialize with the type and with separators: ['a_b', 'c'] and ['a', 'b_c'] are
+  // different column sets and must re-measure even though they join to the same
+  // string, and React.Key also allows bigint, which JSON.stringify refuses to take.
+  const columnsKeyStr = JSON.stringify(
+    columnsKey.map(columnKey => `${typeof columnKey}:${columnKey}`),
+  );
 
   useLayoutEffect(() => {
     measureColumns();

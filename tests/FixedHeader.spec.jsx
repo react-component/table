@@ -239,6 +239,58 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
+  it('keeps the measured sub-pixel width the observer would report', async () => {
+    // The per-cell observer reports getBoundingClientRect().width whenever
+    // offsetWidth is that width rounded, so the batched pass has to match it.
+    const rectSpy = spyElementPrototypes(HTMLElement, {
+      getBoundingClientRect: () => ({ width: 100.4, height: 10 }),
+    });
+
+    const { container } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }]}
+        data={[{ light: 'bamboo', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    expect(container.querySelector('.rc-table-header table col').style.width).toEqual('100.4px');
+
+    rectSpy.mockRestore();
+    vi.useRealTimers();
+  });
+
+  it('measures columns keyed by bigint', async () => {
+    const { container } = render(
+      <Table
+        columns={[
+          { key: 1n, dataIndex: 'light' },
+          { key: 2n, dataIndex: 'bamboo' },
+        ]}
+        data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = [...container.querySelectorAll('.rc-table-header table col')].map(
+      col => col.style.width,
+    );
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
   it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
