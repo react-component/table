@@ -196,6 +196,48 @@ describe('Table.FixedHeader', () => {
     expect(container.querySelectorAll('th.rc-table-cell-fix-end')).toHaveLength(1);
   });
 
+  it('should keep controls copied into the measure row out of the tab order', () => {
+    const { container } = render(
+      <Table
+        columns={[
+          { title: <button type="button">Select all</button>, dataIndex: 'name', key: 'name' },
+        ]}
+        data={[{ name: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    const measureRow = container.querySelector('.rc-table-measure-row');
+    expect(measureRow.querySelector('button')).toBeTruthy();
+    expect(measureRow.getAttribute('aria-hidden')).toBe('true');
+    expect(measureRow.style.visibility).toBe('hidden');
+    expect(measureRow.hasAttribute('inert')).toBe(true);
+  });
+
+  it('should keep a title that is visible on its own out of the tab order', () => {
+    const { container } = render(
+      <Table
+        columns={[
+          {
+            title: (
+              <button type="button" style={{ visibility: 'visible' }}>
+                Select all
+              </button>
+            ),
+            dataIndex: 'name',
+            key: 'name',
+          },
+        ]}
+        data={[{ name: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    const measureRow = container.querySelector('.rc-table-measure-row');
+    expect(measureRow.querySelector('button').style.visibility).toBe('visible');
+    expect(measureRow.hasAttribute('inert')).toBe(true);
+  });
+
   it('should support measureRowRender to wrap MeasureRow with custom provider', async () => {
     const FilterDropdown = ({ visible, onVisibleChange }) => (
       <div className="test-filter-dropdown" style={{ display: visible ? 'block' : 'none' }}>
