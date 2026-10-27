@@ -291,6 +291,50 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
+  it('keeps sub-pixel widths when 40 columns are reordered', async () => {
+    // Fixed layout, 2025px table, 40 columns of 50.625px: offsetWidth rounds each
+    // one to 51, so an integer pass drifts the header to 2040px against a 2025px
+    // body. The observer reports the fractional width and a reorder has to keep it.
+    measureWidth = 51;
+    const rectSpy = spyElementPrototypes(HTMLElement, {
+      getBoundingClientRect: () => ({ width: 50.625, height: 10 }),
+    });
+    const columns = Array.from({ length: 40 }, (_, index) => ({
+      key: `c${index}`,
+      dataIndex: `c${index}`,
+    }));
+    const data = [Object.fromEntries([['key', 1], ...columns.map(col => [col.key, col.key])])];
+
+    const { container, rerender } = render(
+      <Table columns={columns} data={data} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const measuredWidths = () =>
+      [...container.querySelectorAll('.rc-table-header table col')]
+        .slice(0, columns.length)
+        .map(col => parseFloat(col.style.width));
+
+    rerender(<Table columns={[...columns].reverse()} data={data} scroll={{ y: 10 }} />);
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = measuredWidths();
+    expect(widths).toHaveLength(40);
+    expect(widths.every(width => width === 50.625)).toBe(true);
+    expect(widths.reduce((total, width) => total + width, 0)).toBeCloseTo(2025, 5);
+
+    rectSpy.mockRestore();
+    vi.useRealTimers();
+  });
+
   it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {

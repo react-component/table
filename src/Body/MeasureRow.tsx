@@ -51,11 +51,13 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
     });
   });
 
-  // Serialize with the type and with separators: ['a_b', 'c'] and ['a', 'b_c'] are
-  // different column sets and must re-measure even though they join to the same
-  // string, and React.Key also allows bigint, which JSON.stringify refuses to take.
+  // Sorted, so moving the same columns around does not re-measure: the cells keep
+  // their keys, every width change that follows a reorder reaches the per-cell
+  // observers. Serialized with the type and with separators because ['a_b', 'c']
+  // and ['a', 'b_c'] are different column sets that join to the same string, and
+  // React.Key also allows bigint, which JSON.stringify refuses to take.
   const columnsKeyStr = JSON.stringify(
-    columnsKey.map(columnKey => `${typeof columnKey}:${columnKey}`),
+    columnsKey.map(columnKey => `${typeof columnKey}:${columnKey}`).sort(),
   );
 
   useLayoutEffect(() => {
