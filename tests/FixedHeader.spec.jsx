@@ -141,6 +141,200 @@ describe('Table.FixedHeader', () => {
     vi.useRealTimers();
   });
 
+  it('re-measures when the column set changes', async () => {
+    const { container, rerender } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }]}
+        data={[{ light: 'bamboo', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    const headerCols = () =>
+      [...container.querySelectorAll('.rc-table-header table col')].map(col => col.style.width);
+    expect(headerCols()[0]).toEqual('100px');
+
+    // A wider column set must be measured again without waiting for a resize.
+    rerender(
+      <Table
+        columns={[{ dataIndex: 'light' }, { dataIndex: 'bamboo' }, { dataIndex: 'extra' }]}
+        data={[{ light: 'bamboo', bamboo: 'light', extra: '!', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = headerCols();
+    expect(widths).toHaveLength(4); // 3 measured columns + the scroll gutter
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+    expect(widths[2]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('re-measures when new column keys collide in a joined identifier', async () => {
+    const { container, rerender } = render(
+      <Table columns={[{ key: 'a_b' }, { key: 'c' }]} data={[{ key: 1 }]} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    // ['a_b', 'c'] -> ['a', 'b_c'] keep the same joined form 'a_b_c'.
+    rerender(
+      <Table columns={[{ key: 'a' }, { key: 'b_c' }]} data={[{ key: 1 }]} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = [...container.querySelectorAll('.rc-table-header table col')].map(
+      col => col.style.width,
+    );
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('reports a cell resize when the row keeps its size', async () => {
+    const { container } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }, { dataIndex: 'bamboo' }]}
+        data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+    const headerCols = () =>
+      [...container.querySelectorAll('.rc-table-header table col')].map(col => col.style.width);
+    expect(headerCols()[0]).toEqual('100px');
+
+    // Width moves between columns (fixed layout, constant table width):
+    // only cells change size, the measure row keeps its own size.
+    measureWidth = 80;
+    const cells = container.querySelectorAll('.rc-table-measure-row td');
+    await triggerResize(cells[0]);
+
+    expect(headerCols()[0]).toEqual('80px');
+    expect(headerCols()[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('keeps the measured sub-pixel width the observer would report', async () => {
+    // The per-cell observer reports getBoundingClientRect().width whenever
+    // offsetWidth is that width rounded, so the batched pass has to match it.
+    const rectSpy = spyElementPrototypes(HTMLElement, {
+      getBoundingClientRect: () => ({ width: 100.4, height: 10 }),
+    });
+
+    const { container } = render(
+      <Table
+        columns={[{ dataIndex: 'light' }]}
+        data={[{ light: 'bamboo', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    expect(container.querySelector('.rc-table-header table col').style.width).toEqual('100.4px');
+
+    rectSpy.mockRestore();
+    vi.useRealTimers();
+  });
+
+  it('measures columns keyed by bigint', async () => {
+    const { container } = render(
+      <Table
+        columns={[
+          { key: 1n, dataIndex: 'light' },
+          { key: 2n, dataIndex: 'bamboo' },
+        ]}
+        data={[{ light: 'bamboo', bamboo: 'light', key: 1 }]}
+        scroll={{ y: 10 }}
+      />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = [...container.querySelectorAll('.rc-table-header table col')].map(
+      col => col.style.width,
+    );
+    expect(widths[0]).toEqual('100px');
+    expect(widths[1]).toEqual('100px');
+
+    vi.useRealTimers();
+  });
+
+  it('keeps sub-pixel widths when 40 columns are reordered', async () => {
+    // Fixed layout, 2025px table, 40 columns of 50.625px: offsetWidth rounds each
+    // one to 51, so an integer pass drifts the header to 2040px against a 2025px
+    // body. The observer reports the fractional width and a reorder has to keep it.
+    measureWidth = 51;
+    const rectSpy = spyElementPrototypes(HTMLElement, {
+      getBoundingClientRect: () => ({ width: 50.625, height: 10 }),
+    });
+    const columns = Array.from({ length: 40 }, (_, index) => ({
+      key: `c${index}`,
+      dataIndex: `c${index}`,
+    }));
+    const data = [Object.fromEntries([['key', 1], ...columns.map(col => [col.key, col.key])])];
+
+    const { container, rerender } = render(
+      <Table columns={columns} data={data} scroll={{ y: 10 }} />,
+    );
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const measuredWidths = () =>
+      [...container.querySelectorAll('.rc-table-header table col')]
+        .slice(0, columns.length)
+        .map(col => parseFloat(col.style.width));
+
+    rerender(<Table columns={[...columns].reverse()} data={data} scroll={{ y: 10 }} />);
+
+    await act(async () => {
+      vi.runAllTimers();
+      await Promise.resolve();
+    });
+
+    const widths = measuredWidths();
+    expect(widths).toHaveLength(40);
+    expect(widths.every(width => width === 50.625)).toBe(true);
+    expect(widths.reduce((total, width) => total + width, 0)).toBeCloseTo(2025, 5);
+
+    rectSpy.mockRestore();
+    vi.useRealTimers();
+  });
+
   it('do not mask as fixed in nested table parent cell', async () => {
     const columns = [
       {
