@@ -23,8 +23,16 @@ const MeasureRow: React.FC<MeasureRowProps> = ({
 
   const { measureRowRender } = useContext(TableContext, ['measureRowRender']);
 
+  // The row holds copies of the column titles, which may contain controls such as a
+  // select-all checkbox. aria-hidden alone leaves those focusable; visibility: hidden
+  // takes them out of the tab order while the row still lays out for measuring.
   const measureRow = (
-    <tr aria-hidden="true" className={`${prefixCls}-measure-row`} style={{ height: 0 }} ref={ref}>
+    <tr
+      aria-hidden="true"
+      className={`${prefixCls}-measure-row`}
+      style={{ height: 0, visibility: 'hidden' }}
+      ref={ref}
+    >
       <ResizeObserver.Collection
         onBatchResize={infoList => {
           if (isVisible(ref.current)) {
