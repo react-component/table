@@ -31,6 +31,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     getRowKey,
     expandedKeys,
     childrenColumnName,
+    rowExpandable,
     emptyNode,
     classNames,
     styles,
@@ -44,6 +45,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     'getRowKey',
     'expandedKeys',
     'childrenColumnName',
+    'rowExpandable',
     'emptyNode',
     'classNames',
     'styles',
@@ -59,6 +61,7 @@ const Body = <RecordType,>(props: BodyProps<RecordType>) => {
     childrenColumnName,
     expandedKeys,
     getRowKey,
+    rowExpandable,
   );
 
   const rowKeys = React.useMemo(() => flattenData.map(item => item.rowKey), [flattenData]);

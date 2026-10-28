@@ -1013,7 +1013,7 @@ describe('Table.Basic', () => {
             {
               key: 'parent',
               children: [
-                { key: 'light', children: [] },
+                { key: 'light', children: [{ key: 'spark' }] },
                 { key: 'bamboo', children: [{ key: 'little' }] },
               ],
             },

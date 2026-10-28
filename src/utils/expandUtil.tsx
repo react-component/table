@@ -92,11 +92,16 @@ export function findAllChildrenKeys<RecordType>(
   data: readonly RecordType[],
   getRowKey: GetRowKey<RecordType>,
   childrenColumnName: string,
+  rowExpandable?: (record: RecordType) => boolean,
 ): Key[] {
   const keys: Key[] = [];
 
   function dig(list: readonly RecordType[]) {
     (list || []).forEach((item, index) => {
+      if (rowExpandable && !rowExpandable(item)) {
+        return;
+      }
+
       keys.push(getRowKey(item, index));
 
       dig((item as any)[childrenColumnName]);

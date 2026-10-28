@@ -75,11 +75,14 @@ export default function useRowInfo<RecordType>(
   const nestExpandable = expandableType === 'nest';
 
   const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
-  const mergedExpandable = rowSupportExpand || nestExpandable;
+  const rowSupportNestExpand = nestExpandable && (!rowExpandable || rowExpandable(record));
 
   const expanded = expandedKeys && expandedKeys.has(rowKey);
 
-  const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
+  const nestChildren = childrenColumnName && record && record[childrenColumnName];
+  const hasNestChildren =
+    rowSupportNestExpand && Array.isArray(nestChildren) && nestChildren.length > 0;
+  const mergedExpandable = rowSupportExpand || hasNestChildren;
 
   const onInternalTriggerExpand = useEvent(onTriggerExpand);
 
