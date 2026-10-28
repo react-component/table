@@ -29,6 +29,23 @@ describe('Table.Expand', () => {
     errorSpy.mockRestore();
   });
 
+  it('renders keyboard-accessible row expand controls', () => {
+    const { getAllByRole } = render(
+      createTable({
+        expandable: { expandedRowRender },
+      }),
+    );
+
+    const [expandButton] = getAllByRole('button', { name: 'Expand row' });
+    expect(expandButton).toHaveAttribute('type', 'button');
+    expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.click(expandButton);
+
+    expect(expandButton).toHaveAccessibleName('Collapse row');
+    expect(expandButton).toHaveAttribute('aria-expanded', 'true');
+  });
+
   it('pass proper parameters to expandedRowRender', () => {
     const rowRender = vi.fn(() => <div>expanded row</div>);
     const expandableProps = props => ({ expandable: { expandedRowRender: rowRender, ...props } });
