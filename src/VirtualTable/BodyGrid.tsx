@@ -58,6 +58,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     listItemHeight,
     getComponent,
     onScroll: onTablePropScroll,
+    onVirtualScroll: onTablePropVirtualScroll,
   } = useContext(StaticContext);
 
   // =========================== Ref ============================
@@ -276,11 +277,12 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         component={wrapperComponent}
         scrollWidth={scrollX as number}
         direction={direction}
-        onVirtualScroll={({ x }) => {
+        onVirtualScroll={({ x, y }) => {
           onScroll({
             currentTarget: listRef.current?.nativeElement,
             scrollLeft: x,
           });
+          onTablePropVirtualScroll?.({ x, y });
         }}
         onScroll={onTablePropScroll}
         extraRender={extraRender}

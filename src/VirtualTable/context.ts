@@ -1,5 +1,5 @@
 import { createContext } from '@rc-component/context';
-import type { GetComponent, TableSticky } from '../interface';
+import type { GetComponent, OnVirtualScroll, TableSticky } from '../interface';
 
 export interface StaticContextProps {
   scrollY: number;
@@ -7,6 +7,7 @@ export interface StaticContextProps {
   sticky: boolean | TableSticky;
   getComponent: GetComponent;
   onScroll?: React.UIEventHandler<HTMLDivElement>;
+  onVirtualScroll?: OnVirtualScroll;
 }
 
 export const StaticContext = createContext<StaticContextProps>(null);
