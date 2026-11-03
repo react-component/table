@@ -161,6 +161,7 @@ exports[`Table.Expand > does not crash if scroll is not set 1`] = `
             style="height: 0px; visibility: hidden;"
           >
             <td
+              class="rc-table-row-expand-icon-cell"
               style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
@@ -317,6 +318,7 @@ exports[`Table.Expand > does not crash if scroll is not set 2`] = `
             style="height: 0px; visibility: hidden;"
           >
             <td
+              class="rc-table-row-expand-icon-cell"
               style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
@@ -561,6 +563,7 @@ exports[`Table.Expand > renders fixed column correctly > work 1`] = `
             style="height: 0px; visibility: hidden;"
           >
             <td
+              class="rc-table-row-expand-icon-cell"
               style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
@@ -1026,6 +1029,7 @@ exports[`Table.Expand > work in expandable fix 1`] = `
             style="height: 0px; visibility: hidden;"
           >
             <td
+              class="rc-table-row-expand-icon-cell"
               style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
@@ -1212,6 +1216,7 @@ exports[`Table.Expand > work in expandable fix 2`] = `
               </div>
             </td>
             <td
+              class="rc-table-row-expand-icon-cell"
               style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
             >
               <div
