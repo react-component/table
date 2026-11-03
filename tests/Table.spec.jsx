@@ -567,6 +567,29 @@ describe('Table.Basic', () => {
     );
   });
 
+  it('keeps className and style from onHeaderRow', () => {
+    const onHeaderRow = () => ({ className: 'my-header-row', style: { color: 'red' } });
+    const { container } = render(createTable({ onHeaderRow }));
+    const headerRow = container.querySelector('thead tr');
+    expect(headerRow).toHaveClass('my-header-row');
+    expect(headerRow.style.color).toBe('red');
+  });
+
+  it('merges onHeaderRow className and style with semantic header row', () => {
+    const onHeaderRow = () => ({ className: 'my-header-row', style: { color: 'red' } });
+    const { container } = render(
+      createTable({
+        onHeaderRow,
+        classNames: { header: { row: 'semantic-header-row' } },
+        styles: { header: { row: { background: 'blue' } } },
+      }),
+    );
+    const headerRow = container.querySelector('thead tr');
+    expect(headerRow).toHaveClass('my-header-row', 'semantic-header-row');
+    expect(headerRow.style.color).toBe('red');
+    expect(headerRow.style.background).toBe('blue');
+  });
+
   it('renders column.onHeaderCell', () => {
     const onHeaderCell = column => ({
       id: `header-cell-${column.key}`,
