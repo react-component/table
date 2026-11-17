@@ -191,6 +191,67 @@ describe('Table.Expand', () => {
     expect(iconTypes).toEqual(['expandable', 'spaced']);
   });
 
+  it('keeps expanded tree rows collapsible when rowExpandable returns false', () => {
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        children: [{ key: 2, name: 'Jim', age: 1 }],
+      },
+    ];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: {
+          defaultExpandedRowKeys: [0],
+          rowExpandable: () => false,
+        },
+      }),
+    );
+
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(2);
+
+    const icon = container.querySelector('td .rc-table-row-expand-icon');
+    expect(icon.classList.contains('rc-table-row-expanded')).toBeTruthy();
+
+    fireEvent.click(icon);
+
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(1);
+    expect(
+      container
+        .querySelector('td .rc-table-row-expand-icon')
+        .classList.contains('rc-table-row-spaced'),
+    ).toBeTruthy();
+  });
+
+  it('ignores row click for non-expandable tree rows', () => {
+    const onExpand = vi.fn();
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        children: [{ key: 2, name: 'Jim', age: 1 }],
+      },
+    ];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: {
+          expandRowByClick: true,
+          rowExpandable: () => false,
+          onExpand,
+        },
+      }),
+    );
+
+    fireEvent.click(container.querySelector('tbody tr'));
+
+    expect(onExpand).not.toHaveBeenCalled();
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(1);
+  });
+
   it('not use nest when children is invalidate', () => {
     const data = [
       { key: 2, name: 'Jack', age: 28, children: null },

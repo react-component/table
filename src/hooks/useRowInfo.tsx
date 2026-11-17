@@ -27,7 +27,6 @@ export default function useRowInfo<RecordType>(
   | 'expandIconColumnIndex'
   | 'expandedKeys'
   | 'childrenColumnName'
-  | 'rowExpandable'
   | 'onRow'
 > & {
   columnsKey: React.Key[];
@@ -75,10 +74,12 @@ export default function useRowInfo<RecordType>(
   // Only when row is not expandable and `children` exist in record
   const nestExpandable = expandableType === 'nest';
 
-  const rowSupportExpand = expandableType === 'row' && (!rowExpandable || rowExpandable(record));
-  const mergedExpandable = rowSupportExpand || nestExpandable;
-
   const expanded = expandedKeys && expandedKeys.has(rowKey);
+
+  const rowExpandablePass = !rowExpandable || rowExpandable(record);
+  const rowSupportExpand = expandableType === 'row' && rowExpandablePass;
+  // Keep an already expanded row collapsible even if `rowExpandable` now returns false
+  const mergedExpandable = rowSupportExpand || (nestExpandable && (rowExpandablePass || expanded));
 
   const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
 
