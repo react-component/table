@@ -10,6 +10,7 @@ import type {
   VirtualScrollConfig,
 } from '../interface';
 import BodyLine from './BodyLine';
+import BodyHolder from './BodyHolder';
 import { GridContext, StaticContext } from './context';
 
 const ALIGN_MAP: Record<string, 'top' | 'bottom' | 'auto'> = {
@@ -56,7 +57,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
     sticky,
     scrollY,
     listItemHeight,
-    getComponent,
     onScroll: onTablePropScroll,
   } = useContext(StaticContext);
 
@@ -248,9 +248,6 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
   // ========================== Render ==========================
   const tblPrefixCls = `${prefixCls}-tbody`;
 
-  // default 'div' in @rc-component/virtual-list
-  const wrapperComponent = getComponent(['body', 'wrapper']);
-
   // ========================== Sticky Scroll Bar ==========================
   const horizontalScrollBarStyle: React.CSSProperties = {};
   if (sticky) {
@@ -273,7 +270,7 @@ const Grid = React.forwardRef<GridRef, GridProps>((props, ref) => {
         itemHeight={listItemHeight || 24}
         data={flattenData}
         itemKey={item => getRowKey(item.record)}
-        component={wrapperComponent}
+        component={BodyHolder}
         scrollWidth={scrollX as number}
         direction={direction}
         onVirtualScroll={({ x }) => {
