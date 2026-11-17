@@ -252,6 +252,23 @@ describe('Table.Expand', () => {
     expect(container.querySelectorAll('tbody tr')).toHaveLength(1);
   });
 
+  it('does not treat empty children array as expandable', () => {
+    const onExpand = vi.fn();
+    const data = [{ key: 0, name: 'Lucy', age: 27, children: [] }];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: { expandRowByClick: true, onExpand },
+      }),
+    );
+
+    const icon = container.querySelector('td .rc-table-row-expand-icon');
+    expect(icon.classList.contains('rc-table-row-spaced')).toBeTruthy();
+
+    fireEvent.click(container.querySelector('tbody tr'));
+    expect(onExpand).not.toHaveBeenCalled();
+  });
+
   it('not use nest when children is invalidate', () => {
     const data = [
       { key: 2, name: 'Jack', age: 28, children: null },

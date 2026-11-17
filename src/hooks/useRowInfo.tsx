@@ -78,10 +78,13 @@ export default function useRowInfo<RecordType>(
 
   const rowExpandablePass = !rowExpandable || rowExpandable(record);
   const rowSupportExpand = expandableType === 'row' && rowExpandablePass;
-  // Keep an already expanded row collapsible even if `rowExpandable` now returns false
-  const mergedExpandable = rowSupportExpand || (nestExpandable && (rowExpandablePass || expanded));
 
-  const hasNestChildren = childrenColumnName && record && record[childrenColumnName];
+  const nestChildren = childrenColumnName ? record?.[childrenColumnName] : undefined;
+  // Empty children array should not be expandable
+  const hasNestChildren = Array.isArray(nestChildren) && nestChildren.length > 0;
+  // Keep an already expanded row collapsible even if `rowExpandable` now returns false
+  const mergedExpandable =
+    rowSupportExpand || (nestExpandable && hasNestChildren && (rowExpandablePass || expanded));
 
   const onInternalTriggerExpand = useEvent(onTriggerExpand);
 
