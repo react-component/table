@@ -27,6 +27,7 @@ export default function useRowInfo<RecordType>(
   | 'expandIconColumnIndex'
   | 'expandedKeys'
   | 'childrenColumnName'
+  | 'rowExpandable'
   | 'onRow'
 > & {
   columnsKey: React.Key[];

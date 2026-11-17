@@ -56,6 +56,7 @@ export function getCellProps<RecordType>(
     expandIcon,
     expanded,
     hasNestChildren,
+    rowExpandable,
     onTriggerExpand,
     expandable,
     expandedKeys,
@@ -76,7 +77,7 @@ export function getCellProps<RecordType>(
         {expandIcon({
           prefixCls,
           expanded,
-          expandable: hasNestChildren,
+          expandable: !!hasNestChildren && (!rowExpandable || rowExpandable(record)),
           record,
           onExpand: onTriggerExpand,
         })}

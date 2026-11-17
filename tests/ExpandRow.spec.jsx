@@ -162,6 +162,35 @@ describe('Table.Expand', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  it('respects rowExpandable in tree mode', () => {
+    const data = [
+      {
+        key: 0,
+        name: 'Lucy',
+        age: 27,
+        children: [{ key: 2, name: 'Jim', age: 1 }],
+      },
+      {
+        key: 1,
+        name: 'Jack',
+        age: 28,
+        children: [{ key: 3, name: 'Tom', age: 2 }],
+      },
+    ];
+    const { container } = render(
+      createTable({
+        data,
+        expandable: { rowExpandable: ({ key }) => key === 0 },
+      }),
+    );
+
+    const iconTypes = Array.from(
+      container.querySelectorAll('td .rc-table-row-expand-icon'),
+    ).map(icon => (icon.classList.contains('rc-table-row-spaced') ? 'spaced' : 'expandable'));
+
+    expect(iconTypes).toEqual(['expandable', 'spaced']);
+  });
+
   it('not use nest when children is invalidate', () => {
     const data = [
       { key: 2, name: 'Jack', age: 28, children: null },
